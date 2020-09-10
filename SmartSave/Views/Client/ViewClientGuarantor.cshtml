@@ -1,0 +1,244 @@
+﻿@model SmartDomain.ClientGuarantor
+@using SmartHelper;
+@using System.Collections.Generic;
+@{
+    ViewData["Title"] = "Client Details";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @Model.Client.ClientRef
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@Model.Client.ClientFullName</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="ViewClientGuarantor">
+            <div class="box-body">
+                @if (TempData["Error"] != null)
+                {<div class="container">
+                        <strong class="">@TempData["Error"].ToString()</strong>
+                        <div class="panel panel-danger">
+                            <div class="panel-body">@Html.ValidationSummary()</div>
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Account Number</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@Model.Client.AccountNumber</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">User Name</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@Model.Client.UserName</label>
+                        </div>
+                    </div>
+                    <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" value="@Model.Client.FirstName">
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" value="@Model.Client.LastName">
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">National ID / Birth Entry No</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="IDNumber" placeholder="National ID" value="@Model.Client.IDNumber">
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="@Model.Client.DateOfBirth" class="col-sm-2 control-label">Date Of Birth</label>
+                    <div class="col-sm-10">
+                        <input asp-for="@Model.Client.DateOfBirth" type="date" class="form-control" />
+                        <span asp-validation-for="@Model.Client.DateOfBirth" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.Client.GenderID" class="form-control"
+                                asp-items="ViewBag.GenderList">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" name="EmailAddress" value="@Model.Client.EmailAddress">
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Residential Address</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="ResidentialAddress" rows="6" cols="40" value="@Model.Client.ResidentialAddress">@Model.Client.ResidentialAddress</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="MobileNumber" value="@Model.Client.MobileNumber">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Client.DepartmentID" class="col-sm-2 control-label">Department</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.Client.DepartmentID" class="form-control" asp-items="ViewBag.DepartmentList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                    <div class="col-sm-10 checkbox">
+                        <div class="form-group">
+
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="@Model.Client.IsActive" />
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Registration Date</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.Client.RegistrationDate)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.Client.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.Client.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+
+            </div>
+            <!-- /.box-footer -->
+
+
+        </form>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                       Information
+                    </div>
+                    <!-- /.panel-heading -->
+                    <form method="post" asp-controller="Client" asp-action="ViewClientGuarantor">
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Firstname:</label>
+                                <input type="text" class="form-control" name="FirstName" value="@Model.FirstName">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Lastname:</label>
+                                <input type="text" class="form-control" name="LastName" value="@Model.LastName">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">ID Number:</label>
+                                <input type="tel" class="form-control" name="IDNumber" value="@Model.IDNumber">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Email Address:</label>
+                                <input type="text" class="form-control" name="EmailAddress" value="@Model.EmailAddress">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number:</label>
+                                <input type="tel" class="form-control" name="MobileNumber" value="@Model.MobileNumber">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Residential Address:</label>
+                                <textarea class="form-control" name="PhysicalAddress" rows="6" cols="40">@Model.PhysicalAddress</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Is Main Guarantor</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="@Model.IsMainGuarantor" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+
+                            </div>
+                            <input type="hidden" name="ClientGuarantorID" value="@Model.ClientGuarantorID" />
+                            <input type="hidden" name="ClientID" value="@Model.ClientID" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <a class="btn btn-danger" asp-controller="Client" asp-action="ActionGuarantor" asp-route-guarantorid="@Model.ClientGuarantorID" asp-route-Clientid="@Model.ClientID">Delete</a>
+                            <a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Details</a>
+                            <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.box -->
+</section>
+
+

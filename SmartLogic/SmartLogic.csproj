@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartDataAccess\SmartDataAccess.csproj" />
+    <ProjectReference Include="..\SmartDomain\SmartDomain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,10 @@
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\bin\Release\netcoreapp2.2\SmartSchoolHelper.deps.json
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\bin\Release\netcoreapp2.2\SmartSchoolHelper.dll
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\bin\Release\netcoreapp2.2\SmartSchoolHelper.pdb
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\obj\Release\netcoreapp2.2\SmartSchoolHelper.csprojAssemblyReference.cache
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\obj\Release\netcoreapp2.2\SmartSchoolHelper.SmartHelper.resources
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\obj\Release\netcoreapp2.2\SmartSchoolHelper.csproj.GenerateResource.cache
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\obj\Release\netcoreapp2.2\SmartSchoolHelper.AssemblyInfoInputs.cache
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\obj\Release\netcoreapp2.2\SmartSchoolHelper.AssemblyInfo.cs
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\obj\Release\netcoreapp2.2\SmartSchoolHelper.dll
+D:\Dev Projects\Smart-School\smart-school\SmartSchoolHelper\obj\Release\netcoreapp2.2\SmartSchoolHelper.pdb

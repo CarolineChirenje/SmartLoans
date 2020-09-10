@@ -1,0 +1,76 @@
+﻿using SmartLogic;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using SmartDomain;
+using SmartDataAccess;
+using SmartHelper;
+
+namespace SmartLogic
+{
+    public class CountryService : ICountryService
+    {
+        private readonly DatabaseContext _context;
+
+        public CountryService(DatabaseContext context) => _context = context;
+        public async Task<int> ActionCountry(int id, DatabaseAction action)
+        {
+            Country Country = await FindCountry(id);
+
+            if (DatabaseAction.Remove == action)
+                _context.Countries.Remove(Country);
+            else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+            {
+                Country.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                Country.LastChangedBy = UtilityService.CurrentUserName;
+                Country.LastChangedDate = DateTime.Now;
+                _context.Update(Country);
+            }
+
+            return (await _context.SaveChangesAsync());
+        }
+
+        public async Task<List<Country>> Country()
+        {
+            return await _context.Countries
+                        .AsNoTracking()
+            .ToListAsync();
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            var course = await _context.Countries.FindAsync(id);
+            _context.Countries.Remove(course);
+            return (await _context.SaveChangesAsync());
+        }
+
+        public async Task<Country> FindCountry(int id)
+        {
+            return await _context.Countries.Where(r => r.CountryID == id)
+ .AsNoTracking().FirstOrDefaultAsync();
+        }
+
+        public async Task<int> Save(Country Country)
+        {
+            Country.LastChangedBy = UtilityService.CurrentUserName;
+            Country.LastChangedDate = DateTime.Now;
+            _context.Add(Country);
+            return (await _context.SaveChangesAsync());
+        }
+
+      
+        public async Task<int> Update(Country Country)
+        {
+            Country update = await FindCountry(Country.CountryID);
+            update.Name = Country.Name;
+            update.IsActive = Country.IsActive;
+                        update.LastChangedBy = UtilityService.CurrentUserName;
+            update.LastChangedDate = DateTime.Now;
+            _context.Update(update);
+            return await _context.SaveChangesAsync();
+        }
+    }
+}

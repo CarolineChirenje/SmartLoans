@@ -1,0 +1,111 @@
+﻿@model IEnumerable<SmartDomain.Role>
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+        @ViewBag.UserName
+     </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">User Roles</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Manage User Roles</h3>
+                    <a asp-controller="User" asp-action="ViewUserRoles" asp-route-id="@ViewBag.UserID" class="btn btn-success pull-right">Give Roles(s)</a><br />
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @if (ViewData["Error"] != null)
+                    {<div class="container">
+                            <strong class="">@ViewData["Error"].ToString()</strong>
+                            <div class="panel panel-danger">
+                                <div class="panel-body">@Html.ValidationSummary()</div>
+                            </div>
+                        </div>
+                    }
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th> Name</th>
+                                <th>Permissions Count</th>
+                                <th>DateAdded</th>
+                                <th>Added By</th>
+                                <th>Active Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                        string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                        int permissionsCount = item.RolePermissions.Count();
+                                        string roleName = item.Name;
+                                        string roleStatus = UtilityService.ShowActiveAction(item.IsActive);
+                                    }
+                                    <td>@roleName</td>
+                                    <td><a asp-controller="Roles" asp-action="RolePermissions" asp-route-id="@item.RoleID">@permissionsCount</a></td>
+                                    <td>@dateCreated</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                    <td>@activeStatus</td>
+                                    <td><a asp-controller="User" asp-action="ChangeUserRoleStatus" asp-route-id="@item.RoleID" asp-route-userid="@ViewBag.UserID" asp-route-status="@item.IsActive">@roleStatus</a> | <a href="" onclick="Delete('@item.RoleID')">Delete</a></td>
+                                </tr>
+                            }
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                   
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+    function Delete(id,userid){
+        alert(id,userid)
+        var txt;
+        var r = confirm("Are you sure you want to Delete?");
+        if (r == true) {
+
+            $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("DeleteUserRole", "User")',
+                data: {
+                    id: id,
+                    userid:userid
+                },
+                error: function (result) {
+                    alert("error");
+                },
+                success: function (result) {
+                    if (result == true) {
+                        var baseUrl="/Users";
+                        window.location.reload();
+                    }
+                    else {
+                        alert("There is a problem, Try Later!");
+                    }
+                }
+            });
+        }
+    }
+</script>

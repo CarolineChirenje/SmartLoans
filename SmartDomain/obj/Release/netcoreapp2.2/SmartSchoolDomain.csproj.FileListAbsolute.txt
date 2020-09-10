@@ -1,0 +1,11 @@
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\bin\Release\netcoreapp2.2\SmartSchoolDomain.deps.json
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\bin\Release\netcoreapp2.2\SmartSchoolDomain.dll
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\bin\Release\netcoreapp2.2\SmartSchoolDomain.pdb
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\bin\Release\netcoreapp2.2\SmartSchoolHelper.dll
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\bin\Release\netcoreapp2.2\SmartSchoolHelper.pdb
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\obj\Release\netcoreapp2.2\SmartSchoolDomain.csprojAssemblyReference.cache
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\obj\Release\netcoreapp2.2\SmartSchoolDomain.AssemblyInfoInputs.cache
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\obj\Release\netcoreapp2.2\SmartSchoolDomain.AssemblyInfo.cs
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\obj\Release\netcoreapp2.2\SmartSchoolDomain.csproj.CopyComplete
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\obj\Release\netcoreapp2.2\SmartSchoolDomain.dll
+D:\Dev Projects\Smart-School\smart-school\SmartDomain\obj\Release\netcoreapp2.2\SmartSchoolDomain.pdb

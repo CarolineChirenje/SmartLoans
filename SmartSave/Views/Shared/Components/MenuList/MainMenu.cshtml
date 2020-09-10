@@ -1,0 +1,29 @@
+@using SmartSave;
+@using SmartHelper;
+<ul class="sidebar-menu" data-widget="tree">
+    <li class="header">@UtilityService.ApplicationName</li>
+      @foreach (var item in Model)
+    {
+        <li  class="treeview @item.IsActiveMenu">
+            <a asp-controller="Home" asp-action="Dashboard">
+                @{
+                    var parentCSS = UtilityService.HtmlEncode(item.CSSClass);
+                }
+                <i class="@parentCSS"></i> <span>@item.DisplayName</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                @foreach (var menu in item.Menus)
+                {
+                    var menuCSS = UtilityService.HtmlEncode(menu.CSSClass);
+                    <li><i class="@menuCSS"></i><a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName">@menu.DisplayName</a></li>
+                }
+
+                }
+            </ul>
+        </li>
+    }
+</ul>
+

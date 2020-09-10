@@ -1,0 +1,128 @@
+﻿@model IEnumerable<SmartDomain.Menu>
+@using SmartHelper;
+@{
+    ViewData["Title"] = "Sub Menus";
+}
+
+<section class="content-header">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">@ViewData["Title"]</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">
+                       Menu Groups:  @ViewBag.MenuGroupName
+                    </h3>
+
+                </div>
+                <!-- /.box-header -->
+                 <div class="box-body">
+                    @if (ViewData["Error"] != null)
+                    {<div class="container">
+                            <strong class="">Error:</strong>
+                            <div class="panel panel-danger">
+                                <div class="panel-body">@ViewData["Error"].ToString()</div>
+                            </div>
+
+                        </div>
+                    }
+                    <br />
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Display Name</th>
+                                <th>Path Name</th>
+                                <th>Style</th>
+                                <th>Order No</th>
+                                <th>Last Changed Date</th>
+                                <th>Changed By</th>
+                                <th>Active Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          
+                                @foreach (var item in Model)
+                                {
+
+                            <tr>
+                                @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                    string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                    string objectStatus = @item.IsActive ? "Deactivate" : "Reactivate";
+                                }
+
+                                <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.PathName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CSSClass)</td>
+                                <td>@Html.DisplayFor(modelItem => item.OrderNo)</td>
+                                <td>@dateCreated</td>
+                                <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+
+                                <td>@activeStatus</td>
+                                <td><a asp-controller="Menus" asp-action="ViewMenu" asp-route-id="@item.MenuID">View</a> | <a asp-controller="Menus" asp-action="ChangeMenuStatus" asp-route-id="@item.MenuID" asp-route-MenuGroupID="@ViewBag.MenuGroupID" asp-route-status="@item.IsActive">@objectStatus</a> | <a href="" onclick="Delete('@item.MenuID,@item.MenuGroupID')">Remove</a></td>
+                            </tr>
+                                }
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a asp-controller="Menus" asp-action="ViewParentMenu" asp-route-id="@ViewBag.MenuGroupID" class="btn btn-default">Cancel</a>
+                    <a asp-controller="Menus" asp-action="AddMenu" class="btn btn-info pull-right">New Menu</a><br />
+                    <br />
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<!-- DataTables -->
+
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+        function Delete(id, parentID){
+       // alert(id)
+        var txt;
+        var r = confirm("Are you sure you want to Delete?");
+        if (r == true) {
+
+            $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("RemoveMenu", "Menus")',
+                data: {
+                    id: id,
+                    parentID: parentID
+                },
+                error: function (result) {
+                    alert("error");
+                },
+                success: function (result) {
+                    if (result == true) {
+                        var baseUrl ="/Menus";
+                        window.location.reload();
+                    }
+                    else {
+                        alert("There is a problem, Try Later!");
+                    }
+                }
+            });
+        }
+    }
+</script>

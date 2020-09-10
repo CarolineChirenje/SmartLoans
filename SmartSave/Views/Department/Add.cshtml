@@ -1,0 +1,55 @@
+﻿@model SmartDomain.Department
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Department
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Add Department</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="Add">
+            @if (ViewData["Error"] != null)
+            {<div class="container">
+                    <strong class="">@ViewData["Error"].ToString()</strong>
+                    <div class="panel panel-danger">
+                        <div class="panel-body">@Html.ValidationSummary()</div>
+                    </div>
+                </div>
+            }
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name" placeholder="Name" required>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                    <div class="checkbox">
+                        <input type="hidden" name="IsActive" value="false" />
+                        <label class="checkbox-inline">
+                            <input type="checkbox" class="minimal" name="IsActive" checked />
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                <button type="submit" class="btn btn-info pull-right">Create</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+</section>

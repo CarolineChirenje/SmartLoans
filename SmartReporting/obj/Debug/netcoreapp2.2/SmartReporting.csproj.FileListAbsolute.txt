@@ -1,0 +1,15 @@
+D:\Dev Projects\SmartFin\SmartReporting\bin\Debug\netcoreapp2.2\SmartReporting.deps.json
+D:\Dev Projects\SmartFin\SmartReporting\bin\Debug\netcoreapp2.2\SmartReporting.dll
+D:\Dev Projects\SmartFin\SmartReporting\bin\Debug\netcoreapp2.2\SmartReporting.pdb
+D:\Dev Projects\SmartFin\SmartReporting\bin\Debug\netcoreapp2.2\SmartDomain.dll
+D:\Dev Projects\SmartFin\SmartReporting\bin\Debug\netcoreapp2.2\SmartHelper.dll
+D:\Dev Projects\SmartFin\SmartReporting\bin\Debug\netcoreapp2.2\SmartDomain.pdb
+D:\Dev Projects\SmartFin\SmartReporting\bin\Debug\netcoreapp2.2\SmartHelper.pdb
+D:\Dev Projects\SmartFin\SmartReporting\bin\Debug\netcoreapp2.2\SmartHelper.dll.config
+D:\Dev Projects\SmartFin\SmartReporting\obj\Debug\netcoreapp2.2\SmartReporting.csprojAssemblyReference.cache
+D:\Dev Projects\SmartFin\SmartReporting\obj\Debug\netcoreapp2.2\SmartReporting.AssemblyInfoInputs.cache
+D:\Dev Projects\SmartFin\SmartReporting\obj\Debug\netcoreapp2.2\SmartReporting.AssemblyInfo.cs
+D:\Dev Projects\SmartFin\SmartReporting\obj\Debug\netcoreapp2.2\SmartReporting.csproj.CoreCompileInputs.cache
+D:\Dev Projects\SmartFin\SmartReporting\obj\Debug\netcoreapp2.2\SmartReporting.csproj.CopyComplete
+D:\Dev Projects\SmartFin\SmartReporting\obj\Debug\netcoreapp2.2\SmartReporting.dll
+D:\Dev Projects\SmartFin\SmartReporting\obj\Debug\netcoreapp2.2\SmartReporting.pdb

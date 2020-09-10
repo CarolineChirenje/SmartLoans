@@ -1,0 +1,127 @@
+﻿@model SmartDomain.Client
+
+@{
+    ViewData["Title"] = "Add New Client";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Client Details
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Add Client</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="AddClient">
+            <div class="box-body">
+                @if (ViewData["Error"] != null)
+                {<div class="container">
+                        <strong class="">@ViewData["Error"].ToString()</strong>
+                        <div class="panel panel-danger">
+                            <div class="panel-body">@Html.ValidationSummary()</div>
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" required>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" required>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">ID/Birth Entry No. </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="IDNumber" placeholder="National ID" required>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Date Of Birth</label>
+
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" name="DateOfBirth" required>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+                    <div class="col-sm-10">
+                        <select asp-for="GenderID" class="form-control" asp-items="ViewBag.GenderList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" name="EmailAddress" placeholder="Email Address" required>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Residential Address</label>
+
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="ResidentialAddress" rows="6" cols="40"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="MobileNumber" placeholder="Mobile Number">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DepartmentID" class="col-sm-2 control-label">Department</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartmentList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" class="minimal" name="IsActive" checked />
+                    </label>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right">Save</button>
+                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+</section>

@@ -1,0 +1,98 @@
+﻿@model SmartDomain.MenuGroup
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+        Menus
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@Model.DisplayName</h3>
+            <a class="btn btn-info pull-right" asp-controller="Menus" asp-action="AddMenu">Add Child Menu</a>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="/Menus/ViewMenuGroup">
+            @if (ViewData["Error"] != null)
+            {<div class="container">
+                    <strong class="">@ViewData["Error"].ToString()</strong>
+                    <div class="panel panel-danger">
+                        <div class="panel-body">@Html.ValidationSummary()</div>
+                    </div>
+                </div>
+            }
+              <div class="box-body">
+
+                 <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                     <div class="col-sm-10">
+                         <input type="text" class="form-control" name="DisplayName" value="@Model.DisplayName">
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">Order No</label>
+                     <div class="col-sm-10">
+                         <input type="text" class="form-control" name="OrderNo" value="@Model.OrderNo">
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">Style</label>
+                     <div class="col-sm-10">
+                         <input type="text" class="form-control" name="CSSClass" value="@Model.CSSClass">
+                     </div>
+                 </div>
+                
+
+                 <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">Menu Active Tab</label>
+                     <div class="col-sm-2">
+                         <label class="checkbox-inline">
+                             <input type="checkbox" class="minimal" name="IsActiveMenu" value="true" checked="@Model.IsActiveMenu" />
+                         </label>
+                                            </div>
+                 </div>
+                 <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">Active Status</label>
+                     <div class="col-sm-2">
+                         <label class="checkbox-inline">
+                             <input type="checkbox" class="minimal" name="IsActive" value="true" checked="@Model.IsActive" />
+                         </label>
+                                             </div>
+                 </div>
+
+                 <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">Children</label>
+                     <div class="col-sm-10">
+                         <a asp-controller="Menus" asp-action="ChildMenus" asp-route-id="@Model.MenuGroupID">@Model.Menus?.Count()</a>
+                     </div>
+                 </div>
+
+                 <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
+                     <div class="col-sm-10">
+                         <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                     </div>
+                 </div>
+
+                 <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                     <div class="col-sm-10">
+                         <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                     </div>
+                 </div>
+                 <input type="hidden" name="MenuGroupID" value="@Model.MenuGroupID" />
+             </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                <button type="submit" class="btn btn-info pull-right">Update</button>
+                
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+</section>

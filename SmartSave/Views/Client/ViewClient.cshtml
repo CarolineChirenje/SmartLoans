@@ -1,0 +1,902 @@
+﻿@model SmartDomain.Client
+
+@using SmartHelper;
+@using System.Collections.Generic;
+@{
+    ViewData["Title"] = "Client Details";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @Model.ClientRef
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@Model.ClientFullName</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="ViewClient">
+            <div class="box-body">
+                @if (TempData["Error"] != null)
+                {<div class="container">
+                        <strong class="">@TempData["Error"].ToString()</strong>
+                        <div class="panel panel-danger">
+                            <div class="panel-body">@Html.ValidationSummary()</div>
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Account Number</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@Model.AccountNumber</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">User Name</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@Model.UserName</label>
+                        </div>
+                    </div>
+                    <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" value="@Model.FirstName">
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" value="@Model.LastName">
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">National ID / Birth Entry No</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="IDNumber" placeholder="National ID" value="@Model.IDNumber">
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="DateOfBirth" class="col-sm-2 control-label">Date Of Birth</label>
+                    <div class="col-sm-10">
+                        <input asp-for="DateOfBirth" type="date" class="form-control" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.GenderID" class="form-control"
+                                asp-items="ViewBag.GenderList">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" name="EmailAddress" value="@Model.EmailAddress">
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Residential Address</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="ResidentialAddress" rows="6" cols="40" value="@Model.ResidentialAddress">@Model.ResidentialAddress</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="MobileNumber" value="@Model.MobileNumber">
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                    <div class="col-sm-10 checkbox">
+                        <div class="form-group">
+
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="IsActive" />
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DepartmentID" class="col-sm-2 control-label">Department</label>
+
+                        <div class="col-sm-10">
+                            <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartmentList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Registration Date</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.RegistrationDate)</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                <button type="submit" class="btn btn-info pull-right">Update</button>
+            </div>
+            <!-- /.box-footer -->
+
+
+        </form>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Additional Information
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <!-- Nav tabs -->
+
+                        <ul class="nav nav-tabs">
+
+                            <li class="active">
+                                <a href="#Contacts" data-toggle="tab">Contacts</a>
+                            </li>
+                            <li>
+                                <a href="#Notes" data-toggle="tab">Notes</a>
+                            </li>
+
+                            <li>
+                                <a href="#Accounts" data-toggle="tab">Payments File</a>
+                            </li>
+                            <li>
+                                <a href="#Statements" data-toggle="tab">Statements</a>
+                            </li>
+
+                            <li>
+                                <a href="#Documents" data-toggle="tab">Documents</a>
+                            </li>
+                            <li>
+                                <a href="#MedicalDetails" data-toggle="tab">Medical Files</a>
+                            </li>
+                            <li>
+                                <a href="#Dependents" data-toggle="tab">Dependents</a>
+                            </li>
+
+
+                            <li>
+                                <a href="#Guarantors" data-toggle="tab">Guarantors</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+
+                            <div class="tab-pane fade in active " id="Contacts">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Contacts
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Contact</th>
+                                                    <th>Contact Person</th>
+                                                    <th>Information</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ClientContacts != null)
+                                                {
+
+                                                    foreach (var item in Model.ClientContacts)
+                                                    {
+                                                        <tr>
+                                                            <td>@Html.DisplayFor(modelItem => item.ContactType.Name)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.ContactPerson)</td>
+
+                                                            <td>@Html.DisplayFor(modelItem => item.Contact)</td>
+
+                                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewContact" asp-route-id="@item.ClientContactID">View</a> | <a asp-controller="Client" asp-action="ActionContact" asp-route-contactid="@item.ClientContactID" asp-route-Clientid="@item.ClientID">Delete</a></td>
+                                                        </tr>
+                                                    }
+                                                }
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#ContactForm">Add Contact</a>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade in" id="Notes">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Notes
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Note Type</th>
+                                                    <th>Initiator</th>
+                                                    <th>Date Uploaded</th>
+                                                    <th>Uploaded By</th>
+                                                    <th>Due Date</th>
+                                                    <th>Comments</th>
+                                                    <th>Date Closed</th>
+                                                    <th>Last Changed By</th>
+                                                    <th>Last Changed Date</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ClientNotes != null)
+                                                {
+                                                    var activeNotes = Model.ClientNotes.OrderByDescending(x => x.DueDate);
+                                                    @foreach (var item in activeNotes)
+                                                    {
+                                                        <tr>
+                                                            @{
+                                                                string duedate = UtilityService.ShowDateTime(item.DueDate);
+                                                                string closedDate = UtilityService.ShowDateTime(item.DateClosed);
+                                                                string dateUploaded = UtilityService.ShowDateTime(item.DateUploaded);
+                                                                string LastChangedDate = UtilityService.ShowDateTime(item.LastChangedDate);
+
+
+                                                            }
+                                                            <td>Client</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.UserType.Name)</td>
+                                                            <td>@dateUploaded</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.UploadedBy)</td>
+                                                            <td>@duedate</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Comment)</td>
+                                                            <td>@closedDate</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                                            <td>@LastChangedDate</td>
+                                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewClientNote" asp-route-id="@item.ClientNoteID">View</a> | <a asp-controller="Client" asp-action="ActionNote" asp-route-noteid="@item.ClientNoteID" asp-route-Clientid="@Model.ClientID"> Delete</a></td>
+                                                        </tr>
+                                                    }
+                                                }
+
+                                        </table>
+                                    </div>
+                                    <div class="box-footer">
+                                        <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#NotesForm">Add Note</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade in" id="MedicalDetails">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Medical Files
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Preffered Doctor</th>
+                                                    <th>Doctor Phone Number</th>
+                                                    <th>Medical Aid</th>
+                                                    <th>Medical Number</th>
+                                                    <th>Preffered Hospital</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ClientMedicalDetails != null)
+                                                {
+
+                                                    foreach (var item in Model.ClientMedicalDetails)
+                                                    {
+                                                        <tr>
+                                                            <td>@Html.DisplayFor(modelItem => item.Doctor)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Telephone)</td>
+
+                                                            <td>@Html.DisplayFor(modelItem => item.MedicalAid)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.MedicalAidNo)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Hospital)</td>
+                                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewMedicalDetail" asp-route-id="@item.ClientMedicalID">View</a> | <a asp-controller="Client" asp-action="ActionMedicalDetail" asp-route-medicaldetailID="@item.ClientMedicalID" asp-route-Clientid="@Model.ClientID">Delete</a></td>
+
+                                                        </tr>
+                                                    }
+                                                }
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#ClientMedicalForm">Create Record</a>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Documents">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Documents
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Document Title</th>
+                                                    <th>Comment</th>
+                                                    <th>File Name</th>
+                                                    <th>Uploaded By</th>
+                                                    <th>Date Uploaded</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ClientDocuments != null)
+                                                {
+                                                    @foreach (var item in Model.ClientDocuments)
+                                                    {
+                                                        <tr>
+                                                            <td>@Html.DisplayFor(modelItem => item.DocumentType.Name)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Comment)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.FileName)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.UploadedBy)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.DateUploaded)</td>
+
+                                                            <td><a asp-controller="Client" asp-action="DownloadDocument" asp-route-id="@item.ClientDocumentID">Download</a> | <a asp-controller="Client" asp-action="ActionDocument" asp-route-id="@item.ClientDocumentID">Delete</a></td>
+                                                        </tr>
+                                                    }
+                                                }
+                                        </table>
+                                    </div>
+                                    <div class="box-footer">
+                                        <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#DocumentForm">Upload Document</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade" id="Accounts">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Payments Files
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Trans Ref</th>
+                                                    <th>Transaction Type</th>
+                                                    <th>Payment Type</th>
+                                                    <th>Amount</th>
+                                                    <th>Payment Status</th>
+                                                    <th>Transaction Date</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ClientPayments != null)
+                                                {
+                                                    @foreach (var item in Model.ClientPayments)
+                                                    {
+                                                        <tr>
+                                                            @{
+                                                                string transactiondate = UtilityService.ShowDateTime(item.TransactionDate);
+
+                                                            }
+
+                                                            <td><a target="_blank" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.TransactionTypes.Name)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
+
+                                                            <td>@Html.DisplayFor(modelItem => item.PaymentStatus.Name)</td>
+                                                            <td>@transactiondate</td>
+
+                                                        </tr>
+                                                    }
+                                                }
+                                        </table>
+                                    </div>
+
+                                    <div class="box-footer">
+                                        <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#PaymentsFile">Upload Payment</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Statements">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Client  Statements
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <form method="get" asp-controller="Client" asp-action="GenerateStatement">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-2 control-label">Start Date</label>
+                                                <input type="date" class="form-control" name="StartDate" ID="StartDate" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-2 control-label">End Date</label>
+                                                <input type="date" class="form-control" name="EndDate" required>
+                                            </div>
+
+                                        </div>
+                                        <input type="hidden" name="ClientID" value="@Model.ClientID" />
+                                        <div class="box-footer">
+                                            <button type="submit" class="btn  btn-small btn-success pull-right">Generate Statement</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade" id="Guarantors">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Guarantors
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Full Name</th>
+                                                    <th>IDNumber</th>
+                                                    <th>Cell Phone and Email</th>
+                                                    <th>Is Main Guarantor</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ClientGuarantors != null)
+                                                {
+
+                                                    foreach (var item in Model.ClientGuarantors)
+                                                    {
+                                                        var isMainGuarantor = UtilityService.ShowYesOrNo(item.IsMainGuarantor);
+                                                        <tr>
+                                                            <td>@Html.DisplayFor(modelItem => item.GuarantorFullName)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
+
+                                                            <td>@Html.DisplayFor(modelItem => item.GuarantorContacts)</td>
+                                                            <td>@isMainGuarantor</td>
+                                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewClientGuarantor" asp-route-id="@item.ClientGuarantorID" asp-route-Clientid="@Model.ClientID">View</a> | <a asp-controller="Client" asp-action="ActionGuarantor" asp-route-guarantorid="@item.ClientGuarantorID" asp-route-Clientid="@Model.ClientID">Delete</a></td>
+                                                        </tr>
+                                                    }
+                                                }
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#GuaratorForm">Add Guarantor</a>
+                                </div>
+                            </div>
+
+                            <!-- /.panel-body -->
+                        </div>
+                            <!-- /.panel -->
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.box -->
+</section>
+
+<!-- Modal HTML Markup -->
+<!-- Modal -->
+<div class="modal fade" id="NotesForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientNote">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Comment:</label>
+                        <textarea class="form-control" name="Comment"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">DueDate:</label>
+                        <input type="date" class="form-control" name="DueDate">
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="hidden" name="IsActive" value="false" />
+                                    <input type="checkbox" name="IsActive"> Is Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Note</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DocumentForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientDocument" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Document Type</label>
+                        <select asp-for="DocumentTypeID" class="form-control" asp-items="ViewBag.DocumentsList">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Comment:</label>
+                        <textarea class="form-control" name="Comment"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label"></label>
+
+                        <input type="file" class="form-control" name="FileBytes">
+
+                    </div>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ContactForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientContact">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Contact Type</label>
+                        <select asp-for="ContactTypeID" class="form-control" asp-items="ViewBag.ContactTypes">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Contact Person:</label>
+                        <input type="text" class="form-control" name="ContactPerson">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Relationship:</label>
+                        <select asp-for="RelationshipTypeID" class="form-control" asp-items="ViewBag.RelationTypes">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Contact:</label>
+                        <textarea class="form-control" name="Contact"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="hidden" name="IsActive" value="false" />
+                                    <input type="checkbox" name="IsActive"> Is Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Contact</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PaymentsFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddTransaction">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Bank Account</label>
+
+                        <select asp-for="BankAccountID" class="form-control" asp-items="ViewBag.BankAccountList">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Payment Type</label>
+
+                        <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductList">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Payment Date:</label>
+
+                        <input type="date" class="form-control" name="PaymentDate" ID="PaymentDate">
+
+                    </div>
+                    <div class="form-group">
+                        @{
+
+                            if (SmartHelper.UtilityService.PaymentsMustBeVatInclusive)
+                            {
+
+                                <label class="">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System</label>
+                            }
+
+                            else
+                            {
+
+                                <label class="">Payment Amount Should be VAT Exclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
+
+                            }
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Pay Amount</label>
+
+                        <input type="number" class="form-control" name="Amount">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">VAT</label>
+
+                        <input type="text" class="form-control" name="VAT" disabled="disabled" value="0.00">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Amount Excl VAT</label>
+
+                        <input type="text" class="form-control" name="AmountExclVAT" disabled="disabled" value="0.00">
+
+                    </div>
+
+
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Pay</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ClientMedicalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientMedicalDetail">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Allergies:</label>
+                        <textarea class="form-control" name="Allergies"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Preffered Hospital:</label>
+                        <input type="text" class="form-control" name="Hospital">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Preffered Doctor:</label>
+                        <input type="text" class="form-control" name="Doctor">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Doctor Phone Number:</label>
+                        <input type="tel" class="form-control" name="Telephone">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Medical Aid Name:</label>
+                        <input type="text" class="form-control" name="MedicalAid">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Medical Aid Number:</label>
+                        <input type="tel" class="form-control" name="MedicalAidNo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Other Information:</label>
+                        <textarea class="form-control" name="Other"></textarea>
+                    </div>
+
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="GuaratorForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientGuarantor">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Firstname:</label>
+                        <input type="text" class="form-control" name="FirstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Lastname:</label>
+                        <input type="text" class="form-control" name="LastName">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">ID Number:</label>
+                        <input type="tel" class="form-control" name="IDNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Email Address:</label>
+                        <input type="text" class="form-control" name="EmailAddress">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number:</label>
+                        <input type="tel" class="form-control" name="MobileNumber">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Residential Address:</label>
+                        <textarea class="form-control" name="PhysicalAddress" rows="6" cols="40"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Is Main Guarantor</label>
+                        <div class="checkbox">
+                            <input type="hidden" name="IsMainGuarantor" value="false" />
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="minimal" name="IsMainGuarantor" checked />
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
+</script>
+

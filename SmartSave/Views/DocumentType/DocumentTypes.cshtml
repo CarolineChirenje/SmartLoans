@@ -1,0 +1,110 @@
+﻿@model IEnumerable<SmartDomain.DocumentType>
+@using SmartHelper;
+@{
+    ViewData["Title"] = "Document List";
+}
+
+<section class="content-header">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">@ViewData["Title"]</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Manage Document Types</h3>
+
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Format</th>
+
+                                <th>Active Status</th>
+                                <th>Last Changed By</th>
+                                <th>Last Changed Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+                                    @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                        string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                        string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
+
+                                    }
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DocumentFormat.Name)</td>
+
+                                    <td>@activeStatus</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                    <td>@dateCreated</td>
+
+                                    <td><a asp-controller="DocumentType" asp-action="ViewDocumentType" asp-route-id="@item.DocumentTypeID">View</a> | <a asp-controller="DocumentType" asp-action="ChangeDocumentTypeStatus" asp-route-id="@item.DocumentTypeID" asp-route-status="@item.IsActive">@activateStatus</a> | <a href="" onclick="Delete('@item.DocumentTypeID')">Delete</a></td>
+                                </tr>
+                            }
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    <a class="btn btn-success pull-right" asp-controller="DocumentType" asp-action="AddDocumentType">New</a><br />
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+    function Delete(id){
+       // alert(id)
+        var txt;
+        var r = confirm("Are you sure you want to Delete?");
+        if (r == true) {
+
+            $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("Delete", "DocumentType")',
+                data: {
+                    id: id
+                },
+                error: function (result) {
+                    alert("error");
+                },
+                success: function (result) {
+                    if (result == true) {
+                        var baseUrl ="/DocumentType";
+                        window.location.reload();
+                    }
+                    else {
+                        alert("There is a problem, Try Later!");
+                    }
+                }
+            });
+        }
+    }
+</script>
