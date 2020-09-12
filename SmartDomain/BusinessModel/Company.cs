@@ -11,6 +11,7 @@ namespace SmartDomain
         public int CompanyID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public bool IsDefault { get; set; }
         public bool IsActive { get; set; }
         public virtual List<Product> CompanyProducts { get; set; }
 

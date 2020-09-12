@@ -23,8 +23,7 @@ namespace SmartDomain
         public int Month { get; set; }
         public int TransactionTypeID { get; set; }
         public virtual TransactionTypes TransactionTypes { get; set; }
-        
-        public int PaymentStatusID { get; set; }
+                public int PaymentStatusID { get; set; }
         public virtual PaymentStatus PaymentStatus { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }

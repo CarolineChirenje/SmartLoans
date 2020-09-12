@@ -158,12 +158,12 @@ namespace SmartReporting
             {
 
 
-                string _selectClause = @"SELECT t.TransactionDate,t.TransRef,t.Amount,f.Name AS Description,tt.Name AS TransactionType
+                string _selectClause = @"SELECT t.TransactionDate,t.TransRef,t.Amount,p.Name AS Description,tt.Name AS TransactionType
                                             FROM Transactions t
-                                            INNER JOIN Fees f ON f.FeeID=t.FeeID
+                                            INNER JOIN Products p ON p.ProductID=t.ProductID
                                             INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
                 
-                string sqlQuery = _selectClause + $"WHERE t.ClientID={_statement.ClientID}  AND t.TransactionDate>'{_statement.StartDate.ToString("yyyy-MM-dd")}' AND t.TransactionDate < '{ _statement.EndDate.ToString("yyyy-MM-dd")}'";
+                string sqlQuery = _selectClause + $"WHERE t.ClientID={_statement.ClientID}  AND t.ProductID={_statement.ProductID} AND t.TransactionDate>'{_statement.StartDate.ToString("yyyy-MM-dd")}' AND t.TransactionDate < '{ _statement.EndDate.ToString("yyyy-MM-dd")}'";
 
                 DataTable Transactions = GetData.GetDataTable(sqlQuery);
 

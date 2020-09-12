@@ -70,6 +70,8 @@ namespace SmartLogic
                             ThenInclude(docFormat => docFormat.DocumentFormat).
                             Include(sm => sm.ClientMedicalDetails).
                             Include(sg => sg.ClientGuarantors).
+                            Include(p=>p.ClientProducts).
+                            ThenInclude(p=>p.Product).
                             Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
                 return await ClientResults;
 
@@ -410,14 +412,12 @@ namespace SmartLogic
 
 
         // Client Guarantor
-
         public async Task<ClientGuarantor> FindGuarantor(int id)
         {
             return await _context.ClientGuarantors.
             Include(s => s.Client).
             Where(t => t.ClientGuarantorID == id).FirstOrDefaultAsync();
         }
-
         public async Task<List<ClientGuarantor>> FindGuarantors(int ClientID)
         {
             return await _context.ClientGuarantors.Where(t => t.ClientID == ClientID).ToListAsync();
@@ -445,7 +445,7 @@ namespace SmartLogic
                         //throw;
                     }
 
-               }
+                }
             }
             ClientGuarantor.LastChangedBy = UtilityService.CurrentUserName;
             ClientGuarantor.LastChangedDate = DateTime.Now;
@@ -512,6 +512,106 @@ namespace SmartLogic
             }
 
             return (await _context.SaveChangesAsync());
+        }
+
+
+        // Client Dependent
+        public async Task<ClientDependent> FindDependent(int id)
+        {
+            return await _context.ClientDependents.
+            Include(s => s.Client).
+            Where(t => t.ClientDependentID == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<int> Save(ClientDependent ClientDependent)
+        {
+
+            ClientDependent.LastChangedBy = UtilityService.CurrentUserName;
+            ClientDependent.LastChangedDate = DateTime.Now;
+            _context.Add(ClientDependent);
+            return (await _context.SaveChangesAsync());
+
+        }
+        public async Task<int> Update(ClientDependent ClientDependent)
+        {
+
+            ClientDependent dependent = _context.ClientDependents.Find(ClientDependent.ClientDependentID);
+            dependent.DateOfBirth = ClientDependent.DateOfBirth;
+            dependent.IDNumber = ClientDependent.IDNumber;
+            dependent.FirstName = ClientDependent.FirstName;
+            dependent.Occupation = ClientDependent.Occupation;
+            dependent.IsActive = ClientDependent.IsActive;
+            dependent.ClientID = ClientDependent.ClientID;
+            dependent.LastName = ClientDependent.LastName;
+            dependent.LastChangedBy = UtilityService.CurrentUserName;
+            dependent.LastChangedDate = DateTime.Now;
+            _context.Update(dependent);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> ActionDependent(int id, DatabaseAction action)
+        {
+            ClientDependent clientDependent = await FindDependent(id);
+            if (DatabaseAction.Remove == action)
+                _context.ClientDependents.Remove(clientDependent);
+            return (await _context.SaveChangesAsync());
+        }
+
+        // Client Product
+        public async Task<ClientProduct> FindProduct(int id)
+        {
+            return await _context.ClientProducts.
+            Include(c => c.Product).
+            Include(s => s.Client).
+            Where(t => t.ClientProductID == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<int> Save(ClientProduct clientProduct)
+        {
+
+            clientProduct.LastChangedBy = UtilityService.CurrentUserName;
+            clientProduct.LastChangedDate = DateTime.Now;
+            _context.Add(clientProduct);
+            return (await _context.SaveChangesAsync());
+
+        }
+        public async Task<int> Update(ClientProduct clientProduct)
+        {
+
+         
+            ClientProduct ClientProduct = _context.ClientProducts.Find(clientProduct.ClientProductID);
+                       ClientProduct.IsActive = clientProduct.IsActive;
+            ClientProduct.LastChangedBy = UtilityService.CurrentUserName;
+            ClientProduct.LastChangedDate = DateTime.Now;
+            _context.Update(ClientProduct);
+            int _result = await _context.SaveChangesAsync();
+            return _result;
+        }
+
+        public async Task<int> ActionProduct(int id, DatabaseAction action)
+        {
+            ClientProduct ClientProduct = _context.ClientProducts.Find(id);
+            if (DatabaseAction.Remove == action)
+                _context.ClientProducts.Remove(ClientProduct);
+            return (await _context.SaveChangesAsync());
+        }
+
+
+        public  List<ClientProduct> GetClientProducts(int id)
+        {
+            return  _context.ClientProducts.
+            Include(s => s.Client).
+            Include(p=>p.Product).
+            Where(t => t.ClientID == id && t.IsActive).ToList();
+        }
+
+        public List<Product> GetClientRegisteredProducts(int id)
+        {
+            var productids= _context.ClientProducts.
+                       Where(t => t.ClientID == id).Select(p=>p.ProductID);
+             
+                       return _context.Products.
+                       Where(t => productids.Contains(t.ProductID)).ToList();
         }
     }
 }

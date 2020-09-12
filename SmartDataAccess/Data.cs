@@ -195,7 +195,7 @@ namespace SmartDataAccess
                 new CustomSetting()
                 {
 
-                        CustomSettingID = (int)AppSetting.Minimum_Year,
+                    CustomSettingID = (int)AppSetting.Minimum_Year,
                     Name = AppSetting.Minimum_Year.ToString().Replace("_", " "),
                     Value="2000",
                     Description="Displays the minimum year that can be selected  from the system",
@@ -290,7 +290,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Mail_SMTP_Host,
                     Name = AppSetting.Mail_SMTP_Host.ToString().Replace("_", " "),
-                    Value="",
+                    Value="smtp.gmail.com",
                     Description ="Host used to Send Emails",
                     CustomVariableTypeID=(int)VariableType.String,
                     CustomSettingTypeID=(int)SettingType.Email,
@@ -314,7 +314,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Mail_Use_Default_Credentials,
                     Name = AppSetting.Mail_Use_Default_Credentials.ToString().Replace("_", " "),
-                    Value="true",
+                    Value="false",
                     Description ="Use Default Mail Credentials",
                     CustomVariableTypeID=(int)VariableType.Boolean,
                     CustomSettingTypeID=(int)SettingType.Email,
@@ -326,8 +326,8 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Mail_Credential_User_Name,
                     Name = AppSetting.Mail_Credential_User_Name.ToString().Replace("_", " "),
-                    Value="carochire@gmail.com",
-                    Description ="Email Address used",
+                    Value="carolinesolutions89@gmail.com",
+                    Description ="Email Address used to email",
                     CustomVariableTypeID=(int)VariableType.String,
                     CustomSettingTypeID=(int)SettingType.Email,
                     IsActive = true,
@@ -339,7 +339,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Mail_Credential_Password,
                     Name = AppSetting.Mail_Credential_Password.ToString().Replace("_", " "),
-                    Value="carochire@gmail.com",
+                    Value="TE1TdXNlckA2Mjk5IyM=",
                     Description ="Email Password",
                     CustomVariableTypeID=(int)VariableType.Password,
                     CustomSettingTypeID=(int)SettingType.Email,
@@ -466,7 +466,88 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
+                },
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Default_Company_ID,
+                    Name = AppSetting.Default_Company_ID.ToString().Replace("_", " "),
+                    Value=UtilityService.DefaultCompanyID.ToString(),
+                    Description="Default Company that the System Uses",
+                    CustomVariableTypeID=(int)VariableType.Integer,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Mail_Default_Subject,
+                    Name = AppSetting.Mail_Default_Subject.ToString().Replace("_", " "),
+                    Value=$"{UtilityService.ApplicationName} Admin",
+                    Description="Default Email Subject Name Used By Auto-Generated Emails",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Statement_Save_To_Folder,
+                    Name = AppSetting.Statement_Save_To_Folder.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Option to Save Generated Statement To A physical Location on the Server",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Statement_Save_To_Physical_Location,
+                    Name = AppSetting.Statement_Save_To_Physical_Location.ToString().Replace("_", " "),
+                    Value=@"C:\SmartApp\Statements",
+                    Description="Physical Location on the Server where  Statements Are Generated",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Statement_Password_For_Admin,
+                    Name = AppSetting.Statement_Password_For_Admin.ToString().Replace("_", " "),
+                    Value="123456",
+                    Description="Password Used to Open Password Protected Statement By System Administrators",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Statement_Password_Protect,
+                    Name = AppSetting.Statement_Password_Protect.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Allows to password protect statements being sent by Email",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
                 }
+
 
             };
 
@@ -786,6 +867,27 @@ namespace SmartDataAccess
             };
 
             return roles.ToArray();
+
+        }
+
+        public static Company[] GetDefaultCompany()
+        {
+
+            List<Company> company = new List<Company>
+            {
+                new Company()
+                {
+                    CompanyID = 1,
+                    Name = UtilityService.ApplicationName.Trim(),
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser",
+                    IsActive = true,
+                    IsDefault=true
+
+                }
+            };
+
+            return company.ToArray();
 
         }
         public static Gender[] GetGenders()

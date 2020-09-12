@@ -491,7 +491,8 @@ namespace SmartHelper
     public enum FeatureFlagList
     {
         Send_Email_On_Error = 1,
-        CC_Client_On_Error
+        CC_Client_On_Error,
+        Enable_Document_Emailing_Functionality
     }
     public enum DocumentFormatList
     {
@@ -534,7 +535,16 @@ namespace SmartHelper
         Report_Footer_2,
         Report_Logo_Path,
         Report_FootNotes,
-        Capture_VAT_Inclusive_Payments
+        Capture_VAT_Inclusive_Payments,
+        Default_Company_ID,
+        Mail_Default_Subject,
+        Statement_Save_To_Folder,
+        Statement_Save_To_Physical_Location,
+        Statement_Password_Protect,
+        Statement_Password_For_Admin
+       
+
+
 
 
     }

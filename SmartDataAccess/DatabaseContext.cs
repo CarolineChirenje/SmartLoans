@@ -71,6 +71,10 @@ namespace SmartDataAccess
             modelBuilder.Entity<CustomSetting>().HasData(
               Data.GetApplicationSettings());
 
+            //default company
+            modelBuilder.Entity<Company>().HasData(
+              Data.GetDefaultCompany());
+
             //   priority
             modelBuilder.Entity<PriorityRank>().HasData(
               Data.GetPriorityRanks());
@@ -136,6 +140,7 @@ namespace SmartDataAccess
         public DbSet<ClientBoard> ClientBoard { get; set; }
         public DbSet<ClientNote> ClientNotes { get; set; }
         public DbSet<ClientDependent> ClientDependents { get; set; }
+        public DbSet<ClientProduct> ClientProducts { get; set; }
         public DbSet<ClientMedicalDetail> ClientMedicalDetails { get; set; }
         public DbSet<NoticeBoard> NoticeBoard { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -165,8 +170,7 @@ namespace SmartDataAccess
         public DbSet<BroadCast> BroadCasts { get; set; }
         public DbSet<AuditAction> AuditActions { get; set; }
         public DbSet<AuditEntry> AuditEntries { get; set; }
-        public DbSet<Email> Emails { get; set; }
-        public DbSet<Country> Countries { get; set; }
+                public DbSet<Country> Countries { get; set; }
         public DbSet<FeatureFlag> FeatureFlags { get; set; }
 
         public DbSet<Menu> Menus { get; set; }

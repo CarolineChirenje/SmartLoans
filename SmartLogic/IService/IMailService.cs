@@ -7,6 +7,6 @@ namespace SmartLogic
 {
     public interface IMailService
     {
-        bool SendMail(Email email);
+        bool SendMail(Email email, bool sendAsync=false);
     }
 }

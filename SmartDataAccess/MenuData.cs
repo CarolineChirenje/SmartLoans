@@ -333,7 +333,21 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
-                }
+                },
+                new Menu()
+                {
+                    MenuID =17,
+                    MenuGroupID = (int)MenuGroups.Administration,
+                    DisplayName = "Companies",
+                    ControllerName = "Company",
+                    ActionName = "Companies",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa-building-o"),
+                    OrderNo =17,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
             };
             return menus.ToArray();
 

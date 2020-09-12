@@ -184,7 +184,9 @@
                             <li>
                                 <a href="#Notes" data-toggle="tab">Notes</a>
                             </li>
-
+                            <li>
+                                <a href="#Products" data-toggle="tab">Products</a>
+                            </li>
                             <li>
                                 <a href="#Accounts" data-toggle="tab">Payments File</a>
                             </li>
@@ -252,6 +254,61 @@
                                     <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#ContactForm">Add Contact</a>
                                 </div>
                             </div>
+
+                            <div class="tab-pane fade in" id="Products">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Products
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Date Registered</th>
+                                                    <th>Active Status</th>
+                                                    <th>Last Changed By</th>
+                                                    <th>Last Changed Date</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ClientProducts != null)
+                                                {
+                                                    var activeProducts = Model.ClientProducts.OrderByDescending(x => x.DateRegistered);
+                                                    @foreach (var item in activeProducts)
+                                                    {
+                                                <tr>
+                                                    @{
+
+                                                        string dateRegistered = UtilityService.ShowDateTime(item.DateRegistered);
+                                                        string LastChangedDate = UtilityService.ShowDateTime(item.LastChangedDate);
+                                                        string activeStatus = UtilityService.ShowActiveAction(item.IsActive);
+
+                                                    }
+
+                                                    <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                                                    <td>@dateRegistered</td>
+                                                    <td>@activeStatus</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                                    <td>@LastChangedDate</td>
+                                                    <td><a target="_blank" asp-controller="Client" asp-action="ViewClientProduct" asp-route-id="@item.ClientProductID">View</a> | <a asp-controller="Client" asp-action="ActionProduct" asp-route-productid="@item.ClientProductID" asp-route-Clientid="@Model.ClientID"> Delete</a></td>
+                                                </tr>
+                                                    }
+                                                }
+
+                                        </table>
+                                    </div>
+                                    <div class="box-footer">
+                                        <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#ProductsForm">Add Product</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
                             <div class="tab-pane fade in" id="Notes">
                                 <div class="panel panel-default">
@@ -467,6 +524,15 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <form method="get" asp-controller="Client" asp-action="GenerateStatement">
+                                   
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Client Product:</label>
+                                            <select asp-for="ProductID" class="form-control" asp-items="ViewBag.RegisteredProducts">
+                                                <option value="">----</option>
+                                            </select>
+
+                                        </div>
+
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label for="inputEmail3" class="col-sm-2 control-label">Start Date</label>
@@ -483,7 +549,9 @@
                                         </div>
                                         <input type="hidden" name="ClientID" value="@Model.ClientID" />
                                         <div class="box-footer">
-                                            <button type="submit" class="btn  btn-small btn-success pull-right">Generate Statement</button>
+                                            <button type="submit" class="btn  btn-small btn-success" name="GenerateStatement" value="GenerateStatement">Generate Statement</button>
+                                            <button type="submit" class="btn  btn-small btn-info" name="EmailStatement" value="EmailStatement"  disabled="@UtilityService.FeatureFlagOn((int)FeatureFlagList.Enable_Document_Emailing_Functionality)">Email Statement</button>
+                                            
                                         </div>
                                     </form>
                                 </div>
@@ -537,8 +605,8 @@
 
                             <!-- /.panel-body -->
                         </div>
-                            <!-- /.panel -->
-                        </div>
+                        <!-- /.panel -->
+                    </div>
 
                 </div>
             </div>
@@ -635,6 +703,48 @@
     </div>
 </div>
 
+<div class="modal fade" id="ProductsForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientProduct">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
+                        <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductsAvailable">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="hidden" name="IsActive" value="false" />
+                                    <input type="checkbox" name="IsActive"> Is Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>                  
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Product</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="ContactForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -714,7 +824,7 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Payment Type</label>
 
-                        <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductList">
+                        <select asp-for="ProductID" class="form-control" asp-items="ViewBag.RegisteredProducts">
                             <option value="">----</option>
                         </select>
 

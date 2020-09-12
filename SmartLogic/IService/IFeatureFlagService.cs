@@ -15,5 +15,6 @@ namespace SmartLogic
         Task<int> ActionFeatureFlag(int id, DatabaseAction action);
         Task<FeatureFlag> FindFeatureFlag(int id);
         Task<List<FeatureFlag>> FeatureFlag();
+        bool FeatureIsSwitchedOn( int id);
     }
 }

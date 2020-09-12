@@ -99,7 +99,20 @@ namespace SmartSave.Controllers
             }).OrderBy(t => t.Name);
 
         ViewBag.FrequencyList = new SelectList(frequency, "ProductFrequencyID", "Name");
-  
+
+
+            List<Company> activeCompanies = _service.Companies();
+
+            int? defaultCompany = activeCompanies.Where(c => c.IsActive).FirstOrDefault().CompanyID;
+             
+            var company = activeCompanies.Select(t => new
+            {
+                t.CompanyID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.CompanyList = new SelectList(company, "CompanyID", "Name", defaultCompany.HasValue? defaultCompany.Value : UtilityService.DefaultCompanyID);
+
         }
 
        

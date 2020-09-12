@@ -32,64 +32,60 @@
                             </div>
                         </div>
                     }
-                     <div class="panel-body">
-                         <div class="dataTable_wrapper">
-                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                 <thead>
-                                     <tr>
-                                         <th>Name</th>
-                                         <th>Active Status</th>
-                                                                                  <th>Pricing History</th>
-                                         <th>Last Changed Date</th>
-                                         <th>Last Changed By</th>
-                                         <th>Action</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody>
-                                     @foreach (var item in Model)
-                                     {
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>Name</th>
+                                        <th>Active Status</th>
+                                        <th>Last Changed Date</th>
+                                        <th>Last Changed By</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
 
-                                         <tr>
-                                             @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
-                                                 string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                                 string roleStatus = @item.IsActive ? "Deactivate" : "Reactivate";
+                                        <tr>
+                                            @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                                string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                                string roleStatus = @item.IsActive ? "Deactivate" : "Reactivate";
 
-                                             }
-
-                                             <td>@Html.DisplayFor(modelItem => item.Name)</td>
-
-                                             <td>@activeStatus</td>
-                                            
-                                             <td><a asp-controller="Product" asp-action="ViewProductPrices" asp-route-id="@item.ProductID">Pricing History</a></td>
-                                             <td>@dateCreated</td>
-                                             <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-
-                                             <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">View</a> | <a asp-controller="Product" asp-action="ChangeProductstatus" asp-route-id="@item.ProductID" asp-route-status="@item.IsActive">@roleStatus</a> | <a href="" onclick="Delete('@item.ProductID')">Delete</a></td>
-                                         </tr>
-                                     }
-                             </table>
-                         </div>
-                     </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer">
-                            <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                            <a href="AddProduct" class="btn btn-success pull-right">New Product</a><br />
+                                            }
+                                            <td>@Html.DisplayFor(modelItem => item.Company.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                            <td>@activeStatus</td>
+                                            <td>@dateCreated</td>
+                                            <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                            <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">View</a> | <a asp-controller="Product" asp-action="ChangeProductstatus" asp-route-id="@item.ProductID" asp-route-status="@item.IsActive">@roleStatus</a> | <a href="" onclick="Delete('@item.ProductID')">Delete</a></td>
+                                        </tr>
+                                    }
+                            </table>
                         </div>
                     </div>
-                    <!-- /.box -->
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                        <a href="AddProduct" class="btn btn-success pull-right">New Product</a><br />
+                    </div>
                 </div>
-        <!-- /.col -->
-    </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
         </div>
+    </div>
     <!-- /.row -->
 </section>
 
 
 <!-- page script -->
 <script>
-   
+
     function Delete(id){
-     
+
         var txt;
         var r = confirm("Are you sure you want to Delete?");
         if (r == true) {

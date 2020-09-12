@@ -60,8 +60,7 @@ namespace SmartLogic
             _context.Add(Course);
             return (await _context.SaveChangesAsync());
         }
-
-      
+     
         public async Task<int> Update(Course Course)
         {
            
@@ -69,6 +68,54 @@ namespace SmartLogic
             Course.LastChangedDate = DateTime.Now;
             _context.Update(Course);
             return await _context.SaveChangesAsync();
+        }
+
+//Course Outline
+
+        public async Task<int> ActionCourseOutline(int id, DatabaseAction action)
+        {
+            CourseOutline outline = await FindCourseOutline(id);
+
+            if (DatabaseAction.Remove == action)
+                _context.CourseOutlines.Remove(outline);
+            else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+            {
+                outline.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                outline.LastChangedBy = UtilityService.CurrentUserName;
+                outline.LastChangedDate = DateTime.Now;
+                _context.Update(outline);
+            }
+
+            return (await _context.SaveChangesAsync());
+        }
+
+       
+
+        public async Task<CourseOutline> FindCourseOutline(int id)
+        {
+            return await _context.CourseOutlines.Where(r => r.CourseOutlineID == id)
+               .AsNoTracking().FirstOrDefaultAsync();
+        }
+
+        public async Task<int> Save(CourseOutline courseOutline)
+        {
+            
+            courseOutline.LastChangedBy = UtilityService.CurrentUserName;
+            courseOutline.LastChangedDate = DateTime.Now;
+            _context.Add(courseOutline);
+            return (await _context.SaveChangesAsync());
+        }
+
+        public async Task<int> Update(CourseOutline outline)
+        {
+
+            CourseOutline courseOutline = await FindCourseOutline(outline.CourseOutlineID);
+            courseOutline.IsActive = outline.IsActive;
+            courseOutline.Name = outline.Name;
+            courseOutline.LastChangedBy = UtilityService.CurrentUserName;
+            courseOutline.LastChangedDate = DateTime.Now;
+            _context.Update(courseOutline);
+            return (await _context.SaveChangesAsync());
         }
     }
 }

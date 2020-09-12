@@ -35,7 +35,8 @@ namespace SmartSave
             services.AddDbContext<DatabaseContext>(options =>
        options.UseSqlServer(Configuration.GetConnectionString("SSDBConnection")));
 
-            // setup dependency injection in service container  
+            // setup dependency injection in service container
+            services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDashboardService, DashboardService>();

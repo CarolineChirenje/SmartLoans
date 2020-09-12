@@ -21,19 +21,26 @@ namespace SmartLogic
         public async Task<Product> FindProduct(int id = 0) => await GetProduct(id);
         public async Task<Product> GetProduct(int ProductID = 0)
         {
-            return await _context.Products.Where(r => r.ProductID == ProductID)
-                        .Include(m => m.Clients).AsNoTracking().FirstOrDefaultAsync();
+            return await _context.Products
+               .Where(r => r.ProductID == ProductID)
+               .Include(m => m.Clients)
+               .Include(c => c.Company)
+               .AsNoTracking().FirstOrDefaultAsync();
         }
         public async Task<Product> GetProduct(string name)
         {
             return await _context.Products.Where(r => r.Name.ToUpper() == name.Trim().ToUpper())
-                           .Include(m => m.Clients).AsNoTracking().FirstOrDefaultAsync();
+                           .Include(m => m.Clients)
+                           .Include(c => c.Company)
+                           .AsNoTracking().FirstOrDefaultAsync();
         }
 
         public async Task<List<Product>> Products()
         {
             return await _context.Products
-                        .Include(m => m.Clients).AsNoTracking()
+                        .Include(m => m.Clients)
+                        .Include(c => c.Company)
+                        .AsNoTracking()
             .ToListAsync();
         }
 
@@ -41,7 +48,9 @@ namespace SmartLogic
         public List<Product> GetProduct()
         {
             return _context.Products
-                         .Include(m => m.Clients).AsNoTracking()
+            .Include(m => m.Clients)
+            .Include(c => c.Company)
+            .AsNoTracking()
             .ToList();
         }
 
@@ -89,6 +98,13 @@ namespace SmartLogic
         public List<ProductFrequency> ProductFrequencies()
         {
             return _context.ProductFrequencies
+           .AsNoTracking()
+             .ToList();
+        }
+
+        public List<Company> Companies()
+        {
+            return _context.Companies.Where(c=>c.IsActive)
            .AsNoTracking()
              .ToList();
         }

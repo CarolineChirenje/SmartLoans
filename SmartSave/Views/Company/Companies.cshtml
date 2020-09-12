@@ -1,0 +1,117 @@
+﻿@model IEnumerable<SmartDomain.Company>
+@using SmartHelper;
+@{
+    ViewData["Title"] = "Company List";
+}
+
+<section class="content-header">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">@ViewData["Title"]</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Manage Companys</h3>
+
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Is Default</th>
+                                <th>Is Active</th>
+                                <th>Last Changed Date</th>
+                                <th>Last Changed By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+
+                            <tr>
+                                @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                    string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                    string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
+                                    string defaultStatus = UtilityService.ShowYesOrNo(@item.IsDefault);
+                                    string companyName;
+                                    if (String.IsNullOrEmpty(item.Code))
+                                    {
+                                        companyName = item.Name;
+                                    }
+                                    else
+                                    {
+                                        companyName = item.Code + "-" + item.Name;
+
+                                    }
+                                }
+                                <td>@companyName</td>
+                                <td>@defaultStatus</td>
+                                <td>@activeStatus</td>
+                                                               <td>@dateCreated</td>
+                                <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                <td><a asp-controller="Company" asp-action="ViewCompany" asp-route-id="@item.CompanyID">View</a> |<a asp-controller="Company" asp-action="ActionCompany" asp-route-id="@item.CompanyID" asp-route-status="@item.IsActive">@activateStatus</a> | <a href="" onclick="Delete('@item.CompanyID')">Delete</a></td>
+                            </tr>
+                            }
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    <a class="btn btn-success pull-right" asp-controller="Companys" asp-action="AddCompany">New</a><br />
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+    function Delete(id){
+       // alert(id)
+        var txt;
+        var r = confirm("Are you sure you want to Delete?");
+        if (r == true) {
+
+            $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("Delete", "Company")',
+                data: {
+                    id: id
+                },
+                error: function (result) {
+                    alert("error");
+                },
+                success: function (result) {
+                    if (result == true) {
+                        var baseUrl ="/Company";
+                        window.location.reload();
+                    }
+                    else {
+                        alert("There is a problem, Try Later!");
+                    }
+                }
+            });
+        }
+    }
+</script>

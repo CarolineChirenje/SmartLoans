@@ -115,6 +115,8 @@ D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.dll.conf
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartReporting.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartDomain.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csprojAssemblyReference.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.Resource.resources
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.GenerateResource.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfoInputs.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfo.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.CoreCompileInputs.cache
@@ -132,13 +134,18 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\C
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClient.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientGuarantor.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientNote.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientProduct.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewContact.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewMedicalDetail.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Company\AddCompany.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Company\Companies.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Company\ViewCompany.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Country\Country.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Country\ViewCountry.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Courses\AddCourse.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Courses\Courses.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Courses\ViewCourse.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Courses\ViewCourseOutline.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Currency\Currency.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Currency\ViewCurrency.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\CustomSettings\CustomSettings.cshtml.g.cs

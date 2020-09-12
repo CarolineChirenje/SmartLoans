@@ -64,7 +64,7 @@ namespace SmartSave.Controllers
                         Body = String.Format(UtilityService.GetMessageToDisplay("PASSWORDGENERATED"), user.UserFullName, "GymAdmin", Encryption.Decrypt(user.Password))
                     };
 
-                    _mailservice.SendMail(mail);
+                    _mailservice.SendMail(mail,true);
                 }
 
                 return RedirectToAction(nameof(Users));

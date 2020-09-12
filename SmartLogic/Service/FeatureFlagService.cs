@@ -53,6 +53,17 @@ namespace SmartLogic
  .AsNoTracking().FirstOrDefaultAsync();
         }
 
+
+        public bool FeatureIsSwitchedOn(int id)
+        {
+            FeatureFlag featureFlag =  FindFeatureFlag(id).Result;
+            if (UtilityService.IsNotNull(featureFlag))
+                return featureFlag.IsActive;
+            else
+                return false;
+
+
+        }
         public async Task<int> Save(FeatureFlag FeatureFlag)
         {
             FeatureFlag.LastChangedBy = UtilityService.CurrentUserName;

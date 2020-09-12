@@ -15,5 +15,6 @@ namespace SmartDomain
         public virtual Product Product { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public Boolean EmailStatement { get; set; }
     }
 }

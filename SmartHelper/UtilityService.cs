@@ -7,7 +7,8 @@ using SmartHelper;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data;
-
+using System.Data.SqlClient;
+using System.Net.Http.Headers;
 
 namespace SmartHelper
 {
@@ -120,6 +121,93 @@ namespace SmartHelper
             }
         }
 
+        public static bool StatementPasswordProtect
+        {
+            get
+            {
+
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Password_Protect).Value;
+                return value.Equals("true") ? true : false;
+
+            }
+        }
+
+
+        public static string StatementPasswordForAdmin
+        {
+            get
+            {
+
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Password_For_Admin).Value;
+                return value;
+
+            }
+        }
+        public static bool SaveStatementsToFolder
+        {
+            get
+            {
+
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Save_To_Folder).Value;
+                return value.Equals("true") ? true : false;
+
+            }
+        }
+
+        public static string StatementsSavePath
+        {
+            get
+            {
+
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Save_To_Physical_Location).Value;
+                return value;
+
+            }
+        }
+
+        public static string AppendFileTimeStamp( string fileName)
+        {
+            return string.Concat(
+                System.IO.Path.GetFileNameWithoutExtension(fileName),
+                DateTime.Now.ToString("yyyyMMddHHmmss"),
+                 System.IO.Path.GetExtension(fileName)
+                );
+        }
+
+        public static int DefaultCompanyID
+        {
+            get
+            {
+                string sqlCustomSetting = $"SELECT TOP 1 Value FROM CustomSettings WHERE CustomSettingID={(int)AppSetting.Default_Company_ID};";
+                string _companyID = GetData.GetStringValue(sqlCustomSetting);
+                int defaultCompanyID = 1;
+                try
+                {
+                    defaultCompanyID = Int32.Parse(_companyID);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                return defaultCompanyID;
+
+            }
+        }
+
+
+        public static bool FeatureFlagOn(int id)
+        {
+
+            string sqlCustomSetting = $"SELECT TOP 1 IsActive  FROM FeatureFlags WHERE FeatureFlagID={id};";
+            string _result = GetData.GetStringValue(sqlCustomSetting);
+            if (String.IsNullOrEmpty(_result))
+                return false;
+            if (_result.Equals("1"))
+                return true;
+            else
+                return false;
+        }
         //public static int UserType
         //{
         //    get

@@ -48,7 +48,7 @@ namespace SmartDomain
         public virtual List<ClientMedicalDetail> ClientMedicalDetails { get; set; }
         public virtual List<ClientDependent> ClientDependents{ get; set; }
         public virtual List<ClientGuarantor> ClientGuarantors { get; set; }
-
+        public virtual List<ClientProduct> ClientProducts { get; set; }
         [NotMapped]
         public int StatementID { get; set; }
         [NotMapped]
@@ -65,6 +65,9 @@ namespace SmartDomain
         [NotMapped]
         [DisplayName("Contact Type")]
         public int ContactTypeID { get; set; }
+
+        [NotMapped]
+                public int ClientProductID { get; set; }
 
         [NotMapped]
         [DisplayName("Relationship Type")]

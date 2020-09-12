@@ -20,7 +20,9 @@ namespace SmartLogic
         Task<Product> FindProduct(int ProductId = 0);
         Task<List<Product>> Products();
         List<ProductFrequency> ProductFrequencies();
-        
+        List<Company> Companies();
+
+
     }
 }
 

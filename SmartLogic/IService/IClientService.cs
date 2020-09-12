@@ -57,6 +57,18 @@ namespace SmartLogic
         Task<int> Update(ClientGuarantor ClientGuarantor);
         Task<int> ActionGuarantor(int id, DatabaseAction action);
 
+        //Dependent
+        Task<ClientDependent> FindDependent(int id);
+        Task<int> Save(ClientDependent ClientDependent);
+        Task<int> Update(ClientDependent ClientDependent);
+        Task<int> ActionDependent(int id, DatabaseAction action);
 
+        //Product
+        Task<ClientProduct> FindProduct(int id);
+        Task<int> Save(ClientProduct ClientProduct);
+        Task<int> Update(ClientProduct ClientProduct);
+        Task<int> ActionProduct(int id, DatabaseAction action);
+        List<ClientProduct> GetClientProducts(int id);
+        List<Product> GetClientRegisteredProducts(int id);
     }
 }

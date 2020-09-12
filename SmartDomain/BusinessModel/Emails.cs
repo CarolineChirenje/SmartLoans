@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Text;
 
 namespace SmartDomain
@@ -24,14 +25,33 @@ namespace SmartDomain
         public string CC { get; set; }
         public string BCC { get; set; }
         public string Subject { get; set; }
-      
+
         public string Body { get; set; }
-        [NotMapped]
-       public List<string> AttachmentFullPath { get; set; }
+
+        public List<AttachmentFromFileSystem> FileSystemAttachmentList { get; set; }
+
+        public List<AttachmentFromMemory> AttachmentFromMemory { get; set; }
         public DateTime DateCreated { get; set; }
         public string CreatedBy { get; set; }
         public int EmailStatus { get; set; }
         public DateTime? DelaySendingUntil { get; set; }
 
     }
+
+    public class AttachmentFromMemory
+    {
+        public string Name { get; set; }
+        public string FileExtension { get; set; }
+
+        public MemoryStream MemoryStream { get; set; }
+
+    }
+
+    public class AttachmentFromFileSystem
+    {
+        public string Name { get; set; }
+
+
+    }
 }
+

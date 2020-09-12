@@ -174,7 +174,7 @@ namespace SmartLogic
             return await _context.Transactions.Where(p => p.ClientID == ClientID)
              .Include(p => p.Client)
              .Include(p => p.Product)
-             .Include(p => p.PaymentStatus)
+                           .Include(p => p.PaymentStatus)
               .Include(p => p.TransactionTypes)
               .Include(p => p.BankAccount)
              .OrderByDescending(t => t.TransactionDate)
@@ -186,7 +186,7 @@ namespace SmartLogic
             return await _context.Transactions
               .Include(p => p.Client)
              .Include(p => p.Product)
-             .Include(p => p.PaymentStatus)
+                        .Include(p => p.PaymentStatus)
               .Include(p => p.TransactionTypes)
                .Include(p => p.BankAccount)
              .AsNoTracking()
@@ -198,7 +198,7 @@ namespace SmartLogic
             .Include(p => p.Client)
              .Include(p => p.Client)
              .Include(p => p.Product)
-             .Include(p => p.PaymentStatus)
+                           .Include(p => p.PaymentStatus)
              .Include(p => p.TransactionTypes)
               .Include(p => p.BankAccount)
             .Where(p => p.TransactionDate.Date == DateTime.Now.Date)
@@ -212,14 +212,14 @@ namespace SmartLogic
                 TransactionID = _context.Transactions
               .Include(p => p.Client)
              .Include(p => p.Product)
-             .Include(p => p.PaymentStatus)
+                           .Include(p => p.PaymentStatus)
               .Include(p => p.TransactionTypes)
                .Include(p => p.BankAccount)
               .FirstOrDefault(p => p.TransRef.ToUpper() == TranRef.Trim().ToUpper())?.TransactionID ?? 0;
             return await _context.Transactions
             .Include(p => p.Client)
                         .Include(p => p.Product)
-             .Include(p => p.PaymentStatus)
+                                      .Include(p => p.PaymentStatus)
               .Include(p => p.TransactionTypes)
             .Where(t => t.TransactionID == TransactionID).FirstOrDefaultAsync();
         }
