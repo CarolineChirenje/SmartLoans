@@ -16,6 +16,7 @@ using SmartReporting;
 using MigraDoc.Rendering;
 using MigraDoc.DocumentObjectModel;
 using PdfSharp.Pdf.Security;
+using System.Text;
 
 namespace SmartSave.Controllers
 {
@@ -329,7 +330,8 @@ namespace SmartSave.Controllers
             if (statement.ClientID == 0)
                 return RedirectToAction(nameof(Clients));
             statement.Client = _service.FindClient(statement.ClientID).Result;
-            string filename = statement.Client.ClientRef;
+            statement.Product = _settingService.FindProduct(statement.ProductID);
+            string filename = statement.Client.AccountNumber;
             StatementPrintOut printOut = new StatementPrintOut();
             if (!string.IsNullOrEmpty(GenerateStatement))
             {
@@ -361,7 +363,7 @@ namespace SmartSave.Controllers
                 {
                     FileExtension = "pdf",
                     MemoryStream = new MemoryStream(pdfFile),
-                    Name = filename
+                    Name = UtilityService.MaskAccountNumber(filename)
                 };
 
                 attachments.Add(attachment);
@@ -383,7 +385,7 @@ namespace SmartSave.Controllers
            System.IO.Directory.CreateDirectory(filePath);
             return filePath;
         }
-       
+      
 
         private byte[] GeneratePDFStatement(Statement statement)
         {

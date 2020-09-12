@@ -22,7 +22,11 @@ namespace SmartLogic
         public List<Currency> GetCurrencies() => _context.Currencies.Where(x => x.IsActive).ToList();
         public List<DocumentFormat> GetDocumentFormats() => _context.DocumentFormats.Where(x => x.IsActive).ToList();
 
+        public Product FindProduct(int id)
+        {
+            return _context.Products.Find(id);
 
+        }
         public DocumentType FindDocumentTypes(int DocumentTypeID)
         {
           return  _context.DocumentTypes.

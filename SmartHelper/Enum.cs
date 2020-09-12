@@ -541,8 +541,9 @@ namespace SmartHelper
         Statement_Save_To_Folder,
         Statement_Save_To_Physical_Location,
         Statement_Password_Protect,
-        Statement_Password_For_Admin
-       
+        Statement_Password_For_Admin,
+        Statement_Hide_Table_Boarders
+
 
 
 

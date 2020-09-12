@@ -19,6 +19,7 @@ namespace SmartReporting
         Table table;
         Color TableColor = Colors.LightGray;
         Color TableBorder = Colors.Black;
+        Color WhiteColor = Colors.White;
         Color HeaderColor = Colors.LightGray;
         TextFrame addressFrame;
         Statement _statement;
@@ -44,6 +45,7 @@ namespace SmartReporting
                     this.guarantor = guarantors.Where(g => g.IsMainGuarantor)?.SingleOrDefault();
                 style = ReportingUtilities.DefineStyles(this.document);
                 AddressAndHeader();
+                AccountDetails();
                 TransactionDetails();
 
 
@@ -152,6 +154,99 @@ namespace SmartReporting
                 //   ErrorLog.Log(e, ErrorSource.Reporting);
             }
         }
+
+        void AccountDetails()
+        {
+            try
+            {
+                // Create the item table
+                this.table = section.AddTable();
+                this.table.Style = "Table";
+                this.table.Borders.Width = 0;
+                this.table.Borders.Left.Width = 0;
+                this.table.Borders.Right.Width = 0;
+                this.table.Rows.LeftIndent = 0;
+
+                // Before you can add a row, you must define the columns
+                Column column = this.table.AddColumn("3cm");
+                column.Format.Alignment = ParagraphAlignment.Left;
+
+                column = this.table.AddColumn("5cm");
+                column.Format.Alignment = ParagraphAlignment.Left;
+
+                column = this.table.AddColumn("3cm");
+                column.Format.Alignment = ParagraphAlignment.Left;
+
+                column = this.table.AddColumn("5cm");
+                column.Format.Alignment = ParagraphAlignment.Left;
+
+
+                Paragraph paragraph = this.addressFrame.AddParagraph();
+
+               
+
+
+                    // Each item fills two rows
+                    Row tblrow = this.table.AddRow();
+
+                    tblrow.TopPadding = 1.5;
+                    tblrow.Cells[0].Borders.Visible = false;
+                    tblrow.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow.Cells[0].Format.Font.Bold = true;
+                    tblrow.Cells[0].AddParagraph("Product");
+
+                    tblrow.Cells[1].Borders.Visible = false;
+                    tblrow.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+                tblrow.Cells[1].AddParagraph(UtilityService.IsNull(_statement.Product) ? "-": _statement.Product.Name) ;
+
+                    tblrow.Cells[2].Borders.Visible = false;
+                    tblrow.Cells[2].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow.Cells[2].Format.Font.Bold = true;
+                    tblrow.Cells[2].AddParagraph("Account Number");
+
+                    tblrow.Cells[3].Borders.Visible = false;
+                    tblrow.Cells[3].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow.Cells[3].AddParagraph(_statement.Client.AccountNumber);
+
+                    Row tblrow1 = this.table.AddRow();
+                    tblrow1.Borders.Visible = false;
+                    tblrow1.TopPadding = 1.5;
+                    tblrow1.Cells[0].Borders.Visible = false;
+                    tblrow1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow1.Cells[0].Format.Font.Bold = true;
+                    tblrow1.Cells[0].AddParagraph("Statement Period");
+
+                    tblrow1.Cells[1].Borders.Visible = false;
+                    tblrow1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow1.Cells[1].AddParagraph($"{_statement.StartDate.ToString("dd-MMM-yyyy")} to {_statement.EndDate.ToString("dd-MMM-yyyy")}");
+
+                    tblrow1.Cells[2].Borders.Visible = false;
+                    tblrow1.Cells[2].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow1.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow1.Cells[2].Format.Font.Bold = true;
+                    tblrow1.Cells[2].AddParagraph("Print Date");
+
+                    tblrow1.Cells[3].Borders.Visible = false;
+                    tblrow1.Cells[3].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow1.Cells[3].AddParagraph(DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+
+
+                                 paragraph = section.AddParagraph();
+            }
+
+            catch (Exception e)
+            {
+
+              //  ErrorLog.Log(e, ErrorSource.Reporting);
+            }
+        }
         void TransactionDetails()
         {
             try
@@ -173,10 +268,21 @@ namespace SmartReporting
                 this.table = section.AddTable();
                 this.table.Style = "Table";
                 this.table.Borders.Color = TableBorder;
-                this.table.Borders.Width = 0.25;
-                this.table.Borders.Left.Width = 0.25;
-                this.table.Borders.Right.Width = 0.25;
-                this.table.Rows.LeftIndent = 0;
+                if (UtilityService.StatementHideTableBoarders)
+                {
+                    this.table.Borders.Width = 0;
+                    this.table.Borders.Left.Width = 0;
+                    this.table.Borders.Right.Width = 0;
+                    this.table.Rows.LeftIndent = 0;
+
+                }
+
+                else
+                {
+                    this.table.Borders.Width = 0.25;
+                    this.table.Borders.Left.Width = 0.25;
+                    this.table.Borders.Right.Width = 0.25;
+                }
 
                 // Before you can add a row, you must define the columns
                 Column column = this.table.AddColumn("3cm");
@@ -202,17 +308,17 @@ namespace SmartReporting
 
                 row.Cells[0].AddParagraph("Date");
                 row.Cells[0].Format.Font.Bold = true;
-                row.Cells[0].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[0].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
                 row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
 
                 row.Cells[1].AddParagraph("Reference");
                 row.Cells[1].Format.Font.Bold = true;
-                row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[1].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
                 row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
 
                 row.Cells[2].AddParagraph("Description");
                 row.Cells[2].Format.Font.Bold = true;
-                row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[2].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center; 
                 row.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
 
                 row.Cells[3].AddParagraph("Amount");
@@ -231,24 +337,24 @@ namespace SmartReporting
                     Row row1 = this.table.AddRow();
 
                     row1.TopPadding = 1.5;
-                    row1.Cells[0].Borders.Visible = true;
+                    row1.Cells[0].Borders.Visible = UtilityService.StatementHideTableBoarders;
                     row1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                     row1.Cells[0].AddParagraph(transaction.Field<DateTime>("TransactionDate").ToString("yyyy-MM-dd HH:mm"));
 
-                    row1.Cells[1].Borders.Visible = true;
+                    row1.Cells[1].Borders.Visible = UtilityService.StatementHideTableBoarders;
                     row1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-                    row1.Cells[1].Format.Alignment = ParagraphAlignment.Center;
+                    row1.Cells[1].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
                     row1.Cells[1].AddParagraph(transaction.Field<string>("TransRef"));
 
 
                     string _transactionDescription = String.Concat(transaction.Field<string>("Description"), " ", transaction.Field<string>("TransactionType"));
-                    row1.Cells[2].Borders.Visible = true;
-                    row1.Cells[2].Format.Alignment = ParagraphAlignment.Left;
+                    row1.Cells[2].Borders.Visible = UtilityService.StatementHideTableBoarders;
+                    row1.Cells[2].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Left;
                     row1.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[2].AddParagraph(_transactionDescription);
 
-                    row1.Cells[3].Borders.Visible = true;
+                    row1.Cells[3].Borders.Visible = UtilityService.StatementHideTableBoarders;
                     row1.Cells[3].Format.Alignment = ParagraphAlignment.Right;
                     row1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[3].AddParagraph(String.Format(culture, "{0:C}", transaction.Field<decimal>("Amount")));

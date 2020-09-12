@@ -238,7 +238,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Account_Number_Length,
                     Name = AppSetting.Account_Number_Length.ToString().Replace("_", " "),
-                    Value="6",
+                    Value="9",
                     Description="Limit Account Number Size",
                     CustomVariableTypeID=(int)VariableType.Integer,
                     CustomSettingTypeID=(int)SettingType.All,
@@ -252,7 +252,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Account_Number_Prefix,
                     Name = AppSetting.Account_Number_Prefix.ToString().Replace("_", " "),
-                    Value="SS",
+                    Value="",
                     Description="Account Number Prefix if Any",
                     CustomVariableTypeID=(int)VariableType.String,
                     CustomSettingTypeID=(int)SettingType.All,
@@ -540,6 +540,19 @@ namespace SmartDataAccess
                     Name = AppSetting.Statement_Password_Protect.ToString().Replace("_", " "),
                     Value="true",
                     Description="Allows to password protect statements being sent by Email",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Statement_Hide_Table_Boarders,
+                    Name = AppSetting.Statement_Hide_Table_Boarders.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Determines if table borders will be shown on the ",
                     CustomVariableTypeID=(int)VariableType.Boolean,
                     CustomSettingTypeID=(int)SettingType.All,
                     IsActive = true,

@@ -165,6 +165,17 @@ namespace SmartHelper
             }
         }
 
+
+        public static bool StatementHideTableBoarders
+        {
+            get
+            {
+
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Hide_Table_Boarders).Value;
+                return value.Equals("true") ? true : false;
+
+            }
+        }
         public static string AppendFileTimeStamp( string fileName)
         {
             return string.Concat(
@@ -172,6 +183,30 @@ namespace SmartHelper
                 DateTime.Now.ToString("yyyyMMddHHmmss"),
                  System.IO.Path.GetExtension(fileName)
                 );
+        }
+
+        public static string MaskAccountNumber(string  accountNumber)
+
+        {
+
+            int accLength = accountNumber.Trim().Length;
+            if (accLength > 0 && accLength < 4)
+                return accountNumber;
+            else
+            {
+
+                string lastFourDigits = accountNumber.Substring((accountNumber.Length - 4), 4);
+                int remaining_digits = accLength - 4;
+                StringBuilder sb = new StringBuilder("X", remaining_digits);
+                for (int i = 1; i < remaining_digits; i++)
+                {
+                    sb.Append("X");
+
+                }
+                string result = sb.ToString() + lastFourDigits;
+                return result;
+            }
+
         }
 
         public static int DefaultCompanyID

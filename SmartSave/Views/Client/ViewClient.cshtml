@@ -543,7 +543,7 @@
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label for="inputEmail3" class="col-sm-2 control-label">End Date</label>
-                                                <input type="date" class="form-control" name="EndDate" required>
+                                                <input type="date" class="form-control" name="EndDate"  ID="EndDate"required>
                                             </div>
 
                                         </div>
@@ -1007,6 +1007,10 @@
     </div>
 </div>
 <script>
+    var futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + 60);
     document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
+    document.getElementById('StartDate').value = new Date().toISOString().substring(0, 10);
+    document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
 </script>
 
