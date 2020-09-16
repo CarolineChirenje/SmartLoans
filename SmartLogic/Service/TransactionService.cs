@@ -210,17 +210,13 @@ namespace SmartLogic
         {
             if (!String.IsNullOrEmpty(TranRef))
                 TransactionID = _context.Transactions
-              .Include(p => p.Client)
-             .Include(p => p.Product)
-                           .Include(p => p.PaymentStatus)
-              .Include(p => p.TransactionTypes)
-               .Include(p => p.BankAccount)
-              .FirstOrDefault(p => p.TransRef.ToUpper() == TranRef.Trim().ToUpper())?.TransactionID ?? 0;
+                            .FirstOrDefault(p => p.TransRef.ToUpper() == TranRef.Trim().ToUpper())?.TransactionID ?? 0;
             return await _context.Transactions
-            .Include(p => p.Client)
-                        .Include(p => p.Product)
-                                      .Include(p => p.PaymentStatus)
-              .Include(p => p.TransactionTypes)
+             .Include(p => p.Client)
+             .Include(p => p.Product)
+             .Include(p => p.PaymentStatus)
+             .Include(p => p.TransactionTypes)
+             .Include(p => p.BankAccount)
             .Where(t => t.TransactionID == TransactionID).FirstOrDefaultAsync();
         }
 

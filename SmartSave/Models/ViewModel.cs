@@ -27,6 +27,31 @@ namespace SmartSave.Models
         public string Password { get; set; }
 
     }
+
+    public class PasswordResetModel
+    {
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        public int UserID { get; set; }
+
+    }
+
+    public class ForgotPasswordViewModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string EmailAddress { get; set; }
+
+
+    }
     public class CheckBoxModel
     {
         public int LinkedID { get; set; }
@@ -41,7 +66,8 @@ namespace SmartSave.Models
     }
 
     public class CheckBoxListItem
-    {        public int ID { get; set; }
+    {
+        public int ID { get; set; }
         public string Value { get; set; }
         public string Checked { get; set; }
         public bool IsChecked { get; set; }
@@ -60,7 +86,7 @@ namespace SmartSave.Models
 
     }
     public class PaymentViewModel
-    { 
+    {
         public int TransactionID { get; set; }
         public string TransRef { get; set; }
         public int ClientID { get; set; }
@@ -78,5 +104,5 @@ namespace SmartSave.Models
         public int BankAccountID { get; set; }
     }
 
-  
+
 }

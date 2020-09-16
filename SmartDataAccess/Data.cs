@@ -164,7 +164,7 @@ namespace SmartDataAccess
         }
         public static SmartDomain.CustomSetting[] GetApplicationSettings()
         {
-            List<SmartDomain.CustomSetting> settings = new List<SmartDomain.CustomSetting>
+            List<CustomSetting> settings = new List<SmartDomain.CustomSetting>
             {
                 new SmartDomain.CustomSetting()
                 {
@@ -179,12 +179,52 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Application_Name_Prefix,
+                    Name = AppSetting.Application_Name_Prefix.ToString().Replace("_", " "),
+                    Value="SS",
+                    Description="Short Name for Application",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
                 new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.System_Version,
                     Name = AppSetting.System_Version.ToString().Replace("_", " "),
                     Value="1.0.0.0",
                     Description="Displays Current Version of the System",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                 new CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Account_Number_Length,
+                    Name = AppSetting.Account_Number_Length.ToString().Replace("_", " "),
+                    Value="9",
+                    Description="Limit Account Number Size",
+                    CustomVariableTypeID=(int)VariableType.Integer,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+
+                new CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Account_Number_Prefix,
+                    Name = AppSetting.Account_Number_Prefix.ToString().Replace("_", " "),
+                    Value="",
+                    Description="Account Number Prefix if Any",
                     CustomVariableTypeID=(int)VariableType.String,
                     CustomSettingTypeID=(int)SettingType.All,
                     IsActive = true,
@@ -234,33 +274,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                new CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Account_Number_Length,
-                    Name = AppSetting.Account_Number_Length.ToString().Replace("_", " "),
-                    Value="9",
-                    Description="Limit Account Number Size",
-                    CustomVariableTypeID=(int)VariableType.Integer,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-
-                new CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Account_Number_Prefix,
-                    Name = AppSetting.Account_Number_Prefix.ToString().Replace("_", " "),
-                    Value="",
-                    Description="Account Number Prefix if Any",
-                    CustomVariableTypeID=(int)VariableType.String,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
+               
                   new CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Date_Format,
@@ -386,19 +400,7 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                },
-               new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Application_Name_Prefix,
-                    Name = AppSetting.Application_Name_Prefix.ToString().Replace("_", " "),
-                    Value="SS",
-                    Description="Short Name for Application",
-                    CustomVariableTypeID=(int)VariableType.String,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
+              
                new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Report_Footer_1,
@@ -467,34 +469,8 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Default_Company_ID,
-                    Name = AppSetting.Default_Company_ID.ToString().Replace("_", " "),
-                    Value=UtilityService.DefaultCompanyID.ToString(),
-                    Description="Default Company that the System Uses",
-                    CustomVariableTypeID=(int)VariableType.Integer,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-
-                new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Mail_Default_Subject,
-                    Name = AppSetting.Mail_Default_Subject.ToString().Replace("_", " "),
-                    Value=$"{UtilityService.ApplicationName} Admin",
-                    Description="Default Email Subject Name Used By Auto-Generated Emails",
-                    CustomVariableTypeID=(int)VariableType.String,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-
+                
+              
                 new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Statement_Save_To_Folder,
@@ -521,7 +497,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                                 new SmartDomain.CustomSetting()
+                new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Statement_Password_For_Admin,
                     Name = AppSetting.Statement_Password_For_Admin.ToString().Replace("_", " "),
@@ -552,20 +528,121 @@ namespace SmartDataAccess
                     CustomSettingID = (int)AppSetting.Statement_Hide_Table_Boarders,
                     Name = AppSetting.Statement_Hide_Table_Boarders.ToString().Replace("_", " "),
                     Value="true",
-                    Description="Determines if table borders will be shown on the ",
+                    Description="Determines if table borders will be shown on the report ",
                     CustomVariableTypeID=(int)VariableType.Boolean,
                     CustomSettingTypeID=(int)SettingType.All,
                     IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
+                },
+                  new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Mail_Default_Subject,
+                    Name = AppSetting.Mail_Default_Subject.ToString().Replace("_", " "),
+                    Value=$"Smart Save  Admin",
+                    Description="Default Email Subject Name Used By Auto-Generated Emails",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                     new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Password_Reset_Pin_Code_Length,
+                    Name = AppSetting.Password_Reset_Pin_Code_Length.ToString().Replace("_", " "),
+                    Value="5",
+                    Description="Password Reset Pin Code Length",
+                    CustomVariableTypeID=(int)VariableType.Integer,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                  new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Password_Reset_Pin_Validity,
+                    Name = AppSetting.Password_Reset_Pin_Validity.ToString().Replace("_", " "),
+                    Value="2",
+                    Description="Password Reset Pin Code Validity Period in Days",
+                    CustomVariableTypeID=(int)VariableType.Integer,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                  new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Site_URL,
+                    Name = AppSetting.Site_URL.ToString().Replace("_", " "),
+                    Value=@"https://localhost:5001",
+                    Description="Site URL",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Site_Reset_Password_URL,
+                    Name = AppSetting.Site_Reset_Password_URL.ToString().Replace("_", " "),
+                    Value=@"https://localhost:5001/Login/ForgotPasswordConfirmation",
+                    Description="Site Reset Password URL",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Site_Customer_Service_Email,
+                    Name = AppSetting.Site_Customer_Service_Email.ToString().Replace("_", " "),
+                    Value=@"carochire@gmail.com",
+                    Description="Customer Support Email",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Site_Customer_Service_Number,
+                    Name = AppSetting.Site_Customer_Service_Number.ToString().Replace("_", " "),
+                    Value=@"0731143168",
+                    Description="Customer Support Number",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
                 }
+                //new SmartDomain.CustomSetting()
+                //{
+                //    CustomSettingID = (int)AppSetting.Default_Company_ID,
+                //    Name = AppSetting.Default_Company_ID.ToString().Replace("_", " "),
+                //    Value=UtilityService.DefaultCompanyID.ToString(),
+                //    Description="Default Company that the System Uses",
+                //    CustomVariableTypeID=(int)VariableType.Integer,
+                //    CustomSettingTypeID=(int)SettingType.All,
+                //    IsActive = true,
+                //    LastChangedDate = DateTime.Now,
+                //    LastChangedBy = "SuperUser"
 
+                //},
 
-            };
-
-
-
+                
+                };
 
             return settings.ToArray();
 
@@ -891,7 +968,7 @@ namespace SmartDataAccess
                 new Company()
                 {
                     CompanyID = 1,
-                    Name = UtilityService.ApplicationName.Trim(),
+                    Name = String.IsNullOrEmpty(UtilityService.ApplicationName) ? "Smart Save" : UtilityService.ApplicationName,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser",
                     IsActive = true,
@@ -1174,6 +1251,27 @@ namespace SmartDataAccess
             return documentTypes.ToArray();
         }
 
+        public static EmailType[] GetEmailTypes()
+        {
+
+            List<EmailType> emailTypes = new List<EmailType>();
+            var eTypes = from EmailTypeList s in Enum.GetValues(typeof(EmailTypeList))
+                         select new { ID = s, Name = s.ToString() };
+
+            foreach (var x in eTypes)
+            {
+                emailTypes.Add(new EmailType()
+                {
+                    EmailTypeID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+
+            }
+            return emailTypes.ToArray();
+        }
     }
 
 }

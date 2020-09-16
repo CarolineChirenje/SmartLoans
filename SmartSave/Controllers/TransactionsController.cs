@@ -82,8 +82,8 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             if (id == 0 && transref == null)
                 return RedirectToAction(nameof(Transactions));
-
-            return View(await _service.PaymentFile(id, transref));
+            Transaction transaction = await _service.PaymentFile(id, transref);
+            return View(transaction);
         }
 
        

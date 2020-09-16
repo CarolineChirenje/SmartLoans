@@ -348,6 +348,20 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
+                 new Menu()
+                {
+                    MenuID =18,
+                    MenuGroupID = (int)MenuGroups.Administration,
+                    DisplayName = "Email Templates",
+                    ControllerName = "EmailTemplate",
+                    ActionName = "EmailTemplate",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-envelope-o"),
+                    OrderNo =18,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                }
             };
             return menus.ToArray();
 

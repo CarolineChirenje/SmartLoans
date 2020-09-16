@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,13 +26,14 @@ namespace SmartSave
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            string _configValue = Configuration.GetConnectionString("SSDBConnection");
             services.AddDbContext<DatabaseContext>(options =>
-       options.UseSqlServer(Configuration.GetConnectionString("SSDBConnection")));
+       options.UseSqlServer(_configValue));
 
             // setup dependency injection in service container
             services.AddScoped<ICompanyService, CompanyService>();
@@ -45,6 +45,7 @@ namespace SmartSave
             services.AddScoped<IDepartmentService, DepartmentService>();
             
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IEmailTemplateService, EmailTemplateService>();
             services.AddScoped<ITransactionService, TransactionService>();
            
             services.AddScoped<IMenuService, MenuService>();

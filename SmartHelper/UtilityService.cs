@@ -46,7 +46,7 @@ namespace SmartHelper
         {
             get
             {
-                return GetData.GetSettingValue((int)AppSetting.Application_Name).Value;
+                return GetData.GetSettingValue((int)AppSetting.Application_Name)?.Value;
 
             }
         }
@@ -54,7 +54,7 @@ namespace SmartHelper
         {
             get
             {
-                return GetData.GetSettingValue((int)AppSetting.Application_Name_Prefix).Value;
+                return GetData.GetSettingValue((int)AppSetting.Application_Name_Prefix)?.Value;
 
             }
         }
@@ -176,7 +176,7 @@ namespace SmartHelper
 
             }
         }
-        public static string AppendFileTimeStamp( string fileName)
+        public static string AppendFileTimeStamp(string fileName)
         {
             return string.Concat(
                 System.IO.Path.GetFileNameWithoutExtension(fileName),
@@ -184,7 +184,41 @@ namespace SmartHelper
                  System.IO.Path.GetExtension(fileName)
                 );
         }
+        public static string SiteURL
+        {
+            get
+            {
+                return GetData.GetSettingValue((int)AppSetting.Site_URL)?.Value;
 
+            }
+        }
+
+        public static string SiteURLPasswordReset
+        {
+            get
+            {
+                return GetData.GetSettingValue((int)AppSetting.Site_Reset_Password_URL)?.Value;
+
+            }
+        }
+        public static string CustomerServiceEmail
+        {
+            get
+            {
+                return GetData.GetSettingValue((int)AppSetting.Site_Customer_Service_Email)?.Value;
+
+            }
+        }
+        public static string CustomerServiceNumber
+        {
+            get
+            {
+                return GetData.GetSettingValue((int)AppSetting.Site_Customer_Service_Number)?.Value;
+
+            }
+        }
+
+    
         public static string MaskAccountNumber(string  accountNumber)
 
         {
@@ -230,7 +264,44 @@ namespace SmartHelper
             }
         }
 
+        public static int PinCodeLength
+        {
+            get
+            {
+                string sqlCustomSetting = $"SELECT TOP 1 Value FROM CustomSettings WHERE CustomSettingID={(int)AppSetting.Password_Reset_Pin_Code_Length};";
+                string _pincodeLengthID = GetData.GetStringValue(sqlCustomSetting);
+                int pincodeLengthID = 4;
+                try
+                {
+                    pincodeLengthID = Int32.Parse(_pincodeLengthID);
+                }
+                catch (Exception)
+                {
 
+
+                }
+                return pincodeLengthID;
+
+            }
+        }
+        public static int PinCodeValidityPeriod
+        {
+            get
+            {
+               string _result= GetData.GetSettingValue((int)AppSetting.Password_Reset_Pin_Validity)?.Value;
+                int pincodeValidityPeriod = 0;
+                try
+                {
+                    pincodeValidityPeriod = Int32.Parse(_result);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                return pincodeValidityPeriod;
+            }
+        }
         public static bool FeatureFlagOn(int id)
         {
 

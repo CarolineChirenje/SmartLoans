@@ -43,7 +43,7 @@ namespace SmartHelper
         {
                        using (IDbConnection db = new SqlConnection(SSDBConnection))
             {
-                return db.Query<string>(sqlQuery).SingleOrDefault();
+                return db.Query<string>(sqlQuery)?.SingleOrDefault();
             }
         }
 

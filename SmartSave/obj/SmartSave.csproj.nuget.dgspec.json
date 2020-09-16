@@ -55,12 +55,6 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[3.1.8, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[3.1.8, )"
             }
           },
           "imports": [
@@ -443,6 +437,9 @@
             "projectReferences": {
               "D:\\Dev Projects\\SmartSave\\SmartDataAccess\\SmartDataAccess.csproj": {
                 "projectPath": "D:\\Dev Projects\\SmartSave\\SmartDataAccess\\SmartDataAccess.csproj"
+              },
+              "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj": {
+                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj"
               },
               "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj": {
                 "projectPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj"

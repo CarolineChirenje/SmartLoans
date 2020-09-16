@@ -29,6 +29,7 @@
           "Microsoft.EntityFrameworkCore.Tools": "3.1.8",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.3",
           "SmartDataAccess": "1.0.0",
+          "SmartDomain": "1.0.0",
           "SmartHelper": "1.0.0",
           "SmartLogic": "1.0.0",
           "SmartReporting": "1.0.0",

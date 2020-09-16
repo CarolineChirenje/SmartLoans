@@ -9,7 +9,9 @@ namespace SmartLogic
  public   interface ILoginService
     {
         Task<User> Login(string username, string password);
-     
 
+        Task<string> ResetPassword(string emailaddress);
+        Task<UserPinReset> ConfirmCode(string  code);
+        Task<int> PasswordChange( int userid, string password);
     }
 }

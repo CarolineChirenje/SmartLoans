@@ -15,18 +15,18 @@ namespace SmartDataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserRole>().HasKey(sc => new { sc.UserID, sc.RoleID });
+                modelBuilder.Entity<UserRole>().HasKey(sc => new { sc.UserID, sc.RoleID });
 
-            //System Roles
-            modelBuilder.Entity<Role>().HasData(
-                Data.GetRoles());
-            // permissions
-            modelBuilder.Entity<Permission>().HasData(
-            Data.GetPermissions());
+                //System Roles
+                modelBuilder.Entity<Role>().HasData(
+                    Data.GetRoles());
+                // permissions
+                modelBuilder.Entity<Permission>().HasData(
+                Data.GetPermissions());
 
-            // rolePermissions
-            modelBuilder.Entity<RolePermission>().HasData(
-          Data.GetPermissionsForSuperUserRole());
+                // rolePermissions
+                modelBuilder.Entity<RolePermission>().HasData(
+              Data.GetPermissionsForSuperUserRole());
             // paymentstatus
             modelBuilder.Entity<PaymentStatus>().HasData(
           Data.GetPaymentStatuses());
@@ -59,6 +59,10 @@ namespace SmartDataAccess
             modelBuilder.Entity<RelationshipType>().HasData(
               Data.GetRelationshipTypes());
 
+            //default company
+            //modelBuilder.Entity<Company>().HasData(
+            //  Data.GetDefaultCompany());
+
             //  custom  setting types
             modelBuilder.Entity<CustomSettingType>().HasData(
                 Data.GetCustomSettingTypes());
@@ -67,22 +71,6 @@ namespace SmartDataAccess
             modelBuilder.Entity<CustomVariableType>().HasData(
            Data.GetCustomVariableTypes());
 
-            //   custom settings
-            modelBuilder.Entity<CustomSetting>().HasData(
-              Data.GetApplicationSettings());
-
-            //default company
-            modelBuilder.Entity<Company>().HasData(
-              Data.GetDefaultCompany());
-
-            //   priority
-            modelBuilder.Entity<PriorityRank>().HasData(
-              Data.GetPriorityRanks());
-            //users
-            modelBuilder.Entity<User>().HasData(
-                     Data.GetUsers());
-
-
             //gender
             modelBuilder.Entity<Gender>().HasData(
                      Data.GetGenders());
@@ -90,6 +78,19 @@ namespace SmartDataAccess
             // country
             modelBuilder.Entity<Country>().HasData(
                     Data.GetCountries());
+
+
+            //   priority
+            modelBuilder.Entity<PriorityRank>().HasData(
+              Data.GetPriorityRanks());
+
+
+
+            //users
+            modelBuilder.Entity<User>().HasData(
+                     Data.GetUsers());
+
+
 
             // feature flags
             modelBuilder.Entity<FeatureFlag>().HasData(
@@ -121,6 +122,19 @@ namespace SmartDataAccess
             // WeekDays
             modelBuilder.Entity<WeekDay>().HasData(
             Data.GetWeekDays());
+
+
+
+           // email types
+            modelBuilder.Entity<EmailType>().HasData(
+            Data.GetEmailTypes());
+
+
+            //custom settings
+            modelBuilder.Entity<CustomSetting>().HasData(
+              Data.GetApplicationSettings());
+
+
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -141,6 +155,7 @@ namespace SmartDataAccess
         public DbSet<ClientNote> ClientNotes { get; set; }
         public DbSet<ClientDependent> ClientDependents { get; set; }
         public DbSet<ClientProduct> ClientProducts { get; set; }
+        public DbSet<UserPinReset> UserPinResets  { get; set; }
         public DbSet<ClientMedicalDetail> ClientMedicalDetails { get; set; }
         public DbSet<NoticeBoard> NoticeBoard { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -170,8 +185,11 @@ namespace SmartDataAccess
         public DbSet<BroadCast> BroadCasts { get; set; }
         public DbSet<AuditAction> AuditActions { get; set; }
         public DbSet<AuditEntry> AuditEntries { get; set; }
-                public DbSet<Country> Countries { get; set; }
+        public DbSet<Country> Countries { get; set; }
         public DbSet<FeatureFlag> FeatureFlags { get; set; }
+
+        public DbSet<EmailTemplate> EmailTemplates { get; set; }
+        public DbSet<EmailType> EmailTypes { get; set; }
 
         public DbSet<Menu> Menus { get; set; }
         public DbSet<MenuGroup> MenuGroups { get; set; }

@@ -49,11 +49,11 @@ namespace SmartLogic
 
             //set the subject of the mail message
             mMailMessage.Subject = string.IsNullOrEmpty(email.Subject) ? DEFAULTEMAILSUBJECT : email.Subject;
-
-            //set the body of the mail message
-            mMailMessage.Body = email.Body;
             //set the format of the mail message body
             mMailMessage.IsBodyHtml = true;
+            //set the body of the mail message
+            mMailMessage.Body = email.Body;
+          
 
 
             //set the priority

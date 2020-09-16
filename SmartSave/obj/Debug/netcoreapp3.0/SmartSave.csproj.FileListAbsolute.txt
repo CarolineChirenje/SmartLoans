@@ -108,12 +108,12 @@ D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartDomain.dll
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.dll
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartLogic.dll
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartReporting.dll
-D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartLogic.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartDataAccess.pdb
+D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartLogic.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartReporting.pdb
-D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartDomain.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csprojAssemblyReference.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.Resource.resources
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.GenerateResource.cache
@@ -157,6 +157,9 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Departme
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\DocumentType\AddDocumentType.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\DocumentType\DocumentTypes.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\DocumentType\ViewDocumentType.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\EmailTemplate\AddEmailTemplate.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\EmailTemplate\EmailTemplate.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\EmailTemplate\ViewEmailTemplate.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\FeatureFlag\FeatureFlag.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\FeatureFlag\ViewFeatureFlag.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Home\About.cshtml.g.cs
@@ -164,7 +167,10 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Home\Con
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Home\Dashboard.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Home\Index.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Home\Privacy.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Login\ForgotPassword.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Login\ForgotPasswordConfirmation.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Login\Login.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Login\PasswordReset.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Menus\AddMenu.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Menus\ChildMenus.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Menus\MainMenu.cshtml.g.cs

@@ -511,6 +511,13 @@ namespace SmartHelper
         Proof_Of_Address
     }
 
+    public enum EmailTypeList
+    {
+        Client_Statement = 1,
+        Proof_Of_Payment,
+        Invoice,
+
+    }
     public enum AppSetting
     {
         Application_Name = 1,
@@ -542,10 +549,13 @@ namespace SmartHelper
         Statement_Save_To_Physical_Location,
         Statement_Password_Protect,
         Statement_Password_For_Admin,
-        Statement_Hide_Table_Boarders
-
-
-
+        Statement_Hide_Table_Boarders,
+        Password_Reset_Pin_Code_Length,
+        Password_Reset_Pin_Validity,
+        Site_URL,
+        Site_Reset_Password_URL,
+        Site_Customer_Service_Email,
+        Site_Customer_Service_Number
 
 
     }

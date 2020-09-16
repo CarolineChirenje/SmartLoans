@@ -79,12 +79,17 @@
 
                                     </div>
                                     @*<div class="checkbox">
-                                        <label>
-                                            <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                        </label>
-                                    </div>*@
+            <label>
+                <input name="remember" type="checkbox" value="Remember Me">Remember Me
+            </label>
+        </div>*@
 
+                                  
                                     <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
+                                    <br/>
+                                    <div class="form-group">
+                                        <a  asp-controller="Login" asp-action="ForgotPassword">Forgot Password?</a>
+                                    </div>
                                 </fieldset>
                                 </div>
                         </form>

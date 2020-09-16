@@ -31,9 +31,12 @@ namespace SmartSave.Controllers
         readonly IBankAccountservice _bankService;
         readonly IMailService _mailService;
         readonly IFeatureFlagService _featureFlagService;
+        private readonly IEmailTemplateService _emailTemplateService;
+
         public ClientController(IClientService service, IUserService userService, IDocumentTypeService documentTypeService,
         ISettingService settingService, ITransactionService paymentService,
-        IBankAccountservice bankService, IDepartmentService departmentService, IMailService mailservice, IFeatureFlagService featureFlagService)
+        IBankAccountservice bankService, IDepartmentService departmentService, IMailService mailservice,
+        IFeatureFlagService featureFlagService, IEmailTemplateService emailTemplateService)
         {
             _service = service;
             _userService = userService;
@@ -44,6 +47,7 @@ namespace SmartSave.Controllers
             _departmentService = departmentService;
             _mailService = mailservice;
             _featureFlagService = featureFlagService;
+            _emailTemplateService = emailTemplateService;
         }
 
         public async Task<IActionResult> Clients(string accountNum = null, bool newClientsOnly = false)
@@ -346,7 +350,7 @@ namespace SmartSave.Controllers
                     if (UtilityService.SaveStatementsToFolder)
                     {
 
-                       string _filename = UtilityService.AppendFileTimeStamp(filename + ".pdf");
+                        string _filename = UtilityService.AppendFileTimeStamp(filename + ".pdf");
                         string filePath = $"{CreateSubFolder()}\\{_filename}";
                         // Save the document...
                         pdfRenderer.PdfDocument.Save(filePath);
@@ -355,8 +359,10 @@ namespace SmartSave.Controllers
                 }
 
             }
-           else
+            else
             {
+
+                EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.Client_Statement).Result;
                 byte[] pdfFile = GeneratePDFStatement(statement);
                 List<AttachmentFromMemory> attachments = new List<AttachmentFromMemory>();
                 AttachmentFromMemory attachment = new AttachmentFromMemory
@@ -371,21 +377,27 @@ namespace SmartSave.Controllers
                 Email email = new Email();
                 email.To = statement.Client.EmailAddress;
                 email.AttachmentFromMemory = attachments;
+                if (UtilityService.IsNotNull(emailTemplate))
+                {
+                    email.Body = emailTemplate.Body;
+                    email.Subject = emailTemplate.Subject;
+                }
                 _mailService.SendMail(email, false);
 
-                return RedirectToAction("ViewClient", new { id = statement.ClientID});
+                return RedirectToAction("ViewClient", new { id = statement.ClientID });
             }
-            }
+        }
 
 
-        private string  CreateSubFolder()
-        
-        { string subFolder = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString();
+        private string CreateSubFolder()
+
+        {
+            string subFolder = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString();
             string filePath = $"{UtilityService.StatementsSavePath}\\{subFolder}";
-           System.IO.Directory.CreateDirectory(filePath);
+            System.IO.Directory.CreateDirectory(filePath);
             return filePath;
         }
-      
+
 
         private byte[] GeneratePDFStatement(Statement statement)
         {
