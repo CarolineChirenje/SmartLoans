@@ -82,15 +82,15 @@
                                     <img src="~/dist/img/profileIcon.png" class="img-circle" alt="User Image">
                                     <p>
                                         @UtilityService.UserFullName
-                                        <small>Developer</small>
+                                        <small>@UtilityService.UserRole</small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
                                 <li class="user-body">
                                     <div class="row">
-                                        <div class="col-xs-4 text-center">
+                                        @*<div class="col-xs-4 text-center">
                                             <a asp-controller="User" asp-action="ViewUser" asp-route-username="@UtilityService.CurrentUserName">Account</a>
-                                        </div>
+                                        </div>*@
                                     </div>
                                     <!-- /.row -->
                                 </li>
@@ -154,7 +154,7 @@
         <!-- Main Footer -->
         <footer class="main-footer">
             <!-- Default to the left -->
-            <strong>Copyright &copy; @DateTime.Now.Year <a href="#">Caroline Chirenje</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="#">Caroline Chirenje Version @UtilityService.ApplicationVersion</a>.</strong> All rights reserved.
         </footer>
     </div>
     <!-- ./wrapper -->

@@ -217,8 +217,16 @@ namespace SmartHelper
 
             }
         }
+        public static string ApplicationVersion
+        {
+            get
+            {
+                return GetData.GetSettingValue((int)AppSetting.System_Version)?.Value;
 
-    
+            }
+        }
+        
+
         public static string MaskAccountNumber(string  accountNumber)
 
         {
@@ -260,6 +268,22 @@ namespace SmartHelper
 
                 }
                 return defaultCompanyID;
+
+            }
+        }
+
+
+        public static string UserRole
+        {
+            get
+            {
+                string sqlCustomSetting = @"SELECT TOP 1 r.Name FROM Users u 
+                INNER JOIN UserRoles ur ON  ur.UserID=u.UserID
+                INNER JOIN Roles r ON ur.RoleID=r.RoleID
+                WHERE u.UserName='" + UtilityService.CurrentUserName + "'";
+                string _userRole = GetData.GetStringValue(sqlCustomSetting);
+                
+                return _userRole;
 
             }
         }

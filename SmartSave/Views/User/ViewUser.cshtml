@@ -87,8 +87,10 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
+                
+                <button type="submit" class="btn btn-info">Update</button>
+                <a class="btn btn-success" asp-controller="Login" asp-action="PasswordReset" asp-route-id="@Model.UserID">Change Password</a>
                 <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                <button type="submit" class="btn btn-info pull-right">Update</button>
             </div>
             <!-- /.box-footer -->
         </form>
