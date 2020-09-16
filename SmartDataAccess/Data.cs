@@ -918,16 +918,16 @@ namespace SmartDataAccess
             return permissions.ToArray();
 
         }
-        public static TransactionTypes[] GetTransactionTypes()
+        public static TransactionType[] GetTransactionTypes()
         {
 
-            List<TransactionTypes> transactionTypes = new List<TransactionTypes>();
-            var transTypes = from TransactionType s in Enum.GetValues(typeof(TransactionType))
+            List<TransactionType> transactionTypes = new List<TransactionType>();
+            var transTypes = from TransactionTypeList s in Enum.GetValues(typeof(TransactionTypeList))
                              select new { ID = s, Name = s.ToString() };
 
             foreach (var x in transTypes)
             {
-                transactionTypes.Add(new TransactionTypes()
+                transactionTypes.Add(new TransactionType()
                 {
                     TransactionTypeID = (int)x.ID,
                     Name = x.Name.Replace("_", " "),

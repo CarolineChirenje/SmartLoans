@@ -60,7 +60,7 @@ namespace SmartLogic
 
                 Task<Client> ClientResults = _context.Clients.
                             Include(c => c.ClientContacts).
-                            Include(payments => payments.ClientPayments).ThenInclude(trans => trans.TransactionTypes).
+                            Include(payments => payments.ClientPayments).ThenInclude(trans => trans.TransactionType).
                             Include(payments => payments.ClientPayments).ThenInclude(trans => trans.Product).
                             Include(payments => payments.ClientPayments).ThenInclude(trans => trans.PaymentStatus).
                             Include(n => n.ClientNotes).
@@ -143,7 +143,7 @@ namespace SmartLogic
             return await _context.Clients.
                 Include(c => c.ClientContacts).
                 Include(p => p.ClientPayments).
-                ThenInclude(p => p.TransactionTypes).
+                ThenInclude(p => p.TransactionType).
                 Include(n => n.ClientNotes).
                 ThenInclude(ut => ut.UserType).
                 Include(d => d.ClientDocuments).

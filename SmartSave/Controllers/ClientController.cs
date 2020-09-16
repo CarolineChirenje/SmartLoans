@@ -461,7 +461,7 @@ namespace SmartSave.Controllers
                 Client Client = await _service.FindClient(payment.ClientID);
                 payment.Client = Client;
 
-                if (await (_paymentService.CreatePayment(payment, TransactionType.Payment)) == 0)
+                if (await (_paymentService.CreatePayment(payment, TransactionTypeList.Payment)) == 0)
                 {
                     ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClient", new { id = payment.ClientID });
@@ -488,7 +488,7 @@ namespace SmartSave.Controllers
                 Transaction paymentsFile = await _paymentService.PaymentFile(payment.TransactionID);
                 if (UtilityService.IsNotNull(paymentsFile))
                 {
-                    if (await (_paymentService.CreatePayment(paymentsFile, (TransactionType)id)) == 0)
+                    if (await (_paymentService.CreatePayment(paymentsFile, (TransactionTypeList)id)) == 0)
                         ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClient", new { id = payment.ClientID });
                 }

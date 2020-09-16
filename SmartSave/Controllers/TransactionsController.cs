@@ -70,7 +70,7 @@ namespace SmartSave.Controllers
 
                 };
 
-                if (await (_service.CreatePayment(addPaymentsFile, TransactionType.Payment)) == 0)
+                if (await (_service.CreatePayment(addPaymentsFile, TransactionTypeList.Payment)) == 0)
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR"); ;
                 return RedirectToAction(nameof(Transactions));
             }
@@ -93,7 +93,7 @@ namespace SmartSave.Controllers
             Transaction paymentsFile = await (_service.PaymentFile(id));
             if (UtilityService.IsNotNull(paymentsFile))
             {
-                if (await (_service.CreatePayment(paymentsFile, (TransactionType)transactionTypeID)) == 0)
+                if (await (_service.CreatePayment(paymentsFile, (TransactionTypeList)transactionTypeID)) == 0)
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewTransaction", new { paymentsFile.TransactionID });
             }

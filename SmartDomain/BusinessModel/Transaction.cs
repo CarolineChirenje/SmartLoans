@@ -22,7 +22,7 @@ namespace SmartDomain
         public int Year { get; set; }
         public int Month { get; set; }
         public int TransactionTypeID { get; set; }
-        public virtual TransactionTypes TransactionTypes { get; set; }
+        public virtual TransactionType TransactionType { get; set; }
         public int PaymentStatusID { get; set; }
         public virtual PaymentStatus PaymentStatus { get; set; }
         [Column(TypeName = "decimal(18,2)")]

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmartDomain
 {
-    public class TransactionTypes : ChangeAudit
+    public class TransactionType : ChangeAudit
     {
         [Key]
         public int TransactionTypeID { get; set; }

@@ -67,7 +67,7 @@ namespace SmartHelper
         Percentage
 
     }
-    public enum TransactionType
+    public enum TransactionTypeList
     {
         Payment = 1,
         Reversal,

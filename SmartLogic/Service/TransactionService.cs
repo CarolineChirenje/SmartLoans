@@ -16,14 +16,14 @@ namespace SmartLogic
         private readonly DatabaseContext _context;
 
         public TransactionService(DatabaseContext context) => _context = context;
-        public async Task<int> CreatePayment(Transaction PaymentsFile, TransactionType transaction)
+        public async Task<int> CreatePayment(Transaction PaymentsFile, TransactionTypeList transaction)
         {
             PaymentsFile.Year = DateTime.Now.Year;
             PaymentsFile.Month = DateTime.Now.Month;
             PaymentsFile.TransactionDate = DateTime.Now;
             switch (transaction)
             {
-                case TransactionType.Payment:
+                case TransactionTypeList.Payment:
 
 
                     string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage).Value;
@@ -62,9 +62,9 @@ namespace SmartLogic
                     _context.Add(PaymentsFile);
 
                     break;
-                case TransactionType.Reversal:
-                case TransactionType.Refund:
-                case TransactionType.Void:
+                case TransactionTypeList.Reversal:
+                case TransactionTypeList.Refund:
+                case TransactionTypeList.Void:
                     UpdatePayment(PaymentsFile, transaction);
                     break;
                 default:
@@ -74,12 +74,12 @@ namespace SmartLogic
         }
 
 
-        void UpdatePayment(Transaction PaymentsFile, TransactionType transaction)
+        void UpdatePayment(Transaction PaymentsFile, TransactionTypeList transaction)
         {// create a duplicate negative payment with  new transactions
             int transactionID = PaymentsFile.TransactionID;
             int oldPaymentStatus = 0;
 
-            if (transaction == TransactionType.Void)
+            if (transaction == TransactionTypeList.Void)
             {
 
                 oldPaymentStatus = (int)PaymentState.Pending;
@@ -92,16 +92,16 @@ namespace SmartLogic
                 switch (transaction)
                 {
 
-                    case TransactionType.Reversal:
+                    case TransactionTypeList.Reversal:
                         oldPaymentStatus = (int)PaymentState.Reversed;
 
                         break;
-                    case TransactionType.Refund:
+                    case TransactionTypeList.Refund:
                         oldPaymentStatus = (int)PaymentState.Refunded;
 
                         break;
 
-                    case TransactionType.Discount:
+                    case TransactionTypeList.Discount:
                         oldPaymentStatus = (int)PaymentState.Discounted;
 
                         break;
@@ -175,7 +175,7 @@ namespace SmartLogic
              .Include(p => p.Client)
              .Include(p => p.Product)
                            .Include(p => p.PaymentStatus)
-              .Include(p => p.TransactionTypes)
+              .Include(p => p.TransactionType)
               .Include(p => p.BankAccount)
              .OrderByDescending(t => t.TransactionDate)
              .AsNoTracking()
@@ -187,7 +187,7 @@ namespace SmartLogic
               .Include(p => p.Client)
              .Include(p => p.Product)
                         .Include(p => p.PaymentStatus)
-              .Include(p => p.TransactionTypes)
+              .Include(p => p.TransactionType)
                .Include(p => p.BankAccount)
              .AsNoTracking()
              .ToListAsync();
@@ -199,7 +199,7 @@ namespace SmartLogic
              .Include(p => p.Client)
              .Include(p => p.Product)
                            .Include(p => p.PaymentStatus)
-             .Include(p => p.TransactionTypes)
+             .Include(p => p.TransactionType)
               .Include(p => p.BankAccount)
             .Where(p => p.TransactionDate.Date == DateTime.Now.Date)
             .AsNoTracking()
@@ -215,7 +215,7 @@ namespace SmartLogic
              .Include(p => p.Client)
              .Include(p => p.Product)
              .Include(p => p.PaymentStatus)
-             .Include(p => p.TransactionTypes)
+             .Include(p => p.TransactionType)
              .Include(p => p.BankAccount)
             .Where(t => t.TransactionID == TransactionID).FirstOrDefaultAsync();
         }

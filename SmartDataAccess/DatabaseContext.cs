@@ -31,7 +31,7 @@ namespace SmartDataAccess
             modelBuilder.Entity<PaymentStatus>().HasData(
           Data.GetPaymentStatuses());
             // transaction type
-            modelBuilder.Entity<TransactionTypes>().HasData(
+            modelBuilder.Entity<TransactionType>().HasData(
               Data.GetTransactionTypes());
 
             // bank account types
@@ -144,7 +144,7 @@ namespace SmartDataAccess
         public DbSet<BankAccountType> BankAccountTypes { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
-        public DbSet<TransactionTypes> TransactionType { get; set; }
+        public DbSet<TransactionType> TransactionType { get; set; }
         public DbSet<Client> Clients { get; set; }
 
 

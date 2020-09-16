@@ -52,7 +52,7 @@ namespace SmartLogic
             //set the format of the mail message body
             mMailMessage.IsBodyHtml = true;
             //set the body of the mail message
-            mMailMessage.Body = email.Body;
+            mMailMessage.Body = UtilityService.HtmlDecode(email.Body);
           
 
 

@@ -497,7 +497,7 @@
 
                                                             <td><a target="_blank" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
                                                             <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.TransactionTypes.Name)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.TransactionType.Name)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
 
                                                             <td>@Html.DisplayFor(modelItem => item.PaymentStatus.Name)</td>
