@@ -63,8 +63,11 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(role)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction(nameof(Roles));
+                    {
+                         ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        return View(role);
+                   }
+                   //     return RedirectToAction(nameof(Roles));
                 }
                 return View(role);
             }

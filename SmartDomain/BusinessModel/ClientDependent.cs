@@ -1,11 +1,13 @@
-﻿using System;
+﻿using SmartHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SmartDomain
 {
-   public class ClientDependent : ChangeAudit
+    public class ClientDependent : ChangeAudit
     {
 
         [Key]
@@ -27,8 +29,12 @@ namespace SmartDomain
 
         public bool IsActive { get; set; }
 
-        
         public DateTime RegistrationDate { get; set; }
-       
+
+        [NotMapped]
+        public string FullName { get { return String.Concat(LastName, " ", FirstName); } }
+        [NotMapped]
+        public int  Age { get { return UtilityService.CalculateAge(DateOfBirth); } }
+
     }
 }

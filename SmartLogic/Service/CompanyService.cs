@@ -49,6 +49,31 @@ namespace SmartLogic
 
         public async Task<int> Save(Company Company)
         {
+
+            Company company = _context.Companies.Where(r => r.IsDefault)
+               .AsNoTracking().FirstOrDefault();
+            if (UtilityService.IsNull(company))
+               Company.IsDefault = true;
+
+            else
+            {
+                if (Company.IsDefault)
+                {
+                    try
+                    {
+                        // if this has been set as the main guarator then all the gurantors already in the DB  should have that column set to false
+                        var companies = _context.Companies.Where(s => s.IsDefault).ToList();
+                        companies.ForEach(a => a.IsDefault = false);
+                        _context.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        //throw;
+                    }
+
+                }
+            }
             Company.LastChangedBy = UtilityService.CurrentUserName;
             Company.LastChangedDate = DateTime.Now;
             _context.Add(Company);
@@ -56,7 +81,7 @@ namespace SmartLogic
         }
         public async Task<int> Update(Company Company)
         {
-            Company company = await FindCompany(Company.CompanyID);
+            Company company = _context.Companies.Find(Company.CompanyID);
             List<Company> Companies = _context.Companies.ToList();
             if (Companies == null || Companies.Count() == 0)
                 company.IsDefault = true;
@@ -68,7 +93,7 @@ namespace SmartLogic
                     try
                     {
                        
-                        var defaultCompany = _context.Companies.Where(s => s.IsDefault).FirstOrDefault();
+                        var defaultCompany = _context.Companies.Where(s => s.IsDefault && s.CompanyID!=Company.CompanyID).FirstOrDefault();
                         if(UtilityService.IsNotNull(defaultCompany))
                         {
 

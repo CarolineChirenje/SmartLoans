@@ -72,6 +72,7 @@ namespace SmartLogic
                             Include(sg => sg.ClientGuarantors).
                             Include(p=>p.ClientProducts).
                             ThenInclude(p=>p.Product).
+                            Include(d=>d.ClientDependents).
                             Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
                 return await ClientResults;
 
@@ -482,6 +483,7 @@ namespace SmartLogic
             }
             ClientGuarantor guarantor = _context.ClientGuarantors.Find(ClientGuarantor.ClientGuarantorID);
             guarantor.MobileNumber = ClientGuarantor.MobileNumber;
+            guarantor.IDNumber = ClientGuarantor.IDNumber;
             guarantor.EmailAddress = ClientGuarantor.EmailAddress;
             guarantor.FirstName = ClientGuarantor.FirstName;
             guarantor.IsMainGuarantor = ClientGuarantor.IsMainGuarantor;
@@ -525,7 +527,7 @@ namespace SmartLogic
 
         public async Task<int> Save(ClientDependent ClientDependent)
         {
-
+            ClientDependent.RegistrationDate = DateTime.Now;
             ClientDependent.LastChangedBy = UtilityService.CurrentUserName;
             ClientDependent.LastChangedDate = DateTime.Now;
             _context.Add(ClientDependent);

@@ -72,13 +72,17 @@ namespace SmartSave.Controllers
             return View(Course);
         }
 
-
-        public async Task<IActionResult> ChangeCoursestatus(int id, bool status)
+        
+        public async Task<IActionResult> ActionCourse(int id)
         {
-            if (await (_service.ActionCourse(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
+            if (await (_service.ActionCourse(id, DatabaseAction.Remove)) == 0)
+            {
                 ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                return RedirectToAction("ViewCourse", new { id });
 
-            return RedirectToAction("ViewCourse", new { id });
+            }
+            return RedirectToAction(nameof(Courses));
+
         }
 
 
@@ -117,25 +121,31 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewCourseOutline(CourseOutline courseoutline)
         {
+            CourseOutline _courseoutline = await _service.FindCourseOutline(courseoutline.CourseOutlineID);
             if (ModelState.IsValid)
             {
-                CourseOutline update = await _service.FindCourseOutline(courseoutline.CourseOutlineID);
-                if (UtilityService.IsNotNull(update))
+               
+                if (UtilityService.IsNotNull(_courseoutline))
                 {
                     if (await (_service.Update(courseoutline)) == 0)
+                    {
                         ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewCourseOutline", new { id = courseoutline.CourseOutlineID });
-                }
-                return RedirectToAction("ViewCourseOutline", new { id = courseoutline.CourseOutlineID });
+                        return View(_courseoutline);
+                    } }
+                _courseoutline = await _service.FindCourseOutline(courseoutline.CourseOutlineID);
+
+                return View(_courseoutline);
             }
             ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction("ViewCourseOutline", new { id = courseoutline.CourseOutlineID });
+            return View(_courseoutline);
         }
-        public async Task<IActionResult> ActionNote(int outlineid, int courseid)
+        public async Task<IActionResult> ActionCourseOutline(int outlineid, int courseid)
         {
             if (await (_service.ActionCourseOutline(outlineid, DatabaseAction.Remove)) == 0)
+            {
                 ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
+                return RedirectToAction("ViewCourseOutline", new { id = outlineid });
+            }
             return RedirectToAction("ViewCourse", new { id = courseid });
         }
     }

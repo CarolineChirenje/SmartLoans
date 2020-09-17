@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SmartDomain
@@ -15,6 +16,7 @@ namespace SmartDomain
         public virtual List<RolePermission> RolePermissions { get; set; }
         public virtual List<UserRole> UserRoles { get; set; }
 
-    
+     [NotMapped]
+        public int PermissionID { get; set; }
     }
 }

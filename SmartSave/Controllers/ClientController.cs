@@ -194,7 +194,7 @@ namespace SmartSave.Controllers
                 if (await (_service.Save(ClientNote)) == 0)
                 {
                     ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewClient", new { id = ClientNote.ClientID });
+                    return View(ClientNote);
                 }
 
             }
@@ -601,6 +601,63 @@ namespace SmartSave.Controllers
             }
             return RedirectToAction("ViewClient", new { id = Clientid });
         }
+
+        //Dependent Details
+        [HttpPost]
+        public async Task<IActionResult> AddClientDependent(ClientDependent ClientDependent)
+        {
+            if (ModelState.IsValid)
+            {
+                if (await (_service.Save(ClientDependent)) == 0)
+                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+
+            }
+            return RedirectToAction("ViewClient", new { id = ClientDependent.ClientID });
+        }
+
+
+        public async Task<IActionResult> ViewClientDependent(int id, int Clientid)
+        {
+            if (id == 0)
+                return RedirectToAction("ViewClient", new { id = Clientid });
+
+            ClientDependent ClientDependent = await _service.FindDependent(id);
+            if (UtilityService.IsNull(ClientDependent))
+                return RedirectToAction("ViewClient", new { id = Clientid });
+
+            return View(ClientDependent);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ViewClientDependent(ClientDependent ClientDependent)
+        {
+            if (ModelState.IsValid)
+            {
+                ClientDependent update = await _service.FindDependent(ClientDependent.ClientDependentID);
+                if (UtilityService.IsNotNull(update))
+                {
+                    if (await (_service.Update(ClientDependent)) == 0)
+                    {
+                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        //return RedirectToAction("ViewClientDependent", new { id = ClientDependent.ClientDependentID });
+                        return View(ClientDependent);
+                    }
+                }
+                return RedirectToAction("ViewClientDependent", new { id = ClientDependent.ClientDependentID });
+            }
+            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            return RedirectToAction("ViewClient", new { id = ClientDependent.ClientID });
+        }
+        [HttpPost]
+        public async Task<IActionResult> ActionDependent(int Dependentid, int Clientid)
+        {
+            if (await (_service.ActionDependent(Dependentid, DatabaseAction.Remove)) == 0)
+            {
+                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                return RedirectToAction("ViewClient", new { id = Clientid });
+            }
+            return RedirectToAction("ViewClient", new { id = Clientid });
+        }
         /// <summary>
         /// Client Product
         /// </summary>
@@ -707,21 +764,19 @@ namespace SmartSave.Controllers
             {
                 clientID = 0;
             }
+
+            List<Product> clientproductList = null;
             if (clientID != 0)
             {
-                var clientActiveProducts = _service.GetClientProducts(clientID);
-                if (clientActiveProducts != null)
+                clientproductList = _service.GetClientRegisteredProducts(clientID);
+
+                clientproductList.Select(t => new
                 {
-                    if (clientActiveProducts.Count() > 0)
-                    {
-                        clientActiveProducts.Select(a => new
-                        {
-                            a.ProductID,
-                            Name = a.Product.Name,
-                        });
-                        ViewBag.ProductList = new SelectList(clientActiveProducts, "ProductID", "Name");
-                    }
-                }
+                    t.ProductID,
+                    t.Name,
+                }).OrderBy(t => t.Name);
+
+                ViewBag.RegisteredProducts = new SelectList(clientproductList, "ProductID", "Name");
 
             }
 
@@ -736,17 +791,17 @@ namespace SmartSave.Controllers
                     }).OrderBy(t => t.Name);
                 }
                 ViewBag.ProductList = new SelectList(productList, "ProductID", "Name");
-            }
+                           }
             var allproductList = _settingService.GetActiveProductList();
-            var clientproductList = _service.GetClientRegisteredProducts(clientID);
-
-            clientproductList.Select(t => new
+            allproductList.Select(t => new
             {
                 t.ProductID,
                 t.Name,
             }).OrderBy(t => t.Name);
 
-            ViewBag.RegisteredProducts = new SelectList(clientproductList, "ProductID", "Name");
+            ViewBag.AllProductList = new SelectList(allproductList, "ProductID", "Name");
+
+           
 
             var availableProduct = allproductList.Except(clientproductList);
             if (availableProduct != null)
@@ -760,7 +815,7 @@ namespace SmartSave.Controllers
             ViewBag.ProductsAvailable = new SelectList(availableProduct, "ProductID", "Name");
 
 
-            var genderList = _settingService.GenderList(); if (genderList != null)
+              var genderList = _settingService.GenderList(); if (genderList != null)
             {
                 genderList.Select(t => new
                 {

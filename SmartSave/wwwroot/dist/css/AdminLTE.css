@@ -90,19 +90,23 @@ body {
   background-color: #ecf0f5;
   z-index: 800;
 }
-.main-sidebar {
+/*.main-sidebar {
     background-color: #339CFF !important
 }
 
 .sidebar-menu {
     background-color: #339CFF !important
+}*/
+.main-sidebar {
+    background-color: #00a65a !important
 }
 
-/*// .skin-[skinname] .main-header .navbar {
+.sidebar-menu {
+    background-color: #00a65a !important
+    /*// .skin-[skinname] .main-header .navbar {
     background-color: #054a71;
 }*/
-
-.main-footer {
+    .main-footer {
   background: #fff;
   padding: 15px;
   color: #444;

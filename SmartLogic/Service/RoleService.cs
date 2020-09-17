@@ -94,12 +94,13 @@ namespace SmartLogic
 
         public async Task<int> Update(Role role)
         {
-            Role update = await FindRole(role.RoleID);
+            Role update = _context.Roles.Find(role.RoleID);
+            update.Name = role.Name;
             update.Description = role.Description;
             update.IsActive = role.IsActive;
             update.LastChangedBy = UtilityService.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
-            _context.Update(role);
+            _context.Update(update);
             return await _context.SaveChangesAsync();
         }
         public async Task<int> Save(Role role)

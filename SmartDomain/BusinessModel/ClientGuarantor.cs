@@ -33,6 +33,6 @@ namespace SmartDomain
         [NotMapped]
         public string GuarantorFullName { get { return String.Concat(LastName, " ", FirstName); } }
         [NotMapped]
-        public string GuarantorContacts { get { return String.Concat(MobileNumber, "-", EmailAddress); } }
+        public string GuarantorContacts { get { return  String.IsNullOrEmpty(MobileNumber)? EmailAddress: String.Concat(MobileNumber, "-", EmailAddress); } }
     }
 }

@@ -28,8 +28,10 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Active Status</th>
                                 <th>Credits</th>
+                                <th>Sessions</th>
+                                <th>Is Status</th>
+
                                 <th>Last Changed Date</th>
                                 <th>Last Changed By</th>
                                 <th>Action</th>
@@ -42,15 +44,17 @@
                             <tr>
                                 @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
                                     string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                    string activateStatus = UtilityService.ShowActiveAction(@item.IsActive) ;
-
+                                    string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
+                                    int sessionCount = item.CourseOutlines == null ? 0 : item.CourseOutlines.Count();
                                 }
                                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                                <td>@activeStatus</td>
                                 <td>@Html.DisplayFor(modelItem => item.Credits)</td>
+                                <td>@sessionCount</td>
+                                <td>@activeStatus</td>
+                                
                                 <td>@dateCreated</td>
                                 <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-                                <td><a asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseID">View</a> |<a asp-controller="Courses" asp-action="ChangeCourseStatus" asp-route-id="@item.CourseID" asp-route-status="@item.IsActive">@activateStatus</a> | <a href="" onclick="Delete('@item.CourseID')">Delete</a></td>
+                                <td><a asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseID">View</a> |<a asp-controller="Courses" asp-action="ChangeCourseStatus" asp-route-id="@item.CourseID" asp-route-status="@item.IsActive">@activateStatus</a> | <a asp-controller="Courses" asp-action="ActionCourse" asp-route-id="@item.CourseID">Delete</a></td>
                             </tr>
                             }
                     </table>
@@ -76,32 +80,5 @@
     $(function () {
         $('#example1').DataTable();
     });
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "Courses")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl ="/Courses";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
+  
 </script>

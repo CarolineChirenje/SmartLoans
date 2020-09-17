@@ -35,9 +35,10 @@ namespace SmartLogic
 
         public async Task<List<Course>> Courses()
         {
-            return await _context.Courses
-                        .AsNoTracking()
-            .ToListAsync();
+            return await _context.Courses.
+                Include(c => c.CourseOutlines).
+                AsNoTracking().
+                ToListAsync();
         }
 
         public async Task<int> Delete(int id)
@@ -49,7 +50,9 @@ namespace SmartLogic
 
         public async Task<Course> FindCourse(int id)
         {
-            return await _context.Courses.Where(r => r.CourseID == id)
+            return await _context.Courses.
+            Include(c=>c.CourseOutlines).
+            Where(r => r.CourseID == id)
                .AsNoTracking().FirstOrDefaultAsync();
         }
 
@@ -93,7 +96,9 @@ namespace SmartLogic
 
         public async Task<CourseOutline> FindCourseOutline(int id)
         {
-            return await _context.CourseOutlines.Where(r => r.CourseOutlineID == id)
+            return await _context.CourseOutlines.
+              Include(c => c.Course).
+            Where(r => r.CourseOutlineID == id)
                .AsNoTracking().FirstOrDefaultAsync();
         }
 
@@ -109,7 +114,7 @@ namespace SmartLogic
         public async Task<int> Update(CourseOutline outline)
         {
 
-            CourseOutline courseOutline = await FindCourseOutline(outline.CourseOutlineID);
+            CourseOutline courseOutline = _context.CourseOutlines.Find(outline.CourseOutlineID);
             courseOutline.IsActive = outline.IsActive;
             courseOutline.Name = outline.Name;
             courseOutline.LastChangedBy = UtilityService.CurrentUserName;
