@@ -70,5 +70,12 @@ namespace SmartLogic
         Task<int> ActionProduct(int id, DatabaseAction action);
         List<ClientProduct> GetClientProducts(int id);
         List<Product> GetClientRegisteredProducts(int id);
+
+        //Course
+        Task<ClientCourse> FindCourse(int id);
+        Task<int> Save(ClientCourse ClientCourse);
+        Task<int> Update(ClientCourse ClientCourse);
+        Task<int> ActionCourse(int id);
+
     }
 }

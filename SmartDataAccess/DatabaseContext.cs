@@ -147,7 +147,9 @@ namespace SmartDataAccess
         public DbSet<TransactionType> TransactionType { get; set; }
         public DbSet<Client> Clients { get; set; }
 
-
+        public DbSet<ClientCourse> ClientCourses { get; set; }
+        public DbSet<CourseTranscript> CourseTranscripts { get; set; }
+        
         public DbSet<ClientContact> ClientContacts { get; set; }
         public DbSet<ClientDocument> ClientDocuments { get; set; }
         public DbSet<ClientGuarantor> ClientGuarantors { get; set; }

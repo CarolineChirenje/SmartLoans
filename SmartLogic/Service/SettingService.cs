@@ -64,8 +64,15 @@ namespace SmartLogic
              .AsNoTracking()
             .ToList();
         }
+        public List<Course> GetActiveCourseList()
 
-       
+        {
+            return _context.Courses.Where(p => p.IsActive)
+             .AsNoTracking()
+            .ToList();
+        }
+        
+
         public List<Gender> GenderList() => _context.Genders.Where(x => x.IsActive).ToList();
 
         public List<Course> GetCourseList() => _context.Courses.Where(x => x.IsActive).ToList();

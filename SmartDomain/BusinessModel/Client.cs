@@ -49,6 +49,7 @@ namespace SmartDomain
         public virtual List<ClientDependent> ClientDependents{ get; set; }
         public virtual List<ClientGuarantor> ClientGuarantors { get; set; }
         public virtual List<ClientProduct> ClientProducts { get; set; }
+        public virtual List<ClientCourse> ClientCourses { get; set; }
         [NotMapped]
         public int StatementID { get; set; }
         [NotMapped]
@@ -72,6 +73,10 @@ namespace SmartDomain
         [NotMapped]
         [DisplayName("Relationship Type")]
         public int RelationshipTypeID { get; set; }
+
+        [NotMapped]
+        
+        public int CourseID { get; set; }
 
         [NotMapped]
         [DisplayName("Product Type")]

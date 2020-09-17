@@ -719,6 +719,66 @@ namespace SmartSave.Controllers
         }
 
 
+        /// <summary>
+        /// Client Course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// 
+
+        [HttpPost]
+        public async Task<IActionResult> AddClientCourse(ClientCourse ClientCourse)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (await (_service.Save(ClientCourse)) == 0)
+                {
+                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return RedirectToAction("ViewClient", new { id = ClientCourse.ClientID });
+                }
+
+            }
+            return RedirectToAction("ViewClient", new { id = ClientCourse.ClientID });
+        }
+
+        public async Task<IActionResult> ViewClientCourse(int id)
+        {
+            if (id == 0)
+                return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+            GetDropDownLists();
+            return View(await _service.FindCourse(id));
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ViewClientCourse(ClientCourse clientCourse)
+        {
+            GetDropDownLists();
+            if (ModelState.IsValid)
+            {
+                ClientCourse update = await _service.FindCourse(clientCourse.ClientCourseID);
+                if (UtilityService.IsNotNull(update))
+                {
+                    if (await (_service.Update(clientCourse)) == 0)
+                    {
+                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        return RedirectToAction("ViewClient", new { id = clientCourse.ClientID });
+                    }
+                }
+                return RedirectToAction("ViewClientCourse", new { id = clientCourse.ClientCourseID });
+            }
+            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            return RedirectToAction("ViewClientCourse", new { id = clientCourse.ClientCourseID });
+        }
+        public async Task<IActionResult> ActionCourse(int courseid, int Clientid)
+        {
+            if (await (_service.ActionCourse(courseid)) == 0)
+                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+
+            return RedirectToAction("ViewClient", new { id = Clientid });
+        }
+
         private void GetDropDownLists()
         {
             var documentTypes = _documentTypeService.DocumentTypes().Result;
@@ -843,6 +903,15 @@ namespace SmartSave.Controllers
             }).OrderBy(t => t.Name);
 
             ViewBag.DepartmentList = new SelectList(departments, "DepartmentID", "Name");
+
+
+            var courses = _settingService.GetActiveCourseList().Select(t => new
+            {
+                t.CourseID,
+                t.Title,
+            }).OrderBy(t => t.Title);
+
+            ViewBag.CourseList = new SelectList(courses, "CourseID", "Title");
 
         }
 

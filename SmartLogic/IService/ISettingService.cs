@@ -17,7 +17,8 @@ namespace SmartLogic
         List<PriorityRank> GetPriorityRanks();
         List<Gender> GenderList();
         List<Product> GetActiveProductList();
-       Product FindProduct(int productid);
+        List<Course> GetActiveCourseList();
+        Product FindProduct(int productid);
 
         List<WeekDay> GetWeekDays();
         List<Course> GetCourseList();

@@ -132,6 +132,8 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAcco
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\AddClient.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\Clients.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClient.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientCourse.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientDependent.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientGuarantor.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientNote.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientProduct.cshtml.g.cs
@@ -213,4 +215,3 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\staticwebassets\Smar
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.genruntimeconfig.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientDependent.cshtml.g.cs

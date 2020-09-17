@@ -70,9 +70,12 @@ namespace SmartLogic
                             ThenInclude(docFormat => docFormat.DocumentFormat).
                             Include(sm => sm.ClientMedicalDetails).
                             Include(sg => sg.ClientGuarantors).
-                            Include(p=>p.ClientProducts).
-                            ThenInclude(p=>p.Product).
-                            Include(d=>d.ClientDependents).
+                            Include(p => p.ClientProducts).
+                            ThenInclude(p => p.Product).
+                            Include(d => d.ClientDependents).
+                            Include(c => c.ClientCourses).
+                            ThenInclude(c=>c.Course).
+                             ThenInclude(c => c.CourseOutlines).
                             Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
                 return await ClientResults;
 
@@ -408,10 +411,6 @@ namespace SmartLogic
 
             return (await _context.SaveChangesAsync());
         }
-
-
-
-
         // Client Guarantor
         public async Task<ClientGuarantor> FindGuarantor(int id)
         {
@@ -580,9 +579,9 @@ namespace SmartLogic
         public async Task<int> Update(ClientProduct clientProduct)
         {
 
-         
+
             ClientProduct ClientProduct = _context.ClientProducts.Find(clientProduct.ClientProductID);
-                       ClientProduct.IsActive = clientProduct.IsActive;
+            ClientProduct.IsActive = clientProduct.IsActive;
             ClientProduct.LastChangedBy = UtilityService.CurrentUserName;
             ClientProduct.LastChangedDate = DateTime.Now;
             _context.Update(ClientProduct);
@@ -599,21 +598,106 @@ namespace SmartLogic
         }
 
 
-        public  List<ClientProduct> GetClientProducts(int id)
+        public List<ClientProduct> GetClientProducts(int id)
         {
-            return  _context.ClientProducts.
+            return _context.ClientProducts.
             Include(s => s.Client).
-            Include(p=>p.Product).
+            Include(p => p.Product).
             Where(t => t.ClientID == id && t.IsActive).ToList();
         }
 
         public List<Product> GetClientRegisteredProducts(int id)
         {
-            var productids= _context.ClientProducts.
-                       Where(t => t.ClientID == id).Select(p=>p.ProductID);
-             
-                       return _context.Products.
-                       Where(t => productids.Contains(t.ProductID)).ToList();
+            var productids = _context.ClientProducts.
+                       Where(t => t.ClientID == id).Select(p => p.ProductID);
+
+            return _context.Products.
+            Where(t => productids.Contains(t.ProductID)).ToList();
         }
+
+        //Client Course
+        public async Task<ClientCourse> FindCourse(int id)
+        {
+            return await _context.ClientCourses.
+             Include(c => c.Client).
+             Include(c => c.Course).
+             ThenInclude(c => c.CourseOutlines).
+            Where(t => t.ClientCourseID == id).FirstOrDefaultAsync();
+        }
+        public async Task<int> Save(ClientCourse ClientCourse)
+        {
+            ClientCourse.DateRegistered = DateTime.Now;
+            ClientCourse.LastChangedBy = UtilityService.CurrentUserName;
+            ClientCourse.LastChangedDate = DateTime.Now;
+            _context.Add(ClientCourse);
+            int _result = await _context.SaveChangesAsync();
+            int id = ClientCourse.ClientCourseID; // Yes it's here
+            if (_result > 0)
+            {
+                // create course outlines against client
+                int _transcriptResults = await createCourseOutlines(ClientCourse);
+
+            }
+            return _result;
+
+        }
+
+        async Task<int> createCourseOutlines(ClientCourse Course)
+        {
+            var outlines = _context.CourseOutlines.Where(c => c.CourseID == Course.CourseID);
+            if (UtilityService.IsNull(outlines))
+                return 1;
+
+            try
+            {
+
+                foreach (var item in outlines)
+                {
+
+                    CourseTranscript transcript = new CourseTranscript
+                    {
+                        ClientCourseID = Course.ClientCourseID,
+                        CourseOutlineID = item.CourseOutlineID,
+                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedDate = DateTime.Now,
+                        DateRegistered = DateTime.Now
+                    };
+                    _context.Add(transcript);
+                }
+
+
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                return 0;
+            }
+
+        }
+
+
+        public async Task<int> Update(ClientCourse Course)
+        {
+            ClientCourse course = _context.ClientCourses.Find(Course.ClientCourseID);
+            course.CourseID = Course.CourseID;
+            course.LastChangedBy = UtilityService.CurrentUserName;
+            course.LastChangedDate = DateTime.Now;
+            _context.Update(course);
+
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> ActionCourse(int id)
+        {
+            ClientCourse course = _context.ClientCourses.Find(id);
+            course.IsDeRegistered = true;
+            course.LastChangedBy = UtilityService.CurrentUserName;
+            course.LastChangedDate = DateTime.Now;
+            _context.Update(course);
+
+            return await _context.SaveChangesAsync();
+        }
+
     }
 }
