@@ -13,16 +13,25 @@ namespace SmartLogic
         string RoleName(Role role);
         Task<int> Delete(int id);
         Task<int> Save(Role role);
+       
         Task<int> Update(Role role);
+        Task<int> UpdatePermissions(int roleID, string[] selectedPermissions);
         Task<int> ActionRole( int roleID, DatabaseAction action);
         Task<int> ActionPermission(int permissionID, int roleID, DatabaseAction action);
         Task<Role> GetRole(int roleID);
         Task<List<RolePermission>> GetRolePermissions(int roleID);
+      
         Task<Role> GetRole(string name);
         Task<Role> FindRole(int roleID = 0, string username = null);
         Task<List<Role>> Roles();
         List<Role> GetRoles();
-      
+        List<Permission> GetPermissionsForRole(int roleID);
+        List<Permission> GetAllPermissions();
+        Task<Permission> FindPermission(int id);
+        List<User> GetActiveUsersNotInRole(int roleID);
+        Task<int> Save(UserRole user);
+        Task<int> DeleteUserFromRole(int userid, int roleid);
+
 
     }
 }

@@ -1,3 +1,12 @@
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csprojAssemblyReference.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.Resource.resources
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.GenerateResource.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfoInputs.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfo.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.CoreCompileInputs.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.MvcApplicationPartsAssemblyInfo.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cs
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\appsettings.Development.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\appsettings.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Custom\vendors\bootstrap-wysihtml5\component.json
@@ -114,15 +123,6 @@ D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartLogic.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartReporting.pdb
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csprojAssemblyReference.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.Resource.resources
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.GenerateResource.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfoInputs.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfo.cs
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.CoreCompileInputs.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.MvcApplicationPartsAssemblyInfo.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.TagHelpers.input.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.TagHelpers.output.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorCoreGenerate.cache
@@ -188,6 +188,7 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Product\
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\Add.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\RolePermissions.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\Roles.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\ViewPermission.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\ViewRole.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Shared\Components\MenuList\MainMenu.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Shared\Error.cshtml.g.cs
@@ -203,7 +204,6 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\User\Add
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\User\UserRoles.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\User\Users.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\User\ViewUser.cshtml.g.cs
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\User\ViewUserRoles.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\_ViewImports.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\_ViewStart.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorTargetAssemblyInfo.cache

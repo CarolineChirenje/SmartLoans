@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SmartDomain;
 using SmartHelper;
+using Microsoft.AspNetCore.Http;
 
 namespace SmartSave.Controllers
 {
@@ -37,7 +38,7 @@ namespace SmartSave.Controllers
             User user = await _service.FindUser(id);
             ViewBag.UserName = user.UserFullName ?? "No Name";
             ViewBag.UserID = user.UserID;
-            return View( _service.GetUserRoles(id));
+            return View(_service.GetUserRoles(id));
         }
 
 
@@ -60,11 +61,11 @@ namespace SmartSave.Controllers
                     Email mail = new Email
                     {
                         To = user.EmailAddress,
-                        Subject="New User Account Created",
+                        Subject = "New User Account Created",
                         Body = String.Format(UtilityService.GetMessageToDisplay("PASSWORDGENERATED"), user.UserFullName, "GymAdmin", Encryption.Decrypt(user.Password))
                     };
 
-                    _mailservice.SendMail(mail,true);
+                    _mailservice.SendMail(mail, true);
                 }
 
                 return RedirectToAction(nameof(Users));
@@ -79,6 +80,9 @@ namespace SmartSave.Controllers
             if (id == 0 && username == null)
                 return RedirectToAction(nameof(Users));
             ViewBag.DepartmentList = GetDepartments();
+           
+            HttpContext.Session.SetString("UserID", id.ToString());
+            PopulateDropDownLists();
             return View(await _service.FindUser(id, username));
         }
 
@@ -86,6 +90,7 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewUser(User user)
         {
+            PopulateDropDownLists();
             if (ModelState.IsValid)
             {
                 User update = await _service.FindUser(user.UserID);
@@ -114,55 +119,19 @@ namespace SmartSave.Controllers
         }
 
         // UserRoles
-        public async Task<IActionResult> ViewUserRoles(int id)
+               [HttpPost]
+        public async Task<IActionResult> AddUserRoles(string[] selectedRoles, UserRole user)
         {
-            User user = await _service.FindUser(id);
-            ViewBag.UserName = user.UserFullName ?? "No Name";
-            ViewBag.UserID = user.UserID;
-            CheckBoxModel model = new CheckBoxModel
+
+            if (await (_service.UpdateRoles(user.UserID, selectedRoles)) == 0)
             {
-                LinkedID = id,
-                AvailableItems = GetAvailableListItems(id)
-            };
-            return View(model);
-
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> ViewUserRoles(CheckBoxModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (await (_service.SaveUserRoles(model.LinkedID, model.SelectedItems.ToList())) > 0)
-                    return RedirectToAction(nameof(Users));
-                else
-                {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewUser", new { model.LinkedID });
-                }
+                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
-            model.AvailableItems = GetAvailableListItems(model.LinkedID);
-            return View(model);
+
+            return RedirectToAction("ViewUser", new { id=user.UserID });
+
         }
 
-
-        [HttpPost]
-        public async Task<IActionResult> AddUserRoles(CheckBoxModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (await (_service.SaveUserRoles(model.LinkedID, model.SelectedItems.ToList())) > 0)
-                    return RedirectToAction(nameof(Users));
-                else
-                {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewUser", new { model.LinkedID });
-                }
-            }
-            model.AvailableItems = GetAvailableListItems(model.LinkedID);
-            return View(model);
-        }
         public async Task<IActionResult> DeleteUserRole(int id, int userid)
         {
             if (await (_service.ActionUserRole(id, userid, DatabaseAction.Remove)) > 0)
@@ -184,26 +153,23 @@ namespace SmartSave.Controllers
             }
         }
 
-        // this must return unticked  checkboxs if Department has no Department otherwise it will return ticked and unticked boxes 
-        // #ndini ndadaro
-        public List<CheckBoxListItem> GetAvailableListItems(int id)
+        public void PopulateDropDownLists()
         {
-            List<Role> allRoles = _roleservice.GetRoles();
-            List<Role> userRoles =    _service.GetUserRoles(id);
-            List<Role> availableRoles = allRoles.Except(userRoles).ToList();
-            var AvailableListItems = new List<CheckBoxListItem>();
-            foreach (var role in availableRoles)
+            int userID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+            var allRoles = _service.GetAllRoles();
+            var userRoles = new HashSet<int>(_service.GetUserRoles(userID)?.Select(p => p.RoleID));
+            var viewModel = new List<CheckBoxListItem>();
+            foreach (var role in allRoles)
             {
-                AvailableListItems.Add(new CheckBoxListItem()
+                viewModel.Add(new CheckBoxListItem
                 {
                     ID = role.RoleID,
-                    Value = role.Name,
-                    IsChecked = false //On the add view, checkbox are selected by default
-
-                    //   IsChecked = userRoles.Where(x => x.ID == role.RoleID).Any()
+                    Name = role.Name,
+                    IsChecked = userRoles.Contains(role.RoleID)
                 });
             }
-            return AvailableListItems;
+            ViewBag.RolesList = viewModel;
+
         }
         private IList<Department> GetDepartments()
         {

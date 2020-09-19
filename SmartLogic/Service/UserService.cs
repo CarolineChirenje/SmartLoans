@@ -45,7 +45,7 @@ namespace SmartLogic
                 id = user.UserID;
             }
                 string[] roles = _context.UserRoles.Where(
-             userRole => userRole.UserID == id && !userRole.IsDeleted).Select(r => r.RoleID.ToString()).ToArray();
+             userRole => userRole.UserID == id).Select(r => r.RoleID.ToString()).ToArray();
 
             return _context
             .Roles
@@ -97,9 +97,7 @@ namespace SmartLogic
                     UserRoleID = roleID,
                     LastChangedBy = UtilityService.CurrentUserName,
                     LastChangedDate = DateTime.Now,
-                    IsActive = true,
-                    IsDeleted = false,
-                };
+                                    };
 
                 _context.Add(userRole);
             }
@@ -125,7 +123,7 @@ namespace SmartLogic
                 _context.UserRoles.Remove(userRole);
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
-                userRole.IsActive = DatabaseAction.Deactivate == action ? false : true;
+               
                 userRole.LastChangedBy = UtilityService.CurrentUserName;
                 userRole.LastChangedDate = DateTime.Now;
                 _context.Update(userRole);
@@ -145,6 +143,91 @@ namespace SmartLogic
         private static Lazy<UserService> instance = new Lazy<UserService>(() => new UserService());
 
         public static UserService Instance => instance.Value;
+
+        public List<Role> GetAllRoles() => _context.Roles.ToList();
+
+        public async Task<int> UpdateRoles(int userID, string[] selectedRoles)
+        {
+            int result = 0;
+            try
+            {
+                IEnumerable<int> oldRoles = from c in _context.UserRoles
+                                      where c.UserID == userID
+                                      select c.RoleID;
+
+                List<int> old_Roles = oldRoles.ToList();
+                List<int> add_Roles = new List<int>();
+                List<int> remove_Roles = new List<int>();
+                int[] updated_Details = selectedRoles == null ? null : Array.ConvertAll(selectedRoles, s => int.Parse(s));
+
+
+                if (old_Roles == null && old_Roles.Count == 0)
+                {
+                    add_Roles = updated_Details.ToList();
+                    return await AddRole(userID, add_Roles);
+                }
+                foreach (var role in _context.Roles)
+                {
+                    if (selectedRoles.Contains(role.RoleID.ToString()))
+                    {
+                        if (!old_Roles.Contains(role.RoleID))
+                        {
+                            add_Roles.Add(role.RoleID);
+                        }
+                    }
+                    else
+                    {
+                        if (old_Roles.Contains(role.RoleID))
+                        {
+                            remove_Roles.Add(role.RoleID);
+                        }
+                    }
+                }
+                int _addResult = await AddRole(userID, add_Roles);
+                int _removeResult = await RemoveRoleFromUser(userID, remove_Roles);
+                result = _addResult + _removeResult;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            return result;
+        }
+
+        public async Task<int> AddRole(int userID, List<int> roles)
+        {
+            try
+            {
+
+                foreach (int roleid in roles)
+                {
+                    UserRole userRole = new UserRole
+                    {
+                        UserID = userID,
+                        RoleID = roleid,
+                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedDate = DateTime.Now
+                    };
+                    _context.Add(userRole);
+
+                }
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+        public async Task<int> RemoveRoleFromUser(int userID, List<int> roles)
+        {
+            List<UserRole> userRoles = await _context.UserRoles.Where(r => r.UserID == userID).ToListAsync();
+            var rolesToBeRemoved = userRoles
+                    .Where(x => roles.Any(y => y == x.RoleID));
+            _context.UserRoles.RemoveRange(rolesToBeRemoved);
+            return (await _context.SaveChangesAsync());
+        }
+
+
 
     }
 }

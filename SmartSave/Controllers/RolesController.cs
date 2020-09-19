@@ -6,6 +6,10 @@ using SmartLogic;
 using Microsoft.AspNetCore.Mvc;
 using SmartHelper;
 using SmartDomain;
+using SmartSave.Models;
+using Microsoft.AspNetCore.Http;
+using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SmartSave.Controllers
 {
@@ -40,7 +44,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(role)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");;
+                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR"); ;
                 return RedirectToAction(nameof(Roles));
             }
             ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -51,12 +55,18 @@ namespace SmartSave.Controllers
         {
             if (id == 0 && rolename == null)
                 return RedirectToAction(nameof(Roles));
-            return View(await _service.FindRole(id, rolename));
+
+            Role role = await _service.FindRole(id, rolename);
+            HttpContext.Session.SetString("RoleID", role.RoleID.ToString());
+
+            PopulateDropDownLists();
+            return View(role);
         }
 
         [HttpPost]
         public async Task<IActionResult> ViewRole(Role role)
         {
+            PopulateDropDownLists();
             if (ModelState.IsValid)
             {
                 Role update = await (_service.GetRole(role.RoleID));
@@ -64,10 +74,10 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(role)) == 0)
                     {
-                         ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                         return View(role);
-                   }
-                   //     return RedirectToAction(nameof(Roles));
+                    }
+                    //     return RedirectToAction(nameof(Roles));
                 }
                 return View(role);
             }
@@ -87,7 +97,7 @@ namespace SmartSave.Controllers
             }
 
         }
-        public async Task<IActionResult> ChangeRoleStatus(int id,  bool status)
+        public async Task<IActionResult> ChangeRoleStatus(int id, bool status)
         {
             if (await (_service.ActionRole(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
                 ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -110,22 +120,92 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewRole", new { id });
         }
 
-        public async Task<IActionResult> RemovePermission(int id,  int roleID)
+        public async Task<IActionResult> RemovePermission(int id, int roleID)
         {
-            if (await (_service.ActionPermission(id, roleID, DatabaseAction.Remove))==0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("RolePermissions", new { roleID }); ;
-            
+            if (await (_service.ActionPermission(id, roleID, DatabaseAction.Remove)) == 0)
 
-        }
-        public async Task<IActionResult> ChangePermissionStatus(int id, int roleID, bool status)
-        {
-            if (await (_service.ActionPermission(id, roleID, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
                 ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            return RedirectToAction("ViewRole", new { roleID });
 
-            return RedirectToAction("RolePermissions", new {id= roleID });
+        }
+        public async Task<IActionResult> ViewPermission(int id)
+        {
+            int roleID = Convert.ToInt32(HttpContext.Session.GetString("RoleID"));
+            if (id == 0)
+                return RedirectToAction("ViewRole", new { roleID });
+
+            Permission permission = await _service.FindPermission(id);
+            if (UtilityService.IsNull(permission))
+                return RedirectToAction("ViewRole", new { roleID });
+            return View(permission);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddUserToRole(UserRole user)
+        {
+            Role update = await (_service.GetRole(user.RoleID));
+            if (UtilityService.IsNull(update))
+                return RedirectToAction(nameof(Roles));
+            if (await _service.Save(user) == 0)
+            {
+                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            }
+
+            return RedirectToAction("ViewRole", new { user.RoleID });
         }
 
+
+        public async Task<IActionResult> RemoveUserFromRole(int UserID, int roleID)
+        {
+            if (await (_service.DeleteUserFromRole(UserID,roleID)) == 0)
+
+                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            return RedirectToAction("ViewRole", new { roleID });
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPermission(string[] selectedPermissions, Role role)
+        {
+            Role update = await (_service.GetRole(role.RoleID));
+            if (UtilityService.IsNotNull(update))
+            {
+                if (await (_service.UpdatePermissions(role.RoleID, selectedPermissions)) == 0)
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return View(role);
+                }
+
+            }
+            return RedirectToAction("ViewRole", new { role.RoleID });
+
+        }
+
+        private void PopulateDropDownLists()
+        {
+
+            int roleID = Convert.ToInt32(HttpContext.Session.GetString("RoleID"));
+            var allPermissions = _service.GetAllPermissions();
+            var rolePermissions = new HashSet<int>(_service.GetPermissionsForRole(roleID)?.Select(p => p.PermissionID));
+            var viewModel = new List<CheckBoxListItem>();
+            foreach (var permission in allPermissions)
+            {
+                viewModel.Add(new CheckBoxListItem
+                {
+                    ID = permission.PermissionID,
+                    Name = permission.Name,
+                    IsChecked = rolePermissions.Contains(permission.PermissionID)
+                });
+            }
+            ViewBag.PermissionsList = viewModel;
+
+
+            var activeUsers = _service.GetActiveUsersNotInRole(roleID).Select(t => new
+            {
+                t.UserID,
+                Name = t.UserFullName,
+            }).OrderBy(t => t.Name);
+            ViewBag.Users = new SelectList(activeUsers, "UserID", "Name");
+        }
 
     }
 }

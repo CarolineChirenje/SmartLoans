@@ -39,18 +39,18 @@ namespace SmartLogic
         }
         public async Task<Role> GetRole(int roleID = 0)
         {
-        
-        Task<Role> role =     _context
-            .Roles
-            .Where(r => r.RoleID == roleID)
-            .Include(rp => rp.RolePermissions)
-            .ThenInclude(perm => perm.Permission)
-            .Include(u => u.UserRoles)
-             .ThenInclude(usr=>usr.User)
-            //  .AsNoTracking()
-            .FirstOrDefaultAsync();
-           
-            return await  role;
+
+            Task<Role> role = _context
+                .Roles
+                .Where(r => r.RoleID == roleID)
+                .Include(rp => rp.RolePermissions)
+                .ThenInclude(perm => perm.Permission)
+                .Include(u => u.UserRoles)
+                 .ThenInclude(usr => usr.User)
+                //  .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            return await role;
         }
         public async Task<Role> GetRole(string name)
         {
@@ -84,6 +84,29 @@ namespace SmartLogic
             .AsNoTracking()
             .ToListAsync();
         }
+
+        public List<Permission> GetAllPermissions()
+        {
+
+            return _context.Permissions
+            .ToList();
+        }
+        public async  Task<Permission> FindPermission(int id)
+        {
+
+            return await _context.Permissions.Where(p => p.PermissionID == id).
+            Include(p => p.RolePermissions).ThenInclude(p => p.Roles).FirstOrDefaultAsync();
+          
+        }
+
+        
+        public List<Permission> GetPermissionsForRole(int roleID)
+        {
+            IEnumerable<int> rolePermissions = RolePermissions(roleID);
+            return _context.Permissions.Where(r => rolePermissions.Contains(r.PermissionID))
+            .ToList();
+        }
+
         public List<Role> GetRoles()
         {
             return _context.Roles
@@ -91,7 +114,13 @@ namespace SmartLogic
             .ToList();
         }
 
+        IEnumerable<int> RolePermissions(int roleID)
+        {
 
+         return   from c in _context.RolePermissions
+            where c.RoleID == roleID
+            select c.PermissionID;
+        }
         public async Task<int> Update(Role role)
         {
             Role update = _context.Roles.Find(role.RoleID);
@@ -131,8 +160,7 @@ namespace SmartLogic
                 _context.RolePermissions.Remove(permission);
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
-                permission.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                permission.LastChangedBy = UtilityService.CurrentUserName;
+                                permission.LastChangedBy = UtilityService.CurrentUserName;
                 permission.LastChangedDate = DateTime.Now;
                 _context.Update(permission);
             }
@@ -157,5 +185,104 @@ namespace SmartLogic
             return (await _context.SaveChangesAsync());
         }
 
+     public async   Task<int> UpdatePermissions(int roleID, string[] selectedPermissions)
+        {
+            int result = 0;
+            try
+            {
+                List<int> old_Permissions = RolePermissions(roleID).ToList();
+                List<int> add_Permissions = new List<int>();
+                List<int> remove_Permissions = new List<int>();
+                int[] updated_Details = selectedPermissions == null? null :  Array.ConvertAll(selectedPermissions, s => int.Parse(s));
+
+
+                 if(old_Permissions==null && old_Permissions.Count==0)
+                 {
+                    add_Permissions = updated_Details.ToList();
+                   return await AddPermissions(roleID, add_Permissions);
+                }
+                foreach (var permission in _context.Permissions)
+                {
+                    if (selectedPermissions.Contains(permission.PermissionID.ToString()))
+                    {
+                        if (!old_Permissions.Contains(permission.PermissionID))
+                        {
+                            add_Permissions.Add(permission.PermissionID);
+                        }
+                    }
+                    else
+                    {
+                        if (old_Permissions.Contains(permission.PermissionID))
+                        {
+                            remove_Permissions.Add(permission.PermissionID);
+                        }
+                    }
+                }
+                int _addResult =await AddPermissions(roleID, add_Permissions);
+                int _removeResult = await RemovePermissionsFromRole(roleID, remove_Permissions);
+                result = _addResult + _removeResult;
+            }
+            catch (Exception ex)
+           {
+                return 0;
+            }
+            return result;
+        }
+       
+        public async Task<int> AddPermissions(int roleID,List<int>permissions)
+        {
+            try
+            {
+
+                foreach (int permissionid in permissions)
+                {
+                    RolePermission rolePermissions = new RolePermission
+                    {
+                        PermissionID =permissionid,
+                        RoleID = roleID,
+                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedDate = DateTime.Now
+                    };
+                    _context.Add(rolePermissions);
+
+                }
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+        public async Task<int> RemovePermissionsFromRole(int roleID, List<int> permissions)
+        {
+            List<RolePermission> rolePermissions = await _context.RolePermissions.Where(r => r.RoleID ==roleID).ToListAsync();
+            var rolePermissionsToBeRemoved = rolePermissions
+                    .Where(x => permissions.Any(y => y == x.PermissionID));
+            _context.RolePermissions.RemoveRange(rolePermissionsToBeRemoved);
+            return (await _context.SaveChangesAsync());
+        }
+
+       public List<User> GetActiveUsersNotInRole(int roleID)
+       {
+            IEnumerable<int> userList = from c in _context.UserRoles
+                                        where c.RoleID == roleID
+                                        select c.UserID;
+            List<User> usersToBeAdded = _context.Users.Where(u => !userList.Contains(u.UserID) && u.IsActive).ToList();
+            return usersToBeAdded;
+       }
+
+        public async Task<int> Save(UserRole user)
+        {
+            user.LastChangedBy = UtilityService.CurrentUserName;
+            user.LastChangedDate = DateTime.Now;
+            _context.Add(user);
+            return (await _context.SaveChangesAsync());
+        }
+        public async Task<int> DeleteUserFromRole(int userid, int roleid)
+        {
+            var _userRole = await _context.UserRoles.Where(r=>r.RoleID==roleid && r.UserID==userid).FirstOrDefaultAsync();
+            _context.UserRoles.Remove(_userRole);
+            return (await _context.SaveChangesAsync());
+        }
     }
 }

@@ -18,8 +18,7 @@ namespace SmartDomain
         public int RoleID { get; set; }
         public virtual Role Roles { get; set; }
     
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
+       
      
     }
 }

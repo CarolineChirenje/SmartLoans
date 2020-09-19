@@ -68,9 +68,8 @@ namespace SmartSave.Models
     public class CheckBoxListItem
     {
         public int ID { get; set; }
-        public string Value { get; set; }
-        public string Checked { get; set; }
-        public bool IsChecked { get; set; }
+        public string Name { get; set; }
+               public bool IsChecked { get; set; }
     }
 
     public class DashBoardViewModel

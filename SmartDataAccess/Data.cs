@@ -883,9 +883,7 @@ namespace SmartDataAccess
                     RolePermissionID = count,
                     PermissionID = permission.PermissionID,
                     RoleID = 1,
-                    IsActive = true,
-                    IsDeleted = false,
-                    LastChangedDate = DateTime.Now,
+                                       LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser",
 
                 });
@@ -1081,8 +1079,7 @@ namespace SmartDataAccess
                UserRoleID = 1,
                UserID = 1,
                RoleID = 1,
-               IsDeleted = false,
-               IsActive = true,
+               
                LastChangedBy = "SuperUser",
                LastChangedDate = DateTime.Now,
            },
@@ -1091,9 +1088,7 @@ namespace SmartDataAccess
                 UserRoleID = 2,
                 UserID = 2,
                 RoleID = 1,
-                IsDeleted = false,
-                IsActive = true,
-                LastChangedBy = "SuperUser",
+                               LastChangedBy = "SuperUser",
                 LastChangedDate = DateTime.Now,
             }
             };

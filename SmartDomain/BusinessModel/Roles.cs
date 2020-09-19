@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SmartDomain
 {
- public   class Role: ChangeAudit
+    public class Role : ChangeAudit
     {
         [Key]
         public int RoleID { get; set; }
@@ -16,7 +16,11 @@ namespace SmartDomain
         public virtual List<RolePermission> RolePermissions { get; set; }
         public virtual List<UserRole> UserRoles { get; set; }
 
-     [NotMapped]
+        [NotMapped]
         public int PermissionID { get; set; }
+        [NotMapped]
+        public int UserID { get; set; }
+
+
     }
 }

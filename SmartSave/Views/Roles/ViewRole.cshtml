@@ -79,131 +79,124 @@
             </div>
             <!-- /.box-footer -->
         </form>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Additional Information
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#Permissions" data-toggle="tab">Permissions</a>
-                            </li>
-                            <li>
-                                <a href="#Users" data-toggle="tab">Users</a>
-                            </li>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Additional Information
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#Permissions" data-toggle="tab">Permissions</a>
+                        </li>
+                        <li>
+                            <a href="#Users" data-toggle="tab">Users</a>
+                        </li>
 
 
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div class="tab-pane fade in active" id="Permissions">
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="Permissions">
 
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        Permissions: @Model.Name
-                                    </div>
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div class="panel-body">
-                                    <div class="dataTable_wrapper">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Last Changed Date</th>
-                                                    <th>Changed By</th>
-                                                    <th>Active Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (Model.RolePermissions != null)
-                                                {
-
-                                                    @foreach (var item in Model.RolePermissions)
-                                                    {
-
-                                                        <tr>
-                                                            @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
-                                                                string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                                                string roleStatus = @item.IsActive ? "Deactivate" : "Reactivate";
-
-                                                            }
-
-                                                            <td>@Html.DisplayFor(modelItem => item.Permission.Name)</td>
-                                                            <td>@dateCreated</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-
-                                                            <td>@activeStatus</td>
-                                                            <td><a asp-controller="Roles" asp-action="ChangePermissionStatus" asp-route-id="@item.RolePermissionID" asp-route-roleID="@ViewBag.RoleID" asp-route-status="@item.IsActive">@roleStatus</a> | <a asp-controller="Roles" asp-action="RemovePermission" asp-route-id="@item.RolePermissionID" asp-route-roleID="@ViewBag.RoleID">Remove</a></td>
-                                                        </tr>
-                                                    }
-                                                }
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="box-footer">
-                                    <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#DocumentForm">Add Permission</a>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Permissions: @Model.Name
                                 </div>
                             </div>
-                       
-                            <div class="tab-pane fade in" id="Users">
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="dataTable_wrapper">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Last Changed Date</th>
+                                                <th>Changed By</th>
 
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        Users: @Model.Name
-                                    </div>
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div class="panel-body">
-                                    <div class="dataTable_wrapper">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Active Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (Model.UserRoles != null)
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.RolePermissions != null)
+                                            {
+
+                                                @foreach (var item in Model.RolePermissions)
                                                 {
 
-                                                    @foreach (var item in Model.UserRoles)
-                                                    {
+                                                    <tr>
+                                                        @{
+                                                            string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
 
-                                                        <tr>
-                                                            @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);  string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                                              
+                                                        }
 
-                                                            }
+                                                        <td><a target="_blank" asp-controller="Roles" asp-action="ViewPermission" asp-route-id="@item.PermissionID">@item.Permission.Name</a></td>
+                                                        <td>@dateCreated</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
 
-                                                            <td>@Html.DisplayFor(modelItem => item.User.UserFullName)</td>
-                                                            <td>@activeStatus</td>
-                                                            <td><a asp-controller="User" asp-action="ViewUser" asp-route-id="@item.UserID">View</a> | <a asp-controller="User" asp-action="DeleteUserRole" asp-route-id="@Model.RoleID" asp-route-userid="@item.UserID">Remove Role</a></td>
-                                                        </tr>
-                                                    }
+
+                                                        <td> <a asp-controller="Roles" asp-action="RemovePermission" asp-route-id="@item.PermissionID" asp-route-roleID="@Model.RoleID">Remove</a></td>
+                                                    </tr>
                                                 }
-                                        </table>
-                                    </div>
+                                            }
+                                    </table>
                                 </div>
-                                <div class="box-footer">
-                                    <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#DocumentForm">Add User</a>
+                            </div>
+                            <div class="box-footer">
+                                <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddPermissions">Add Permission</a>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade in" id="Users">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Users: @Model.Name
                                 </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="dataTable_wrapper">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.UserRoles != null)
+                                            {
+
+                                                @foreach (var item in Model.UserRoles)
+                                                {
+
+                                                    <tr>
+
+                                                        <td>@Html.DisplayFor(modelItem => item.User.UserFullName)</td>
+                                                        <td><a asp-controller="User" asp-action="ViewUser" asp-route-id="@item.UserID">View</a> | <a asp-controller="Roles" asp-action="RemoveUserFromRole" asp-route-roleID="@item.RoleID" asp-route-UserID="@item.UserID">Remove User</a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#UserForm">Add User</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /.box -->
+    </div>
+    <!-- /.box -->
 </section>
-<div class="modal fade" id="ProductsForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="AddPermissions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -212,26 +205,80 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" asp-controller="Role" asp-action="AddPermission">
+            <form method="post" asp-controller="Roles" asp-action="AddPermission">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Permission</label>
-                        <select asp-for="PermissionID" class="form-control" asp-items="ViewBag.PermissionsList">
-                            <option value="">----</option>
-                        </select>
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                                <tr>
+                                    @{
+                                        int cnt = 0;
+                                        List<CheckBoxListItem> permissions = ViewBag.PermissionsList;
+
+                                        foreach (var permission in permissions)
+                                        {
+                                            if (cnt++ % 3 == 0)
+                                            {
+                                            @:</tr><tr>
+                                            }
+                                            @:<td>
+                                                <input type="checkbox"
+                                                       name="selectedPermissions"
+                                                       value="@permission.ID"
+                                                       @(Html.Raw(permission.IsChecked ? "checked=\"checked\"" : "")) />
+                                                @permission.Name
+                                            @:</td>
+                                        }
+                                    @:</tr>
+                                    }
+                                </table>
+                            </div>
+
+                        </div>
+
+
+                        <input type="hidden" name="RoleID" value="@Model.RoleID" />
 
                     </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                   
-                    <input type="hidden" name="RoleID" value="@Model.RoleID" />
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                </div>
-            </form>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+    <div class="modal fade" id="UserForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Model.Name</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" asp-controller="Roles" asp-action="AddUserToRole">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Active Users Not In Role</label>
+                            <select asp-for="UserID" class="form-control" asp-items="ViewBag.Users">
+                                <option value="">----</option>
+                            </select>
+
+                        </div>
+
+                        <input type="hidden" name="RoleID" value="@Model.RoleID" />
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
