@@ -1,4 +1,5 @@
 ﻿@model SmartDomain.BankAccount
+@using SmartHelper;
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -80,10 +81,13 @@
 
         <!-- /.box-body -->
         <div class="box-footer">
-            <button type="submit" class="btn btn-info pull-right">Create</button>
-            <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+            @if (UtilityService.HasPermission(Permissions.Add_Bank_Account))
+            {
+                <button type="submit" class="btn btn-info pull-right">Create</button>
+            }
+                <a class="btn btn-default" asp-controller="BankAccounts" asp-action="BankAccounts">Cancel</a>
 
-        </div>
+            </div>
         <!-- /.box-footer -->
     </form>
     <!-- /.box -->

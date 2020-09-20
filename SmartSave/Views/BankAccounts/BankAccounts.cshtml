@@ -31,36 +31,44 @@
                                     <th>Account Number</th>
                                     <th>Bank Name</th>
                                     <th>Active Status</th>
-                                    <th>Action</th>
+                                  
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
-                                            string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                            string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
-                                            string accountNum = item.AccountCode + "-" + item.AccountNumber;
+                                <tr>
+                                    @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                        string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                        string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
+                                        string accountNum = item.AccountCode + "-" + item.AccountNumber;
 
-                                        }
+                                    }
 
-                                        <td>@Html.DisplayFor(modelItem => item.BankAccountType.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.BankAccountType.Name)</td>
+                                    @if (UtilityService.HasPermission(Permissions.View_Bank_Account))
+                                    {
+                                        <td><a asp-controller="BankAccounts" asp-action="ViewBankAccount" asp-route-id="@item.BankAccountID">@accountNum</a></td>
+                                    }
+                                    else
+
+                                    {
                                         <td>@accountNum</td>
-                                        <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
-                                        <td>@activeStatus</td>
-
-                                        <td><a asp-controller="BankAccounts" asp-action="ViewBankAccount" asp-route-id="@item.BankAccountID">View</a> | <a asp-controller="BankAccounts" asp-action="ChangeBankAccountstatus" asp-route-id="@item.BankAccountID" asp-route-status="@item.IsActive">@activateStatus</a> | <a href="" onclick="Delete('@item.BankAccountID')">Delete</a></td>
-                                    </tr>
+                                    }
+                                    <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
+                                    <td>@activeStatus</td>
+ </tr>
                                 }
                         </table>
                     </div>
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                    <a class="btn btn-success pull-right" asp-controller="BankAccounts" asp-action="AddBankAccount">New</a><br />
-
-                </div>
+                    @if (UtilityService.HasPermission(Permissions.Add_Bank_Account))
+                    {
+                        <a class="btn btn-success pull-right" asp-controller="BankAccounts" asp-action="AddBankAccount">New</a><br />
+                    }
+                    </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
@@ -70,34 +78,3 @@
     <!-- /.row -->
 </section>
 
-<script>
-
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "BankAccounts")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl="/Users";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
-</script>

@@ -77,5 +77,7 @@ namespace SmartLogic
         Task<int> Update(ClientCourse ClientCourse);
         Task<int> ActionCourse(int id);
 
+        Task<int> UpdateSessions(int clientCourseID, string[] selectedSessions);
+
     }
 }

@@ -41,7 +41,6 @@
                                     <th>Is Active</th>
                                     <th>Last Changed Date</th>
                                     <th>Last Changed By</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,62 +54,46 @@
                                             string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
 
                                         }
-
-                                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                        @if (UtilityService.HasPermission(Permissions.View_Notice))
+                                        {
+                                            <td><a asp-controller="NoticeBoard" asp-action="ViewNotice" asp-route-id="@item.NoticeID">@item.Title</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                        }
                                         <td>@eventdate</td>
                                         <td>@activeStatus</td>
                                         <td>@dateCreated</td>
                                         <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-
-                                        <td><a asp-controller="NoticeBoard" asp-action="ViewNotice" asp-route-id="@item.NoticeID">View</a> |<a asp-controller="NoticeBoard" asp-action="ChangeNoticeBoardStatus" asp-route-id="@item.NoticeID" asp-route-status="@item.IsActive">@activateStatus</a> | <a href="" onclick="Delete('@item.NoticeID')">Delete</a></td>
                                     </tr>
                                 }
                         </table>
                     </div>
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer">
-                        <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        <a class="btn btn-success pull-right" asp-controller="NoticeBoard" asp-action="AddNotice">New</a><br />
-                    </div>
                 </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    @if (UtilityService.HasPermission(Permissions.Add_Notice))
+                    {
+                        <a class="btn btn-success pull-right" asp-controller="NoticeBoard" asp-action="AddNotice">New</a><br />
+                    }
+                </div>
+            </div>
             <!-- /.box -->
         </div>
         <!-- /.col -->
     </div>
     <!-- /.row -->
 </section>
-
-
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- page script -->
 <script>
-   
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
+    $(function () {
+        $('#example1').DataTable();
+    });
 
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "NoticeBoard")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl ="/NoticeBoard";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
 </script>
+

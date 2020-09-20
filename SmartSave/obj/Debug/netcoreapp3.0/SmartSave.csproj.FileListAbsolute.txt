@@ -7,6 +7,11 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.Cor
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.MvcApplicationPartsAssemblyInfo.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.TagHelpers.input.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.TagHelpers.output.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorCoreGenerate.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\appsettings.Development.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\appsettings.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Custom\vendors\bootstrap-wysihtml5\component.json
@@ -123,9 +128,6 @@ D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartLogic.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartReporting.pdb
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.TagHelpers.input.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.TagHelpers.output.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorCoreGenerate.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAccounts\AddBankAccount.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAccounts\BankAccounts.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAccounts\ViewBankAccount.cshtml.g.cs
@@ -212,6 +214,4 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.Views.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.CopyComplete
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\staticwebassets\SmartSave.StaticWebAssets.Manifest.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\staticwebassets\SmartSave.StaticWebAssets.xml
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
-D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.genruntimeconfig.cache

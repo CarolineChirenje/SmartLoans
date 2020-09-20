@@ -98,10 +98,15 @@
 
         </div>
             <!-- /.box-body -->
-            <div class="box-footer">
-                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                <button type="submit" class="btn btn-info pull-right">Update</button>
-            </div>
+        <div class="box-footer">
+            <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+            @if (UtilityService.HasPermission(Permissions.Update_Bank_Account))
+            {<button type="submit" class="btn btn-info">Update</button>
+            }
+            @if (UtilityService.HasPermission(Permissions.Delete_Bank_Account))
+            {<a class="btn btn-danger" asp-controller="BankAccounts" asp-action="Delete" asp-route-id="@Model.BankAccountID">Delete</a>
+            }
+        </div>
             <!-- /.box-footer -->
         </form>
     </div>

@@ -66,7 +66,14 @@
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Clients on Product</label>
                 <div class="col-sm-10">
-                    <a asp-controller="Product" asp-action="ClientsLinkedToProduct" asp-route-id="@Model.ProductID">@Model.Clients?.Count()</a>
+                    @if (UtilityService.HasPermission(Permissions.View_User))
+                    {
+                        <a asp-controller="Product" asp-action="ClientsLinkedToProduct" asp-route-id="@Model.ProductID">@Model.Clients?.Count()</a>
+                    }
+                    else
+                    {
+                        @Model.Clients?.Count()
+                    }
                 </div>
             </div>
 
@@ -86,10 +93,17 @@
             <input type="hidden" name="ProductID" value="@Model.ProductID" />
         </div>
             <!-- /.box-body -->
-            <div class="box-footer">
-                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                <button type="submit" class="btn btn-info pull-right">Update</button>
-            </div>
+        <div class="box-footer">
+            <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>
+            @if (UtilityService.HasPermission(Permissions.Update_Product))
+            {
+                <button type="submit" class="btn btn-info">Update</button>
+            }
+            @if (UtilityService.HasPermission(Permissions.Delete_Product))
+            {
+                <a class="btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.ProductID">Delete</a>
+            }
+        </div>
             <!-- /.box-footer -->
         </form>
        

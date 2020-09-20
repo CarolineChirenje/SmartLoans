@@ -41,7 +41,7 @@
                                     <th>Users</th>
                                     <th>Last Changed Date</th>
                                     <th>Last Changed By</th>
-                                    <th>Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,26 +54,34 @@
                                             string status = @item.IsActive ? "Deactivate" : "Reactivate";
 
                                         }
-
-                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-
+                                        @if (UtilityService.HasPermission(Permissions.View_Department))
+                                        {
+                                            <td><a asp-controller="Department" asp-action="ViewDepartment" asp-route-id="@item.DepartmentID">@item.Name</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        }
                                         <td>@activeStatus</td>
                                         <td><a asp-controller="Department" asp-action="ViewDepartmentUsers" asp-route-id="@item.DepartmentID">@item.Clients?.Count()</a></td>
                                         <td>@dateCreated</td>
                                         <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
 
-                                        <td><a asp-controller="Department" asp-action="ViewDepartment" asp-route-id="@item.DepartmentID">View</a> |<a asp-controller="Department" asp-action="ChangeDepartmentstatus" asp-route-id="@item.DepartmentID" asp-route-status="@item.IsActive">@status</a> | <a href="" onclick="Delete('@item.DepartmentID')">Delete</a></td>
+
                                     </tr>
                                 }
                         </table>
                     </div>
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer">
-                        <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        <a href="Add" class="btn btn-success pull-right">Create</a><br />
-                    </div>
                 </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    @if (UtilityService.HasPermission(Permissions.Add_Department))
+                    {
+                        <a href="Add" class="btn btn-success pull-right">Create</a><br />
+                    }
+                </div>
+            </div>
             <!-- /.box -->
         </div>
         <!-- /.col -->
@@ -81,35 +89,13 @@
     <!-- /.row -->
 </section>
 
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- page script -->
 <script>
-  
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
+    $(function () {
+        $('#example1').DataTable();
+    });
 
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "Department")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl ="/Department";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
 </script>

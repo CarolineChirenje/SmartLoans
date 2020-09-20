@@ -586,8 +586,6 @@ namespace SmartHelper
     {  //User Module
         Add_User = 1,
         Update_User = 2,
-        Activate_User,
-        Deactivate_User,
         Delete_User,
         View_User,
         Change_User_Password,
@@ -595,8 +593,6 @@ namespace SmartHelper
         // Client Module
         Add_Client,
         Update_Client,
-        Activate_Client,
-        Deactivate_Client,
         Delete_Client,
         View_Client,
         Change_Client_Password,
@@ -604,16 +600,15 @@ namespace SmartHelper
         // Role Module
         Add_Role,
         Update_Role,
-        Activate_Role,
-        Deactivate_Role,
         Delete_Role,
         View_Role,
+        Add_Permissions,
+        Remove_Permissions,
+        View_Permissions,
 
         // Product Module
         Add_Product,
         Update_Product,
-        Activate_Product,
-        Deactivate_Product,
         Delete_Product,
         View_Product,
 
@@ -621,8 +616,6 @@ namespace SmartHelper
         // Department Module
         Add_Department,
         Update_Department,
-        Activate_Department,
-        Deactivate_Department,
         Delete_Department,
         View_Department,
 
@@ -638,6 +631,8 @@ namespace SmartHelper
         Refund_Payment,
         Reverse_Payment,
         Void_Payment,
+        View_Payment,
+        Make_Payment,
 
 
         // Menus
@@ -666,7 +661,33 @@ namespace SmartHelper
         Delete_Document_Type,
         View_Document_Type,
 
-       
+        //Company
+        Add_Company,
+        Update_Company,
+        Delete_Company,
+        View_Company,
+
+        //Bank Account
+        Add_Bank_Account,
+        Update_Bank_Account,
+        Delete_Bank_Account,
+        View_Bank_Account,
+
+        //Email Templates
+        Add_Email_Template,
+        Update_Email_Template,
+        Delete_Email_Template,
+        View_Email_Template,
+
+
+        //Notice Board
+        Add_Notice,
+        Update_Notice,
+        Delete_Notice,
+        View_Notice,
+
+        Update_Country,
+        Update_Currency
 
     }
 
@@ -676,7 +697,7 @@ namespace SmartHelper
         Technical = 2,
         Other = 3,
     }
-   
+
     public enum ContactTypeValues
     {
         Residential_Address = 1,

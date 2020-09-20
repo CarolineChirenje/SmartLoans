@@ -112,9 +112,12 @@
 
         </div>
             <!-- /.box-body -->
-            <div class="box-footer">
-                <button type="submit" class="btn btn-info pull-right">Update</button>
-                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+        <div class="box-footer">
+            @if (UtilityService.HasPermission(Permissions.Add_Notice))
+            {
+                <button type="submit" class="btn btn-info pull-right">Add</button>
+            }
+                <a class="btn btn-default" asp-controller="NoticeBoard" asp-action="NoticeBoard">Cancel</a>
             </div>
             <!-- /.box-footer -->
         </form>

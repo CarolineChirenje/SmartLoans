@@ -30,8 +30,8 @@
                                     <th>Name</th>
                                     <th>Last Changed By</th>
                                     <th>Last Changed Date</th>
-                                     <th>Active Status</th>
-                                    <th>Action</th>
+                                    <th>Active Status</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,13 +43,17 @@
                                             string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
 
                                         }
-
-                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        @if (UtilityService.HasPermission(Permissions.Update_Country))
+                                        {
+                                            <td><a asp-controller="Country" asp-action="ViewCountry" asp-route-id="@item.CountryID">@item.Name</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        }
                                         <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
                                         <td>@dateCreated</td>
                                         <td>@activeStatus</td>
-
-                                        <td><a asp-controller="Country" asp-action="ViewCountry" asp-route-id="@item.CountryID">View</a> | <a asp-controller="Country" asp-action="ChangeCountryStatus" asp-route-id="@item.CountryID" asp-route-status="@item.IsActive">@activateStatus</a></td>
                                     </tr>
                                 }
                         </table>
@@ -57,7 +61,7 @@
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                   
+
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -68,34 +72,3 @@
     <!-- /.row -->
 </section>
 
-<script>
-
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "Country")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl="/Users";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
-</script>

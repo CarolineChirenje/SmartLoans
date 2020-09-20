@@ -746,8 +746,24 @@ namespace SmartSave.Controllers
         {
             if (id == 0)
                 return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+           
+            HttpContext.Session.SetString("CourseID", id.ToString());
             GetDropDownLists();
             return View(await _service.FindCourse(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSessions(string[] selectedSessions, ClientCourse clientCourse)
+        {
+
+            if (await (_service.UpdateSessions(clientCourse.ClientCourseID, selectedSessions)) == 0)
+            {
+                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            }
+
+
+            return RedirectToAction("ViewClientCourse", new { id=clientCourse.ClientCourseID});
+
         }
 
 
@@ -851,7 +867,7 @@ namespace SmartSave.Controllers
                     }).OrderBy(t => t.Name);
                 }
                 ViewBag.ProductList = new SelectList(productList, "ProductID", "Name");
-                           }
+            }
             var allproductList = _settingService.GetActiveProductList();
             allproductList.Select(t => new
             {
@@ -861,7 +877,7 @@ namespace SmartSave.Controllers
 
             ViewBag.AllProductList = new SelectList(allproductList, "ProductID", "Name");
 
-           
+
 
             var availableProduct = allproductList.Except(clientproductList);
             if (availableProduct != null)
@@ -875,7 +891,7 @@ namespace SmartSave.Controllers
             ViewBag.ProductsAvailable = new SelectList(availableProduct, "ProductID", "Name");
 
 
-              var genderList = _settingService.GenderList(); if (genderList != null)
+            var genderList = _settingService.GenderList(); if (genderList != null)
             {
                 genderList.Select(t => new
                 {
@@ -913,25 +929,26 @@ namespace SmartSave.Controllers
 
             ViewBag.CourseList = new SelectList(courses, "CourseID", "Title");
 
-        }
 
-        // this must return unticked  checkboxs if Department has no Department otherwise it will return ticked and unticked boxes 
-        // #ndini ndadaro
-        //public List<CheckBoxListItem> GetAvailableListItems(int id)
-        //{
-        //    var allActivities = _activityService.GetActivities();
-        //    var ClientActivities = _service.GetClientActivities(id);
-        //    var AvailableListItems = new List<CheckBoxListItem>();
-        //    foreach (var activity in allActivities)
-        //    {
-        //        AvailableListItems.Add(new CheckBoxListItem()
-        //        {
-        //            ID = activity.ActivityID,
-        //            Value = activity.Name,
-        //            IsChecked = false
-        //        });
-        //    }
-        //    return AvailableListItems;
-        //}
+            int courseID = Convert.ToInt32(HttpContext.Session.GetString("CourseID"));
+            if (courseID > 0)
+            {
+                var allSessions = _settingService.GetCourseOutlines(courseID);
+                var clientSessions = new HashSet<int>(_settingService.GetUserAttendedSessions(clientID, courseID)?.Select(c => c.CourseOutlineID));
+                var viewModel = new List<CheckBoxListItem>();
+                foreach (var session in allSessions)
+                {
+                    viewModel.Add(new CheckBoxListItem
+                    {
+                        ID = session.CourseOutlineID,
+                        Name = session.Name,
+                        IsChecked = clientSessions.Contains(session.CourseOutlineID)
+                    });
+                }
+                ViewBag.SessionsList = viewModel;
+
+            }
+            else ViewBag.SessionsList = null;
+        }
     }
 }

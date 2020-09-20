@@ -15,6 +15,7 @@ namespace SmartDomain
         public int CourseID { get; set; }
         public virtual Course Course { get; set; }
         public DateTime DateRegistered { get; set; }
+        public DateTime? DateCompleted { get; set; }
         public bool IsDeRegistered { get; set; }
     }
 }

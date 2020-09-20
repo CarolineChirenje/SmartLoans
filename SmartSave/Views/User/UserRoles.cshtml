@@ -3,7 +3,7 @@
 <section class="content-header">
     <h1>
         @ViewBag.UserName
-     </h1>
+    </h1>
     <ol class="breadcrumb">
         <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">User Roles</li>
@@ -36,7 +36,7 @@
                                 <th>DateAdded</th>
                                 <th>Added By</th>
                                 <th>Active Status</th>
-                                <th>Action</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -50,18 +50,25 @@
                                         string roleStatus = UtilityService.ShowActiveAction(item.IsActive);
                                     }
                                     <td>@roleName</td>
-                                    <td><a asp-controller="Roles" asp-action="RolePermissions" asp-route-id="@item.RoleID">@permissionsCount</a></td>
+                                    @if (UtilityService.HasPermission(Permissions.View_Permissions))
+                                    {
+                                        <td><a asp-controller="Roles" asp-action="RolePermissions" asp-route-id="@item.RoleID">@permissionsCount</a></td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>@permissionsCount</td>
+                                    }
                                     <td>@dateCreated</td>
                                     <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
                                     <td>@activeStatus</td>
-                                    <td><a asp-controller="User" asp-action="ChangeUserRoleStatus" asp-route-id="@item.RoleID" asp-route-userid="@ViewBag.UserID" asp-route-status="@item.IsActive">@roleStatus</a> | <a href="" onclick="Delete('@item.RoleID')">Delete</a></td>
                                 </tr>
                             }
                     </table>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                   
+
                 </div>
             </div>
             <!-- /.box -->
@@ -79,33 +86,5 @@
     $(function () {
         $('#example1').DataTable();
     });
-    function Delete(id,userid){
-        alert(id,userid)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("DeleteUserRole", "User")',
-                data: {
-                    id: id,
-                    userid:userid
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl="/Users";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
+ 
 </script>

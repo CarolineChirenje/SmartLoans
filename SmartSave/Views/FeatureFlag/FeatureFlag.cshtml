@@ -30,7 +30,7 @@
                                     <th>Name</th>
                                     <th>Last Changed By</th>
                                     <th>Last Changed Date</th>
-                                     <th>Active Status</th>
+                                    <th>Active Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                   
+
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -68,34 +68,13 @@
     <!-- /.row -->
 </section>
 
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
 <script>
+    $(function () {
+        $('#example1').DataTable();
+    });
 
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "FeatureFlag")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl="/Users";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
 </script>

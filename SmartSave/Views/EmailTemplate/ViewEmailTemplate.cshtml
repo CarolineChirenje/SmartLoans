@@ -73,10 +73,17 @@
                 <input type="hidden" name="EmailTemplateID" value="@Model.EmailTemplateID" />
             </div>
             <!-- /.box-body -->
-            <div class="box-footer">
-                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                <button type="submit" class="btn btn-info pull-right">Update</button>
-            </div>
+        <div class="box-footer">
+            <a class="btn btn-default" asp-controller="EmailTemplate" asp-action="EmailTemplate">Cancel</a>
+            @if (UtilityService.HasPermission(Permissions.Update_Email_Template))
+            {
+                <button type="submit" class="btn btn-info">Update</button>
+            }
+            @if (UtilityService.HasPermission(Permissions.Delete_Email_Template))
+            {
+                <a class="btn btn-danger" asp-controller="EmailTemplate" asp-action="Delete" asp-route-id="@Model.EmailTemplateID">Delete</a>
+            }
+        </div>
             <!-- /.box-footer -->
         </form>
        

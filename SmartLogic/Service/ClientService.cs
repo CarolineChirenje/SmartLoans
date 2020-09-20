@@ -631,56 +631,16 @@ namespace SmartLogic
             ClientCourse.LastChangedDate = DateTime.Now;
             _context.Add(ClientCourse);
             int _result = await _context.SaveChangesAsync();
-            int id = ClientCourse.ClientCourseID; // Yes it's here
-            if (_result > 0)
-            {
-                // create course outlines against client
-                int _transcriptResults = await createCourseOutlines(ClientCourse);
-
-            }
-            return _result;
+                       return _result;
 
         }
-
-        async Task<int> createCourseOutlines(ClientCourse Course)
-        {
-            var outlines = _context.CourseOutlines.Where(c => c.CourseID == Course.CourseID);
-            if (UtilityService.IsNull(outlines))
-                return 1;
-
-            try
-            {
-
-                foreach (var item in outlines)
-                {
-
-                    CourseTranscript transcript = new CourseTranscript
-                    {
-                        ClientCourseID = Course.ClientCourseID,
-                        CourseOutlineID = item.CourseOutlineID,
-                        LastChangedBy = UtilityService.CurrentUserName,
-                        LastChangedDate = DateTime.Now,
-                        DateRegistered = DateTime.Now
-                    };
-                    _context.Add(transcript);
-                }
-
-
-                return await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                return 0;
-            }
-
-        }
-
 
         public async Task<int> Update(ClientCourse Course)
         {
             ClientCourse course = _context.ClientCourses.Find(Course.ClientCourseID);
             course.CourseID = Course.CourseID;
+            course.DateCompleted = Course.DateCompleted;
+            course.IsDeRegistered = Course.IsDeRegistered;
             course.LastChangedBy = UtilityService.CurrentUserName;
             course.LastChangedDate = DateTime.Now;
             _context.Update(course);
@@ -698,6 +658,88 @@ namespace SmartLogic
 
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<int> UpdateSessions(int clientCourseID, string[] selectedSessions)
+        {
+            int result = 0;
+            try
+            {
+                IEnumerable<int> courseOutlines = from c in _context.CourseTranscripts
+                                                  where c.ClientCourseID == clientCourseID
+                                                  select c.CourseOutlineID;
+                List<int> old_sessions = courseOutlines.ToList();
+                List<int> add_sessions = new List<int>();
+                List<int> remove_sessions = new List<int>();
+                int[] updated_Details = selectedSessions == null ? null : Array.ConvertAll(selectedSessions, s => int.Parse(s));
+
+
+                if (old_sessions == null && old_sessions.Count == 0)
+                {
+                    add_sessions = updated_Details.ToList();
+                    return await AddSessions(clientCourseID, add_sessions);
+                }
+                foreach (var courseOutline in _context.CourseOutlines)
+                {
+                    if (selectedSessions.Contains(courseOutline.CourseOutlineID.ToString()))
+                    {
+                        if (!old_sessions.Contains(courseOutline.CourseOutlineID))
+                        {
+                            add_sessions.Add(courseOutline.CourseOutlineID);
+                        }
+                    }
+                    else
+                    {
+                        if (old_sessions.Contains(courseOutline.CourseOutlineID))
+                        {
+                            remove_sessions.Add(courseOutline.CourseOutlineID);
+                        }
+                    }
+                }
+                int _addResult = await AddSessions(clientCourseID, add_sessions);
+                int _removeResult = await RemoveSessions(clientCourseID, remove_sessions);
+                result = _addResult + _removeResult;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            return result;
+        }
+
+        public async Task<int> AddSessions(int clientCourseID, List<int> sessions)
+        {
+            try
+            {
+
+                foreach (int sessionid in sessions)
+                {
+                    CourseTranscript  transcript = new CourseTranscript
+                    {
+                        ClientCourseID = clientCourseID,
+                        CourseOutlineID = sessionid,
+                        DateRegistered=DateTime.Now,
+                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedDate = DateTime.Now
+                    };
+                    _context.Add(transcript);
+
+                }
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+        public async Task<int> RemoveSessions(int clientCourseID, List<int> sessions)
+        {
+            List<CourseTranscript> courseTranscripts = await _context.CourseTranscripts.Where(r => r.ClientCourseID == clientCourseID).ToListAsync();
+            var transcriptsToBeRemoved = courseTranscripts
+                    .Where(x => sessions.Any(y => y == x.CourseOutlineID));
+            _context.CourseTranscripts.RemoveRange(transcriptsToBeRemoved);
+            return (await _context.SaveChangesAsync());
+        }
+
 
     }
 }

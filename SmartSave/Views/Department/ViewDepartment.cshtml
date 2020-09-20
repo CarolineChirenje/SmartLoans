@@ -67,7 +67,14 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                <button type="submit" class="btn btn-info pull-right">Update</button>
+                @if (UtilityService.HasPermission(Permissions.Update_Department))
+                {
+                    <button type="submit" class="btn btn-info ">Update</button>
+                }
+                @if (UtilityService.HasPermission(Permissions.Delete_Department))
+                {
+                    <a class="btn btn-danger" asp-controller="Department" asp-action="Delete" asp-route-id="@Model.DepartmentID">Delete</a>
+                }
             </div>
             <!-- /.box-footer -->
         </form>

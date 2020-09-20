@@ -20,7 +20,7 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Manage Roles</h3>
-                  
+
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -41,7 +41,7 @@
                                     <th>Permissions</th>
                                     <th>Last Changed Date</th>
                                     <th>Last Changed By</th>
-                                    <th>Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,26 +54,32 @@
                                             string roleStatus = @item.IsActive ? "Deactivate" : "Reactivate";
 
                                         }
+                                        @if (UtilityService.HasPermission(Permissions.View_Role))
+                                        {
+                                            <td><a asp-controller="Roles" asp-action="ViewRole" asp-route-id="@item.RoleID">@item.Name</a></td>
+                                        }
+                                        else
+                                        {
 
-                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        }
 
                                         <td>@activeStatus</td>
                                         <td><a asp-controller="Roles" asp-action="RolePermissions" asp-route-id="@item.RoleID">@item.RolePermissions?.Count()</a></td>
                                         <td>@dateCreated</td>
                                         <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
 
-                                        <td><a asp-controller="Roles" asp-action="ViewRole" asp-route-id="@item.RoleID">View</a> |<a asp-controller="Roles" asp-action="ChangeRoleStatus" asp-route-id="@item.RoleID" asp-route-status="@item.IsActive">@roleStatus</a> | <a href="" onclick="Delete('@item.RoleID')">Delete</a></td>
                                     </tr>
                                 }
                         </table>
                     </div>
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer">
-                        <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        <a class="btn btn-success pull-right" asp-controller="Roles" asp-action="Add">New Role</a><br />
-                    </div>
                 </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    <a class="btn btn-success pull-right" asp-controller="Roles" asp-action="Add">New Role</a><br />
+                </div>
+            </div>
             <!-- /.box -->
         </div>
         <!-- /.col -->
@@ -81,36 +87,13 @@
     <!-- /.row -->
 </section>
 
-
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- page script -->
 <script>
-  
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
+    $(function () {
+        $('#example1').DataTable();
+    });
 
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "Roles")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl ="/Roles";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
 </script>

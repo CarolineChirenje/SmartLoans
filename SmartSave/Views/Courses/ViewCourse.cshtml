@@ -42,8 +42,8 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Sessions</label>
                     <div class="col-sm-10">
-                        <a asp-controller="Courses" asp-action="CourseOutlines" asp-route-id="@Model.CourseID">@Model.CourseOutlines?.Count()</a>
-                    </div>
+                        <a data-toggle="modal" data-target="#CourseSessions">@Model.CourseOutlines?.Count()</a>
+                       </div>
                 </div>
 
                 <div class="form-group">
@@ -73,8 +73,15 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                <button type="submit" class="btn btn-info pull-right">Update</button>
+                <a class="btn btn-default" asp-controller="Courses" asp-action="Courses">Cancel</a>
+                @if (UtilityService.HasPermission(Permissions.Update_Course))
+                {
+                    <button type="submit" class="btn btn-info">Update</button>
+                }
+                @if (UtilityService.HasPermission(Permissions.Delete_Course))
+                {
+                    <a class="btn btn-danger" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.CourseID">Delete</a>
+                }
             </div>
             <!-- /.box-footer -->
         </form>
@@ -124,15 +131,15 @@
 
                                                 foreach (var item in Model.CourseOutlines)
                                                 {
-                                            <tr>
-                                                @{
-                                                    string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                                    <tr>
+                                                        @{
+                                                            string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
 
-                                                }
-                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                                <td>@activeStatus</td>
-                                                <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseOutline" asp-route-outlineid="@item.CourseOutlineID" asp-route-courseid="@item.CourseID">View</a> | <a asp-controller="Courses" asp-action="ActionCourseOutline" asp-route-outlineid="@item.CourseOutlineID" asp-route-courseid="@item.CourseID">Delete</a></td>
-                                            </tr>
+                                                        }
+                                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                        <td>@activeStatus</td>
+                                                        <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseOutline" asp-route-outlineid="@item.CourseOutlineID" asp-route-courseid="@item.CourseID">View</a> | <a asp-controller="Courses" asp-action="ActionCourseOutline" asp-route-outlineid="@item.CourseOutlineID" asp-route-courseid="@item.CourseID">Delete</a></td>
+                                                    </tr>
                                                 }
                                             }
                                     </table>
@@ -195,3 +202,54 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="CourseSessions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="UpdateSessions">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                                <tr>
+                                    @{
+                                        int cnt = 0;
+                                        List<CheckBoxListItem> sessionsList = ViewBag.SessionsList;
+
+                                        foreach (var session in sessionsList)
+                                        {
+                                            if (cnt++ % 2 == 0)
+                                            {
+                                            @:</tr><tr>
+                                            }
+                                            @:<td>
+                                                <input type="checkbox"
+                                                       name="selectedSessions"
+                                                       value="@session.ID"
+                                                       @(Html.Raw(session.IsChecked ? "checked=\"checked\"" : "")) />
+                                                @session.Name
+                                            @:</td>
+                                        }
+                                    @:</tr>
+                                    }
+                                </table>
+                            </div>
+
+                        </div>
+                       
+                    </div>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

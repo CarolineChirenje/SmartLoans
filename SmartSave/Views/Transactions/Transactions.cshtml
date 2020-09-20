@@ -51,8 +51,14 @@
                                         string transactiondate = UtilityService.ShowDateTime(item.TransactionDate);
 
                                     }
-
-                                    <td><a asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
+                                    @if (UtilityService.HasPermission(Permissions.View_Payment))
+                                    {
+                                        <td><a asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.TransRef</td>
+                                    }
                                     <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TransactionType.Name)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
@@ -66,10 +72,13 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="RecordPayment">Capture Transaction</a><br />
-                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    @if (UtilityService.HasPermission(Permissions.Make_Payment))
+                    {
+                        <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="RecordPayment">Capture Transaction</a><br />
+                    }
+                        <a class="btn btn-default" asp-controller="Transactions" asp-action="Transactions">Cancel</a>
 
-                </div>
+                    </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
@@ -78,36 +87,3 @@
     </div>
     <!-- /.row -->
 </section>
-
-
-<script>
-
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "Transactions")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl="/Transactions";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
-</script>

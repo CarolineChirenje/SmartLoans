@@ -46,7 +46,7 @@
                                 <th>Last Changed Date</th>
                                 <th>Changed By</th>
                                 <th>Active Status</th>
-                                <th>Action</th>
+                             
                             </tr>
                         </thead>
                         <tbody>
@@ -57,10 +57,19 @@
                             <tr>
                                 @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
                                     string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                    string objectStatus = @item.IsActive ? "Deactivate" : "Reactivate";
+                                  
                                 }
 
-                                <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
+                               
+                                @if (UtilityService.HasPermission(Permissions.View_Menu))
+                                {
+                                    <td><a asp-controller="Menus" asp-action="ViewMenu" asp-route-id="@item.MenuID">@item.DisplayName</a></td>
+                                }
+                                else
+                                {
+
+                                    <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
+                                }
                                 <td>@Html.DisplayFor(modelItem => item.PathName)</td>
                                 <td>@Html.DisplayFor(modelItem => item.CSSClass)</td>
                                 <td>@Html.DisplayFor(modelItem => item.OrderNo)</td>
@@ -68,8 +77,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
 
                                 <td>@activeStatus</td>
-                                <td><a asp-controller="Menus" asp-action="ViewMenu" asp-route-id="@item.MenuID">View</a> | <a asp-controller="Menus" asp-action="ChangeMenuStatus" asp-route-id="@item.MenuID" asp-route-MenuGroupID="@ViewBag.MenuGroupID" asp-route-status="@item.IsActive">@objectStatus</a> | <a href="" onclick="Delete('@item.MenuID,@item.MenuGroupID')">Remove</a></td>
-                            </tr>
+                                 </tr>
                                 }
                     </table>
                 </div>

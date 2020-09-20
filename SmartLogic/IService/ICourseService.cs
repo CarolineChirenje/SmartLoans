@@ -24,7 +24,7 @@ namespace SmartLogic
         Task<int> Update(CourseOutline CourseOutline);
         Task<int> ActionCourseOutline(int id, DatabaseAction action);
         Task<CourseOutline> FindCourseOutline(int id);
-    
+        List<CourseOutline> GetCourseOutlines(int courseID);
 
     }
 }

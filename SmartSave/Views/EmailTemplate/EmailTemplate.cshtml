@@ -41,7 +41,7 @@
                                         <th>Template Type</th>
                                         <th>Last Changed Date</th>
                                         <th>Last Changed By</th>
-                                        <th>Action</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,10 +53,18 @@
                                                 string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
 
                                             }
-                                            <td>@Html.DisplayFor(modelItem => item.EmailType.Name)</td>
+                                            @if (UtilityService.HasPermission(Permissions.View_Email_Template))
+                                            {
+                                                <td><a asp-controller="EmailTemplate" asp-action="ViewEmailTemplate" asp-route-id="@item.EmailTemplateID">@item.EmailType.Name</a></td>
+
+                                            }
+                                            else
+                                            {
+                                                <td>@Html.DisplayFor(modelItem => item.EmailType.Name)</td>
+
+                                            }
                                             <td>@dateCreated</td>
                                             <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-                                            <td><a asp-controller="EmailTemplate" asp-action="ViewEmailTemplate" asp-route-id="@item.EmailTemplateID">View</a> | <a asp-controller="EmailTemplate" asp-action="ActionEmailTemplate" asp-route-id="@item.EmailTemplateID">Delete</a></td>
                                         </tr>
                                     }
                             </table>
@@ -65,7 +73,10 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        <a href="AddEmailTemplate" class="btn btn-success pull-right">New Template</a><br />
+                        @if (UtilityService.HasPermission(Permissions.Add_Email_Template))
+                        {
+                            <a href="AddEmailTemplate" class="btn btn-success pull-right">New Template</a><br />
+                        }
                     </div>
                 </div>
                 <!-- /.box -->
@@ -76,36 +87,13 @@
     <!-- /.row -->
 </section>
 
-
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- page script -->
 <script>
+    $(function () {
+        $('#example1').DataTable();
+    });
 
-    function Delete(id){
-
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "EmailTemplate")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl ="/EmailTemplate";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
 </script>

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartHelper;
 using SmartDomain;
+using Microsoft.AspNetCore.Http;
+using SmartSave.Models;
 
 namespace SmartSave.Controllers
 {
@@ -48,7 +50,9 @@ namespace SmartSave.Controllers
             
             if (id == 0)
                 return RedirectToAction(nameof(Courses));
-          
+
+            HttpContext.Session.SetString("CourseID", id.ToString());
+            PopulateDropDownList();
             return View(await _service.FindCourse(id));
         }
 
@@ -56,7 +60,7 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewCourse(Course Course)
         {
-           
+            PopulateDropDownList();
             if (ModelState.IsValid)
             {
                 Course update = await (_service.FindCourse(Course.CourseID));
@@ -73,7 +77,7 @@ namespace SmartSave.Controllers
         }
 
         
-        public async Task<IActionResult> ActionCourse(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (await (_service.ActionCourse(id, DatabaseAction.Remove)) == 0)
             {
@@ -147,6 +151,24 @@ namespace SmartSave.Controllers
                 return RedirectToAction("ViewCourseOutline", new { id = outlineid });
             }
             return RedirectToAction("ViewCourse", new { id = courseid });
+        }
+        public void PopulateDropDownList()
+        {
+            int courseID = Convert.ToInt32(HttpContext.Session.GetString("CourseID"));
+            var courseOutlines = _service.GetCourseOutlines(courseID);
+            var viewModel = new List<CheckBoxListItem>();
+            foreach (var session in courseOutlines)
+            {
+                viewModel.Add(new CheckBoxListItem
+                {
+                    ID = session.CourseOutlineID,
+                    Name = session.Name,
+                    IsChecked =false
+                });
+            }
+            ViewBag.SessionsList = viewModel;
+            
+        
         }
     }
 }

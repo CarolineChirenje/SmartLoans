@@ -22,18 +22,7 @@ namespace SmartSave.Controllers
         {
             return View(await _service.Roles());
         }
-        //public async Task<IActionResult> Roles(int RoleID)
-        //{
-        //    Roles role = await (_service.GetRole(RoleID));
-        //    if (UtilityService.IsNotNull(role))
-        //    {
-        //        ViewBag.UserName = role.Name;
-        //        return View(role);
-        //    }
-
-        //    return RedirectToAction(nameof(Roles));
-        //}
-
+        
         public IActionResult Add()
         {
             return View();

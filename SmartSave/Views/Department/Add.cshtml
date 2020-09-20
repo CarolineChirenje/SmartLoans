@@ -1,4 +1,5 @@
 ﻿@model SmartDomain.Department
+@using SmartHelper;
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -44,9 +45,12 @@
             </div>
         </div>
             <!-- /.box-body -->
-            <div class="box-footer">
-                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+        <div class="box-footer">
+            <a class="btn btn-default" asp-controller="Department" asp-action="Department">Cancel</a>
+            @if (UtilityService.HasPermission(Permissions.Add_Department))
+            {
                 <button type="submit" class="btn btn-info pull-right">Create</button>
+            }
             </div>
             <!-- /.box-footer -->
         </form>

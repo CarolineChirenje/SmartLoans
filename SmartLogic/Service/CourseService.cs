@@ -122,5 +122,11 @@ namespace SmartLogic
             _context.Update(courseOutline);
             return (await _context.SaveChangesAsync());
         }
+        public List<CourseOutline> GetCourseOutlines(int courseID)
+        {
+            return _context.CourseOutlines
+           .Where(c => c.CourseID == courseID).ToList();
+
+        }
     }
 }

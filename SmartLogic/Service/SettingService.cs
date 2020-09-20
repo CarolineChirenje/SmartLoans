@@ -103,6 +103,24 @@ namespace SmartLogic
 
             return custom;
         }
+        public List<CourseOutline> GetCourseOutlines(int courseID)
+        {
+            return _context.CourseOutlines
+           .Where(c => c.CourseID == courseID).ToList();
+
+        }
+        public List<CourseOutline> GetUserAttendedSessions(int clientid, int courseid)
+        {
+        
+           int _ClientCourseID= _context.ClientCourses.Where(c => c.ClientID == clientid && c.CourseID == courseid).FirstOrDefault().ClientCourseID;
+
+            IEnumerable<int> courseOutlines = from c in _context.CourseTranscripts
+                                              where c.ClientCourseID == _ClientCourseID
+                                              select c.CourseOutlineID;
+            return _context.CourseOutlines 
+           .Where(c => courseOutlines.Contains(c.CourseOutlineID)).ToList();
+
+        }
 
     }
 }

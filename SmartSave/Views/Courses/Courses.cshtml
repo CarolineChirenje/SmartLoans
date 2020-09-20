@@ -34,7 +34,7 @@
 
                                 <th>Last Changed Date</th>
                                 <th>Last Changed By</th>
-                                <th>Action</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -47,23 +47,33 @@
                                     string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
                                     int sessionCount = item.CourseOutlines == null ? 0 : item.CourseOutlines.Count();
                                 }
-                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                @if (UtilityService.HasPermission(Permissions.Update_Document_Type))
+                                {
+                                    <td><a asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseID">@item.Title</a></td>
+                                }
+                                else
+                                {
+
+                                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                }
                                 <td>@Html.DisplayFor(modelItem => item.Credits)</td>
                                 <td>@sessionCount</td>
                                 <td>@activeStatus</td>
-                                
+
                                 <td>@dateCreated</td>
                                 <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-                                <td><a asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseID">View</a> |<a asp-controller="Courses" asp-action="ChangeCourseStatus" asp-route-id="@item.CourseID" asp-route-status="@item.IsActive">@activateStatus</a> | <a asp-controller="Courses" asp-action="ActionCourse" asp-route-id="@item.CourseID">Delete</a></td>
-                            </tr>
+                             </tr>
                             }
                     </table>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                    <a class="btn btn-success pull-right" asp-controller="Courses" asp-action="AddCourse">New</a><br />
-                </div>
+                    @if (UtilityService.HasPermission(Permissions.Add_Course))
+                    {
+                        <a class="btn btn-success pull-right" asp-controller="Courses" asp-action="AddCourse">New</a><br />
+                    }
+                    </div>
             </div>
             <!-- /.box -->
         </div>

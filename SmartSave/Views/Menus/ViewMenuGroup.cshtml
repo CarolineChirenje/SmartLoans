@@ -86,11 +86,14 @@
                  <input type="hidden" name="MenuGroupID" value="@Model.MenuGroupID" />
              </div>
             <!-- /.box-body -->
-            <div class="box-footer">
-                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                <button type="submit" class="btn btn-info pull-right">Update</button>
-                
-            </div>
+              <div class="box-footer">
+                  <a class="btn btn-default" asp-controller="Menus" asp-action="MainMenu">Cancel</a>
+                  @if (UtilityService.HasPermission(Permissions.Update_Menu))
+                  {
+                      <button type="submit" class="btn btn-info pull-right">Update</button>
+                  }
+
+              </div>
             <!-- /.box-footer -->
         </form>
     </div>

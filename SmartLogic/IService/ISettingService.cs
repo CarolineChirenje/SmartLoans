@@ -32,6 +32,10 @@ namespace SmartLogic
         List<DocumentFormat> GetDocumentFormats();
 
 
+        List<CourseOutline> GetCourseOutlines(int courseID);
+        List<CourseOutline> GetUserAttendedSessions(int clientid, int courseid);
+
+
     }
 
 

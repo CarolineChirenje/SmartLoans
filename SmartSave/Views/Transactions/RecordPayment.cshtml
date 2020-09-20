@@ -1,5 +1,5 @@
 ﻿@model SmartDomain.Transaction
-
+@using SmartHelper;
 @{
     ViewData["Title"] = "Add New Transaction";
 }
@@ -74,7 +74,7 @@
                         if (SmartHelper.UtilityService.PaymentsMustBeVatInclusive)
                         {
                             <div class="col-sm-10">
-                                                    <label class="alert">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
+                                <label class="alert">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
                             </div>
                         }
 
@@ -105,12 +105,15 @@
                         <input type="text" class="form-control" name="AmountExclVAT" disabled="disabled" value="0.00">
                     </div>
                 </div>
-               
+
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button type="submit" class="btn btn-info pull-right">Save</button>
-                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                @if (UtilityService.HasPermission(Permissions.Make_Payment))
+                {
+                    <button type="submit" class="btn btn-info pull-right">Save</button>
+                }
+                <a class="btn btn-default" asp-controller="Transactions" asp-action="Transactions">Cancel</a>
 
             </div>
             <!-- /.box-footer -->

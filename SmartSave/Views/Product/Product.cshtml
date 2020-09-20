@@ -42,7 +42,6 @@
                                         <th>Active Status</th>
                                         <th>Last Changed Date</th>
                                         <th>Last Changed By</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,12 +54,20 @@
                                                 string roleStatus = @item.IsActive ? "Deactivate" : "Reactivate";
 
                                             }
+
                                             <td>@Html.DisplayFor(modelItem => item.Company.Name)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                            @if (UtilityService.HasPermission(Permissions.View_Product))
+                                            {
+                                                <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Name</a></td>
+
+                                            }
+                                            else
+                                            {
+                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                            }
                                             <td>@activeStatus</td>
                                             <td>@dateCreated</td>
                                             <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-                                            <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">View</a> | <a asp-controller="Product" asp-action="ChangeProductstatus" asp-route-id="@item.ProductID" asp-route-status="@item.IsActive">@roleStatus</a> | <a href="" onclick="Delete('@item.ProductID')">Delete</a></td>
                                         </tr>
                                     }
                             </table>
@@ -69,7 +76,10 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        <a href="AddProduct" class="btn btn-success pull-right">New Product</a><br />
+                        @if (UtilityService.HasPermission(Permissions.Add_Product))
+                        {
+                            <a href="AddProduct" class="btn btn-success pull-right">New Product</a><br />
+                        }
                     </div>
                 </div>
                 <!-- /.box -->
@@ -79,37 +89,13 @@
     </div>
     <!-- /.row -->
 </section>
-
-
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- page script -->
 <script>
+    $(function () {
+        $('#example1').DataTable();
+    });
 
-    function Delete(id){
-
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "Product")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl ="/Product";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
 </script>

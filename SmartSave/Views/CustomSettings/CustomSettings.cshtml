@@ -43,8 +43,7 @@
                                     <th>Active Status</th>
                                     <th>Last Changed Date</th>
                                     <th>Last Changed By</th>
-                                    <th>Action</th>
-                                </tr>
+                                                                   </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
@@ -57,16 +56,23 @@
                                         string value = @item.Value;
 
                                     }
+                                    @if (UtilityService.HasPermission(Permissions.View_Custom_Setting))
+                                    {
+                                        <td><a asp-controller="CustomSettings" asp-action="ViewCustomSettings" asp-route-id="@item.CustomSettingID">@item.Name</a></td>
+                                    }
+                                    else
+                                    {
 
+                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    }
                                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
                                     <td>@Html.DisplayFor(modelItem => item.CustomSettingType.Name)</td>
                                     <td>@Html.DisplayFor(modelItem => item.CustomVariableType.Name)</td>
                                     <td>@value</td>
                                     <td>@activeStatus</td>
-                                     <td>@dateCreated</td>
+                                    <td>@dateCreated</td>
                                     <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
 
-                                    <td><a asp-controller="CustomSettings" asp-action="ViewCustomSettings" asp-route-id="@item.CustomSettingID">View</a> |<a asp-controller="CustomSetting" asp-action="ActionSettingStatus" asp-route-id="@item.CustomSettingID" asp-route-status="@item.IsActive">@status</a> 
                                 </tr>
                                 }
                         </table>
@@ -75,7 +81,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                    <a href="Add" class="btn btn-success pull-right">Create</a><br />
+                  
                 </div>
             </div>
             <!-- /.box -->

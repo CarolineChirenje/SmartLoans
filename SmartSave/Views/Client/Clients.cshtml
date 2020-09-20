@@ -58,15 +58,25 @@
                                         string gender = UtilityService.ShowGender(@item.GenderID);
 
                                     }
-                                    <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@Html.DisplayFor(modelItem => item.AccountNumber)</a> </td>
+                                    @if (UtilityService.HasPermission(Permissions.View_Client))
+                                    {
+                                        <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@Html.DisplayFor(modelItem => item.AccountNumber)</a> </td>
+                                    }
+                                    else
+                                    {
+
+                                        <td>@Html.DisplayFor(modelItem => item.AccountNumber) </td>
+                                    }
                                     <td>@Html.DisplayFor(modelItem => item.ClientFullName)</td>
                                     <td>@dob</td>
                                     <td>@gender</td>
                                     <td>@Html.DisplayFor(modelItem => item.EmailAddress)</td>
                                     <td>@dateRegistered</td>
                                     <td>@activeStatus</td>
-
-                                    <td><a asp-controller="Client" asp-action="ChangeClientStatus" asp-route-id="@item.ClientID" asp-route-status="@item.IsActive">@ClientStatus</a>| <a href="" onclick="Delete('@item.ClientID')">Delete</a></td>
+                                    @if (UtilityService.HasPermission(Permissions.Delete_Client))
+                                    {
+                                        <td> <a href="" onclick="Delete('@item.ClientID')">Delete</a></td>
+                                    }
                                 </tr>
                                 }
                         </table>
@@ -74,9 +84,11 @@
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                    <a class="btn btn-success pull-right" asp-controller="Client" asp-action="AddClient">New</a><br />
-
-                </div>
+                    @if (UtilityService.HasPermission(Permissions.Add_Client))
+                    {
+                        <a class="btn btn-success pull-right" asp-controller="Client" asp-action="AddClient">New</a><br />
+                    }
+                    </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
