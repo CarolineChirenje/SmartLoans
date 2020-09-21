@@ -188,9 +188,19 @@
                                             int sessions = Model.Course.CourseOutlines == null ? 0 : Model.Course.CourseOutlines.Count();
 
                                         }
-                                        <label>
-                                            <a data-toggle="modal" data-target="#CourseSessions">@sessions</a>
-                                        </label>
+                                        @if (UtilityService.HasPermission(Permissions.Update_Client_Course))
+                                        {
+                                            <label>
+                                                <a data-toggle="modal" data-target="#CourseSessions">@sessions</a>
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label>
+                                                <a>@sessions</a>
+                                            </label>
+                                        }
+
                                     </div>
                                 </div>
                             </div>
@@ -238,11 +248,14 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Update</button>
-
-                            <a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Products</a>
-                            <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        </div>
+                            @if (UtilityService.HasPermission(Permissions.Update_Client_Course))
+                            {
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            }
+                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                            {<a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Products</a>
+                            } <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                            </div>
 
                     </form>
                 </div>
@@ -296,9 +309,13 @@
                         <input type="hidden" name="ClientCourseID" value="@Model.ClientCourseID" />
 
                    </div>
-                    <div class="modal-footer">
-                        @if(!@Model.IsDeRegistered || !@Model.DateCompleted.HasValue){
-                        <button type="submit" class="btn btn-primary">Mark Sessions As Complete</button>}
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Update_Client_Course))
+                    {
+                        @if (!@Model.IsDeRegistered || !@Model.DateCompleted.HasValue)
+                        {
+                            <button type="submit" class="btn btn-primary">Mark Sessions As Complete</button>}
+                    }
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                     </div>

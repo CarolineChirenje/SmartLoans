@@ -224,11 +224,15 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                            <a class="btn btn-danger" asp-controller="Client" asp-action="ActionMedicalDetail" asp-route-medicaldetailID="@Model.ClientMedicalID" asp-route-Clientid="@Model.ClientID">Delete</a>
-                            <a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Details</a>
-                            <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        </div>
+                            @if (UtilityService.HasPermission(Permissions.Update_Client_Medical_Details))
+                            {
+                                <button type="submit" class="btn btn-primary">Update</button>}
+                            @if (UtilityService.HasPermission(Permissions.Delete_Client_Medical_Details))
+                            {<a class="btn btn-danger" asp-controller="Client" asp-action="ActionMedicalDetail" asp-route-medicaldetailID="@Model.ClientMedicalID" asp-route-Clientid="@Model.ClientID">Delete</a>
+                            } @if (UtilityService.HasPermission(Permissions.View_Client))
+                            {<a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Details</a>
+                            }<a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                            </div>
 
                     </form>
                 </div>

@@ -42,42 +42,38 @@
                                     <th>Email</th>
                                     <th>Registration Date</th>
                                     <th>Is Active</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="odd gradeX">
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    @{
-                                        string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
-                                        string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                        string dateRegistered = UtilityService.ShowDateTime(item.RegistrationDate);
-                                        string dob = UtilityService.ShowDate(item.DateOfBirth);
-                                        string ClientStatus = UtilityService.ShowActiveAction(@item.IsActive);
-                                        string gender = UtilityService.ShowGender(@item.GenderID);
+                                    <tr>
+                                        @{
+                                            string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                            string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                            string dateRegistered = UtilityService.ShowDateTime(item.RegistrationDate);
+                                            string dob = UtilityService.ShowDate(item.DateOfBirth);
+                                            string ClientStatus = UtilityService.ShowActiveAction(@item.IsActive);
+                                            string gender = UtilityService.ShowGender(@item.GenderID);
 
-                                    }
-                                    @if (UtilityService.HasPermission(Permissions.View_Client))
-                                    {
-                                        <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@Html.DisplayFor(modelItem => item.AccountNumber)</a> </td>
-                                    }
-                                    else
-                                    {
+                                        }
+                                        @if (UtilityService.HasPermission(Permissions.View_Client))
+                                        {
+                                            <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@Html.DisplayFor(modelItem => item.AccountNumber)</a> </td>
+                                        }
+                                        else
+                                        {
 
-                                        <td>@Html.DisplayFor(modelItem => item.AccountNumber) </td>
-                                    }
-                                    <td>@Html.DisplayFor(modelItem => item.ClientFullName)</td>
-                                    <td>@dob</td>
-                                    <td>@gender</td>
-                                    <td>@Html.DisplayFor(modelItem => item.EmailAddress)</td>
-                                    <td>@dateRegistered</td>
-                                    <td>@activeStatus</td>
-                                    @if (UtilityService.HasPermission(Permissions.Delete_Client))
-                                    {
-                                        <td> <a href="" onclick="Delete('@item.ClientID')">Delete</a></td>
-                                    }
-                                </tr>
+                                            <td>@Html.DisplayFor(modelItem => item.AccountNumber) </td>
+                                        }
+                                        <td>@Html.DisplayFor(modelItem => item.ClientFullName)</td>
+                                        <td>@dob</td>
+                                        <td>@gender</td>
+                                        <td>@Html.DisplayFor(modelItem => item.EmailAddress)</td>
+                                        <td>@dateRegistered</td>
+                                        <td>@activeStatus</td>
+
+                                    </tr>
                                 }
                         </table>
                     </div>
@@ -88,7 +84,7 @@
                     {
                         <a class="btn btn-success pull-right" asp-controller="Client" asp-action="AddClient">New</a><br />
                     }
-                    </div>
+                </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->

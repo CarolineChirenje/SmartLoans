@@ -1,0 +1,17 @@
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartLogic.deps.json
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartLogic.dll
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartLogic.pdb
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartDataAccess.dll
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartDomain.dll
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartDataAccess.pdb
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartDomain.pdb
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartHelper.pdb
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartHelper.dll.config
+D:\Dev Projects\SmartSave\SmartLogic\obj\Release\netcoreapp3.0\SmartLogic.csprojAssemblyReference.cache
+D:\Dev Projects\SmartSave\SmartLogic\obj\Release\netcoreapp3.0\SmartLogic.AssemblyInfoInputs.cache
+D:\Dev Projects\SmartSave\SmartLogic\obj\Release\netcoreapp3.0\SmartLogic.AssemblyInfo.cs
+D:\Dev Projects\SmartSave\SmartLogic\obj\Release\netcoreapp3.0\SmartLogic.csproj.CoreCompileInputs.cache
+D:\Dev Projects\SmartSave\SmartLogic\obj\Release\netcoreapp3.0\SmartLogic.csproj.CopyComplete
+D:\Dev Projects\SmartSave\SmartLogic\obj\Release\netcoreapp3.0\SmartLogic.dll
+D:\Dev Projects\SmartSave\SmartLogic\obj\Release\netcoreapp3.0\SmartLogic.pdb

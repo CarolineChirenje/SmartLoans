@@ -231,12 +231,20 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                            <a class="btn btn-success" asp-controller="Client" asp-action="CloseNote" asp-route-noteid="@Model.ClientNoteID" asp-route-Clientid="@Model.ClientID">Close</a>
-                            <a class="btn btn-danger" asp-controller="Client" asp-action="ActionNote" asp-route-noteid="@Model.ClientNoteID" asp-route-Clientid="@Model.ClientID">Delete</a>
-                            <a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Notes</a>
-                            <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        </div>
+                            @if (UtilityService.HasPermission(Permissions.Update_Client_Note))
+                            {
+                                <button type="submit" class="btn btn-primary">Update</button>
+                                <a class="btn btn-success" asp-controller="Client" asp-action="CloseNote" asp-route-noteid="@Model.ClientNoteID" asp-route-Clientid="@Model.ClientID">Close</a>
+                            }
+                            @if (UtilityService.HasPermission(Permissions.Delete_Client_Product))
+                            {
+                                <a class="btn btn-danger" asp-controller="Client" asp-action="ActionNote" asp-route-noteid="@Model.ClientNoteID" asp-route-Clientid="@Model.ClientID">Delete</a>
+                            }
+                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                            {
+                                <a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Notes</a>
+                            } <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                            </div>
 
                     </form>
                 </div>
