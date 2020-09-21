@@ -184,7 +184,7 @@
                     <div class="panel-body">
                         <!-- Nav tabs -->
 
-                        <ul class="nav nav-tabs">
+                        <ul class="nav nav-tabs" id="myTab">
                             @if (UtilityService.HasPermission(Permissions.View_Client_Contact))
                             {
                                 <li class="active">
@@ -1275,5 +1275,16 @@
     document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
     document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
     document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
+
+    $(document).ready(function () {
+        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab) {
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+    });
+
 </script>
 

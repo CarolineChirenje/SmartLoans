@@ -24,33 +24,23 @@
 </head>
 <body class="hold-transition login-page">
     <section class="content-header">
+        
         @if (ViewData["Error"] != null)
         {<div class="container">
-                <h2>Error : </h2>
-                <div class="panel panel-danger">
-                    <div class="panel-body">@ViewData["Error"].ToString()</div>
-                </div>
+                <div class="text-danger">@ViewData["Error"].ToString()</div>
             </div>
-
         }
 
         @if (ViewData["Success"] != null)
         {<div class="container">
-                <h2>Success : </h2>
-                <div class="panel panel-success">
-                    <div class="panel-body">@ViewData["Success"].ToString()</div>
-                </div>
+                <div class="text-success">@ViewData["Success"].ToString()</div>
             </div>
 
         }
         @if (ViewData["Warning"] != null)
         {<div class="container">
-                <h2>Warning : </h2>
-                <div class="panel panel-warning">
-                    <div class="panel-body">@ViewData["Warning"].ToString()</div>
-                </div>
+                <div class="text-warning">@ViewData["Warning"].ToString()</div>
             </div>
-
         }
     </section>
     <div class="login-logo">
@@ -79,19 +69,19 @@
 
                                     </div>
                                     @*<div class="checkbox">
-            <label>
-                <input name="remember" type="checkbox" value="Remember Me">Remember Me
-            </label>
-        </div>*@
+                                            <label>
+                                                <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                            </label>
+                                        </div>*@
 
-                                  
+
                                     <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
-                                    <br/>
+                                    <br />
                                     <div class="form-group">
-                                        <a  asp-controller="Login" asp-action="ForgotPassword">Forgot Password?</a>
+                                        <a asp-controller="Login" asp-action="ForgotPassword">Forgot Password?</a>
                                     </div>
                                 </fieldset>
-                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
