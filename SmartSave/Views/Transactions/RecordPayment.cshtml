@@ -30,9 +30,9 @@
                     </div>
                 }
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Client Acc Num</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Employee Acc Num</label>
                     <div class="col-sm-10">
-                        <input asp-for="Client.AccountNumber" list="Clients" type="text" class="form-control" name="AccountNumber" placeholder="Type Client Account Number Here">
+                        <input asp-for="Client.AccountNumber" list="Clients" type="text" class="form-control" name="AccountNumber" placeholder="Type Client Employee Number Here">
 
 
                         <datalist id="Clients">
@@ -61,6 +61,15 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Transaction Type</label>
+                    <div class="col-sm-10">
+                        <select asp-for="TransactionTypeID" class="form-control" asp-items="ViewBag.TransactionTypeList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Payment Date:</label>
                     <div class="col-sm-10">
@@ -74,14 +83,14 @@
                         if (SmartHelper.UtilityService.PaymentsMustBeVatInclusive)
                         {
                             <div class="col-sm-10">
-                                <label class="alert">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
+                                <label class="text-danger">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
                             </div>
                         }
 
                         else
                         {
                             <div class="col-sm-10">
-                                <label class="alert">Payment Amount Should be VAT Exclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
+                                <label class="text-danger">Payment Amount Should be VAT Exclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
                             </div>
                         }
                     }
@@ -111,7 +120,7 @@
             <div class="box-footer">
                 @if (UtilityService.HasPermission(Permissions.Make_Payment))
                 {
-                    <button type="submit" class="btn btn-success pull-right">Submit Payment</button>
+                    <button type="submit" class="btn btn-success pull-right">Submit</button>
                     
                 }
                 <a class="btn btn-default" asp-controller="Transactions" asp-action="Transactions">Cancel</a>

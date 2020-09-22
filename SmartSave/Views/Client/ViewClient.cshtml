@@ -3,7 +3,7 @@
 @using SmartHelper;
 @using System.Collections.Generic;
 @{
-    ViewData["Title"] = "Client Details";
+    ViewData["Title"] = "Employee Details";
 }
 
 <!-- Content Header (Page header) -->
@@ -23,17 +23,26 @@
         <!-- form start -->
         <form class="form-horizontal" method="post" action="ViewClient">
             <div class="box-body">
-                @if (TempData["Error"] != null)
+
+                @if (ViewData["Error"] != null)
                 {<div class="container">
-                        <strong class="">@TempData["Error"].ToString()</strong>
-                        <div class="panel panel-danger">
-                            <div class="panel-body">@Html.ValidationSummary()</div>
-                        </div>
+                        <div class="text-danger">@ViewData["Error"].ToString()</div>
+                    </div>
+                }
+
+                @if (ViewData["Success"] != null)
+                {<div class="container">
+                        <div class="text-success">@ViewData["Success"].ToString()</div>
+                    </div>
+                }
+                @if (ViewData["Warning"] != null)
+                {<div class="container">
+                        <div class="text-warning">@ViewData["Warning"].ToString()</div>
                     </div>
                 }
                 <div class="form-group">
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Account Number</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Employee Number</label>
                         <div class="col-sm-10">
                             <label for="inputEmail3" class="form-control label-default">@Model.AccountNumber</label>
                         </div>
@@ -213,9 +222,9 @@
                             @if (UtilityService.HasPermission(Permissions.View_Client_Course))
                             {
                                 <li>
-                                    <a href="#Courses" data-toggle="tab">Courses</a>
+                                    <a href="#Courses" data-toggle="tab">Coaching Programmes</a>
                                 </li>
-}
+                            }
                             @if (UtilityService.HasPermission(Permissions.Generate_Client_Statement))
                             {
                                 <li>
@@ -359,7 +368,7 @@
                             <div class="tab-pane fade in" id="Courses">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        Courses
+                                        Coaching Programmes
                                     </div>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -370,7 +379,7 @@
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>Date Registered</th>
-                                                    <th>Sessions</th>
+                                                    <th>Sessions Completed</th>
                                                     <th>Is De-Registered</th>
 
                                                 </tr>
@@ -582,8 +591,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>Trans Ref</th>
+                                                    <th>Product</th>
                                                     <th>Transaction Type</th>
-                                                    <th>Payment Type</th>
+
                                                     <th>Amount</th>
                                                     <th>Payment Status</th>
                                                     <th>Transaction Date</th>
@@ -603,7 +613,7 @@
 
                                                             <td><a target="_blank" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
                                                             <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.TransactionType.Name)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.TransactionType.TransType)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
 
                                                             <td>@Html.DisplayFor(modelItem => item.PaymentStatus.Name)</td>
@@ -627,7 +637,7 @@
                             <div class="tab-pane fade" id="Statements">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        Client  Statements
+                                        Employee  Statements
                                     </div>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -635,7 +645,7 @@
                                     <form method="get" asp-controller="Client" asp-action="GenerateStatement">
 
                                         <div class="form-group">
-                                            <label for="inputEmail3" class="col-sm-2 control-label">Client Product:</label>
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Employee Product:</label>
                                             <select asp-for="ProductID" class="form-control" asp-items="ViewBag.RegisteredProducts">
                                                 <option value="">----</option>
                                             </select>
@@ -1015,12 +1025,18 @@
 
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Payment Type</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
 
                         <select asp-for="ProductID" class="form-control" asp-items="ViewBag.RegisteredProducts">
                             <option value="">----</option>
                         </select>
 
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Transaction Type</label>
+                        <select asp-for="TransactionTypeID" class="form-control" asp-items="ViewBag.TransactionTypeList">
+                            <option value="">----</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Payment Date:</label>
@@ -1033,15 +1049,13 @@
 
                             if (SmartHelper.UtilityService.PaymentsMustBeVatInclusive)
                             {
-
-                                <label class="">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System</label>
+                                <label class="text-danger">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
                             }
 
                             else
                             {
 
-                                <label class="">Payment Amount Should be VAT Exclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
-
+                                <label class="text-danger">Payment Amount Should be VAT Exclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
                             }
                         }
                     </div>
@@ -1066,7 +1080,7 @@
 
                     </div>
 
-
+                    <input type="hidden" name="IsFromClient" value="true" />
                     <input type="hidden" name="ClientID" value="@Model.ClientID" />
 
                 </div>
@@ -1236,7 +1250,14 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">Date Of Birth</label>
                         <input type="date" class="form-control" name="DateOfBirth" required>
                     </div>
-
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+                       
+                            <select asp-for="GenderID" class="form-control" asp-items="ViewBag.GenderList">
+                                <option value="">----</option>
+                            </select>
+                       
+                    </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Occupation:</label>
                         <input type="text" class="form-control" name="Occupation">
@@ -1273,6 +1294,7 @@
     var previousDate = new Date();
     previousDate.setDate(previousDate.getDate() - 60);
     document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
+    document.getElementById('DueDate').value = new Date().toISOString().substring(0, 10);
     document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
     document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
 

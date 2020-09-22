@@ -24,8 +24,10 @@ namespace SmartLogic
             switch (transaction)
             {
                 case TransactionTypeList.Payment:
-
-
+                case TransactionTypeList.Purchase:
+                case TransactionTypeList.Receipts:
+                case TransactionTypeList.Sales:
+                case TransactionTypeList.Recon:
                     string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage).Value;
                     decimal _vatPercentage = 0;
                     try
@@ -62,11 +64,8 @@ namespace SmartLogic
                     _context.Add(PaymentsFile);
 
                     break;
-                case TransactionTypeList.Reversal:
-                case TransactionTypeList.Refund:
-                case TransactionTypeList.Void:
-                    UpdatePayment(PaymentsFile, transaction);
-                    break;
+            
+                 
                 default:
                     break;
             }
@@ -79,15 +78,15 @@ namespace SmartLogic
             int transactionID = PaymentsFile.TransactionID;
             int oldPaymentStatus = 0;
 
-            if (transaction == TransactionTypeList.Void)
-            {
+            //if (transaction == TransactionTypeList.Void)
+            //{
 
-                oldPaymentStatus = (int)PaymentState.Pending;
-                updateOldPayment(transactionID, oldPaymentStatus);
-            }
+            //    oldPaymentStatus = (int)PaymentState.Pending;
+            //    updateOldPayment(transactionID, oldPaymentStatus);
+            //}
 
-            else
-            {
+            //else
+            //{
 
                 switch (transaction)
                 {
@@ -96,15 +95,15 @@ namespace SmartLogic
                         oldPaymentStatus = (int)PaymentState.Reversed;
 
                         break;
-                    case TransactionTypeList.Refund:
-                        oldPaymentStatus = (int)PaymentState.Refunded;
+                    //case TransactionTypeList.Refund:
+                    //    oldPaymentStatus = (int)PaymentState.Refunded;
 
-                        break;
+                    //    break;
 
-                    case TransactionTypeList.Discount:
-                        oldPaymentStatus = (int)PaymentState.Discounted;
+                    //case TransactionTypeList.Discount:
+                    //    oldPaymentStatus = (int)PaymentState.Discounted;
 
-                        break;
+                   //     break;
                     default:
                         break;
                 }
@@ -142,7 +141,7 @@ namespace SmartLogic
                     throw;
                 }
 
-            }
+            //}
 
 
         }

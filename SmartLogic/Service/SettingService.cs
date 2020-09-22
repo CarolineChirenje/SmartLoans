@@ -50,6 +50,8 @@ namespace SmartLogic
             return years;
           
         }
+
+        public List<TransactionType> GetActiveTransactionTypeList() => _context.TransactionType.Where(T => T.IsActive && T.TransactionTypeID!=(int)TransactionTypeList.Reversal).ToList();
         public List<CustomSettingType> GetCustomSettingsTypes() => _context.CustomSettingTypes.Where(x => x.IsActive).ToList();
 
         public List<CustomVariableType> GetCustomVariableTypes() => _context.SystemVariableTypes.Where(x => x.IsActive).ToList();

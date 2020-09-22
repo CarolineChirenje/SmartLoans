@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace SmartReporting
 {
-  public  class StatementPrintOut
+  public  class StatementPrintOutOriginal
     {
         Document document;
         Table table;
@@ -253,7 +253,7 @@ namespace SmartReporting
             {
 
 
-                string _selectClause = @"SELECT t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,'-', p.Name) AS Counter,t.Amount
+                string _selectClause = @"SELECT t.PaymentDate,t.TransRef,t.Amount,p.Name AS Description,tt.Name AS TransactionType
                                             FROM Transactions t
                                             INNER JOIN Products p ON p.ProductID=t.ProductID
                                             INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
@@ -306,17 +306,17 @@ namespace SmartReporting
                 row.Format.Font.Bold = true;
                 row.Shading.Color = HeaderColor;
 
-                row.Cells[0].AddParagraph("Trans Date");
+                row.Cells[0].AddParagraph("Date");
                 row.Cells[0].Format.Font.Bold = true;
                 row.Cells[0].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
                 row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
 
-                row.Cells[1].AddParagraph("Trans Code");
+                row.Cells[1].AddParagraph("Reference");
                 row.Cells[1].Format.Font.Bold = true;
                 row.Cells[1].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
                 row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
 
-                row.Cells[2].AddParagraph("Counter");
+                row.Cells[2].AddParagraph("Description");
                 row.Cells[2].Format.Font.Bold = true;
                 row.Cells[2].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center; 
                 row.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
@@ -342,15 +342,15 @@ namespace SmartReporting
                     row1.Cells[0].Borders.Visible = UtilityService.StatementHideTableBoarders;
                     row1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                    row1.Cells[0].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
+                    row1.Cells[0].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd HH:mm"));
 
                     row1.Cells[1].Borders.Visible = UtilityService.StatementHideTableBoarders;
                     row1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[1].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
-                    row1.Cells[1].AddParagraph(transaction.Field<string>("TransCode"));
+                    row1.Cells[1].AddParagraph(transaction.Field<string>("TransRef"));
 
 
-                    string _transactionDescription = transaction.Field<string>("Counter");
+                    string _transactionDescription = String.Concat(transaction.Field<string>("Description"), " ", transaction.Field<string>("TransactionType"));
                     row1.Cells[2].Borders.Visible = UtilityService.StatementHideTableBoarders;
                     row1.Cells[2].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Left;
                     row1.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;

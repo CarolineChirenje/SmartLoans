@@ -66,15 +66,23 @@ namespace SmartSave.Controllers
                     ParentPaymentID = paymentsFile.ParentPaymentID,
                     LastChangedBy = UtilityService.CurrentUserName,
                     LastChangedDate = DateTime.Now,
-                    BankAccountID=paymentsFile.BankAccountID
+                    BankAccountID=paymentsFile.BankAccountID,
+                    TransactionTypeID=paymentsFile.TransactionTypeID
 
                 };
 
-                if (await (_service.CreatePayment(addPaymentsFile, TransactionTypeList.Payment)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR"); ;
-                return RedirectToAction(nameof(Transactions));
+                if (await (_service.CreatePayment(addPaymentsFile, (TransactionTypeList)paymentsFile.TransactionTypeID)) == 0)
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return View(paymentsFile);
+
+                }
+               
             }
-            return RedirectToAction(nameof(Transactions));
+            if (paymentsFile.IsFromClient)
+                return RedirectToAction("ViewClient", "Client", new { id = paymentsFile.ClientID });
+            else
+                return RedirectToAction(nameof(Transactions));
         }
         // GET:
         public async Task<IActionResult> ViewTransaction(int id = 0, string transref = null)
@@ -153,6 +161,14 @@ namespace SmartSave.Controllers
             }).OrderBy(t => t.Name);
 
             ViewBag.BankAccountList = new SelectList(bankList, "BankAccountID", "Name");
+
+            var transactionTypeList = _settingService.GetActiveTransactionTypeList().Select(t => new
+            {
+                t.TransactionTypeID,
+               Name= t.TransType,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.TransactionTypeList  = new SelectList(transactionTypeList, "TransactionTypeID", "Name",(int)TransactionTypeList.Payment);
 
         }
     }

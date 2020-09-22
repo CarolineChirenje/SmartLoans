@@ -16,94 +16,102 @@
         <!-- /.box-header -->
         <!-- form start -->
         <form class="form-horizontal" method="post" action="/Product/ViewProduct">
+
             @if (ViewData["Error"] != null)
             {<div class="container">
-                    <strong class="">@ViewData["Error"].ToString()</strong>
-                    <div class="panel panel-danger">
-                        <div class="panel-body">@Html.ValidationSummary()</div>
+                    <div class="text-danger">@ViewData["Error"].ToString()</div>
+                </div>
+            }
+
+            @if (ViewData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@ViewData["Success"].ToString()</div>
+                </div>
+            }
+            @if (ViewData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@ViewData["Warning"].ToString()</div>
+                </div>
+            }
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CompanyID" class="form-control" asp-items="ViewBag.CompanyList">
+                            <option value="">----</option>
+                        </select>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name" value="@Model.Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Frequency</label>
+                    <div class="col-sm-10">
+                        <select asp-for="ProductFrequencyID" class="form-control" asp-items="ViewBag.FrequencyList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
 
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Active Status</label>
+                    <div class="col-sm-2">
+
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.IsActive)
+                        </label>
+
+                    </div>
                 </div>
-            }
-        <div class="box-body">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
-                <div class="col-sm-10">
-                    <select asp-for="CompanyID" class="form-control" asp-items="ViewBag.CompanyList">
-                        <option value="">----</option>
-                    </select>
+
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Employees Linked To Product</label>
+                    <div class="col-sm-10">
+                        @if (UtilityService.HasPermission(Permissions.View_User))
+                        {
+                            <a asp-controller="Product" asp-action="ClientsLinkedToProduct" asp-route-id="@Model.ProductID">@Model.ClientCount</a>
+                        }
+                        else
+                        {
+                            @Model.ClientCount
+                        }
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="ProductID" value="@Model.ProductID" />
             </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="Name" value="@Model.Name">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Frequency</label>
-                <div class="col-sm-10">
-                    <select asp-for="ProductFrequencyID" class="form-control" asp-items="ViewBag.FrequencyList">
-                        <option value="">----</option>
-                    </select>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Active Status</label>
-                <div class="col-sm-2">
-
-                    <label class="checkbox-inline">
-                        @Html.CheckBoxFor(model => model.IsActive)
-                    </label>
-
-                </div>
-            </div>
-
-
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Clients on Product</label>
-                <div class="col-sm-10">
-                    @if (UtilityService.HasPermission(Permissions.View_User))
-                    {
-                        <a asp-controller="Product" asp-action="ClientsLinkedToProduct" asp-route-id="@Model.ProductID">@Model.Clients?.Count()</a>
-                    }
-                    else
-                    {
-                        @Model.Clients?.Count()
-                    }
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
-                </div>
-            </div>
-            <input type="hidden" name="ProductID" value="@Model.ProductID" />
-        </div>
             <!-- /.box-body -->
-        <div class="box-footer">
-            <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>
-            @if (UtilityService.HasPermission(Permissions.Update_Product))
-            {
-                <button type="submit" class="btn btn-info">Update</button>
-            }
-            @if (UtilityService.HasPermission(Permissions.Delete_Product))
-            {
-                <a class="btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.ProductID">Delete</a>
-            }
-        </div>
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>
+                @if (UtilityService.HasPermission(Permissions.Update_Product))
+                {
+                    <button type="submit" class="btn btn-info">Update</button>
+                }
+                @if (UtilityService.HasPermission(Permissions.Delete_Product))
+                {
+                    <a class="btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.ProductID">Delete</a>
+                }
+            </div>
             <!-- /.box-footer -->
         </form>
        

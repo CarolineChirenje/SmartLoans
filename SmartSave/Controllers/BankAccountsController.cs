@@ -23,7 +23,7 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> BankAccounts()
         {
-            
+
             return View(await _service.Banks());
         }
 
@@ -63,14 +63,12 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             if (ModelState.IsValid)
             {
-                BankAccount update = await (_service.FindBank(BankAccount.BankAccountID));
-                if (UtilityService.IsNotNull(update))
+                BankAccount bankAccount = await (_service.FindBank(BankAccount.BankAccountID));
+                if (UtilityService.IsNotNull(bankAccount))
                 {
                     if (await (_service.Update(BankAccount)) == 0)
                         ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction(nameof(BankAccounts));
                 }
-                return View(BankAccount);
             }
             ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(BankAccount);
@@ -79,20 +77,28 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            if (await (_service.Delete(id)) > 0)
-                return RedirectToAction(nameof(BankAccount));
-            else
+            BankAccount bankAccount = await (_service.FindBank(id));
+            if (UtilityService.IsNotNull(bankAccount))
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("ViewBankAccount", new { id });
+                if (await (_service.Delete(id)) > 0)
+                    return RedirectToAction(nameof(BankAccount));
+                else
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return View(bankAccount);
+                }
             }
-
+            return RedirectToAction("ViewBankAccount", new { id });
         }
         public async Task<IActionResult> ChangeBankAccountstatus(int id, bool status)
         {
-            if (await (_service.ActionBank(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
+            BankAccount bankAccount = await (_service.FindBank(id));
+            if (UtilityService.IsNotNull(bankAccount))
+            {
+                if (await (_service.ActionBank(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
+                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                return View(bankAccount);
+            }
             return RedirectToAction("ViewBankAccount", new { id });
         }
 
@@ -112,7 +118,7 @@ namespace SmartSave.Controllers
             ViewBag.AccountTypeList = new SelectList(bankAccountTypes, "BankAccountTypeID", "Name");
 
 
-            var  currency = _settingService.GetCurrencies();
+            var currency = _settingService.GetCurrencies();
             if (currency != null)
             {
                 currency.Select(t => new

@@ -94,8 +94,8 @@ namespace SmartLogic
             Client.RegistrationDate = DateTime.Now;
             Client.IsActive = true;
             _context.Add(Client);
-            return (await _context.SaveChangesAsync());
-
+            await _context.SaveChangesAsync();
+           return Client.ClientID; 
         }
 
         public async Task<int> Update(Client Client)
@@ -544,6 +544,7 @@ namespace SmartLogic
             dependent.IsActive = ClientDependent.IsActive;
             dependent.ClientID = ClientDependent.ClientID;
             dependent.LastName = ClientDependent.LastName;
+            dependent.GenderID = ClientDependent.GenderID;
             dependent.LastChangedBy = UtilityService.CurrentUserName;
             dependent.LastChangedDate = DateTime.Now;
             _context.Update(dependent);

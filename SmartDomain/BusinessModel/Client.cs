@@ -81,7 +81,9 @@ namespace SmartDomain
         [NotMapped]
         [DisplayName("Product Type")]
         public int ProductID { get; set; }
-
+               
+        [NotMapped]
+        public int TransactionTypeID { get; set; }
         [NotMapped]
         [DisplayName("Current Class ")]
         public int SchoolClassID { get; set; }

@@ -16,97 +16,105 @@
         <!-- /.box-header -->
         <!-- form start -->
         <form class="form-horizontal" method="post" action="/BankAccounts/ViewBankAccount">
+
             @if (ViewData["Error"] != null)
-            {<div class="container">
-                    <strong class="">@ViewData["Error"].ToString()</strong>
-                    <div class="panel panel-danger">
-                        <div class="panel-body">@Html.ValidationSummary()</div>
+        {<div class="container">
+                <div class="text-danger">@ViewData["Error"].ToString()</div>
+            </div>
+        }
+
+            @if (ViewData["Success"] != null)
+        {<div class="container">
+                <div class="text-success">@ViewData["Success"].ToString()</div>
+            </div>
+        }
+            @if (ViewData["Warning"] != null)
+        {<div class="container">
+                <div class="text-warning">@ViewData["Warning"].ToString()</div>
+            </div>
+        }
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="AccountName" value="@Model.AccountName">
+
                     </div>
-
                 </div>
-            }
-        <div class="box-body">
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="AccountName" value="@Model.AccountName">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Account Code</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="AccountCode" value="@Model.AccountCode">
 
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Employee Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="AccountNumber" value="@Model.AccountNumber">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="BankAccountTypeID" class="col-sm-2 control-label">Account Type</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="BankAccountTypeID" class="form-control" asp-items="ViewBag.AccountTypeList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CurrencyID" class="col-sm-2 control-label">Currency</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="CurrencyID" class="form-control" asp-items="ViewBag.CurrencyList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Active Status</label>
+                    <div class="col-sm-2">
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.IsActive)
+                        </label>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="BankAccountID" value="@Model.BankAccountID" />
+
             </div>
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Account Code</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="AccountCode" value="@Model.AccountCode">
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Account Number</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="AccountNumber" value="@Model.AccountNumber">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="BankAccountTypeID" class="col-sm-2 control-label">Account Type</label>
-
-                <div class="col-sm-10">
-                    <select asp-for="BankAccountTypeID" class="form-control" asp-items="ViewBag.AccountTypeList">
-                        <option value="">----</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="CurrencyID" class="col-sm-2 control-label">Currency</label>
-
-                <div class="col-sm-10">
-                    <select asp-for="CurrencyID" class="form-control" asp-items="ViewBag.CurrencyList">
-                        <option value="">----</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Active Status</label>
-                <div class="col-sm-2">
-                    <label class="checkbox-inline">
-                        @Html.CheckBoxFor(model => model.IsActive)
-                    </label>
-
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
-                </div>
-            </div>
-            <input type="hidden" name="BankAccountID" value="@Model.BankAccountID" />
-
-        </div>
             <!-- /.box-body -->
-        <div class="box-footer">
-            <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-            @if (UtilityService.HasPermission(Permissions.Update_Bank_Account))
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                @if (UtilityService.HasPermission(Permissions.Update_Bank_Account))
             {<button type="submit" class="btn btn-info">Update</button>
             }
-            @if (UtilityService.HasPermission(Permissions.Delete_Bank_Account))
+                @if (UtilityService.HasPermission(Permissions.Delete_Bank_Account))
             {<a class="btn btn-danger" asp-controller="BankAccounts" asp-action="Delete" asp-route-id="@Model.BankAccountID">Delete</a>
             }
-        </div>
+            </div>
             <!-- /.box-footer -->
         </form>
     </div>

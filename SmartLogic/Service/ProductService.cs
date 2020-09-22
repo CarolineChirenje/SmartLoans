@@ -21,11 +21,23 @@ namespace SmartLogic
         public async Task<Product> FindProduct(int id = 0) => await GetProduct(id);
         public async Task<Product> GetProduct(int ProductID = 0)
         {
-            return await _context.Products
+            Product product= await _context.Products
                .Where(r => r.ProductID == ProductID)
+                .Include(c => c.Company)
                .Include(m => m.Clients)
-               .Include(c => c.Company)
+              
                .AsNoTracking().FirstOrDefaultAsync();
+
+            return product;
+        }
+
+        public int ClientsOnProduct(int ProductID )
+        {
+          int result=   _context.ClientProducts
+               .Where(r => r.ProductID == ProductID).ToList().Count();
+              
+
+            return result;
         }
         public async Task<Product> GetProduct(string name)
         {

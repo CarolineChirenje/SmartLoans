@@ -36,7 +36,8 @@ namespace SmartSave.Controllers
             {
                 if (await (_service.Save(Company)) == 0)
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction(nameof(Companies));
+
+                return View(Company);
             }
             ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Company);
@@ -58,12 +59,12 @@ namespace SmartSave.Controllers
 
             if (ModelState.IsValid)
             {
-                Company update = await (_service.FindCompany(Company.CompanyID));
-                if (UtilityService.IsNotNull(update))
+                Company company = await (_service.FindCompany(Company.CompanyID));
+                if (UtilityService.IsNotNull(company))
                 {
                     if (await (_service.Update(Company)) == 0)
                         ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction(nameof(Companies));
+                    return View(Company);
                 }
                 return View(Company);
             }
@@ -74,21 +75,32 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> ActionCompany(int id, bool status)
         {
-            if (await (_service.ActionCompany(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
+            Company company = await (_service.FindCompany(id));
+            if (UtilityService.IsNotNull(company))
+            {
+                if (await (_service.ActionCompany(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return View(company);
+                }
+            }
             return RedirectToAction("ViewCompany", new { id });
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            if (await (_service.ActionCompany(id,DatabaseAction.Remove)) >0)
-                return RedirectToAction(nameof(Companies));
-            else
+            Company company = await (_service.FindCompany(id));
+            if (UtilityService.IsNotNull(company))
             {
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("ViewCompany", new { id });
+                if (await (_service.ActionCompany(id, DatabaseAction.Remove)) > 0)
+                    return RedirectToAction(nameof(Companies));
+                else
+                {
+                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return View(company);
+                }
             }
+            return RedirectToAction("ViewCompany", new { id });
         }
 
     }

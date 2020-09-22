@@ -2,7 +2,9 @@
 using SmartHelper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using CustomSetting = SmartDomain.CustomSetting;
 
 namespace SmartDataAccess
@@ -916,6 +918,16 @@ namespace SmartDataAccess
             return permissions.ToArray();
 
         }
+        public static string DescriptionAttr<T>(this T source)
+        {
+            FieldInfo fi = source.GetType().GetField(source.ToString());
+
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(
+                typeof(DescriptionAttribute), false);
+
+            if (attributes != null && attributes.Length > 0) return attributes[0].Description;
+            else return source.ToString();
+        }
         public static TransactionType[] GetTransactionTypes()
         {
 
@@ -929,7 +941,8 @@ namespace SmartDataAccess
                 {
                     TransactionTypeID = (int)x.ID,
                     Name = x.Name.Replace("_", " "),
-                    IsActive = true,
+                    Code= ((TransactionTypeList)x.ID).DescriptionAttr(),
+                     IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
@@ -1019,8 +1032,8 @@ namespace SmartDataAccess
                             Password = Encryption.Encrypt(UtilityService.GetMessageToDisplay("ADMIN")),
                             IsActive = true,
                             UserName = "SuperUser",
-                            FirstName = "User",
-                            LastName = "Super",
+                            FirstName = "Wadzanai",
+                            LastName = "Chirenje",
                             LastChangedBy = "SuperUser"
                         },
                          new User()
@@ -1028,12 +1041,12 @@ namespace SmartDataAccess
                              UserID = 2,
                              UserTypeID = (int)TypeOfUser.Employer,
                              LastChangedDate = DateTime.Now,
-                             EmailAddress = "carochire@gmail.com",
+                             EmailAddress = "carochire89@gmail.com",
                              Password = Encryption.Encrypt(UtilityService.GetMessageToDisplay("ADMIN")),
                              IsActive = true,
-                             UserName = "Emp1",
-                             FirstName = "Employer",
-                             LastName = "Employer",
+                             UserName = "Employer",
+                             FirstName = "John",
+                             LastName = "Jarani",
                              LastChangedBy = "SuperUser"
                          }
                          ,
@@ -1042,12 +1055,12 @@ namespace SmartDataAccess
                              UserID = 3,
                              UserTypeID = (int)TypeOfUser.Client,
                              LastChangedDate = DateTime.Now,
-                             EmailAddress = "carochire@gmail.com",
+                             EmailAddress = "carolinesolutions89@gmail.com",
                              Password = Encryption.Encrypt(UtilityService.GetMessageToDisplay("ADMIN")),
                              IsActive = true,
-                             UserName = "Client",
-                             FirstName = "Client",
-                             LastName = "Client",
+                             UserName = "Employee",
+                             FirstName = "Ndini",
+                             LastName = "Ndadaro",
                              LastChangedBy = "SuperUser"
                          },
 
@@ -1056,12 +1069,12 @@ namespace SmartDataAccess
                              UserID = 4,
                              UserTypeID = (int)TypeOfUser.Visitor,
                              LastChangedDate = DateTime.Now,
-                             EmailAddress = "carochire@gmail.com",
+                             EmailAddress = "edwinguri@gmail.com",
                              Password = Encryption.Encrypt(UtilityService.GetMessageToDisplay("ADMIN")),
                              IsActive = true,
                              UserName = "Visitor",
-                             FirstName = "Visitor",
-                             LastName = "Visitor",
+                             FirstName = "Potential",
+                             LastName = "Employer",
                              LastChangedBy = "SuperUser"
                          }
             };

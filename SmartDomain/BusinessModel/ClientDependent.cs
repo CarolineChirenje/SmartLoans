@@ -26,6 +26,8 @@ namespace SmartDomain
         public string IDNumber { get; set; }
 
         public string Occupation { get; set; }
+        public int GenderID { get; set; }
+
 
         public bool IsActive { get; set; }
 

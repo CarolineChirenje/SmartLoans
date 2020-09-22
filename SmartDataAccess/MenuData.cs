@@ -112,7 +112,7 @@ namespace SmartDataAccess
                 {
                     MenuID = 1,
                     MenuGroupID = (int)MenuGroups.Clients,
-                    DisplayName = "Clients",
+                    DisplayName = "Employees",
                     ControllerName = "Client",
                     ActionName = "Clients",
                     IsActive = true,
@@ -142,11 +142,11 @@ namespace SmartDataAccess
                 {
                     MenuID = 3,
                     MenuGroupID = (int)MenuGroups.Accounting,
-                    DisplayName = "Payments",
+                    DisplayName = "Transactions",
                     ControllerName = "Transactions",
                     ActionName = "Transactions",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-user"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-money"),
                     OrderNo = 3,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -217,7 +217,7 @@ namespace SmartDataAccess
                     ControllerName = "Menus",
                     ActionName = "MainMenu",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-university"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-book"),
                     OrderNo = 8,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -228,7 +228,7 @@ namespace SmartDataAccess
                 {
                     MenuID = 9,
                     MenuGroupID = (int)MenuGroups.Administration,
-                    DisplayName = "Courses",
+                    DisplayName = "Coaching Programmes",
                     ControllerName = "Courses",
                     ActionName = "Courses",
                     IsActive = true,

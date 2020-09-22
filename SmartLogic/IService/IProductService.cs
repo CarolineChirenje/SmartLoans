@@ -21,7 +21,7 @@ namespace SmartLogic
         Task<List<Product>> Products();
         List<ProductFrequency> ProductFrequencies();
         List<Company> Companies();
-
+        int ClientsOnProduct(int ProductID);
 
     }
 }

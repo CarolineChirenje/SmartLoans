@@ -101,6 +101,9 @@ namespace SmartSave.Models
         public string PaymentReasonID { get; set; }
         public string AccountNumber { get; set; }
         public int BankAccountID { get; set; }
+        public int TransactionTypeID { get; set; }
+        public bool IsFromClient { get; set; }
+        
     }
 
 

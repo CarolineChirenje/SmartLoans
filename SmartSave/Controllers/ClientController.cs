@@ -71,10 +71,14 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> AddClient(Client Client)
         {
             GetDropDownLists();
-            if (await (_service.Save(Client)) == 0)
+            int _result = await (_service.Save(Client));
+            if ( _result== 0)
+            {
                 ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                return View(Client);
+            }
 
-            return RedirectToAction("Clients", new { accountNum = String.Empty, registeredOnly = true });
+            return RedirectToAction("ViewClient", new { id =_result });
         }
 
         public async Task<IActionResult> ViewClient(int id = 0, string accountnNum = null)
@@ -746,10 +750,13 @@ namespace SmartSave.Controllers
         {
             if (id == 0)
                 return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
-           
-            HttpContext.Session.SetString("CourseID", id.ToString());
+            ClientCourse clientCourse = await _service.FindCourse(id);
+            if (UtilityService.IsNotNull(clientCourse))
+            {
+                HttpContext.Session.SetString("CourseID", clientCourse.CourseID.ToString());
+            }
             GetDropDownLists();
-            return View(await _service.FindCourse(id));
+            return View(clientCourse);
         }
 
         [HttpPost]
@@ -949,6 +956,15 @@ namespace SmartSave.Controllers
 
             }
             else ViewBag.SessionsList = null;
+
+            var transactionTypeList = _settingService.GetActiveTransactionTypeList().Select(t => new
+            {
+                t.TransactionTypeID,
+                Name = t.TransType,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.TransactionTypeList = new SelectList(transactionTypeList, "TransactionTypeID", "Name", (int)TransactionTypeList.Payment);
+
         }
     }
 }

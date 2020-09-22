@@ -42,6 +42,7 @@ namespace SmartDomain
         public int? ParentPaymentID { get; set; }
 
         public string Reason { get; set; }
+       
 
 
 

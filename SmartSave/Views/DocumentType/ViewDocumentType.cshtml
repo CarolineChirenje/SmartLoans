@@ -16,67 +16,75 @@
         <!-- /.box-header -->
         <!-- form start -->
         <form class="form-horizontal" method="post" action="/DocumentType/ViewDocumentType">
+
             @if (ViewData["Error"] != null)
             {<div class="container">
-                    <strong class="">@ViewData["Error"].ToString()</strong>
-                    <div class="panel panel-danger">
-                        <div class="panel-body">@Html.ValidationSummary()</div>
+                    <div class="text-danger">@ViewData["Error"].ToString()</div>
+                </div>
+            }
+
+            @if (ViewData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@ViewData["Success"].ToString()</div>
+                </div>
+            }
+            @if (ViewData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@ViewData["Warning"].ToString()</div>
+                </div>
+            }
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name" value="@Model.Name">
                     </div>
-
                 </div>
-            }
-        <div class="box-body">
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="Name" value="@Model.Name">
+                <div class="form-group">
+                    <label asp-for="DocumentFormatID" class="col-sm-2 control-label">Format</label>
+                    <div class="col-sm-10">
+                        <select asp-for="DocumentFormatID" class="form-control"
+                                asp-items="ViewBag.DocumentFormatList">
+                            <option>----</option>
+                        </select>
+                    </div>
                 </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Active Status</label>
+                    <div class="col-sm-2">
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.IsActive)
+                        </label>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="DocumentTypeID" value="@Model.DocumentTypeID" />
             </div>
-            <div class="form-group">
-                <label asp-for="DocumentFormatID" class="col-sm-2 control-label">Format</label>
-                <div class="col-sm-10">
-                    <select asp-for="DocumentFormatID" class="form-control"
-                            asp-items="ViewBag.DocumentFormatList">
-                        <option>----</option>
-                    </select>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Active Status</label>
-                <div class="col-sm-2">
-                    <label class="checkbox-inline">
-                        @Html.CheckBoxFor(model => model.IsActive)
-                    </label>
-
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
-                </div>
-            </div>
-            <input type="hidden" name="DocumentTypeID" value="@Model.DocumentTypeID" />
-        </div>
             <!-- /.box-body -->
-        <div class="box-footer">
-            <a class="btn btn-default" asp-controller="DocumentType" asp-action="DocumentTypes">Cancel</a>
-            @if (UtilityService.HasPermission(Permissions.Update_Document_Type))
-            {
-                <button type="submit" class="btn btn-info">Update</button>
-            }
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="DocumentType" asp-action="DocumentTypes">Cancel</a>
+                @if (UtilityService.HasPermission(Permissions.Update_Document_Type))
+                {
+                    <button type="submit" class="btn btn-info">Update</button>
+                }
                 @if (UtilityService.HasPermission(Permissions.Delete_Document_Type))
                 {
                     <a class="btn btn-danger" asp-controller="DocumentType" asp-action="Delete" asp-route-id="@Model.DocumentTypeID">Delete</a>

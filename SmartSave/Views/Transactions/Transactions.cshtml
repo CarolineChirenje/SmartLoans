@@ -36,9 +36,9 @@
                             <thead>
                                 <tr>
                                     <th>Trans Ref</th>
+                                    <th>Product</th>
                                     <th>Transaction Type</th>
-                                    <th>Payment Type</th>
-                                    <th>Amount</th>
+                                                                        <th>Amount</th>
                                     <th>Payment Status</th>
                                     <th>Transaction Date</th>
                                 </tr>
@@ -60,7 +60,7 @@
                                         <td>@item.TransRef</td>
                                     }
                                     <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.TransactionType.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TransactionType.TransType)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
 
                                     <td>@Html.DisplayFor(modelItem => item.PaymentStatus.Name)</td>

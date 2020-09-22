@@ -45,7 +45,9 @@ namespace SmartSave.Controllers
             if (id == 0 && Productname == null)
                 return RedirectToAction(nameof(Product));
             FillDropDownLists();
-            return View(await _service.FindProduct(id));
+            Product product = await _service.FindProduct(id);
+            product.ClientCount = _service.ClientsOnProduct(id);
+            return View(product);
         }
 
 

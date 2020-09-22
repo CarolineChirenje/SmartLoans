@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.ComponentModel;
+using System.Configuration;
 
 namespace SmartHelper
 {
@@ -69,11 +70,27 @@ namespace SmartHelper
     }
     public enum TransactionTypeList
     {
+        //      https://study.com/academy/lesson/financial-transactions-types-lesson-quiz.html#:~:text=There%20are%20four%20main%20types,purchases%2C%20receipts%2C%20and%20payments.&text=The%20receipt%20transaction%20is%20recorded,a%20credit%20to%20accounts%20receivable. 
+
+        //There are four main types of financial transactions that occur in a business. These four types of financial transactions are sales, purchases, receipts, and payments. Let's take a minute to learn about each one:
+
+        //Sales are the transactions in which property is transferred from buyer to seller for money or credit. Sales transactions are recorded in the accounting journal for the seller as a debit to cash or accounts receivable and a credit to the sales account.
+        //Purchases are the transactions that are required by a business in order to obtain the goods or services needed to accomplish the goals of the organization. Purchases made in cash result in a debit to the inventory account and a credit to cash. If the purchase is made with a credit account, the debit entry would still be to the inventory account and the credit entry would be to the accounts payable account.
+        //Receipts are the transactions that refer to a business getting paid for delivering goods or services to another business. The receipt transaction is recorded in the journal for the seller as a debit to cash and a credit to accounts receivable.
+        //Payments are the transactions that refer to a business receiving money for a good or service. They are recorded in the accounting journal of the business issuing the payment as a credit to cash and a debit to accounts payable.
+
+        [Description("PAY")]
         Payment = 1,
+        [Description("REVERS")]
         Reversal,
-        Refund,
-        Void,
-        Discount
+                [Description("PURCH")]
+        Purchase,
+        [Description("SALE")]
+        Sales,
+        [Description("RPR")]
+        Receipts,
+        [Description("RECON")]
+        Recon
     }
 
     public enum AccountType
@@ -506,9 +523,10 @@ namespace SmartHelper
 
     public enum DocumentTypeList
     {
-        Assignment = 1,
+        Identity_Document = 1,
         Birth_Certificate,
-        Proof_Of_Address
+        Proof_Of_Address,
+        Payslips
     }
 
     public enum EmailTypeList
