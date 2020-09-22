@@ -350,30 +350,28 @@ namespace SmartHelper
             else
                 return false;
         }
-        //public static int UserType
-        //{
-        //    get
-        //    {
+        public static int UserType
+        {
+            get
+            {
 
-        //        string sqlCustomSetting = $"SELECT TOP 1 * FROM CustomSettings WHERE CustomSettingID={CustomSettingID};";
-        //        string _result = GetData.GetStringValue((int)AppSetting.VAT_Percentage).Value;
-        //        decimal _vatPercentage = 0;
-        //        try
-        //        {
-        //            _vatPercentage = decimal.Parse(_percentage, System.Globalization.CultureInfo.InvariantCulture); ;
-        //        }
-        //        catch (Exception)
-        //        {
+                string sqlCustomSetting = $"SELECT TOP 1  u.UserTypeID FROM  Users u WHERE  UserName='{CurrentUserName}';";
+                string _result = GetData.GetStringValue(sqlCustomSetting);
+               int userType = 0;
+                try
+                {
+                    userType = Int32.Parse(_result, System.Globalization.CultureInfo.InvariantCulture); ;
+                }
+                catch (Exception ex)
+                {
 
-        //            _vatPercentage = 0.15M;
-        //        }
+                }
 
-        //        decimal vatPercentage = _vatPercentage * 100M;
+             
+                return userType;
 
-        //        return String.Concat(vatPercentage.ToString(), "%");
-
-        //    }
-        //}
+            }
+        }
         /// <summary>
         /// Static value protected by access routine.
         /// </summary>

@@ -10,7 +10,7 @@ namespace SmartDomain
         public int ClientNoteID { get; set; }
         public int ClientID { get; set; }
         public virtual Client Client { get; set; }
-        public bool VisibleToClient { get; set; }
+        public bool VisibleToAdminOnly { get; set; }
 
     }
 }

@@ -196,7 +196,7 @@
                                                     <tr>
                                                         @if (UtilityService.HasPermission(Permissions.View_User))
                                                         {
-                                                            <a asp-controller="User" asp-action="ViewUser" asp-route-id="@item.UserID">@item.User.UserFullName</a>
+                                                        <td> <a asp-controller="User" asp-action="ViewUser" asp-route-id="@item.UserID">@item.User.UserFullName</a></td>
 
                                                         }
                                                         else

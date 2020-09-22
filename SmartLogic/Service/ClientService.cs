@@ -246,6 +246,7 @@ namespace SmartLogic
                 cn.DueDate = DateTime.Now.AddDays(5);
             if (!UtilityService.IsNotNull(cn.DateClosed))
                 cn.DateClosed = DateTime.MinValue;
+            cn.VisibleToAdminOnly = ClientNote.VisibleToAdminOnly;
             cn.UserTypeID = UtilityService.CurrentUserTypeID;
             cn.LastChangedBy = UtilityService.CurrentUserName;
             cn.LastChangedDate = DateTime.Now;
