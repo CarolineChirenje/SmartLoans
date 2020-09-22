@@ -63,7 +63,7 @@ namespace SmartHelper
         {
             get
             {
-                return GetData.GetSettingValue((int)AppSetting.Report_Logo_Path).Value;
+                return GetData.GetSettingValue((int)AppSetting.Report_Logo_Path)?.Value;
 
             }
         }
@@ -72,7 +72,7 @@ namespace SmartHelper
         {
             get
             {
-                return GetData.GetSettingValue((int)AppSetting.Report_Footer_1).Value;
+                return GetData.GetSettingValue((int)AppSetting.Report_Footer_1)?.Value;
 
             }
         }
@@ -81,7 +81,7 @@ namespace SmartHelper
         {
             get
             {
-                return GetData.GetSettingValue((int)AppSetting.Report_Footer_2).Value;
+                return GetData.GetSettingValue((int)AppSetting.Report_Footer_2)?.Value;
 
             }
         }
@@ -91,7 +91,7 @@ namespace SmartHelper
             get
             {
 
-                string value = GetData.GetSettingValue((int)AppSetting.Capture_VAT_Inclusive_Payments).Value;
+                string value = GetData.GetSettingValue((int)AppSetting.Capture_VAT_Inclusive_Payments)?.Value;
                 return value.Equals("true") ? true : false;
 
             }
@@ -102,11 +102,11 @@ namespace SmartHelper
             get
             {
 
-                string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage).Value;
+                string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage)?.Value;
                 decimal _vatPercentage = 0;
                 try
                 {
-                    _vatPercentage = decimal.Parse(_percentage, System.Globalization.CultureInfo.InvariantCulture); ;
+                    _vatPercentage = decimal.Parse(_percentage, System.Globalization.CultureInfo.InvariantCulture); 
                 }
                 catch (Exception)
                 {
@@ -120,13 +120,32 @@ namespace SmartHelper
 
             }
         }
+        public static SiteEnvironment SiteEnvironment
+        {
+            get
+            {
+
+                string _result = GetData.GetSettingValue((int)AppSetting.Site_Default_Environment)?.Value;
+                int _siteEnv = 1;
+                try
+                {
+                    _siteEnv = Int32.Parse(_result, System.Globalization.CultureInfo.InvariantCulture); 
+                }
+                catch (Exception)
+                {
+
+                }
+
+                return (SiteEnvironment)_siteEnv;
+            }
+        }
 
         public static bool StatementPasswordProtect
         {
             get
             {
 
-                string value = GetData.GetSettingValue((int)AppSetting.Statement_Password_Protect).Value;
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Password_Protect)?.Value;
                 return value.Equals("true") ? true : false;
 
             }
@@ -138,7 +157,7 @@ namespace SmartHelper
             get
             {
 
-                string value = GetData.GetSettingValue((int)AppSetting.Statement_Password_For_Admin).Value;
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Password_For_Admin)?.Value;
                 return value;
 
             }
@@ -148,7 +167,7 @@ namespace SmartHelper
             get
             {
 
-                string value = GetData.GetSettingValue((int)AppSetting.Statement_Save_To_Folder).Value;
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Save_To_Folder)?.Value;
                 return value.Equals("true") ? true : false;
 
             }
@@ -159,7 +178,7 @@ namespace SmartHelper
             get
             {
 
-                string value = GetData.GetSettingValue((int)AppSetting.Statement_Save_To_Physical_Location).Value;
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Save_To_Physical_Location)?.Value;
                 return value;
 
             }
@@ -171,7 +190,7 @@ namespace SmartHelper
             get
             {
 
-                string value = GetData.GetSettingValue((int)AppSetting.Statement_Hide_Table_Boarders).Value;
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Hide_Table_Boarders)?.Value;
                 return value.Equals("true") ? true : false;
 
             }
@@ -226,6 +245,15 @@ namespace SmartHelper
             get
             {
                 return GetData.GetSettingValue((int)AppSetting.Site_Customer_Service_Number)?.Value;
+
+            }
+        }
+
+        public static string TestEmailAddress
+        {
+            get
+            {
+                return GetData.GetSettingValue((int)AppSetting.Site_Test_Email_Account)?.Value;
 
             }
         }
@@ -528,7 +556,7 @@ namespace SmartHelper
         public static string ShowDateTime(DateTime? passedDate)
         {
             DateTime datePassed = passedDate ?? DateTime.MinValue;
-            return datePassed.ToString(GetData.GetSettingValue((int)AppSetting.Date_Format).Value);
+            return datePassed.ToString(GetData.GetSettingValue((int)AppSetting.Date_Format)?.Value);
         }
 
         public static string ShowDate(DateTime? passedDate)

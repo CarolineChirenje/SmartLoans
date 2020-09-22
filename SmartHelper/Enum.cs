@@ -534,6 +534,7 @@ namespace SmartHelper
         Client_Statement = 1,
         Proof_Of_Payment,
         Invoice,
+        New_User_Account_Created,
 
     }
     public enum AppSetting
@@ -573,7 +574,9 @@ namespace SmartHelper
         Site_URL,
         Site_Reset_Password_URL,
         Site_Customer_Service_Email,
-        Site_Customer_Service_Number
+        Site_Customer_Service_Number,
+        Site_Test_Email_Account,
+        Site_Default_Environment
 
 
     }
@@ -581,7 +584,7 @@ namespace SmartHelper
     {
         Administrator = 1,
         Employer,
-        Client,
+        Employee,
         Visitor,
     }
     public enum Frequency
@@ -741,6 +744,13 @@ namespace SmartHelper
 
     }
 
+
+    public enum SiteEnvironment
+    {
+        Test = 1,
+        Production = 2,
+       
+    }
     public enum QueryType
     {
         Sales = 1,
@@ -808,12 +818,7 @@ namespace SmartHelper
         Completed = 4
     }
 
-    public enum EmailTemplatesTypes
-    {
-        New_UserCreated = 1,
-        Approval_Request = 2
-
-    }
+    
 
     public enum Priority
     {

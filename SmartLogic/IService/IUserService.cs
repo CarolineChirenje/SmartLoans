@@ -21,6 +21,7 @@ namespace SmartLogic
         Task<List<User>> Users();
         List<Role> GetUserRoles(int id, string username = null);
         List<Role> GetAllRoles();
+        List<UserType> GetUserTypes();
         bool HasPermission(Permissions permission);
         Task<int> UpdateRoles(int userID, string[] selectedRoles);
     }

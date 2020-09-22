@@ -16,13 +16,21 @@
         <!-- /.box-header -->
         <!-- form start -->
         <form class="form-horizontal" method="post" action="ViewTransaction">
+
             @if (ViewData["Error"] != null)
             {<div class="container">
-                    <strong class="">@ViewData["Error"].ToString()</strong>
-                    <div class="panel panel-danger">
-                        <div class="panel-body">@Html.ValidationSummary()</div>
-                    </div>
+                    <div class="text-danger">@ViewData["Error"].ToString()</div>
+                </div>
+            }
 
+            @if (ViewData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@ViewData["Success"].ToString()</div>
+                </div>
+            }
+            @if (ViewData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@ViewData["Warning"].ToString()</div>
                 </div>
             }
             <div class="box-body">
@@ -151,34 +159,34 @@
                                 }
                             }
                             @*transactionTypeID = (int)TransactionTypeList.Void;
-                                if (Model.PaymentStatusID != (int)PaymentState.Pending)
-                                {
-                                    if (UtilityService.HasPermission(Permissions.Void_Payment))
-                                    {
-                                        <a class="btn btn-warning" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Void Transaction</a>
-                                    }
+                        if (Model.PaymentStatusID != (int)PaymentState.Pending)
+                        {
+                            if (UtilityService.HasPermission(Permissions.Void_Payment))
+                            {
+                                <a class="btn btn-warning" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Void Transaction</a>
+                            }
 
-                                }
-                                transactionTypeID = (int)TransactionTypeList.Refund;
-                                if (Model.PaymentStatusID != (int)PaymentState.Pending)
-                                {
-                                    if (UtilityService.HasPermission(Permissions.Refund_Payment))
-                                    {
-                                        <a class="btn btn-success" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Refund Transaction</a>
-                                    }
-                                }*@
+                        }
+                        transactionTypeID = (int)TransactionTypeList.Refund;
+                        if (Model.PaymentStatusID != (int)PaymentState.Pending)
+                        {
+                            if (UtilityService.HasPermission(Permissions.Refund_Payment))
+                            {
+                                <a class="btn btn-success" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Refund Transaction</a>
+                            }
+                        }*@
                             break;
                         @*case TransactionTypeList.Reversal:
-                                break;
-                            case TransactionTypeList.Refund:
-                                transactionTypeID = (int)TransactionTypeList.Void;
-                                if (UtilityService.HasPermission(Permissions.Void_Payment))
-                                {
-                                    <a class="btn btn-warning" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Void Transaction</a>
-                                }
-                                break;
-                            case TransactionTypeList.Void:
-                                break;*@
+                        break;
+                    case TransactionTypeList.Refund:
+                        transactionTypeID = (int)TransactionTypeList.Void;
+                        if (UtilityService.HasPermission(Permissions.Void_Payment))
+                        {
+                            <a class="btn btn-warning" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Void Transaction</a>
+                        }
+                        break;
+                    case TransactionTypeList.Void:
+                        break;*@
                         default:
                             break;
 

@@ -628,6 +628,33 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
+                },
+                
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Site_Test_Email_Account,
+                    Name = AppSetting.Site_Test_Email_Account.ToString().Replace("_", " "),
+                    Value="carochire@gmail.com",
+                    Description="Default Email Addresss that overrides Client Email Address in a Test Environment ",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Site_Default_Environment,
+                    Name = AppSetting.Site_Default_Environment.ToString().Replace("_", " "),
+                    Value="1",
+                    Description="Current System Environment Set it to 1 For Test Environment  or 2 for Production Environment if no value has been set System defaults to Test Environment ",
+                    CustomVariableTypeID=(int)VariableType.Integer,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
                 }
                 //new SmartDomain.CustomSetting()
                 //{
@@ -1053,7 +1080,7 @@ namespace SmartDataAccess
                          new User()
                          {
                              UserID = 3,
-                             UserTypeID = (int)TypeOfUser.Client,
+                             UserTypeID = (int)TypeOfUser.Employee,
                              LastChangedDate = DateTime.Now,
                              EmailAddress = "carolinesolutions89@gmail.com",
                              Password = Encryption.Encrypt(UtilityService.GetMessageToDisplay("ADMIN")),

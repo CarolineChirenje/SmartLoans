@@ -20,7 +20,7 @@ namespace SmartLogic
         public UserService()
         {
         }
-
+        public List<UserType> GetUserTypes() => _context.UserTypes.Where(t => t.IsActive).ToList();
         public async Task<User> FindUser(int id = 0, string username = null)
         {
             if (!String.IsNullOrEmpty(username))
@@ -67,11 +67,12 @@ namespace SmartLogic
             updateUser.FirstName = user.FirstName;
             updateUser.LastName = user.LastName;
             updateUser.IsActive = user.IsActive;
+            updateUser.UserTypeID = user.UserTypeID;
             updateUser.EmailAddress = user.EmailAddress;
             updateUser.LastChangedBy = UtilityService.CurrentUserName;
             updateUser.LastChangedDate = DateTime.Now;
             _context.Update(updateUser);
-            await _context.SaveChangesAsync();
+          
             return await _context.SaveChangesAsync();
         }
         public async Task<int> Save(User user)
@@ -83,7 +84,8 @@ namespace SmartLogic
             user.UserTypeID = (int)TypeOfUser.Administrator;
             user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
             _context.Add(user);
-            return (await _context.SaveChangesAsync());
+            await _context.SaveChangesAsync();
+            return (user.UserID);
         }
 
         public async Task<int> SaveUserRoles(int UserID, List<string> RoleID)

@@ -387,7 +387,7 @@ namespace SmartSave.Controllers
                     email.Body = emailTemplate.Body;
                     email.Subject = emailTemplate.Subject;
                 }
-                _mailService.SendMail(email, false);
+                _mailService.SendMail(email);
 
                 return RedirectToAction("ViewClient", new { id = statement.ClientID });
             }

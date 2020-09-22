@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartDomain;
 using SmartHelper;
 using Microsoft.AspNetCore.Http;
+using SmartDataAccess;
 
 namespace SmartSave.Controllers
 {
@@ -20,12 +21,15 @@ namespace SmartSave.Controllers
         IRoleService _roleservice;
         IDepartmentService _departmentservice;
         IMailService _mailservice;
-        public UserController(IUserService service, IRoleService roleservice, IDepartmentService departmentService, IMailService mailService)
+        IEmailTemplateService _emailTemplateService;
+        public UserController(IUserService service, IRoleService roleservice,
+        IDepartmentService departmentService, IMailService mailService, IEmailTemplateService emailTemplateService)
         {
             _service = service;
             _roleservice = roleservice;
             _departmentservice = departmentService;
             _mailservice = mailService;
+            _emailTemplateService = emailTemplateService;
         }
 
         // GET: User
@@ -45,30 +49,45 @@ namespace SmartSave.Controllers
 
         public IActionResult AddUser()
         {
+            PopulateDropDownLists();
             ViewBag.DepartmentList = GetDepartments();
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> AddUser(User user)
         {
+            PopulateDropDownLists();
             if (UtilityService.StringParameterHasValue(String.Concat(user.FirstName, ' ', user.LastName)))
             {
                 user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
-                if (await (_service.Save(user)) == 0)
+                int result=await  _service.Save(user);
+                if (result == 0)
+                {
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return View(user);
+                }
                 else
                 {
-                    Email mail = new Email
+                    EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.New_User_Account_Created).Result;
+                    Email email = new Email();
+                    email.To = user.EmailAddress;
+            
+                    if (UtilityService.IsNotNull(emailTemplate))
                     {
-                        To = user.EmailAddress,
-                        Subject = "New User Account Created",
-                        Body = String.Format(UtilityService.GetMessageToDisplay("PASSWORDGENERATED"), user.UserFullName, "GymAdmin", Encryption.Decrypt(user.Password))
-                    };
+                        email.Body = emailTemplate.Body + String.Format(UtilityService.GetMessageToDisplay("PASSWORDGENERATED"), user.UserFullName, UtilityService.ApplicationName, Encryption.Decrypt(user.Password));
+                        email.Subject = emailTemplate.Subject;
+                    }
+                    else{
 
-                    _mailservice.SendMail(mail, true);
+                        email.Body = UtilityService.HtmlDecode(String.Format(UtilityService.GetMessageToDisplay("PASSWORDGENERATED"), user.UserFullName, UtilityService.ApplicationName, Encryption.Decrypt(user.Password)));
+                        email.Subject = "New Account Created";
+                    }
+                    _mailservice.SendMail(email);
+                  
+                    return RedirectToAction("ViewUser", new { id=result });
                 }
 
-                return RedirectToAction(nameof(Users));
+           
             }
             return View(user);
         }
@@ -96,14 +115,16 @@ namespace SmartSave.Controllers
                 User update = await _service.FindUser(user.UserID);
                 if (UtilityService.IsNotNull(update))
                 {
-                    if (await (_service.Update(update)) == 0)
+                    if (await (_service.Update(user)) == 0)
+                    {
                         ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction(nameof(Users));
+                        return View(user);
+                    }
                 }
-                return View(user);
+                return RedirectToAction("ViewUser", new { id=user.UserID });
             }
             ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return View(user);
+            return RedirectToAction("ViewUser", new { id = user.UserID });
         }
 
         // GET: User/Delete/5
@@ -169,6 +190,16 @@ namespace SmartSave.Controllers
                 });
             }
             ViewBag.RolesList = viewModel;
+
+
+            var userTypeList = _service.GetUserTypes().Select(t => new
+            {
+                t.UserTypeID,
+                Name = t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.UserTypeList = new SelectList(userTypeList, "UserTypeID", "Name");
+
 
         }
         private IList<Department> GetDepartments()

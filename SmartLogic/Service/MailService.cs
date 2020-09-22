@@ -30,30 +30,38 @@ namespace SmartLogic
 
             //set the sender address of the mail message
             mMailMessage.From = new MailAddress(CREDENTIALUSERNAME, MAILDISPLAYNAME);
-            //set the recipient address of the mail message
-            foreach (var address in email.To.Split(','))
-                mMailMessage.To.Add(new MailAddress(address));
-            //set the carbon copy address
-            if (!string.IsNullOrEmpty(email.CC))
+            Tif (UtilityService.SiteEnvironment == SiteEnvironment.Production)
             {
-                foreach (var address in email.CC.Split(','))
-                    mMailMessage.CC.Add(new MailAddress(address));
+                //set the recipient address of the mail message
+                foreach (var address in email.To.Split(','))
+                    mMailMessage.To.Add(new MailAddress(address));
+                //set the carbon copy address
+                if (!string.IsNullOrEmpty(email.CC))
+                {
+                    foreach (var address in email.CC.Split(','))
+                        mMailMessage.CC.Add(new MailAddress(address));
+                }
+
+                //set the blind carbon copy address
+                if (!string.IsNullOrEmpty(email.BCC))
+                {
+                    foreach (var address in email.BCC.Split(','))
+                        mMailMessage.Bcc.Add(new MailAddress(address));
+                }
+
             }
 
-            //set the blind carbon copy address
-            if (!string.IsNullOrEmpty(email.BCC))
+            else
             {
-                foreach (var address in email.BCC.Split(','))
-                    mMailMessage.Bcc.Add(new MailAddress(address));
+                mMailMessage.To.Add(new MailAddress(UtilityService.TestEmailAddress));
             }
-
             //set the subject of the mail message
             mMailMessage.Subject = string.IsNullOrEmpty(email.Subject) ? DEFAULTEMAILSUBJECT : email.Subject;
             //set the format of the mail message body
             mMailMessage.IsBodyHtml = true;
             //set the body of the mail message
             mMailMessage.Body = UtilityService.HtmlDecode(email.Body);
-          
+
 
 
             //set the priority
