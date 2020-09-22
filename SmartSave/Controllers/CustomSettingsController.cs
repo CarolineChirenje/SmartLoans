@@ -24,7 +24,8 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> CustomSettings()
         {
-            return View(await _service.CustomSettings());
+            List<CustomSetting> customSettings = await _service.CustomSettings();
+            return View(customSettings.OrderByDescending(x=>x.Name));
         }
 
      

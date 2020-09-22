@@ -25,10 +25,18 @@
                 <div class="box-body">
                     @if (ViewData["Error"] != null)
                     {<div class="container">
-                            <strong class="">@ViewData["Error"].ToString()</strong>
-                            <div class="panel panel-danger">
-                                <div class="panel-body">@Html.ValidationSummary()</div>
-                            </div>
+                            <div class="text-danger">@ViewData["Error"].ToString()</div>
+                        </div>
+                    }
+
+                    @if (ViewData["Success"] != null)
+                    {<div class="container">
+                            <div class="text-success">@ViewData["Success"].ToString()</div>
+                        </div>
+                    }
+                    @if (ViewData["Warning"] != null)
+                    {<div class="container">
+                            <div class="text-warning">@ViewData["Warning"].ToString()</div>
                         </div>
                     }
                     <div class="dataTable_wrapper">
@@ -94,35 +102,13 @@
     <!-- /.row -->
 </section>
 
-
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
 <script>
+    $(function () {
+        $('#example1').DataTable();
+    });
 
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "Client")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl="/Clients";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
 </script>

@@ -30,7 +30,7 @@ namespace SmartLogic
 
             //set the sender address of the mail message
             mMailMessage.From = new MailAddress(CREDENTIALUSERNAME, MAILDISPLAYNAME);
-            Tif (UtilityService.SiteEnvironment == SiteEnvironment.Production)
+            if (UtilityService.SiteEnvironment == SiteEnvironment.Production)
             {
                 //set the recipient address of the mail message
                 foreach (var address in email.To.Split(','))

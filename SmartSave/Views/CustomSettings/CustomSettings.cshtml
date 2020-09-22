@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SmartDomain.CustomSetting>
 @using SmartHelper;
 @{
-    ViewData["Title"] = "Custom Setting";
+    ViewData["Title"] = "Custom Settings";
 }
 
 <section class="content-header">
@@ -20,16 +20,23 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Manage Custom Settings</h3>
-
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     @if (ViewData["Error"] != null)
                     {<div class="container">
-                            <strong class="">@ViewData["Error"].ToString()</strong>
-                            <div class="panel panel-danger">
-                                <div class="panel-body">@Html.ValidationSummary()</div>
-                            </div>
+                            <div class="text-danger">@ViewData["Error"].ToString()</div>
+                        </div>
+                    }
+
+                    @if (ViewData["Success"] != null)
+                    {<div class="container">
+                            <div class="text-success">@ViewData["Success"].ToString()</div>
+                        </div>
+                    }
+                    @if (ViewData["Warning"] != null)
+                    {<div class="container">
+                            <div class="text-warning">@ViewData["Warning"].ToString()</div>
                         </div>
                     }
                     <div class="dataTable_wrapper">
@@ -43,46 +50,44 @@
                                     <th>Active Status</th>
                                     <th>Last Changed Date</th>
                                     <th>Last Changed By</th>
-                                                                   </tr>
+                                </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="odd gradeX">
                                 @foreach (var item in Model)
                                 {
+                                    <tr>
+                                        @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                            string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                            string status = @item.IsActive ? "Deactivate" : "Reactivate";
+                                            string value = @item.Value;
 
-                                <tr>
-                                    @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
-                                        string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                        string status = @item.IsActive ? "Deactivate" : "Reactivate";
-                                        string value = @item.Value;
+                                        }
+                                        @if (UtilityService.HasPermission(Permissions.View_Custom_Setting))
+                                        {
+                                            <td><a asp-controller="CustomSettings" asp-action="ViewCustomSettings" asp-route-id="@item.CustomSettingID">@item.Name</a></td>
+                                        }
+                                        else
+                                        {
 
-                                    }
-                                    @if (UtilityService.HasPermission(Permissions.View_Custom_Setting))
-                                    {
-                                        <td><a asp-controller="CustomSettings" asp-action="ViewCustomSettings" asp-route-id="@item.CustomSettingID">@item.Name</a></td>
-                                    }
-                                    else
-                                    {
+                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        }
+                                                                             <td>@Html.DisplayFor(modelItem => item.CustomSettingType.Name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.CustomVariableType.Name)</td>
+                                        <td>@value</td>
+                                        <td>@activeStatus</td>
+                                        <td>@dateCreated</td>
+                                        <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
 
-                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                    }
-                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CustomSettingType.Name)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CustomVariableType.Name)</td>
-                                    <td>@value</td>
-                                    <td>@activeStatus</td>
-                                    <td>@dateCreated</td>
-                                    <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-
-                                </tr>
+                                    </tr>
+                                 
                                 }
-                        </table>
+</table>
                     </div>
                 </div>
-                <!-- /.box-body -->
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                  
-                </div>
+                                    </div>
+                <!-- /.box-body -->
             </div>
             <!-- /.box -->
         </div>
@@ -91,35 +96,13 @@
     <!-- /.row -->
 </section>
 
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- page script -->
 <script>
+    $(function () {
+        $('#example1').DataTable();
+    });
 
-    function Delete(id){
-       // alert(id)
-        var txt;
-        var r = confirm("Are you sure you want to Delete?");
-        if (r == true) {
-
-            $.ajax(
-            {
-                type: "POST",
-                url: '@Url.Action("Delete", "CustomSetting")',
-                data: {
-                    id: id
-                },
-                error: function (result) {
-                    alert("error");
-                },
-                success: function (result) {
-                    if (result == true) {
-                        var baseUrl ="/CustomSettings";
-                        window.location.reload();
-                    }
-                    else {
-                        alert("There is a problem, Try Later!");
-                    }
-                }
-            });
-        }
-    }
 </script>
