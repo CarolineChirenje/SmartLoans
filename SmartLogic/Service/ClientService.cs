@@ -521,7 +521,7 @@ namespace SmartLogic
         {
             return await _context.ClientDependents.
             Include(s => s.Client).
-            Where(t => t.ClientDependentID == id).FirstOrDefaultAsync();
+                     Where(t => t.ClientDependentID == id).FirstOrDefaultAsync();
         }
 
         public async Task<int> Save(ClientDependent ClientDependent)

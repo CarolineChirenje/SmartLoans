@@ -209,7 +209,7 @@ namespace SmartSave.Controllers
         {
             if (id == 0)
                 return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
-
+            GetDropDownLists();
             return View(await _service.FindNote(id));
         }
 
@@ -217,6 +217,7 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewClientNote(ClientNote ClientNote)
         {
+            GetDropDownLists();
             if (ModelState.IsValid)
             {
                 ClientNote update = await _service.FindNote(ClientNote.ClientNoteID);
@@ -521,13 +522,14 @@ namespace SmartSave.Controllers
         {
             if (id == 0)
                 return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
-
+            GetDropDownLists();
             return View(await _service.FindMedicalDetail(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> ViewMedicalDetail(ClientMedicalDetail ClientMedicalDetail)
         {
+            GetDropDownLists();
             if (ModelState.IsValid)
             {
                 ClientMedicalDetail update = await _service.FindMedicalDetail(ClientMedicalDetail.ClientMedicalID);
@@ -628,13 +630,15 @@ namespace SmartSave.Controllers
             ClientDependent ClientDependent = await _service.FindDependent(id);
             if (UtilityService.IsNull(ClientDependent))
                 return RedirectToAction("ViewClient", new { id = Clientid });
-
+            HttpContext.Session.SetString("GenderID", ClientDependent.GenderID.ToString());
+            GetDropDownLists();
             return View(ClientDependent);
         }
 
         [HttpPost]
         public async Task<IActionResult> ViewClientDependent(ClientDependent ClientDependent)
         {
+            GetDropDownLists();
             if (ModelState.IsValid)
             {
                 ClientDependent update = await _service.FindDependent(ClientDependent.ClientDependentID);
@@ -643,7 +647,8 @@ namespace SmartSave.Controllers
                     if (await (_service.Update(ClientDependent)) == 0)
                     {
                         ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                        //return RedirectToAction("ViewClientDependent", new { id = ClientDependent.ClientDependentID });
+                        
+                        HttpContext.Session.SetString("GenderID", ClientDependent.GenderID.ToString());
                         return View(ClientDependent);
                     }
                 }
@@ -847,6 +852,15 @@ namespace SmartSave.Controllers
             {
                 clientID = 0;
             }
+            int dependentGenderID = 0;
+            try
+            {
+                dependentGenderID = Convert.ToInt32(HttpContext.Session.GetString("GenderID"));
+            }
+            catch (Exception)
+            {
+                dependentGenderID = 0;
+            }
 
             List<Product> clientproductList = null;
             if (clientID != 0)
@@ -908,7 +922,8 @@ namespace SmartSave.Controllers
             }
 
             ViewBag.GenderList = new SelectList(genderList, "GenderID", "Name");
-
+            ViewBag.DependentGenderList = new SelectList(genderList, "GenderID", "Name", dependentGenderID);
+            
 
 
             var bankList = _bankService.Banks().Result.Select(t => new

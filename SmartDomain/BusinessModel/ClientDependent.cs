@@ -27,9 +27,7 @@ namespace SmartDomain
 
         public string Occupation { get; set; }
         public int GenderID { get; set; }
-
-
-        public bool IsActive { get; set; }
+               public bool IsActive { get; set; }
 
         public DateTime RegistrationDate { get; set; }
 
