@@ -39,8 +39,12 @@ namespace SmartLogic
                         .AsNoTracking()
             .ToListAsync();
         }
+        public async Task<bool> IsDuplicate(Company _company)
+        {
+            Company company = await _context.Companies.Where(b => b.Name.Equals(_company.Name)).FirstOrDefaultAsync();
+            return UtilityService.IsNotNull(company);
+        }
 
-       
         public async Task<Company> FindCompany(int id)
         {
             return await _context.Companies.Where(r => r.CompanyID == id)

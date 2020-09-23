@@ -40,7 +40,11 @@ namespace SmartLogic
                 AsNoTracking().
                 ToListAsync();
         }
-
+        public async Task<bool> IsDuplicate(Course _course)
+        {
+            Course course = await _context.Courses.Where(b => b.Title.Equals(_course.Title)).FirstOrDefaultAsync();
+            return UtilityService.IsNotNull(course);
+        }
         public async Task<int> Delete(int id)
         {
             var course = await _context.Courses.FindAsync(id);

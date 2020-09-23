@@ -21,7 +21,7 @@ namespace SmartLogic
         Task<Department> FindDepartment(int departmentId);
         Task<List<Department>> Departments();
         List<Department> GetDepartments();
-
+        Task<bool> IsDuplicate(Department _department);
 
     }
 

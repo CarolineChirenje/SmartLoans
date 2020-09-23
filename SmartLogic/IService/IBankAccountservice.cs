@@ -12,6 +12,7 @@ namespace SmartLogic.IService
     {
         Task<int> Delete(int id);
         Task<int> Save(BankAccount bank);
+        Task<bool> IsDuplicate(BankAccount bank);
         Task<int> Update(BankAccount bank);
         Task<int> ActionBank(int id, DatabaseAction action);
         Task<BankAccount> FindBank(int id);

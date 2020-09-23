@@ -13,6 +13,7 @@ namespace SmartLogic
 
        
         Task<int> Save(Company company);
+        Task<bool> IsDuplicate(Company company);
         Task<int> Update(Company company);
         Task<int> ActionCompany(int id, DatabaseAction action);
         Task<Company> FindCompany(int id);

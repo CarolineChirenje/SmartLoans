@@ -28,6 +28,11 @@ namespace SmartSave.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (await _service.IsDuplicate(department))
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = "Failed to Create Department a Department  with the same Name Already Exists";
+                    return View(department);
+                }
                 if (await (_service.Save(department)) == 0)
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");;
                 return RedirectToAction(nameof(Department));

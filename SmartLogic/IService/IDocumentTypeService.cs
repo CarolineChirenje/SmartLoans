@@ -16,6 +16,8 @@ namespace SmartLogic
         Task<int> ActionDocumentType(int id, DatabaseAction action);
         Task<DocumentType> FindDocumentType(int id);
         Task<List<DocumentType>> DocumentTypes();
-     
+        Task<bool> IsDuplicate(DocumentType DocumentType);
+
+
     }
 }

@@ -34,6 +34,11 @@ namespace SmartSave.Controllers
 
             if (ModelState.IsValid)
             {
+                if (await _service.IsDuplicate(Company))
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = "Failed to Create Company a Company with the same Name Already Exists";
+                    return View(Company);
+                }
                 if (await (_service.Save(Company)) == 0)
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 

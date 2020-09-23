@@ -37,6 +37,11 @@ namespace SmartSave.Controllers
           
             if (ModelState.IsValid)
             {
+                if (await _service.IsDuplicate(Course))
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = "Failed to Create Course a Course with the same Title Already Exists";
+                    return View(Course);
+                }
                 if (await (_service.Save(Course)) == 0)
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(Courses));

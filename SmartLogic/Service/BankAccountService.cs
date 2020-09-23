@@ -34,6 +34,11 @@ namespace SmartLogic
             return (await _context.SaveChangesAsync());
         }
 
+       public async Task<bool> IsDuplicate(BankAccount bank)
+       {
+            BankAccount bankAccount = await _context.BankAccounts.Where(b => b.AccountName.Equals(bank.AccountName) && b.AccountNumber.Equals(bank.AccountNumber)).FirstOrDefaultAsync();
+            return  UtilityService.IsNotNull(bankAccount);
+            }
         public async Task<List<BankAccount>> Banks()
         {
             return await _context.BankAccounts

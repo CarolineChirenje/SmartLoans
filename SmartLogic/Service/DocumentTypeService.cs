@@ -60,7 +60,11 @@ namespace SmartLogic
             _context.Add(DocumentType);
             return (await _context.SaveChangesAsync());
         }
-
+        public async Task<bool> IsDuplicate(DocumentType DocumentType)
+        {
+            DocumentType documentType = await _context.DocumentTypes.Where(b => b.Name.Equals(DocumentType.Name)).FirstOrDefaultAsync();
+            return UtilityService.IsNotNull(documentType);
+        }
         public async Task<int> Update(DocumentType DocumentType)
         {
             DocumentType.LastChangedBy = UtilityService.CurrentUserName;

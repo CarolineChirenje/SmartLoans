@@ -13,6 +13,7 @@ namespace SmartLogic
 
        
         Task<int> Save(Course Course);
+        Task<bool> IsDuplicate(Course course);
         Task<int> Update(Course Course);
         Task<int> ActionCourse(int id, DatabaseAction action);
         Task<Course> FindCourse(int id);

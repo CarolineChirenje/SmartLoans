@@ -37,6 +37,11 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             if (ModelState.IsValid)
             {
+                if (await _service.IsDuplicate(DocumentType))
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = "Failed to Create Document Type a Document Type  with the same Name Already Exists";
+                    return View(DocumentType);
+                }
                 if (await (_service.Save(DocumentType)) == 0)
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(DocumentTypes));

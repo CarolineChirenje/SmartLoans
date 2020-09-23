@@ -39,9 +39,17 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             if (ModelState.IsValid)
             {
+                if (await _service.IsDuplicate(BankAccount))
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = "Failed to Create Bank Account a Bank Account with the same name and Account Number Already Exists";
+                    return View(BankAccount);
+                }
+
                 if (await (_service.Save(BankAccount)) == 0)
+                {
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction(nameof(BankAccounts));
+                    return View(BankAccount);
+                }
             }
             ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(BankAccount);

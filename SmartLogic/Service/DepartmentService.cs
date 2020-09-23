@@ -65,7 +65,13 @@ namespace SmartLogic
         _context.Add(Department);
         return (await _context.SaveChangesAsync());
     }
-    public async Task<int> Delete(int id)
+
+        public async Task<bool> IsDuplicate(Department _department)
+        {
+            Department department = await _context.Department.Where(b => b.Name.Equals(_department.Name)).FirstOrDefaultAsync();
+            return UtilityService.IsNotNull(department);
+        }
+        public async Task<int> Delete(int id)
     {
         var Department = await _context.Department.FindAsync(id);
         _context.Department.Remove(Department);
