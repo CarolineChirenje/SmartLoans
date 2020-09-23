@@ -396,6 +396,7 @@ namespace SmartLogic
             medicalDetail.Telephone = MedicalDetail.Telephone;
             medicalDetail.LastChangedBy = UtilityService.CurrentUserName;
             medicalDetail.LastChangedDate = DateTime.Now;
+            medicalDetail.PrescribedMedication = MedicalDetail.PrescribedMedication;
             _context.Update(medicalDetail);
 
             return await _context.SaveChangesAsync();

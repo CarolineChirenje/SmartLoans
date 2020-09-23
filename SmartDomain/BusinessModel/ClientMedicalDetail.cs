@@ -22,6 +22,7 @@ namespace SmartDomain
         public string MedicalAidNo { get; set; }
         public string Allergies { get; set; }
 
+        public string PrescribedMedication { get; set; }
         public string Other { get; set; }
 
         public string  Hospital { get; set; }
