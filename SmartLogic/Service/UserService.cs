@@ -11,7 +11,7 @@ namespace SmartLogic
 {
     public class UserService : IUserService
     {
-        private  DatabaseContext _context;
+        private DatabaseContext _context;
 
         public object Encrypt { get; private set; }
 
@@ -27,7 +27,7 @@ namespace SmartLogic
                 id = _context.Users.FirstOrDefault(u => u.UserName.ToUpper() == username.Trim().ToUpper())?.UserID ?? 0;
             return await _context.Users.Include(p => p.UserRoles)
                          .ThenInclude(r => r.Roles)
-                         .ThenInclude(r=>r.RolePermissions)
+                         .ThenInclude(r => r.RolePermissions)
                          .Include(ut => ut.UserType).
                 Where(r => r.UserID == id).FirstOrDefaultAsync();
         }
@@ -44,8 +44,8 @@ namespace SmartLogic
                     return null;
                 id = user.UserID;
             }
-                string[] roles = _context.UserRoles.Where(
-             userRole => userRole.UserID == id).Select(r => r.RoleID.ToString()).ToArray();
+            string[] roles = _context.UserRoles.Where(
+         userRole => userRole.UserID == id).Select(r => r.RoleID.ToString()).ToArray();
 
             return _context
             .Roles
@@ -64,6 +64,8 @@ namespace SmartLogic
         public async Task<int> Update(User user)
         {
             User updateUser = await FindUser(user.UserID);
+            string oldIDNumber = updateUser.IDNumber;
+            string oldEmailAddress = updateUser.EmailAddress;
             updateUser.FirstName = user.FirstName;
             updateUser.LastName = user.LastName;
             updateUser.IsActive = user.IsActive;
@@ -73,8 +75,24 @@ namespace SmartLogic
             updateUser.LastChangedBy = UtilityService.CurrentUserName;
             updateUser.LastChangedDate = DateTime.Now;
             _context.Update(updateUser);
-          
-            return await _context.SaveChangesAsync();
+
+            int result = await _context.SaveChangesAsync();
+            if (result > 0)
+            {  // also need to update id number and email address on client account 
+                Client client = _context.Clients.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
+                if (UtilityService.IsNotNull(user))
+                {
+                    client.EmailAddress = user.EmailAddress;
+                    client.IDNumber = user.IDNumber;
+                    client.LastChangedBy = UtilityService.CurrentUserName;
+                    client.LastChangedDate = DateTime.Now;
+                    _context.Update(client);
+                    result = await _context.SaveChangesAsync();
+
+                }
+
+            }
+            return result;
         }
 
         public bool UserExists(string emailAddress)
@@ -88,11 +106,11 @@ namespace SmartLogic
         {
 
             user.Password = Encryption.Encrypt(UtilityService.GeneratePassword);
-            user.LastChangedBy = String.IsNullOrEmpty(UtilityService.CurrentUserName)?"System": UtilityService.CurrentUserName;
+            user.LastChangedBy = String.IsNullOrEmpty(UtilityService.CurrentUserName) ? "System" : UtilityService.CurrentUserName;
             user.LastChangedDate = DateTime.Now;
-           // user.UserTypeID = (int)TypeOfUser.Administrator;
-            if(generateUserName)
-            user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
+            // user.UserTypeID = (int)TypeOfUser.Administrator;
+            if (generateUserName)
+                user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
             user.PasswordExpiryDate = DateTime.Now;
             _context.Add(user);
             await _context.SaveChangesAsync();
@@ -102,7 +120,7 @@ namespace SmartLogic
             {
                 //assign default role
                 UserRole userRole = new UserRole();
-                userRole.RoleID =(int)DefaultRoles.Employee;
+                userRole.RoleID = (int)DefaultRoles.Employee;
                 userRole.UserID = userid;
                 userRole.LastChangedBy = String.IsNullOrEmpty(UtilityService.CurrentUserName) ? "System" : UtilityService.CurrentUserName;
                 userRole.LastChangedDate = DateTime.Now;
@@ -120,7 +138,7 @@ namespace SmartLogic
         public string GetCredential(int id)
         {
 
-            string _password =  _context.Users.Find(id)?.Password;
+            string _password = _context.Users.Find(id)?.Password;
             return Encryption.Decrypt(_password);
         }
 
@@ -135,7 +153,7 @@ namespace SmartLogic
                     UserRoleID = roleID,
                     LastChangedBy = UtilityService.CurrentUserName,
                     LastChangedDate = DateTime.Now,
-                                    };
+                };
 
                 _context.Add(userRole);
             }
@@ -161,7 +179,7 @@ namespace SmartLogic
                 _context.UserRoles.Remove(userRole);
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
-               
+
                 userRole.LastChangedBy = UtilityService.CurrentUserName;
                 userRole.LastChangedDate = DateTime.Now;
                 _context.Update(userRole);
@@ -190,8 +208,8 @@ namespace SmartLogic
             try
             {
                 IEnumerable<int> oldRoles = from c in _context.UserRoles
-                                      where c.UserID == userID
-                                      select c.RoleID;
+                                            where c.UserID == userID
+                                            select c.RoleID;
 
                 List<int> old_Roles = oldRoles.ToList();
                 List<int> add_Roles = new List<int>();

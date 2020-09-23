@@ -45,11 +45,11 @@ namespace SmartLogic
 
         public async Task<Client> ClientDetails(string emailAddress, string idnumber)
         {
-            var Client = await _context.Clients.Where(c=>c.EmailAddress.Equals(emailAddress) && c.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
-                      return Client;
+            var Client = await _context.Clients.Where(c => c.EmailAddress.Equals(emailAddress) && c.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
+            return Client;
         }
 
-       
+
         public async Task<Client> FindClient(int Clientid = 0, string accountNumber = null)
         {
 
@@ -79,7 +79,7 @@ namespace SmartLogic
                             ThenInclude(p => p.Product).
                             Include(d => d.ClientDependents).
                             Include(c => c.ClientCourses).
-                            ThenInclude(c=>c.Course).
+                            ThenInclude(c => c.Course).
                              ThenInclude(c => c.CourseOutlines).
                             Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
                 return await ClientResults;
@@ -100,29 +100,51 @@ namespace SmartLogic
             Client.IsActive = true;
             _context.Add(Client);
             await _context.SaveChangesAsync();
-           return Client.ClientID; 
+            return Client.ClientID;
         }
+
+      
+
 
         public async Task<int> Update(Client Client)
         {
             Client updateClient = await _context.Clients.FindAsync(Client.ClientID);
+            string oldIDNumber = updateClient.IDNumber;
+            string oldEmailAddress = updateClient.EmailAddress;
             if (UtilityService.IsNotNull(updateClient))
             {
                 updateClient.FirstName = Client.FirstName;
                 updateClient.LastName = Client.LastName;
                 updateClient.IsActive = Client.IsActive;
                 updateClient.EmailAddress = Client.EmailAddress;
+                updateClient.IDNumber = Client.IDNumber;
                 updateClient.ResidentialAddress = Client.ResidentialAddress;
                 updateClient.MobileNumber = Client.MobileNumber;
                 updateClient.DateOfBirth = Client.DateOfBirth;
-
+                updateClient.DepartmentID = Client.DepartmentID;
                 updateClient.LastChangedBy = UtilityService.CurrentUserName;
                 updateClient.LastChangedDate = DateTime.Now;
                 _context.Update(updateClient);
             }
+            int result = await _context.SaveChangesAsync();
+            if (result > 0)
+            {  // also need to update id number and email address on user account 
+                User user = _context.Users.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
+                if (UtilityService.IsNotNull(user))
+                {
+                    user.EmailAddress = Client.EmailAddress;
+                    user.IDNumber = Client.IDNumber;
+                    user.LastChangedBy = UtilityService.CurrentUserName;
+                    user.LastChangedDate = DateTime.Now;
+                    _context.Update(user);
+                    result = await _context.SaveChangesAsync();
 
-            return await _context.SaveChangesAsync();
+                }
+
+           }
+            return result;
         }
+
 
         public async Task<List<Client>> Clients()
         {
@@ -639,7 +661,7 @@ namespace SmartLogic
             ClientCourse.LastChangedDate = DateTime.Now;
             _context.Add(ClientCourse);
             int _result = await _context.SaveChangesAsync();
-                       return _result;
+            return _result;
 
         }
 
@@ -721,11 +743,11 @@ namespace SmartLogic
 
                 foreach (int sessionid in sessions)
                 {
-                    CourseTranscript  transcript = new CourseTranscript
+                    CourseTranscript transcript = new CourseTranscript
                     {
                         ClientCourseID = clientCourseID,
                         CourseOutlineID = sessionid,
-                        DateRegistered=DateTime.Now,
+                        DateRegistered = DateTime.Now,
                         LastChangedBy = UtilityService.CurrentUserName,
                         LastChangedDate = DateTime.Now
                     };

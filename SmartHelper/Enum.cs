@@ -660,6 +660,7 @@ namespace SmartHelper
         Client_Upload_Document,
         Client_View_Document,
 
+
         // Role Module
         Add_Role,
         Update_Role,
@@ -755,7 +756,8 @@ namespace SmartHelper
         Update_Currency,
 
 
-        View_Dashboard_Notices
+        View_Dashboard_Notices,
+        Client_Update_Personal_Details
     }
 
 

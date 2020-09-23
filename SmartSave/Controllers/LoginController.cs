@@ -60,11 +60,25 @@ namespace SmartSave.Controllers
                     UtilityService.CurrentUserName = user.UserName;
                     UtilityService.UserFullName = user.UserFullName;
                     UtilityService.CurrentUserTypeID = user.UserTypeID;
-                    if(DateTime.Now >user.PasswordExpiryDate)
+                    if (DateTime.Now > user.PasswordExpiryDate)
                         return RedirectToAction("PasswordReset", new { id = user.UserID });
 
                     else
-                        return RedirectToLocal(returnUrl);
+                    {
+                        if (user.UserTypeID == (int)TypeOfUser.Employee)
+                        {
+                            Client client = await _clientService.ClientDetails(user.EmailAddress, user.IDNumber);
+                            if (UtilityService.IsNotNull(client))
+                            {
+                                return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
+                            }
+                            else
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                            return RedirectToLocal(returnUrl);
+
+                    }
                 }
 
                 else

@@ -16,7 +16,7 @@ namespace SmartDomain
         public string StackTrace { get; set; }
         public string Message { get; set; }
         public string LoggedBy { get; set; }
-        public DateTime DateLogged { get; set; }
+        public DateTime DateGenerated { get; set; }
 
     }
 }

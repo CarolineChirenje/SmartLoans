@@ -52,6 +52,9 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Clients(string accountNum = null, bool newClientsOnly = false)
         {
+            if (UtilityService.UserType == (int)TypeOfUser.Employee)
+                return RedirectToAction("Dashboard", "Home");
+
             List<Client> Clients = await _service.Clients();
             if (String.IsNullOrEmpty(accountNum))
                 return View(Clients);
@@ -60,7 +63,26 @@ namespace SmartSave.Controllers
             else
                 return View(Clients.Where(m => m.AccountNumber.ToString().Contains(accountNum.Trim())));
         }
-
+        public IActionResult MyAccount()
+        {
+           if(UtilityService.UserType==(int)TypeOfUser.Employee)
+           {
+                User user = _userService.FindUser(0, UtilityService.CurrentUserName).Result;
+                if(UtilityService.IsNotNull(user))
+                {
+                    Client client =  _service.ClientDetails(user.EmailAddress, user.IDNumber).Result;
+                    if (UtilityService.IsNotNull(client))
+                    {
+                        return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
+                    }
+                    else
+                        return RedirectToAction("Dashboard", "Home");
+                }
+                else
+                    return RedirectToAction("Dashboard", "Home");
+            }
+            return RedirectToAction("Dashboard", "Home");
+        }
 
         public IActionResult AddClient()
         {
@@ -72,13 +94,13 @@ namespace SmartSave.Controllers
         {
             GetDropDownLists();
             int _result = await (_service.Save(Client));
-            if ( _result== 0)
+            if (_result == 0)
             {
                 ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(Client);
             }
 
-            return RedirectToAction("ViewClient", new { id =_result });
+            return RedirectToAction("ViewClient", new { id = _result });
         }
 
         public async Task<IActionResult> ViewClient(int id = 0, string accountnNum = null)
@@ -90,9 +112,15 @@ namespace SmartSave.Controllers
             if (id == 0 && accountnNum == null)
                 return RedirectToAction(nameof(Clients));
             Client Client = await _service.FindClient(id);
-            HttpContext.Session.SetString("ClientID", Client.ClientID.ToString());
-            GetDropDownLists();
-            return View(Client);
+            if (UtilityService.IsNotNull(Client))
+            {
+                HttpContext.Session.SetString("ClientID", Client.ClientID.ToString());
+
+                GetDropDownLists();
+                return View(Client);
+            }
+            else
+                return RedirectToAction(nameof(Clients));
         }
 
         [HttpPost]
@@ -113,6 +141,8 @@ namespace SmartSave.Controllers
             ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Client);
         }
+
+
 
 
         public async Task<IActionResult> Delete(int id)
@@ -647,7 +677,7 @@ namespace SmartSave.Controllers
                     if (await (_service.Update(ClientDependent)) == 0)
                     {
                         ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                        
+
                         HttpContext.Session.SetString("GenderID", ClientDependent.GenderID.ToString());
                         return View(ClientDependent);
                     }
@@ -774,7 +804,7 @@ namespace SmartSave.Controllers
             }
 
 
-            return RedirectToAction("ViewClientCourse", new { id=clientCourse.ClientCourseID});
+            return RedirectToAction("ViewClientCourse", new { id = clientCourse.ClientCourseID });
 
         }
 
@@ -900,7 +930,7 @@ namespace SmartSave.Controllers
 
 
 
-            var availableProduct =clientproductList!=null ? allproductList.Except(clientproductList) : allproductList;
+            var availableProduct = clientproductList != null ? allproductList.Except(clientproductList) : allproductList;
             if (availableProduct != null)
             {
                 availableProduct.Select(t => new
@@ -923,7 +953,7 @@ namespace SmartSave.Controllers
 
             ViewBag.GenderList = new SelectList(genderList, "GenderID", "Name");
             ViewBag.DependentGenderList = new SelectList(genderList, "GenderID", "Name", dependentGenderID);
-            
+
 
 
             var bankList = _bankService.Banks().Result.Select(t => new
