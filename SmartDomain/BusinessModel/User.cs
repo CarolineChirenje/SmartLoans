@@ -30,6 +30,8 @@ namespace SmartDomain
         [Required(ErrorMessage = "This field is required.")]
         [DisplayName("First Name(s)")]
         public string FirstName { get; set; }
+        [Required(ErrorMessage = "This field is required.")]
+        public string IDNumber { get; set; }
 
         [Column(TypeName = "nvarchar(250)")]
         [Required(ErrorMessage = "This field is required.")]
@@ -38,7 +40,8 @@ namespace SmartDomain
         public string UserName { get; set; }
      
         public string Password { get; set; }
-        
+
+        public DateTime PasswordExpiryDate { get; set; }
         public bool IsActive { get; set; }
 
         

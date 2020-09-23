@@ -577,16 +577,25 @@ namespace SmartHelper
         Site_Customer_Service_Number,
         Site_Test_Email_Account,
         Site_Default_Environment,
-        Application_Role_Based_Menus
+        Application_Role_Based_Menus,
+        Site_Create_Account_URL,
+        Password_Validity_Period
 
 
     }
+
+    public enum DefaultRoles
+    {
+        Super_Admin = 1,
+        Employee,
+        Administrator,
+          }
     public enum TypeOfUser
     {
         Administrator = 1,
         Employer,
         Employee,
-        Visitor,
+      
     }
     public enum Frequency
     {
@@ -743,8 +752,10 @@ namespace SmartHelper
         View_Notice,
 
         Update_Country,
-        Update_Currency
+        Update_Currency,
 
+
+        View_Dashboard_Notices
     }
 
 

@@ -243,6 +243,36 @@ namespace SmartHelper
 
             }
         }
+
+
+        public static string SiteURLAccountCreation
+        {
+            get
+            {
+                return GetData.GetSettingValue((int)AppSetting.Site_Create_Account_URL)?.Value;
+
+            }
+        }
+
+        public static int PasswordValidityPeriod
+        {
+            get
+            {
+                  string _period = GetData.GetSettingValue((int)AppSetting.Password_Validity_Period)?.Value;
+                int expiryPeriod = 1;
+                try
+                {
+                    expiryPeriod = Int32.Parse(_period);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                return expiryPeriod;
+
+            }
+        }
         public static string CustomerServiceEmail
         {
             get
@@ -356,8 +386,7 @@ namespace SmartHelper
                 catch (Exception ex)
                 {
 
-                    throw;
-                }
+                                  }
 
                 return roleID;
 

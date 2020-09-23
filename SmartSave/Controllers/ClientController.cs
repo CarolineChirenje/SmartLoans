@@ -900,7 +900,7 @@ namespace SmartSave.Controllers
 
 
 
-            var availableProduct = allproductList.Except(clientproductList);
+            var availableProduct =clientproductList!=null ? allproductList.Except(clientproductList) : allproductList;
             if (availableProduct != null)
             {
                 availableProduct.Select(t => new

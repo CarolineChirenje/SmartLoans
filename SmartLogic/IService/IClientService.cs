@@ -20,7 +20,8 @@ namespace SmartLogic
         Task<List<Client>> Clients();
         Task<List<Client>> NewClients();
         Task<List<string>> ClientAccountNumbers(string account);
-
+        Task<Client> ClientDetails(string emailAddress, string idnumber);
+        
 
 
         //Notes

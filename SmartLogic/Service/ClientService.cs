@@ -43,8 +43,13 @@ namespace SmartLogic
             return (await _context.SaveChangesAsync());
         }
 
+        public async Task<Client> ClientDetails(string emailAddress, string idnumber)
+        {
+            var Client = await _context.Clients.Where(c=>c.EmailAddress.Equals(emailAddress) && c.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
+                      return Client;
+        }
 
-
+       
         public async Task<Client> FindClient(int Clientid = 0, string accountNumber = null)
         {
 

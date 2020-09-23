@@ -13,7 +13,9 @@ namespace SmartLogic
         Task<int> Delete(int id);
 
         Task<int> ActionUserRole(int id ,int userid,DatabaseAction action);
-        Task<int> Save(User user);
+        Task<int> Save(User user, bool generateUserName=true);
+        bool UserExists(string emailAddress);
+        public string GetCredential(int id);
         Task<int> Update(User user);
         Task<int> SaveUserRoles(int useId, List<string> roles);
         //Task<User> GetUser(int id);

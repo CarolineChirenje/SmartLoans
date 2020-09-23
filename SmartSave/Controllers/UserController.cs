@@ -59,7 +59,14 @@ namespace SmartSave.Controllers
             PopulateDropDownLists();
             if (UtilityService.StringParameterHasValue(String.Concat(user.FirstName, ' ', user.LastName)))
             {
+
+             if (_service.UserExists(user.EmailAddress))
+             {
+                    ViewData[MessageDisplayType.Error.ToString()] = $"A User Account with the same email address {user.EmailAddress} already exists";
+                    return View(user);
+                }
                 user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
+
                 int result=await  _service.Save(user);
                 if (result == 0)
                 {
@@ -74,13 +81,18 @@ namespace SmartSave.Controllers
             
                     if (UtilityService.IsNotNull(emailTemplate))
                     {
-                        email.Body = emailTemplate.Body + String.Format(UtilityService.GetMessageToDisplay("PASSWORDGENERATED"), user.UserFullName, UtilityService.ApplicationName, Encryption.Decrypt(user.Password));
+                        email.Body = emailTemplate.Body + _service.GetCredential(result);
                         email.Subject = emailTemplate.Subject;
                     }
                     else{
 
-                        email.Body = UtilityService.HtmlDecode(String.Format(UtilityService.GetMessageToDisplay("PASSWORDGENERATED"), user.UserFullName, UtilityService.ApplicationName, Encryption.Decrypt(user.Password)));
-                        email.Subject = "New Account Created";
+                        
+                        email.AttachmentFromMemory = null;
+                        string _emailBody = @"Your user account has been created successfully  account on " + UtilityService.ApplicationName + ".<br/><br/>" +
+                                   "We recommend that you keep your account details secure and not share it with anyone.If you feel your credentials have  been compromised, " +
+                                @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ". Your login password is <b>" + _service.GetCredential(result) + "</b>.<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
+                        email.Body = UtilityService.HtmlDecode(_emailBody);
+                        email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
                     }
                     _mailservice.SendMail(email);
                   

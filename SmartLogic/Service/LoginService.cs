@@ -42,7 +42,7 @@ namespace SmartLogic
 
         private bool PinCodeExists(string pincode)
         {
-            return _context.UserPinResets.Any(p => p.PinCode.Equals(pincode));
+            return _context.UserAuthenticationCodes.Any(p => p.PinCode.Equals(pincode));
         }
 
         string GeneratePinCode()
@@ -60,29 +60,45 @@ namespace SmartLogic
 
 
         #endregion PinCode
-        public async Task<string> ResetPassword(string emailaddress)
+        public async Task<string> ResetPassword(string emailaddress, bool isAccountCreation)
         {
-           
-            User user= await _context.Users.FirstOrDefaultAsync(u => u.EmailAddress.Equals(emailaddress));
-            if (UtilityService.IsNull(user))
-                return "";
+            Client client=new Client();
+            User user = new User();
+            if (isAccountCreation) {
+                client = await _context.Clients.FirstOrDefaultAsync(u => u.EmailAddress.Equals(emailaddress));
+                if (UtilityService.IsNull(client))
+                    return "";
+            }
+            else
+            {
+          user  = await _context.Users.FirstOrDefaultAsync(u => u.EmailAddress.Equals(emailaddress));
+                if (UtilityService.IsNull(user))
+                    return "";
+            }
             string encryptedPinCode = NewPinCode;
-            UserPinReset pin = new UserPinReset();
-            pin.UserID = user.UserID;
+            UserAuthenticationCode pin = new UserAuthenticationCode();
+            pin.UserID = isAccountCreation? client.ClientID  : user.UserID;
             pin.DateRequested = DateTime.Now;
             pin.PinCode = encryptedPinCode;
             pin.ExpiryDate = pin.DateRequested.AddDays(UtilityService.PinCodeValidityPeriod);
-            _context.UserPinResets.Add(pin);
+            pin.IsAccountCreation = isAccountCreation;
+            _context.UserAuthenticationCodes.Add(pin);
              await _context.SaveChangesAsync();
 
             return encryptedPinCode;
         }
+        public async Task<bool> UserAccountExists(string emailaddress, string idnumber)
+        {
 
-        public async Task<UserPinReset> ConfirmCode(string code)
+            var user = _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefault();
+            return UtilityService.IsNotNull(user);
+            }
+
+        public async Task<UserAuthenticationCode> ConfirmCode(string code, bool isAccountCreation)
         {
             string encryptedPinCode = Encryption.Encrypt(code);
-            UserPinReset pinReset = await _context.UserPinResets
-                        .FirstOrDefaultAsync(u => u.PinCode.Equals(encryptedPinCode));
+            UserAuthenticationCode pinReset = await _context.UserAuthenticationCodes
+                        .FirstOrDefaultAsync(u => u.PinCode.Equals(encryptedPinCode) && u.IsAccountCreation==isAccountCreation);
            
             return pinReset;
         }
@@ -96,6 +112,7 @@ namespace SmartLogic
                 return 0;
             user.Password = encryptedPassword;
             user.LastChangedBy = UtilityService.CurrentUserName;
+            user.PasswordExpiryDate = DateTime.Now.AddDays(UtilityService.PasswordValidityPeriod);
             user.LastChangedDate = DateTime.Now;
 
 

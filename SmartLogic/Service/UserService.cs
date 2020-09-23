@@ -69,23 +69,59 @@ namespace SmartLogic
             updateUser.IsActive = user.IsActive;
             updateUser.UserTypeID = user.UserTypeID;
             updateUser.EmailAddress = user.EmailAddress;
+            updateUser.IDNumber = user.IDNumber;
             updateUser.LastChangedBy = UtilityService.CurrentUserName;
             updateUser.LastChangedDate = DateTime.Now;
             _context.Update(updateUser);
           
             return await _context.SaveChangesAsync();
         }
-        public async Task<int> Save(User user)
+
+        public bool UserExists(string emailAddress)
+        {
+            var user = _context.Users.Where(u => u.EmailAddress.Equals(emailAddress)).FirstOrDefault();
+            return UtilityService.IsNotNull(user);
+
+
+        }
+        public async Task<int> Save(User user, bool generateUserName)
         {
 
             user.Password = Encryption.Encrypt(UtilityService.GeneratePassword);
-            user.LastChangedBy = UtilityService.CurrentUserName;
+            user.LastChangedBy = String.IsNullOrEmpty(UtilityService.CurrentUserName)?"System": UtilityService.CurrentUserName;
             user.LastChangedDate = DateTime.Now;
-            user.UserTypeID = (int)TypeOfUser.Administrator;
+           // user.UserTypeID = (int)TypeOfUser.Administrator;
+            if(generateUserName)
             user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
+            user.PasswordExpiryDate = DateTime.Now;
             _context.Add(user);
             await _context.SaveChangesAsync();
-            return (user.UserID);
+            int userid = user.UserID;
+
+            if ((TypeOfUser)user.UserTypeID == TypeOfUser.Employee)
+            {
+                //assign default role
+                UserRole userRole = new UserRole();
+                userRole.RoleID =(int)DefaultRoles.Employee;
+                userRole.UserID = userid;
+                userRole.LastChangedBy = String.IsNullOrEmpty(UtilityService.CurrentUserName) ? "System" : UtilityService.CurrentUserName;
+                userRole.LastChangedDate = DateTime.Now;
+                int _result = await Save(userRole);
+            }
+            return userid;
+        }
+        public async Task<int> Save(UserRole user)
+        {
+            user.LastChangedBy = UtilityService.CurrentUserName;
+            user.LastChangedDate = DateTime.Now;
+            _context.Add(user);
+            return (await _context.SaveChangesAsync());
+        }
+        public string GetCredential(int id)
+        {
+
+            string _password =  _context.Users.Find(id)?.Password;
+            return Encryption.Decrypt(_password);
         }
 
         public async Task<int> SaveUserRoles(int UserID, List<string> RoleID)

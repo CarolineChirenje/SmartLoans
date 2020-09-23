@@ -52,6 +52,21 @@ namespace SmartSave.Models
 
 
     }
+    public class RegisterAccountViewModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string EmailAddress { get; set; }
+        [Required]
+        [Display(Name = "Identity Number")]
+
+        public string IDNumber { get; set; }
+
+
+
+    }
+       
     public class CheckBoxModel
     {
         public int LinkedID { get; set; }
@@ -69,7 +84,7 @@ namespace SmartSave.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-               public bool IsChecked { get; set; }
+        public bool IsChecked { get; set; }
     }
 
     public class DashBoardViewModel
@@ -103,7 +118,7 @@ namespace SmartSave.Models
         public int BankAccountID { get; set; }
         public int TransactionTypeID { get; set; }
         public bool IsFromClient { get; set; }
-        
+
     }
 
 

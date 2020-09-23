@@ -157,7 +157,7 @@ namespace SmartDataAccess
         public DbSet<ClientNote> ClientNotes { get; set; }
         public DbSet<ClientDependent> ClientDependents { get; set; }
         public DbSet<ClientProduct> ClientProducts { get; set; }
-        public DbSet<UserPinReset> UserPinResets  { get; set; }
+        public DbSet<UserAuthenticationCode> UserAuthenticationCodes { get; set; }
         public DbSet<ClientMedicalDetail> ClientMedicalDetails { get; set; }
         public DbSet<NoticeBoard> NoticeBoard { get; set; }
         public DbSet<Product> Products { get; set; }

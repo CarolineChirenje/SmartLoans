@@ -669,9 +669,37 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 }
-               
+                ,
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Site_Create_Account_URL,
+                    Name = AppSetting.Site_Create_Account_URL.ToString().Replace("_", " "),
+                    Value=@"https://localhost:5001/Login/CreateAccountConfirmation",
+                    Description="Site Client Create Account URL",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
 
-                
+                },
+                  new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Password_Validity_Period,
+                    Name = AppSetting.Password_Validity_Period.ToString().Replace("_", " "),
+                    Value="30",
+                    Description="Password Validity Period in Days",
+                    CustomVariableTypeID=(int)VariableType.Integer,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+
+
+
+
                 };
 
             return settings.ToArray();
@@ -981,21 +1009,24 @@ namespace SmartDataAccess
         }
         public static Role[] GetRoles()
         {
+            List<Role> roles1 = new List<Role>();
+            var roles = from DefaultRoles s in Enum.GetValues(typeof(DefaultRoles))
+                               select new { ID = s, Name = s.ToString() };
 
-            List<Role> roles = new List<Role>
+            foreach (var x in roles)
             {
-                new Role()
+                roles1.Add(new Role()
                 {
-                    RoleID = 1,
-                    Name = "Super-Admin",
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser",
+                    RoleID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
                     IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
 
-                }
-            };
+                });
 
-            return roles.ToArray();
+            }
+            return roles1.ToArray();
 
         }
 
@@ -1062,7 +1093,9 @@ namespace SmartDataAccess
                             UserName = "SuperUser",
                             FirstName = "Wadzanai",
                             LastName = "Chirenje",
-                            LastChangedBy = "SuperUser"
+                            IDNumber="8904161200188",
+                            LastChangedBy = "SuperUser",
+                            PasswordExpiryDate=DateTime.MinValue
                         },
                          new User()
                          {
@@ -1075,7 +1108,9 @@ namespace SmartDataAccess
                              UserName = "Employer",
                              FirstName = "John",
                              LastName = "Jarani",
-                             LastChangedBy = "SuperUser"
+                             IDNumber="0000000000000",
+                             LastChangedBy = "SuperUser",
+                              PasswordExpiryDate=DateTime.MinValue
                          }
                          ,
                          new User()
@@ -1089,22 +1124,12 @@ namespace SmartDataAccess
                              UserName = "Employee",
                              FirstName = "Ndini",
                              LastName = "Ndadaro",
-                             LastChangedBy = "SuperUser"
+                             IDNumber="1111111111111",
+                             LastChangedBy = "SuperUser",
+                              PasswordExpiryDate=DateTime.MinValue
                          },
 
-                         new User()
-                         {
-                             UserID = 4,
-                             UserTypeID = (int)TypeOfUser.Visitor,
-                             LastChangedDate = DateTime.Now,
-                             EmailAddress = "edwinguri@gmail.com",
-                             Password = Encryption.Encrypt(UtilityService.GetMessageToDisplay("ADMIN")),
-                             IsActive = true,
-                             UserName = "Visitor",
-                             FirstName = "Potential",
-                             LastName = "Employer",
-                             LastChangedBy = "SuperUser"
-                         }
+                        
             };
 
             return users.ToArray();

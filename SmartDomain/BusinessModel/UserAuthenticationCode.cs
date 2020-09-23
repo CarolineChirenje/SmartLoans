@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SmartDomain
 {
- public   class UserPinReset
+ public   class UserAuthenticationCode
     {
         [Key]
         public int UserPinID { get; set; }
@@ -14,5 +14,6 @@ namespace SmartDomain
         public string PinCode { get; set; }
         public DateTime DateRequested { get; set; }
         public DateTime ExpiryDate { get; set; }
+        public bool  IsAccountCreation { get; set; }
     }
 }
