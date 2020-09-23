@@ -114,18 +114,18 @@ namespace SmartSave.Controllers
             if (await (_service.ActionPermission(id, roleID, DatabaseAction.Remove)) == 0)
 
                 ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction("ViewRole", new { roleID });
+            return RedirectToAction("ViewRole", new {id= roleID });
 
         }
         public async Task<IActionResult> ViewPermission(int id)
         {
             int roleID = Convert.ToInt32(HttpContext.Session.GetString("RoleID"));
             if (id == 0)
-                return RedirectToAction("ViewRole", new { roleID });
+                return RedirectToAction("ViewRole", new {id= roleID });
 
             Permission permission = await _service.FindPermission(id);
             if (UtilityService.IsNull(permission))
-                return RedirectToAction("ViewRole", new { roleID });
+                return RedirectToAction("ViewRole", new {id= roleID });
             return View(permission);
         }
         [HttpPost]
@@ -139,7 +139,7 @@ namespace SmartSave.Controllers
                 ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
 
-            return RedirectToAction("ViewRole", new { user.RoleID });
+            return RedirectToAction("ViewRole", new {id= user.RoleID });
         }
 
 
@@ -148,7 +148,7 @@ namespace SmartSave.Controllers
             if (await (_service.DeleteUserFromRole(UserID,roleID)) == 0)
 
                 ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction("ViewRole", new { roleID });
+            return RedirectToAction("ViewRole", new {id= roleID });
 
         }
 
@@ -165,10 +165,37 @@ namespace SmartSave.Controllers
                 }
 
             }
-            return RedirectToAction("ViewRole", new { role.RoleID });
+            return RedirectToAction("ViewRole", new {id= role.RoleID });
 
         }
 
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddMenu(string[] selectedMenus, Role role)
+        {
+            Role update = await (_service.GetRole(role.RoleID));
+            if (UtilityService.IsNotNull(update))
+            {
+                if (await (_service.UpdateMenus(role.RoleID, selectedMenus)) == 0)
+                {
+                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return View(role);
+                }
+
+            }
+            return RedirectToAction("ViewRole", new {id= role.RoleID });
+
+        }
+
+        public async Task<IActionResult> RemoveMenuFromRole(int roleID, int menuid)
+        {
+            if (await (_service.DeleteMenuFromRole(roleID,menuid)) == 0)
+
+                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            return RedirectToAction("ViewRole", new {id= roleID });
+
+        }
         private void PopulateDropDownLists()
         {
 
@@ -186,6 +213,22 @@ namespace SmartSave.Controllers
                 });
             }
             ViewBag.PermissionsList = viewModel;
+
+
+
+            var allMenus = _service.GetAllMenus();
+            var roleMenus = new HashSet<int>(_service.GetRoleMenus(roleID)?.Select(m => m.MenuID));
+            var menuModel = new List<CheckBoxListItem>();
+            foreach (var menu in allMenus)
+            {
+                menuModel.Add(new CheckBoxListItem
+                {
+                    ID = menu.MenuID,
+                    Name = menu.DisplayName,
+                    IsChecked = roleMenus.Contains(menu.MenuID)
+                });
+            }
+            ViewBag.MenuList = menuModel;
 
 
             var activeUsers = _service.GetActiveUsersNotInRole(roleID).Select(t => new

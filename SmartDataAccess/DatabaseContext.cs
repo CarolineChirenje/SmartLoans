@@ -176,6 +176,8 @@ namespace SmartDataAccess
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<RoleMenu> RoleMenus { get; set; }
+        
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<CustomVariableType> SystemVariableTypes { get; set; }
         public DbSet<CustomSettingType> CustomSettingTypes { get; set; }

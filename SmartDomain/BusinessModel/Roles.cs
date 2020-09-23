@@ -15,11 +15,14 @@ namespace SmartDomain
         public bool IsActive { get; set; }
         public virtual List<RolePermission> RolePermissions { get; set; }
         public virtual List<UserRole> UserRoles { get; set; }
+        public virtual List<RoleMenu> RoleMenus { get; set; }
 
         [NotMapped]
         public int PermissionID { get; set; }
         [NotMapped]
         public int UserID { get; set; }
+        [NotMapped]
+        public int MenuID { get; set; }
 
 
     }

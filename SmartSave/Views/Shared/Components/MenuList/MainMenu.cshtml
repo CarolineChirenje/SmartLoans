@@ -2,9 +2,52 @@
 @using SmartHelper;
 <ul class="sidebar-menu" data-widget="tree">
     <li class="header">@UtilityService.ApplicationName</li>
-      @foreach (var item in Model)
+    @if (UtilityService.ApplyRoleBasedMenus)
     {
-        <li  class="treeview @item.IsActiveMenu">
+        List<int> _roleMenus = UtilityService.GetRoleMenus;
+        List<int> _roleMenuGroups = UtilityService.GetRoleMenusGroups;
+
+
+
+    @foreach (var item in Model)
+    {
+
+        if (_roleMenuGroups.Contains(item.MenuGroupID))
+        {
+
+        <li class="treeview @item.IsActiveMenu">
+            <a asp-controller="Home" asp-action="Dashboard">
+                @{
+                    var parentCSS = UtilityService.HtmlEncode(item.CSSClass);
+                }
+                <i class="@parentCSS"></i> <span>@item.DisplayName</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                @{
+                    List<SmartDomain.Menu> _menus = item.Menus;
+                    var menuList = _menus.Where(m => _roleMenus.Contains(m.MenuID)).ToList();
+                
+                }
+                @foreach (var menu in menuList)
+                {
+                    var menuCSS = UtilityService.HtmlEncode(menu.CSSClass);
+                    <li><i class="@menuCSS"></i><a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName">@menu.DisplayName</a></li>
+                }
+
+
+            </ul>
+        </li>
+                            }
+                        }
+                    }
+    else
+    {
+    @foreach (var item in Model)
+    {
+        <li class="treeview @item.IsActiveMenu">
             <a asp-controller="Home" asp-action="Dashboard">
                 @{
                     var parentCSS = UtilityService.HtmlEncode(item.CSSClass);
@@ -21,9 +64,11 @@
                     <li><i class="@menuCSS"></i><a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName">@menu.DisplayName</a></li>
                 }
 
-                
+                }
             </ul>
         </li>
+    }
+
     }
 </ul>
 

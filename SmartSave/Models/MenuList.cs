@@ -15,7 +15,7 @@ namespace SmartSave
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View("MainMenu",await _service.MenuGroups());
+            return View("MainMenu",await _service.DisplayMenuGroups());
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Data.Common;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 namespace SmartHelper
 {
@@ -92,6 +93,16 @@ namespace SmartHelper
             {
 
                 string value = GetData.GetSettingValue((int)AppSetting.Capture_VAT_Inclusive_Payments)?.Value;
+                return value.Equals("true") ? true : false;
+
+            }
+        }
+        public static bool ApplyRoleBasedMenus
+        {
+            get
+            {
+
+                string value = GetData.GetSettingValue((int)AppSetting.Application_Role_Based_Menus)?.Value;
                 return value.Equals("true") ? true : false;
 
             }
@@ -328,6 +339,30 @@ namespace SmartHelper
             }
         }
 
+        public static int UserRoleID
+        {
+            get
+            {
+                string sqlCustomSetting = @"SELECT TOP 1 r.RoleID FROM Users u 
+                INNER JOIN UserRoles ur ON  ur.UserID=u.UserID
+                INNER JOIN Roles r ON ur.RoleID=r.RoleID
+                WHERE u.UserName='" + UtilityService.CurrentUserName + "'";
+                string _Role= GetData.GetStringValue(sqlCustomSetting);
+                int roleID = 0;
+                try
+                {
+                    roleID = Int32.Parse(_Role);
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+
+                return roleID;
+
+            }
+        }
         public static int PinCodeLength
         {
             get
@@ -400,6 +435,33 @@ namespace SmartHelper
 
             }
         }
+        public static List<int> GetRoleMenus
+        {
+            get
+            {
+                string sqlCustomSetting = $"SELECT rm.MenuID FROM RoleMenus rm WHERE rm.RoleID={UserRoleID};";
+                DataTable _result = GetData.GetDataTable(sqlCustomSetting);
+                               List<int> results = (from row in _result.AsEnumerable() select Convert.ToInt32(row["MenuID"])).ToList();
+                return results;
+            }
+        
+        
+        
+        }
+        public static List<int> GetRoleMenusGroups
+        {
+            get
+            {
+                string sqlCustomSetting = $"SELECT DISTINCT m.MenuGroupID FROM RoleMenus rm INNER JOIN Menus m ON rm.MenuID = m.MenuID WHERE rm.RoleID={UserRoleID};";
+                DataTable _result = GetData.GetDataTable(sqlCustomSetting);
+                List<int> results = (from row in _result.AsEnumerable() select Convert.ToInt32(row["MenuGroupID"])).ToList();
+                return results;
+            }
+
+
+
+        }
+
         /// <summary>
         /// Static value protected by access routine.
         /// </summary>

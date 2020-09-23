@@ -655,20 +655,21 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
-                }
-                //new SmartDomain.CustomSetting()
-                //{
-                //    CustomSettingID = (int)AppSetting.Default_Company_ID,
-                //    Name = AppSetting.Default_Company_ID.ToString().Replace("_", " "),
-                //    Value=UtilityService.DefaultCompanyID.ToString(),
-                //    Description="Default Company that the System Uses",
-                //    CustomVariableTypeID=(int)VariableType.Integer,
-                //    CustomSettingTypeID=(int)SettingType.All,
-                //    IsActive = true,
-                //    LastChangedDate = DateTime.Now,
-                //    LastChangedBy = "SuperUser"
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Application_Role_Based_Menus,
+                    Name = AppSetting.Application_Role_Based_Menus.ToString().Replace("_", " "),
+                    Value="false",
+                    Description="Display menus based on User Role",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
 
-                //},
+                }
+               
 
                 
                 };

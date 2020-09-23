@@ -28,10 +28,11 @@ namespace SmartLogic
                 Include(x => x.Menus).OrderBy(m => m.OrderNo).AsNoTracking().FirstOrDefaultAsync();
         }
 
-        public async Task<List<MenuGroup>> MenuGroups()
+        public async Task<List<MenuGroup>> DisplayMenuGroups()
         {
             return await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
         }
+        public async Task<List<MenuGroup>> MenuGroups() => await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
 
         public List<MenuGroup> GetMenuGroups()
         {
@@ -47,10 +48,10 @@ namespace SmartLogic
         }
         public async Task<int> Update(MenuGroup ParentMenu)
         {
-                    MenuGroup update = await FindMenuGroup(ParentMenu.MenuGroupID);
+            MenuGroup update = await FindMenuGroup(ParentMenu.MenuGroupID);
             if (ParentMenu.IsActiveMenu)
                 // reset others and  activate only this
-            await ResetActiveMenuGroup(ParentMenu.MenuGroupID);
+                await ResetActiveMenuGroup(ParentMenu.MenuGroupID);
             update.IsActiveMenu = ParentMenu.IsActive; // rule must be at least 1 active tab for all
             update.DisplayName = ParentMenu.DisplayName;
             update.CSSClass = UtilityService.HtmlDecode(ParentMenu.CSSClass);

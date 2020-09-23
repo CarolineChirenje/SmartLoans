@@ -576,7 +576,8 @@ namespace SmartHelper
         Site_Customer_Service_Email,
         Site_Customer_Service_Number,
         Site_Test_Email_Account,
-        Site_Default_Environment
+        Site_Default_Environment,
+        Application_Role_Based_Menus
 
 
     }
@@ -658,6 +659,8 @@ namespace SmartHelper
         Add_Permissions,
         Remove_Permissions,
         View_Permissions,
+        Add_Menu_To_Role,
+        Remove_Menu_From_Role,
 
         // Product Module
         Add_Product,

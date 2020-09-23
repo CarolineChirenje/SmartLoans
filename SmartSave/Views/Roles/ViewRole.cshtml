@@ -85,13 +85,17 @@
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Roles" asp-action="Roles">Cancel</a>
                 @if (UtilityService.HasPermission(Permissions.Update_Role))
-                {
-                    <button type="submit" class="btn btn-info pull-right">Update</button>
+                {@if (!Model.Name.Contains("Super"))
+                    {
+                        <button type="submit" class="btn btn-info pull-right">Update</button>
+                }
                 }
                 @if (UtilityService.HasPermission(Permissions.Delete_Role))
                 {
-                    <a class="btn btn-danger" asp-controller="Roles" asp-action="Delete" asp-route-id="@Model.RoleID">Delete</a>
-                }
+                    @if (!Model.Name.Contains("Super"))
+                    {
+                        <a class="btn btn-danger" asp-controller="Roles" asp-action="Delete" asp-route-id="@Model.RoleID">Delete</a>
+                    }}
             </div>
             <!-- /.box-footer -->
         </form>
@@ -108,6 +112,9 @@
                     <ul class="nav nav-tabs" id="myTab">
                         <li class="active">
                             <a href="#Permissions" data-toggle="tab">Permissions</a>
+                        </li>
+                        <li>
+                            <a href="#Menu" data-toggle="tab">Menu</a>
                         </li>
                         <li>
                             <a href="#Users" data-toggle="tab">Users</a>
@@ -166,8 +173,72 @@
                                 @if (UtilityService.HasPermission(Permissions.Add_Permissions))
                                 {
                                     <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddPermissions">Add Permission</a>
-                                }</div>
+                                }
+                            </div>
                         </div>
+
+
+                        <div class="tab-pane fade in" id="Menu">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Menus: @Model.Name
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="dataTable_wrapper">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>Display Name</th>
+                                                <th>Order No</th>
+                                                <th>Menu Group</th>
+                                                @if (UtilityService.HasPermission(Permissions.Update_Role))
+                                                {
+                                                    <th>Action</th>
+                                                }
+
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in Model.RoleMenus)
+                                            {
+
+                                            <tr>
+
+                                                @if (UtilityService.HasPermission(Permissions.View_Menu))
+                                                {
+                                                    <td><a asp-controller="Menus" asp-action="ViewMenu" asp-route-id="@item.MenuID">@item.Menu.DisplayName</a></td>
+                                                }
+                                                else
+                                                {
+
+                                                    <td>@Html.DisplayFor(modelItem => item.Menu.DisplayName)</td>
+                                                }
+
+                                                <td>@Html.DisplayFor(modelItem => item.Menu.OrderNo)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Menu.MenuGroup.DisplayName)</td>
+
+                                                @if (UtilityService.HasPermission(Permissions.Remove_Menu_From_Role))
+                                                {
+
+                                                    <td><a asp-controller="Roles" asp-action="RemoveMenuFromRole" asp-route-roleID="@item.RoleID" asp-route-menuid="@item.MenuID">Remove Menu</a></td>
+                                                }
+                                            </tr>
+                                            }
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                @if (UtilityService.HasPermission(Permissions.Add_Menu_To_Role))
+                                {
+                                    <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddMenu">Add Menu</a>
+                                }
+                            </div>
+                        </div>
+
 
                         <div class="tab-pane fade in" id="Users">
 
@@ -196,7 +267,7 @@
                                                     <tr>
                                                         @if (UtilityService.HasPermission(Permissions.View_User))
                                                         {
-                                                        <td> <a asp-controller="User" asp-action="ViewUser" asp-route-id="@item.UserID">@item.User.UserFullName</a></td>
+                                                            <td> <a asp-controller="User" asp-action="ViewUser" asp-route-id="@item.UserID">@item.User.UserFullName</a></td>
 
                                                         }
                                                         else
@@ -272,11 +343,70 @@
                         <input type="hidden" name="RoleID" value="@Model.RoleID" />
 
                     </div>
-                <div class="modal-footer">
-                    @if (UtilityService.HasPermission(Permissions.Add_Permissions))
-                    {
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    }
+                    <div class="modal-footer">
+                        @if (UtilityService.HasPermission(Permissions.Add_Permissions))
+                        {
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        }
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<div class="modal fade" id="AddMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Roles" asp-action="AddMenu">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                                <tr>
+                                    @{
+                                        int count = 0;
+                                        List<CheckBoxListItem> menus = ViewBag.MenuList;
+
+                                        foreach (var menu in menus)
+                                        {
+                                            if (count++ % 3 == 0)
+                                            {
+                                            @:</tr><tr>
+                                            }
+                                            @:<td>
+                                                <input type="checkbox"
+                                                       name="selectedMenus"
+                                                       value="@menu.ID"
+                                                       @(Html.Raw(menu.IsChecked ? "checked=\"checked\"" : "")) />
+                                                @menu.Name
+                                            @:</td>
+                                        }
+                                    @:</tr>
+                                    }
+                                </table>
+                            </div>
+
+                        </div>
+
+
+                        <input type="hidden" name="RoleID" value="@Model.RoleID" />
+
+                    </div>
+                    <div class="modal-footer">
+                        @if (UtilityService.HasPermission(Permissions.Add_Permissions))
+                        {
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        }
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                     </div>
@@ -318,15 +448,15 @@
             </div>
         </div>
     </div>
-<script>
-    $(document).ready(function () {
-        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-            localStorage.setItem('activeTab', $(e.target).attr('href'));
+    <script>
+        $(document).ready(function () {
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                localStorage.setItem('activeTab', $(e.target).attr('href'));
+            });
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('#myTab a[href="' + activeTab + '"]').tab('show');
+            }
         });
-        var activeTab = localStorage.getItem('activeTab');
-        if (activeTab) {
-            $('#myTab a[href="' + activeTab + '"]').tab('show');
-        }
-    });
 
-</script>
+    </script>

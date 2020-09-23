@@ -47,6 +47,9 @@ namespace SmartLogic
                 .ThenInclude(perm => perm.Permission)
                 .Include(u => u.UserRoles)
                  .ThenInclude(usr => usr.User)
+                 .Include(m=>m.RoleMenus)
+                 .ThenInclude(m=>m.Menu)
+                 .ThenInclude(m=>m.MenuGroup)
                 //  .AsNoTracking()
                 .FirstOrDefaultAsync();
 
@@ -91,6 +94,13 @@ namespace SmartLogic
             return _context.Permissions
             .ToList();
         }
+
+        public List<Menu> GetAllMenus()
+        {
+
+            return _context.Menus
+            .ToList();
+        }
         public async  Task<Permission> FindPermission(int id)
         {
 
@@ -121,6 +131,8 @@ namespace SmartLogic
             where c.RoleID == roleID
             select c.PermissionID;
         }
+
+       
         public async Task<int> Update(Role role)
         {
             Role update = _context.Roles.Find(role.RoleID);
@@ -184,8 +196,8 @@ namespace SmartLogic
 
             return (await _context.SaveChangesAsync());
         }
-
-     public async   Task<int> UpdatePermissions(int roleID, string[] selectedPermissions)
+  
+        public async   Task<int> UpdatePermissions(int roleID, string[] selectedPermissions)
         {
             int result = 0;
             try
@@ -228,7 +240,6 @@ namespace SmartLogic
             }
             return result;
         }
-       
         public async Task<int> AddPermissions(int roleID,List<int>permissions)
         {
             try
@@ -284,5 +295,102 @@ namespace SmartLogic
             _context.UserRoles.Remove(_userRole);
             return (await _context.SaveChangesAsync());
         }
+
+        public async Task<int> UpdateMenus(int roleID, string[] selectedMenus)
+        {
+            int result = 0;
+            try
+            {
+                List<int> old_Menus = RoleMenus(roleID).ToList();
+                List<int> add_Menus = new List<int>();
+                List<int> remove_Menus = new List<int>();
+                int[] updated_Details = selectedMenus == null ? null : Array.ConvertAll(selectedMenus, s => int.Parse(s));
+
+
+                if (old_Menus == null && old_Menus.Count == 0)
+                {
+                    add_Menus = updated_Details.ToList();
+                    return await AddMenus(roleID, add_Menus);
+                }
+                foreach (var menu in _context.Menus)
+                {
+                    if (selectedMenus.Contains(menu.MenuID.ToString()))
+                    {
+                        if (!old_Menus.Contains(menu.MenuID))
+                        {
+                            add_Menus.Add(menu.MenuID);
+                        }
+                    }
+                    else
+                    {
+                        if (old_Menus.Contains(menu.MenuID))
+                        {
+                            remove_Menus.Add(menu.MenuID);
+                        }
+                    }
+                }
+                int _addResult = await AddMenus(roleID, add_Menus);
+                int _removeResult = await RemoveMenusFromRole(roleID, remove_Menus);
+                result = _addResult + _removeResult;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            return result;
+        }
+
+        public async Task<int> AddMenus(int roleID, List<int> menus)
+        {
+            try
+            {
+
+                foreach (int menuid in menus)
+                {
+                    RoleMenu roleMenu = new RoleMenu
+                    {
+                        MenuID = menuid,
+                        RoleID = roleID,
+                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedDate = DateTime.Now
+                    };
+                    _context.Add(roleMenu);
+
+                }
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+        public async Task<int> RemoveMenusFromRole(int roleID, List<int> menus)
+        {
+            List<RoleMenu> roleMenus = await _context.RoleMenus.Where(r => r.RoleID == roleID).ToListAsync();
+            var roleMenusToBeRemoved = roleMenus
+                    .Where(x => menus.Any(y => y == x.MenuID));
+            _context.RoleMenus.RemoveRange(roleMenusToBeRemoved);
+            return (await _context.SaveChangesAsync());
+        }
+
+        IEnumerable<int> RoleMenus(int roleID)
+        {
+
+            return from c in _context.RoleMenus
+                   where c.RoleID == roleID
+                   select c.MenuID;
+        }
+        public  List<RoleMenu> GetRoleMenus(int roleID)
+        {
+            return  _context.RoleMenus.Where(m => m.RoleID == roleID).ToList();
+        }
+
+        public async Task<int> DeleteMenuFromRole(int roleID, int menuid)
+        {
+            var _menuRole = await _context.RoleMenus.Where(r => r.RoleID == roleID && r.MenuID == menuid).FirstOrDefaultAsync();
+            _context.RoleMenus.Remove(_menuRole);
+            return (await _context.SaveChangesAsync());
+        }
+      
     }
 }

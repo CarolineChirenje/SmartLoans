@@ -13,6 +13,7 @@ namespace SmartLogic
         // Parent Menu
         Task<MenuGroup> FindMenuGroup(int MenuGroupID);
         Task<List<MenuGroup>> MenuGroups();
+        Task<List<MenuGroup>> DisplayMenuGroups();
         List<MenuGroup> GetMenuGroups();
         Task<int> Save(MenuGroup MenuGroup);
         Task<int> Update(MenuGroup MenuGroup);
