@@ -42,17 +42,22 @@ namespace SmartSave.Controllers
                 if (await _service.IsDuplicate(BankAccount))
                 {
                     ViewData[MessageDisplayType.Error.ToString()] = "Failed to Create Bank Account a Bank Account with the same name and Account Number Already Exists";
-                    return View();
+                    return View(BankAccount);
                 }
 
-                if (await (_service.Save(BankAccount)) == 0)
+                int result= await _service.Save(BankAccount));
+                if ( result == 0)
                 {
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return View();
+                    return View(BankAccount);
+                }
+                else
+                {
+                    return RedirectToAction("ViewBankAccount", new { id=result });
                 }
             }
             ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return View();
+            return View(BankAccount);
         }
         // GET:
         public async Task<IActionResult> ViewBankAccount(int id = 0)

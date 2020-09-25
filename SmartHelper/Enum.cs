@@ -7,7 +7,7 @@ namespace SmartHelper
     {
 
         DashBoard = 1,
-        Clients,
+        Employees,
         Accounting,
         Settings,
         Administration,

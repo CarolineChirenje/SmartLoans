@@ -477,7 +477,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Statement_Save_To_Folder,
                     Name = AppSetting.Statement_Save_To_Folder.ToString().Replace("_", " "),
-                    Value="true",
+                    Value="false",
                     Description="Option to Save Generated Statement To A physical Location on the Server",
                     CustomVariableTypeID=(int)VariableType.Boolean,
                     CustomSettingTypeID=(int)SettingType.All,

@@ -66,7 +66,9 @@ namespace SmartLogic
             Bank.LastChangedBy = UtilityService.CurrentUserName;
             Bank.LastChangedDate = DateTime.Now;
             _context.Add(Bank);
-            return (await _context.SaveChangesAsync());
+            await _context.SaveChangesAsync();
+
+            return Bank.BankAccountID;
         }
 
 

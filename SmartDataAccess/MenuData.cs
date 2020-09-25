@@ -26,8 +26,8 @@ namespace SmartDataAccess
                 },
                 new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Clients,
-                    DisplayName = MenuGroups.Clients.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Employees,
+                    DisplayName = MenuGroups.Employees.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa-user-circle"),
@@ -111,7 +111,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 1,
-                    MenuGroupID = (int)MenuGroups.Clients,
+                    MenuGroupID = (int)MenuGroups.Employees,
                     DisplayName = "Employees",
                     ControllerName = "Client",
                     ActionName = "Clients",
@@ -126,7 +126,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 2,
-                    MenuGroupID = (int)MenuGroups.Clients,
+                    MenuGroupID = (int)MenuGroups.Employees,
                     DisplayName = "Enquiries",
                     ControllerName = "Enquiries",
                     ActionName = "Enquiries",
@@ -241,7 +241,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 10,
-                    MenuGroupID = (int)MenuGroups.Clients,
+                    MenuGroupID = (int)MenuGroups.Employees,
                     DisplayName = "Notice Board",
                     ControllerName = "NoticeBoard",
                     ActionName = "NoticeBoard",
@@ -365,7 +365,7 @@ namespace SmartDataAccess
                  new Menu()
                 {
                     MenuID = 19,
-                    MenuGroupID = (int)MenuGroups.Clients,
+                    MenuGroupID = (int)MenuGroups.Employees,
                     DisplayName = "My Account",
                     ControllerName = "Client",
                     ActionName = "MyAccount",
