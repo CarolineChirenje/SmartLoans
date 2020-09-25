@@ -45,7 +45,7 @@ namespace SmartSave.Controllers
                     return View(BankAccount);
                 }
 
-                int result= await _service.Save(BankAccount));
+                int result= await _service.Save(BankAccount);
                 if ( result == 0)
                 {
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
