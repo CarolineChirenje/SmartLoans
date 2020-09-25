@@ -114,7 +114,10 @@ namespace SmartLogic
         public List<CourseOutline> GetUserAttendedSessions(int clientid, int courseid)
         {
         
-           int _ClientCourseID= _context.ClientCourses.Where(c => c.ClientID == clientid && c.CourseID == courseid).FirstOrDefault().ClientCourseID;
+        var clientCourse= _context.ClientCourses.Where(c => c.ClientID == clientid && c.CourseID == courseid).FirstOrDefault();
+            int _ClientCourseID = 0;
+         if (UtilityService.IsNotNull(clientCourse))
+            _ClientCourseID=clientCourse.ClientCourseID;
 
             IEnumerable<int> courseOutlines = from c in _context.CourseTranscripts
                                               where c.ClientCourseID == _ClientCourseID

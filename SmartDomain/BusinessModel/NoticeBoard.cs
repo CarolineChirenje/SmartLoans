@@ -24,7 +24,6 @@ namespace SmartDomain
         public int PriorityRankID { get; set; }
         public virtual PriorityRank PriorityRank { get; set; }
         public bool IsActive { get; set; }
-        public bool SendToGuardian { get; set; }
-        public bool SendToClient { get; set; }
+               public bool SendToClient { get; set; }
     }
 }

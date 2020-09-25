@@ -7932,6 +7932,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\*" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SmartDataAccess\SmartDataAccess.csproj" />
     <ProjectReference Include="..\SmartDomain\SmartDomain.csproj" />
     <ProjectReference Include="..\SmartLogic\SmartLogic.csproj" />

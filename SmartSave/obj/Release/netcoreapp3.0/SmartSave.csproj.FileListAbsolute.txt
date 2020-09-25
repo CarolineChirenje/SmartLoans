@@ -215,3 +215,16 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\staticwebassets\Sm
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\SmartSave.dll
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\SmartSave.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\SmartSave.genruntimeconfig.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Login\CreateAccountConfirmation.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Login\FinaliseAccount.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Login\RegisterAccount.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\serviceDependencies.json
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\serviceDependencies.SmartSave20200924134030 - Web Deploy.json
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\ServiceDependencies\SmartSave20200924134030 - Web Deploy\profile.arm.json
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\serviceDependencies.SmartSave2020 - Web Deploy.json
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\ServiceDependencies\SmartSave2020 - Web Deploy\mssql1.arm.json
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\ServiceDependencies\SmartSave2020 - Web Deploy\profile.arm.json
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\serviceDependencies.SmartSave - Web Deploy.json
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\ServiceDependencies\SmartSave - Web Deploy\mssql1.arm.json
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\ServiceDependencies\SmartSave - Web Deploy\profile.arm.json
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Home\Error.cshtml.g.cs

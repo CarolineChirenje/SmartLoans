@@ -225,7 +225,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Account_Number_Prefix,
                     Name = AppSetting.Account_Number_Prefix.ToString().Replace("_", " "),
-                    Value="",
+                    Value="SS",
                     Description="Account Number Prefix if Any",
                     CustomVariableTypeID=(int)VariableType.String,
                     CustomSettingTypeID=(int)SettingType.All,
@@ -276,7 +276,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-               
+
                   new CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Date_Format,
@@ -402,7 +402,7 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                },
-              
+
                new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Report_Footer_1,
@@ -471,8 +471,8 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                
-              
+
+
                 new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Statement_Save_To_Folder,
@@ -629,7 +629,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                
+
                  new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Site_Test_Email_Account,
@@ -941,7 +941,7 @@ namespace SmartDataAccess
                     RolePermissionID = count,
                     PermissionID = permission.PermissionID,
                     RoleID = 1,
-                                       LastChangedDate = DateTime.Now,
+                    LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser",
 
                 });
@@ -997,8 +997,8 @@ namespace SmartDataAccess
                 {
                     TransactionTypeID = (int)x.ID,
                     Name = x.Name.Replace("_", " "),
-                    Code= ((TransactionTypeList)x.ID).DescriptionAttr(),
-                     IsActive = true,
+                    Code = ((TransactionTypeList)x.ID).DescriptionAttr(),
+                    IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
@@ -1011,7 +1011,7 @@ namespace SmartDataAccess
         {
             List<Role> roles1 = new List<Role>();
             var roles = from DefaultRoles s in Enum.GetValues(typeof(DefaultRoles))
-                               select new { ID = s, Name = s.ToString() };
+                        select new { ID = s, Name = s.ToString() };
 
             foreach (var x in roles)
             {
@@ -1129,7 +1129,7 @@ namespace SmartDataAccess
                               PasswordExpiryDate=DateTime.MinValue
                          },
 
-                        
+
             };
 
             return users.ToArray();
@@ -1144,8 +1144,7 @@ namespace SmartDataAccess
            {
                UserRoleID = 1,
                UserID = 1,
-               RoleID = 1,
-               
+               RoleID =(int)DefaultRoles.Super_Admin,
                LastChangedBy = "SuperUser",
                LastChangedDate = DateTime.Now,
            },
@@ -1153,13 +1152,37 @@ namespace SmartDataAccess
             {
                 UserRoleID = 2,
                 UserID = 2,
-                RoleID = 1,
-                               LastChangedBy = "SuperUser",
+                RoleID =(int)DefaultRoles.Administrator,
+                LastChangedBy = "SuperUser",
                 LastChangedDate = DateTime.Now,
             }
             };
 
             return userRoles.ToArray();
+
+        }
+
+        public static RoleMenu[] GetRoleMenus()
+        {
+
+            List<RoleMenu> roleMenus = new List<RoleMenu>();
+            var menus = MenuData.GetMenus();
+            //  int menuCount = menus.Length;
+            int count = 1;//-(menuCount);
+            foreach (var x in menus)
+            {
+                roleMenus.Add(new RoleMenu()
+                {
+                    RoleMenuID = count,
+                    MenuID = (int)x.MenuID,
+                    RoleID = (int)DefaultRoles.Super_Admin,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+                count++;
+            }
+            return roleMenus.ToArray();
 
         }
         public static BankAccountType[] GetBankAccountTypes()
@@ -1183,11 +1206,6 @@ namespace SmartDataAccess
 
             }
             return bankAccountTypes.ToArray();
-
-
-
-
-
 
         }
         public static Currency[] GetCurrencies()

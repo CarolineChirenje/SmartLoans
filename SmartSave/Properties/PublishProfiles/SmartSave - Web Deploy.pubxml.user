@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAChxXdOUaBk2PiPySvNVuoAAAAAACAAAAAAAQZgAAAAEAACAAAABicgRTbfifNOIsY3OxPd20WVMBF0/DF1PPAH4hvI1dGwAAAAAOgAAAAAIAACAAAADrmv6QgeJ+vsJY+X+PafZARSL86p3tBs6dvsev2qfuRoAAAABQslC8s9Rwg18sRSi0B2qnK2bG8fssEZVxS4s0poGimQemeqtEQTCraU9YKPMsooqDYdnFIOWg2rb8k9leGcWkAE/ThdlS2bpzp110CEo9I6SRpo1Hg6Agr5JxEfMUITiPoNtOhsTKMjt1vHZLUhMfOYCx6ZJ7AfQrqfqPad9kkEAAAABLeCUU/B2zojoaVTufhoBmCBf/cyHGswiBvCot6OJdF9d5lRuxBASpjXWsD/TZ7jISZr/FmAEJJor57Hmz3uPp</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="SSDBConnection">
+      <Value>Data Source=tcp:smartsavedbserver.database.windows.net,1433%3bInitial Catalog=SmartSave%3bUser Id=cchirenje%40smartsavedbserver%3bPassword=Ch1gumbu6299##</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="SmartDataAccess.DatabaseContext">
+      <Value>Data Source=tcp:smartsavedbserver.database.windows.net,1433%3bInitial Catalog=SmartSave%3bUser Id=cchirenje%40smartsavedbserver%3bPassword=Ch1gumbu6299##</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

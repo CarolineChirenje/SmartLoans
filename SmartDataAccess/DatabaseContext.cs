@@ -134,6 +134,12 @@ namespace SmartDataAccess
             modelBuilder.Entity<CustomSetting>().HasData(
               Data.GetApplicationSettings());
 
+            modelBuilder.Entity<RoleMenu>().HasData(
+           Data.GetRoleMenus());
+
+
+            
+
 
         }
         public DbSet<User> Users { get; set; }

@@ -36,6 +36,7 @@ namespace SmartLogic
         public async Task<List<DocumentType>> DocumentTypes()
         {
             return await _context.DocumentTypes
+            .Include(d=>d.DocumentFormat)
             .AsNoTracking()
             .ToListAsync();
         }
