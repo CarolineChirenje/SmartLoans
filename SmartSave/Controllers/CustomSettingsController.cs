@@ -49,6 +49,11 @@ namespace SmartSave.Controllers
                 CustomSetting update = await (_service.FindCustomSetting(CustomSettings.CustomSettingID));
                 if (UtilityService.IsNotNull(update))
                 {
+                    if (CustomSettings.CustomSettingID == (int)AppSetting.Mail_Credential_Password)
+                    {
+                        string value = CustomSettings.Value;
+                        CustomSettings.Value = Encryption.Encrypt(value);
+                }
                     if (await (_service.Update(CustomSettings)) == 0)
                         ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction(nameof(CustomSettings));

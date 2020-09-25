@@ -122,22 +122,6 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-
-                new Menu()
-                {
-                    MenuID = 2,
-                    MenuGroupID = (int)MenuGroups.Employees,
-                    DisplayName = "Enquiries",
-                    ControllerName = "Enquiries",
-                    ActionName = "Enquiries",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-question-circle"),
-                    OrderNo = 2,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-
                 new Menu()
                 {
                     MenuID = 3,

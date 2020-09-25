@@ -3,6 +3,7 @@ using MigraDoc.DocumentObjectModel.Shapes;
 using SmartHelper;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Text;
 
@@ -11,9 +12,19 @@ namespace SmartReporting
     public class ReportingUtilities
     {
         public static Image PrintHeaderLogo(Section section)
-        {// Put a logo in the header
+        {
+
+       
+        
+        // Put a logo in the header
             string imagePath =UtilityService.ReportLogo;
+           
             Image image = section.Headers.Primary.AddImage(imagePath);
+            if (image.Height.IsEmpty)
+            {
+              imagePath= AppDomain.CurrentDomain.BaseDirectory +"SmartLogo.PNG";
+              image = section.Headers.Primary.AddImage(imagePath);
+            }
             image.Height = "1.5cm";
             image.LockAspectRatio = true;
             image.RelativeVertical = RelativeVertical.Line;

@@ -14,16 +14,16 @@ namespace SmartDomain
         [Required]
         public string Title { get; set; }
         public string Details { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{yyyy-MM-dd HH:mm}")]
         public DateTime StartDate { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{yyyy-MM-dd HH:mm}")]
         public DateTime EndDate { get; set; }
         [DisplayName("Priority")]
         public int PriorityRankID { get; set; }
         public virtual PriorityRank PriorityRank { get; set; }
         public bool IsActive { get; set; }
-               public bool SendToClient { get; set; }
+              
     }
 }

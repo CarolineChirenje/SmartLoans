@@ -3,4 +3,21 @@
 }
 <h2>@ViewData["Title"]</h2>
 
-<p>Oops something went wrong.</p>
+<div id="layoutError_content">
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="text-center mt-4">
+                        <h1 class="display-1">Oops</h1>
+                        <p class="lead">Internal Server Error -something went wrong</p>
+                        <a  asp-controller="Home" asp-action="Dashboard">
+                            <i class="fas fa-arrow-left mr-1"></i>
+                            Return to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
