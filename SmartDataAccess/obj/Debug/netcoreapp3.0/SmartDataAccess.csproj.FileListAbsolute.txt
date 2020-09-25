@@ -1,0 +1,15 @@
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Debug\netcoreapp3.0\SmartDataAccess.deps.json
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Debug\netcoreapp3.0\SmartDataAccess.dll
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Debug\netcoreapp3.0\SmartDataAccess.pdb
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Debug\netcoreapp3.0\SmartDomain.dll
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Debug\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
+D:\Dev Projects\SmartSave\SmartDataAccess\obj\Debug\netcoreapp3.0\SmartDataAccess.csprojAssemblyReference.cache
+D:\Dev Projects\SmartSave\SmartDataAccess\obj\Debug\netcoreapp3.0\SmartDataAccess.AssemblyInfoInputs.cache
+D:\Dev Projects\SmartSave\SmartDataAccess\obj\Debug\netcoreapp3.0\SmartDataAccess.AssemblyInfo.cs
+D:\Dev Projects\SmartSave\SmartDataAccess\obj\Debug\netcoreapp3.0\SmartDataAccess.csproj.CoreCompileInputs.cache
+D:\Dev Projects\SmartSave\SmartDataAccess\obj\Debug\netcoreapp3.0\SmartDataAccess.csproj.CopyComplete
+D:\Dev Projects\SmartSave\SmartDataAccess\obj\Debug\netcoreapp3.0\SmartDataAccess.dll
+D:\Dev Projects\SmartSave\SmartDataAccess\obj\Debug\netcoreapp3.0\SmartDataAccess.pdb

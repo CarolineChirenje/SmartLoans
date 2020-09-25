@@ -985,7 +985,7 @@ namespace SmartSave.Controllers
             int courseID = Convert.ToInt32(HttpContext.Session.GetString("CourseID"));
             if (courseID > 0)
             {
-                var allSessions = _settingService.GetCourseOutlines(courseID);
+                var allSessions = _settingService.GetCourseOutlines(courseID).OrderBy(r => r.Name);
                 var clientSessions = new HashSet<int>(_settingService.GetUserAttendedSessions(clientID, courseID)?.Select(c => c.CourseOutlineID));
                 var viewModel = new List<CheckBoxListItem>();
                 foreach (var session in allSessions)

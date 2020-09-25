@@ -200,7 +200,7 @@ namespace SmartSave.Controllers
         {
 
             int roleID = Convert.ToInt32(HttpContext.Session.GetString("RoleID"));
-            var allPermissions = _service.GetAllPermissions();
+            var allPermissions = _service.GetAllPermissions().OrderBy(r => r.Name);
             var rolePermissions = new HashSet<int>(_service.GetPermissionsForRole(roleID)?.Select(p => p.PermissionID));
             var viewModel = new List<CheckBoxListItem>();
             foreach (var permission in allPermissions)
@@ -216,7 +216,7 @@ namespace SmartSave.Controllers
 
 
 
-            var allMenus = _service.GetAllMenus();
+            var allMenus = _service.GetAllMenus().OrderBy(r => r.DisplayName);
             var roleMenus = new HashSet<int>(_service.GetRoleMenus(roleID)?.Select(m => m.MenuID));
             var menuModel = new List<CheckBoxListItem>();
             foreach (var menu in allMenus)

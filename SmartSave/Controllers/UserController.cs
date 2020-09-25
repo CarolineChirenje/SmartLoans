@@ -189,7 +189,7 @@ namespace SmartSave.Controllers
         public void PopulateDropDownLists()
         {
             int userID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
-            var allRoles = _service.GetAllRoles();
+            var allRoles = _service.GetAllRoles().OrderBy(r=>r.Name);
             var userRoles = new HashSet<int>(_service.GetUserRoles(userID)?.Select(p => p.RoleID));
             var viewModel = new List<CheckBoxListItem>();
             foreach (var role in allRoles)
