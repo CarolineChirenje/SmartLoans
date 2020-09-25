@@ -15,9 +15,9 @@ namespace SmartLogic
         Task<int> Save(EmailTemplate EmailTemplate);
         Task<int> Update(EmailTemplate EmailTemplate);
         Task<int> ActionEmailTemplate(int EmailTemplateId, DatabaseAction action);
-        Task<EmailTemplate> GetEmailTemplate(int EmailTemplateId);
+        Task<EmailTemplate> GetEmailTemplate(int EmailTypeID);
 
-        Task<EmailTemplate> FindEmailTemplate(int EmailTemplateId = 0);
+        Task<EmailTemplate> FindEmailTemplate(int EmailTypeID = 0);
         Task<List<EmailTemplate>> EmailTemplates();
         List<EmailType> EmailTypes();
        

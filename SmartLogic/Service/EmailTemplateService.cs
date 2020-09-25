@@ -19,10 +19,10 @@ namespace SmartLogic
         public EmailTemplateService(DatabaseContext context) => _context = context;
 
         public async Task<EmailTemplate> FindEmailTemplate(int id = 0) => await GetEmailTemplate(id);
-        public async Task<EmailTemplate> GetEmailTemplate(int EmailTemplateID)
+        public async Task<EmailTemplate> GetEmailTemplate(int EmailTypeID)
         {
             return await _context.EmailTemplates
-               .Where(r => r.EmailTemplateID == EmailTemplateID)
+               .Where(r => r.EmailTypeID == EmailTypeID)
                .Include(m => m.EmailType)
                .AsNoTracking().FirstOrDefaultAsync();
         }

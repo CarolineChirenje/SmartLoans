@@ -13,3 +13,5 @@ D:\Dev Projects\SmartSave\SmartReporting\obj\Release\netcoreapp3.0\SmartReportin
 D:\Dev Projects\SmartSave\SmartReporting\obj\Release\netcoreapp3.0\SmartReporting.csproj.CopyComplete
 D:\Dev Projects\SmartSave\SmartReporting\obj\Release\netcoreapp3.0\SmartReporting.dll
 D:\Dev Projects\SmartSave\SmartReporting\obj\Release\netcoreapp3.0\SmartReporting.pdb
+D:\Dev Projects\SmartSave\SmartReporting\obj\Release\netcoreapp3.0\SmartReporting.Resource.resources
+D:\Dev Projects\SmartSave\SmartReporting\obj\Release\netcoreapp3.0\SmartReporting.csproj.GenerateResource.cache

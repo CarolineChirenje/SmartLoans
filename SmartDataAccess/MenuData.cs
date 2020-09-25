@@ -124,14 +124,14 @@ namespace SmartDataAccess
                 },
                 new Menu()
                 {
-                    MenuID = 3,
+                    MenuID = 2,
                     MenuGroupID = (int)MenuGroups.Accounting,
                     DisplayName = "Transactions",
                     ControllerName = "Transactions",
                     ActionName = "Transactions",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-money"),
-                    OrderNo = 3,
+                    OrderNo = 2,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
@@ -139,27 +139,41 @@ namespace SmartDataAccess
 
                 new Menu()
                 {
-                    MenuID = 4,
+                    MenuID = 3,
                     MenuGroupID = (int)MenuGroups.Accounting,
                     DisplayName = "Products",
                     ControllerName = "Product",
                     ActionName = "Product",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-product-hunt"),
-                    OrderNo = 4,
+                    OrderNo = 3,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
                 
                 new Menu()
                 {
-                    MenuID = 5,
+                    MenuID = 4,
                     MenuGroupID = (int)MenuGroups.Settings,
                     DisplayName = "Users",
                     ControllerName = "User",
                     ActionName = "Users",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-user"),
+                    OrderNo = 4,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new Menu()
+                {
+                    MenuID = 5,
+                    MenuGroupID = (int)MenuGroups.Settings,
+                    DisplayName = "Roles & Permissions",
+                    ControllerName = "Roles",
+                    ActionName = "Roles",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-asterisk"),
                     OrderNo = 5,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -167,42 +181,28 @@ namespace SmartDataAccess
                 },
                 new Menu()
                 {
-                    MenuID = 6,
-                    MenuGroupID = (int)MenuGroups.Settings,
-                    DisplayName = "Roles & Permissions",
-                    ControllerName = "Roles",
-                    ActionName = "Roles",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-asterisk"),
-                    OrderNo = 6,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                new Menu()
-                {
-                    MenuID =7,
+                    MenuID =6,
                     MenuGroupID = (int)MenuGroups.Administration,
                     DisplayName = "Departments",
                     ControllerName = "Department",
                     ActionName = "Department",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-building"),
-                    OrderNo =7,
+                    OrderNo =6,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
                 new Menu()
                 {
-                    MenuID = 8,
+                    MenuID = 7,
                     MenuGroupID = (int)MenuGroups.Menu,
                     DisplayName = "Menu",
                     ControllerName = "Menus",
                     ActionName = "MainMenu",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-book"),
-                    OrderNo = 8,
+                    OrderNo = 7,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
@@ -210,66 +210,80 @@ namespace SmartDataAccess
 
                 new Menu()
                 {
-                    MenuID = 9,
+                    MenuID = 8,
                     MenuGroupID = (int)MenuGroups.Administration,
                     DisplayName = "Coaching Programmes",
                     ControllerName = "Courses",
                     ActionName = "Courses",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-university"),
-                    OrderNo = 9,
+                    OrderNo = 8,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
                 new Menu()
                 {
-                    MenuID = 10,
+                    MenuID = 9,
                     MenuGroupID = (int)MenuGroups.Employees,
                     DisplayName = "Notice Board",
                     ControllerName = "NoticeBoard",
                     ActionName = "NoticeBoard",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa broadcast-tower"),
-                    OrderNo =10,
+                    OrderNo =9,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                },
                  new Menu()
                 {
-                    MenuID = 11,
+                    MenuID = 10.,
                     MenuGroupID = (int)MenuGroups.Administration,
                     DisplayName = "Documents",
                     ControllerName = "DocumentType",
                     ActionName = "DocumentTypes",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-file"),
-                    OrderNo = 11,
+                    OrderNo = 10,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                },
           new Menu()
                 {
-                    MenuID = 12,
+                    MenuID = 11,
                     MenuGroupID = (int)MenuGroups.Settings,
                     DisplayName = "Custom Settings",
                     ControllerName = "CustomSettings",
                     ActionName = "CustomSettings",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-spinner"),
-                    OrderNo = 13,
+                    OrderNo = 11,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                },
                  new Menu()
                 {
-                    MenuID =13,
+                    MenuID =12,
                     MenuGroupID = (int)MenuGroups.Administration,
                     DisplayName = "Banks",
                     ControllerName = "BankAccounts",
                     ActionName = "BankAccounts",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-university"),
+                    OrderNo =12,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                 new Menu()
+                {
+                    MenuID =13,
+                    MenuGroupID = (int)MenuGroups.Administration,
+                    DisplayName = "Currency",
+                    ControllerName = "Currency",
+                    ActionName = "Currency",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-money"),
                     OrderNo =13,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -279,26 +293,12 @@ namespace SmartDataAccess
                 {
                     MenuID =14,
                     MenuGroupID = (int)MenuGroups.Administration,
-                    DisplayName = "Currency",
-                    ControllerName = "Currency",
-                    ActionName = "Currency",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-money"),
-                    OrderNo =14,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                 new Menu()
-                {
-                    MenuID =15,
-                    MenuGroupID = (int)MenuGroups.Administration,
                     DisplayName = "Country",
                     ControllerName = "Country",
                     ActionName = "Country",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-globe"),
-                    OrderNo =15,
+                    OrderNo =14,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
@@ -306,42 +306,42 @@ namespace SmartDataAccess
 
                  new Menu()
                 {
-                    MenuID =16,
+                    MenuID =15,
                     MenuGroupID = (int)MenuGroups.Developer_Menu,
                     DisplayName = "Feature Flags",
                     ControllerName = "FeatureFlag",
                     ActionName = "FeatureFlag",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-building"),
-                    OrderNo =16,
+                    OrderNo =15,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
                 new Menu()
                 {
-                    MenuID =17,
+                    MenuID =16,
                     MenuGroupID = (int)MenuGroups.Administration,
                     DisplayName = "Companies",
                     ControllerName = "Company",
                     ActionName = "Companies",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa-building-o"),
-                    OrderNo =17,
+                    OrderNo =16,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
                  new Menu()
                 {
-                    MenuID =18,
+                    MenuID =17,
                     MenuGroupID = (int)MenuGroups.Administration,
                     DisplayName = "Email Templates",
                     ControllerName = "EmailTemplate",
                     ActionName = "EmailTemplate",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-envelope-o"),
-                    OrderNo =18,
+                    OrderNo =17,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
