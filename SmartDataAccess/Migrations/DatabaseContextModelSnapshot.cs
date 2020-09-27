@@ -133,7 +133,7 @@ namespace SmartDataAccess.Migrations
                             BankAccountTypeID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 606, DateTimeKind.Local).AddTicks(7046),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 238, DateTimeKind.Local).AddTicks(3813),
                             Name = "Savings"
                         },
                         new
@@ -141,7 +141,7 @@ namespace SmartDataAccess.Migrations
                             BankAccountTypeID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 606, DateTimeKind.Local).AddTicks(7499),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 238, DateTimeKind.Local).AddTicks(4912),
                             Name = "Cheque"
                         },
                         new
@@ -149,7 +149,7 @@ namespace SmartDataAccess.Migrations
                             BankAccountTypeID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 606, DateTimeKind.Local).AddTicks(7506),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 238, DateTimeKind.Local).AddTicks(4927),
                             Name = "Credit"
                         },
                         new
@@ -157,7 +157,7 @@ namespace SmartDataAccess.Migrations
                             BankAccountTypeID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 606, DateTimeKind.Local).AddTicks(7509),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 238, DateTimeKind.Local).AddTicks(4931),
                             Name = "Cash"
                         });
                 });
@@ -661,6 +661,9 @@ namespace SmartDataAccess.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("CompanyLogo")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -710,7 +713,7 @@ namespace SmartDataAccess.Migrations
                             ContactTypeID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(1754),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 250, DateTimeKind.Local).AddTicks(9310),
                             Name = "Cell Phone"
                         },
                         new
@@ -718,7 +721,7 @@ namespace SmartDataAccess.Migrations
                             ContactTypeID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(1909),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 250, DateTimeKind.Local).AddTicks(9476),
                             Name = "Email Address"
                         },
                         new
@@ -726,7 +729,7 @@ namespace SmartDataAccess.Migrations
                             ContactTypeID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(1915),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 250, DateTimeKind.Local).AddTicks(9485),
                             Name = "Postal Address"
                         },
                         new
@@ -734,7 +737,7 @@ namespace SmartDataAccess.Migrations
                             ContactTypeID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(1920),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 250, DateTimeKind.Local).AddTicks(9491),
                             Name = "Residential Address"
                         },
                         new
@@ -742,7 +745,7 @@ namespace SmartDataAccess.Migrations
                             ContactTypeID = 5,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(1924),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 250, DateTimeKind.Local).AddTicks(9496),
                             Name = "Telephone"
                         });
                 });
@@ -776,7 +779,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(8943),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(7822),
                             Name = "Afghanistan"
                         },
                         new
@@ -784,7 +787,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9384),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8895),
                             Name = "Albania"
                         },
                         new
@@ -792,7 +795,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9395),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8909),
                             Name = "Algeria"
                         },
                         new
@@ -800,7 +803,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9406),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8922),
                             Name = "American Samoa"
                         },
                         new
@@ -808,7 +811,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 5,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9410),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8928),
                             Name = "Andorra"
                         },
                         new
@@ -816,7 +819,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 6,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9420),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8941),
                             Name = "Angola"
                         },
                         new
@@ -824,7 +827,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 7,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9423),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8946),
                             Name = "Anguilla"
                         },
                         new
@@ -832,7 +835,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 8,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9427),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8951),
                             Name = "Antigua Barbuda"
                         },
                         new
@@ -840,7 +843,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 9,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9431),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8956),
                             Name = "Argentina"
                         },
                         new
@@ -848,7 +851,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 10,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9435),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8966),
                             Name = "Armenia"
                         },
                         new
@@ -856,7 +859,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 11,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9438),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8972),
                             Name = "Aruba"
                         },
                         new
@@ -864,7 +867,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 12,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9442),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8976),
                             Name = "Australia"
                         },
                         new
@@ -872,7 +875,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 13,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9446),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8980),
                             Name = "Austria"
                         },
                         new
@@ -880,7 +883,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 14,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9449),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8986),
                             Name = "Azerbaijan"
                         },
                         new
@@ -888,7 +891,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 15,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9452),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8991),
                             Name = "Bahamas"
                         },
                         new
@@ -896,7 +899,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 16,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9456),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(8996),
                             Name = " The"
                         },
                         new
@@ -904,7 +907,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 17,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9459),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9002),
                             Name = "Bahrain"
                         },
                         new
@@ -912,7 +915,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 18,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9465),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9010),
                             Name = "Bangladesh"
                         },
                         new
@@ -920,7 +923,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 19,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9468),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9014),
                             Name = "Barbados"
                         },
                         new
@@ -928,7 +931,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 20,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9471),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9019),
                             Name = "Belarus"
                         },
                         new
@@ -936,7 +939,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 21,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9474),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9105),
                             Name = "Belgium"
                         },
                         new
@@ -944,7 +947,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 22,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9477),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9112),
                             Name = "Belize"
                         },
                         new
@@ -952,7 +955,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 23,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9481),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9120),
                             Name = "Benin"
                         },
                         new
@@ -960,7 +963,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 24,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9483),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9124),
                             Name = "Bermuda"
                         },
                         new
@@ -968,7 +971,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 25,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9487),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9128),
                             Name = "Bhutan"
                         },
                         new
@@ -976,7 +979,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 26,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9490),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9133),
                             Name = "Bolivia"
                         },
                         new
@@ -984,7 +987,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 27,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9494),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9140),
                             Name = "Bosnia Herzegovina"
                         },
                         new
@@ -992,7 +995,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 28,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9497),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9145),
                             Name = "Botswana"
                         },
                         new
@@ -1000,7 +1003,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 29,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9501),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9150),
                             Name = "Brazil"
                         },
                         new
@@ -1008,7 +1011,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 30,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9506),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9158),
                             Name = "British Virgin Is"
                         },
                         new
@@ -1016,7 +1019,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 31,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9509),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9162),
                             Name = "Brunei"
                         },
                         new
@@ -1024,7 +1027,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 32,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9512),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9171),
                             Name = "Bulgaria"
                         },
                         new
@@ -1032,7 +1035,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 33,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9516),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9178),
                             Name = "Burkina Faso"
                         },
                         new
@@ -1040,7 +1043,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 34,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9521),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9185),
                             Name = "Burma"
                         },
                         new
@@ -1048,7 +1051,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 35,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9524),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9191),
                             Name = "Burundi"
                         },
                         new
@@ -1056,7 +1059,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 36,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9528),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9197),
                             Name = "Cambodia"
                         },
                         new
@@ -1064,7 +1067,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 37,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9531),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9202),
                             Name = "Cameroon"
                         },
                         new
@@ -1072,7 +1075,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 38,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9534),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9208),
                             Name = "Canada"
                         },
                         new
@@ -1080,7 +1083,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 39,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9538),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9214),
                             Name = "Cape Verde"
                         },
                         new
@@ -1088,7 +1091,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 40,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9542),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9219),
                             Name = "Cayman Islands"
                         },
                         new
@@ -1096,7 +1099,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 41,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9546),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9225),
                             Name = "Central African Rep"
                         },
                         new
@@ -1104,7 +1107,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 42,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9549),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9229),
                             Name = "Chad"
                         },
                         new
@@ -1112,7 +1115,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 43,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9552),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9236),
                             Name = "Chile"
                         },
                         new
@@ -1120,7 +1123,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 44,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9555),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9241),
                             Name = "China"
                         },
                         new
@@ -1128,7 +1131,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 45,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9558),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9247),
                             Name = "Colombia"
                         },
                         new
@@ -1136,7 +1139,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 46,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9562),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9252),
                             Name = "Comoros"
                         },
                         new
@@ -1144,7 +1147,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 47,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9623),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9258),
                             Name = "Congo Dem Rep"
                         },
                         new
@@ -1152,7 +1155,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 48,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9629),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9267),
                             Name = "Congo Repub of the"
                         },
                         new
@@ -1160,7 +1163,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 49,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9632),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9274),
                             Name = "Cook Islands"
                         },
                         new
@@ -1168,7 +1171,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 50,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9636),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9280),
                             Name = "Costa Rica"
                         },
                         new
@@ -1176,7 +1179,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 51,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9640),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9287),
                             Name = "Cote dIvoire"
                         },
                         new
@@ -1184,7 +1187,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 52,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9644),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9295),
                             Name = "Croatia"
                         },
                         new
@@ -1192,7 +1195,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 53,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9647),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9300),
                             Name = "Cuba"
                         },
                         new
@@ -1200,7 +1203,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 54,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9650),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9305),
                             Name = "Cyprus"
                         },
                         new
@@ -1208,7 +1211,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 55,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9654),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9311),
                             Name = "Czech Republic"
                         },
                         new
@@ -1216,7 +1219,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 56,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9657),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9317),
                             Name = "Denmark"
                         },
                         new
@@ -1224,7 +1227,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 57,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9660),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9323),
                             Name = "Djibouti"
                         },
                         new
@@ -1232,7 +1235,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 58,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9664),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9330),
                             Name = "Dominica"
                         },
                         new
@@ -1240,7 +1243,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 59,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9668),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9342),
                             Name = "Dominican Republic"
                         },
                         new
@@ -1248,7 +1251,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 60,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9672),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9348),
                             Name = "East Timor"
                         },
                         new
@@ -1256,7 +1259,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 61,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9676),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9357),
                             Name = "Ecuador"
                         },
                         new
@@ -1264,7 +1267,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 62,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9679),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9362),
                             Name = "Egypt"
                         },
                         new
@@ -1272,7 +1275,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 63,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9683),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9368),
                             Name = "El Salvador"
                         },
                         new
@@ -1280,7 +1283,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 64,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9687),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9376),
                             Name = "Equatorial Guinea"
                         },
                         new
@@ -1288,7 +1291,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 65,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9690),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9381),
                             Name = "Eritrea"
                         },
                         new
@@ -1296,7 +1299,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 66,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9696),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9390),
                             Name = "Estonia"
                         },
                         new
@@ -1304,7 +1307,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 67,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9703),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9396),
                             Name = "Ethiopia"
                         },
                         new
@@ -1312,7 +1315,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 68,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9706),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9402),
                             Name = "Faroe Islands"
                         },
                         new
@@ -1320,7 +1323,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 69,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9710),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9409),
                             Name = "Fiji"
                         },
                         new
@@ -1328,7 +1331,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 70,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9713),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9413),
                             Name = "Finland"
                         },
                         new
@@ -1336,7 +1339,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 71,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9716),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9418),
                             Name = "France"
                         },
                         new
@@ -1344,7 +1347,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 72,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9720),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9424),
                             Name = "French Guiana"
                         },
                         new
@@ -1352,7 +1355,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 73,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9724),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9430),
                             Name = "French Polynesia"
                         },
                         new
@@ -1360,7 +1363,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 74,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9727),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9438),
                             Name = "Gabon"
                         },
                         new
@@ -1368,7 +1371,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 75,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9758),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9491),
                             Name = "Gambia The"
                         },
                         new
@@ -1376,7 +1379,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 76,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9762),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9497),
                             Name = "Gaza Strip"
                         },
                         new
@@ -1384,7 +1387,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 77,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9765),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9502),
                             Name = "Georgia"
                         },
                         new
@@ -1392,7 +1395,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 78,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9768),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9506),
                             Name = "Germany"
                         },
                         new
@@ -1400,7 +1403,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 79,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9771),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9511),
                             Name = "Ghana"
                         },
                         new
@@ -1408,7 +1411,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 80,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9774),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9515),
                             Name = "Gibraltar"
                         },
                         new
@@ -1416,7 +1419,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 81,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9777),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9520),
                             Name = "Greece"
                         },
                         new
@@ -1424,7 +1427,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 82,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9781),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9526),
                             Name = "Greenland"
                         },
                         new
@@ -1432,7 +1435,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 83,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9784),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9530),
                             Name = "Grenada"
                         },
                         new
@@ -1440,7 +1443,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 84,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9788),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9535),
                             Name = "Guadeloupe"
                         },
                         new
@@ -1448,7 +1451,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 85,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9790),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9541),
                             Name = "Guam"
                         },
                         new
@@ -1456,7 +1459,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 86,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9794),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9546),
                             Name = "Guatemala"
                         },
                         new
@@ -1464,7 +1467,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 87,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9798),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9551),
                             Name = "Guernsey"
                         },
                         new
@@ -1472,7 +1475,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 88,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9801),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9555),
                             Name = "Guinea"
                         },
                         new
@@ -1480,7 +1483,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 89,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9805),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9561),
                             Name = "Guinea Bissau"
                         },
                         new
@@ -1488,7 +1491,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 90,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9808),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9566),
                             Name = "Guyana"
                         },
                         new
@@ -1496,7 +1499,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 91,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9811),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9570),
                             Name = "Haiti"
                         },
                         new
@@ -1504,7 +1507,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 92,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9814),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9576),
                             Name = "Honduras"
                         },
                         new
@@ -1512,7 +1515,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 93,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9818),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9581),
                             Name = "Hong Kong"
                         },
                         new
@@ -1520,7 +1523,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 94,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9821),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9586),
                             Name = "Hungary"
                         },
                         new
@@ -1528,7 +1531,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 95,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9824),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9591),
                             Name = "Iceland"
                         },
                         new
@@ -1536,7 +1539,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 96,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9828),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9595),
                             Name = "India"
                         },
                         new
@@ -1544,7 +1547,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 97,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9831),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9600),
                             Name = "Indonesia"
                         },
                         new
@@ -1552,7 +1555,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 98,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9834),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9604),
                             Name = "Iran"
                         },
                         new
@@ -1560,7 +1563,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 99,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9837),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9611),
                             Name = "Iraq"
                         },
                         new
@@ -1568,7 +1571,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 100,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9840),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9620),
                             Name = "Ireland"
                         },
                         new
@@ -1576,7 +1579,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 101,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9844),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9629),
                             Name = "Isle of Man"
                         },
                         new
@@ -1584,7 +1587,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 102,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9847),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9634),
                             Name = "Israel"
                         },
                         new
@@ -1592,7 +1595,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 103,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9851),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9639),
                             Name = "Italy"
                         },
                         new
@@ -1600,7 +1603,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 104,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9854),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9643),
                             Name = "Jamaica"
                         },
                         new
@@ -1608,7 +1611,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 105,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9857),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9647),
                             Name = "Japan"
                         },
                         new
@@ -1616,7 +1619,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 106,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9898),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9652),
                             Name = "Jersey"
                         },
                         new
@@ -1624,7 +1627,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 107,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9902),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9656),
                             Name = "Jordan"
                         },
                         new
@@ -1632,7 +1635,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 108,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9905),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9661),
                             Name = "Kazakhstan"
                         },
                         new
@@ -1640,7 +1643,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 109,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9908),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9668),
                             Name = "Kenya"
                         },
                         new
@@ -1648,7 +1651,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 110,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9912),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9672),
                             Name = "Kiribati"
                         },
                         new
@@ -1656,7 +1659,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 111,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9915),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9678),
                             Name = "Korea North"
                         },
                         new
@@ -1664,7 +1667,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 112,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9919),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9686),
                             Name = "Korea South"
                         },
                         new
@@ -1672,7 +1675,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 113,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9922),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9690),
                             Name = "Kuwait"
                         },
                         new
@@ -1680,7 +1683,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 114,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9925),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9694),
                             Name = "Kyrgyzstan"
                         },
                         new
@@ -1688,7 +1691,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 115,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9929),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9699),
                             Name = "Laos"
                         },
                         new
@@ -1696,7 +1699,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 116,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9933),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9705),
                             Name = "Latvia"
                         },
                         new
@@ -1704,7 +1707,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 117,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9936),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9710),
                             Name = "Lebanon"
                         },
                         new
@@ -1712,7 +1715,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 118,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9939),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9715),
                             Name = "Lesotho"
                         },
                         new
@@ -1720,7 +1723,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 119,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9942),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9719),
                             Name = "Liberia"
                         },
                         new
@@ -1728,7 +1731,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 120,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9945),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9723),
                             Name = "Libya"
                         },
                         new
@@ -1736,7 +1739,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 121,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9949),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9727),
                             Name = "Liechtenstein"
                         },
                         new
@@ -1744,7 +1747,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 122,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9952),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9732),
                             Name = "Lithuania"
                         },
                         new
@@ -1752,7 +1755,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 123,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9955),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9736),
                             Name = "Luxembourg"
                         },
                         new
@@ -1760,7 +1763,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 124,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9958),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9740),
                             Name = "Macau"
                         },
                         new
@@ -1768,7 +1771,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 125,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9962),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9745),
                             Name = "Macedonia"
                         },
                         new
@@ -1776,7 +1779,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 126,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9965),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9750),
                             Name = "Madagascar"
                         },
                         new
@@ -1784,7 +1787,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 127,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9968),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9755),
                             Name = "Malawi"
                         },
                         new
@@ -1792,7 +1795,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 128,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9971),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9759),
                             Name = "Malaysia"
                         },
                         new
@@ -1800,7 +1803,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 129,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9974),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9764),
                             Name = "Maldives"
                         },
                         new
@@ -1808,7 +1811,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 130,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9980),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9816),
                             Name = "Mali"
                         },
                         new
@@ -1816,7 +1819,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 131,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9983),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9821),
                             Name = "Malta"
                         },
                         new
@@ -1824,7 +1827,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 132,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9987),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9827),
                             Name = "Marshall Islands"
                         },
                         new
@@ -1832,7 +1835,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 133,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9991),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9831),
                             Name = "Martinique"
                         },
                         new
@@ -1840,7 +1843,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 134,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9994),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9836),
                             Name = "Mauritania"
                         },
                         new
@@ -1848,7 +1851,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 135,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 622, DateTimeKind.Local).AddTicks(9997),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9843),
                             Name = "Mauritius"
                         },
                         new
@@ -1856,7 +1859,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 136,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9847),
                             Name = "Mayotte"
                         },
                         new
@@ -1864,7 +1867,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 137,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(3),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9851),
                             Name = "Mexico"
                         },
                         new
@@ -1872,7 +1875,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 138,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(8),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9857),
                             Name = "Micronesia Fed St"
                         },
                         new
@@ -1880,7 +1883,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 139,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(11),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9861),
                             Name = "Moldova"
                         },
                         new
@@ -1888,7 +1891,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 140,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(15),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9866),
                             Name = "Monaco"
                         },
                         new
@@ -1896,7 +1899,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 141,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(18),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9870),
                             Name = "Mongolia"
                         },
                         new
@@ -1904,7 +1907,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 142,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(21),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9875),
                             Name = "Montserrat"
                         },
                         new
@@ -1912,7 +1915,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 143,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(24),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9881),
                             Name = "Morocco"
                         },
                         new
@@ -1920,7 +1923,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 144,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(28),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9888),
                             Name = "Mozambique"
                         },
                         new
@@ -1928,7 +1931,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 145,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(31),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9893),
                             Name = "Namibia"
                         },
                         new
@@ -1936,7 +1939,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 146,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(35),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9897),
                             Name = "Nauru"
                         },
                         new
@@ -1944,7 +1947,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 147,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(38),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9902),
                             Name = "Nepal"
                         },
                         new
@@ -1952,7 +1955,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 148,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(41),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9906),
                             Name = "Netherlands"
                         },
                         new
@@ -1960,7 +1963,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 149,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(45),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9912),
                             Name = "Netherlands Antilles"
                         },
                         new
@@ -1968,7 +1971,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 150,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(50),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9918),
                             Name = "New Caledonia"
                         },
                         new
@@ -1976,7 +1979,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 151,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(54),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9925),
                             Name = "New Zealand"
                         },
                         new
@@ -1984,7 +1987,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 152,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(57),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9929),
                             Name = "Nicaragua"
                         },
                         new
@@ -1992,7 +1995,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 153,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(60),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9934),
                             Name = "Niger"
                         },
                         new
@@ -2000,7 +2003,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 154,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(63),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9940),
                             Name = "Nigeria"
                         },
                         new
@@ -2008,7 +2011,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 155,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(68),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9947),
                             Name = "N Mariana Islands"
                         },
                         new
@@ -2016,7 +2019,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 156,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(71),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9951),
                             Name = "Norway"
                         },
                         new
@@ -2024,7 +2027,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 157,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(74),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9959),
                             Name = "Oman"
                         },
                         new
@@ -2032,7 +2035,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 158,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(77),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9963),
                             Name = "Pakistan"
                         },
                         new
@@ -2040,7 +2043,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 159,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(80),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9967),
                             Name = "Palau"
                         },
                         new
@@ -2048,7 +2051,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 160,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(83),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9972),
                             Name = "Panama"
                         },
                         new
@@ -2056,7 +2059,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 161,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(121),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9978),
                             Name = "Papua New Guinea"
                         },
                         new
@@ -2064,7 +2067,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 162,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(124),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9982),
                             Name = "Paraguay"
                         },
                         new
@@ -2072,7 +2075,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 163,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(127),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9986),
                             Name = "Peru"
                         },
                         new
@@ -2080,7 +2083,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 164,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(131),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 260, DateTimeKind.Local).AddTicks(9996),
                             Name = "Philippines"
                         },
                         new
@@ -2088,7 +2091,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 165,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(134),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local),
                             Name = "Poland"
                         },
                         new
@@ -2096,7 +2099,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 166,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(137),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(5),
                             Name = "Portugal"
                         },
                         new
@@ -2104,7 +2107,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 167,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(141),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(15),
                             Name = "Puerto Rico"
                         },
                         new
@@ -2112,7 +2115,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 168,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(144),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(21),
                             Name = "Qatar"
                         },
                         new
@@ -2120,7 +2123,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 169,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(147),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(27),
                             Name = "Reunion"
                         },
                         new
@@ -2128,7 +2131,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 170,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(150),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(34),
                             Name = "Romania"
                         },
                         new
@@ -2136,7 +2139,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 171,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(153),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(39),
                             Name = "Russia"
                         },
                         new
@@ -2144,7 +2147,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 172,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(157),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(44),
                             Name = "Rwanda"
                         },
                         new
@@ -2152,7 +2155,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 173,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(161),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(51),
                             Name = "Saint Helena"
                         },
                         new
@@ -2160,7 +2163,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 174,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(165),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(57),
                             Name = "Saint Kitts Nevis"
                         },
                         new
@@ -2168,7 +2171,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 175,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(169),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(62),
                             Name = "Saint Lucia"
                         },
                         new
@@ -2176,7 +2179,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 176,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(173),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(69),
                             Name = "St Pierre Miquelon"
                         },
                         new
@@ -2184,7 +2187,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 177,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(178),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(76),
                             Name = "Saint Vincent and the Grenadines"
                         },
                         new
@@ -2192,7 +2195,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 178,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(182),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(81),
                             Name = "Samoa"
                         },
                         new
@@ -2200,7 +2203,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 179,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(185),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(86),
                             Name = "San Marino"
                         },
                         new
@@ -2208,7 +2211,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 180,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(190),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(93),
                             Name = "Sao Tome Principe"
                         },
                         new
@@ -2216,7 +2219,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 181,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(193),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(102),
                             Name = "Saudi Arabia"
                         },
                         new
@@ -2224,7 +2227,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 182,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(197),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(107),
                             Name = "Senegal"
                         },
                         new
@@ -2232,7 +2235,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 183,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(200),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(111),
                             Name = "Serbia"
                         },
                         new
@@ -2240,7 +2243,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 184,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(203),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(118),
                             Name = "Seychelles"
                         },
                         new
@@ -2248,7 +2251,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 185,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(206),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(122),
                             Name = "Sierra Leone"
                         },
                         new
@@ -2256,7 +2259,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 186,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(210),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(127),
                             Name = "Singapore"
                         },
                         new
@@ -2264,7 +2267,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 187,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(213),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(133),
                             Name = "Slovakia"
                         },
                         new
@@ -2272,7 +2275,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 188,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(216),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(137),
                             Name = "Slovenia"
                         },
                         new
@@ -2280,7 +2283,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 189,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(220),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(143),
                             Name = "Solomon Islands"
                         },
                         new
@@ -2288,7 +2291,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 190,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(223),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(148),
                             Name = "Somalia"
                         },
                         new
@@ -2296,7 +2299,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 191,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(226),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(153),
                             Name = "South Africa"
                         },
                         new
@@ -2304,7 +2307,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 192,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(230),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(158),
                             Name = "Spain"
                         },
                         new
@@ -2312,7 +2315,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 193,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(233),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(163),
                             Name = "Sri Lanka"
                         },
                         new
@@ -2320,7 +2323,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 194,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(237),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(168),
                             Name = "Sudan"
                         },
                         new
@@ -2328,7 +2331,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 195,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(240),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(173),
                             Name = "Suriname"
                         },
                         new
@@ -2336,7 +2339,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 196,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(243),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(178),
                             Name = "Swaziland"
                         },
                         new
@@ -2344,7 +2347,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 197,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(246),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(183),
                             Name = "Sweden"
                         },
                         new
@@ -2352,7 +2355,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 198,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(249),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(235),
                             Name = "Switzerland"
                         },
                         new
@@ -2360,7 +2363,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 199,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(253),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(240),
                             Name = "Syria"
                         },
                         new
@@ -2368,7 +2371,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 200,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(256),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(249),
                             Name = "Taiwan"
                         },
                         new
@@ -2376,7 +2379,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 201,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(259),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(254),
                             Name = "Tajikistan"
                         },
                         new
@@ -2384,7 +2387,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 202,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(263),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(259),
                             Name = "Tanzania"
                         },
                         new
@@ -2392,7 +2395,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 203,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(266),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(264),
                             Name = "Thailand"
                         },
                         new
@@ -2400,7 +2403,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 204,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(269),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(268),
                             Name = "Togo"
                         },
                         new
@@ -2408,7 +2411,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 205,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(272),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(272),
                             Name = "Tonga"
                         },
                         new
@@ -2416,7 +2419,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 206,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(276),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(277),
                             Name = "Trinidad Tobago"
                         },
                         new
@@ -2424,7 +2427,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 207,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(279),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(281),
                             Name = "Tunisia"
                         },
                         new
@@ -2432,7 +2435,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 208,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(282),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(285),
                             Name = "Turkey"
                         },
                         new
@@ -2440,7 +2443,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 209,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(285),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(290),
                             Name = "Turkmenistan"
                         },
                         new
@@ -2448,7 +2451,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 210,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(289),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(296),
                             Name = "Turks Caicos Is"
                         },
                         new
@@ -2456,7 +2459,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 211,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(293),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(301),
                             Name = "Tuvalu"
                         },
                         new
@@ -2464,7 +2467,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 212,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(296),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(306),
                             Name = "Uganda"
                         },
                         new
@@ -2472,7 +2475,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 213,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(299),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(314),
                             Name = "Ukraine"
                         },
                         new
@@ -2480,7 +2483,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 214,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(303),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(319),
                             Name = "United Arab Emirates"
                         },
                         new
@@ -2488,7 +2491,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 215,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(306),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(324),
                             Name = "United Kingdom"
                         },
                         new
@@ -2496,7 +2499,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 216,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(310),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(330),
                             Name = "United States"
                         },
                         new
@@ -2504,7 +2507,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 217,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(314),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(334),
                             Name = "Uruguay"
                         },
                         new
@@ -2512,7 +2515,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 218,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(317),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(338),
                             Name = "Uzbekistan"
                         },
                         new
@@ -2520,7 +2523,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 219,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(320),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(343),
                             Name = "Vanuatu"
                         },
                         new
@@ -2528,7 +2531,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 220,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(323),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(348),
                             Name = "Venezuela"
                         },
                         new
@@ -2536,7 +2539,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 221,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(326),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(353),
                             Name = "Vietnam"
                         },
                         new
@@ -2544,7 +2547,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 222,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(330),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(358),
                             Name = "Virgin Islands"
                         },
                         new
@@ -2552,7 +2555,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 223,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(334),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(363),
                             Name = "Wallis Futuna"
                         },
                         new
@@ -2560,7 +2563,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 224,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(338),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(368),
                             Name = "West Bank"
                         },
                         new
@@ -2568,7 +2571,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 225,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(341),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(374),
                             Name = "Western Sahara"
                         },
                         new
@@ -2576,7 +2579,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 226,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(344),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(378),
                             Name = "Yemen"
                         },
                         new
@@ -2584,7 +2587,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 227,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(379),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(382),
                             Name = "Zambia"
                         },
                         new
@@ -2592,7 +2595,7 @@ namespace SmartDataAccess.Migrations
                             CountryID = 228,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(383),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 261, DateTimeKind.Local).AddTicks(387),
                             Name = "Zimbabwe"
                         });
                 });
@@ -2708,7 +2711,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(4409),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(1746),
                             Name = "AED"
                         },
                         new
@@ -2716,7 +2719,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5398),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2324),
                             Name = "AFN"
                         },
                         new
@@ -2724,7 +2727,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5406),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2335),
                             Name = "ALL"
                         },
                         new
@@ -2732,7 +2735,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5410),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2339),
                             Name = "AMD"
                         },
                         new
@@ -2740,7 +2743,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 5,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5413),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2343),
                             Name = "ANG"
                         },
                         new
@@ -2748,7 +2751,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 6,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5425),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2353),
                             Name = "AOA"
                         },
                         new
@@ -2756,7 +2759,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 7,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5428),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2356),
                             Name = "ARS"
                         },
                         new
@@ -2764,7 +2767,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 8,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5431),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2360),
                             Name = "AUD"
                         },
                         new
@@ -2772,7 +2775,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 9,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5434),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2363),
                             Name = "AWG"
                         },
                         new
@@ -2780,7 +2783,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 10,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5439),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2368),
                             Name = "AZN"
                         },
                         new
@@ -2788,7 +2791,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 11,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5442),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2371),
                             Name = "BAM"
                         },
                         new
@@ -2796,7 +2799,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 12,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5445),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2374),
                             Name = "BBD"
                         },
                         new
@@ -2804,7 +2807,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 13,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5448),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2377),
                             Name = "BDT"
                         },
                         new
@@ -2812,7 +2815,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 14,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5496),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2381),
                             Name = "BGN"
                         },
                         new
@@ -2820,7 +2823,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 15,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5499),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2384),
                             Name = "BHD"
                         },
                         new
@@ -2828,7 +2831,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 16,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5503),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2387),
                             Name = "BIF"
                         },
                         new
@@ -2836,7 +2839,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 17,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5506),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2390),
                             Name = "BMD"
                         },
                         new
@@ -2844,7 +2847,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 18,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5511),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2395),
                             Name = "BND"
                         },
                         new
@@ -2852,7 +2855,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 19,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5515),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2398),
                             Name = "BOB"
                         },
                         new
@@ -2860,7 +2863,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 20,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5518),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2401),
                             Name = "BRL"
                         },
                         new
@@ -2868,7 +2871,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 21,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5521),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2404),
                             Name = "BSD"
                         },
                         new
@@ -2876,7 +2879,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 22,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5524),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2407),
                             Name = "BTN"
                         },
                         new
@@ -2884,7 +2887,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 23,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5527),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2410),
                             Name = "BWP"
                         },
                         new
@@ -2892,7 +2895,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 24,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5530),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2414),
                             Name = "BYN"
                         },
                         new
@@ -2900,7 +2903,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 25,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5533),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2417),
                             Name = "BZD"
                         },
                         new
@@ -2908,7 +2911,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 26,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5536),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2420),
                             Name = "CAD"
                         },
                         new
@@ -2916,7 +2919,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 27,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5539),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2423),
                             Name = "CDF"
                         },
                         new
@@ -2924,7 +2927,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 28,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5542),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2426),
                             Name = "CHF"
                         },
                         new
@@ -2932,7 +2935,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 29,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5545),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2429),
                             Name = "CLP"
                         },
                         new
@@ -2940,7 +2943,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 30,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5548),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2432),
                             Name = "CNY"
                         },
                         new
@@ -2948,7 +2951,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 31,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5551),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2435),
                             Name = "COP"
                         },
                         new
@@ -2956,7 +2959,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 32,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5555),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2438),
                             Name = "CRC"
                         },
                         new
@@ -2964,7 +2967,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 33,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5558),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2442),
                             Name = "CUC"
                         },
                         new
@@ -2972,7 +2975,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 34,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5562),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2446),
                             Name = "CUP"
                         },
                         new
@@ -2980,7 +2983,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 35,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5569),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2449),
                             Name = "CVE"
                         },
                         new
@@ -2988,7 +2991,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 36,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5572),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2452),
                             Name = "CZK"
                         },
                         new
@@ -2996,7 +2999,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 37,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5575),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2455),
                             Name = "DJF"
                         },
                         new
@@ -3004,7 +3007,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 38,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5578),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2459),
                             Name = "DKK"
                         },
                         new
@@ -3012,7 +3015,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 39,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5581),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2462),
                             Name = "DOP"
                         },
                         new
@@ -3020,7 +3023,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 40,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5584),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2465),
                             Name = "DZD"
                         },
                         new
@@ -3028,7 +3031,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 41,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5587),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2468),
                             Name = "EGP"
                         },
                         new
@@ -3036,7 +3039,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 42,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5590),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2471),
                             Name = "ERN"
                         },
                         new
@@ -3044,7 +3047,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 43,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5593),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2474),
                             Name = "ETB"
                         },
                         new
@@ -3052,7 +3055,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 44,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5597),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2477),
                             Name = "EUR"
                         },
                         new
@@ -3060,7 +3063,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 45,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5599),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2480),
                             Name = "FJD"
                         },
                         new
@@ -3068,7 +3071,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 46,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5603),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2484),
                             Name = "FKP"
                         },
                         new
@@ -3076,7 +3079,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 47,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5606),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2487),
                             Name = "GBP"
                         },
                         new
@@ -3084,7 +3087,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 48,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5609),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2490),
                             Name = "GEL"
                         },
                         new
@@ -3092,7 +3095,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 49,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5612),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2493),
                             Name = "GGP"
                         },
                         new
@@ -3100,7 +3103,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 50,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5615),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2496),
                             Name = "GHS"
                         },
                         new
@@ -3108,7 +3111,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 51,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5618),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2561),
                             Name = "GIP"
                         },
                         new
@@ -3116,7 +3119,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 52,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5621),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2565),
                             Name = "GMD"
                         },
                         new
@@ -3124,7 +3127,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 53,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5624),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2568),
                             Name = "GNF"
                         },
                         new
@@ -3132,7 +3135,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 54,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5627),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2571),
                             Name = "GTQ"
                         },
                         new
@@ -3140,7 +3143,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 55,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5630),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2574),
                             Name = "GYD"
                         },
                         new
@@ -3148,7 +3151,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 56,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5633),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2577),
                             Name = "HKD"
                         },
                         new
@@ -3156,7 +3159,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 57,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5636),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2580),
                             Name = "HNL"
                         },
                         new
@@ -3164,7 +3167,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 58,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5639),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2583),
                             Name = "HRK"
                         },
                         new
@@ -3172,7 +3175,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 59,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5642),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2586),
                             Name = "HTG"
                         },
                         new
@@ -3180,7 +3183,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 60,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5645),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2589),
                             Name = "HUF"
                         },
                         new
@@ -3188,7 +3191,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 61,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5648),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2592),
                             Name = "IDR"
                         },
                         new
@@ -3196,7 +3199,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 62,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5651),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2596),
                             Name = "ILS"
                         },
                         new
@@ -3204,7 +3207,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 63,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5654),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2599),
                             Name = "IMP"
                         },
                         new
@@ -3212,7 +3215,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 64,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5657),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2602),
                             Name = "INR"
                         },
                         new
@@ -3220,7 +3223,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 65,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5660),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2605),
                             Name = "IQD"
                         },
                         new
@@ -3228,7 +3231,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 66,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5665),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2610),
                             Name = "IRR"
                         },
                         new
@@ -3236,7 +3239,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 67,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5668),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2613),
                             Name = "ISK"
                         },
                         new
@@ -3244,7 +3247,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 68,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5671),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2616),
                             Name = "JEP"
                         },
                         new
@@ -3252,7 +3255,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 69,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5674),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2619),
                             Name = "JMD"
                         },
                         new
@@ -3260,7 +3263,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 70,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5677),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2622),
                             Name = "JOD"
                         },
                         new
@@ -3268,7 +3271,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 71,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5680),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2625),
                             Name = "JPY"
                         },
                         new
@@ -3276,7 +3279,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 72,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5683),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2628),
                             Name = "KES"
                         },
                         new
@@ -3284,7 +3287,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 73,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5686),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2631),
                             Name = "KGS"
                         },
                         new
@@ -3292,7 +3295,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 74,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5689),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2634),
                             Name = "KHR"
                         },
                         new
@@ -3300,7 +3303,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 75,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5727),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2636),
                             Name = "KMF"
                         },
                         new
@@ -3308,7 +3311,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 76,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5735),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2640),
                             Name = "KPW"
                         },
                         new
@@ -3316,7 +3319,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 77,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5739),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2643),
                             Name = "KRW"
                         },
                         new
@@ -3324,7 +3327,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 78,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5742),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2646),
                             Name = "KWD"
                         },
                         new
@@ -3332,7 +3335,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 79,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5745),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2649),
                             Name = "KYD"
                         },
                         new
@@ -3340,7 +3343,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 80,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5748),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2651),
                             Name = "KZT"
                         },
                         new
@@ -3348,7 +3351,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 81,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5750),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2654),
                             Name = "LAK"
                         },
                         new
@@ -3356,7 +3359,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 82,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5754),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2658),
                             Name = "LBP"
                         },
                         new
@@ -3364,7 +3367,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 83,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5757),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2661),
                             Name = "LKR"
                         },
                         new
@@ -3372,7 +3375,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 84,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5760),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2664),
                             Name = "LRD"
                         },
                         new
@@ -3380,7 +3383,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 85,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5763),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2667),
                             Name = "LSL"
                         },
                         new
@@ -3388,7 +3391,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 86,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5766),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2670),
                             Name = "LYD"
                         },
                         new
@@ -3396,7 +3399,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 87,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5769),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2673),
                             Name = "MAD"
                         },
                         new
@@ -3404,7 +3407,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 88,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5772),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2676),
                             Name = "MDL"
                         },
                         new
@@ -3412,7 +3415,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 89,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5775),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2679),
                             Name = "MGA"
                         },
                         new
@@ -3420,7 +3423,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 90,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5778),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2682),
                             Name = "MKD"
                         },
                         new
@@ -3428,7 +3431,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 91,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5781),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2685),
                             Name = "MMK"
                         },
                         new
@@ -3436,7 +3439,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 92,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5784),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2688),
                             Name = "MNT"
                         },
                         new
@@ -3444,7 +3447,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 93,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5787),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2691),
                             Name = "MOP"
                         },
                         new
@@ -3452,7 +3455,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 94,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5791),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2694),
                             Name = "MRU"
                         },
                         new
@@ -3460,7 +3463,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 95,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5794),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2697),
                             Name = "MUR"
                         },
                         new
@@ -3468,7 +3471,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 96,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5797),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2699),
                             Name = "MVR"
                         },
                         new
@@ -3476,7 +3479,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 97,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5800),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2702),
                             Name = "MWK"
                         },
                         new
@@ -3484,7 +3487,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 98,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5803),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2705),
                             Name = "MXN"
                         },
                         new
@@ -3492,7 +3495,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 99,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5806),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2708),
                             Name = "MYR"
                         },
                         new
@@ -3500,7 +3503,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 100,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5809),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2711),
                             Name = "MZN"
                         },
                         new
@@ -3508,7 +3511,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 101,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5811),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2714),
                             Name = "NAD"
                         },
                         new
@@ -3516,7 +3519,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 102,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5815),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2717),
                             Name = "NGN"
                         },
                         new
@@ -3524,7 +3527,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 103,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5818),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2721),
                             Name = "NIO"
                         },
                         new
@@ -3532,7 +3535,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 104,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5821),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2724),
                             Name = "NOK"
                         },
                         new
@@ -3540,7 +3543,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 105,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5824),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2727),
                             Name = "NPR"
                         },
                         new
@@ -3548,7 +3551,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 106,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5827),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2730),
                             Name = "NZD"
                         },
                         new
@@ -3556,7 +3559,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 107,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5830),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2733),
                             Name = "OMR"
                         },
                         new
@@ -3564,7 +3567,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 108,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5833),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2736),
                             Name = "PAB"
                         },
                         new
@@ -3572,7 +3575,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 109,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5836),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2739),
                             Name = "PEN"
                         },
                         new
@@ -3580,7 +3583,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 110,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5839),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2741),
                             Name = "PGK"
                         },
                         new
@@ -3588,7 +3591,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 111,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5842),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2744),
                             Name = "PHP"
                         },
                         new
@@ -3596,7 +3599,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 112,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5845),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2747),
                             Name = "PKR"
                         },
                         new
@@ -3604,7 +3607,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 113,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5848),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2750),
                             Name = "PLN"
                         },
                         new
@@ -3612,7 +3615,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 114,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5851),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2753),
                             Name = "PYG"
                         },
                         new
@@ -3620,7 +3623,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 115,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5854),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2756),
                             Name = "QAR"
                         },
                         new
@@ -3628,7 +3631,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 116,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5857),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2759),
                             Name = "RON"
                         },
                         new
@@ -3636,7 +3639,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 117,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5860),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2762),
                             Name = "RSD"
                         },
                         new
@@ -3644,7 +3647,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 118,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5863),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2765),
                             Name = "RUB"
                         },
                         new
@@ -3652,7 +3655,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 119,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5866),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2768),
                             Name = "RWF"
                         },
                         new
@@ -3660,7 +3663,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 120,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5869),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2809),
                             Name = "SAR"
                         },
                         new
@@ -3668,7 +3671,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 121,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5872),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2813),
                             Name = "SBD"
                         },
                         new
@@ -3676,7 +3679,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 122,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5875),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2817),
                             Name = "SCR"
                         },
                         new
@@ -3684,7 +3687,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 123,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5879),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2821),
                             Name = "SDG"
                         },
                         new
@@ -3692,7 +3695,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 124,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5882),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2825),
                             Name = "SEK"
                         },
                         new
@@ -3700,7 +3703,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 125,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5885),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2828),
                             Name = "SGD"
                         },
                         new
@@ -3708,7 +3711,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 126,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5888),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2832),
                             Name = "SHP"
                         },
                         new
@@ -3716,7 +3719,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 127,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5891),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2835),
                             Name = "SLL"
                         },
                         new
@@ -3724,7 +3727,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 128,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5894),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2838),
                             Name = "SOS"
                         },
                         new
@@ -3732,7 +3735,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 129,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5896),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2842),
                             Name = "SPL"
                         },
                         new
@@ -3740,7 +3743,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 130,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5902),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2848),
                             Name = "SRD"
                         },
                         new
@@ -3748,7 +3751,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 131,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5905),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2852),
                             Name = "STN"
                         },
                         new
@@ -3756,7 +3759,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 132,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5908),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2855),
                             Name = "SVC"
                         },
                         new
@@ -3764,7 +3767,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 133,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5911),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2858),
                             Name = "SYP"
                         },
                         new
@@ -3772,7 +3775,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 134,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5947),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2862),
                             Name = "SZL"
                         },
                         new
@@ -3780,7 +3783,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 135,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5950),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2865),
                             Name = "THB"
                         },
                         new
@@ -3788,7 +3791,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 136,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5953),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2869),
                             Name = "TJS"
                         },
                         new
@@ -3796,7 +3799,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 137,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5956),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2872),
                             Name = "TMT"
                         },
                         new
@@ -3804,7 +3807,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 138,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5959),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2876),
                             Name = "TND"
                         },
                         new
@@ -3812,7 +3815,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 139,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5962),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2879),
                             Name = "TOP"
                         },
                         new
@@ -3820,7 +3823,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 140,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5965),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2882),
                             Name = "TRY"
                         },
                         new
@@ -3828,7 +3831,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 141,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5968),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2886),
                             Name = "TTD"
                         },
                         new
@@ -3836,7 +3839,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 142,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5971),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2889),
                             Name = "TVD"
                         },
                         new
@@ -3844,7 +3847,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 143,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5974),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2893),
                             Name = "TWD"
                         },
                         new
@@ -3852,7 +3855,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 144,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5977),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2896),
                             Name = "TZS"
                         },
                         new
@@ -3860,7 +3863,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 145,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5980),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2900),
                             Name = "UAH"
                         },
                         new
@@ -3868,7 +3871,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 146,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5983),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2903),
                             Name = "UGX"
                         },
                         new
@@ -3876,7 +3879,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 147,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5986),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2906),
                             Name = "USD"
                         },
                         new
@@ -3884,7 +3887,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 148,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5989),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2910),
                             Name = "UYU"
                         },
                         new
@@ -3892,7 +3895,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 149,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5992),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2913),
                             Name = "UZS"
                         },
                         new
@@ -3900,7 +3903,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 150,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5995),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2917),
                             Name = "VEF"
                         },
                         new
@@ -3908,7 +3911,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 151,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(5998),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2920),
                             Name = "VND"
                         },
                         new
@@ -3916,7 +3919,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 152,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6001),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2923),
                             Name = "VUV"
                         },
                         new
@@ -3924,7 +3927,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 153,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6004),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2927),
                             Name = "WST"
                         },
                         new
@@ -3932,7 +3935,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 154,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6007),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2930),
                             Name = "XAF"
                         },
                         new
@@ -3940,7 +3943,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 155,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6010),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2934),
                             Name = "XCD"
                         },
                         new
@@ -3948,7 +3951,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 156,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6013),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2937),
                             Name = "XDR"
                         },
                         new
@@ -3956,7 +3959,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 157,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6016),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2940),
                             Name = "XOF"
                         },
                         new
@@ -3964,7 +3967,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 158,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6019),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2944),
                             Name = "XPF"
                         },
                         new
@@ -3972,7 +3975,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 159,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6022),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2947),
                             Name = "YER"
                         },
                         new
@@ -3980,7 +3983,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 160,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6025),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2951),
                             Name = "ZAR"
                         },
                         new
@@ -3988,7 +3991,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 161,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6028),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2954),
                             Name = "ZMW"
                         },
                         new
@@ -3996,7 +3999,7 @@ namespace SmartDataAccess.Migrations
                             CurrencyID = 162,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 609, DateTimeKind.Local).AddTicks(6031),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 242, DateTimeKind.Local).AddTicks(2958),
                             Name = "ZWD"
                         });
                 });
@@ -4049,7 +4052,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Displayed as the Application Name",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(2999),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5125),
                             Name = "Application Name",
                             Value = "Smart Save"
                         },
@@ -4061,7 +4064,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Short Name for Application",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3259),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5356),
                             Name = "Application Name Prefix",
                             Value = "SS"
                         },
@@ -4073,7 +4076,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Displays Current Version of the System",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3270),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5364),
                             Name = "System Version",
                             Value = "1.0.0.0"
                         },
@@ -4085,7 +4088,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Limit Account Number Size",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3278),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5371),
                             Name = "Account Number Length",
                             Value = "9"
                         },
@@ -4097,7 +4100,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Account Number Prefix if Any",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3286),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5378),
                             Name = "Account Number Prefix",
                             Value = "SS"
                         },
@@ -4109,7 +4112,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Displays the minimum year that can be selected  from the system",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3300),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5391),
                             Name = "Minimum Year",
                             Value = "2000"
                         },
@@ -4121,7 +4124,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Allows system to BroadCast System Messages",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3307),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5397),
                             Name = "BroadCast Messages",
                             Value = "true"
                         },
@@ -4133,7 +4136,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Allows system to hide exceptions and show custom error page to user",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3314),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5403),
                             Name = "Show Custom Exceptions To Users",
                             Value = "true"
                         },
@@ -4145,7 +4148,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Format Used to display date",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3320),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5408),
                             Name = "Date Format",
                             Value = "yyyy-MMM-dd HH:mm"
                         },
@@ -4157,7 +4160,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Port used to Send Emails",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3329),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5415),
                             Name = "Mail SMTP Port",
                             Value = "587"
                         },
@@ -4169,7 +4172,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Host used to Send Emails",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3335),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5420),
                             Name = "Mail SMTP Host",
                             Value = "smtp.gmail.com"
                         },
@@ -4181,7 +4184,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Enable SSL",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3341),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5425),
                             Name = "Mail Enable SSL",
                             Value = "true"
                         },
@@ -4193,7 +4196,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Use Default Mail Credentials",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3349),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5431),
                             Name = "Mail Use Default Credentials",
                             Value = "false"
                         },
@@ -4205,7 +4208,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Email Address used to email",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3356),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5438),
                             Name = "Mail Credential User Name",
                             Value = "carolinesolutions89@gmail.com"
                         },
@@ -4217,7 +4220,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Email Password",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3362),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5443),
                             Name = "Mail Credential Password",
                             Value = "TE1TdXNlckA2Mjk5IyM="
                         },
@@ -4229,7 +4232,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Display Sender Name As",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3368),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5448),
                             Name = "Mail Display Name",
                             Value = "Smart Admin"
                         },
@@ -4241,7 +4244,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Percentage To Which VAT is calculated on ",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3373),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5453),
                             Name = "VAT Percentage",
                             Value = "0.14"
                         },
@@ -4253,7 +4256,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Maximum file size that can be uploaded to the System",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3382),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5460),
                             Name = "File Maximum UpLoadable Size",
                             Value = "5"
                         },
@@ -4265,7 +4268,7 @@ namespace SmartDataAccess.Migrations
                             Description = "First Line on the Report Footer",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3388),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5465),
                             Name = "Report Footer 1",
                             Value = "W. Guri Mrs. (Chairman), *E. Guri (Managing)"
                         },
@@ -4277,7 +4280,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Additional Line on the Report Footer (can be blank)",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3395),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5470),
                             Name = "Report Footer 2",
                             Value = "*Executive."
                         },
@@ -4289,7 +4292,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Physical Location of Logo that is to be used on Reports",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3401),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5476),
                             Name = "Report Logo Path",
                             Value = "D:\\Dev Projects\\SmartSave\\SmartSave\\SmartResources\\SmartLogo.png"
                         },
@@ -4301,7 +4304,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Foot notes that you would like to include on your statement (not mandatory)",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3408),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5626),
                             Name = "Report FootNotes",
                             Value = ""
                         },
@@ -4313,7 +4316,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Instructs the System to Advise User to Capture VAT inclusive amounts and calculate breakdown accordingly",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3414),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5634),
                             Name = "Capture VAT Inclusive Payments",
                             Value = "true"
                         },
@@ -4325,7 +4328,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Option to Save Generated Statement To A physical Location on the Server",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3421),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5640),
                             Name = "Statement Save To Folder",
                             Value = "false"
                         },
@@ -4337,7 +4340,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Physical Location on the Server where  Statements Are Generated",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3428),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5646),
                             Name = "Statement Save To Physical Location",
                             Value = "C:\\SmartApp\\Statements"
                         },
@@ -4349,7 +4352,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Password Used to Open Password Protected Statement By System Administrators",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3435),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5652),
                             Name = "Statement Password For Admin",
                             Value = "123456"
                         },
@@ -4361,7 +4364,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Allows to password protect statements being sent by Email",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3441),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5657),
                             Name = "Statement Password Protect",
                             Value = "true"
                         },
@@ -4373,8 +4376,8 @@ namespace SmartDataAccess.Migrations
                             Description = "Determines if table borders will be shown on the report ",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3447),
-                            Name = "Statement Hide Table Boarders",
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5663),
+                            Name = "Statement Show Table Boarders",
                             Value = "true"
                         },
                         new
@@ -4385,7 +4388,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Default Email Subject Name Used By Auto-Generated Emails",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3454),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5667),
                             Name = "Mail Default Subject",
                             Value = "Smart Save  Admin"
                         },
@@ -4397,7 +4400,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Password Reset Pin Code Length",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3462),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5673),
                             Name = "Password Reset Pin Code Length",
                             Value = "5"
                         },
@@ -4409,7 +4412,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Password Reset Pin Code Validity Period in Days",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3470),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5680),
                             Name = "Password Reset Pin Validity",
                             Value = "2"
                         },
@@ -4421,7 +4424,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Site URL",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3476),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5685),
                             Name = "Site URL",
                             Value = "https://localhost:5001"
                         },
@@ -4433,7 +4436,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Site Reset Password URL",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3484),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5691),
                             Name = "Site Reset Password URL",
                             Value = "https://localhost:5001/Login/ForgotPasswordConfirmation"
                         },
@@ -4445,7 +4448,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Customer Support Email",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3495),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5701),
                             Name = "Site Customer Service Email",
                             Value = "carochire@gmail.com"
                         },
@@ -4457,7 +4460,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Customer Support Number",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3503),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5707),
                             Name = "Site Customer Service Number",
                             Value = "0731143168"
                         },
@@ -4469,7 +4472,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Default Email Addresss that overrides Client Email Address in a Test Environment ",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3510),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5712),
                             Name = "Site Test Email Account",
                             Value = "carochire@gmail.com"
                         },
@@ -4481,7 +4484,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Current System Environment Set it to 1 For Test Environment  or 2 for Production Environment if no value has been set System defaults to Test Environment ",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3517),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5718),
                             Name = "Site Default Environment",
                             Value = "1"
                         },
@@ -4493,7 +4496,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Display menus based on User Role",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3588),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5724),
                             Name = "Application Role Based Menus",
                             Value = "false"
                         },
@@ -4505,7 +4508,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Site Client Create Account URL",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3596),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5729),
                             Name = "Site Create Account URL",
                             Value = "https://localhost:5001/Login/CreateAccountConfirmation"
                         },
@@ -4517,7 +4520,7 @@ namespace SmartDataAccess.Migrations
                             Description = "Password Validity Period in Days",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 652, DateTimeKind.Local).AddTicks(3602),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 292, DateTimeKind.Local).AddTicks(5734),
                             Name = "Password Validity Period",
                             Value = "30"
                         });
@@ -4552,7 +4555,7 @@ namespace SmartDataAccess.Migrations
                             CustomSettingTypeID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 617, DateTimeKind.Local).AddTicks(7437),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 253, DateTimeKind.Local).AddTicks(3227),
                             Name = "BackEnd"
                         },
                         new
@@ -4560,7 +4563,7 @@ namespace SmartDataAccess.Migrations
                             CustomSettingTypeID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 617, DateTimeKind.Local).AddTicks(7545),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 253, DateTimeKind.Local).AddTicks(3386),
                             Name = "Portal"
                         },
                         new
@@ -4568,7 +4571,7 @@ namespace SmartDataAccess.Migrations
                             CustomSettingTypeID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 617, DateTimeKind.Local).AddTicks(7550),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 253, DateTimeKind.Local).AddTicks(3393),
                             Name = "All"
                         },
                         new
@@ -4576,7 +4579,7 @@ namespace SmartDataAccess.Migrations
                             CustomSettingTypeID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 617, DateTimeKind.Local).AddTicks(7554),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 253, DateTimeKind.Local).AddTicks(3397),
                             Name = "Email"
                         });
                 });
@@ -4610,7 +4613,7 @@ namespace SmartDataAccess.Migrations
                             CustomVariableTypeID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 618, DateTimeKind.Local).AddTicks(9248),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(1420),
                             Name = "Boolean"
                         },
                         new
@@ -4618,7 +4621,7 @@ namespace SmartDataAccess.Migrations
                             CustomVariableTypeID = 5,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 618, DateTimeKind.Local).AddTicks(9363),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(1659),
                             Name = "Double"
                         },
                         new
@@ -4626,7 +4629,7 @@ namespace SmartDataAccess.Migrations
                             CustomVariableTypeID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 618, DateTimeKind.Local).AddTicks(9369),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(1666),
                             Name = "Integer"
                         },
                         new
@@ -4634,7 +4637,7 @@ namespace SmartDataAccess.Migrations
                             CustomVariableTypeID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 618, DateTimeKind.Local).AddTicks(9372),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(1670),
                             Name = "Long"
                         },
                         new
@@ -4642,7 +4645,7 @@ namespace SmartDataAccess.Migrations
                             CustomVariableTypeID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 618, DateTimeKind.Local).AddTicks(9376),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(1673),
                             Name = "String"
                         },
                         new
@@ -4650,7 +4653,7 @@ namespace SmartDataAccess.Migrations
                             CustomVariableTypeID = 6,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 618, DateTimeKind.Local).AddTicks(9386),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(1686),
                             Name = "Decimal"
                         },
                         new
@@ -4658,7 +4661,7 @@ namespace SmartDataAccess.Migrations
                             CustomVariableTypeID = 7,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 618, DateTimeKind.Local).AddTicks(9397),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(1697),
                             Name = "Date Time"
                         },
                         new
@@ -4666,7 +4669,7 @@ namespace SmartDataAccess.Migrations
                             CustomVariableTypeID = 8,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 618, DateTimeKind.Local).AddTicks(9401),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(1701),
                             Name = "Password"
                         },
                         new
@@ -4674,7 +4677,7 @@ namespace SmartDataAccess.Migrations
                             CustomVariableTypeID = 9,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 618, DateTimeKind.Local).AddTicks(9405),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(1706),
                             Name = "Percentage"
                         });
                 });
@@ -4732,7 +4735,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 633, DateTimeKind.Local).AddTicks(5477),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 272, DateTimeKind.Local).AddTicks(3663),
                             Name = "pdf"
                         },
                         new
@@ -4740,7 +4743,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 633, DateTimeKind.Local).AddTicks(5921),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 272, DateTimeKind.Local).AddTicks(4269),
                             Name = "doc"
                         },
                         new
@@ -4748,7 +4751,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 633, DateTimeKind.Local).AddTicks(5927),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 272, DateTimeKind.Local).AddTicks(4276),
                             Name = "xlsx"
                         },
                         new
@@ -4756,7 +4759,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 633, DateTimeKind.Local).AddTicks(5931),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 272, DateTimeKind.Local).AddTicks(4280),
                             Name = "txt"
                         },
                         new
@@ -4764,7 +4767,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 5,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 633, DateTimeKind.Local).AddTicks(5934),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 272, DateTimeKind.Local).AddTicks(4284),
                             Name = "rtf"
                         },
                         new
@@ -4772,7 +4775,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 6,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 633, DateTimeKind.Local).AddTicks(5942),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 272, DateTimeKind.Local).AddTicks(4293),
                             Name = "ppt"
                         });
                 });
@@ -4812,7 +4815,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 636, DateTimeKind.Local).AddTicks(1543),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 275, DateTimeKind.Local).AddTicks(2897),
                             Name = "Identity Document"
                         },
                         new
@@ -4821,7 +4824,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 636, DateTimeKind.Local).AddTicks(2516),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 275, DateTimeKind.Local).AddTicks(3832),
                             Name = "Birth Certificate"
                         },
                         new
@@ -4830,7 +4833,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 636, DateTimeKind.Local).AddTicks(2554),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 275, DateTimeKind.Local).AddTicks(3854),
                             Name = "Proof Of Address"
                         },
                         new
@@ -4839,7 +4842,7 @@ namespace SmartDataAccess.Migrations
                             DocumentFormatID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 636, DateTimeKind.Local).AddTicks(2560),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 275, DateTimeKind.Local).AddTicks(3858),
                             Name = "Payslips"
                         });
                 });
@@ -4903,28 +4906,28 @@ namespace SmartDataAccess.Migrations
                         {
                             EmailTypeID = 1,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 646, DateTimeKind.Local).AddTicks(4082),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 287, DateTimeKind.Local).AddTicks(7528),
                             Name = "Client Statement"
                         },
                         new
                         {
                             EmailTypeID = 2,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 646, DateTimeKind.Local).AddTicks(4644),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 287, DateTimeKind.Local).AddTicks(8218),
                             Name = "Proof Of Payment"
                         },
                         new
                         {
                             EmailTypeID = 3,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 646, DateTimeKind.Local).AddTicks(4651),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 287, DateTimeKind.Local).AddTicks(8226),
                             Name = "Invoice"
                         },
                         new
                         {
                             EmailTypeID = 4,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 646, DateTimeKind.Local).AddTicks(4656),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 287, DateTimeKind.Local).AddTicks(8231),
                             Name = "New User Account Created"
                         });
                 });
@@ -4985,7 +4988,7 @@ namespace SmartDataAccess.Migrations
                             FeatureFlagID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 630, DateTimeKind.Local).AddTicks(4507),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 269, DateTimeKind.Local).AddTicks(3415),
                             Name = "Send Email On Error"
                         },
                         new
@@ -4993,7 +4996,7 @@ namespace SmartDataAccess.Migrations
                             FeatureFlagID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 630, DateTimeKind.Local).AddTicks(5044),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 269, DateTimeKind.Local).AddTicks(3992),
                             Name = "CC Client On Error"
                         },
                         new
@@ -5001,7 +5004,7 @@ namespace SmartDataAccess.Migrations
                             FeatureFlagID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 630, DateTimeKind.Local).AddTicks(5059),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 269, DateTimeKind.Local).AddTicks(4002),
                             Name = "Enable Document Emailing Functionality"
                         });
                 });
@@ -5035,7 +5038,7 @@ namespace SmartDataAccess.Migrations
                             GenderID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 619, DateTimeKind.Local).AddTicks(6527),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(9825),
                             Name = "Female"
                         },
                         new
@@ -5043,7 +5046,7 @@ namespace SmartDataAccess.Migrations
                             GenderID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 619, DateTimeKind.Local).AddTicks(6663),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 255, DateTimeKind.Local).AddTicks(9956),
                             Name = "Male"
                         });
                 });
@@ -5098,7 +5101,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Employees",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9373),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6576),
                             MenuGroupID = 2,
                             OrderNo = 1
                         },
@@ -5111,7 +5114,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Transactions",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9571),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6758),
                             MenuGroupID = 3,
                             OrderNo = 2
                         },
@@ -5124,7 +5127,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Products",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9595),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6766),
                             MenuGroupID = 3,
                             OrderNo = 3
                         },
@@ -5137,7 +5140,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Users",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9599),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6774),
                             MenuGroupID = 4,
                             OrderNo = 4
                         },
@@ -5150,7 +5153,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Roles & Permissions",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9603),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6778),
                             MenuGroupID = 4,
                             OrderNo = 5
                         },
@@ -5163,7 +5166,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Departments",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9612),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6789),
                             MenuGroupID = 5,
                             OrderNo = 6
                         },
@@ -5176,7 +5179,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Menu",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9688),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6793),
                             MenuGroupID = 9998,
                             OrderNo = 7
                         },
@@ -5189,7 +5192,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Coaching Programmes",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9693),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6797),
                             MenuGroupID = 5,
                             OrderNo = 8
                         },
@@ -5202,7 +5205,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Notice Board",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9697),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6801),
                             MenuGroupID = 2,
                             OrderNo = 9
                         },
@@ -5215,7 +5218,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Documents",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9702),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6806),
                             MenuGroupID = 5,
                             OrderNo = 10
                         },
@@ -5228,7 +5231,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Custom Settings",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9708),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6810),
                             MenuGroupID = 4,
                             OrderNo = 11
                         },
@@ -5241,7 +5244,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Banks",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9711),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6814),
                             MenuGroupID = 5,
                             OrderNo = 12
                         },
@@ -5254,7 +5257,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Currency",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9715),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6818),
                             MenuGroupID = 5,
                             OrderNo = 13
                         },
@@ -5267,7 +5270,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Country",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9720),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6822),
                             MenuGroupID = 5,
                             OrderNo = 14
                         },
@@ -5280,7 +5283,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Feature Flags",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9724),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6826),
                             MenuGroupID = 999,
                             OrderNo = 15
                         },
@@ -5293,7 +5296,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Companies",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9728),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6830),
                             MenuGroupID = 5,
                             OrderNo = 16
                         },
@@ -5306,7 +5309,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Email Templates",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9731),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6834),
                             MenuGroupID = 5,
                             OrderNo = 17
                         },
@@ -5319,7 +5322,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "My Account",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9736),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6840),
                             MenuGroupID = 2,
                             OrderNo = 0
                         },
@@ -5332,7 +5335,7 @@ namespace SmartDataAccess.Migrations
                             DisplayName = "Transaction Types",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 640, DateTimeKind.Local).AddTicks(9740),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 279, DateTimeKind.Local).AddTicks(6844),
                             MenuGroupID = 3,
                             OrderNo = 19
                         });
@@ -5382,7 +5385,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsActiveMenu = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 638, DateTimeKind.Local).AddTicks(6199),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 277, DateTimeKind.Local).AddTicks(5875),
                             OrderNo = 1
                         },
                         new
@@ -5393,7 +5396,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsActiveMenu = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 638, DateTimeKind.Local).AddTicks(7237),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 277, DateTimeKind.Local).AddTicks(6073),
                             OrderNo = 2
                         },
                         new
@@ -5404,7 +5407,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsActiveMenu = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 638, DateTimeKind.Local).AddTicks(7250),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 277, DateTimeKind.Local).AddTicks(6080),
                             OrderNo = 3
                         },
                         new
@@ -5415,7 +5418,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsActiveMenu = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 638, DateTimeKind.Local).AddTicks(7258),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 277, DateTimeKind.Local).AddTicks(6085),
                             OrderNo = 4
                         },
                         new
@@ -5426,7 +5429,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsActiveMenu = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 638, DateTimeKind.Local).AddTicks(7263),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 277, DateTimeKind.Local).AddTicks(6090),
                             OrderNo = 5
                         },
                         new
@@ -5437,7 +5440,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsActiveMenu = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 638, DateTimeKind.Local).AddTicks(7283),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 277, DateTimeKind.Local).AddTicks(6099),
                             OrderNo = 6
                         },
                         new
@@ -5448,7 +5451,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsActiveMenu = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 638, DateTimeKind.Local).AddTicks(7303),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 277, DateTimeKind.Local).AddTicks(6109),
                             OrderNo = 7
                         });
                 });
@@ -5524,7 +5527,7 @@ namespace SmartDataAccess.Migrations
                             PaymentStatusID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 598, DateTimeKind.Local).AddTicks(9704),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 230, DateTimeKind.Local).AddTicks(7958),
                             Name = "Paid"
                         },
                         new
@@ -5532,7 +5535,7 @@ namespace SmartDataAccess.Migrations
                             PaymentStatusID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 599, DateTimeKind.Local).AddTicks(334),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 230, DateTimeKind.Local).AddTicks(8358),
                             Name = "Reversed"
                         },
                         new
@@ -5540,7 +5543,7 @@ namespace SmartDataAccess.Migrations
                             PaymentStatusID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 599, DateTimeKind.Local).AddTicks(344),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 230, DateTimeKind.Local).AddTicks(8366),
                             Name = "Pending"
                         },
                         new
@@ -5548,7 +5551,7 @@ namespace SmartDataAccess.Migrations
                             PaymentStatusID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 599, DateTimeKind.Local).AddTicks(351),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 230, DateTimeKind.Local).AddTicks(8369),
                             Name = "Refunded"
                         },
                         new
@@ -5556,7 +5559,7 @@ namespace SmartDataAccess.Migrations
                             PaymentStatusID = 5,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 599, DateTimeKind.Local).AddTicks(355),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 230, DateTimeKind.Local).AddTicks(8372),
                             Name = "Discounted"
                         });
                 });
@@ -5597,7 +5600,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(797),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(3966),
                             Name = "Add User"
                         },
                         new
@@ -5606,7 +5609,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1455),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4541),
                             Name = "Update User"
                         },
                         new
@@ -5615,7 +5618,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1474),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4551),
                             Name = "Delete User"
                         },
                         new
@@ -5624,7 +5627,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1480),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4559),
                             Name = "View User"
                         },
                         new
@@ -5633,7 +5636,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1487),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4565),
                             Name = "Change User Password"
                         },
                         new
@@ -5642,7 +5645,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1505),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4575),
                             Name = "Add Client"
                         },
                         new
@@ -5651,7 +5654,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1512),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4580),
                             Name = "Update Client"
                         },
                         new
@@ -5660,7 +5663,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1519),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4585),
                             Name = "Delete Client"
                         },
                         new
@@ -5669,7 +5672,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1525),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4589),
                             Name = "View Client"
                         },
                         new
@@ -5678,7 +5681,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1535),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4595),
                             Name = "Change Client Password"
                         },
                         new
@@ -5687,7 +5690,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1542),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4599),
                             Name = "Add Client Note"
                         },
                         new
@@ -5696,7 +5699,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1549),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4603),
                             Name = "Update Client Note"
                         },
                         new
@@ -5705,7 +5708,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1555),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4607),
                             Name = "Delete Client Note"
                         },
                         new
@@ -5714,7 +5717,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1562),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4612),
                             Name = "View Client Note"
                         },
                         new
@@ -5723,7 +5726,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1569),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4617),
                             Name = "Add Client Contact"
                         },
                         new
@@ -5732,7 +5735,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1575),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4621),
                             Name = "Update Client Contact"
                         },
                         new
@@ -5741,7 +5744,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1581),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4625),
                             Name = "Delete Client Contact"
                         },
                         new
@@ -5750,7 +5753,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1591),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4630),
                             Name = "View Client Contact"
                         },
                         new
@@ -5759,7 +5762,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1598),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4721),
                             Name = "Add Client Product"
                         },
                         new
@@ -5768,7 +5771,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1604),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4726),
                             Name = "Update Client Product"
                         },
                         new
@@ -5777,7 +5780,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1610),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4730),
                             Name = "Delete Client Product"
                         },
                         new
@@ -5786,7 +5789,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1617),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4734),
                             Name = "View Client Product"
                         },
                         new
@@ -5795,7 +5798,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1624),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4738),
                             Name = "Add Client Dependent"
                         },
                         new
@@ -5804,7 +5807,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1631),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4743),
                             Name = "Update Client Dependent"
                         },
                         new
@@ -5813,7 +5816,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1638),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4747),
                             Name = "Delete Client Dependent"
                         },
                         new
@@ -5822,7 +5825,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1645),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4751),
                             Name = "View Client Dependent"
                         },
                         new
@@ -5831,7 +5834,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1652),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4755),
                             Name = "Add Client Guarantor"
                         },
                         new
@@ -5840,7 +5843,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1659),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4759),
                             Name = "Update Client Guarantor"
                         },
                         new
@@ -5849,7 +5852,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1666),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4764),
                             Name = "Delete Client Guarantor"
                         },
                         new
@@ -5858,7 +5861,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1672),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4768),
                             Name = "View Client Guarantor"
                         },
                         new
@@ -5867,7 +5870,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1679),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4773),
                             Name = "Add Client Course"
                         },
                         new
@@ -5876,7 +5879,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1686),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4777),
                             Name = "Update Client Course"
                         },
                         new
@@ -5885,7 +5888,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1692),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4781),
                             Name = "Delete Client Course"
                         },
                         new
@@ -5894,7 +5897,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1702),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4787),
                             Name = "View Client Course"
                         },
                         new
@@ -5903,7 +5906,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1777),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4792),
                             Name = "Add Client Medical Details"
                         },
                         new
@@ -5912,7 +5915,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1787),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4796),
                             Name = "Update Client Medical Details"
                         },
                         new
@@ -5921,7 +5924,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1794),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4801),
                             Name = "Delete Client Medical Details"
                         },
                         new
@@ -5930,7 +5933,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1801),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4805),
                             Name = "View Client Medical Details"
                         },
                         new
@@ -5939,7 +5942,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1812),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4809),
                             Name = "View Client Payments"
                         },
                         new
@@ -5948,7 +5951,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1818),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4813),
                             Name = "Generate Client Statement"
                         },
                         new
@@ -5957,7 +5960,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1825),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4817),
                             Name = "Client Upload Document"
                         },
                         new
@@ -5966,7 +5969,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1832),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4821),
                             Name = "Client View Document"
                         },
                         new
@@ -5975,7 +5978,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1838),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4825),
                             Name = "Add Role"
                         },
                         new
@@ -5984,7 +5987,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1844),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4829),
                             Name = "Update Role"
                         },
                         new
@@ -5993,7 +5996,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1850),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4832),
                             Name = "Delete Role"
                         },
                         new
@@ -6002,7 +6005,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1856),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4836),
                             Name = "View Role"
                         },
                         new
@@ -6011,7 +6014,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1862),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4841),
                             Name = "Add Permissions"
                         },
                         new
@@ -6020,7 +6023,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1868),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4845),
                             Name = "Remove Permissions"
                         },
                         new
@@ -6029,7 +6032,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1875),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4849),
                             Name = "View Permissions"
                         },
                         new
@@ -6038,7 +6041,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1882),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4854),
                             Name = "Add Menu To Role"
                         },
                         new
@@ -6047,7 +6050,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1890),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4859),
                             Name = "Remove Menu From Role"
                         },
                         new
@@ -6056,7 +6059,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1896),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4863),
                             Name = "Add Product"
                         },
                         new
@@ -6065,7 +6068,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1902),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4866),
                             Name = "Update Product"
                         },
                         new
@@ -6074,7 +6077,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1908),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4870),
                             Name = "Delete Product"
                         },
                         new
@@ -6083,7 +6086,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1914),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4874),
                             Name = "View Product"
                         },
                         new
@@ -6092,7 +6095,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1921),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4878),
                             Name = "Add Department"
                         },
                         new
@@ -6101,7 +6104,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1928),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4882),
                             Name = "Update Department"
                         },
                         new
@@ -6110,7 +6113,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1934),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4886),
                             Name = "Delete Department"
                         },
                         new
@@ -6119,7 +6122,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1941),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4890),
                             Name = "View Department"
                         },
                         new
@@ -6128,7 +6131,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1948),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4893),
                             Name = "Respond To Enquiry"
                         },
                         new
@@ -6137,7 +6140,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1954),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4981),
                             Name = "Route Enquiry"
                         },
                         new
@@ -6146,7 +6149,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1961),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4985),
                             Name = "Suspend Enquiry"
                         },
                         new
@@ -6155,7 +6158,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1967),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4989),
                             Name = "Close Enquiry"
                         },
                         new
@@ -6164,7 +6167,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1974),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4993),
                             Name = "Capture Payment"
                         },
                         new
@@ -6173,7 +6176,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1980),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(4996),
                             Name = "Refund Payment"
                         },
                         new
@@ -6182,7 +6185,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1990),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5002),
                             Name = "Reverse Payment"
                         },
                         new
@@ -6191,7 +6194,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(1996),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5006),
                             Name = "Void Payment"
                         },
                         new
@@ -6200,7 +6203,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2002),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5010),
                             Name = "View Payment"
                         },
                         new
@@ -6209,7 +6212,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2008),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5014),
                             Name = "Make Payment"
                         },
                         new
@@ -6218,7 +6221,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2014),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5018),
                             Name = "Add Menu"
                         },
                         new
@@ -6227,7 +6230,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2020),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5022),
                             Name = "Update Menu"
                         },
                         new
@@ -6236,7 +6239,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2026),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5025),
                             Name = "Activate Menu"
                         },
                         new
@@ -6245,7 +6248,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2032),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5029),
                             Name = "Deactivate Menu"
                         },
                         new
@@ -6254,7 +6257,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2038),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5033),
                             Name = "Delete Menu"
                         },
                         new
@@ -6263,7 +6266,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2044),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5036),
                             Name = "View Menu"
                         },
                         new
@@ -6272,7 +6275,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2157),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5040),
                             Name = "Add Course"
                         },
                         new
@@ -6281,7 +6284,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2165),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5044),
                             Name = "Update Course"
                         },
                         new
@@ -6290,7 +6293,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2171),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5047),
                             Name = "Delete Course"
                         },
                         new
@@ -6299,7 +6302,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2178),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5051),
                             Name = "View Course"
                         },
                         new
@@ -6308,7 +6311,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2184),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5055),
                             Name = "Update Custom Setting"
                         },
                         new
@@ -6317,7 +6320,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2191),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5059),
                             Name = "View Custom Setting"
                         },
                         new
@@ -6326,7 +6329,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2198),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5064),
                             Name = "Add Document Type"
                         },
                         new
@@ -6335,7 +6338,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2205),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5068),
                             Name = "Update Document Type"
                         },
                         new
@@ -6344,7 +6347,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2211),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5072),
                             Name = "Delete Document Type"
                         },
                         new
@@ -6353,7 +6356,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2218),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5076),
                             Name = "View Document Type"
                         },
                         new
@@ -6362,7 +6365,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2225),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5080),
                             Name = "Add Company"
                         },
                         new
@@ -6371,7 +6374,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2230),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5083),
                             Name = "Update Company"
                         },
                         new
@@ -6380,7 +6383,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2237),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5087),
                             Name = "Delete Company"
                         },
                         new
@@ -6389,7 +6392,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2243),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5091),
                             Name = "View Company"
                         },
                         new
@@ -6398,7 +6401,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2249),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5095),
                             Name = "Add Bank Account"
                         },
                         new
@@ -6407,7 +6410,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2256),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5099),
                             Name = "Update Bank Account"
                         },
                         new
@@ -6416,7 +6419,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2262),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5103),
                             Name = "Delete Bank Account"
                         },
                         new
@@ -6425,7 +6428,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2269),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5107),
                             Name = "View Bank Account"
                         },
                         new
@@ -6434,7 +6437,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2275),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5111),
                             Name = "Add Email Template"
                         },
                         new
@@ -6443,7 +6446,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2282),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5115),
                             Name = "Update Email Template"
                         },
                         new
@@ -6452,7 +6455,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2288),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5119),
                             Name = "Delete Email Template"
                         },
                         new
@@ -6461,7 +6464,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2294),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5122),
                             Name = "View Email Template"
                         },
                         new
@@ -6470,7 +6473,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2300),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5126),
                             Name = "Add Notice"
                         },
                         new
@@ -6479,7 +6482,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2306),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5130),
                             Name = "Update Notice"
                         },
                         new
@@ -6488,7 +6491,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2313),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5134),
                             Name = "Delete Notice"
                         },
                         new
@@ -6497,7 +6500,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2318),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5137),
                             Name = "View Notice"
                         },
                         new
@@ -6506,7 +6509,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2324),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5234),
                             Name = "Update Country"
                         },
                         new
@@ -6515,7 +6518,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2330),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5239),
                             Name = "Update Currency"
                         },
                         new
@@ -6524,7 +6527,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2337),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5243),
                             Name = "View Dashboard Notices"
                         },
                         new
@@ -6533,7 +6536,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2344),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5248),
                             Name = "Client Update Personal Details"
                         },
                         new
@@ -6542,7 +6545,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2351),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5252),
                             Name = "Update Transaction Type"
                         },
                         new
@@ -6551,7 +6554,7 @@ namespace SmartDataAccess.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 594, DateTimeKind.Local).AddTicks(2358),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 227, DateTimeKind.Local).AddTicks(5256),
                             Name = "View Transaction Type"
                         });
                 });
@@ -6585,7 +6588,7 @@ namespace SmartDataAccess.Migrations
                             PriorityRankID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(9231),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 262, DateTimeKind.Local).AddTicks(4520),
                             Name = "Critical"
                         },
                         new
@@ -6593,7 +6596,7 @@ namespace SmartDataAccess.Migrations
                             PriorityRankID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(9360),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 262, DateTimeKind.Local).AddTicks(4694),
                             Name = "High"
                         },
                         new
@@ -6601,7 +6604,7 @@ namespace SmartDataAccess.Migrations
                             PriorityRankID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(9367),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 262, DateTimeKind.Local).AddTicks(4708),
                             Name = "Medium"
                         },
                         new
@@ -6609,7 +6612,7 @@ namespace SmartDataAccess.Migrations
                             PriorityRankID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 623, DateTimeKind.Local).AddTicks(9371),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 262, DateTimeKind.Local).AddTicks(4714),
                             Name = "Low"
                         });
                 });
@@ -6683,7 +6686,7 @@ namespace SmartDataAccess.Migrations
                             ProductFrequencyID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 612, DateTimeKind.Local).AddTicks(2684),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 246, DateTimeKind.Local).AddTicks(3757),
                             Name = "Weekly"
                         },
                         new
@@ -6691,7 +6694,7 @@ namespace SmartDataAccess.Migrations
                             ProductFrequencyID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 612, DateTimeKind.Local).AddTicks(3172),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 246, DateTimeKind.Local).AddTicks(4302),
                             Name = "Monthly"
                         },
                         new
@@ -6699,7 +6702,7 @@ namespace SmartDataAccess.Migrations
                             ProductFrequencyID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 612, DateTimeKind.Local).AddTicks(3180),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 246, DateTimeKind.Local).AddTicks(4308),
                             Name = "Quaterly"
                         },
                         new
@@ -6707,7 +6710,7 @@ namespace SmartDataAccess.Migrations
                             ProductFrequencyID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 612, DateTimeKind.Local).AddTicks(3190),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 246, DateTimeKind.Local).AddTicks(4320),
                             Name = "Bi Annually"
                         },
                         new
@@ -6715,7 +6718,7 @@ namespace SmartDataAccess.Migrations
                             ProductFrequencyID = 5,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 612, DateTimeKind.Local).AddTicks(3194),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 246, DateTimeKind.Local).AddTicks(4323),
                             Name = "Yearly"
                         });
                 });
@@ -6793,7 +6796,7 @@ namespace SmartDataAccess.Migrations
                             RelationshipTypeID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(8671),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 252, DateTimeKind.Local).AddTicks(421),
                             Name = "Mother"
                         },
                         new
@@ -6801,7 +6804,7 @@ namespace SmartDataAccess.Migrations
                             RelationshipTypeID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(8819),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 252, DateTimeKind.Local).AddTicks(733),
                             Name = "Father"
                         },
                         new
@@ -6809,7 +6812,7 @@ namespace SmartDataAccess.Migrations
                             RelationshipTypeID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(8823),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 252, DateTimeKind.Local).AddTicks(738),
                             Name = "Sibling"
                         },
                         new
@@ -6817,7 +6820,7 @@ namespace SmartDataAccess.Migrations
                             RelationshipTypeID = 4,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(8825),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 252, DateTimeKind.Local).AddTicks(740),
                             Name = "Spouse"
                         },
                         new
@@ -6825,7 +6828,7 @@ namespace SmartDataAccess.Migrations
                             RelationshipTypeID = 5,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 616, DateTimeKind.Local).AddTicks(8827),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 252, DateTimeKind.Local).AddTicks(743),
                             Name = "Other"
                         });
                 });
@@ -6862,7 +6865,7 @@ namespace SmartDataAccess.Migrations
                             RoleID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 586, DateTimeKind.Local).AddTicks(6137),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 221, DateTimeKind.Local).AddTicks(4194),
                             Name = "Super Admin"
                         },
                         new
@@ -6870,7 +6873,7 @@ namespace SmartDataAccess.Migrations
                             RoleID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 588, DateTimeKind.Local).AddTicks(1373),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 222, DateTimeKind.Local).AddTicks(9627),
                             Name = "Employee"
                         },
                         new
@@ -6878,7 +6881,7 @@ namespace SmartDataAccess.Migrations
                             RoleID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 588, DateTimeKind.Local).AddTicks(1442),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 222, DateTimeKind.Local).AddTicks(9692),
                             Name = "Administrator"
                         });
                 });
@@ -6915,7 +6918,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 1,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2085),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2248),
                             MenuID = 1,
                             RoleID = 1
                         },
@@ -6923,7 +6926,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 2,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2789),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2367),
                             MenuID = 2,
                             RoleID = 1
                         },
@@ -6931,7 +6934,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 3,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2796),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2371),
                             MenuID = 3,
                             RoleID = 1
                         },
@@ -6939,7 +6942,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 4,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2798),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2373),
                             MenuID = 4,
                             RoleID = 1
                         },
@@ -6947,7 +6950,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 5,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2801),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2376),
                             MenuID = 5,
                             RoleID = 1
                         },
@@ -6955,7 +6958,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 6,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2810),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2381),
                             MenuID = 6,
                             RoleID = 1
                         },
@@ -6963,7 +6966,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 7,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2813),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2383),
                             MenuID = 7,
                             RoleID = 1
                         },
@@ -6971,7 +6974,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 8,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2815),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2387),
                             MenuID = 8,
                             RoleID = 1
                         },
@@ -6979,7 +6982,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 9,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2818),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2389),
                             MenuID = 9,
                             RoleID = 1
                         },
@@ -6987,7 +6990,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 10,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2823),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2392),
                             MenuID = 10,
                             RoleID = 1
                         },
@@ -6995,7 +6998,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 11,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2826),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2394),
                             MenuID = 11,
                             RoleID = 1
                         },
@@ -7003,7 +7006,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 12,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2828),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2395),
                             MenuID = 12,
                             RoleID = 1
                         },
@@ -7011,7 +7014,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 13,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2831),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2397),
                             MenuID = 13,
                             RoleID = 1
                         },
@@ -7019,7 +7022,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 14,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2833),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2399),
                             MenuID = 14,
                             RoleID = 1
                         },
@@ -7027,7 +7030,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 15,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2836),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2401),
                             MenuID = 15,
                             RoleID = 1
                         },
@@ -7035,7 +7038,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 16,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2838),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2402),
                             MenuID = 16,
                             RoleID = 1
                         },
@@ -7043,7 +7046,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 17,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2841),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2404),
                             MenuID = 17,
                             RoleID = 1
                         },
@@ -7051,7 +7054,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 18,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2845),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2407),
                             MenuID = 18,
                             RoleID = 1
                         },
@@ -7059,7 +7062,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RoleMenuID = 19,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 653, DateTimeKind.Local).AddTicks(2848),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 293, DateTimeKind.Local).AddTicks(2409),
                             MenuID = 19,
                             RoleID = 1
                         });
@@ -7097,7 +7100,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 1,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(2924),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2182),
                             PermissionID = 1,
                             RoleID = 1
                         },
@@ -7105,7 +7108,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 2,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3605),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2311),
                             PermissionID = 2,
                             RoleID = 1
                         },
@@ -7113,7 +7116,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 3,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3614),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2314),
                             PermissionID = 3,
                             RoleID = 1
                         },
@@ -7121,7 +7124,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 4,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3616),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2316),
                             PermissionID = 4,
                             RoleID = 1
                         },
@@ -7129,7 +7132,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 5,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3619),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2318),
                             PermissionID = 5,
                             RoleID = 1
                         },
@@ -7137,7 +7140,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 6,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3626),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2322),
                             PermissionID = 6,
                             RoleID = 1
                         },
@@ -7145,7 +7148,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 7,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3629),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2324),
                             PermissionID = 7,
                             RoleID = 1
                         },
@@ -7153,7 +7156,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 8,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3631),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2325),
                             PermissionID = 8,
                             RoleID = 1
                         },
@@ -7161,7 +7164,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 9,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3633),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2327),
                             PermissionID = 9,
                             RoleID = 1
                         },
@@ -7169,7 +7172,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 10,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3637),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2330),
                             PermissionID = 10,
                             RoleID = 1
                         },
@@ -7177,7 +7180,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 11,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3640),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2332),
                             PermissionID = 11,
                             RoleID = 1
                         },
@@ -7185,7 +7188,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 12,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3642),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2333),
                             PermissionID = 12,
                             RoleID = 1
                         },
@@ -7193,7 +7196,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 13,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3645),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2335),
                             PermissionID = 13,
                             RoleID = 1
                         },
@@ -7201,7 +7204,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 14,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3647),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2336),
                             PermissionID = 14,
                             RoleID = 1
                         },
@@ -7209,7 +7212,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 15,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3650),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2338),
                             PermissionID = 15,
                             RoleID = 1
                         },
@@ -7217,7 +7220,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 16,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3652),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2339),
                             PermissionID = 16,
                             RoleID = 1
                         },
@@ -7225,7 +7228,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 17,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3654),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2341),
                             PermissionID = 17,
                             RoleID = 1
                         },
@@ -7233,7 +7236,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 18,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3660),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2344),
                             PermissionID = 18,
                             RoleID = 1
                         },
@@ -7241,7 +7244,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 19,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3663),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2345),
                             PermissionID = 19,
                             RoleID = 1
                         },
@@ -7249,7 +7252,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 20,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3665),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2347),
                             PermissionID = 20,
                             RoleID = 1
                         },
@@ -7257,7 +7260,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 21,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3669),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2348),
                             PermissionID = 21,
                             RoleID = 1
                         },
@@ -7265,7 +7268,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 22,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3671),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2350),
                             PermissionID = 22,
                             RoleID = 1
                         },
@@ -7273,7 +7276,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 23,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3673),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2351),
                             PermissionID = 23,
                             RoleID = 1
                         },
@@ -7281,7 +7284,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 24,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3676),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2353),
                             PermissionID = 24,
                             RoleID = 1
                         },
@@ -7289,7 +7292,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 25,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3678),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2354),
                             PermissionID = 25,
                             RoleID = 1
                         },
@@ -7297,7 +7300,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 26,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3680),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2356),
                             PermissionID = 26,
                             RoleID = 1
                         },
@@ -7305,7 +7308,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 27,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3682),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2357),
                             PermissionID = 27,
                             RoleID = 1
                         },
@@ -7313,7 +7316,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 28,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3685),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2359),
                             PermissionID = 28,
                             RoleID = 1
                         },
@@ -7321,7 +7324,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 29,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3687),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2360),
                             PermissionID = 29,
                             RoleID = 1
                         },
@@ -7329,7 +7332,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 30,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3689),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2362),
                             PermissionID = 30,
                             RoleID = 1
                         },
@@ -7337,7 +7340,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 31,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3692),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2408),
                             PermissionID = 31,
                             RoleID = 1
                         },
@@ -7345,7 +7348,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 32,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3694),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2410),
                             PermissionID = 32,
                             RoleID = 1
                         },
@@ -7353,7 +7356,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 33,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3701),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2412),
                             PermissionID = 33,
                             RoleID = 1
                         },
@@ -7361,7 +7364,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 34,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3706),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2415),
                             PermissionID = 34,
                             RoleID = 1
                         },
@@ -7369,7 +7372,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 35,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3709),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2416),
                             PermissionID = 35,
                             RoleID = 1
                         },
@@ -7377,7 +7380,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 36,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3711),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2418),
                             PermissionID = 36,
                             RoleID = 1
                         },
@@ -7385,7 +7388,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 37,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3714),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2420),
                             PermissionID = 37,
                             RoleID = 1
                         },
@@ -7393,7 +7396,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 38,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3716),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2421),
                             PermissionID = 38,
                             RoleID = 1
                         },
@@ -7401,7 +7404,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 39,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3718),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2423),
                             PermissionID = 39,
                             RoleID = 1
                         },
@@ -7409,7 +7412,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 40,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3721),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2425),
                             PermissionID = 40,
                             RoleID = 1
                         },
@@ -7417,7 +7420,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 41,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3723),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2426),
                             PermissionID = 41,
                             RoleID = 1
                         },
@@ -7425,7 +7428,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 42,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3725),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2428),
                             PermissionID = 42,
                             RoleID = 1
                         },
@@ -7433,7 +7436,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 43,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3727),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2429),
                             PermissionID = 43,
                             RoleID = 1
                         },
@@ -7441,7 +7444,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 44,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3730),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2431),
                             PermissionID = 44,
                             RoleID = 1
                         },
@@ -7449,7 +7452,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 45,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3732),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2432),
                             PermissionID = 45,
                             RoleID = 1
                         },
@@ -7457,7 +7460,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 46,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3734),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2434),
                             PermissionID = 46,
                             RoleID = 1
                         },
@@ -7465,7 +7468,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 47,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3736),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2435),
                             PermissionID = 47,
                             RoleID = 1
                         },
@@ -7473,7 +7476,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 48,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3739),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2437),
                             PermissionID = 48,
                             RoleID = 1
                         },
@@ -7481,7 +7484,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 49,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3742),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2438),
                             PermissionID = 49,
                             RoleID = 1
                         },
@@ -7489,7 +7492,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 50,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3744),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2440),
                             PermissionID = 50,
                             RoleID = 1
                         },
@@ -7497,7 +7500,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 51,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3746),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2442),
                             PermissionID = 51,
                             RoleID = 1
                         },
@@ -7505,7 +7508,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 52,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3748),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2443),
                             PermissionID = 52,
                             RoleID = 1
                         },
@@ -7513,7 +7516,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 53,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3751),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2445),
                             PermissionID = 53,
                             RoleID = 1
                         },
@@ -7521,7 +7524,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 54,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3753),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2446),
                             PermissionID = 54,
                             RoleID = 1
                         },
@@ -7529,7 +7532,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 55,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3756),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2448),
                             PermissionID = 55,
                             RoleID = 1
                         },
@@ -7537,7 +7540,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 56,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3758),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2449),
                             PermissionID = 56,
                             RoleID = 1
                         },
@@ -7545,7 +7548,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 57,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3760),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2451),
                             PermissionID = 57,
                             RoleID = 1
                         },
@@ -7553,7 +7556,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 58,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3763),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2452),
                             PermissionID = 58,
                             RoleID = 1
                         },
@@ -7561,7 +7564,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 59,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3765),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2454),
                             PermissionID = 59,
                             RoleID = 1
                         },
@@ -7569,7 +7572,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 60,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3767),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2455),
                             PermissionID = 60,
                             RoleID = 1
                         },
@@ -7577,7 +7580,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 61,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3769),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2457),
                             PermissionID = 61,
                             RoleID = 1
                         },
@@ -7585,7 +7588,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 62,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3772),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2458),
                             PermissionID = 62,
                             RoleID = 1
                         },
@@ -7593,7 +7596,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 63,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3774),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2460),
                             PermissionID = 63,
                             RoleID = 1
                         },
@@ -7601,7 +7604,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 64,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3776),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2461),
                             PermissionID = 64,
                             RoleID = 1
                         },
@@ -7609,7 +7612,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 65,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3779),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2463),
                             PermissionID = 65,
                             RoleID = 1
                         },
@@ -7617,7 +7620,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 66,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3838),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2466),
                             PermissionID = 66,
                             RoleID = 1
                         },
@@ -7625,7 +7628,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 67,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3841),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2467),
                             PermissionID = 67,
                             RoleID = 1
                         },
@@ -7633,7 +7636,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 68,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3844),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2469),
                             PermissionID = 68,
                             RoleID = 1
                         },
@@ -7641,7 +7644,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 69,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3846),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2470),
                             PermissionID = 69,
                             RoleID = 1
                         },
@@ -7649,7 +7652,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 70,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3848),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2472),
                             PermissionID = 70,
                             RoleID = 1
                         },
@@ -7657,7 +7660,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 71,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3850),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2474),
                             PermissionID = 71,
                             RoleID = 1
                         },
@@ -7665,7 +7668,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 72,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3853),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2475),
                             PermissionID = 72,
                             RoleID = 1
                         },
@@ -7673,7 +7676,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 73,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3855),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2477),
                             PermissionID = 73,
                             RoleID = 1
                         },
@@ -7681,7 +7684,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 74,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3857),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2478),
                             PermissionID = 74,
                             RoleID = 1
                         },
@@ -7689,7 +7692,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 75,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3859),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2480),
                             PermissionID = 75,
                             RoleID = 1
                         },
@@ -7697,7 +7700,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 76,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3862),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2481),
                             PermissionID = 76,
                             RoleID = 1
                         },
@@ -7705,7 +7708,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 77,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3864),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2483),
                             PermissionID = 77,
                             RoleID = 1
                         },
@@ -7713,7 +7716,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 78,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3867),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2484),
                             PermissionID = 78,
                             RoleID = 1
                         },
@@ -7721,7 +7724,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 79,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3870),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2486),
                             PermissionID = 79,
                             RoleID = 1
                         },
@@ -7729,7 +7732,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 80,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3872),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2487),
                             PermissionID = 80,
                             RoleID = 1
                         },
@@ -7737,7 +7740,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 81,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3876),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2489),
                             PermissionID = 81,
                             RoleID = 1
                         },
@@ -7745,7 +7748,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 82,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3879),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2490),
                             PermissionID = 82,
                             RoleID = 1
                         },
@@ -7753,7 +7756,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 83,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3881),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2492),
                             PermissionID = 83,
                             RoleID = 1
                         },
@@ -7761,7 +7764,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 84,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3884),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2493),
                             PermissionID = 84,
                             RoleID = 1
                         },
@@ -7769,7 +7772,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 85,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3886),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2495),
                             PermissionID = 85,
                             RoleID = 1
                         },
@@ -7777,7 +7780,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 86,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3888),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2496),
                             PermissionID = 86,
                             RoleID = 1
                         },
@@ -7785,7 +7788,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 87,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3891),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2498),
                             PermissionID = 87,
                             RoleID = 1
                         },
@@ -7793,7 +7796,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 88,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3893),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2500),
                             PermissionID = 88,
                             RoleID = 1
                         },
@@ -7801,7 +7804,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 89,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3895),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2501),
                             PermissionID = 89,
                             RoleID = 1
                         },
@@ -7809,7 +7812,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 90,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3897),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2503),
                             PermissionID = 90,
                             RoleID = 1
                         },
@@ -7817,7 +7820,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 91,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3900),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2504),
                             PermissionID = 91,
                             RoleID = 1
                         },
@@ -7825,7 +7828,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 92,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3902),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2506),
                             PermissionID = 92,
                             RoleID = 1
                         },
@@ -7833,7 +7836,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 93,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3904),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2507),
                             PermissionID = 93,
                             RoleID = 1
                         },
@@ -7841,7 +7844,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 94,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3907),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2509),
                             PermissionID = 94,
                             RoleID = 1
                         },
@@ -7849,7 +7852,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 95,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3909),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2510),
                             PermissionID = 95,
                             RoleID = 1
                         },
@@ -7857,7 +7860,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 96,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3912),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2512),
                             PermissionID = 96,
                             RoleID = 1
                         },
@@ -7865,7 +7868,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 97,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3914),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2513),
                             PermissionID = 97,
                             RoleID = 1
                         },
@@ -7873,7 +7876,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 98,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3916),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2515),
                             PermissionID = 98,
                             RoleID = 1
                         },
@@ -7881,7 +7884,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 99,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3918),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2516),
                             PermissionID = 99,
                             RoleID = 1
                         },
@@ -7889,7 +7892,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 100,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3921),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2518),
                             PermissionID = 100,
                             RoleID = 1
                         },
@@ -7897,7 +7900,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 101,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3923),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2519),
                             PermissionID = 101,
                             RoleID = 1
                         },
@@ -7905,7 +7908,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 102,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3925),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2521),
                             PermissionID = 102,
                             RoleID = 1
                         },
@@ -7913,7 +7916,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 103,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3928),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2522),
                             PermissionID = 103,
                             RoleID = 1
                         },
@@ -7921,7 +7924,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 104,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3930),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2524),
                             PermissionID = 104,
                             RoleID = 1
                         },
@@ -7929,7 +7932,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 105,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3932),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2526),
                             PermissionID = 105,
                             RoleID = 1
                         },
@@ -7937,7 +7940,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 106,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3935),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2527),
                             PermissionID = 106,
                             RoleID = 1
                         },
@@ -7945,7 +7948,7 @@ namespace SmartDataAccess.Migrations
                         {
                             RolePermissionID = 107,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 595, DateTimeKind.Local).AddTicks(3937),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 228, DateTimeKind.Local).AddTicks(2529),
                             PermissionID = 107,
                             RoleID = 1
                         });
@@ -8092,7 +8095,7 @@ namespace SmartDataAccess.Migrations
                             Code = "PAY",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 603, DateTimeKind.Local).AddTicks(3203),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 234, DateTimeKind.Local).AddTicks(3332),
                             Name = "Payment",
                             TransactionStatusID = 1
                         },
@@ -8102,7 +8105,7 @@ namespace SmartDataAccess.Migrations
                             Code = "REVERS",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 603, DateTimeKind.Local).AddTicks(4693),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 234, DateTimeKind.Local).AddTicks(4348),
                             Name = "Reversal",
                             TransactionStatusID = 1
                         },
@@ -8112,7 +8115,7 @@ namespace SmartDataAccess.Migrations
                             Code = "PURCH",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 603, DateTimeKind.Local).AddTicks(4829),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 234, DateTimeKind.Local).AddTicks(4435),
                             Name = "Purchase",
                             TransactionStatusID = 1
                         },
@@ -8122,7 +8125,7 @@ namespace SmartDataAccess.Migrations
                             Code = "SALE",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 603, DateTimeKind.Local).AddTicks(4930),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 234, DateTimeKind.Local).AddTicks(4517),
                             Name = "Sales",
                             TransactionStatusID = 1
                         },
@@ -8132,7 +8135,7 @@ namespace SmartDataAccess.Migrations
                             Code = "RPR",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 603, DateTimeKind.Local).AddTicks(5017),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 234, DateTimeKind.Local).AddTicks(4682),
                             Name = "Receipts",
                             TransactionStatusID = 1
                         },
@@ -8142,7 +8145,7 @@ namespace SmartDataAccess.Migrations
                             Code = "RECON",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 603, DateTimeKind.Local).AddTicks(5108),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 234, DateTimeKind.Local).AddTicks(4753),
                             Name = "Recon",
                             TransactionStatusID = 1
                         });
@@ -8206,7 +8209,7 @@ namespace SmartDataAccess.Migrations
                             IDNumber = "8904161200188",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 624, DateTimeKind.Local).AddTicks(8964),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 263, DateTimeKind.Local).AddTicks(5172),
                             LastName = "Chirenje",
                             Password = "YWRtaW4=",
                             PasswordExpiryDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -8221,7 +8224,7 @@ namespace SmartDataAccess.Migrations
                             IDNumber = "0000000000000",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 627, DateTimeKind.Local).AddTicks(7539),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 266, DateTimeKind.Local).AddTicks(5514),
                             LastName = "Jarani",
                             Password = "YWRtaW4=",
                             PasswordExpiryDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -8236,7 +8239,7 @@ namespace SmartDataAccess.Migrations
                             IDNumber = "1111111111111",
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 627, DateTimeKind.Local).AddTicks(8326),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 266, DateTimeKind.Local).AddTicks(6434),
                             LastName = "Ndadaro",
                             Password = "YWRtaW4=",
                             PasswordExpiryDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -8303,7 +8306,7 @@ namespace SmartDataAccess.Migrations
                             UserID = 1,
                             RoleID = 1,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 636, DateTimeKind.Local).AddTicks(7610),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 275, DateTimeKind.Local).AddTicks(9830),
                             UserRoleID = 1
                         },
                         new
@@ -8311,7 +8314,7 @@ namespace SmartDataAccess.Migrations
                             UserID = 2,
                             RoleID = 3,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 636, DateTimeKind.Local).AddTicks(7697),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 275, DateTimeKind.Local).AddTicks(9942),
                             UserRoleID = 2
                         });
                 });
@@ -8345,7 +8348,7 @@ namespace SmartDataAccess.Migrations
                             UserTypeID = 1,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 615, DateTimeKind.Local).AddTicks(806),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 249, DateTimeKind.Local).AddTicks(6389),
                             Name = "Administrator"
                         },
                         new
@@ -8353,7 +8356,7 @@ namespace SmartDataAccess.Migrations
                             UserTypeID = 2,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 615, DateTimeKind.Local).AddTicks(1307),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 249, DateTimeKind.Local).AddTicks(6856),
                             Name = "Employer"
                         },
                         new
@@ -8361,7 +8364,7 @@ namespace SmartDataAccess.Migrations
                             UserTypeID = 3,
                             IsActive = true,
                             LastChangedBy = "SuperUser",
-                            LastChangedDate = new DateTime(2020, 9, 27, 10, 59, 47, 615, DateTimeKind.Local).AddTicks(1316),
+                            LastChangedDate = new DateTime(2020, 9, 27, 13, 12, 38, 249, DateTimeKind.Local).AddTicks(6863),
                             Name = "Employee"
                         });
                 });

@@ -199,7 +199,7 @@ namespace SmartReporting
                     tblrow.Cells[1].Borders.Visible = false;
                     tblrow.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
                     tblrow.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                tblrow.Cells[1].AddParagraph(UtilityService.IsNull(_statement.Product) ? "-": _statement.Product.Name) ;
+                tblrow.Cells[1].AddParagraph(UtilityService.IsNull(_statement.Product) ? " - ": _statement.Product.Name) ;
 
                     tblrow.Cells[2].Borders.Visible = false;
                     tblrow.Cells[2].Format.Alignment = ParagraphAlignment.Left;
@@ -253,7 +253,7 @@ namespace SmartReporting
             {
 
 
-                string _selectClause = @"SELECT t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,'-', p.Name) AS Counter,t.Amount
+                string _selectClause = @"SELECT t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' - ', p.Name) AS Counter,t.Amount
                                             FROM Transactions t
                                             INNER JOIN Products p ON p.ProductID=t.ProductID
                                             INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
@@ -268,20 +268,21 @@ namespace SmartReporting
                 this.table = section.AddTable();
                 this.table.Style = "Table";
                 this.table.Borders.Color = TableBorder;
-                if (UtilityService.StatementHideTableBoarders)
+                if (UtilityService.StatementShowTableBoarders)
                 {
-                    this.table.Borders.Width = 0;
-                    this.table.Borders.Left.Width = 0;
-                    this.table.Borders.Right.Width = 0;
-                    this.table.Rows.LeftIndent = 0;
+                    this.table.Borders.Width = 0.25;
+                    this.table.Borders.Left.Width = 0.25;
+                    this.table.Borders.Right.Width = 0.25;
 
                 }
 
                 else
                 {
-                    this.table.Borders.Width = 0.25;
-                    this.table.Borders.Left.Width = 0.25;
-                    this.table.Borders.Right.Width = 0.25;
+                   
+                    this.table.Borders.Width = 0;
+                    this.table.Borders.Left.Width = 0;
+                    this.table.Borders.Right.Width = 0;
+                    this.table.Rows.LeftIndent = 0;
                 }
 
                 // Before you can add a row, you must define the columns
@@ -308,17 +309,17 @@ namespace SmartReporting
 
                 row.Cells[0].AddParagraph("Trans Date");
                 row.Cells[0].Format.Font.Bold = true;
-                row.Cells[0].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
+                row.Cells[0].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
                 row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
 
                 row.Cells[1].AddParagraph("Trans Code");
                 row.Cells[1].Format.Font.Bold = true;
-                row.Cells[1].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
+                row.Cells[1].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
                 row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
 
                 row.Cells[2].AddParagraph("Counter");
                 row.Cells[2].Format.Font.Bold = true;
-                row.Cells[2].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center; 
+                row.Cells[2].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left; 
                 row.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
 
                 row.Cells[3].AddParagraph("Amount");
@@ -326,7 +327,7 @@ namespace SmartReporting
                 row.Cells[3].Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
 
-                if (!UtilityService.StatementHideTableBoarders)
+                if (UtilityService.StatementShowTableBoarders)
                     this.table.SetEdge(0, 0, 4, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
                 Paragraph paragraph = this.addressFrame.AddParagraph();
@@ -339,29 +340,29 @@ namespace SmartReporting
                     Row row1 = this.table.AddRow();
 
                     row1.TopPadding = 1.5;
-                    row1.Cells[0].Borders.Visible = UtilityService.StatementHideTableBoarders;
+                    row1.Cells[0].Borders.Visible = UtilityService.StatementShowTableBoarders;
                     row1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                     row1.Cells[0].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
 
-                    row1.Cells[1].Borders.Visible = UtilityService.StatementHideTableBoarders;
+                    row1.Cells[1].Borders.Visible = UtilityService.StatementShowTableBoarders;
                     row1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-                    row1.Cells[1].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
+                    row1.Cells[1].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
                     row1.Cells[1].AddParagraph(transaction.Field<string>("TransCode"));
 
 
                     string _transactionDescription = transaction.Field<string>("Counter");
-                    row1.Cells[2].Borders.Visible = UtilityService.StatementHideTableBoarders;
-                    row1.Cells[2].Format.Alignment = UtilityService.StatementHideTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Left;
+                    row1.Cells[2].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[2].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Left;
                     row1.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[2].AddParagraph(_transactionDescription);
 
-                    row1.Cells[3].Borders.Visible = UtilityService.StatementHideTableBoarders;
+                    row1.Cells[3].Borders.Visible = UtilityService.StatementShowTableBoarders;
                     row1.Cells[3].Format.Alignment = ParagraphAlignment.Right;
                     row1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[3].AddParagraph(String.Format(culture, "{0:C}", transaction.Field<decimal>("Amount")));
 
-                    if (!UtilityService.StatementHideTableBoarders)
+                    if (UtilityService.StatementShowTableBoarders)
                     this.table.SetEdge(0, this.table.Rows.Count - 1, 4, 1, Edge.Box,BorderStyle.Single, 0.75);
                 }
 
@@ -380,7 +381,7 @@ namespace SmartReporting
                 row2.Cells[3].AddParagraph(String.Format(culture, "{0:C}", TotalPaid));
 
                 // Set the borders of the specified cell range
-                if (!UtilityService.StatementHideTableBoarders)
+                if (UtilityService.StatementShowTableBoarders)
                     this.table.SetEdge(3, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
 
 

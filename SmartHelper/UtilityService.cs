@@ -196,12 +196,12 @@ namespace SmartHelper
         }
 
 
-        public static bool StatementHideTableBoarders
+        public static bool StatementShowTableBoarders
         {
             get
             {
 
-                string value = GetData.GetSettingValue((int)AppSetting.Statement_Hide_Table_Boarders)?.Value;
+                string value = GetData.GetSettingValue((int)AppSetting.Statement_Show_Table_Boarders)?.Value;
                 return value.Equals("true") ? true : false;
 
             }
@@ -352,6 +352,17 @@ namespace SmartHelper
 
             }
         }
+
+        public static byte[] CompanyLogo
+        {
+            get
+            {
+               return GetData.CompanyLogo();
+                
+
+            }
+        }
+
 
 
         public static string UserRole

@@ -11,20 +11,18 @@ namespace SmartReporting
 {
     public class ReportingUtilities
     {
+        static string MigraDocFilenameFromByteArray(byte[] image)
+        {
+            return "base64:" +
+                   Convert.ToBase64String(image);
+        }
         public static Image PrintHeaderLogo(Section section)
         {
 
-       
-        
-        // Put a logo in the header
-            string imagePath =UtilityService.ReportLogo;
-           
+
+            // Put a logo in the header
+            string imagePath = MigraDocFilenameFromByteArray(UtilityService.CompanyLogo);
             Image image = section.Headers.Primary.AddImage(imagePath);
-            if (image.Height.IsEmpty)
-            {
-              imagePath= AppDomain.CurrentDomain.BaseDirectory +"SmartLogo.PNG";
-              image = section.Headers.Primary.AddImage(imagePath);
-            }
             image.Height = "1.5cm";
             image.LockAspectRatio = true;
             image.RelativeVertical = RelativeVertical.Line;
@@ -54,7 +52,7 @@ namespace SmartReporting
 
             paragraph.Format.SpaceBefore = "2cm";
             paragraph.Format.Font.Size = 8;
-           // paragraph.Format.Font.ApplyFont(new Font("Lucida Handwriting"));
+            // paragraph.Format.Font.ApplyFont(new Font("Lucida Handwriting"));
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.AddText("");
             paragraph.AddLineBreak();
@@ -123,7 +121,7 @@ namespace SmartReporting
             catch (Exception e)
             {
 
-              //  ErrorLog.Log(e, ErrorSource.Reporting);
+                //  ErrorLog.Log(e, ErrorSource.Reporting);
             }
 
 

@@ -21,7 +21,18 @@ namespace SmartLogic
             Company Company = await FindCompany(id);
 
             if (DatabaseAction.Remove == action)
+            {
+                if (Company.IsDefault)
+                {
+                    var companies = _context.Companies.Where(c => c.CompanyID != id);
+                    var newDefaultCompany = companies.FirstOrDefault();
+                    newDefaultCompany.IsDefault = true;
+                    _context.SaveChanges();
+
+                }
                 _context.Companies.Remove(Company);
+
+            }
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
                 Company.IsActive = DatabaseAction.Deactivate == action ? false : true;
@@ -57,7 +68,7 @@ namespace SmartLogic
             Company company = _context.Companies.Where(r => r.IsDefault)
                .AsNoTracking().FirstOrDefault();
             if (UtilityService.IsNull(company))
-               Company.IsDefault = true;
+                Company.IsDefault = true;
 
             else
             {
@@ -96,9 +107,9 @@ namespace SmartLogic
                 {
                     try
                     {
-                       
-                        var defaultCompany = _context.Companies.Where(s => s.IsDefault && s.CompanyID!=Company.CompanyID).FirstOrDefault();
-                        if(UtilityService.IsNotNull(defaultCompany))
+
+                        var defaultCompany = _context.Companies.Where(s => s.IsDefault && s.CompanyID != Company.CompanyID).FirstOrDefault();
+                        if (UtilityService.IsNotNull(defaultCompany))
                         {
 
                             defaultCompany.IsDefault = false;
@@ -113,6 +124,7 @@ namespace SmartLogic
 
                 }
             }
+            company.CompanyLogo = Company.CompanyLogo;
             company.Code = Company.Code;
             company.IsActive = Company.IsActive;
             company.Name = Company.Name;

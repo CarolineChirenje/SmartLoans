@@ -74,6 +74,19 @@ namespace SmartHelper
 
         }
 
+        public static byte[] CompanyLogo()
+        {
+            byte[] logo;
+
+            string sqlCustomSetting = "SELECT TOP 1 c.CompanyLogo FROM Companies c WHERE c.IsDefault=1;";
+            using (IDbConnection db = new SqlConnection(SSDBConnection))
+            {
+                logo = db.Query<byte[]>(sqlCustomSetting).SingleOrDefault();
+            }
+
+            return logo;
+
+        }
         public static string SSDBConnectionValue()
         {
             IConfiguration _configuration;

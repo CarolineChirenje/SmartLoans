@@ -1327,14 +1327,7 @@
     </div>
 </div>
 <script>
-    var futureDate = new Date();
-    futureDate.setDate(futureDate.getDate() + 60);
-    var previousDate = new Date();
-    previousDate.setDate(previousDate.getDate() - 60);
-    document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
-    document.getElementById('DueDate').value = new Date().toISOString().substring(0, 10);
-    document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
-    document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
+   
 
     $(document).ready(function () {
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -1344,6 +1337,14 @@
         if (activeTab) {
             $('#myTab a[href="' + activeTab + '"]').tab('show');
         }
+        var futureDate = new Date();
+        futureDate.setDate(futureDate.getDate() + 60);
+        var previousDate = new Date();
+        previousDate.setDate(previousDate.getDate() - 60);
+        document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
+        document.getElementById('DueDate').value = new Date().toISOString().substring(0, 10);
+        document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
+        document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
     });
 
 </script>

@@ -1,4 +1,5 @@
-﻿@using SmartHelper;
+﻿@model SmartDomain.Company
+@using SmartHelper;
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -14,24 +15,24 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" action="AddCompany">
+        <form class="form-horizontal" method="post" action="AddCompany" enctype="multipart/form-data">
 
             @if (ViewData["Error"] != null)
-        {<div class="container">
-                <div class="text-danger">@ViewData["Error"].ToString()</div>
-            </div>
-        }
+            {<div class="container">
+                    <div class="text-danger">@ViewData["Error"].ToString()</div>
+                </div>
+            }
 
             @if (ViewData["Success"] != null)
-        {<div class="container">
-                <div class="text-success">@ViewData["Success"].ToString()</div>
-            </div>
-        }
+            {<div class="container">
+                    <div class="text-success">@ViewData["Success"].ToString()</div>
+                </div>
+            }
             @if (ViewData["Warning"] != null)
-        {<div class="container">
-                <div class="text-warning">@ViewData["Warning"].ToString()</div>
-            </div>
-        }
+            {<div class="container">
+                    <div class="text-warning">@ViewData["Warning"].ToString()</div>
+                </div>
+            }
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
@@ -59,7 +60,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Active Status</label>
                     <div class="checkbox">
                         <label class="checkbox-inline">
                             <input type="checkbox" data-val="true" id="IsActive"
@@ -67,13 +68,19 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Logo</label>
+                    <input type="file" name="CompanyLogo" id="CompanyLogo" accept=".png" />
+
+                </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Company" asp-action="Companies">Cancel</a>
                 @if (UtilityService.HasPermission(Permissions.Add_Company))
                 {
-                <button type="submit" class="btn btn-info pull-right">Create</button>
+                    <button type="submit" class="btn btn-info pull-right">Create</button>
                 }
             </div>
             <!-- /.box-footer -->
@@ -81,3 +88,14 @@
     </div>
     <!-- /.box -->
 </section>
+
+@section scripts{
+    <script type="text/javascript">
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}  

@@ -13,6 +13,7 @@ namespace SmartDomain
         public string Name { get; set; }
         public bool IsDefault { get; set; }
         public bool IsActive { get; set; }
+        public byte[] CompanyLogo { get; set; }
         public virtual List<Product> CompanyProducts { get; set; }
 
 

@@ -527,8 +527,8 @@ namespace SmartDataAccess
                 },
                 new SmartDomain.CustomSetting()
                 {
-                    CustomSettingID = (int)AppSetting.Statement_Hide_Table_Boarders,
-                    Name = AppSetting.Statement_Hide_Table_Boarders.ToString().Replace("_", " "),
+                    CustomSettingID = (int)AppSetting.Statement_Show_Table_Boarders,
+                    Name = AppSetting.Statement_Show_Table_Boarders.ToString().Replace("_", " "),
                     Value="true",
                     Description="Determines if table borders will be shown on the report ",
                     CustomVariableTypeID=(int)VariableType.Boolean,
