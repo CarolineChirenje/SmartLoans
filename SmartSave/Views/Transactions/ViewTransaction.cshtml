@@ -64,13 +64,14 @@
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Client Details</label>
-                    <div class="col-sm-10
-                         @if (UtilityService.HasPermission(Permissions.View_Client)) {<a asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">@Model.Client.ClientRef</a>
-                         }
-                         else
-                         {
-                            <input type="text" class="form-control" disabled="disabled" value="@Model.Client.ClientRef">
-                         }
+                    <div class="col-sm-10">
+                        @if (UtilityService.HasPermission(Permissions.View_Client))
+                        {<a asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">@Model.Client.ClientRef</a>
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" disabled="disabled" value="@Model.Client.ClientRef">
+                    }
                     </div>
                 </div>
                 <div class="form-group">
@@ -108,13 +109,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Discount</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Discount" disabled="disabled" value="@Model.Discount ">
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Total Paid</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="TotalPaid" disabled="disabled" value="@Model.TotalPaid">
@@ -147,50 +141,15 @@
 
                 @{
 
-                    switch ((TransactionTypeList)Model.TransactionTypeID)
+                    int transactionTypeID = (int)TransactionTypeList.Reversal;
+                    if (UtilityService.HasPermission(Permissions.Reverse_Payment))
                     {
-                        case TransactionTypeList.Payment:
-                            int transactionTypeID = (int)TransactionTypeList.Reversal;
-                            if (UtilityService.HasPermission(Permissions.Reverse_Payment))
-                            {
-                                if (Model.PaymentStatusID != (int)PaymentState.Reversed)
-                                {
-                                    <a class="btn btn-danger" asp-controller="Transactions" asp-action="ActionTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Reverse Transaction</a>
-                                }
-                            }
-                            @*transactionTypeID = (int)TransactionTypeList.Void;
-                        if (Model.PaymentStatusID != (int)PaymentState.Pending)
+                        if (Model.PaymentStatusID != (int)PaymentState.Reversed)
                         {
-                            if (UtilityService.HasPermission(Permissions.Void_Payment))
-                            {
-                                <a class="btn btn-warning" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Void Transaction</a>
-                            }
-
+                            <a class="btn btn-danger" asp-controller="Transactions" asp-action="ActionTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Reverse Transaction</a>
                         }
-                        transactionTypeID = (int)TransactionTypeList.Refund;
-                        if (Model.PaymentStatusID != (int)PaymentState.Pending)
-                        {
-                            if (UtilityService.HasPermission(Permissions.Refund_Payment))
-                            {
-                                <a class="btn btn-success" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Refund Transaction</a>
-                            }
-                        }*@
-                            break;
-                        @*case TransactionTypeList.Reversal:
-                        break;
-                    case TransactionTypeList.Refund:
-                        transactionTypeID = (int)TransactionTypeList.Void;
-                        if (UtilityService.HasPermission(Permissions.Void_Payment))
-                        {
-                            <a class="btn btn-warning" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Void Transaction</a>
-                        }
-                        break;
-                    case TransactionTypeList.Void:
-                        break;*@
-                        default:
-                            break;
-
                     }
+
                 }
 
                 <a class="btn btn-primary" asp-controller="Transactions" asp-action="PrintTransaction" asp-route-id="@Model.TransactionID">Generate PDF</a>

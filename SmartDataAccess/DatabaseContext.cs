@@ -138,6 +138,8 @@ namespace SmartDataAccess
            Data.GetRoleMenus());
 
 
+            modelBuilder.Entity<TransactionStatus>().HasData(
+           Data.GetTransactionStatus());
             
 
 
@@ -151,6 +153,7 @@ namespace SmartDataAccess
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
         public DbSet<TransactionType> TransactionType { get; set; }
+        public DbSet<TransactionStatus> TransactionStatus { get; set; }
         public DbSet<Client> Clients { get; set; }
 
         public DbSet<ClientCourse> ClientCourses { get; set; }

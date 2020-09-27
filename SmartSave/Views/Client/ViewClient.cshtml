@@ -286,7 +286,7 @@
                                                             <td>@Html.DisplayFor(modelItem => item.ContactType.Name)</td>
                                                             @if (UtilityService.HasPermission(Permissions.View_Client_Contact))
                                                             {
-                                                                <td><a target="_blank" asp-controller="Client" asp-action="ViewContact" asp-route-id="@item.ClientContactID">@item.ContactPerson</a></td>
+                                                                <td><a  asp-controller="Client" asp-action="ViewContact" asp-route-id="@item.ClientContactID">@item.ContactPerson</a></td>
                                                             }
                                                             else
                                                             {
@@ -346,7 +346,7 @@
 
                                                             }
 
-                                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewClientProduct" asp-route-id="@item.ClientProductID">@item.Product.Name</a></td>
+                                                            <td><a asp-controller="Client" asp-action="ViewClientProduct" asp-route-id="@item.ClientProductID">@item.Product.Name</a></td>
                                                             <td>@dateRegistered</td>
                                                             <td>@activeStatus</td>
                                                             <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
@@ -399,7 +399,7 @@
 
                                                             }
 
-                                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewClientCourse" asp-route-id="@item.ClientCourseID">@item.Course.Title</a></td>
+                                                            <td><a asp-controller="Client" asp-action="ViewClientCourse" asp-route-id="@item.ClientCourseID">@item.Course.Title</a></td>
                                                             <td>@dateRegistered</td>
                                                             <td>@sessions</td>
                                                             <td>@status</td>
@@ -470,7 +470,7 @@
                                                             <td>@Html.DisplayFor(modelItem => item.UploadedBy)</td>
                                                             <td>@duedate</td>
 
-                                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewClientNote" asp-route-id="@item.ClientNoteID">@item.Comment</a> </td>
+                                                            <td><a  asp-controller="Client" asp-action="ViewClientNote" asp-route-id="@item.ClientNoteID">@item.Comment</a> </td>
                                                             <td>@closedDate</td>
                                                             <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
                                                             <td>@LastChangedDate</td>
@@ -517,7 +517,7 @@
                                                     foreach (var item in Model.ClientMedicalDetails)
                                                     {
                                                         <tr>
-                                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewMedicalDetail" asp-route-id="@item.ClientMedicalID">@item.Doctor</a></td>
+                                                            <td><a asp-controller="Client" asp-action="ViewMedicalDetail" asp-route-id="@item.ClientMedicalID">@item.Doctor</a></td>
                                                             <td>@Html.DisplayFor(modelItem => item.Telephone)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.MedicalAid)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.MedicalAidNo)</td>
@@ -602,6 +602,7 @@
 
                                                     <th>Amount</th>
                                                     <th>Payment Status</th>
+                                                    <th>Payment Date</th>
                                                     <th>Transaction Date</th>
 
                                                 </tr>
@@ -609,23 +610,26 @@
                                             <tbody>
                                                 @if (Model.ClientPayments != null)
                                                 {
-                                                    @foreach (var item in Model.ClientPayments)
+                                                    var payments = Model.ClientPayments.OrderByDescending(c => c.TransactionDate);
+                                                    @foreach (var item in payments)
                                                     {
-                                                        <tr>
-                                                            @{
-                                                                string transactiondate = UtilityService.ShowDateTime(item.TransactionDate);
+                                                <tr>
+                                                    @{
+                                                        string transactiondate = UtilityService.ShowDateTime(item.TransactionDate);
+                                                        string paymentdate = UtilityService.ShowDate(item.PaymentDate);
 
-                                                            }
 
-                                                            <td><a target="_blank" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
-                                                            <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.TransactionType.TransType)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
+                                                    }
 
-                                                            <td>@Html.DisplayFor(modelItem => item.PaymentStatus.Name)</td>
-                                                            <td>@transactiondate</td>
+                                                    <td><a target="_blank" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
+                                                    <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.TransactionType.TransType)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
 
-                                                        </tr>
+                                                    <td>@Html.DisplayFor(modelItem => item.PaymentStatus.Name)</td>
+                                                    <td>@paymentdate</td>
+                                                    <td>@transactiondate</td>
+                                                </tr>
                                                     }
                                                 }
                                         </table>
@@ -712,7 +716,7 @@
                                                     {
                                                         var isMainGuarantor = UtilityService.ShowYesOrNo(item.IsMainGuarantor);
                                                         <tr>
-                                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewClientGuarantor" asp-route-id="@item.ClientGuarantorID" asp-route-Clientid="@Model.ClientID">@item.GuarantorFullName</a></td>
+                                                            <td><a  asp-controller="Client" asp-action="ViewClientGuarantor" asp-route-id="@item.ClientGuarantorID" asp-route-Clientid="@Model.ClientID">@item.GuarantorFullName</a></td>
                                                             <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
 
                                                             <td>@Html.DisplayFor(modelItem => item.GuarantorContacts)</td>
@@ -764,7 +768,7 @@
                                                     @{
                                                         string gender = ((GenderOrientation)item.GenderID).ToString();
                                                     }
-                                                    <td><a target="_blank" asp-controller="Client" asp-action="ViewClientDependent" asp-route-id="@item.ClientDependentID" asp-route-Clientid="@Model.ClientID">@item.FullName</a> </td>
+                                                    <td><a asp-controller="Client" asp-action="ViewClientDependent" asp-route-id="@item.ClientDependentID" asp-route-Clientid="@Model.ClientID">@item.FullName</a> </td>
                                                     <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
                                                     <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
                                                     <td>@gender</td>

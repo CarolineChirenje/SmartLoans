@@ -237,7 +237,7 @@ namespace SmartDataAccess
                },
                  new Menu()
                 {
-                    MenuID = 10.,
+                    MenuID = 10,
                     MenuGroupID = (int)MenuGroups.Administration,
                     DisplayName = "Documents",
                     ControllerName = "DocumentType",
@@ -348,7 +348,7 @@ namespace SmartDataAccess
                 },
                  new Menu()
                 {
-                    MenuID = 19,
+                    MenuID = 18,
                     MenuGroupID = (int)MenuGroups.Employees,
                     DisplayName = "My Account",
                     ControllerName = "Client",
@@ -356,6 +356,20 @@ namespace SmartDataAccess
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-users-user"),
                     OrderNo = 0,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                  new Menu()
+                {
+                    MenuID = 19,
+                    MenuGroupID = (int)MenuGroups.Accounting,
+                    DisplayName = "Transaction Types",
+                    ControllerName = "TransactionType",
+                    ActionName = "TransactionType",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-money"),
+                    OrderNo = 19,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 

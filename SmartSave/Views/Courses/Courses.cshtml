@@ -28,41 +28,40 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Credits</th>
                                 <th>Sessions</th>
-                                <th>Is Status</th>
+                                <th>Is Active</th>
 
                                 <th>Last Changed Date</th>
                                 <th>Last Changed By</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
 
-                            <tr>
-                                @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
-                                    string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                    string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
-                                    int sessionCount = item.CourseOutlines == null ? 0 : item.CourseOutlines.Count();
-                                }
-                                @if (UtilityService.HasPermission(Permissions.Update_Document_Type))
-                                {
-                                    <td><a asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseID">@item.Title</a></td>
-                                }
-                                else
-                                {
+                                <tr>
+                                    @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                        string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                        string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
+                                        int sessionCount = item.CourseOutlines == null ? 0 : item.CourseOutlines.Count();
+                                    }
+                                    @if (UtilityService.HasPermission(Permissions.Update_Document_Type))
+                                    {
+                                        <td><a asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseID">@item.Title</a></td>
+                                    }
+                                    else
+                                    {
 
-                                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                                }
-                                <td>@Html.DisplayFor(modelItem => item.Credits)</td>
-                                <td>@sessionCount</td>
-                                <td>@activeStatus</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                    }
+                                    
+                                    <td>@sessionCount</td>
+                                    <td>@activeStatus</td>
 
-                                <td>@dateCreated</td>
-                                <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-                             </tr>
+                                    <td>@dateCreated</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                </tr>
                             }
                     </table>
                 </div>
@@ -73,7 +72,7 @@
                     {
                         <a class="btn btn-success pull-right" asp-controller="Courses" asp-action="AddCourse">New</a><br />
                     }
-                    </div>
+                </div>
             </div>
             <!-- /.box -->
         </div>
@@ -90,5 +89,5 @@
     $(function () {
         $('#example1').DataTable();
     });
-  
+
 </script>

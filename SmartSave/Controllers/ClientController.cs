@@ -496,7 +496,7 @@ namespace SmartSave.Controllers
                 Client Client = await _service.FindClient(payment.ClientID);
                 payment.Client = Client;
 
-                if (await (_paymentService.CreatePayment(payment, TransactionTypeList.Payment)) == 0)
+                if (await (_paymentService.CreatePayment(payment, (TransactionTypeList)payment.TransactionTypeID)) == 0)
                 {
                     ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClient", new { id = payment.ClientID });

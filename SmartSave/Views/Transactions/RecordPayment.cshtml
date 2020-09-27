@@ -107,13 +107,13 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Pay Amount</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" name="Amount">
+                        <input type="number" step="any" class="form-control" name="Amount">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">VAT</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="VAT" disabled="disabled" value="0.00">
+                        <input type="text"  class="form-control" name="VAT" disabled="disabled" value="0.00">
                     </div>
                 </div>
 
@@ -140,3 +140,13 @@
     </div>
     <!-- /.box -->
 </section>
+<script>
+   
+
+    $(document).ready(function () {
+
+        document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
+
+    });
+
+</script>

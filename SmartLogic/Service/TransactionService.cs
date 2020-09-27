@@ -16,18 +16,23 @@ namespace SmartLogic
         private readonly DatabaseContext _context;
 
         public TransactionService(DatabaseContext context) => _context = context;
+
+        TransactionState GetTransactionState(int TransactionTypeID)
+        {
+            var transactionType = _context.TransactionType.Find(TransactionTypeID);
+            TransactionState transactionState = (TransactionState)transactionType.TransactionStatusID;
+            return transactionState;
+        }
         public async Task<int> CreatePayment(Transaction PaymentsFile, TransactionTypeList transaction)
         {
+            TransactionState transactionState = GetTransactionState(PaymentsFile.TransactionTypeID);
+            decimal VATAmount = 0m;
+            decimal AmountExclVat = 0m;
+            decimal AmountInclVat = 0m;
             PaymentsFile.Year = DateTime.Now.Year;
             PaymentsFile.Month = DateTime.Now.Month;
             PaymentsFile.TransactionDate = DateTime.Now;
-            switch (transaction)
-            {
-                case TransactionTypeList.Payment:
-                case TransactionTypeList.Purchase:
-                case TransactionTypeList.Receipts:
-                case TransactionTypeList.Sales:
-                case TransactionTypeList.Recon:
+         
                     string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage).Value;
                     decimal _vatPercentage = 0;
                     try
@@ -41,20 +46,24 @@ namespace SmartLogic
                     }
                     if (UtilityService.PaymentsMustBeVatInclusive)
                     { // total paid will include VAT
-                        decimal _discountInclusiveTotal = PaymentsFile.TotalPaid + PaymentsFile.Discount;
-                        PaymentsFile.VAT = PaymentsFile.TotalPaid * _vatPercentage;
-                        PaymentsFile.AmountExclVAT = PaymentsFile.TotalPaid - PaymentsFile.VAT;
-                        PaymentsFile.Amount = _discountInclusiveTotal;
+                        VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
+                        AmountExclVat = PaymentsFile.TotalPaid - PaymentsFile.VAT;
+                        AmountInclVat = PaymentsFile.TotalPaid;
+                        PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
+                        PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
+                        PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1);
 
                     }
                     else
                     {
 
                         // total paid is VAT exclusive so we need to calculate total with VAT
-                        PaymentsFile.VAT = PaymentsFile.TotalPaid * _vatPercentage;
-                        decimal _VATInclusiveTotal = PaymentsFile.VAT + PaymentsFile.TotalPaid;
-                        PaymentsFile.AmountExclVAT = PaymentsFile.TotalPaid;
-                        PaymentsFile.Amount = _VATInclusiveTotal + PaymentsFile.Discount;
+                        VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
+                        AmountInclVat = PaymentsFile.VAT + PaymentsFile.TotalPaid;
+                        AmountExclVat = PaymentsFile.TotalPaid;
+                        PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
+                        PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
+                        PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1); ;
                     }
                     PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(PaymentsFile.Client.AccountNumber.ToString());
                     PaymentsFile.TransactionTypeID = (int)transaction;
@@ -63,87 +72,58 @@ namespace SmartLogic
                     PaymentsFile.LastChangedDate = DateTime.Now;
                     _context.Add(PaymentsFile);
 
-                    break;
-            
-                 
-                default:
-                    break;
-            }
-            return (await _context.SaveChangesAsync());
+            return await _context.SaveChangesAsync();
         }
 
-
-        void UpdatePayment(Transaction PaymentsFile, TransactionTypeList transaction)
+        public async Task<int> ReversePayment(Transaction PaymentsFile, TransactionTypeList transaction)
         {// create a duplicate negative payment with  new transactions
             int transactionID = PaymentsFile.TransactionID;
-            int oldPaymentStatus = 0;
+            int oldPaymentStatus = (int)PaymentState.Reversed;
 
-            //if (transaction == TransactionTypeList.Void)
-            //{
+                         try
+            {
 
-            //    oldPaymentStatus = (int)PaymentState.Pending;
-            //    updateOldPayment(transactionID, oldPaymentStatus);
-            //}
-
-            //else
-            //{
-
-                switch (transaction)
+                TransactionState transactionState = GetTransactionState(PaymentsFile.TransactionTypeID);
+                // with reversal if the transaction was a positive it becomes a negative and negative becomes positive
+                decimal VATAmount = 0m;
+                decimal AmountExclVat = 0m;
+                decimal AmountInclVat = 0m;
+                VATAmount = PaymentsFile.VAT;
+                AmountExclVat = PaymentsFile.AmountExclVAT;
+                AmountInclVat = PaymentsFile.Amount;
+                Transaction newPaymentFile = new Transaction
                 {
+                    TransRef = UtilityService.GenerateTransactionRef(PaymentsFile.Client.AccountNumber),
+                    ClientID = PaymentsFile.ClientID,
+                    ProductID = PaymentsFile.ProductID,
+                    PaymentDate = DateTime.Now,
+                    TransactionDate = DateTime.Now,
+                    Year = DateTime.Now.Year,
+                    Month = DateTime.Now.Month,
+                    Amount = (TransactionState.Positive == transactionState) ? (AmountInclVat * -1) : AmountInclVat,
+                    VAT = (TransactionState.Positive == transactionState) ? (VATAmount * -1) : VATAmount,
+                    AmountExclVAT = (TransactionState.Positive == transactionState) ? (AmountExclVat * -1) : AmountExclVat,
+                    ParentPaymentID = transactionID,
+                    LastChangedBy = UtilityService.CurrentUserName,
+                    LastChangedDate = DateTime.Now,
+                    TransactionTypeID = (int)transaction,
+                    PaymentStatusID = (int)PaymentState.Paid,
+                    BankAccountID = PaymentsFile.BankAccountID
+                };
+                _context.Add(newPaymentFile);
 
-                    case TransactionTypeList.Reversal:
-                        oldPaymentStatus = (int)PaymentState.Reversed;
+                updateOldPayment(transactionID, oldPaymentStatus);
 
-                        break;
-                    //case TransactionTypeList.Refund:
-                    //    oldPaymentStatus = (int)PaymentState.Refunded;
+            }
+            catch (Exception ex)
+            {
 
-                    //    break;
-
-                    //case TransactionTypeList.Discount:
-                    //    oldPaymentStatus = (int)PaymentState.Discounted;
-
-                   //     break;
-                    default:
-                        break;
-                }
-                oldPaymentStatus = (int)PaymentState.Reversed;
-                try
-                {
-                    Transaction newPaymentFile = new Transaction
-                    {
-                        TransRef = UtilityService.GenerateTransactionRef(PaymentsFile.Client.AccountNumber),
-                        ClientID = PaymentsFile.ClientID,
-                        ProductID = PaymentsFile.ProductID,
-                        PaymentDate = DateTime.Now,
-                        TransactionDate = DateTime.Now,
-                        Year = DateTime.Now.Year,
-                        Month = DateTime.Now.Month,
-                        Amount = PaymentsFile.Amount * -1,
-                        VAT = PaymentsFile.VAT * -1,
-                        AmountExclVAT = PaymentsFile.AmountExclVAT * -1,
-                        Discount = PaymentsFile.Discount * -1,
-                        ParentPaymentID = transactionID,
-                        LastChangedBy = UtilityService.CurrentUserName,
-                        LastChangedDate = DateTime.Now,
-                        TransactionTypeID = (int)transaction,
-                        PaymentStatusID = (int)PaymentState.Paid,
-                        BankAccountID = PaymentsFile.BankAccountID
-                    };
-                    _context.Add(newPaymentFile);
-
-                    updateOldPayment(transactionID, oldPaymentStatus);
-
-                }
-                catch (Exception ex)
-                {
-
-                    throw;
-                }
+                throw;
+            }
 
             //}
 
-
+            return await _context.SaveChangesAsync();
         }
 
 
@@ -175,6 +155,7 @@ namespace SmartLogic
              .Include(p => p.Product)
                            .Include(p => p.PaymentStatus)
               .Include(p => p.TransactionType)
+               .ThenInclude(p => p.TransactionStatus)
               .Include(p => p.BankAccount)
              .OrderByDescending(t => t.TransactionDate)
              .AsNoTracking()
@@ -187,6 +168,7 @@ namespace SmartLogic
              .Include(p => p.Product)
                         .Include(p => p.PaymentStatus)
               .Include(p => p.TransactionType)
+              .ThenInclude(p => p.TransactionStatus)
                .Include(p => p.BankAccount)
              .AsNoTracking()
              .ToListAsync();
@@ -197,9 +179,10 @@ namespace SmartLogic
             .Include(p => p.Client)
              .Include(p => p.Client)
              .Include(p => p.Product)
-                           .Include(p => p.PaymentStatus)
+             .Include(p => p.PaymentStatus)
              .Include(p => p.TransactionType)
-              .Include(p => p.BankAccount)
+             .ThenInclude(p => p.TransactionStatus)
+             .Include(p => p.BankAccount)
             .Where(p => p.TransactionDate.Date == DateTime.Now.Date)
             .AsNoTracking()
             .LongCountAsync();
@@ -215,11 +198,12 @@ namespace SmartLogic
              .Include(p => p.Product)
              .Include(p => p.PaymentStatus)
              .Include(p => p.TransactionType)
+             .ThenInclude(p => p.TransactionStatus)
              .Include(p => p.BankAccount)
             .Where(t => t.TransactionID == TransactionID).FirstOrDefaultAsync();
         }
 
 
-      
+
     }
 }

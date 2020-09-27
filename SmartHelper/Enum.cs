@@ -26,6 +26,13 @@ namespace SmartHelper
         Friday,
         Saturday
     }
+
+    public enum TransactionState
+    {
+        Positive = 1,
+        Negative,
+        
+    }
     public enum DatabaseAction
     {
         Remove = 1,
@@ -757,7 +764,10 @@ namespace SmartHelper
 
 
         View_Dashboard_Notices,
-        Client_Update_Personal_Details
+        Client_Update_Personal_Details,
+        Update_Transaction_Type,
+        View_Transaction_Type,
+        
     }
 
 

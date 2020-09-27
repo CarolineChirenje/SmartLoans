@@ -14,6 +14,7 @@ using System.IO;
 using SmartReporting;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
+using System.Collections.Generic;
 
 namespace SmartSave.Controllers
 {
@@ -33,9 +34,11 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Transactions()
         {
-            return View(await _service.Transactions());
+            List<Transaction> transactions = await _service.Transactions();
+            List<Transaction> _transactions = transactions.OrderByDescending(t => t.TransactionDate).ToList();
+            return View(_transactions);
         }
-       
+
 
         public IActionResult RecordPayment()
         {
@@ -48,8 +51,8 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             if (ModelState.IsValid)
             {
-               Client Client= await  _ClientService.FindClient(0,paymentsFile.AccountNumber.Trim());
-                if(!UtilityService.IsNotNull(Client))
+                Client Client = await _ClientService.FindClient(0, paymentsFile.AccountNumber.Trim());
+                if (!UtilityService.IsNotNull(Client))
                     return RedirectToAction(nameof(Transactions));
                 Transaction addPaymentsFile = new Transaction()
                 {
@@ -57,17 +60,16 @@ namespace SmartSave.Controllers
                     Month = paymentsFile.Month,
                     Amount = paymentsFile.Amount,
                     ClientID = Client.ClientID,
-                    Client=Client,
+                    Client = Client,
                     ProductID = paymentsFile.ProductID,
                     PaymentDate = paymentsFile.PaymentDate,
                     PaymentStatusID = (int)PaymentState.Paid,
                     TransactionDate = DateTime.Now,
-                    Discount = paymentsFile.Discount,
                     ParentPaymentID = paymentsFile.ParentPaymentID,
                     LastChangedBy = UtilityService.CurrentUserName,
                     LastChangedDate = DateTime.Now,
-                    BankAccountID=paymentsFile.BankAccountID,
-                    TransactionTypeID=paymentsFile.TransactionTypeID
+                    BankAccountID = paymentsFile.BankAccountID,
+                    TransactionTypeID = paymentsFile.TransactionTypeID
 
                 };
 
@@ -77,7 +79,7 @@ namespace SmartSave.Controllers
                     return View(paymentsFile);
 
                 }
-               
+
             }
             if (paymentsFile.IsFromClient)
                 return RedirectToAction("ViewClient", "Client", new { id = paymentsFile.ClientID });
@@ -94,16 +96,18 @@ namespace SmartSave.Controllers
             return View(transaction);
         }
 
-       
+
         [HttpGet]
         public async Task<IActionResult> ActionTransaction(int id, int transactionTypeID)
         {
             Transaction paymentsFile = await (_service.PaymentFile(id));
             if (UtilityService.IsNotNull(paymentsFile))
             {
-                if (await (_service.CreatePayment(paymentsFile, (TransactionTypeList)transactionTypeID)) == 0)
+                if (await (_service.ReversePayment(paymentsFile, (TransactionTypeList)transactionTypeID)) == 0)
+                {
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("ViewTransaction", new { paymentsFile.TransactionID });
+                    return RedirectToAction("ViewTransaction", new { paymentsFile.TransactionID });
+                }
             }
             return RedirectToAction(nameof(Transactions));
         }
@@ -122,7 +126,7 @@ namespace SmartSave.Controllers
 
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    Document document = printOut.Print(transaction); 
+                    Document document = printOut.Print(transaction);
                     PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
                     pdfRenderer.Document = document;
                     pdfRenderer.RenderDocument();
@@ -165,10 +169,10 @@ namespace SmartSave.Controllers
             var transactionTypeList = _settingService.GetActiveTransactionTypeList().Select(t => new
             {
                 t.TransactionTypeID,
-               Name= t.TransType,
+                Name = t.TransType,
             }).OrderBy(t => t.Name);
 
-            ViewBag.TransactionTypeList  = new SelectList(transactionTypeList, "TransactionTypeID", "Name",(int)TransactionTypeList.Payment);
+            ViewBag.TransactionTypeList = new SelectList(transactionTypeList, "TransactionTypeID", "Name", (int)TransactionTypeList.Payment);
 
         }
     }

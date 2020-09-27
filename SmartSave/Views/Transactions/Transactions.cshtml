@@ -38,8 +38,9 @@
                                     <th>Trans Ref</th>
                                     <th>Product</th>
                                     <th>Transaction Type</th>
-                                                                        <th>Amount</th>
+                                    <th>Amount</th>
                                     <th>Payment Status</th>
+                                    <th>Payment Date</th>
                                     <th>Transaction Date</th>
                                 </tr>
                             </thead>
@@ -49,6 +50,7 @@
                                 <tr>
                                     @{
                                         string transactiondate = UtilityService.ShowDateTime(item.TransactionDate);
+                                        string paymentdate = UtilityService.ShowDate(item.PaymentDate);
 
                                     }
                                     @if (UtilityService.HasPermission(Permissions.View_Payment))
@@ -64,6 +66,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
 
                                     <td>@Html.DisplayFor(modelItem => item.PaymentStatus.Name)</td>
+                                    <td>@paymentdate</td>
                                     <td>@transactiondate</td>
 
                                 </tr>

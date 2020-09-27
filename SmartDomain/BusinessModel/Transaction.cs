@@ -31,12 +31,9 @@ namespace SmartDomain
         public decimal AmountExclVAT { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal VAT { get; set; }
-        [DefaultValue(0)]
+        
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Discount { get; set; }
-
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal TotalPaid { get { return Amount + Discount; } }
+        public decimal TotalPaid { get { return Amount; } }
         public DateTime PaymentDate { get; set; }
         public DateTime TransactionDate { get; set; }
         public int? ParentPaymentID { get; set; }

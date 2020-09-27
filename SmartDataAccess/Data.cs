@@ -998,6 +998,7 @@ namespace SmartDataAccess
                     TransactionTypeID = (int)x.ID,
                     Name = x.Name.Replace("_", " "),
                     Code = ((TransactionTypeList)x.ID).DescriptionAttr(),
+                    TransactionStatusID=(int)TransactionState.Positive,
                     IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -1206,6 +1207,27 @@ namespace SmartDataAccess
 
             }
             return bankAccountTypes.ToArray();
+
+        }
+
+        public static TransactionStatus[] GetTransactionStatus()
+        {
+
+            List<TransactionStatus> transactions = new List<TransactionStatus>();
+            var transState = from TransactionState s in Enum.GetValues(typeof(TransactionState))
+                               select new { ID = s, Name = s.ToString() };
+
+            foreach (var x in transState)
+            {
+                transactions.Add(new TransactionStatus()
+                {
+                    TransactionStatusID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                  
+                });
+
+            }
+            return transactions.ToArray();
 
         }
         public static Currency[] GetCurrencies()

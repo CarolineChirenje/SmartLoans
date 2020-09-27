@@ -56,7 +56,7 @@ namespace SmartSave
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IDocumentTypeService, DocumentTypeService>();
             services.AddScoped<ICustomSettingsService, CustomSettingsService>();
-           
+            services.AddScoped<ITransactionTypeService, TransactionTypeService>();
             services.AddScoped<IBankAccountservice, BankAccountService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<ICountryService, CountryService>();
