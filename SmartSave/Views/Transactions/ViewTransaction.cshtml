@@ -141,12 +141,11 @@
 
                 @{
 
-                    int transactionTypeID = (int)TransactionTypeList.Reversal;
                     if (UtilityService.HasPermission(Permissions.Reverse_Payment))
                     {
                         if (Model.PaymentStatusID != (int)PaymentState.Reversed)
                         {
-                            <a class="btn btn-danger" asp-controller="Transactions" asp-action="ActionTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@transactionTypeID">Reverse Transaction</a>
+                            <a class="btn btn-danger" asp-controller="Transactions" asp-action="ActionTransaction" asp-route-id="@Model.TransactionID" asp-route-transactionTypeID="@Model.TransactionTypeID">Reverse Transaction</a>
                         }
                     }
 

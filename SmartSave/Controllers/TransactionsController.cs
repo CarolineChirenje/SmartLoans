@@ -109,7 +109,10 @@ namespace SmartSave.Controllers
                     return RedirectToAction("ViewTransaction", new { paymentsFile.TransactionID });
                 }
             }
-            return RedirectToAction(nameof(Transactions));
+            //if (clientid!=0)
+            //    return RedirectToAction("ViewClient", "Client", new { id = clientid });
+            //else
+                return RedirectToAction(nameof(Transactions));
         }
 
         [HttpGet]

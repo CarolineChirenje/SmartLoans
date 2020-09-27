@@ -228,3 +228,5 @@ D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\service
 D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\ServiceDependencies\SmartSave - Web Deploy\mssql1.arm.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Properties\ServiceDependencies\SmartSave - Web Deploy\profile.arm.json
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Home\Error.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\TransactionType\TransactionType.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\TransactionType\ViewTransactionType.cshtml.g.cs

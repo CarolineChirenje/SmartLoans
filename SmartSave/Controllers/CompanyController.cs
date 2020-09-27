@@ -61,9 +61,11 @@ namespace SmartSave.Controllers
                     }
                 }
                 if (await (_service.Save(Company)) == 0)
+                {
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
-                return View(Company);
+                    return View(Company);
+                }
+                return RedirectToAction("ViewCompany", new { id = Company.CompanyID });
             }
             ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Company);
@@ -105,10 +107,12 @@ namespace SmartSave.Controllers
                         }
                     }
                     if (await (_service.Update(Company)) == 0)
+                    {
                         ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return View(Company);
+                        return View(Company);
+                    }
                 }
-                return View(Company);
+                return RedirectToAction("ViewCompany", new { id=Company.CompanyID });
             }
             ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Company);

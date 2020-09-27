@@ -133,10 +133,13 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(Client)) == 0)
+                    {
                         ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction(nameof(Clients));
+                        return View(Client);
+                    }
                 }
-                return View(Client);
+               
+                return RedirectToAction("ViewClient", new { id = Client.ClientID });
             }
             ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Client);
@@ -473,12 +476,7 @@ namespace SmartSave.Controllers
             return pdffile;
         }
 
-        //[HttpGet]
-        //public async Task<FileResult> DownloadAssignmentDocument(int id)
-        //{
-        //    ClientAssignment document = await _service.FindAssignmentDocument(id);
-        //    return File(document.FileBytes, document.FileType, document.FileName);
-        //}
+       
 
         /// <summary>
         /// Client Payment
@@ -504,6 +502,34 @@ namespace SmartSave.Controllers
 
             }
             return RedirectToAction("ViewClient", new { id = payment.ClientID });
+        }
+
+        // GET:
+        public async Task<IActionResult> ViewClientTransaction(int id)
+        {
+            GetDropDownLists();
+            if (id == 0)
+                return RedirectToAction(nameof(Clients));
+            Transaction transaction = await _paymentService.PaymentFile(id, null) ;
+            return View(transaction);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ActionTransaction(int id, int transactionTypeID, int clientid)
+        {
+            Transaction paymentsFile = await (_paymentService.PaymentFile(id));
+            if (UtilityService.IsNotNull(paymentsFile))
+            {
+                if (await (_paymentService.ReversePayment(paymentsFile, (TransactionTypeList)transactionTypeID)) == 0)
+                {
+               
+                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                  
+                }
+              
+            }
+               return RedirectToAction("ViewClient", "Client", new { id = clientid });
+           
         }
 
         public async Task<IActionResult> ViewTransaction(int id = 0)

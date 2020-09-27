@@ -32,45 +32,45 @@ namespace SmartLogic
             PaymentsFile.Year = DateTime.Now.Year;
             PaymentsFile.Month = DateTime.Now.Month;
             PaymentsFile.TransactionDate = DateTime.Now;
-         
-                    string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage).Value;
-                    decimal _vatPercentage = 0;
-                    try
-                    {
-                        _vatPercentage = decimal.Parse(_percentage, CultureInfo.InvariantCulture); ;
-                    }
-                    catch (Exception)
-                    {
 
-                        _vatPercentage = 0.15M;
-                    }
-                    if (UtilityService.PaymentsMustBeVatInclusive)
-                    { // total paid will include VAT
-                        VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
-                        AmountExclVat = PaymentsFile.TotalPaid - PaymentsFile.VAT;
-                        AmountInclVat = PaymentsFile.TotalPaid;
-                        PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
-                        PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
-                        PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1);
+            string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage).Value;
+            decimal _vatPercentage = 0;
+            try
+            {
+                _vatPercentage = decimal.Parse(_percentage, CultureInfo.InvariantCulture); ;
+            }
+            catch (Exception)
+            {
 
-                    }
-                    else
-                    {
+                _vatPercentage = 0.15M;
+            }
+            if (UtilityService.PaymentsMustBeVatInclusive)
+            { // total paid will include VAT
+                VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
+                AmountExclVat = PaymentsFile.TotalPaid - PaymentsFile.VAT;
+                AmountInclVat = PaymentsFile.TotalPaid;
+                PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
+                PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
+                PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1);
 
-                        // total paid is VAT exclusive so we need to calculate total with VAT
-                        VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
-                        AmountInclVat = PaymentsFile.VAT + PaymentsFile.TotalPaid;
-                        AmountExclVat = PaymentsFile.TotalPaid;
-                        PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
-                        PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
-                        PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1); ;
-                    }
-                    PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(PaymentsFile.Client.AccountNumber.ToString());
-                    PaymentsFile.TransactionTypeID = (int)transaction;
-                    PaymentsFile.PaymentStatusID = (int)PaymentState.Paid;
-                    PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
-                    PaymentsFile.LastChangedDate = DateTime.Now;
-                    _context.Add(PaymentsFile);
+            }
+            else
+            {
+
+                // total paid is VAT exclusive so we need to calculate total with VAT
+                VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
+                AmountInclVat = PaymentsFile.VAT + PaymentsFile.TotalPaid;
+                AmountExclVat = PaymentsFile.TotalPaid;
+                PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
+                PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
+                PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1); ;
+            }
+            PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(PaymentsFile.Client.AccountNumber.ToString());
+            PaymentsFile.TransactionTypeID = (int)transaction;
+            PaymentsFile.PaymentStatusID = (int)PaymentState.Paid;
+            PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
+            PaymentsFile.LastChangedDate = DateTime.Now;
+            _context.Add(PaymentsFile);
 
             return await _context.SaveChangesAsync();
         }
@@ -80,7 +80,7 @@ namespace SmartLogic
             int transactionID = PaymentsFile.TransactionID;
             int oldPaymentStatus = (int)PaymentState.Reversed;
 
-                         try
+            try
             {
 
                 TransactionState transactionState = GetTransactionState(PaymentsFile.TransactionTypeID);
@@ -100,17 +100,18 @@ namespace SmartLogic
                     TransactionDate = DateTime.Now,
                     Year = DateTime.Now.Year,
                     Month = DateTime.Now.Month,
-                    Amount = (TransactionState.Positive == transactionState) ? (AmountInclVat * -1) : AmountInclVat,
-                    VAT = (TransactionState.Positive == transactionState) ? (VATAmount * -1) : VATAmount,
-                    AmountExclVAT = (TransactionState.Positive == transactionState) ? (AmountExclVat * -1) : AmountExclVat,
                     ParentPaymentID = transactionID,
                     LastChangedBy = UtilityService.CurrentUserName,
                     LastChangedDate = DateTime.Now,
                     TransactionTypeID = (int)transaction,
-                    PaymentStatusID = (int)PaymentState.Paid,
+                    PaymentStatusID = (int)PaymentState.Reversed,
                     BankAccountID = PaymentsFile.BankAccountID
                 };
-                _context.Add(newPaymentFile);
+           
+                    newPaymentFile.Amount = (AmountInclVat * -1);
+                    newPaymentFile.VAT = (VATAmount * -1);
+                    newPaymentFile.AmountExclVAT = (AmountExclVat * -1);
+                              _context.Add(newPaymentFile);
 
                 updateOldPayment(transactionID, oldPaymentStatus);
 

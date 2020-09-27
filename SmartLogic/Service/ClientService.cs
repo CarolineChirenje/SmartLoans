@@ -122,6 +122,7 @@ namespace SmartLogic
                 updateClient.MobileNumber = Client.MobileNumber;
                 updateClient.DateOfBirth = Client.DateOfBirth;
                 updateClient.DepartmentID = Client.DepartmentID;
+                updateClient.GenderID = Client.GenderID;
                 updateClient.LastChangedBy = UtilityService.CurrentUserName;
                 updateClient.LastChangedDate = DateTime.Now;
                 _context.Update(updateClient);

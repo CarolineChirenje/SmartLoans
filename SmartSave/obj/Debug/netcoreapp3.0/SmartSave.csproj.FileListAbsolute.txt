@@ -146,6 +146,7 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\V
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientGuarantor.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientNote.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientProduct.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientTransaction.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewContact.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewMedicalDetail.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Company\AddCompany.cshtml.g.cs

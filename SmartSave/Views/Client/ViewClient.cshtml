@@ -621,7 +621,7 @@
 
                                                     }
 
-                                                    <td><a target="_blank" asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
+                                                    <td><a  asp-controller="Client" asp-action="ViewClientTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
                                                     <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
                                                     <td>@Html.DisplayFor(modelItem => item.TransactionType.TransType)</td>
                                                     <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
@@ -918,13 +918,12 @@
                     </div>
 
                     <div class="form-group">
-                        <div>
-                            <div class="checkbox">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" data-val="true" id="IsActive"
-                                           name="IsActive" value="true">
-                                </label>
-                            </div>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                        <div class="checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" data-val="true" id="IsActive"
+                                       name="IsActive" value="true">
+                            </label>
                         </div>
                     </div>
                     <input type="hidden" name="ClientID" value="@Model.ClientID" />
