@@ -597,7 +597,7 @@ namespace SmartHelper
         public static string GenerateTransactionRef(string ClientRef)
         {
             string sAlphNum = RandomAlphanumeric();
-            string queryRef = $"T{ClientRef}{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MM").ToUpper()}{RandomAlphanumeric(2)}";
+            string queryRef = $"T-{ClientRef}-{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MM").ToUpper()}-{RandomAlphanumeric(2)}";
             return queryRef.ToUpper();
         }
 
