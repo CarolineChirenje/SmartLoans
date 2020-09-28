@@ -357,7 +357,7 @@ if (!document.createElement('canvas').getContext) {
     orchid: '#DA70D6',
     palegoldenrod: '#EEE8AA',
     palegreen: '#98FB98',
-    paleturquoise: '#AProductEE',
+    paleturquoise: '#AFEEEE',
     palevioletred: '#DB7093',
     papayawhip: '#FFEFD5',
     peachpuff: '#FFDAB9',

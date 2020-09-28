@@ -2770,13 +2770,13 @@ select[multiple].form-group-lg .form-control {
   font-size: 18px;
   line-height: 1.3333333;
 }
-.has-Productdback {
+.has-feedback {
   position: relative;
 }
-.has-Productdback .form-control {
+.has-feedback .form-control {
   padding-right: 42.5px;
 }
-.form-control-Productdback {
+.form-control-feedback {
   position: absolute;
   top: 0;
   right: 0;
@@ -2788,12 +2788,12 @@ select[multiple].form-group-lg .form-control {
   text-align: center;
   pointer-events: none;
 }
-.input-lg + .form-control-Productdback {
+.input-lg + .form-control-feedback {
   width: 46px;
   height: 46px;
   line-height: 46px;
 }
-.input-sm + .form-control-Productdback {
+.input-sm + .form-control-feedback {
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -2825,7 +2825,7 @@ select[multiple].form-group-lg .form-control {
   background-color: #dff0d8;
   border-color: #3c763d;
 }
-.has-success .form-control-Productdback {
+.has-success .form-control-feedback {
   color: #3c763d;
 }
 .has-warning .help-block,
@@ -2855,7 +2855,7 @@ select[multiple].form-group-lg .form-control {
   background-color: #fcf8e3;
   border-color: #8a6d3b;
 }
-.has-warning .form-control-Productdback {
+.has-warning .form-control-feedback {
   color: #8a6d3b;
 }
 .has-error .help-block,
@@ -2885,13 +2885,13 @@ select[multiple].form-group-lg .form-control {
   background-color: #f2dede;
   border-color: #a94442;
 }
-.has-error .form-control-Productdback {
+.has-error .form-control-feedback {
   color: #a94442;
 }
-.has-Productdback label ~ .form-control-Productdback {
+.has-feedback label ~ .form-control-feedback {
   top: 25px;
 }
-.has-Productdback label.sr-only ~ .form-control-Productdback {
+.has-feedback label.sr-only ~ .form-control-feedback {
   top: 0;
 }
 .help-block {
@@ -2946,7 +2946,7 @@ select[multiple].form-group-lg .form-control {
     position: relative;
     margin-left: 0;
   }
-  .form-inline .has-Productdback .form-control-Productdback {
+  .form-inline .has-feedback .form-control-feedback {
     top: 0;
   }
 }
@@ -2973,7 +2973,7 @@ select[multiple].form-group-lg .form-control {
     text-align: right;
   }
 }
-.form-horizontal .has-Productdback .form-control-Productdback {
+.form-horizontal .has-feedback .form-control-feedback {
   right: 15px;
 }
 @media (min-width: 768px) {
@@ -4324,7 +4324,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     position: relative;
     margin-left: 0;
   }
-  .navbar-form .has-Productdback .form-control-Productdback {
+  .navbar-form .has-feedback .form-control-feedback {
     top: 0;
   }
 }

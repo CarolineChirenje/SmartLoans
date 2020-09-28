@@ -33,8 +33,8 @@ Very daring.
 
 Fork, hack, possibly even add some tests, then send a pull request :)
 
-Remember that Morris.js is a cofProductscript project. Please make your changes in
-the `.cofProduct` files, not in the compiled javascript files in the root directory
+Remember that Morris.js is a coffeescript project. Please make your changes in
+the `.coffee` files, not in the compiled javascript files in the root directory
 of the project.
 
 ### Developer quick-start

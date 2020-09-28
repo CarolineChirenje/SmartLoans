@@ -854,23 +854,23 @@ a:focus {
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li > a:hover {
   color: #fff;
 }
-.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a,
-.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:hover,
-.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:focus,
-.control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:active {
-  background: #222d32;
-  color: #fff;
-}
+    .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a,
+    .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:hover,
+    .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:focus,
+    .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:active {
+        background: #ffffff;
+        color: #fff;
+    }
 .control-sidebar-dark .control-sidebar-heading,
 .control-sidebar-dark .control-sidebar-subheading {
   color: #fff;
 }
-.control-sidebar-dark .control-sidebar-menu > li > a:hover {
-  background: #1e282c;
-}
-.control-sidebar-dark .control-sidebar-menu > li > a .menu-info > p {
-  color: #b8c7ce;
-}
+    .control-sidebar-dark .control-sidebar-menu > li > a:hover {
+        background: #ffffff;
+    }
+    .control-sidebar-dark .control-sidebar-menu > li > a .menu-info > p {
+        color: #ffffff;
+    }
 .control-sidebar-light {
   color: #5e5e5e;
 }

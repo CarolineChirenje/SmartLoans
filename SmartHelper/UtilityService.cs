@@ -10,6 +10,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Globalization;
 
 namespace SmartHelper
 {
@@ -117,7 +118,7 @@ namespace SmartHelper
                 decimal _vatPercentage = 0;
                 try
                 {
-                    _vatPercentage = decimal.Parse(_percentage, System.Globalization.CultureInfo.InvariantCulture); 
+                    _vatPercentage = decimal.Parse(_percentage, System.Globalization.CultureInfo.InvariantCulture);
                 }
                 catch (Exception)
                 {
@@ -140,7 +141,7 @@ namespace SmartHelper
                 int _siteEnv = 1;
                 try
                 {
-                    _siteEnv = Int32.Parse(_result, System.Globalization.CultureInfo.InvariantCulture); 
+                    _siteEnv = Int32.Parse(_result, System.Globalization.CultureInfo.InvariantCulture);
                 }
                 catch (Exception)
                 {
@@ -258,7 +259,7 @@ namespace SmartHelper
         {
             get
             {
-                  string _period = GetData.GetSettingValue((int)AppSetting.Password_Validity_Period)?.Value;
+                string _period = GetData.GetSettingValue((int)AppSetting.Password_Validity_Period)?.Value;
                 int expiryPeriod = 1;
                 try
                 {
@@ -306,9 +307,9 @@ namespace SmartHelper
 
             }
         }
-        
 
-        public static string MaskAccountNumber(string  accountNumber)
+
+        public static string MaskAccountNumber(string accountNumber)
 
         {
 
@@ -357,8 +358,8 @@ namespace SmartHelper
         {
             get
             {
-               return GetData.CompanyLogo();
-                
+                return GetData.CompanyLogo();
+
 
             }
         }
@@ -374,7 +375,7 @@ namespace SmartHelper
                 INNER JOIN Roles r ON ur.RoleID=r.RoleID
                 WHERE u.UserName='" + UtilityService.CurrentUserName + "'";
                 string _userRole = GetData.GetStringValue(sqlCustomSetting);
-                
+
                 return _userRole;
 
             }
@@ -388,7 +389,7 @@ namespace SmartHelper
                 INNER JOIN UserRoles ur ON  ur.UserID=u.UserID
                 INNER JOIN Roles r ON ur.RoleID=r.RoleID
                 WHERE u.UserName='" + UtilityService.CurrentUserName + "'";
-                string _Role= GetData.GetStringValue(sqlCustomSetting);
+                string _Role = GetData.GetStringValue(sqlCustomSetting);
                 int roleID = 0;
                 try
                 {
@@ -397,7 +398,7 @@ namespace SmartHelper
                 catch (Exception ex)
                 {
 
-                                  }
+                }
 
                 return roleID;
 
@@ -427,7 +428,7 @@ namespace SmartHelper
         {
             get
             {
-               string _result= GetData.GetSettingValue((int)AppSetting.Password_Reset_Pin_Validity)?.Value;
+                string _result = GetData.GetSettingValue((int)AppSetting.Password_Reset_Pin_Validity)?.Value;
                 int pincodeValidityPeriod = 0;
                 try
                 {
@@ -460,7 +461,7 @@ namespace SmartHelper
 
                 string sqlCustomSetting = $"SELECT TOP 1  u.UserTypeID FROM  Users u WHERE  UserName='{CurrentUserName}';";
                 string _result = GetData.GetStringValue(sqlCustomSetting);
-               int userType = 0;
+                int userType = 0;
                 try
                 {
                     userType = Int32.Parse(_result, System.Globalization.CultureInfo.InvariantCulture); ;
@@ -470,7 +471,7 @@ namespace SmartHelper
 
                 }
 
-             
+
                 return userType;
 
             }
@@ -481,12 +482,12 @@ namespace SmartHelper
             {
                 string sqlCustomSetting = $"SELECT rm.MenuID FROM RoleMenus rm WHERE rm.RoleID={UserRoleID};";
                 DataTable _result = GetData.GetDataTable(sqlCustomSetting);
-                               List<int> results = (from row in _result.AsEnumerable() select Convert.ToInt32(row["MenuID"])).ToList();
+                List<int> results = (from row in _result.AsEnumerable() select Convert.ToInt32(row["MenuID"])).ToList();
                 return results;
             }
-        
-        
-        
+
+
+
         }
         public static List<int> GetRoleMenusGroups
         {
@@ -571,6 +572,16 @@ namespace SmartHelper
             UtilityService.CurrentUserName = string.Empty;
         }
 
+
+        public static decimal GetDecimalAmount(string Amount)
+        {
+
+            decimal _amount = 0;
+            var cul = CultureInfo.GetCultureInfo("EN-us");
+            decimal.TryParse(Amount, NumberStyles.AllowDecimalPoint, cul, out _amount);
+                    return _amount;
+        }
+        // GET:
         public static string HtmlDecode(string htmlValue) => WebUtility.HtmlDecode(htmlValue);
 
         public static string HtmlEncode(string stringValue) => WebUtility.HtmlEncode(stringValue);

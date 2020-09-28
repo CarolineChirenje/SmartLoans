@@ -66,7 +66,7 @@ namespace SmartSave.Models
 
 
     }
-       
+
     public class CheckBoxModel
     {
         public int LinkedID { get; set; }
@@ -109,8 +109,8 @@ namespace SmartSave.Models
         public int Month { get; set; }
         public int TransactionType { get; set; }
         public int PaymentStatusID { get; set; }
-        public decimal Amount { get; set; }
-        public decimal Discount { get; set; }
+        public string Amount { get; set; }
+        public string Narration { get; set; }
         public DateTime PaymentDate { get; set; }
         public int ParentPaymentID { get; set; }
         public string PaymentReasonID { get; set; }

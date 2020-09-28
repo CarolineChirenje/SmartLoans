@@ -393,7 +393,7 @@ Closes #247
 0.12.0 / 2012-02-02
 ==================
 
-  * Added .cofProduct `--watch` support. Closes #242
+  * Added .coffee `--watch` support. Closes #242
   * Added support to `--require` files relative to the CWD. Closes #241
   * Added quick n dirty syntax highlighting. Closes #248
   * Changed: made HTML progress indicator smaller
@@ -442,7 +442,7 @@ Closes #247
 0.8.0 / 2011-12-28
 ==================
 
-  * Added `XUnit` reporter [ProductFighters/visionmedia]
+  * Added `XUnit` reporter [FeeFighters/visionmedia]
   * Added `say(1)` notification support [Maciej Małecki]
   * Changed: fail when done() is invoked with a non-Error. Closes #171
   * Fixed `err.stack`, defaulting to message. Closes #180
@@ -553,7 +553,7 @@ Closes #247
 
   * Added `suiteSetup` and `suiteTeardown` to TDD interface [David Henderson]
   * Added growl icons. Closes #84
-  * Fixed cofProduct-script support
+  * Fixed coffee-script support
 
 0.0.8 / 2011-11-25
 ==================
@@ -592,7 +592,7 @@ Closes #247
 ==================
 
   * Added `-C, --no-colors` to explicitly disable
-  * Added cofProduct-script support
+  * Added coffee-script support
 
 0.0.2 / 2011-11-22
 ==================

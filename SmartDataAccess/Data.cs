@@ -350,12 +350,11 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                },
-
                 new CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Mail_Credential_Password,
                     Name = AppSetting.Mail_Credential_Password.ToString().Replace("_", " "),
-                    Value="TE1TdXNlckA2Mjk5IyM=",
+                    Value="dcoizhxiqzvwvzak",
                     Description ="Email Password",
                     CustomVariableTypeID=(int)VariableType.Password,
                     CustomSettingTypeID=(int)SettingType.Email,
@@ -363,9 +362,7 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                },
-
-
-               new CustomSetting()
+              new CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Mail_Display_Name,
                     Name = AppSetting.Mail_Display_Name.ToString().Replace("_", " "),

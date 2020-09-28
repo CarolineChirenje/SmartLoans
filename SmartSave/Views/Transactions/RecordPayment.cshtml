@@ -39,33 +39,28 @@
                     </div>
                 }
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Employee Acc Num</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Employee Details</label>
                     <div class="col-sm-10">
-                        <input asp-for="Client.AccountNumber" list="Clients" type="text" class="form-control" name="AccountNumber" placeholder="Type Client Employee Number Here">
-
-
-                        <datalist id="Clients">
-                            @foreach (var item in ViewBag.ClientList)
-                            {
-                                <option>@item.Text</option>
-                            }
-                        </datalist>
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Bank Account</label>
-                    <div class="col-sm-10">
-                        <select asp-for="BankAccountID" class="form-control" asp-items="ViewBag.BankAccountList">
-                            <option value="">----</option>
+                        <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientList" onchange="GetProduct(this.value)">
+                            <option value="">--- Select Employee ---</option>
                         </select>
+
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
                     <div class="col-sm-10">
-                        <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductList">
+                        <select id="ProductList" name="ProductID" class="form-control">
+                        </select>
+                        <span id="ProductListNotFound" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Bank Account</label>
+                    <div class="col-sm-10">
+                        <select asp-for="BankAccountID" class="form-control" asp-items="ViewBag.BankAccountList">
                             <option value="">----</option>
                         </select>
                     </div>
@@ -83,6 +78,13 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Payment Date:</label>
                     <div class="col-sm-10">
                         <input type="date" class="form-control" name="PaymentDate" ID="PaymentDate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Narration:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Narration" ID="Narration">
                     </div>
                 </div>
 
@@ -107,13 +109,14 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Pay Amount</label>
                     <div class="col-sm-10">
-                        <input type="number" step="any" class="form-control" name="Amount">
+                        <input type="text" class="form-control" id="Amount" name="Amount">
+                        <span id="AmountError" class="text-danger text-bold"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">VAT</label>
                     <div class="col-sm-10">
-                        <input type="text"  class="form-control" name="VAT" disabled="disabled" value="0.00">
+                        <input type="text" class="form-control" name="VAT" disabled="disabled" value="0.00">
                     </div>
                 </div>
 
@@ -130,7 +133,7 @@
                 @if (UtilityService.HasPermission(Permissions.Make_Payment))
                 {
                     <button type="submit" class="btn btn-success pull-right">Submit</button>
-                    
+
                 }
                 <a class="btn btn-default" asp-controller="Transactions" asp-action="Transactions">Cancel</a>
 
@@ -141,7 +144,7 @@
     <!-- /.box -->
 </section>
 <script>
-   
+
 
     $(document).ready(function () {
 
@@ -149,4 +152,51 @@
 
     });
 
+
+    $(function () {
+        $('#Amount').blur(function () {
+            var tempVal = $('#Amount').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#AmountError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#AmountError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+    })
+
+    function GetProduct(_clientID) {
+        var procemessage = "<option value='0'> Please wait whilst we retrieve Products registered to Individual...</option>";
+        $("#ProductList").html(procemessage).show();
+        var url = "/Transactions/GetProductByClientID/";
+       // alert(_clientID);
+        $.ajax({
+            url: url,
+            data: { clientID: _clientID },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>----</option>";
+                if (data == null || data.length == 0) {
+                    $("#ProductListNotFound").text("Individual is not registered to any Products")
+                    $(":submit").attr("disabled", true);
+                }
+                else {
+                    $("#ProductListNotFound").text("");
+                    $(":submit").removeAttr("disabled");
+                 
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
+                    }
+                }
+                $("#ProductList").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
 </script>

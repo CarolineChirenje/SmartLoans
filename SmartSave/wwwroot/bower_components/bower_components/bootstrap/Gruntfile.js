@@ -9,7 +9,7 @@ module.exports = function (grunt) {
   'use strict';
 
   // Force use of Unix newlines
-  grunt.util.lineProductd = '\n';
+  grunt.util.linefeed = '\n';
 
   RegExp.quote = function (string) {
     return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');

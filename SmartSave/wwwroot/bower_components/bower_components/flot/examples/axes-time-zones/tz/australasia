@@ -567,8 +567,8 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 # From David Zuelke (2011-05-09):
 # Subject: Samoa to move timezone from east to west of international date line
 #
-# <a href="http://www.morningstar.co.uk/uk/markets/newsProductditem.aspx?id=138501958347963">
-# http://www.morningstar.co.uk/uk/markets/newsProductditem.aspx?id=138501958347963
+# <a href="http://www.morningstar.co.uk/uk/markets/newsfeeditem.aspx?id=138501958347963">
+# http://www.morningstar.co.uk/uk/markets/newsfeeditem.aspx?id=138501958347963
 # </a>
 
 # From Mark Sim-Smith (2011-08-17):
@@ -943,7 +943,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #   practice.  The situation for "ST" versus "DT" is less clear, given
 #   the ambiguities involved.
 #
-# * How do Australians Productl about the abbreviations in the tz database?
+# * How do Australians feel about the abbreviations in the tz database?
 #
 #   If you just count Australians on this list, I count 2 in favor and 3
 #   against.  One of the "against" votes (David Keegel) counseled delay,

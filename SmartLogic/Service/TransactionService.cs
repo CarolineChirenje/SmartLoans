@@ -107,13 +107,14 @@ namespace SmartLogic
                     PaymentStatusID = (int)PaymentState.Reversed,
                     BankAccountID = PaymentsFile.BankAccountID
                 };
-           
-                    newPaymentFile.Amount = (AmountInclVat * -1);
-                    newPaymentFile.VAT = (VATAmount * -1);
-                    newPaymentFile.AmountExclVAT = (AmountExclVat * -1);
-                              _context.Add(newPaymentFile);
 
-                updateOldPayment(transactionID, oldPaymentStatus);
+                newPaymentFile.Amount = (AmountInclVat * -1);
+                newPaymentFile.VAT = (VATAmount * -1);
+                newPaymentFile.AmountExclVAT = (AmountExclVat * -1);
+                newPaymentFile.Narration = $"Reversal of  Transaction Ref - {PaymentsFile.TransRef}";
+                _context.Add(newPaymentFile);
+
+                updateOldPayment(transactionID, oldPaymentStatus, newPaymentFile.TransRef);
 
             }
             catch (Exception ex)
@@ -128,16 +129,19 @@ namespace SmartLogic
         }
 
 
-        private void updateOldPayment(int transactionID, int oldPaymentStatus)
+        private void updateOldPayment(int transactionID, int oldPaymentStatus, string newTransRef)
         {
 
             try
             {
                 //update status of old payment
                 Transaction oldPaymentsFile = _context.Transactions.Find(transactionID);
+                string old_Narration = oldPaymentsFile.Narration;
+                string append_Narration = $"Transaction Reversed Refer to Trans Ref  {newTransRef}.";
                 oldPaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
                 oldPaymentsFile.LastChangedDate = DateTime.Now;
                 oldPaymentsFile.PaymentStatusID = oldPaymentStatus;
+                oldPaymentsFile.Narration = String.IsNullOrEmpty(old_Narration) ? append_Narration : $"{old_Narration} : {append_Narration}";
                 _context.Update(oldPaymentsFile);
             }
             catch (Exception ex)

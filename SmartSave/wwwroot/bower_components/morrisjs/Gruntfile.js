@@ -3,22 +3,22 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    cofProduct: {
+    coffee: {
       lib: {
         options: { bare: false },
         files: {
-          'morris.js': ['build/morris.cofProduct']
+          'morris.js': ['build/morris.coffee']
         }
       },
       spec: {
         options: { bare: true },
         files: {
-          'build/spec.js': ['build/spec.cofProduct']
+          'build/spec.js': ['build/spec.coffee']
         }
       },
     },
     concat: {
-      'build/morris.cofProduct': {
+      'build/morris.coffee': {
         options: {
           banner: "### @license\n"+
                   "<%= pkg.name %> v<%= pkg.version %>\n"+
@@ -27,17 +27,17 @@ module.exports = function (grunt) {
                   "###\n",
         },
         src: [
-          'lib/morris.cofProduct',
-          'lib/morris.grid.cofProduct',
-          'lib/morris.hover.cofProduct',
-          'lib/morris.line.cofProduct',
-          'lib/morris.area.cofProduct',
-          'lib/morris.bar.cofProduct',
-          'lib/morris.donut.cofProduct'
+          'lib/morris.coffee',
+          'lib/morris.grid.coffee',
+          'lib/morris.hover.coffee',
+          'lib/morris.line.coffee',
+          'lib/morris.area.coffee',
+          'lib/morris.bar.coffee',
+          'lib/morris.donut.coffee'
         ],
-        dest: 'build/morris.cofProduct'
+        dest: 'build/morris.coffee'
       },
-      'build/spec.cofProduct': ['spec/support/**/*.cofProduct', 'spec/lib/**/*.cofProduct']
+      'build/spec.coffee': ['spec/support/**/*.coffee', 'spec/lib/**/*.coffee']
     },
     less: {
       all: {
@@ -64,12 +64,12 @@ module.exports = function (grunt) {
     },
     watch: {
       all: {
-        files: ['lib/**/*.cofProduct', 'spec/lib/**/*.cofProduct', 'spec/support/**/*.cofProduct', 'less/**/*.less'],
+        files: ['lib/**/*.coffee', 'spec/lib/**/*.coffee', 'spec/support/**/*.coffee', 'less/**/*.less'],
         tasks: 'default'
       },
       dev: {
-        files:  'lib/*.cofProduct' ,
-        tasks: ['concat:build/morris.cofProduct', 'cofProduct:lib']
+        files:  'lib/*.coffee' ,
+        tasks: ['concat:build/morris.coffee', 'coffee:lib']
       }
     },
     shell: {
@@ -86,5 +86,5 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('default', ['concat', 'cofProduct', 'less', 'uglify', 'mocha', 'shell:visual_spec']);
+  grunt.registerTask('default', ['concat', 'coffee', 'less', 'uglify', 'mocha', 'shell:visual_spec']);
 };

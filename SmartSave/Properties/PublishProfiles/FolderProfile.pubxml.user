@@ -17,4 +17,18 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <Value>Server=WEKWACHIRENJE\WEKWACHIRENJE%3bDatabase=SmartSave%3bTrusted_Connection=True%3bMultipleActiveResultSets=True%3b</Value>
     </EFMigrations>
   </ItemGroup>
+  <ItemGroup>
+    <File Include="wwwroot/dist/css/AdminLTE.css">
+      <publishTime>09/28/2020 10:48:27</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/adminlte.css.map">
+      <publishTime>05/04/2019 17:28:56</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/AdminLTE.min.css">
+      <publishTime>09/17/2020 12:50:45</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/adminlte.min.css.map">
+      <publishTime>05/04/2019 17:28:56</publishTime>
+    </File>
+  </ItemGroup>
 </Project>

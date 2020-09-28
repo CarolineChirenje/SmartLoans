@@ -13,6 +13,8 @@ namespace SmartDomain
         [Key]
         public int TransactionID { get; set; }
         public string TransRef { get; set; }
+
+        public string Narration { get; set; }
         public int ClientID { get; set; }
         public virtual Client Client { get; set; }
         public int ProductID { get; set; }

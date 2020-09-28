@@ -47,7 +47,7 @@
                             <label for="inputEmail3" class="form-control label-default">@Model.AccountNumber</label>
                         </div>
                     </div>
-                 
+
                     <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="FirstName" placeholder="First Name" value="@Model.FirstName">
@@ -128,40 +128,40 @@
 
                         </div>
                     </div>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="DepartmentID" class="col-sm-2 control-label">Department</label>
-
-                        <div class="col-sm-10">
-                            <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartmentList">
-                                <option value="">----</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Registration Date</label>
-                        <div class="col-sm-10">
-                            <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.RegistrationDate)</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
-                        <div class="col-sm-10">
-                            <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
-                        <div class="col-sm-10">
-                            <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
-                        </div>
-                    </div>
-                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
                 </div>
-          
+                <div class="form-group">
+                    <label asp-for="DepartmentID" class="col-sm-2 control-label">Department</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartmentList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Registration Date</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.RegistrationDate)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="ClientID" value="@Model.ClientID" />
+            </div>
+
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Client" asp-action="Clients">Cancel</a>
@@ -172,7 +172,7 @@
                 @if (UtilityService.HasPermission(Permissions.Client_Update_Personal_Details) && (UtilityService.UserType == (int)TypeOfUser.Employee))
                 {
                     <button type="submit" class="btn btn-info pull-right">Update My Personal Details</button>
-                    }
+                }
 
                 @if (UtilityService.HasPermission(Permissions.Delete_Client))
                 {
@@ -286,7 +286,7 @@
                                                             <td>@Html.DisplayFor(modelItem => item.ContactType.Name)</td>
                                                             @if (UtilityService.HasPermission(Permissions.View_Client_Contact))
                                                             {
-                                                                <td><a  asp-controller="Client" asp-action="ViewContact" asp-route-id="@item.ClientContactID">@item.ContactPerson</a></td>
+                                                                <td><a asp-controller="Client" asp-action="ViewContact" asp-route-id="@item.ClientContactID">@item.ContactPerson</a></td>
                                                             }
                                                             else
                                                             {
@@ -449,7 +449,7 @@
 
                                                     var _activeNotes = Model.ClientNotes.OrderByDescending(x => x.DueDate);
                                                     var activeNotes = _activeNotes;
-                                                    if((TypeOfUser)UtilityService.UserType!=TypeOfUser.Administrator)
+                                                    if ((TypeOfUser)UtilityService.UserType != TypeOfUser.Administrator)
                                                     {
                                                         activeNotes = _activeNotes.Where(n => !n.VisibleToAdminOnly).OrderByDescending(x => x.DueDate);
                                                     }
@@ -470,7 +470,7 @@
                                                             <td>@Html.DisplayFor(modelItem => item.UploadedBy)</td>
                                                             <td>@duedate</td>
 
-                                                            <td><a  asp-controller="Client" asp-action="ViewClientNote" asp-route-id="@item.ClientNoteID">@item.Comment</a> </td>
+                                                            <td><a asp-controller="Client" asp-action="ViewClientNote" asp-route-id="@item.ClientNoteID">@item.Comment</a> </td>
                                                             <td>@closedDate</td>
                                                             <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
                                                             <td>@LastChangedDate</td>
@@ -613,23 +613,23 @@
                                                     var payments = Model.ClientPayments.OrderByDescending(c => c.TransactionDate);
                                                     @foreach (var item in payments)
                                                     {
-                                                <tr>
-                                                    @{
-                                                        string transactiondate = UtilityService.ShowDateTime(item.TransactionDate);
-                                                        string paymentdate = UtilityService.ShowDate(item.PaymentDate);
+                                                        <tr>
+                                                            @{
+                                                                string transactiondate = UtilityService.ShowDateTime(item.TransactionDate);
+                                                                string paymentdate = UtilityService.ShowDate(item.PaymentDate);
 
 
-                                                    }
+                                                            }
 
-                                                    <td><a  asp-controller="Client" asp-action="ViewClientTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
-                                                    <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.TransactionType.TransType)</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
+                                                            <td><a asp-controller="Client" asp-action="ViewClientTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.TransactionType.TransType)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
 
-                                                    <td>@Html.DisplayFor(modelItem => item.PaymentStatus.Name)</td>
-                                                    <td>@paymentdate</td>
-                                                    <td>@transactiondate</td>
-                                                </tr>
+                                                            <td>@Html.DisplayFor(modelItem => item.PaymentStatus.Name)</td>
+                                                            <td>@paymentdate</td>
+                                                            <td>@transactiondate</td>
+                                                        </tr>
                                                     }
                                                 }
                                         </table>
@@ -638,7 +638,9 @@
                                     <div class="box-footer">
                                         @if (UtilityService.HasPermission(Permissions.Make_Payment))
                                         {
-                                            <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#PaymentsFile">Upload Payment</a>
+                                            @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#PaymentsFile">Upload Payment</a>*@
+                                                                                      <a  target="_blank" class="btn  btn-small btn-success pull-right" asp-controller="Transactions" asp-action="AddTransaction" asp-route-ClientID="@Model.ClientID">Upload Payment</a>
+
                                         }
                                     </div>
                                 </div>
@@ -716,7 +718,7 @@
                                                     {
                                                         var isMainGuarantor = UtilityService.ShowYesOrNo(item.IsMainGuarantor);
                                                         <tr>
-                                                            <td><a  asp-controller="Client" asp-action="ViewClientGuarantor" asp-route-id="@item.ClientGuarantorID" asp-route-Clientid="@Model.ClientID">@item.GuarantorFullName</a></td>
+                                                            <td><a asp-controller="Client" asp-action="ViewClientGuarantor" asp-route-id="@item.ClientGuarantorID" asp-route-Clientid="@Model.ClientID">@item.GuarantorFullName</a></td>
                                                             <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
 
                                                             <td>@Html.DisplayFor(modelItem => item.GuarantorContacts)</td>
@@ -764,16 +766,16 @@
                                                     foreach (var item in Model.ClientDependents)
                                                     {
 
-                                                <tr>
-                                                    @{
-                                                        string gender = ((GenderOrientation)item.GenderID).ToString();
-                                                    }
-                                                    <td><a asp-controller="Client" asp-action="ViewClientDependent" asp-route-id="@item.ClientDependentID" asp-route-Clientid="@Model.ClientID">@item.FullName</a> </td>
-                                                    <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
-                                                    <td>@gender</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.Age)</td>
-                                                </tr>
+                                                        <tr>
+                                                            @{
+                                                                string gender = ((GenderOrientation)item.GenderID).ToString();
+                                                            }
+                                                            <td><a asp-controller="Client" asp-action="ViewClientDependent" asp-route-id="@item.ClientDependentID" asp-route-Clientid="@Model.ClientID">@item.FullName</a> </td>
+                                                            <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
+                                                            <td>@gender</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                                                        </tr>
                                                     }
                                                 }
                                         </table>
@@ -825,18 +827,18 @@
 
                     @if (UtilityService.UserType != (int)TypeOfUser.Employee)
                     {
-                    <div class="form-group">
-                        <div>
-                            <label for="inputEmail3" class="col-sm-2 control-label">Visible To Admin Only:</label>
+                        <div class="form-group">
+                            <div>
+                                <label for="inputEmail3" class="col-sm-2 control-label">Visible To Admin Only:</label>
 
-                            <div class="checkbox">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" data-val="true" id="VisibleToAdminOnly"
-                                           name="VisibleToAdminOnly" value="true">
-                                </label>
+                                <div class="checkbox">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" data-val="true" id="VisibleToAdminOnly"
+                                               name="VisibleToAdminOnly" value="true">
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     }
                     <input type="hidden" name="ClientID" value="@Model.ClientID" />
 
@@ -1034,97 +1036,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="PaymentsFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="width:800px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" asp-controller="Client" asp-action="AddTransaction">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Bank Account</label>
-
-                        <select asp-for="BankAccountID" class="form-control" asp-items="ViewBag.BankAccountList">
-                            <option value="">----</option>
-                        </select>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
-
-                        <select asp-for="ProductID" class="form-control" asp-items="ViewBag.RegisteredProducts">
-                            <option value="">----</option>
-                        </select>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Transaction Type</label>
-                        <select asp-for="TransactionTypeID" class="form-control" asp-items="ViewBag.TransactionTypeList">
-                            <option value="">----</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Payment Date:</label>
-
-                        <input type="date" class="form-control" name="PaymentDate" ID="PaymentDate">
-
-                    </div>
-                    <div class="form-group">
-                        @{
-
-                            if (SmartHelper.UtilityService.PaymentsMustBeVatInclusive)
-                            {
-                                <label class="text-danger">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
-                            }
-
-                            else
-                            {
-
-                                <label class="text-danger">Payment Amount Should be VAT Exclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
-                            }
-                        }
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Pay Amount</label>
-
-                        <input type="number" class="form-control" name="Amount">
-
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">VAT</label>
-
-                        <input type="text" class="form-control" name="VAT" disabled="disabled" value="0.00">
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Amount Excl VAT</label>
-
-                        <input type="text" class="form-control" name="AmountExclVAT" disabled="disabled" value="0.00">
-
-                    </div>
-
-                    <input type="hidden" name="IsFromClient" value="true" />
-                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
-
-                </div>
-                <div class="modal-footer">
-                    @if (UtilityService.HasPermission(Permissions.Make_Payment))
-                    {
-                        <button type="submit" class="btn btn-primary">Pay</button>
-                    }
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="ClientMedicalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -1289,11 +1200,11 @@
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
-                       
-                            <select asp-for="GenderID" class="form-control" asp-items="ViewBag.DependentGenderList">
-                                <option value="">----</option>
-                            </select>
-                       
+
+                        <select asp-for="GenderID" class="form-control" asp-items="ViewBag.DependentGenderList">
+                            <option value="">----</option>
+                        </select>
+
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Occupation:</label>
@@ -1326,7 +1237,7 @@
     </div>
 </div>
 <script>
-   
+
 
     $(document).ready(function () {
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {

@@ -350,11 +350,11 @@ input[type="checkbox"] {
 }
 
 
-// Form control Productdback states
+// Form control feedback states
 //
 // Apply contextual and semantic states to individual form controls.
 
-.has-Productdback {
+.has-feedback {
   // Enable absolute positioning
   position: relative;
 
@@ -363,8 +363,8 @@ input[type="checkbox"] {
     padding-right: (@input-height-base * 1.25);
   }
 }
-// Productdback icon (requires .glyphicon classes)
-.form-control-Productdback {
+// Feedback icon (requires .glyphicon classes)
+.form-control-feedback {
   position: absolute;
   top: 0;
   right: 0;
@@ -376,18 +376,18 @@ input[type="checkbox"] {
   text-align: center;
   pointer-events: none;
 }
-.input-lg + .form-control-Productdback {
+.input-lg + .form-control-feedback {
   width: @input-height-large;
   height: @input-height-large;
   line-height: @input-height-large;
 }
-.input-sm + .form-control-Productdback {
+.input-sm + .form-control-feedback {
   width: @input-height-small;
   height: @input-height-small;
   line-height: @input-height-small;
 }
 
-// Productdback states
+// Feedback states
 .has-success {
   .form-control-validation(@state-success-text; @state-success-text; @state-success-bg);
 }
@@ -398,13 +398,13 @@ input[type="checkbox"] {
   .form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg);
 }
 
-// Reposition Productdback icon if input has visible label above
-.has-Productdback label {
+// Reposition feedback icon if input has visible label above
+.has-feedback label {
 
-  & ~ .form-control-Productdback {
+  & ~ .form-control-feedback {
      top: (@line-height-computed + 5); // Height of the `label` and its margin
   }
-  &.sr-only ~ .form-control-Productdback {
+  &.sr-only ~ .form-control-feedback {
      top: 0;
   }
 }
@@ -497,8 +497,8 @@ input[type="checkbox"] {
       margin-left: 0;
     }
 
-    // Re-override the Productdback icon.
-    .has-Productdback .form-control-Productdback {
+    // Re-override the feedback icon.
+    .has-feedback .form-control-feedback {
       top: 0;
     }
   }
@@ -549,7 +549,7 @@ input[type="checkbox"] {
   //
   // Reposition the icon because it's now within a grid column and columns have
   // `position: relative;` on them. Also accounts for the grid gutter padding.
-  .has-Productdback .form-control-Productdback {
+  .has-feedback .form-control-feedback {
     right: (@grid-gutter-width / 2);
   }
 

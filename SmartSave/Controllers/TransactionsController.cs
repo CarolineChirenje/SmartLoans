@@ -15,6 +15,7 @@ using SmartReporting;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace SmartSave.Controllers
 {
@@ -48,21 +49,25 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> RecordPayment(PaymentViewModel paymentsFile)
         {
-            GetDropDownLists();
+
             if (ModelState.IsValid)
             {
-                Client Client = await _ClientService.FindClient(0, paymentsFile.AccountNumber.Trim());
+
+                Client Client = await _ClientService.FindClient(paymentsFile.ClientID);
                 if (!UtilityService.IsNotNull(Client))
                     return RedirectToAction(nameof(Transactions));
+            Decimal Amount = UtilityService.GetDecimalAmount(paymentsFile.Amount);
+
                 Transaction addPaymentsFile = new Transaction()
                 {
                     Year = paymentsFile.Year,
                     Month = paymentsFile.Month,
-                    Amount = paymentsFile.Amount,
+                    Amount =Amount,
                     ClientID = Client.ClientID,
                     Client = Client,
                     ProductID = paymentsFile.ProductID,
                     PaymentDate = paymentsFile.PaymentDate,
+                    Narration=paymentsFile.Narration,
                     PaymentStatusID = (int)PaymentState.Paid,
                     TransactionDate = DateTime.Now,
                     ParentPaymentID = paymentsFile.ParentPaymentID,
@@ -76,17 +81,33 @@ namespace SmartSave.Controllers
                 if (await (_service.CreatePayment(addPaymentsFile, (TransactionTypeList)paymentsFile.TransactionTypeID)) == 0)
                 {
                     ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return View(paymentsFile);
-
                 }
+               
 
             }
-            if (paymentsFile.IsFromClient)
-                return RedirectToAction("ViewClient", "Client", new { id = paymentsFile.ClientID });
+            int clientID = 0;
+            try
+            {
+                clientID = Convert.ToInt32(HttpContext.Session.GetString("ClientID"));
+            }
+            catch (Exception)
+            {
+                clientID = 0;
+            }
+            if (clientID>0)
+                return RedirectToAction("ViewClient", "Client", new { id = clientID });
             else
                 return RedirectToAction(nameof(Transactions));
+
         }
-        // GET:
+
+
+        public IActionResult AddTransaction(int ClientID)
+        {
+            HttpContext.Session.SetString("ClientID", ClientID.ToString());
+            return RedirectToAction("RecordPayment");
+        }
+
         public async Task<IActionResult> ViewTransaction(int id = 0, string transref = null)
         {
             GetDropDownLists();
@@ -112,7 +133,7 @@ namespace SmartSave.Controllers
             //if (clientid!=0)
             //    return RedirectToAction("ViewClient", "Client", new { id = clientid });
             //else
-                return RedirectToAction(nameof(Transactions));
+            return RedirectToAction(nameof(Transactions));
         }
 
         [HttpGet]
@@ -152,14 +173,23 @@ namespace SmartSave.Controllers
             }).OrderBy(t => t.Name);
 
             ViewBag.ProductList = new SelectList(paymentLists, "ProductID", "Name");
+            int clientID = 0;
+            try
+            {
+                clientID = Convert.ToInt32(HttpContext.Session.GetString("ClientID"));
+            }
+            catch (Exception)
+            {
+                clientID = 0;
+            }
 
             var ClientList = _ClientService.Clients().Result.Select(t => new
             {
                 t.ClientID,
-                Name = t.AccountNumber.ToString(),
+                Name = $" {t.ClientFullName} - {t.AccountNumber}",
             }).OrderBy(t => t.Name);
 
-            ViewBag.ClientList = new SelectList(ClientList, "ClientID", "Name");
+            ViewBag.ClientList = new SelectList(ClientList, "ClientID", "Name",clientID);
 
             var bankList = _bankService.Banks().Result.Select(t => new
             {
@@ -178,5 +208,32 @@ namespace SmartSave.Controllers
             ViewBag.TransactionTypeList = new SelectList(transactionTypeList, "TransactionTypeID", "Name", (int)TransactionTypeList.Payment);
 
         }
+
+
+
+        //Action result for ajax call
+        [HttpPost]
+        public ActionResult GetProductByClientID(int clientID)
+        {
+         
+            SelectList clientProducts = null;
+            if (clientID != 0)
+            {
+                List<Product> clientproductList = _ClientService.GetClientRegisteredProducts(clientID);
+
+                clientproductList.Select(t => new
+                {
+                    t.ProductID,
+                    t.Name,
+                }).OrderBy(t => t.Name);
+
+                 clientProducts = new SelectList(clientproductList, "ProductID", "Name");
+                
+           }
+            return Json(clientProducts);
+
+        }
+
+           
     }
 }
