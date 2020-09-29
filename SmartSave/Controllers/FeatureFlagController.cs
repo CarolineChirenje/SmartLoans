@@ -27,10 +27,10 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(FeatureFlag)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(FeatureFlag));
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(FeatureFlag); 
         }
         // GET:
@@ -53,12 +53,12 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(FeatureFlag)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction(nameof(FeatureFlag));
                 }
                 return View(FeatureFlag);
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(FeatureFlag);
         }
 
@@ -69,7 +69,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(FeatureFlag));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewFeatureFlag", new { id });
             }
 
@@ -77,7 +77,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ChangeFeatureFlagstatus(int id, bool status)
         {
             if (await (_service.ActionFeatureFlag(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewFeatureFlag", new { id });
         }

@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<SmartDomain.Country>
 @using SmartHelper;
 @{
-    ViewData["Title"] = "World Country";
+    TempData["Title"] = "World Country";
 }
 
 <section class="content-header">
     <h1>
-        @ViewData["Title"]
+        @TempData["Title"]
     </h1>
     <ol class="breadcrumb">
         <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">@ViewData["Title"]</li>
+        <li class="active">@TempData["Title"]</li>
     </ol>
 </section>
 <!-- Main content -->

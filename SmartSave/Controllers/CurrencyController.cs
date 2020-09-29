@@ -27,10 +27,10 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(Currency)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(Currency));
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Currency); 
         }
         // GET:
@@ -53,12 +53,12 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(Currency)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction(nameof(Currency));
                 }
                 return View(Currency);
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Currency);
         }
 
@@ -69,7 +69,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(Currency));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewCurrency", new { id });
             }
 
@@ -77,7 +77,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ChangeCurrencystatus(int id, bool status)
         {
             if (await (_service.ActionCurrency(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewCurrency", new { id });
         }

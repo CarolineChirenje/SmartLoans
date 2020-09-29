@@ -354,7 +354,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Mail_Credential_Password,
                     Name = AppSetting.Mail_Credential_Password.ToString().Replace("_", " "),
-                    Value="dcoizhxiqzvwvzak",
+                    Value=Encryption.Encrypt("dcoizhxiqzvwvzak"), //smart save app password
                     Description ="Email Password",
                     CustomVariableTypeID=(int)VariableType.Password,
                     CustomSettingTypeID=(int)SettingType.Email,

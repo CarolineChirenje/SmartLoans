@@ -39,10 +39,10 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(EmailTemplate)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(EmailTemplate));
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(EmailTemplate); 
         }
         // GET:
@@ -65,12 +65,12 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(EmailTemplate)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction(nameof(EmailTemplate));
                 }
                 return View(EmailTemplate);
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(EmailTemplate);
         }
 
@@ -79,7 +79,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ActionEmailTemplate(int id)
         {
             if (await (_service.ActionEmailTemplate(id, DatabaseAction.Remove)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewEmailTemplate", new { id });
         }

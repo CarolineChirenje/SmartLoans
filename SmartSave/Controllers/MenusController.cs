@@ -33,10 +33,10 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(MenuGroup)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR"); ;
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR"); ;
                 return RedirectToAction(nameof(MainMenu));
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction(nameof(MainMenu));
         }
     
@@ -52,12 +52,12 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Update(MenuGroup)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 else
                     return View(MenuGroup);
             }
             else
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return  View(MenuGroup);
         }
 
@@ -67,7 +67,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(MainMenu));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewMenuGroup", new { id });
             }
 
@@ -75,7 +75,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> MenuGroupStatus(int id, bool status)
         {
             if (await (_service.ActionMenuGroup(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewMenuGroup", new { id });
         }
@@ -111,13 +111,13 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(update)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ChildMenus", new { menu.MenuGroupID });
                 }
                // ViewBag.MenuGroups = GetMenuGroups();
                 return View(update);
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction(nameof(MainMenu));
         }
         [HttpGet]
@@ -134,26 +134,26 @@ namespace SmartSave.Controllers
             {
                 if (await (_service.Save(menu)) == 0)
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(menu);
                 }
                 return RedirectToAction("ChildMenus", new { menu.MenuGroupID });
             }
             ViewBag.MenuGroups = GetMenuGroups();
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(menu);
         }
 
         public async Task<IActionResult> RemoveMenu(int id, int MenuGroupID)
         {
             if (await (_service.ActionMenu(id, DatabaseAction.Remove)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ChildMenus", new { MenuGroupID }); ;
         }
         public async Task<IActionResult> ChangeMenuStatus(int id, int MenuGroupID, bool status)
         {
             if (await (_service.ActionMenu(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewMenu", new { id });
         }

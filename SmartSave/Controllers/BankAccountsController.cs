@@ -41,14 +41,14 @@ namespace SmartSave.Controllers
             {
                 if (await _service.IsDuplicate(BankAccount))
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = "Failed to Create Bank Account a Bank Account with the same name and Account Number Already Exists";
+                    TempData[MessageDisplayType.Error.ToString()] = "Failed to Create Bank Account a Bank Account with the same name and Account Number Already Exists";
                     return View(BankAccount);
                 }
 
                 int result= await _service.Save(BankAccount);
                 if ( result == 0)
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(BankAccount);
                 }
                 else
@@ -56,7 +56,7 @@ namespace SmartSave.Controllers
                     return RedirectToAction("ViewBankAccount", new { id=result });
                 }
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(BankAccount);
         }
         // GET:
@@ -80,10 +80,10 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(bankAccount))
                 {
                     if (await (_service.Update(BankAccount)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 }
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(BankAccount);
         }
 
@@ -97,7 +97,7 @@ namespace SmartSave.Controllers
                     return RedirectToAction(nameof(BankAccount));
                 else
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(bankAccount);
                 }
             }
@@ -109,7 +109,7 @@ namespace SmartSave.Controllers
             if (UtilityService.IsNotNull(bankAccount))
             {
                 if (await (_service.ActionBank(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(bankAccount);
             }
             return RedirectToAction("ViewBankAccount", new { id });

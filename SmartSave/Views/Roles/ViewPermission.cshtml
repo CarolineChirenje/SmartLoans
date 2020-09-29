@@ -16,9 +16,9 @@
         <!-- /.box-header -->
         <!-- form start -->
         <form class="form-horizontal">
-            @if (ViewData["Error"] != null)
+            @if (TempData["Error"] != null)
             {<div class="container">
-                    <strong class="">@ViewData["Error"].ToString()</strong>
+                    <strong class="">@TempData["Error"].ToString()</strong>
                     <div class="panel panel-danger">
                         <div class="panel-body">@Html.ValidationSummary()</div>
                     </div>

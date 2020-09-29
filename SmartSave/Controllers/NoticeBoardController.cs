@@ -41,11 +41,11 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(NoticeBoard)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(NoticeBoard));
             }
           
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(NoticeBoard);
         }
         // GET:
@@ -68,12 +68,12 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(NoticeBoard)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction(nameof(NoticeBoard));
                 }
                 return RedirectToAction(nameof(NoticeBoard));
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction(nameof(NoticeBoard));
         }
 
@@ -83,14 +83,14 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(NoticeBoard));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewNotice", new { id });
             }
         }
         public async Task<IActionResult> ChangeNoticeBoardstatus(int id, bool status)
         {
             if (await (_service.ActionNoticeBoard(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewNotice", new { id });
         }

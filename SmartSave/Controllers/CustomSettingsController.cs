@@ -55,12 +55,12 @@ namespace SmartSave.Controllers
                         CustomSettings.Value = Encryption.Encrypt(value);
                 }
                     if (await (_service.Update(CustomSettings)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction(nameof(CustomSettings));
                 }
                 return RedirectToAction("ViewCustomSettings", new { id = CustomSettings.CustomSettingID }); 
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewCustomSettings", new { id = CustomSettings.CustomSettingID });
         }
 
@@ -68,7 +68,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ActionSettingStatus(int id, bool status)
         {
             if (await (_service.ActionCustomSetting(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewCustomSettings", new { id });
         }

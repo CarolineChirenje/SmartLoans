@@ -39,14 +39,14 @@ namespace SmartSave.Controllers
             {
                 if (await _service.IsDuplicate(Course))
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = "Failed to Create Course a Course with the same Title Already Exists";
+                    TempData[MessageDisplayType.Error.ToString()] = "Failed to Create Course a Course with the same Title Already Exists";
                     return View(Course);
                 }
                 if (await (_service.Save(Course)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(Courses));
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Course);
         }
         // GET:
@@ -72,12 +72,12 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(Course)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction(nameof(Courses));
                 }
                 return View(Course);
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Course);
         }
 
@@ -86,7 +86,7 @@ namespace SmartSave.Controllers
         {
             if (await (_service.ActionCourse(id, DatabaseAction.Remove)) == 0)
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewCourse", new { id });
 
             }
@@ -110,7 +110,7 @@ namespace SmartSave.Controllers
 
                 if (await (_service.Save(courseOutline)) == 0)
                 {
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewCourse", new { id = courseOutline.CourseID });
                 }
 
@@ -138,21 +138,21 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(courseoutline)) == 0)
                     {
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                         return View(_courseoutline);
                     } }
                 _courseoutline = await _service.FindCourseOutline(courseoutline.CourseOutlineID);
 
                 return View(_courseoutline);
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(_courseoutline);
         }
         public async Task<IActionResult> ActionCourseOutline(int outlineid, int courseid)
         {
             if (await (_service.ActionCourseOutline(outlineid, DatabaseAction.Remove)) == 0)
             {
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewCourseOutline", new { id = outlineid });
             }
             return RedirectToAction("ViewCourse", new { id = courseid });

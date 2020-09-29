@@ -28,10 +28,10 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(TransactionType)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(TransactionType));
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(TransactionType); 
         }
         // GET:
@@ -55,7 +55,7 @@ namespace SmartSave.Controllers
                 TransactionType.TransactionStatus = await _service.FindTransactionStatus(TransactionType.TransactionStatusID);
                 if (await (_service.Update(TransactionType)) == 0)
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(TransactionType);
                 }
                   
@@ -72,7 +72,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(TransactionType));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewTransactionType", new { id });
             }
 
@@ -80,7 +80,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ChangeTransactionTypestatus(int id, bool status)
         {
             if (await (_service.ActionTransactionType(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewTransactionType", new { id });
         }

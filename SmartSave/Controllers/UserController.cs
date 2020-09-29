@@ -62,7 +62,7 @@ namespace SmartSave.Controllers
 
              if (_service.UserExists(user.EmailAddress))
              {
-                    ViewData[MessageDisplayType.Error.ToString()] = $"A User Account with the same email address {user.EmailAddress} already exists";
+                    TempData[MessageDisplayType.Error.ToString()] = $"A User Account with the same email address {user.EmailAddress} already exists";
                     return View(user);
                 }
                 user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
@@ -70,7 +70,7 @@ namespace SmartSave.Controllers
                 int result=await  _service.Save(user);
                 if (result == 0)
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(user);
                 }
                 else
@@ -129,13 +129,13 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(user)) == 0)
                     {
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                         return View(user);
                     }
                 }
                 return RedirectToAction("ViewUser", new { id=user.UserID });
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewUser", new { id = user.UserID });
         }
 
@@ -146,7 +146,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(Users));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewUser", new { id });
             }
         }
@@ -158,7 +158,7 @@ namespace SmartSave.Controllers
 
             if (await (_service.UpdateRoles(user.UserID, selectedRoles)) == 0)
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
 
             return RedirectToAction("ViewUser", new { id=user.UserID });
@@ -171,7 +171,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(Users));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewUser", new { id });
             }
         }
@@ -181,7 +181,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(Users));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewUser", new { id });
             }
         }

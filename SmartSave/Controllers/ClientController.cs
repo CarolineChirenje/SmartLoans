@@ -65,12 +65,12 @@ namespace SmartSave.Controllers
         }
         public IActionResult MyAccount()
         {
-           if(UtilityService.UserType==(int)TypeOfUser.Employee)
-           {
+            if (UtilityService.UserType == (int)TypeOfUser.Employee)
+            {
                 User user = _userService.FindUser(0, UtilityService.CurrentUserName).Result;
-                if(UtilityService.IsNotNull(user))
+                if (UtilityService.IsNotNull(user))
                 {
-                    Client client =  _service.ClientDetails(user.EmailAddress, user.IDNumber).Result;
+                    Client client = _service.ClientDetails(user.EmailAddress, user.IDNumber).Result;
                     if (UtilityService.IsNotNull(client))
                     {
                         return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
@@ -96,7 +96,7 @@ namespace SmartSave.Controllers
             int _result = await (_service.Save(Client));
             if (_result == 0)
             {
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(Client);
             }
 
@@ -134,14 +134,14 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(Client)) == 0)
                     {
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                         return View(Client);
                     }
                 }
-               
+
                 return RedirectToAction("ViewClient", new { id = Client.ClientID });
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Client);
         }
 
@@ -154,7 +154,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(Clients));
             else
             {
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewClient", new { id = id });
             }
         }
@@ -167,7 +167,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(ClientContact)) == 0)
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             }
             return RedirectToAction("ViewClient", new { id = ClientContact.ClientID });
@@ -198,7 +198,7 @@ namespace SmartSave.Controllers
             if (UtilityService.IsNotNull(update))
             {
                 if (await (_service.Update(ClientContact)) == 0)
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewContact", new { id = ClientContact.ClientContactID });
             }
             return RedirectToAction("ViewContact", new { id = ClientContact.ClientContactID });
@@ -209,7 +209,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ActionContact(int contactid, int Clientid)
         {
             if (await (_service.ActionContact(contactid, DatabaseAction.Remove)) == 0)
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewClient", new { id = Clientid });
         }
@@ -230,7 +230,7 @@ namespace SmartSave.Controllers
 
                 if (await (_service.Save(ClientNote)) == 0)
                 {
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(ClientNote);
                 }
 
@@ -257,18 +257,18 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(ClientNote)) == 0)
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClient", new { id = ClientNote.ClientID });
                 }
                 return RedirectToAction("ViewClient", new { id = ClientNote.ClientID });
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewClientNote", new { id = ClientNote.ClientNoteID });
         }
         public async Task<IActionResult> ActionNote(int noteid, int Clientid)
         {
             if (await (_service.ActionNote(noteid, DatabaseAction.Remove)) == 0)
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewClient", new { id = Clientid });
         }
@@ -276,7 +276,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> CloseNote(int noteid, int Clientid)
         {
             if (await (_service.ActionNote(noteid, DatabaseAction.Close)) == 0)
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewClient", new { id = Clientid });
         }
@@ -304,6 +304,18 @@ namespace SmartSave.Controllers
                     if (FileBytes.Length > 0)
                     //Convert Image to byte and save to database
                     {
+                        int requiredSize = UtilityService.MaximumFileSize;
+                        int MegaBytes = requiredSize* 1024 * 1024;
+                        var fileSize = FileBytes.Length;
+                        if (fileSize > MegaBytes)
+                        {
+
+                            TempData["Error"] = $"Document Size should not be more than {requiredSize} MB";
+                            return RedirectToAction("ViewClient", new
+                            {
+                                id = ClientDocument.ClientID
+                            });
+                        }
                         byte[] file = null;
                         using (var fs1 = FileBytes.OpenReadStream())
                         using (var ms1 = new MemoryStream())
@@ -317,7 +329,7 @@ namespace SmartSave.Controllers
                     }
                 }
                 if (await (_service.Save(ClientDocument)) == 0)
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             }
             return RedirectToAction("ViewClient", new { id = ClientDocument.ClientID });
@@ -342,18 +354,18 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(update)) == 0)
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClient", new { id = ClientDocument.ClientID });
                 }
                 return RedirectToAction("ViewClient", new { id = ClientDocument.ClientID });
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewClient", new { id = ClientDocument.ClientID });
         }
         public async Task<IActionResult> ActionDocument(int id)
         {
             if (await (_service.ActionDocument(id, DatabaseAction.Remove)) == 0)
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
         }
@@ -420,8 +432,10 @@ namespace SmartSave.Controllers
                     email.Body = emailTemplate.Body;
                     email.Subject = emailTemplate.Subject;
                 }
-                _mailService.SendMail(email);
-
+                 if(_mailService.SendMail(email))
+                TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {statement.Client.EmailAddress}";
+               else
+                    TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {statement.Client.EmailAddress}";
                 return RedirectToAction("ViewClient", new { id = statement.ClientID });
             }
         }
@@ -476,7 +490,7 @@ namespace SmartSave.Controllers
             return pdffile;
         }
 
-       
+
 
         /// <summary>
         /// Client Payment
@@ -496,7 +510,7 @@ namespace SmartSave.Controllers
 
                 if (await (_paymentService.CreatePayment(payment, (TransactionTypeList)payment.TransactionTypeID)) == 0)
                 {
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClient", new { id = payment.ClientID });
                 }
 
@@ -510,7 +524,7 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             if (id == 0)
                 return RedirectToAction(nameof(Clients));
-            Transaction transaction = await _paymentService.PaymentFile(id, null) ;
+            Transaction transaction = await _paymentService.PaymentFile(id, null);
             return View(transaction);
         }
 
@@ -522,14 +536,14 @@ namespace SmartSave.Controllers
             {
                 if (await (_paymentService.ReversePayment(paymentsFile, (TransactionTypeList)transactionTypeID)) == 0)
                 {
-               
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                  
+
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+
                 }
-              
+
             }
-               return RedirectToAction("ViewClient", "Client", new { id = clientid });
-           
+            return RedirectToAction("ViewClient", "Client", new { id = clientid });
+
         }
 
         public async Task<IActionResult> ViewTransaction(int id = 0)
@@ -550,12 +564,12 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(paymentsFile))
                 {
                     if (await (_paymentService.CreatePayment(paymentsFile, (TransactionTypeList)id)) == 0)
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClient", new { id = payment.ClientID });
                 }
                 return RedirectToAction("ViewClient", new { id = payment.ClientID });
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewClient", new { id = payment.ClientID });
         }
 
@@ -567,7 +581,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(ClientMedicalDetail)) == 0)
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             }
             return RedirectToAction("ViewClient", new { id = ClientMedicalDetail.ClientID });
@@ -592,19 +606,19 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(ClientMedicalDetail)) == 0)
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewMedicalDetail", new { id = ClientMedicalDetail.ClientMedicalID });
                 }
                 return RedirectToAction("ViewMedicalDetail", new { id = ClientMedicalDetail.ClientMedicalID });
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewClient", new { id = ClientMedicalDetail.ClientID });
         }
 
         public async Task<IActionResult> ActionMedicalDetail(int medicaldetailID, int Clientid)
         {
             if (await (_service.ActionMedicalDetail(medicaldetailID, DatabaseAction.Remove)) == 0)
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewClient", new { id = Clientid });
         }
@@ -617,7 +631,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(ClientGuarantor)) == 0)
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             }
             return RedirectToAction("ViewClient", new { id = ClientGuarantor.ClientID });
@@ -645,12 +659,12 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(ClientGuarantor)) == 0)
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClientGuarantor", new { id = ClientGuarantor.ClientGuarantorID });
                 }
                 return RedirectToAction("ViewClientGuarantor", new { id = ClientGuarantor.ClientGuarantorID });
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewClient", new { id = ClientGuarantor.ClientID });
         }
 
@@ -658,7 +672,7 @@ namespace SmartSave.Controllers
         {
             if (await (_service.ActionGuarantor(guarantorid, DatabaseAction.Remove)) == 0)
             {
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewClient", new { id = Clientid });
             }
             return RedirectToAction("ViewClient", new { id = Clientid });
@@ -671,7 +685,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(ClientDependent)) == 0)
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             }
             return RedirectToAction("ViewClient", new { id = ClientDependent.ClientID });
@@ -702,7 +716,7 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(ClientDependent)) == 0)
                     {
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
                         HttpContext.Session.SetString("GenderID", ClientDependent.GenderID.ToString());
                         return View(ClientDependent);
@@ -710,7 +724,7 @@ namespace SmartSave.Controllers
                 }
                 return RedirectToAction("ViewClientDependent", new { id = ClientDependent.ClientDependentID });
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewClient", new { id = ClientDependent.ClientID });
         }
         [HttpPost]
@@ -718,7 +732,7 @@ namespace SmartSave.Controllers
         {
             if (await (_service.ActionDependent(Dependentid, DatabaseAction.Remove)) == 0)
             {
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewClient", new { id = Clientid });
             }
             return RedirectToAction("ViewClient", new { id = Clientid });
@@ -738,7 +752,7 @@ namespace SmartSave.Controllers
 
                 if (await (_service.Save(ClientProduct)) == 0)
                 {
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClient", new { id = ClientProduct.ClientID });
                 }
 
@@ -766,19 +780,19 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(clientProduct)) == 0)
                     {
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                         return RedirectToAction("ViewClient", new { id = clientProduct.ClientID });
                     }
                 }
                 return RedirectToAction("ViewClientProduct", new { id = clientProduct.ClientProductID });
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewClientProduct", new { id = clientProduct.ClientProductID });
         }
         public async Task<IActionResult> ActionClientProduct(int productid, int Clientid)
         {
             if (await (_service.ActionProduct(productid, DatabaseAction.Remove)) == 0)
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewClient", new { id = Clientid });
         }
@@ -799,7 +813,7 @@ namespace SmartSave.Controllers
 
                 if (await (_service.Save(ClientCourse)) == 0)
                 {
-                    ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction("ViewClient", new { id = ClientCourse.ClientID });
                 }
 
@@ -826,7 +840,7 @@ namespace SmartSave.Controllers
 
             if (await (_service.UpdateSessions(clientCourse.ClientCourseID, selectedSessions)) == 0)
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
 
 
@@ -846,19 +860,19 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(clientCourse)) == 0)
                     {
-                        ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                         return RedirectToAction("ViewClient", new { id = clientCourse.ClientID });
                     }
                 }
                 return RedirectToAction("ViewClientCourse", new { id = clientCourse.ClientCourseID });
             }
-            ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewClientCourse", new { id = clientCourse.ClientCourseID });
         }
         public async Task<IActionResult> ActionCourse(int courseid, int Clientid)
         {
             if (await (_service.ActionCourse(courseid)) == 0)
-                ViewData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewClient", new { id = Clientid });
         }

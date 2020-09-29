@@ -274,6 +274,26 @@ namespace SmartHelper
 
             }
         }
+
+        public static int MaximumFileSize
+        {
+            get
+            {
+                string _size = GetData.GetSettingValue((int)AppSetting.File_Maximum_UpLoadable_Size)?.Value;
+                int size = 1;
+                try
+                {
+                    size = Int32.Parse(_size);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                return size;
+
+            }
+        }
         public static string CustomerServiceEmail
         {
             get

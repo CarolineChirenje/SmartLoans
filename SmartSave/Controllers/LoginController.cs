@@ -47,7 +47,7 @@ namespace SmartSave.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(model);
             }
 
@@ -83,13 +83,13 @@ namespace SmartSave.Controllers
 
                 else
                 {
-                    ViewData[MessageDisplayType.Warning.ToString()] = UtilityService.GetMessageToDisplay("USERINACTIVE");
+                    TempData[MessageDisplayType.Warning.ToString()] = UtilityService.GetMessageToDisplay("USERINACTIVE");
                     return View(model);
                 }
             }
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("USERLOGIN");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("USERLOGIN");
                 return View(model);
             }
         }
@@ -111,7 +111,7 @@ namespace SmartSave.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(model);
             }
 
@@ -134,19 +134,19 @@ namespace SmartSave.Controllers
 
                 if (_mailService.SendMail(email, false))
                 {
-                    ViewData[MessageDisplayType.Success.ToString()] = $"We have sent an email {model.EmailAddress} with the password reset details.";
+                    TempData[MessageDisplayType.Success.ToString()] = $"We have sent an email {model.EmailAddress} with the password reset details.";
                     return View(model);
                 }
 
                 else
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(model);
                 }
             }
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(model);
             }
         }
@@ -165,7 +165,7 @@ namespace SmartSave.Controllers
                 DateTime calculatedExpiryDate = pinReset.ExpiryDate;
                 if (DateTime.Now > calculatedExpiryDate)
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = $"This pin expired on {UtilityService.ShowDateTime(calculatedExpiryDate)}";
+                    TempData[MessageDisplayType.Error.ToString()] = $"This pin expired on {UtilityService.ShowDateTime(calculatedExpiryDate)}";
                     return View(Code);
                 }
                 else
@@ -177,7 +177,7 @@ namespace SmartSave.Controllers
             }
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = "A match for the code provided could not be found";
+                TempData[MessageDisplayType.Error.ToString()] = "A match for the code provided could not be found";
                 return View(Code);
             }
         }
@@ -199,18 +199,18 @@ namespace SmartSave.Controllers
                 int result = await _service.PasswordChange(userID, model.Password);
                 if (result > 0)
                 {
-                    ViewData[MessageDisplayType.Success.ToString()] = "Password Reset Complete";
+                    TempData[MessageDisplayType.Success.ToString()] = "Password Reset Complete";
                     return View(model);
                 }
                 else
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = "An error occurred failed to reset password";
+                    TempData[MessageDisplayType.Error.ToString()] = "An error occurred failed to reset password";
                     return View(model);
                 }
             }
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = "Passwords do not match";
+                TempData[MessageDisplayType.Error.ToString()] = "Passwords do not match";
                 return View(model);
             }
         }
@@ -225,7 +225,7 @@ namespace SmartSave.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(model);
             }
 
@@ -237,7 +237,7 @@ namespace SmartSave.Controllers
                 bool _accountExists = await _service.UserAccountExists(client.EmailAddress, client.IDNumber);
                 if (_accountExists)
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = $"An account registered  with the following Email Address {client.EmailAddress} and ID Number {client.IDNumber} already exists please try to do a password reset if you have forgotten your details or contact our Customer Service Support on {UtilityService.CustomerServiceNumber}   for further help";
+                    TempData[MessageDisplayType.Error.ToString()] = $"An account registered  with the following Email Address {client.EmailAddress} and ID Number {client.IDNumber} already exists please try to do a password reset if you have forgotten your details or contact our Customer Service Support on {UtilityService.CustomerServiceNumber}   for further help";
                     return View(model);
                 }
                 string pincode = await _service.ResetPassword(model.EmailAddress, true);
@@ -257,25 +257,25 @@ namespace SmartSave.Controllers
 
                     if (_mailService.SendMail(email, false))
                     {
-                        ViewData[MessageDisplayType.Success.ToString()] = $"We have sent an email to {model.EmailAddress} with further  details regarding account creation.";
+                        TempData[MessageDisplayType.Success.ToString()] = $"We have sent an email to {model.EmailAddress} with further  details regarding account creation.";
                         return View(model);
                     }
                     else
                     {
-                        ViewData[MessageDisplayType.Success.ToString()] = $"Failed to send email with further  details regarding account creation.Please contact our Customer Service Support on {UtilityService.CustomerServiceNumber} for help.";
+                        TempData[MessageDisplayType.Success.ToString()] = $"Failed to send email with further  details regarding account creation.Please contact our Customer Service Support on {UtilityService.CustomerServiceNumber} for help.";
                         return View(model);
                     }
                 }
 
                 else
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(model);
                 }
             }
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = "A match has not been found";
+                TempData[MessageDisplayType.Error.ToString()] = "A match has not been found";
                 return View(model);
             }
         }
@@ -296,7 +296,7 @@ namespace SmartSave.Controllers
                 DateTime calculatedExpiryDate = pinReset.ExpiryDate;
                 if (DateTime.Now > calculatedExpiryDate)
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = $"This pin expired on {UtilityService.ShowDateTime(calculatedExpiryDate)}";
+                    TempData[MessageDisplayType.Error.ToString()] = $"This pin expired on {UtilityService.ShowDateTime(calculatedExpiryDate)}";
                     return View(Code);
                 }
                 else
@@ -308,7 +308,7 @@ namespace SmartSave.Controllers
             }
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = "A match for the code provided could not be found";
+                TempData[MessageDisplayType.Error.ToString()] = "A match for the code provided could not be found";
                 return View(Code);
             }
         }
@@ -342,7 +342,7 @@ namespace SmartSave.Controllers
             int result = await _userService.Save(user, false);
             if (result == 0)
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(user);
             }
             else
@@ -358,12 +358,12 @@ namespace SmartSave.Controllers
                 email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
                 if (_mailService.SendMail(email, false))
                 {
-                    ViewData[MessageDisplayType.Success.ToString()] = $"Account creation complete.We have sent an email to {client.EmailAddress} with your login credentials.";
+                    TempData[MessageDisplayType.Success.ToString()] = $"Account creation complete.We have sent an email to {client.EmailAddress} with your login credentials.";
                     return View(client);
                 }
                 else
                 {
-                    ViewData[MessageDisplayType.Success.ToString()] = $"Account has been created successfully but we failed to send an  email with further  details regarding account creation.Please contact our Customer Service Support on {UtilityService.CustomerServiceNumber} for help.";
+                    TempData[MessageDisplayType.Success.ToString()] = $"Account has been created successfully but we failed to send an  email with further  details regarding account creation.Please contact our Customer Service Support on {UtilityService.CustomerServiceNumber} for help.";
                     return View(client);
                 }
 

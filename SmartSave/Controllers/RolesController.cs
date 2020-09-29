@@ -33,10 +33,10 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 if (await (_service.Save(role)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR"); ;
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR"); ;
                 return RedirectToAction(nameof(Roles));
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction(nameof(Roles));
         }
         // GET:
@@ -63,14 +63,14 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(role)) == 0)
                     {
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                         return View(role);
                     }
                     //     return RedirectToAction(nameof(Roles));
                 }
                 return View(role);
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(role);
         }
 
@@ -81,7 +81,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(Roles));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewRole", new { id });
             }
 
@@ -89,7 +89,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ChangeRoleStatus(int id, bool status)
         {
             if (await (_service.ActionRole(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewRole", new { id });
         }
@@ -113,7 +113,7 @@ namespace SmartSave.Controllers
         {
             if (await (_service.ActionPermission(id, roleID, DatabaseAction.Remove)) == 0)
 
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewRole", new {id= roleID });
 
         }
@@ -136,7 +136,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(Roles));
             if (await _service.Save(user) == 0)
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
 
             return RedirectToAction("ViewRole", new {id= user.RoleID });
@@ -147,7 +147,7 @@ namespace SmartSave.Controllers
         {
             if (await (_service.DeleteUserFromRole(UserID,roleID)) == 0)
 
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewRole", new {id= roleID });
 
         }
@@ -160,7 +160,7 @@ namespace SmartSave.Controllers
             {
                 if (await (_service.UpdatePermissions(role.RoleID, selectedPermissions)) == 0)
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(role);
                 }
 
@@ -179,7 +179,7 @@ namespace SmartSave.Controllers
             {
                 if (await (_service.UpdateMenus(role.RoleID, selectedMenus)) == 0)
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return View(role);
                 }
 
@@ -192,7 +192,7 @@ namespace SmartSave.Controllers
         {
             if (await (_service.DeleteMenuFromRole(roleID,menuid)) == 0)
 
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewRole", new {id= roleID });
 
         }

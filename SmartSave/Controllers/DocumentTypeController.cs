@@ -39,14 +39,14 @@ namespace SmartSave.Controllers
             {
                 if (await _service.IsDuplicate(DocumentType))
                 {
-                    ViewData[MessageDisplayType.Error.ToString()] = "Failed to Create Document Type a Document Type  with the same Name Already Exists";
+                    TempData[MessageDisplayType.Error.ToString()] = "Failed to Create Document Type a Document Type  with the same Name Already Exists";
                     return View(DocumentType);
                 }
                 if (await (_service.Save(DocumentType)) == 0)
-                    ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(DocumentTypes));
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(DocumentType);
         }
         // GET:
@@ -70,12 +70,12 @@ namespace SmartSave.Controllers
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(DocumentType)) == 0)
-                        ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                     return RedirectToAction(nameof(DocumentTypes));
                 }
                 return View(DocumentType);
             }
-            ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(DocumentType);
         }
 
@@ -86,7 +86,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(DocumentTypes));
             else
             {
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction("ViewDocumentType", new { id });
             }
 
@@ -94,7 +94,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ChangeDocumentTypestatus(int id, bool status)
         {
             if (await (_service.ActionDocumentType(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
-                ViewData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             return RedirectToAction("ViewDocumentType", new { id });
         }
