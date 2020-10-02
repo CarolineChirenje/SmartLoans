@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Employee Details</label>
                     <div class="col-sm-10">
-                        <select asp-for="ClientID" id="ClientID"  class="form-control" asp-items="ViewBag.ClientList" onchange="GetProduct(this.value)">
+                        <select asp-for="ClientID" id="ClientID" class="form-control" asp-items="ViewBag.ClientList" onchange="GetProduct(this.value)">
                             <option value="">--- Select Employee ---</option>
                         </select>
 
@@ -50,9 +50,30 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
                     <div class="col-sm-10">
-                        <select id="ProductList" name="ProductID" class="form-control">
+
+                        <select id="ProductList" name="ProductID" class="form-control" onchange="GetAssertList(this.value)">
                         </select>
                         <span id="ProductListNotFound" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Assert Class</label>
+                    <div class="col-sm-10">
+
+                        <select id="AssertList" name="AssertID" class="form-control" onchange="GetCategoryList(this.value)">
+                        </select>
+                        <span id="AssertListNotFound" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Assert Category</label>
+                    <div class="col-sm-10">
+                        <select id="CategoryList" name="AssertCategoryID" class="form-control">
+                        </select>
+                        <span id="CategoryListNotFound" class="text-danger text-bold"></span>
                     </div>
                 </div>
 
@@ -91,18 +112,21 @@
                 <div class="form-group">
                     @{
 
-                        if (SmartHelper.UtilityService.PaymentsMustBeVatInclusive)
+                        if (SmartHelper.UtilityService.ApplicationIsVATCompliant)
                         {
-                            <div class="col-sm-10">
-                                <label class="text-danger">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
-                            </div>
-                        }
+                            if (SmartHelper.UtilityService.PaymentsMustBeVatInclusive)
+                            {
+                                <div class="col-sm-10">
+                                    <label class="text-danger">Payment Amount Should be VAT Inclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
+                                </div>
+                            }
 
-                        else
-                        {
-                            <div class="col-sm-10">
-                                <label class="text-danger">Payment Amount Should be VAT Exclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
-                            </div>
+                            else
+                            {
+                                <div class="col-sm-10">
+                                    <label class="text-danger">Payment Amount Should be VAT Exclusive Actual Breakdown will be Automatically Calculated By The System using a VAT Percentage of @SmartHelper.UtilityService.VATPercentage .</label>
+                                </div>
+                            }
                         }
                     }
                 </div>
@@ -113,6 +137,8 @@
                         <span id="AmountError" class="text-danger text-bold"></span>
                     </div>
                 </div>
+                @if (SmartHelper.UtilityService.ApplicationIsVATCompliant)
+                {
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">VAT</label>
                     <div class="col-sm-10">
@@ -126,7 +152,7 @@
                         <input type="text" class="form-control" name="AmountExclVAT" disabled="disabled" value="0.00">
                     </div>
                 </div>
-
+                }
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
@@ -168,6 +194,8 @@
         })
     })
 
+
+   
     function GetProduct(_clientID) {
         var procemessage = "<option value='0'> Please wait whilst we retrieve Products registered to Individual...</option>";
         $("#ProductList").html(procemessage).show();
@@ -199,5 +227,71 @@
             }
         });
 
+    }
+
+    function GetAssertList(_productID) {
+        var procemessage = "<option value='0'> Please wait whilst we retrieve Asserts registered to Product...</option>";
+        $("#AssertList").html(procemessage).show();
+        var url = "/Transactions/GetAssertByProductID/";
+      
+        $.ajax({
+            url: url,
+            data: { productID: _productID },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>----</option>";
+                if (data == null || data.length == 0) {
+                    $("#AssertListNotFound").text("No Asserts Linked To Product")
+                   // $(":submit").attr("disabled", true);
+                }
+                else {
+                    $("#AssertListNotFound").text("");
+                   // $(":submit").removeAttr("disabled");
+
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
+                    }
+                }
+                $("#AssertList").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+
+
+
+    function GetCategoryList(_assertID) {
+        var procemessage = "<option value='0'> Please wait whilst we retrieve Categories registered to Assert...</option>";
+        $("#CategoryList").html(procemessage).show();
+        var url = "/Transactions/GetCategoryByAssertID/";
+
+        $.ajax({
+            url: url,
+            data: { assertID: _assertID },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>----</option>";
+                if (data == null || data.length == 0) {
+                    $("#CategoryListNotFound").text("No Categories Linked To Assert")
+                    // $(":submit").attr("disabled", true);
+                }
+                else {
+                    $("#CategoryListNotFound").text("");
+                    // $(":submit").removeAttr("disabled");
+
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
+                    }
+                }
+                $("#CategoryList").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
     }
 </script>

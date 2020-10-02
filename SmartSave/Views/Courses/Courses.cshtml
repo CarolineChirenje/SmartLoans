@@ -46,7 +46,7 @@
                                         string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
                                         int sessionCount = item.CourseOutlines == null ? 0 : item.CourseOutlines.Count();
                                     }
-                                    @if (UtilityService.HasPermission(Permissions.Update_Document_Type))
+                                    @if (UtilityService.HasPermission(Permissions.View_Course))
                                     {
                                         <td><a asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseID">@item.Title</a></td>
                                     }

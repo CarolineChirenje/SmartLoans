@@ -19,6 +19,8 @@ namespace SmartDomain
         public virtual Client Client { get; set; }
         public int ProductID { get; set; }
         public virtual Product Product { get; set; }
+        public int AssertID { get; set; }
+        public int AssertCategoryID { get; set; }
         public int BankAccountID { get; set; }
         public virtual BankAccount BankAccount { get; set; }
         public int Year { get; set; }
@@ -33,7 +35,7 @@ namespace SmartDomain
         public decimal AmountExclVAT { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal VAT { get; set; }
-        
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalPaid { get { return Amount; } }
         public DateTime PaymentDate { get; set; }
@@ -41,7 +43,7 @@ namespace SmartDomain
         public int? ParentPaymentID { get; set; }
 
         public string Reason { get; set; }
-       
+
 
 
 

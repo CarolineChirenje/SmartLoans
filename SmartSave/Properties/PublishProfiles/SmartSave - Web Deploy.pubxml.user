@@ -8,14 +8,4 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAChxXdOUaBk2PiPySvNVuoAAAAAACAAAAAAAQZgAAAAEAACAAAAD29bAJunRhigrL+62dMBAcgtvYH5432vpkT/vnezcicgAAAAAOgAAAAAIAACAAAAAPfyW6e/2SNPHOxDaWiSsZF8kr6H5fQNkc++qILstukIAAAABIx5DtSlBURGQ5sNQan8pJssnvnpTxWuZDyDOetFGJJA2rSCImjVC6PlEflV2Suko2u5i3r5cvYD1aOVtMdup06wlQRfPSzdRVG/sNH10IxkNS6HM6QCY2ipK3+lC6X+BhF/mHKndSfNlZRKASry3DVr2qvch9kNcyMEEV8x4ul0AAAADU4ulU8fdVu6JX8cc/BF9Eav4HXihBRmwXMNA2Nd0H9lvRlh4S15AzWFQ/jPjZvwy9SaGu/is5oLoFV9kHtqnJ</EncryptedPassword>
   </PropertyGroup>
-  <ItemGroup>
-    <DestinationConnectionStrings Include="SSDBConnection">
-      <Value>Data Source=tcp:smartsavedbserver.database.windows.net,1433%3bInitial Catalog=SmartSave%3bUser Id=cchirenje%40smartsavedbserver%3bPassword=Ch1gumbu6299##</Value>
-    </DestinationConnectionStrings>
-  </ItemGroup>
-  <ItemGroup>
-    <EFMigrations Include="SmartDataAccess.DatabaseContext">
-      <Value>Data Source=tcp:smartsavedbserver.database.windows.net,1433%3bInitial Catalog=SmartSave%3bUser Id=cchirenje%40smartsavedbserver%3bPassword=Ch1gumbu6299##</Value>
-    </EFMigrations>
-  </ItemGroup>
 </Project>

@@ -31,11 +31,14 @@ namespace SmartLogic
         List<BankAccountType> GetBankAccountTypes();
         List<Currency> GetCurrencies();
         List<DocumentFormat> GetDocumentFormats();
-
+        List<Country> GetCountryList();
+        List<Frequency> GetFrequencyList();
 
         List<CourseOutline> GetCourseOutlines(int courseID);
         List<CourseOutline> GetUserAttendedSessions(int clientid, int courseid);
 
+        List<Assert> GetAssertsLinkedToProduct(int productID);
+        List<AssertCategory> GetAssertCategory(int assertID);
 
     }
 

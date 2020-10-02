@@ -253,7 +253,7 @@ namespace SmartReporting
             {
 
 
-                string _selectClause = @"SELECT t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' - ', p.Name) AS Counter,t.Amount
+                string _selectClause = @"SELECT t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount
                                             FROM Transactions t
                                             INNER JOIN Products p ON p.ProductID=t.ProductID
                                             INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";

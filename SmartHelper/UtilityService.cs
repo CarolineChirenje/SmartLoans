@@ -98,6 +98,28 @@ namespace SmartHelper
 
             }
         }
+
+        public static bool ApplicationIsVATCompliant
+        {
+            get
+            {
+
+                string value = GetData.GetSettingValue((int)AppSetting.Application_Is_VAT_Compliant)?.Value;
+                return value.Equals("true") ? true : false;
+
+            }
+        }
+
+        public static bool AutoGenerateAccountNumber
+        {
+            get
+            {
+
+                string value = GetData.GetSettingValue((int)AppSetting.Account_Number_Auto_Generate)?.Value;
+                return value.Equals("true") ? true : false;
+
+            }
+        }
         public static bool ApplyRoleBasedMenus
         {
             get
@@ -598,6 +620,7 @@ namespace SmartHelper
 
             decimal _amount = 0;
             var cul = CultureInfo.GetCultureInfo("EN-us");
+            Amount=Amount.Replace(",", ".");
             decimal.TryParse(Amount, NumberStyles.AllowDecimalPoint, cul, out _amount);
                     return _amount;
         }

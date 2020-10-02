@@ -31,7 +31,7 @@ namespace SmartHelper
     {
         Positive = 1,
         Negative,
-        
+
     }
     public enum DatabaseAction
     {
@@ -88,16 +88,20 @@ namespace SmartHelper
 
         [Description("PAY")]
         Payment = 1,
-        [Description("REVERS")]
+        [Description("(R)")]
         Reversal,
-                [Description("PURCH")]
+        [Description("PURCH")]
         Purchase,
         [Description("SALE")]
         Sales,
-        [Description("RPR")]
+        [Description("RPT")]
         Receipts,
         [Description("RECON")]
-        Recon
+        Recon,
+        [Description("DEP")]
+        Deposit,
+        [Description("FEE")]
+        Fee,
     }
 
     public enum AccountType
@@ -586,7 +590,9 @@ namespace SmartHelper
         Site_Default_Environment,
         Application_Role_Based_Menus,
         Site_Create_Account_URL,
-        Password_Validity_Period
+        Password_Validity_Period,
+        Account_Number_Auto_Generate,
+         Application_Is_VAT_Compliant
 
 
     }
@@ -596,21 +602,20 @@ namespace SmartHelper
         Super_Admin = 1,
         Employee,
         Administrator,
-          }
+    }
     public enum TypeOfUser
     {
         Administrator = 1,
         Employer,
         Employee,
-      
+
     }
-    public enum Frequency
+    public enum FrequencyList
     {
-        Weekly = 1,
-        Monthly,
-        Quaterly,
-        Bi_Annually,
-        Yearly
+
+        Once_Off = 1,
+        Monthly
+
     }
     public enum PaymentState
     {
@@ -767,7 +772,25 @@ namespace SmartHelper
         Client_Update_Personal_Details,
         Update_Transaction_Type,
         View_Transaction_Type,
-        
+
+        Add_Product_Fee,
+        Update_Product_Fee,
+        Delete_Product_Fee,
+        View_Product_Fee,
+
+        Add_Product_Assert,
+        Update_Product_Assert,
+        View_Product_Assert,
+
+
+        Add_Assert,
+        Update_Assert,
+        Delete_Assert,
+        View_Assert,
+
+        View_Client_Outstanding_Payments
+
+
     }
 
 
@@ -775,7 +798,7 @@ namespace SmartHelper
     {
         Test = 1,
         Production = 2,
-       
+
     }
     public enum QueryType
     {
@@ -844,7 +867,7 @@ namespace SmartHelper
         Completed = 4
     }
 
-    
+
 
     public enum Priority
     {

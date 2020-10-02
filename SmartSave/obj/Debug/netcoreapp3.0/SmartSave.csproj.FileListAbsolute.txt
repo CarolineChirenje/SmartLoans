@@ -7955,6 +7955,10 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssem
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.TagHelpers.input.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.TagHelpers.output.cache
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorCoreGenerate.cache
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Assert\AddAssert.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Assert\Assert.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Assert\ViewAssert.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Assert\ViewAssertCategory.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAccounts\AddBankAccount.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAccounts\BankAccounts.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAccounts\ViewBankAccount.cshtml.g.cs
@@ -8019,6 +8023,7 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\NoticeBo
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Product\AddProduct.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Product\Product.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Product\ViewProduct.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Product\ViewProductFee.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\Add.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\RolePermissions.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\Roles.cshtml.g.cs

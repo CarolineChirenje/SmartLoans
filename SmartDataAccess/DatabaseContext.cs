@@ -43,9 +43,9 @@ namespace SmartDataAccess
              Data.GetCurrencies());
 
 
-            // product Frequencies
-            modelBuilder.Entity<ProductFrequency>().HasData(
-                Data.GetProductFrequencies());
+            //// product Frequencies
+            modelBuilder.Entity<Frequency>().HasData(
+                Data.GetFrequencies());
 
 
             //   user types
@@ -166,12 +166,21 @@ namespace SmartDataAccess
         public DbSet<ClientNote> ClientNotes { get; set; }
         public DbSet<ClientDependent> ClientDependents { get; set; }
         public DbSet<ClientProduct> ClientProducts { get; set; }
+        public DbSet<ClientFee> ClientFees { get; set; }
+        public DbSet<ClientOccupationHistory> ClientOccupationHistory { get; set; }
+
         public DbSet<UserAuthenticationCode> UserAuthenticationCodes { get; set; }
         public DbSet<ClientMedicalDetail> ClientMedicalDetails { get; set; }
         public DbSet<NoticeBoard> NoticeBoard { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductNote> ProductNotes { get; set; }
-        public DbSet<ProductFrequency> ProductFrequencies { get; set; }
+        public DbSet<ProductHistory> ProductHistory { get; set; }
+        public DbSet<ProductFee> ProductFees { get; set; }
+        public DbSet<ProductFeeHistory> ProductFeeHistory { get; set; }
+        public DbSet<ProductAssert> ProductAsserts { get; set; }
+        public DbSet<AssertCategory> AssertCategories { get; set; }
+        public DbSet<Assert> Asserts { get; set; }
+
+
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseOutline> CourseOutlines { get; set; }
         public DbSet<Department> Department { get; set; }
@@ -179,6 +188,7 @@ namespace SmartDataAccess
         public DbSet<PriorityRank> PriorityRanks { get; set; }
         public DbSet<ContactType> ContactTypes { get; set; }
         public DbSet<WeekDay> WeekDays { get; set; }
+        public DbSet<Frequency> Frequencies { get; set; }
         public DbSet<Gender> Genders { get; set; }
 
         public DbSet<RelationshipType> RelationshipTypes { get; set; }

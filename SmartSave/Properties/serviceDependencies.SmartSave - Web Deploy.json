@@ -5,6 +5,12 @@
       "type": "mssql.azure",
       "connectionId": "SSDBConnection",
       "secretStore": "AzureAppSettings"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "SSDBConnectionPROD",
+      "suggestion": "true",
+      "ignored": "true"
     }
   }
 }

@@ -374,6 +374,20 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
+                 new Menu()
+                {
+                    MenuID = 20,
+                    MenuGroupID = (int)MenuGroups.Accounting,
+                    DisplayName = "Asserts",
+                    ControllerName = "Assert",
+                    ActionName = "Assert",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-lightbulb-o"),
+                    OrderNo = 20,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+
             };
             return menus.ToArray();
 

@@ -145,11 +145,24 @@ namespace SmartLogic
             return await _context.SaveChangesAsync();
         }
         public async Task<int> Save(Role role)
-        {
+        { int result = 0;
             role.LastChangedBy = UtilityService.CurrentUserName;
             role.LastChangedDate = DateTime.Now;
             _context.Add(role);
-            return (await _context.SaveChangesAsync());
+            result = await _context.SaveChangesAsync();
+            if(result>0 && role.DuplicateRoleID>0)
+            {
+                List<int> role_Permission = RolePermissions(role.DuplicateRoleID).ToList();
+                result =await AddPermissions(role.RoleID, role_Permission);
+                if(result>0)
+                {
+                    List<int> role_menus = RoleMenus(role.DuplicateRoleID).ToList();
+                    result = await AddMenus(role.RoleID, role_menus);
+                }
+
+
+            }
+            return result;
         }
         public async Task<int> Delete(int id)
         {
@@ -380,6 +393,7 @@ namespace SmartLogic
                    where c.RoleID == roleID
                    select c.MenuID;
         }
+
         public  List<RoleMenu> GetRoleMenus(int roleID)
         {
             return  _context.RoleMenus.Where(m => m.RoleID == roleID).ToList();

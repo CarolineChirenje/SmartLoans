@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace SmartDomain
 {
-   public class ProductFrequency :ChangeAudit
+   public class Assert :ChangeAudit
     { 
      [Key]
-    public int ProductFrequencyID { get; set; }
+    public int AssertID { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public bool IsActive { get; set; }
-  
-}
+    public virtual List<AssertCategory> AssertCategories { get; set; }
+
+    }
 
 }

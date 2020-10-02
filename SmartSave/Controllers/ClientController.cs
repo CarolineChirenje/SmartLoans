@@ -93,6 +93,8 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> AddClient(Client Client)
         {
             GetDropDownLists();
+            decimal _salary = UtilityService.GetDecimalAmount(Client.SalaryAmount);
+            Client.Salary = _salary;
             int _result = await (_service.Save(Client));
             if (_result == 0)
             {
@@ -127,6 +129,8 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ViewClient(Client Client)
         {
             GetDropDownLists();
+            decimal _salary = UtilityService.GetDecimalAmount(Client.SalaryAmount);
+            Client.Salary = _salary;
             if (ModelState.IsValid)
             {
                 Client update = await _service.FindClient(Client.ClientID);

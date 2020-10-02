@@ -39,6 +39,16 @@
                         <div class="text-warning">@TempData["Warning"].ToString()</div>
                     </div>
                 }
+
+                @if (!SmartHelper.UtilityService.AutoGenerateAccountNumber)
+                {<div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Employee Number</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="AccountNumber" placeholder="Employee Number" required>
+
+                        </div>
+                    </div>
+                }
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
                     <div class="col-sm-10">
@@ -118,6 +128,22 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Occupation</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Occupation" placeholder="Occupation" required>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Salary</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Salary" name="SalaryAmount" required>
+                        <span id="SalaryError" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
                     <div class="checkbox">
                         <label class="checkbox-inline">
@@ -144,4 +170,17 @@
 <script>
   
     document.getElementById('DateOfBirth').value = new Date().toISOString().substring(0, 10);
+    $(function () {
+        $('#Salary').blur(function () {
+            var tempVal = $('#Salary').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#SalaryError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#SalaryError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+    });
  </script>

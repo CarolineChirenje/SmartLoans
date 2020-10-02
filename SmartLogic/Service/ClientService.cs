@@ -75,8 +75,9 @@ namespace SmartLogic
                             ThenInclude(docFormat => docFormat.DocumentFormat).
                             Include(sm => sm.ClientMedicalDetails).
                             Include(sg => sg.ClientGuarantors).
-                            Include(p => p.ClientProducts).
-                            ThenInclude(p => p.Product).
+                            Include(p => p.ClientProducts).ThenInclude(p => p.Product).
+                            Include(p => p.ClientFees).ThenInclude(p => p.ProductFee).ThenInclude(p=>p.Product).
+                            Include(p => p.ClientFees).ThenInclude(p => p.ProductFee).ThenInclude(p => p.Frequency).
                             Include(d => d.ClientDependents).
                             Include(c => c.ClientCourses).
                             ThenInclude(c => c.Course).
@@ -92,7 +93,9 @@ namespace SmartLogic
 
         public async Task<int> Save(Client Client)
         {
-            Client.AccountNumber = NewClientAccountNumber;
+        if (UtilityService.AutoGenerateAccountNumber)
+                Client.AccountNumber = NewClientAccountNumber;
+
             Client.UserName = UtilityService.GenerateUserName(Client.FirstName, Client.LastName);
             Client.LastChangedBy = UtilityService.CurrentUserName;
             Client.LastChangedDate = DateTime.Now;
@@ -103,7 +106,7 @@ namespace SmartLogic
             return Client.ClientID;
         }
 
-      
+
 
 
         public async Task<int> Update(Client Client)
@@ -111,6 +114,18 @@ namespace SmartLogic
             Client updateClient = await _context.Clients.FindAsync(Client.ClientID);
             string oldIDNumber = updateClient.IDNumber;
             string oldEmailAddress = updateClient.EmailAddress;
+            Decimal oldSalary = updateClient.Salary;
+            if (oldSalary != Client.Salary)
+            {
+
+                ClientOccupationHistory clientOccupationHistory = new ClientOccupationHistory();
+                clientOccupationHistory.ClientID = updateClient.ClientID;
+                clientOccupationHistory.Salary = oldSalary;
+                clientOccupationHistory.Occupation = updateClient.Occupation;
+                clientOccupationHistory.LastChangedDate = updateClient.LastChangedDate;
+                clientOccupationHistory.LastChangedBy = updateClient.LastChangedBy;
+                _context.Add(clientOccupationHistory);
+             }
             if (UtilityService.IsNotNull(updateClient))
             {
                 updateClient.FirstName = Client.FirstName;
@@ -125,6 +140,8 @@ namespace SmartLogic
                 updateClient.GenderID = Client.GenderID;
                 updateClient.LastChangedBy = UtilityService.CurrentUserName;
                 updateClient.LastChangedDate = DateTime.Now;
+                updateClient.Salary = Client.Salary;
+                updateClient.Occupation = Client.Occupation;
                 _context.Update(updateClient);
             }
             int result = await _context.SaveChangesAsync();
@@ -142,7 +159,9 @@ namespace SmartLogic
 
                 }
 
-           }
+            }
+
+            
             return result;
         }
 
@@ -331,7 +350,6 @@ namespace SmartLogic
             update.LastChangedBy = UtilityService.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
             _context.Entry(update).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
             return await _context.SaveChangesAsync();
         }
 
@@ -600,11 +618,59 @@ namespace SmartLogic
 
         public async Task<int> Save(ClientProduct clientProduct)
         {
-
+            int result = 0;
             clientProduct.LastChangedBy = UtilityService.CurrentUserName;
             clientProduct.LastChangedDate = DateTime.Now;
             _context.Add(clientProduct);
-            return (await _context.SaveChangesAsync());
+            result = await _context.SaveChangesAsync();
+            if (result > 0)
+            {
+                //Add Fees to client
+                var productFees = _context.ProductFees.Where(p => p.ProductID == clientProduct.ProductID);
+                foreach (var productFee in productFees)
+                {
+                    DateTime dueDate = DateTime.Now;
+                    FrequencyList frequencyList = (FrequencyList)productFee.FrequencyID;
+                    if (frequencyList == FrequencyList.Once_Off)
+                    {
+                        ClientFee clientFee = new ClientFee();
+                        clientFee.ClientID = clientProduct.ClientID;
+                        clientFee.ProductFeeID = productFee.ProductFeeID;
+                        clientFee.Amount = productFee.Amount;
+                        clientFee.IsPaid = false;
+                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                        clientFee.LastChangedDate = DateTime.Now;
+                        clientFee.ClientProductID = clientProduct.ClientProductID;
+                        clientFee.DueDate = dueDate;
+                        _context.Add(clientFee);
+                    }
+
+                    if (frequencyList == FrequencyList.Monthly)
+                    {
+                        for (int i = 1; i < 13; i++)
+                        {
+                            ClientFee clientFee = new ClientFee();
+                            clientFee.ClientID = clientProduct.ClientID;
+                            clientFee.ProductFeeID = productFee.ProductFeeID;
+                            clientFee.Amount = productFee.Amount;
+                            clientFee.IsPaid = false;
+                            clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                            clientFee.LastChangedDate = DateTime.Now;
+                            clientFee.ClientProductID = clientProduct.ClientProductID;
+                            clientFee.DueDate = dueDate;
+                            _context.Add(clientFee);
+
+                            dueDate = dueDate.AddMonths(i);
+                        }
+                        
+                    }
+
+                }
+                if(productFees.Count()>0)
+                                 result = await _context.SaveChangesAsync();
+               
+            }
+            return result;
 
         }
         public async Task<int> Update(ClientProduct clientProduct)

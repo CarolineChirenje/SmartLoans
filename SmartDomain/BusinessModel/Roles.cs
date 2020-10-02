@@ -24,6 +24,10 @@ namespace SmartDomain
         [NotMapped]
         public int MenuID { get; set; }
 
+        [NotMapped]
+        public int DuplicateRoleID { get; set; }
+
+
 
     }
 }

@@ -118,6 +118,8 @@ namespace SmartSave.Models
         public int BankAccountID { get; set; }
         public int TransactionTypeID { get; set; }
         public bool IsFromClient { get; set; }
+        public int AssertID { get; set; }
+        public int AssertCategoryID { get; set; }
 
     }
 

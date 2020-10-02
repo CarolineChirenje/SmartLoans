@@ -14,14 +14,14 @@ namespace SmartLogic
     public class SettingService : ISettingService
     {
         private readonly DatabaseContext _context;
-        private readonly ICustomSettingsService _settingService= new CustomSettingsService();
+        private readonly ICustomSettingsService _settingService = new CustomSettingsService();
         public SettingService(DatabaseContext context) => _context = context;
         public List<ContactType> GetContactTypes() => _context.ContactTypes.Where(x => x.IsActive).ToList();
         public List<RelationshipType> GetRelationshipTypes() => _context.RelationshipTypes.Where(x => x.IsActive).ToList();
         public List<BankAccountType> GetBankAccountTypes() => _context.BankAccountTypes.Where(x => x.IsActive).ToList();
         public List<Currency> GetCurrencies() => _context.Currencies.Where(x => x.IsActive).ToList();
         public List<DocumentFormat> GetDocumentFormats() => _context.DocumentFormats.Where(x => x.IsActive).ToList();
-
+        public List<Frequency> GetFrequencyList() => _context.Frequencies.Where(x => x.IsActive).ToList();
         public Product FindProduct(int id)
         {
             return _context.Products.Find(id);
@@ -29,29 +29,30 @@ namespace SmartLogic
         }
         public DocumentType FindDocumentTypes(int DocumentTypeID)
         {
-          return  _context.DocumentTypes.
-                                  Include(df =>df.DocumentFormat).
-                    Where(r => r.DocumentTypeID == DocumentTypeID).FirstOrDefault();
+            return _context.DocumentTypes.
+                                    Include(df => df.DocumentFormat).
+                      Where(r => r.DocumentTypeID == DocumentTypeID).FirstOrDefault();
 
         }
         public List<CustomSelectList> GetYears()
         {
-            List<CustomSelectList>  years = new List<CustomSelectList>();
-            int MinYear =Convert.ToInt32(_settingService.GetSettingValue(AppSetting.Minimum_Year));
-            int MaxYear =  DateTime.Now.AddYears(1).Year;
+            List<CustomSelectList> years = new List<CustomSelectList>();
+            int MinYear = Convert.ToInt32(_settingService.GetSettingValue(AppSetting.Minimum_Year));
+            int MaxYear = DateTime.Now.AddYears(1).Year;
             for (var i = MinYear; i <= MaxYear; i++)
             {
-                years.Add( new CustomSelectList()
-                { ID=i,
-                Name=i.ToString()
-               });
+                years.Add(new CustomSelectList()
+                {
+                    ID = i,
+                    Name = i.ToString()
+                });
             }
 
             return years;
-          
+
         }
 
-        public List<TransactionType> GetActiveTransactionTypeList() => _context.TransactionType.Where(T => T.IsActive && T.TransactionTypeID!=(int)TransactionTypeList.Reversal).ToList();
+        public List<TransactionType> GetActiveTransactionTypeList() => _context.TransactionType.Where(T => T.IsActive && T.TransactionTypeID != (int)TransactionTypeList.Reversal).ToList();
         public List<CustomSettingType> GetCustomSettingsTypes() => _context.CustomSettingTypes.Where(x => x.IsActive).ToList();
 
         public List<CustomVariableType> GetCustomVariableTypes() => _context.SystemVariableTypes.Where(x => x.IsActive).ToList();
@@ -60,9 +61,9 @@ namespace SmartLogic
 
 
         public List<Product> GetActiveProductList()
-        
+
         {
-            return  _context.Products.Where(p=>p.IsActive)
+            return _context.Products.Where(p => p.IsActive)
              .AsNoTracking()
             .ToList();
         }
@@ -73,11 +74,13 @@ namespace SmartLogic
              .AsNoTracking()
             .ToList();
         }
-        
+
 
         public List<Gender> GenderList() => _context.Genders.Where(x => x.IsActive).ToList();
 
         public List<Course> GetCourseList() => _context.Courses.Where(x => x.IsActive).ToList();
+
+        public List<Country> GetCountryList() => _context.Countries.Where(x => x.IsActive).ToList();
 
         public List<DocumentType> GetDocumentTypes() => _context.DocumentTypes.Where(x => x.IsActive).ToList();
 
@@ -88,9 +91,9 @@ namespace SmartLogic
           .ToList();
         }
         public List<User> GetInstructors() => _context.Users
-        .Include(ur=>ur.UserRoles).Where(x => x.IsActive).ToList();
+        .Include(ur => ur.UserRoles).Where(x => x.IsActive).ToList();
 
-        public  Custom DocumentFormatMatch(string documentFormat, int DocumentTypeID)
+        public Custom DocumentFormatMatch(string documentFormat, int DocumentTypeID)
         {
             DocumentType documentType = FindDocumentTypes(DocumentTypeID);
             int documentFormatID = documentType.DocumentFormatID;
@@ -113,20 +116,37 @@ namespace SmartLogic
         }
         public List<CourseOutline> GetUserAttendedSessions(int clientid, int courseid)
         {
-        
-        var clientCourse= _context.ClientCourses.Where(c => c.ClientID == clientid && c.CourseID == courseid).FirstOrDefault();
+
+            var clientCourse = _context.ClientCourses.Where(c => c.ClientID == clientid && c.CourseID == courseid).FirstOrDefault();
             int _ClientCourseID = 0;
-         if (UtilityService.IsNotNull(clientCourse))
-            _ClientCourseID=clientCourse.ClientCourseID;
+            if (UtilityService.IsNotNull(clientCourse))
+                _ClientCourseID = clientCourse.ClientCourseID;
 
             IEnumerable<int> courseOutlines = from c in _context.CourseTranscripts
                                               where c.ClientCourseID == _ClientCourseID
                                               select c.CourseOutlineID;
-            return _context.CourseOutlines 
+            return _context.CourseOutlines
            .Where(c => courseOutlines.Contains(c.CourseOutlineID)).ToList();
 
         }
 
+        public List<Assert> GetAssertsLinkedToProduct(int productID)
+        {
+            IEnumerable<int> asserts = from a in _context.ProductAsserts
+                                       where a.ProductID == productID
+                                       select a.AssertID;
+
+            return _context.Asserts.Where(a => asserts.Contains(a.AssertID) && a.IsActive).ToList();
+
+        }
+
+
+        public List<AssertCategory> GetAssertCategory(int assertID)
+        {
+
+            var categories = _context.AssertCategories.Where(a => a.AssertID == assertID && a.IsActive).AsNoTracking().ToList();
+            return categories;
+        }
+
     }
 }
-    

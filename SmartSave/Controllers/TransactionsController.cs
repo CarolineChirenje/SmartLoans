@@ -62,20 +62,22 @@ namespace SmartSave.Controllers
                 {
                     Year = paymentsFile.Year,
                     Month = paymentsFile.Month,
-                    Amount =Amount,
+                    Amount = Amount,
                     ClientID = Client.ClientID,
                     Client = Client,
                     ProductID = paymentsFile.ProductID,
                     PaymentDate = paymentsFile.PaymentDate,
-                    Narration=paymentsFile.Narration,
+                    Narration = paymentsFile.Narration,
                     PaymentStatusID = (int)PaymentState.Paid,
                     TransactionDate = DateTime.Now,
                     ParentPaymentID = paymentsFile.ParentPaymentID,
                     LastChangedBy = UtilityService.CurrentUserName,
                     LastChangedDate = DateTime.Now,
                     BankAccountID = paymentsFile.BankAccountID,
-                    TransactionTypeID = paymentsFile.TransactionTypeID
-
+                    TransactionTypeID = paymentsFile.TransactionTypeID,
+                    AssertID = paymentsFile.AssertID,
+                    AssertCategoryID=paymentsFile.AssertCategoryID
+                    
                 };
 
                 if (await (_service.CreatePayment(addPaymentsFile, (TransactionTypeList)paymentsFile.TransactionTypeID)) == 0)
@@ -234,6 +236,50 @@ namespace SmartSave.Controllers
 
         }
 
-           
+        
+
+          [HttpPost]
+        public ActionResult GetAssertByProductID(int productID)
+        {
+
+            SelectList assertLists = null;
+            if (productID != 0)
+            {
+                List<Assert> assertList = _settingService.GetAssertsLinkedToProduct(productID);
+
+                assertList.Select(t => new
+                {
+                    t.AssertID,
+                    t.Name,
+                });
+
+                assertLists = new SelectList(assertList, "AssertID", "Name");
+
+            }
+            return Json(assertLists);
+
+        }
+
+        [HttpPost]
+        public ActionResult GetCategoryByAssertID(int assertID)
+        {
+
+            SelectList categoryList = null;
+            if (assertID != 0)
+            {
+                List<AssertCategory> assertCategories = _settingService.GetAssertCategory(assertID);
+
+                assertCategories.Select(t => new
+                {
+                    t.AssertCategoryID,
+                    Name = t.Name,
+                }).OrderBy(t => t.Name);
+
+                categoryList = new SelectList(assertCategories, "AssertCategoryID", "Name");
+
+            }
+            return Json(categoryList);
+
+        }
     }
 }

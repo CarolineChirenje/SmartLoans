@@ -694,7 +694,32 @@ namespace SmartDataAccess
 
                 },
 
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Account_Number_Auto_Generate,
+                    Name = AppSetting.Account_Number_Auto_Generate.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Auto Generate Account Numbers",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
 
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Application_Is_VAT_Compliant,
+                    Name = AppSetting.Application_Is_VAT_Compliant.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Allows System To Be VAT Compliant and Show calculated VAT Amounts ",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
 
 
                 };
@@ -882,18 +907,18 @@ namespace SmartDataAccess
             return userTypes.ToArray();
         }
 
-        public static ProductFrequency[] GetProductFrequencies()
+        public static Frequency[] GetFrequencies()
         {
 
-            List<ProductFrequency> products = new List<ProductFrequency>();
-            var p = from Frequency s in Enum.GetValues(typeof(Frequency))
+            List<Frequency> frequencies = new List<Frequency>();
+            var p = from FrequencyList s in Enum.GetValues(typeof(FrequencyList))
                     select new { ID = s, Name = s.ToString() };
 
             foreach (var x in p)
             {
-                products.Add(new ProductFrequency()
+                frequencies.Add(new Frequency()
                 {
-                    ProductFrequencyID = (int)x.ID,
+                    FrequencyID = (int)x.ID,
                     Name = x.Name.Replace("_", " "),
                     IsActive = true,
                     LastChangedDate = DateTime.Now,
@@ -902,7 +927,7 @@ namespace SmartDataAccess
                 });
 
             }
-            return products.ToArray();
+            return frequencies.ToArray();
         }
         public static PaymentStatus[] GetPaymentStatuses()
         {

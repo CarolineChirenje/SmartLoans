@@ -31,25 +31,32 @@ namespace SmartDomain
 
         public string EmailAddress { get; set; }
 
-        public string MobileNumber{ get; set; }
+        public string MobileNumber { get; set; }
 
         public string ResidentialAddress { get; set; }
-        
+
         public DateTime RegistrationDate { get; set; }
         public int GenderID { get; set; }
         public virtual Gender Gender { get; set; }
 
         public int? DepartmentID { get; set; }
         public virtual Department Department { get; set; }
+        public string Occupation { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        [DefaultValue("0.00")]
+        public decimal Salary { get; set; }
+
         public virtual List<ClientContact> ClientContacts { get; set; }
         public virtual List<ClientDocument> ClientDocuments { get; set; }
         public virtual ICollection<Transaction> ClientPayments { get; set; }
         public virtual List<ClientNote> ClientNotes { get; set; }
         public virtual List<ClientMedicalDetail> ClientMedicalDetails { get; set; }
-        public virtual List<ClientDependent> ClientDependents{ get; set; }
+        public virtual List<ClientDependent> ClientDependents { get; set; }
         public virtual List<ClientGuarantor> ClientGuarantors { get; set; }
         public virtual List<ClientProduct> ClientProducts { get; set; }
         public virtual List<ClientCourse> ClientCourses { get; set; }
+        public virtual List<ClientFee> ClientFees { get; set; }
+
         [NotMapped]
         public int StatementID { get; set; }
         [NotMapped]
@@ -68,20 +75,19 @@ namespace SmartDomain
         public int ContactTypeID { get; set; }
 
         [NotMapped]
-                public int ClientProductID { get; set; }
+        public int ClientProductID { get; set; }
 
         [NotMapped]
         [DisplayName("Relationship Type")]
         public int RelationshipTypeID { get; set; }
 
         [NotMapped]
-        
         public int CourseID { get; set; }
 
         [NotMapped]
         [DisplayName("Product Type")]
         public int ProductID { get; set; }
-               
+
         [NotMapped]
         public int TransactionTypeID { get; set; }
         [NotMapped]
@@ -101,8 +107,12 @@ namespace SmartDomain
         public DateTime StartDate { get; set; }
         [NotMapped]
         public DateTime EndDate { get; set; }
+        [NotMapped]
+        public string SalaryAmount { get; set; }
 
-        
+
+
+
     }
 
 }

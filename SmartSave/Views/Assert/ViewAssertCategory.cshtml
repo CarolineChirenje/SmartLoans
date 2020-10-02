@@ -1,0 +1,132 @@
+﻿@model SmartDomain.AssertCategory
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+        Categories
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+            <h3 class="box-title">@Model.Assert.Name</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="/Assert/ViewAssert">
+
+            @if (TempData["Error"] != null)
+            {<div class="container">
+                    <div class="text-danger">@TempData["Error"].ToString()</div>
+                </div>
+            }
+
+            @if (TempData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@TempData["Success"].ToString()</div>
+                </div>
+            }
+            @if (TempData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@TempData["Warning"].ToString()</div>
+                </div>
+            }
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name" value="@Model.Assert.Name">
+                    </div>
+                </div>
+               
+               
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                    <div class="col-sm-2">
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Assert.IsActive)
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.Assert.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.Assert.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="AssertID" value="@Model.Assert.AssertID" />
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Assert" asp-action="Assert">Cancel</a>
+                <button type="submit" class="btn btn-info pull-right">Update</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Information
+                    </div>
+                    <!-- /.panel-heading -->
+                    <form method="post" asp-controller="Assert" asp-action="ViewAssertCategory">
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Category:</label>
+                                <input type="text" class="form-control" name="Name" value="@Model.Name">
+                            </div>
+                        
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="@Model.IsActive" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+
+                            </div>
+                            <input type="hidden" name="AssertCategoryID" value="@Model.AssertCategoryID" />
+                            <input type="hidden" name="AssertID" value="@Model.AssertID" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <a class="btn btn-danger" asp-controller="Assert" asp-action="ActionAssertCategory" asp-route-Categoryid="@Model.AssertCategoryID" asp-route-Assertid="@Model.AssertID">Delete</a>
+                            <a class="btn btn-info" asp-controller="Assert" asp-action="ViewAssert" asp-route-id="@Model.AssertID">View More Details</a>
+                            <a class="btn btn-default" asp-controller="Assert" asp-action="Assert">Cancel</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</section>
+

@@ -1,0 +1,266 @@
+﻿@model SmartDomain.ProductFee
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+        Product
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+            <h3 class="box-title">@Model.Product.Name</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="/Product/ViewProduct">
+
+            @if (TempData["Error"] != null)
+            {<div class="container">
+                    <div class="text-danger">@TempData["Error"].ToString()</div>
+                </div>
+            }
+
+            @if (TempData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@TempData["Success"].ToString()</div>
+                </div>
+            }
+            @if (TempData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@TempData["Warning"].ToString()</div>
+                </div>
+            }
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.Product.CompanyID" class="form-control" asp-items="ViewBag.CompanyList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name" value="@Model.Product.Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Percentage Deduction</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="DeductionPercentage" name="DeductionPercentage" value="@Model.Product.DeductionPercentage">
+                        <span id="DeductionPercentageError" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Percentage Deduction After Salary Increment</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="IncreamentPercentage" name="IncreamentPercentage" value="@Model.Product.IncreamentPercentage">
+                        <span id="IncreamentPercentagePercentageError" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.Product.CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                    <div class="col-sm-2">
+
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Product.IsActive)
+                        </label>
+
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Employees Linked To Product</label>
+                    <div class="col-sm-10">
+                        @if (UtilityService.HasPermission(Permissions.View_User))
+                        {
+                            <a asp-controller="Product" asp-action="ClientsLinkedToProduct" asp-route-id="@Model.ProductID">@Model.Product.ClientCount</a>
+                        }
+                        else
+                        {
+                            @Model.Product.ClientCount
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.Product.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.Product.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="ProductID" value="@Model.ProductID" />
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>
+                @if (UtilityService.HasPermission(Permissions.Update_Product))
+                {
+                    <button type="submit" class="btn btn-info">Update</button>
+                }
+                @if (UtilityService.HasPermission(Permissions.Delete_Product))
+                {
+                    <a class="btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.ProductID">Delete</a>
+                }
+            </div>
+            <!-- /.box-footer -->
+        </form>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Information
+                    </div>
+                    <!-- /.panel-heading -->
+                    <form method="post" asp-controller="Product" asp-action="ViewProductFee">
+
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                                <input type="text" class="form-control" name="Name" value="@Model.Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Description</label>
+                                <textarea class="form-control" name="Description">@Model.Description</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Amount</label>
+                                <input type="text" class="form-control" name="Amount" value="@Model.Amount">
+                                <span id="AmountError" class="text-danger text-bold"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Frequency</label>
+
+                                <select asp-for="FrequencyID" class="form-control" asp-items="ViewBag.FrequencyList">
+                                    <option value="">----</option>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="@Model.IsActive" />
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+
+                            </div>
+
+
+
+                            <input type="hidden" name="ProductFeeID" value="@Model.ProductFeeID" />
+
+                        </div>
+                        <div class="modal-footer">
+                            @if (UtilityService.HasPermission(Permissions.Update_Product_Fee))
+                            {
+                                <button type="submit" class="btn btn-primary">Update</button>
+                              
+                            }
+                            @if (UtilityService.HasPermission(Permissions.Delete_Product_Fee))
+                            {
+                                <a class="btn btn-danger" asp-controller="Product" asp-action="ActionProductFee" asp-route-productFeeID="@Model.ProductFeeID" asp-route-productID="@Model.ProductID">Delete</a>
+                            }
+                            @if (UtilityService.HasPermission(Permissions.View_Product))
+                            {
+                                <a class="btn btn-info" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@Model.ProductID">View More Fees</a>
+                            } <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+</section>
+
+<script>
+
+
+    $(document).ready(function () {
+
+    });
+
+
+    $(function () {
+        $('#DeductionPercentage').blur(function () {
+            var tempVal = $('#DeductionPercentage').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#DeductionPercentageError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#DeductionPercentageError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+
+        $('#IncreamentPercentage').blur(function () {
+            var tempVal = $('#IncreamentPercentage').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#IncreamentPercentageError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#IncreamentPercentageError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+
+        $('#Amount').blur(function () {
+            var tempVal = $('#Amount').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#AmountError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#AmountError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+    })
+
+
+
+    }
+</script>

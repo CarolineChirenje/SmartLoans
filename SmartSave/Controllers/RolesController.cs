@@ -25,6 +25,7 @@ namespace SmartSave.Controllers
         
         public IActionResult Add()
         {
+            PopulateDropDownLists();
             return View();
         }
         [HttpPost]
@@ -237,6 +238,13 @@ namespace SmartSave.Controllers
                 Name = t.UserFullName,
             }).OrderBy(t => t.Name);
             ViewBag.Users = new SelectList(activeUsers, "UserID", "Name");
+
+            var activeRoles = _service.GetRoles().Select(t => new
+            {
+                t.RoleID,
+                Name = t.Name,
+            }).OrderBy(t => t.Name);
+            ViewBag.RoleList = new SelectList(activeRoles, "RoleID", "Name");
         }
 
     }
