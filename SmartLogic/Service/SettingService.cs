@@ -148,5 +148,21 @@ namespace SmartLogic
             return categories;
         }
 
+
+        public List<Assert> GetAssertsList()
+        {
+                 
+            return _context.Asserts.ToList();
+
+        }
+
+
+        public List<AssertCategory> GetAssertCategoryList()
+        {
+
+            var categories = _context.AssertCategories.AsNoTracking().ToList();
+            return categories;
+        }
+
     }
 }

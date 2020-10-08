@@ -56,7 +56,8 @@ namespace SmartDomain
         public virtual List<ClientProduct> ClientProducts { get; set; }
         public virtual List<ClientCourse> ClientCourses { get; set; }
         public virtual List<ClientFee> ClientFees { get; set; }
-
+        public virtual List<ClientOccupationHistory> ClientOccupationHistory { get; set; }
+        
         [NotMapped]
         public int StatementID { get; set; }
         [NotMapped]

@@ -10,6 +10,7 @@ using SmartHelper;
 using SmartDataAccess;
 using CustomSetting = SmartDomain.CustomSetting;
 using System.Net;
+using Microsoft.VisualBasic;
 
 namespace SmartLogic
 {
@@ -76,7 +77,7 @@ namespace SmartLogic
                             Include(sm => sm.ClientMedicalDetails).
                             Include(sg => sg.ClientGuarantors).
                             Include(p => p.ClientProducts).ThenInclude(p => p.Product).
-                            Include(p => p.ClientFees).ThenInclude(p => p.ProductFee).ThenInclude(p=>p.Product).
+                            Include(p => p.ClientFees).ThenInclude(p => p.ProductFee).ThenInclude(p => p.Product).
                             Include(p => p.ClientFees).ThenInclude(p => p.ProductFee).ThenInclude(p => p.Frequency).
                             Include(d => d.ClientDependents).
                             Include(c => c.ClientCourses).
@@ -93,7 +94,7 @@ namespace SmartLogic
 
         public async Task<int> Save(Client Client)
         {
-        if (UtilityService.AutoGenerateAccountNumber)
+            if (UtilityService.AutoGenerateAccountNumber)
                 Client.AccountNumber = NewClientAccountNumber;
 
             Client.UserName = UtilityService.GenerateUserName(Client.FirstName, Client.LastName);
@@ -125,7 +126,7 @@ namespace SmartLogic
                 clientOccupationHistory.LastChangedDate = updateClient.LastChangedDate;
                 clientOccupationHistory.LastChangedBy = updateClient.LastChangedBy;
                 _context.Add(clientOccupationHistory);
-             }
+            }
             if (UtilityService.IsNotNull(updateClient))
             {
                 updateClient.FirstName = Client.FirstName;
@@ -161,7 +162,7 @@ namespace SmartLogic
 
             }
 
-            
+
             return result;
         }
 
@@ -637,8 +638,7 @@ namespace SmartLogic
                         clientFee.ClientID = clientProduct.ClientID;
                         clientFee.ProductFeeID = productFee.ProductFeeID;
                         clientFee.Amount = productFee.Amount;
-                        clientFee.IsPaid = false;
-                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                                               clientFee.LastChangedBy = UtilityService.CurrentUserName;
                         clientFee.LastChangedDate = DateTime.Now;
                         clientFee.ClientProductID = clientProduct.ClientProductID;
                         clientFee.DueDate = dueDate;
@@ -653,8 +653,7 @@ namespace SmartLogic
                             clientFee.ClientID = clientProduct.ClientID;
                             clientFee.ProductFeeID = productFee.ProductFeeID;
                             clientFee.Amount = productFee.Amount;
-                            clientFee.IsPaid = false;
-                            clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                                                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
                             clientFee.LastChangedDate = DateTime.Now;
                             clientFee.ClientProductID = clientProduct.ClientProductID;
                             clientFee.DueDate = dueDate;
@@ -662,13 +661,13 @@ namespace SmartLogic
 
                             dueDate = dueDate.AddMonths(i);
                         }
-                        
+
                     }
 
                 }
-                if(productFees.Count()>0)
-                                 result = await _context.SaveChangesAsync();
-               
+                if (productFees.Count() > 0)
+                    result = await _context.SaveChangesAsync();
+
             }
             return result;
 
@@ -837,6 +836,47 @@ namespace SmartLogic
             return (await _context.SaveChangesAsync());
         }
 
+        public List<ClientSchedule> GetClientsOnProduct(int ProductID, System.DateTime CutOffDate)
+        {
+            IEnumerable<int> ClientIDs;
+            if (ProductID == 0)
+            {
+                ClientIDs = from c in _context.ClientProducts
+                            select c.ClientID;
 
+            }
+            else
+            {
+
+                ClientIDs = from c in _context.ClientProducts
+                            where c.ProductID == ProductID
+                            select c.ClientID;
+            }
+            var clientProducts = _context.ClientProducts.
+            Include(c => c.Product).
+               Include(c => c.Client).
+                             Where(t => ClientIDs.Contains(t.ClientID)).ToList();
+
+
+
+            List<ClientSchedule> schedules = new List<ClientSchedule>();
+            foreach (var item in clientProducts)
+            {
+                schedules.Add(new ClientSchedule
+                {
+                    ClientProductID = item.ClientProductID,
+                    ClientID = item.ClientID,
+                    ClientFullName = item.Client.ClientFullName,
+                    Occupation = item.Client.Occupation,
+                    Salary = item.Client.Salary,
+                    ProductID = item.ProductID,
+                    ProductName = item.Product.Name,
+                    CutOffDate = CutOffDate
+
+                });
+            }
+
+            return schedules;
+        }
     }
 }

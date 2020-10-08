@@ -36,10 +36,10 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                new MenuGroup()
+                 new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Accounting,
-                    DisplayName = MenuGroups.Accounting.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Transactions,
+                    DisplayName = MenuGroups.Transactions.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-money"),
@@ -48,31 +48,57 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
+               
                  new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Administration,
-                    DisplayName = MenuGroups.Administration.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Schedules,
+                    DisplayName = MenuGroups.Schedules.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-tools"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-product-hunt"),
                     OrderNo = 4,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
-                new MenuGroup()
+                 new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Settings,
-                    DisplayName = MenuGroups.Settings.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Product_Packaging,
+                    DisplayName = MenuGroups.Product_Packaging.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-wrench"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-money"),
                     OrderNo = 5,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
 
+                 new MenuGroup()
+                {
+                    MenuGroupID = (int)MenuGroups.Administration_Settings,
+                    DisplayName = MenuGroups.Administration_Settings.ToString().Replace("_", " "),
+                    IsActive = true,
+                    IsActiveMenu = false,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-tools"),
+                    OrderNo = 6,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new MenuGroup()
+                {
+                    MenuGroupID = (int)MenuGroups.System_Settings,
+                    DisplayName = MenuGroups.System_Settings.ToString().Replace("_", " "),
+                    IsActive = true,
+                    IsActiveMenu = false,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-wrench"),
+                    OrderNo = 7,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+               
                 new MenuGroup()
                 {
                     MenuGroupID = (int)MenuGroups.Menu,
@@ -80,7 +106,7 @@ namespace SmartDataAccess
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-university"),
-                    OrderNo = 6,
+                    OrderNo = 9998,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
@@ -92,12 +118,12 @@ namespace SmartDataAccess
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa - laptop"),
-                    OrderNo = 7,
+                    OrderNo = 9999,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
-
+                
             };
 
             return parentMenus.ToArray();
@@ -125,7 +151,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 2,
-                    MenuGroupID = (int)MenuGroups.Accounting,
+                    MenuGroupID = (int)MenuGroups.Transactions,
                     DisplayName = "Transactions",
                     ControllerName = "Transactions",
                     ActionName = "Transactions",
@@ -140,7 +166,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 3,
-                    MenuGroupID = (int)MenuGroups.Accounting,
+                    MenuGroupID = (int)MenuGroups.Product_Packaging,
                     DisplayName = "Products",
                     ControllerName = "Product",
                     ActionName = "Product",
@@ -154,7 +180,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 4,
-                    MenuGroupID = (int)MenuGroups.Settings,
+                    MenuGroupID = (int)MenuGroups.System_Settings,
                     DisplayName = "Users",
                     ControllerName = "User",
                     ActionName = "Users",
@@ -168,7 +194,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 5,
-                    MenuGroupID = (int)MenuGroups.Settings,
+                    MenuGroupID = (int)MenuGroups.System_Settings,
                     DisplayName = "Roles & Permissions",
                     ControllerName = "Roles",
                     ActionName = "Roles",
@@ -182,7 +208,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID =6,
-                    MenuGroupID = (int)MenuGroups.Administration,
+                    MenuGroupID = (int)MenuGroups.Administration_Settings,
                     DisplayName = "Departments",
                     ControllerName = "Department",
                     ActionName = "Department",
@@ -211,7 +237,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 8,
-                    MenuGroupID = (int)MenuGroups.Administration,
+                    MenuGroupID = (int)MenuGroups.Administration_Settings,
                     DisplayName = "Coaching Programmes",
                     ControllerName = "Courses",
                     ActionName = "Courses",
@@ -238,7 +264,7 @@ namespace SmartDataAccess
                  new Menu()
                 {
                     MenuID = 10,
-                    MenuGroupID = (int)MenuGroups.Administration,
+                    MenuGroupID = (int)MenuGroups.Administration_Settings,
                     DisplayName = "Documents",
                     ControllerName = "DocumentType",
                     ActionName = "DocumentTypes",
@@ -251,7 +277,7 @@ namespace SmartDataAccess
           new Menu()
                 {
                     MenuID = 11,
-                    MenuGroupID = (int)MenuGroups.Settings,
+                    MenuGroupID = (int)MenuGroups.System_Settings,
                     DisplayName = "Custom Settings",
                     ControllerName = "CustomSettings",
                     ActionName = "CustomSettings",
@@ -264,7 +290,7 @@ namespace SmartDataAccess
                  new Menu()
                 {
                     MenuID =12,
-                    MenuGroupID = (int)MenuGroups.Administration,
+                    MenuGroupID = (int)MenuGroups.Administration_Settings,
                     DisplayName = "Banks",
                     ControllerName = "BankAccounts",
                     ActionName = "BankAccounts",
@@ -278,7 +304,7 @@ namespace SmartDataAccess
                  new Menu()
                 {
                     MenuID =13,
-                    MenuGroupID = (int)MenuGroups.Administration,
+                    MenuGroupID = (int)MenuGroups.Administration_Settings,
                     DisplayName = "Currency",
                     ControllerName = "Currency",
                     ActionName = "Currency",
@@ -292,7 +318,7 @@ namespace SmartDataAccess
                  new Menu()
                 {
                     MenuID =14,
-                    MenuGroupID = (int)MenuGroups.Administration,
+                    MenuGroupID = (int)MenuGroups.Administration_Settings,
                     DisplayName = "Country",
                     ControllerName = "Country",
                     ActionName = "Country",
@@ -321,7 +347,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID =16,
-                    MenuGroupID = (int)MenuGroups.Administration,
+                    MenuGroupID = (int)MenuGroups.Administration_Settings,
                     DisplayName = "Companies",
                     ControllerName = "Company",
                     ActionName = "Companies",
@@ -335,7 +361,7 @@ namespace SmartDataAccess
                  new Menu()
                 {
                     MenuID =17,
-                    MenuGroupID = (int)MenuGroups.Administration,
+                    MenuGroupID = (int)MenuGroups.Administration_Settings,
                     DisplayName = "Email Templates",
                     ControllerName = "EmailTemplate",
                     ActionName = "EmailTemplate",
@@ -363,7 +389,7 @@ namespace SmartDataAccess
                   new Menu()
                 {
                     MenuID = 19,
-                    MenuGroupID = (int)MenuGroups.Accounting,
+                    MenuGroupID = (int)MenuGroups.Product_Packaging,
                     DisplayName = "Transaction Types",
                     ControllerName = "TransactionType",
                     ActionName = "TransactionType",
@@ -377,7 +403,7 @@ namespace SmartDataAccess
                  new Menu()
                 {
                     MenuID = 20,
-                    MenuGroupID = (int)MenuGroups.Accounting,
+                    MenuGroupID = (int)MenuGroups.Product_Packaging,
                     DisplayName = "Asserts",
                     ControllerName = "Assert",
                     ActionName = "Assert",
@@ -387,7 +413,34 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
+                  new Menu()
+                {
+                    MenuID = 21,
+                    MenuGroupID = (int)MenuGroups.Schedules,
+                    DisplayName = "Generate  Schedule",
+                    ControllerName = "Transactions",
+                    ActionName = "Schedule",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-gear"),
+                    OrderNo = 21,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
 
+                },
+                 new Menu()
+                {
+                    MenuID = 22,
+                    MenuGroupID = (int)MenuGroups.Schedules,
+                    DisplayName = "Retrive  Schedule",
+                    ControllerName = "Transactions",
+                    ActionName = "ScheduleReporting",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-file"),
+                    OrderNo = 22,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
             };
             return menus.ToArray();
 

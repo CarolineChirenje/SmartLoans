@@ -8,9 +8,12 @@ namespace SmartHelper
 
         DashBoard = 1,
         Employees,
-        Accounting,
-        Settings,
-        Administration,
+        Product_Packaging,
+        System_Settings,
+        Administration_Settings,
+        Transactions,
+        Schedules,
+
 
         //
         Menu = 9998,
@@ -612,11 +615,10 @@ namespace SmartHelper
     }
     public enum FrequencyList
     {
-
         Once_Off = 1,
         Monthly
-
     }
+  
     public enum PaymentState
     {
         Paid = 1,
@@ -788,7 +790,8 @@ namespace SmartHelper
         Delete_Assert,
         View_Assert,
 
-        View_Client_Outstanding_Payments
+        View_Client_Outstanding_Payments,
+        Generate_Schedules
 
 
     }

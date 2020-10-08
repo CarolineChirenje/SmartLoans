@@ -907,6 +907,8 @@ namespace SmartDataAccess
             return userTypes.ToArray();
         }
 
+
+   
         public static Frequency[] GetFrequencies()
         {
 

@@ -39,6 +39,8 @@ namespace SmartLogic
 
         List<Assert> GetAssertsLinkedToProduct(int productID);
         List<AssertCategory> GetAssertCategory(int assertID);
+        List<Assert> GetAssertsList();
+        List<AssertCategory> GetAssertCategoryList();
 
     }
 

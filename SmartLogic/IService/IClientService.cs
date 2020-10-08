@@ -71,6 +71,7 @@ namespace SmartLogic
         Task<int> ActionProduct(int id, DatabaseAction action);
         List<ClientProduct> GetClientProducts(int id);
         List<Product> GetClientRegisteredProducts(int id);
+        List<ClientSchedule> GetClientsOnProduct(int ProductID, System.DateTime CutOffDate);
 
         //Course
         Task<ClientCourse> FindCourse(int id);

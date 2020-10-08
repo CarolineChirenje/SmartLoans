@@ -56,7 +56,7 @@ namespace SmartSave.Controllers
                 Client Client = await _ClientService.FindClient(paymentsFile.ClientID);
                 if (!UtilityService.IsNotNull(Client))
                     return RedirectToAction(nameof(Transactions));
-            Decimal Amount = UtilityService.GetDecimalAmount(paymentsFile.Amount);
+                Decimal Amount = UtilityService.GetDecimalAmount(paymentsFile.Amount);
 
                 Transaction addPaymentsFile = new Transaction()
                 {
@@ -76,15 +76,15 @@ namespace SmartSave.Controllers
                     BankAccountID = paymentsFile.BankAccountID,
                     TransactionTypeID = paymentsFile.TransactionTypeID,
                     AssertID = paymentsFile.AssertID,
-                    AssertCategoryID=paymentsFile.AssertCategoryID
-                    
+                    AssertCategoryID = paymentsFile.AssertCategoryID
+
                 };
 
                 if (await (_service.CreatePayment(addPaymentsFile, (TransactionTypeList)paymentsFile.TransactionTypeID)) == 0)
                 {
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 }
-               
+
 
             }
             int clientID = 0;
@@ -96,7 +96,7 @@ namespace SmartSave.Controllers
             {
                 clientID = 0;
             }
-            if (clientID>0)
+            if (clientID > 0)
                 return RedirectToAction("ViewClient", "Client", new { id = clientID });
             else
                 return RedirectToAction(nameof(Transactions));
@@ -132,9 +132,7 @@ namespace SmartSave.Controllers
                     return RedirectToAction("ViewTransaction", new { paymentsFile.TransactionID });
                 }
             }
-            //if (clientid!=0)
-            //    return RedirectToAction("ViewClient", "Client", new { id = clientid });
-            //else
+
             return RedirectToAction(nameof(Transactions));
         }
 
@@ -165,6 +163,105 @@ namespace SmartSave.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult Schedule()
+        {
+            GetDropDownLists();
+            return View();
+        }
+
+
+        [HttpGet]
+        public ActionResult SalarySchedule(ScheduleModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                HttpContext.Session.SetString("CutOffDate", model.CutOffDate.ToString());
+
+                HttpContext.Session.SetString("ProductID", model.ProductID.ToString());
+                var clients = _ClientService.GetClientsOnProduct(model.ProductID, model.CutOffDate);
+                return View(clients);
+            }
+            return RedirectToAction(nameof(Schedule));
+        }
+        [HttpPost]
+        public ActionResult GenerateSchedule(IFormCollection formCollection)
+        {
+            var clientProductIDs = formCollection["ClientProductID"];
+            List<int> clientProductID = new List<int>();
+                      foreach (string id in clientProductIDs)
+            {
+                clientProductID.Add(int.Parse(id));
+
+            }
+            if (clientProductID.Count() > 0)
+            {
+                DateTime CutOffDate = DateTime.MinValue;
+                
+                try
+                {
+                    CutOffDate = Convert.ToDateTime(HttpContext.Session.GetString("CutOffDate"));
+                }
+                catch (Exception ex)
+                {
+                }
+
+               
+                int result = _service.CalculateDeductions(clientProductID, CutOffDate).Result;
+                if (result > 0)
+                {
+
+                    var deductions = _service.GetClientDeductions(clientProductID, CutOffDate).Result;
+                    return View(deductions);
+                }
+            }
+
+            return RedirectToAction(nameof(Schedule));
+        }
+        [HttpGet]
+        public ActionResult PrintSchedule()
+        {
+            DateTime CutOffDate = DateTime.MinValue;
+            int ProductID = 0;
+            try
+            {
+                CutOffDate = Convert.ToDateTime(HttpContext.Session.GetString("CutOffDate"));
+            }
+            catch (Exception ex)
+            {
+            }
+
+            try
+            {
+                ProductID = Convert.ToInt32(HttpContext.Session.GetString("ProductID"));
+            }
+            catch (Exception ex)
+            {
+            }
+            Product product;
+
+            if (ProductID > 0)
+                product = _settingService.FindProduct(ProductID);
+            else
+                product = new Product {
+                    ProductID = 0,
+                    Name = "All",
+                };
+
+                SchedulePrintOut printOut = new SchedulePrintOut();
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    Document document = printOut.Print(product, CutOffDate);
+                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                    pdfRenderer.Document = document;
+                    pdfRenderer.RenderDocument();
+                    pdfRenderer.PdfDocument.Save(stream, false);
+                    return File(stream.ToArray(), "application/pdf",    $"SalarySchedule{product.Name}.pdf");
+                }
+            }
+            
+
         private void GetDropDownLists()
         {
 
@@ -191,7 +288,7 @@ namespace SmartSave.Controllers
                 Name = $" {t.ClientFullName} - {t.AccountNumber}",
             }).OrderBy(t => t.Name);
 
-            ViewBag.ClientList = new SelectList(ClientList, "ClientID", "Name",clientID);
+            ViewBag.ClientList = new SelectList(ClientList, "ClientID", "Name", clientID);
 
             var bankList = _bankService.Banks().Result.Select(t => new
             {
@@ -209,6 +306,34 @@ namespace SmartSave.Controllers
 
             ViewBag.TransactionTypeList = new SelectList(transactionTypeList, "TransactionTypeID", "Name", (int)TransactionTypeList.Payment);
 
+
+
+            var productList = _settingService.GetActiveProductList().Select(t => new
+            {
+                t.ProductID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.ProductList = new SelectList(productList, "ProductID", "Name");
+
+            var assertList = _settingService.GetAssertsList().Select(t => new
+            {
+                t.AssertID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.AssertList = new SelectList(assertList, "AssertID", "Name");
+
+
+            var assertCategoryList = _settingService.GetAssertCategoryList().Select(t => new
+            {
+                t.AssertCategoryID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.AssertCategoryList = new SelectList(assertCategoryList, "AssertCategoryID", "Name");
+
+
         }
 
 
@@ -217,7 +342,7 @@ namespace SmartSave.Controllers
         [HttpPost]
         public ActionResult GetProductByClientID(int clientID)
         {
-         
+
             SelectList clientProducts = null;
             if (clientID != 0)
             {
@@ -229,16 +354,16 @@ namespace SmartSave.Controllers
                     t.Name,
                 }).OrderBy(t => t.Name);
 
-                 clientProducts = new SelectList(clientproductList, "ProductID", "Name");
-                
-           }
+                clientProducts = new SelectList(clientproductList, "ProductID", "Name");
+
+            }
             return Json(clientProducts);
 
         }
 
-        
 
-          [HttpPost]
+
+        [HttpPost]
         public ActionResult GetAssertByProductID(int productID)
         {
 

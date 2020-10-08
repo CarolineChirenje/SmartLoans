@@ -154,11 +154,10 @@ namespace SmartDataAccess
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
         public DbSet<TransactionType> TransactionType { get; set; }
         public DbSet<TransactionStatus> TransactionStatus { get; set; }
-        public DbSet<Client> Clients { get; set; }
 
+        public DbSet<Client> Clients { get; set; }
         public DbSet<ClientCourse> ClientCourses { get; set; }
         public DbSet<CourseTranscript> CourseTranscripts { get; set; }
-        
         public DbSet<ClientContact> ClientContacts { get; set; }
         public DbSet<ClientDocument> ClientDocuments { get; set; }
         public DbSet<ClientGuarantor> ClientGuarantors { get; set; }
@@ -167,6 +166,7 @@ namespace SmartDataAccess
         public DbSet<ClientDependent> ClientDependents { get; set; }
         public DbSet<ClientProduct> ClientProducts { get; set; }
         public DbSet<ClientFee> ClientFees { get; set; }
+        public DbSet<ClientDeduction> ClientDeductions { get; set; }
         public DbSet<ClientOccupationHistory> ClientOccupationHistory { get; set; }
 
         public DbSet<UserAuthenticationCode> UserAuthenticationCodes { get; set; }

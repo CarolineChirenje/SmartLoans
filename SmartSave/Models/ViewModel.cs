@@ -122,6 +122,23 @@ namespace SmartSave.Models
         public int AssertCategoryID { get; set; }
 
     }
+    public class ScheduleModel
+    {
+        public int ProductID { get; set; }
+        public int ClientID { get; set; }
+        public bool IsSelected { get; set; }
+        public DateTime CutOffDate { get; set; }
+      
+    }
 
+   
+    public class ScheduleModelDetails
+    {
+        /// <summary>  
+        /// To hold list of schedules  
+        /// </summary>  
+        public List<ScheduleModel> ScheduleDetails { get; set; }
+
+    }
 
 }

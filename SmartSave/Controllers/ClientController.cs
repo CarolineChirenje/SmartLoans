@@ -554,7 +554,7 @@ namespace SmartSave.Controllers
         {
             if (id == 0)
                 return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
-
+            GetDropDownLists();
             return View(await _paymentService.PaymentFile(id));
         }
 
@@ -1053,6 +1053,26 @@ namespace SmartSave.Controllers
             }).OrderBy(t => t.Name);
 
             ViewBag.TransactionTypeList = new SelectList(transactionTypeList, "TransactionTypeID", "Name", (int)TransactionTypeList.Payment);
+
+
+            var assertList = _settingService.GetAssertsList().Select(t => new
+            {
+                t.AssertID,
+              t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.AssertList = new SelectList(assertList, "AssertID", "Name");
+
+
+            var assertCategoryList = _settingService.GetAssertCategoryList().Select(t => new
+            {
+                t.AssertCategoryID,
+                 t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.AssertCategoryList = new SelectList(assertCategoryList, "AssertCategoryID", "Name");
+
+            
 
         }
     }

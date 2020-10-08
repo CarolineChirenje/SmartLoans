@@ -208,6 +208,68 @@ namespace SmartLogic
             .Where(t => t.TransactionID == TransactionID).FirstOrDefaultAsync();
         }
 
+        public async Task<int> CalculateDeductions(List<int> ClientProductIDs, DateTime CutOffDate)
+        {
+            int result = 0;
+            var clientProduct = _context.ClientProducts.
+                Include(c => c.Product).
+                   Include(c => c.Client).
+                   ThenInclude(c => c.ClientOccupationHistory).
+                   Where(t => ClientProductIDs.Contains(t.ClientProductID)).ToList();
+
+            foreach (var item in clientProduct)
+            {
+                //1.
+                decimal _percentageDeduction = item.Product.DeductionPercentage;
+                decimal _percentageIncrement = item.Product.IncreamentPercentage;
+                decimal _currentSalary = item.Client.Salary;
+                decimal _previousSalary = 0M;
+                decimal _totalDeductionPercentage = 0M;
+                decimal _totalDeduction = 0M;
+                var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
+                if (UtilityService.IsNotNull(_lastSalary))
+                    _previousSalary = _lastSalary.Salary;
+
+                if (_currentSalary > _previousSalary)
+                    _totalDeductionPercentage = _percentageDeduction + _percentageIncrement;
+                else
+                    _totalDeductionPercentage = _percentageDeduction;
+
+                _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
+
+                ClientDeduction deduction = new ClientDeduction
+                {
+                    ClientID = item.ClientID,
+                    ClientProductID=item.ClientProductID,
+                    Salary = _currentSalary,
+                    ProductID = item.ProductID,
+                    DueDate = CutOffDate,
+                    DeductedAmount=_totalDeduction,
+                    TotalDeductionPercentage=_totalDeductionPercentage,
+                    DeductionPercentage=_percentageDeduction,
+                    AdditionalDeductionPercentage=_percentageIncrement,
+                    LastChangedBy = UtilityService.CurrentUserName,
+                    LastChangedDate = DateTime.Now,
+
+                };
+
+                _context.Add(deduction);
+            }
+            if (clientProduct.Count() > 0)
+                result = await _context.SaveChangesAsync();
+
+            return result;
+        }
+
+        public async Task<List<ClientDeduction>> GetClientDeductions(List<int> ClientProductIDs, DateTime CutOffDate)
+        {
+            return await _context.ClientDeductions
+                .Include(p => p.Client)
+                .Include(p => p.Product)
+
+               .Where(t => ClientProductIDs.Contains(t.ClientProductID) && t.DueDate==CutOffDate).ToListAsync();
+
+        }
 
 
     }
