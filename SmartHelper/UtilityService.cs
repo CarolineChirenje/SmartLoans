@@ -395,7 +395,31 @@ namespace SmartHelper
 
             }
         }
+        public static int LastInvoiceNumber
+        {
+            get
+            {
+                string sqlCustomSetting = @"SELECT DISTINCT TOP 1 InvoiceNumber 
+                                            FROM ClientDeductions
+                                            ORDER BY InvoiceNumber DESC";
+                string _invoiceID = GetData.GetStringValue(sqlCustomSetting);
+                int invoiceID = 0;
+                try
+                {
+                    invoiceID = Int32.Parse(_invoiceID);
+                }
+                catch (Exception)
+                {
 
+
+                }
+                return invoiceID;
+
+            }
+        }
+
+
+     
         public static byte[] CompanyLogo
         {
             get
@@ -712,13 +736,13 @@ namespace SmartHelper
         public static string ShowDateTime(DateTime? passedDate)
         {
             DateTime datePassed = passedDate ?? DateTime.MinValue;
-            return datePassed.ToString(GetData.GetSettingValue((int)AppSetting.Date_Format)?.Value);
+            return datePassed.ToString(GetData.GetSettingValue((int)AppSetting.Date_Time_Format)?.Value);
         }
 
         public static string ShowDate(DateTime? passedDate)
         {
             DateTime datePassed = passedDate ?? DateTime.MinValue;
-            return datePassed.Date.ToString("yyyy-MM-dd");
+            return datePassed.ToString(GetData.GetSettingValue((int)AppSetting.Date_Format)?.Value);
         }
         public static string GetMessageToDisplay(string ResourceKey) => SmartHelper.ResourceManager.GetString(ResourceKey);
         public static string ShowYesOrNo(bool status) => status ? "Yes" : "No";

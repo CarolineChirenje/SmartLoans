@@ -176,15 +176,55 @@ namespace SmartSave.Controllers
         {
             if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("CutOffDate", model.CutOffDate.ToString());
-
+                HttpContext.Session.SetString("InvoiceDate", model.InvoiceDate.ToString());
+                HttpContext.Session.SetString("DueDate", model.DueDate.ToString());
                 HttpContext.Session.SetString("ProductID", model.ProductID.ToString());
-                var clients = _ClientService.GetClientsOnProduct(model.ProductID, model.CutOffDate);
+                var clients = _ClientService.GetClientsOnProduct(model.ProductID, model.InvoiceDate);
                 return View(clients);
             }
             return RedirectToAction(nameof(Schedule));
         }
+
+
+        [HttpGet]
+        public IActionResult ScheduleReport()
+        {
+            GetDropDownLists();
+            return View();
+        }
+
         [HttpPost]
+        public IActionResult GeneratedInvoices(ScheduleModel model)
+        {
+            HttpContext.Session.SetString("DateFrom", model.DateFrom.ToString());
+            HttpContext.Session.SetString("DateTo", model.DateTo.ToString());
+            HttpContext.Session.SetString("ProductID", model.ProductID.ToString());
+            var deductions = _service.GetSchedule(model.ProductID, model.DateFrom,model.DateTo);
+                return View(deductions);
+                 
+        }
+
+        [HttpPost]
+        public ActionResult DeleteInvoiceEntries(IFormCollection formCollection)
+        {
+            var clientDeductionIDs = formCollection["ClientDeductionID"];
+            List<int> clientDeductionID = new List<int>();
+            foreach (string id in clientDeductionIDs)
+            {
+                clientDeductionID.Add(int.Parse(id));
+
+            }
+            if (clientDeductionID.Count() > 0)
+            {
+                int result = _service.RemoveDeductions(clientDeductionID).Result;
+                if (result > 0)
+                {
+
+                }
+            }
+            return RedirectToAction(nameof(ScheduleReport));
+        }
+            [HttpPost]
         public ActionResult GenerateSchedule(IFormCollection formCollection)
         {
             var clientProductIDs = formCollection["ClientProductID"];
@@ -196,36 +236,112 @@ namespace SmartSave.Controllers
             }
             if (clientProductID.Count() > 0)
             {
-                DateTime CutOffDate = DateTime.MinValue;
-                
+                DateTime InvoiceDate = DateTime.MinValue;
+                DateTime DueDate = DateTime.MinValue;
                 try
                 {
-                    CutOffDate = Convert.ToDateTime(HttpContext.Session.GetString("CutOffDate"));
+                    InvoiceDate = Convert.ToDateTime(HttpContext.Session.GetString("InvoiceDate"));
                 }
                 catch (Exception ex)
                 {
                 }
 
+                try
+                {
+                    DueDate = Convert.ToDateTime(HttpContext.Session.GetString("DueDate"));
+                }
+                catch (Exception ex)
+                {
+                }
+                if (_service.DeductionExists(InvoiceDate))
+                 {
+                    TempData["Error"] = $"Invoices with a due date {UtilityService.ShowDate(InvoiceDate)} have already been generated, you can either deleted the invoices and start over or generate invoices for another date." ;
+                    return RedirectToAction (nameof(Schedule));
+                }
                
-                int result = _service.CalculateDeductions(clientProductID, CutOffDate).Result;
+                int result = _service.CalculateDeductions(clientProductID, InvoiceDate,DueDate).Result;
                 if (result > 0)
                 {
 
-                    var deductions = _service.GetClientDeductions(clientProductID, CutOffDate).Result;
+                    var deductions = _service.GetClientDeductions(clientProductID, InvoiceDate).Result;
                     return View(deductions);
                 }
             }
 
             return RedirectToAction(nameof(Schedule));
         }
+
         [HttpGet]
-        public ActionResult PrintSchedule()
+        public ActionResult PrintGeneratedSchedule()
         {
-            DateTime CutOffDate = DateTime.MinValue;
+            DateTime DateFrom = DateTime.MinValue;
+            DateTime DateTo = DateTime.MinValue;
             int ProductID = 0;
             try
             {
-                CutOffDate = Convert.ToDateTime(HttpContext.Session.GetString("CutOffDate"));
+                DateFrom = Convert.ToDateTime(HttpContext.Session.GetString("DateFrom"));
+            }
+            catch (Exception ex)
+            {
+            }
+
+            try
+            {
+                DateTo = Convert.ToDateTime(HttpContext.Session.GetString("DateTo"));
+            }
+            catch (Exception ex)
+            {
+            }
+
+            try
+            {
+                ProductID = Convert.ToInt32(HttpContext.Session.GetString("ProductID"));
+            }
+            catch (Exception ex)
+            {
+            }
+            Product product;
+
+            if (ProductID > 0)
+                product = _settingService.FindProduct(ProductID);
+            else
+                product = new Product
+                {
+                    ProductID = 0,
+                    Name = "All",
+                };
+
+            Company company = _settingService.FindDefaultCompany();
+            SchedulePrintOut printOut = new SchedulePrintOut();
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                Document document = printOut.PrintGeneratedSchedule(product, company, DateFrom, DateTo);
+                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                pdfRenderer.Document = document;
+                pdfRenderer.RenderDocument();
+                pdfRenderer.PdfDocument.Save(stream, false);
+                return File(stream.ToArray(), "application/pdf", $"SalarySchedule{product.Name}.pdf");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult PrintSchedule()
+        {
+            DateTime InvoiceDate = DateTime.MinValue;
+            DateTime DueDate = DateTime.MinValue;
+            int ProductID = 0;
+            try
+            {
+                InvoiceDate = Convert.ToDateTime(HttpContext.Session.GetString("InvoiceDate"));
+            }
+            catch (Exception ex)
+            {
+            }
+
+            try
+            {
+                DueDate = Convert.ToDateTime(HttpContext.Session.GetString("DueDate"));
             }
             catch (Exception ex)
             {
@@ -248,11 +364,12 @@ namespace SmartSave.Controllers
                     Name = "All",
                 };
 
+            Company company = _settingService.FindDefaultCompany();
                 SchedulePrintOut printOut = new SchedulePrintOut();
 
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    Document document = printOut.Print(product, CutOffDate);
+                    Document document = printOut.Print(product,company, InvoiceDate,DueDate);
                     PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
                     pdfRenderer.Document = document;
                     pdfRenderer.RenderDocument();

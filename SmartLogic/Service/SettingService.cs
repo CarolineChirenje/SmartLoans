@@ -27,6 +27,11 @@ namespace SmartLogic
             return _context.Products.Find(id);
 
         }
+        public Company FindDefaultCompany()
+        {
+
+          return  _context.Companies.Where(c => c.IsDefault).FirstOrDefault();
+        }
         public DocumentType FindDocumentTypes(int DocumentTypeID)
         {
             return _context.DocumentTypes.
@@ -122,7 +127,7 @@ namespace SmartLogic
             if (UtilityService.IsNotNull(clientCourse))
                 _ClientCourseID = clientCourse.ClientCourseID;
 
-            IEnumerable<int> courseOutlines = from c in _context.CourseTranscripts
+            IEnumerable<int> courseOutlines = from c in _context.ClientTranscripts
                                               where c.ClientCourseID == _ClientCourseID
                                               select c.CourseOutlineID;
             return _context.CourseOutlines

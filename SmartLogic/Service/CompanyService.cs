@@ -128,6 +128,14 @@ namespace SmartLogic
             company.Code = Company.Code;
             company.IsActive = Company.IsActive;
             company.Name = Company.Name;
+            company.AddressLine1 = Company.AddressLine1;
+            company.AddressLine2 = Company.AddressLine2;
+            company.City = Company.City;
+            company.Phone = Company.Phone;
+            company.Mobile = Company.Mobile;
+            company.Website = Company.Website;
+            company.CountryID = Company.CountryID;
+            company.Fax = Company.Fax;
             company.LastChangedBy = UtilityService.CurrentUserName;
             company.LastChangedDate = DateTime.Now;
             _context.Update(company);

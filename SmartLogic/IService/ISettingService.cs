@@ -20,6 +20,7 @@ namespace SmartLogic
         List<TransactionType> GetActiveTransactionTypeList();
         List<Course> GetActiveCourseList();
         Product FindProduct(int productid);
+        Company FindDefaultCompany();
 
         List<WeekDay> GetWeekDays();
         List<Course> GetCourseList();

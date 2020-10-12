@@ -8,13 +8,9 @@ namespace SmartHelper
 
         DashBoard = 1,
         Employees,
-        Product_Packaging,
-        System_Settings,
-        Administration_Settings,
-        Transactions,
-        Schedules,
-
-
+        Product_And_Services,
+        Reporting,
+        Custom_Settings,
         //
         Menu = 9998,
         Developer_Menu = 999,
@@ -595,7 +591,8 @@ namespace SmartHelper
         Site_Create_Account_URL,
         Password_Validity_Period,
         Account_Number_Auto_Generate,
-         Application_Is_VAT_Compliant
+         Application_Is_VAT_Compliant,
+        Date_Time_Format
 
 
     }
@@ -791,7 +788,8 @@ namespace SmartHelper
         View_Assert,
 
         View_Client_Outstanding_Payments,
-        Generate_Schedules
+        Generate_Invoices,
+        Remove_Invoice_Entries
 
 
     }

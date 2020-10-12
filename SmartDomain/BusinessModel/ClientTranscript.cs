@@ -5,11 +5,11 @@ using System.Text;
 
 namespace SmartDomain
 {
-    public class CourseTranscript : ChangeAudit
+    public class ClientTranscript : ChangeAudit
     {
 
         [Key]
-        public int CourseTranscriptID { get; set; }
+        public int ClientTranscriptID { get; set; }
         public int ClientCourseID { get; set; }
         public virtual ClientCourse ClientCourse { get; set; }
         public int CourseOutlineID { get; set; }

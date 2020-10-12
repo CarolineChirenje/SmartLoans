@@ -21,7 +21,7 @@ namespace SmartReporting
 
 
             // Put a logo in the header
-            string imagePath = MigraDocFilenameFromByteArray(UtilityService.CompanyLogo);
+            string imagePath = UtilityService.IsNotNull((UtilityService.CompanyLogo))? MigraDocFilenameFromByteArray(UtilityService.CompanyLogo):"";
             Image image = section.Headers.Primary.AddImage(imagePath);
             image.Height = "1.5cm";
             image.LockAspectRatio = true;

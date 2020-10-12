@@ -10,7 +10,7 @@ namespace SmartDomain
         [Key]
         public int CourseID { get; set; }
         public string Title { get; set; }
-                      public bool IsActive { get; set; }
+        public bool IsActive { get; set; }
         public virtual List<CourseOutline> CourseOutlines { get; set; }
 
     }

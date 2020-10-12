@@ -1,6 +1,7 @@
 ﻿using SmartDomain;
 using SmartHelper;
 using SmartLogic;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -71,9 +72,8 @@ namespace SmartLogic
         Task<int> ActionProduct(int id, DatabaseAction action);
         List<ClientProduct> GetClientProducts(int id);
         List<Product> GetClientRegisteredProducts(int id);
-        List<ClientSchedule> GetClientsOnProduct(int ProductID, System.DateTime CutOffDate);
-
-        //Course
+        List<ClientSchedule> GetClientsOnProduct(int ProductID, DateTime CutOffDate);
+             //Course
         Task<ClientCourse> FindCourse(int id);
         Task<int> Save(ClientCourse ClientCourse);
         Task<int> Update(ClientCourse ClientCourse);

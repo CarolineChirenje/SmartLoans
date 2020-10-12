@@ -22,7 +22,7 @@ namespace SmartDomain
         [DefaultValue("0.00")]
         public decimal Salary { get; set; }
         public string ClientFullName { get; set; }
-        public DateTime CutOffDate { get; set; }
+        public DateTime InvoiceDate { get; set; }
               public bool IsSelected{ get; set; }
 
 

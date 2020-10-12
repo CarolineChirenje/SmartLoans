@@ -209,8 +209,8 @@ namespace SmartSave.Controllers
 
 
             List<Company> activeCompanies = _service.Companies();
-
-            int? defaultCompany = activeCompanies.Where(c => c.IsDefault).FirstOrDefault().CompanyID;
+            
+            int? defaultCompany = activeCompanies.Where(c => c.IsDefault).FirstOrDefault()?.CompanyID;
 
             var company = activeCompanies.Select(t => new
             {

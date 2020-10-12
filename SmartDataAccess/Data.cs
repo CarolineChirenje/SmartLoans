@@ -281,8 +281,21 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Date_Format,
                     Name = AppSetting.Date_Format.ToString().Replace("_", " "),
-                    Value="yyyy-MMM-dd HH:mm",
+                    Value="yyyy-MMM-dd",
                     Description ="Format Used to display date",
+                    CustomVariableTypeID=(int)VariableType.Date_Time,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                   new CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Date_Time_Format,
+                    Name = AppSetting.Date_Format.ToString().Replace("_", " "),
+                    Value="yyyy-MMM-dd HH:mm",
+                    Description ="Format Used to display date time",
                     CustomVariableTypeID=(int)VariableType.Date_Time,
                     CustomSettingTypeID=(int)SettingType.All,
                     IsActive = true,

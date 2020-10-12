@@ -119,7 +119,6 @@ namespace SmartLogic
 
         public async Task<int> Save(Menu menu)
         {
-            menu.IsActive = true;
             menu.LastChangedBy = UtilityService.CurrentUserName;
             menu.LastChangedDate = DateTime.Now;
             _context.Add(menu);
@@ -137,7 +136,7 @@ namespace SmartLogic
             update.IsActive = menu.IsActive;
             update.LastChangedBy = UtilityService.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
-            _context.Update(menu);
+            _context.Update(update);
             return await _context.SaveChangesAsync();
         }
 

@@ -760,7 +760,7 @@ namespace SmartLogic
             int result = 0;
             try
             {
-                IEnumerable<int> courseOutlines = from c in _context.CourseTranscripts
+                IEnumerable<int> courseOutlines = from c in _context.ClientTranscripts
                                                   where c.ClientCourseID == clientCourseID
                                                   select c.CourseOutlineID;
                 List<int> old_sessions = courseOutlines.ToList();
@@ -809,7 +809,7 @@ namespace SmartLogic
 
                 foreach (int sessionid in sessions)
                 {
-                    CourseTranscript transcript = new CourseTranscript
+                    ClientTranscript transcript = new ClientTranscript
                     {
                         ClientCourseID = clientCourseID,
                         CourseOutlineID = sessionid,
@@ -829,14 +829,14 @@ namespace SmartLogic
         }
         public async Task<int> RemoveSessions(int clientCourseID, List<int> sessions)
         {
-            List<CourseTranscript> courseTranscripts = await _context.CourseTranscripts.Where(r => r.ClientCourseID == clientCourseID).ToListAsync();
+            List<ClientTranscript> courseTranscripts = await _context.ClientTranscripts.Where(r => r.ClientCourseID == clientCourseID).ToListAsync();
             var transcriptsToBeRemoved = courseTranscripts
                     .Where(x => sessions.Any(y => y == x.CourseOutlineID));
-            _context.CourseTranscripts.RemoveRange(transcriptsToBeRemoved);
+            _context.ClientTranscripts.RemoveRange(transcriptsToBeRemoved);
             return (await _context.SaveChangesAsync());
         }
 
-        public List<ClientSchedule> GetClientsOnProduct(int ProductID, System.DateTime CutOffDate)
+        public List<ClientSchedule> GetClientsOnProduct(int ProductID, System.DateTime InvoiceDate)
         {
             IEnumerable<int> ClientIDs;
             if (ProductID == 0)
@@ -871,7 +871,7 @@ namespace SmartLogic
                     Salary = item.Client.Salary,
                     ProductID = item.ProductID,
                     ProductName = item.Product.Name,
-                    CutOffDate = CutOffDate
+                    InvoiceDate = InvoiceDate
 
                 });
             }

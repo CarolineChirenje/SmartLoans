@@ -42,7 +42,7 @@
                                         <th>Product</th>
                                         <th>Occupation</th>
                                         <th>Salary</th>
-                                        <th>Due Date</th>
+                                        <th>Invoice Date</th>
 
 
                                     </tr>
@@ -56,7 +56,7 @@
 
                                         <tr>
                                             @{
-                                                string dueDate = UtilityService.ShowDate(clientList[i].CutOffDate);
+                                                string invoiceDate = UtilityService.ShowDate(clientList[i].InvoiceDate);
 
                                             }
                                             <td align="center"><input type="checkbox"  id="checkBoxAll" name="ClientProductID" value="@clientList[i].ClientProductID" /></td>
@@ -72,7 +72,7 @@
                                             <td>@clientList[i].Occupation</td>
                                             <td>@clientList[i].Salary</td>
 
-                                            <td>@dueDate</td>
+                                            <td>@invoiceDate</td>
                                           
                                         </tr>
                                        
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        @if (UtilityService.HasPermission(Permissions.Generate_Schedules))
+                        @if (UtilityService.HasPermission(Permissions.Generate_Invoices))
                         {<button type="submit" class="btn btn-success pull-right">Generate Schedule</button><br />
                         }
                         <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>

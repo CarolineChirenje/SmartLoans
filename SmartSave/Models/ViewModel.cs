@@ -127,18 +127,12 @@ namespace SmartSave.Models
         public int ProductID { get; set; }
         public int ClientID { get; set; }
         public bool IsSelected { get; set; }
-        public DateTime CutOffDate { get; set; }
-      
+        public DateTime InvoiceDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime DateTo { get; set; }
+        public DateTime DateFrom { get; set; }
+
     }
 
    
-    public class ScheduleModelDetails
-    {
-        /// <summary>  
-        /// To hold list of schedules  
-        /// </summary>  
-        public List<ScheduleModel> ScheduleDetails { get; set; }
-
-    }
-
 }

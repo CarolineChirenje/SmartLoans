@@ -15,7 +15,8 @@ namespace SmartDataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-                modelBuilder.Entity<UserRole>().HasKey(sc => new { sc.UserID, sc.RoleID });
+           // modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Entity<UserRole>().HasKey(sc => new { sc.UserID, sc.RoleID });
 
                 //System Roles
                 modelBuilder.Entity<Role>().HasData(
@@ -157,11 +158,10 @@ namespace SmartDataAccess
 
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientCourse> ClientCourses { get; set; }
-        public DbSet<CourseTranscript> CourseTranscripts { get; set; }
+        public DbSet<ClientTranscript> ClientTranscripts { get; set; }
         public DbSet<ClientContact> ClientContacts { get; set; }
         public DbSet<ClientDocument> ClientDocuments { get; set; }
         public DbSet<ClientGuarantor> ClientGuarantors { get; set; }
-        public DbSet<ClientBoard> ClientBoard { get; set; }
         public DbSet<ClientNote> ClientNotes { get; set; }
         public DbSet<ClientDependent> ClientDependents { get; set; }
         public DbSet<ClientProduct> ClientProducts { get; set; }
@@ -205,9 +205,6 @@ namespace SmartDataAccess
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<DocumentFormat> DocumentFormats { get; set; }
 
-        public DbSet<BroadCast> BroadCasts { get; set; }
-        public DbSet<AuditAction> AuditActions { get; set; }
-        public DbSet<AuditEntry> AuditEntries { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<FeatureFlag> FeatureFlags { get; set; }
 

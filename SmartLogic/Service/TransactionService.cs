@@ -7,6 +7,8 @@ using SmartDataAccess;
 using SmartHelper;
 using SmartDomain;
 using System.Globalization;
+using Microsoft.VisualBasic;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace SmartLogic
 {
@@ -208,7 +210,22 @@ namespace SmartLogic
             .Where(t => t.TransactionID == TransactionID).FirstOrDefaultAsync();
         }
 
-        public async Task<int> CalculateDeductions(List<int> ClientProductIDs, DateTime CutOffDate)
+        public bool DeductionExists(DateTime CutOffDate)
+        {
+            var clientDeduction = _context.ClientDeductions
+                    .Where(cd => cd.DueDate == CutOffDate).FirstOrDefault();
+
+            return UtilityService.IsNotNull(clientDeduction);
+
+        }
+
+        public async Task<int> RemoveDeductions(List<int> clientDeductionID)
+        {
+            var clientDeductions = _context.ClientDeductions.Where(cd => clientDeductionID.Contains(cd.ClientDeductionID));
+            _context.RemoveRange(clientDeductions);
+            return await _context.SaveChangesAsync();
+        }
+        public async Task<int> CalculateDeductions(List<int> ClientProductIDs, DateTime InvoiceDate, DateTime DueDate)
         {
             int result = 0;
             var clientProduct = _context.ClientProducts.
@@ -217,39 +234,52 @@ namespace SmartLogic
                    ThenInclude(c => c.ClientOccupationHistory).
                    Where(t => ClientProductIDs.Contains(t.ClientProductID)).ToList();
 
+
+
+            int _invoiceNumber = UtilityService.LastInvoiceNumber + 1;
+
             foreach (var item in clientProduct)
             {
                 //1.
                 decimal _percentageDeduction = item.Product.DeductionPercentage;
                 decimal _percentageIncrement = item.Product.IncreamentPercentage;
                 decimal _currentSalary = item.Client.Salary;
-                decimal _previousSalary = 0M;
+                decimal? _previousSalary = null;
                 decimal _totalDeductionPercentage = 0M;
                 decimal _totalDeduction = 0M;
                 var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
                 if (UtilityService.IsNotNull(_lastSalary))
                     _previousSalary = _lastSalary.Salary;
 
-                if (_currentSalary > _previousSalary)
-                    _totalDeductionPercentage = _percentageDeduction + _percentageIncrement;
+                if (_previousSalary.HasValue)
+                {
+                    if (_currentSalary > _previousSalary.Value)
+                        _totalDeductionPercentage = _percentageDeduction + _percentageIncrement;
+                    else
+                        _totalDeductionPercentage = _percentageDeduction;
+                }
                 else
                     _totalDeductionPercentage = _percentageDeduction;
 
                 _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
 
+
+
                 ClientDeduction deduction = new ClientDeduction
                 {
                     ClientID = item.ClientID,
-                    ClientProductID=item.ClientProductID,
+                    ClientProductID = item.ClientProductID,
                     Salary = _currentSalary,
                     ProductID = item.ProductID,
-                    DueDate = CutOffDate,
-                    DeductedAmount=_totalDeduction,
-                    TotalDeductionPercentage=_totalDeductionPercentage,
-                    DeductionPercentage=_percentageDeduction,
-                    AdditionalDeductionPercentage=_percentageIncrement,
+                    InvoiceDate = InvoiceDate,
+                    DueDate = DueDate,
+                    DeductedAmount = _totalDeduction,
+                    TotalDeductionPercentage = _totalDeductionPercentage,
+                    DeductionPercentage = _percentageDeduction,
+                    AdditionalDeductionPercentage = _percentageIncrement,
                     LastChangedBy = UtilityService.CurrentUserName,
                     LastChangedDate = DateTime.Now,
+                    InvoiceNumber = _invoiceNumber
 
                 };
 
@@ -261,16 +291,26 @@ namespace SmartLogic
             return result;
         }
 
-        public async Task<List<ClientDeduction>> GetClientDeductions(List<int> ClientProductIDs, DateTime CutOffDate)
+        public async Task<List<ClientDeduction>> GetClientDeductions(List<int> ClientProductIDs, DateTime InvoiceDate)
         {
             return await _context.ClientDeductions
                 .Include(p => p.Client)
                 .Include(p => p.Product)
 
-               .Where(t => ClientProductIDs.Contains(t.ClientProductID) && t.DueDate==CutOffDate).ToListAsync();
+               .Where(t => t.InvoiceDate == InvoiceDate && ClientProductIDs.Contains(t.ClientProductID)).ToListAsync();
 
         }
 
+        public List<ClientDeduction> GetSchedule(int ProductID, DateTime DateFrom, DateTime DateTo)
+        {
 
+            var deductions = _context.ClientDeductions.
+            Include(c => c.Client).Include(p => p.Product).
+            Where(cd => cd.InvoiceDate >= DateFrom && cd.InvoiceDate <= DateTo);
+            if (ProductID == 0)
+                return deductions.ToList();
+            else
+                return deductions.Where(cd => cd.ProductID == ProductID).ToList();
+        }
     }
 }

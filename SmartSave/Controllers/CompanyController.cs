@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartDomain;
 using SmartHelper;
 using SmartLogic;
@@ -16,9 +17,12 @@ namespace SmartSave.Controllers
     {
 
         private readonly ICompanyService _service;
-        public CompanyController(ICompanyService service)
+        private readonly ISettingService _settingService;
+
+        public CompanyController(ICompanyService service, ISettingService settingService)
         {
             _service = service;
+            _settingService = settingService;
 
         }
 
@@ -29,6 +33,7 @@ namespace SmartSave.Controllers
 
         public IActionResult AddCompany()
         {
+            GetDropDownLists();
             return View();
         }
         [HttpPost]
@@ -76,7 +81,7 @@ namespace SmartSave.Controllers
 
             if (id == 0)
                 return RedirectToAction(nameof(Companies));
-
+            GetDropDownLists();
             return View(await _service.FindCompany(id));
         }
 
@@ -163,6 +168,20 @@ namespace SmartSave.Controllers
             }
             return RedirectToAction("ViewCompany", new { id });
         }
+
+        private void GetDropDownLists()
+        {
+           
+            var country = _settingService.GetCountryList().Select(t => new
+            {
+                t.CountryID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.CountryList = new SelectList(country, "CountryID", "Name");
+
+        }
+
 
     }
 }

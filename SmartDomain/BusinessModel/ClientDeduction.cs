@@ -12,6 +12,7 @@ namespace SmartDomain
 
         public int ClientDeductionID { get; set; }
         public int ClientID { get; set; }
+        public int InvoiceNumber { get; set; }
         public virtual Client Client { get; set; }
         public int ClientProductID { get; set; }
         public int ProductID { get; set; }
@@ -26,6 +27,7 @@ namespace SmartDomain
         public decimal AdditionalDeductionPercentage { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalDeductionPercentage { get; set; }
+        public DateTime InvoiceDate { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime? DatePaid { get; set; }
         [NotMapped]
