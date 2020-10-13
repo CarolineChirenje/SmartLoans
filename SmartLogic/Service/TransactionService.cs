@@ -19,6 +19,16 @@ namespace SmartLogic
 
         public TransactionService(DatabaseContext context) => _context = context;
 
+        public TransactionService()
+        {
+            if (_context == null)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+                optionsBuilder.UseSqlServer(GetData.SSDBConnection);
+                _context = new DatabaseContext(optionsBuilder.Options);
+            }
+
+        }
         TransactionState GetTransactionState(int TransactionTypeID)
         {
             var transactionType = _context.TransactionType.Find(TransactionTypeID);
@@ -67,14 +77,19 @@ namespace SmartLogic
                 PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
                 PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1); ;
             }
-            PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(PaymentsFile.Client.AccountNumber.ToString());
+            var client = _context.Clients.Find(PaymentsFile.ClientID);
+            if(UtilityService.IsNotNull(client))
+            PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(client.AccountNumber.ToString());
+            else
+            PaymentsFile.TransRef = UtilityService.GenerateTransactionRef("");
+
             PaymentsFile.TransactionTypeID = (int)transaction;
             PaymentsFile.PaymentStatusID = (int)PaymentState.Paid;
             PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
             PaymentsFile.LastChangedDate = DateTime.Now;
             _context.Add(PaymentsFile);
-
-            return await _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
+            return  PaymentsFile.TransactionID;
         }
 
         public async Task<int> ReversePayment(Transaction PaymentsFile, TransactionTypeList transaction)

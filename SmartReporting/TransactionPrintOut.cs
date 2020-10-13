@@ -124,7 +124,7 @@ namespace SmartReporting
                 tblrow1.Cells[0].Borders.Visible = false;
                 tblrow1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                tblrow1.Cells[0].AddParagraph(UtilityService.IsNotNull(guarantor) ? guarantor.PhysicalAddress : _paymentFile.Client.ResidentialAddress.Trim());
+                tblrow1.Cells[0].AddParagraph(UtilityService.IsNotNull(guarantor) ? guarantor.PhysicalAddress : _paymentFile.Client.AddressLine1.Trim());
 
                 Row tblrow2 = this.table.AddRow();
                 tblrow2.Borders.Visible = false;

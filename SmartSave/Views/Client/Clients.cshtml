@@ -60,7 +60,7 @@
                                             string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
                                             string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
                                             string dateRegistered = UtilityService.ShowDateTime(item.RegistrationDate);
-                                            string dob = UtilityService.ShowDate(item.DateOfBirth);
+                                            string dob = $"{UtilityService.ShowDate(item.DateOfBirth)}  ({UtilityService.CalculateAge(item.DateOfBirth)})";
                                             string ClientStatus = UtilityService.ShowActiveAction(@item.IsActive);
                                             string gender = UtilityService.ShowGender(@item.GenderID);
 

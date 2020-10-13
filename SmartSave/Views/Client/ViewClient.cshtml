@@ -1,4 +1,4 @@
-﻿@model SmartDomain.Client
+﻿@model SmartDomain.Client;
 
 @using SmartHelper;
 @using System.Collections.Generic;
@@ -102,9 +102,32 @@
 
 
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Residential Address</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="ResidentialAddress" rows="6" cols="40" value="@Model.ResidentialAddress">@Model.ResidentialAddress</textarea>
+                        <input type="text" class="form-control" name="AddressLine1" value="@Model.AddressLine1">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="AddressLine2" value="@Model.AddressLine2">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">City</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="City" value="@Model.City">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                            <option value="">----</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -142,7 +165,7 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Occupation</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Occupation"  value="@Model.Occupation">
+                        <input type="text" class="form-control" name="Occupation" value="@Model.Occupation">
 
                     </div>
                 </div>
@@ -227,12 +250,34 @@
 
                             @if (UtilityService.HasPermission(Permissions.View_Client_Outstanding_Payments))
                             {
-                                <li>
-                                    <a href="#OutstandingPayments" data-toggle="tab">Outstanding Payments</a>
-                                </li>
+                                var fees = Model.ClientFees.Where(cf => !cf.IsPaid);
+                                if (fees != null)
+                                {
+                                    if (fees.Count() > 0)
+                                    {
+                                        <li>
+                                            <a href="#OutstandingPayments" data-toggle="tab">Outstanding Payments</a>
+                                        </li>
+
+                                    }
+                                }
 
                             }
 
+                            @if (UtilityService.HasPermission(Permissions.View_Client_Deductions))
+                            {
+                                if (Model.ClientDeductions != null)
+                                {
+                                    if (Model.ClientDeductions.Count() > 0)
+                                    {
+                                        <li>
+                                            <a href="#ClientDeductions" data-toggle="tab">Deduction Schedules</a>
+                                        </li>
+
+                                    }
+                                }
+
+                            }
                             @if (UtilityService.HasPermission(Permissions.Generate_Client_Statement))
                             {
                                 <li>
@@ -826,7 +871,7 @@
                             <div class="tab-pane fade in" id="OutstandingPayments">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                       Outstanding Payments
+                                        Outstanding Payments
                                     </div>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -836,17 +881,22 @@
                                             <thead>
                                                 <tr>
                                                     <th>Product</th>
+                                                    <th>Fee Name</th>
                                                     <th>Amount</th>
                                                     <th>Payment Terms</th>
                                                     <th>Due Date</th>
+                                                    @if (UtilityService.HasPermission(Permissions.Capture_Payment))
+                                                    {
+                                                        <th>Action</th>
+}
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @if (Model.ClientFees != null)
                                                 {
-                                                    var cutoffDate = DateTime.Now.AddMonths(1); 
-                                                    var clientFees = Model.ClientFees.Where(c=>!c.IsPaid && c.DueDate.Date<cutoffDate.Date).OrderByDescending(x => x.DueDate);
+                                                    var cutoffDate = DateTime.Now.AddMonths(1);
+                                                    var clientFees = Model.ClientFees.Where(c => !c.IsPaid && c.DueDate.Date < cutoffDate.Date).OrderByDescending(x => x.DueDate);
                                                     @foreach (var item in clientFees)
                                                     {
                                                 <tr>
@@ -863,25 +913,109 @@
                                                     else
                                                     {
                                                         <td>@Html.DisplayFor(modelItem => item.ProductFee.Product.Name)</td>
+
                                                     }
+                                                    @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
+                                                    {
+                                                        <td><a target="_blank" asp-controller="Product" asp-action="ViewProductFee" asp-route-id="@item.ProductFee.ProductFeeID">@item.ProductFee.Name</a></td>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Html.DisplayFor(modelItem => item.ProductFee.Name)</td>
+                                                    }
+
 
                                                     <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                                                     <td>@Html.DisplayFor(modelItem => item.ProductFee.Frequency.Name)</td>
-                                                    <td>@duedate</td>
+                                                    <td>
+                                                        @duedate
+                                                    </td>
+                                                    @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
+                                                    {
+
+                                                        <td><a asp-controller="Client" asp-action="ClientFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
+                                                    }
                                                 </tr>
+                                                        }
+
+                                                        }
+                                        </table>
+                                    </div>
+                                    <div class="box-footer">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade in" id="ClientDeductions">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Deduction Schedules
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>Occupation</th>
+                                                    <th>Salary</th>
+                                                    <th>Product</th>
+                                                    <th>Invoice Number</th>
+                                                    <th>Invoice Date</th>
+                                                    <th>Due Date</th>
+                                                    <th>Amount Due</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody class="odd gradeX">
+                                                @if (Model.ClientDeductions != null)
+                                                {
+                                                    @foreach (var item in Model.ClientDeductions)
+                                                    {
+                                                        <tr>
+                                                            @{
+                                                                string duedate = UtilityService.ShowDate(item.DueDate);
+                                                                string invoicedate = UtilityService.ShowDate(item.InvoiceDate);
+                                                            }
+
+                                                            <td>@Html.DisplayFor(modelItem => item.Client.Occupation)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.Client.Salary)</td>
+                                                            @if (UtilityService.HasPermission(Permissions.View_Product))
+                                                            {
+                                                                <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Product.Name</a></td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>@item.Product.Name</td>
+                                                            }
+                                                            <td>@item.InvoiceNumber</td>
+                                                            <td>@invoicedate</td>
+                                                            <td>@duedate</td>
+
+                                                            <td>@Html.DisplayFor(modelItem => item.DeductedAmount)</td>
+
+
+
+                                                        </tr>
                                                     }
                                                 }
 
                                         </table>
                                     </div>
                                     <div class="box-footer">
-                                        @if (UtilityService.HasPermission(Permissions.Capture_Payment))
-                                        {
-                                            <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#">Pay</a>
-                                        }
+                                        @*@if (UtilityService.HasPermission(Permissions.Capture_Payment))
+                                            {
+                                                <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#">Pay</a>
+                                            }*@
                                     </div>
                                 </div>
                             </div>
+
 
                             <!-- /.panel-body -->
                         </div>
@@ -1329,8 +1463,12 @@
         </div>
     </div>
 </div>
+
+
+
+
 <script>
-import te from "../../wwwroot/bower_components/moment/src/locale/te";
+    import te from "../../wwwroot/bower_components/moment/src/locale/te";
 
 
 

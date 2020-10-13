@@ -22,7 +22,12 @@ namespace SmartDomain
         public DateTime? DatePaid { get; set; }
         [NotMapped]
         public bool IsPaid { get { return DatePaid.HasValue; } }
-
+        [NotMapped]
+        public int BankAccountID { get; set; }
+        [NotMapped]
+        public string InputAmount { get; set; }
+        [NotMapped]
+        public int ProductID { get; set; }
 
 
 

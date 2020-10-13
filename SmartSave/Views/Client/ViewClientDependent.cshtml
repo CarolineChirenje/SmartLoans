@@ -107,9 +107,32 @@
 
 
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Residential Address</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="ResidentialAddress" rows="6" cols="40" value="@Model.Client.ResidentialAddress">@Model.Client.ResidentialAddress</textarea>
+                        <input type="text" class="form-control" name="AddressLine1" value="@Model.Client.AddressLine1">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="AddressLine2" value="@Model.Client.AddressLine2">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">City</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="City" value="@Model.Client.City">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.Client.CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                            <option value="">----</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

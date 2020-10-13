@@ -19,6 +19,7 @@ namespace SmartLogic
         private readonly DatabaseContext _context;
         public ClientService(DatabaseContext context) => _context = context;
         ICustomSettingsService _settingService = new CustomSettingsService();
+        ITransactionService _transactionService = new TransactionService();
         public async Task<int> ActionClientStatus(int id, DatabaseAction action)
         {
 
@@ -83,6 +84,8 @@ namespace SmartLogic
                             Include(c => c.ClientCourses).
                             ThenInclude(c => c.Course).
                              ThenInclude(c => c.CourseOutlines).
+                             Include(c => c.ClientDeductions).
+                             ThenInclude(c => c.Product).
                             Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
                 return await ClientResults;
 
@@ -134,7 +137,10 @@ namespace SmartLogic
                 updateClient.IsActive = Client.IsActive;
                 updateClient.EmailAddress = Client.EmailAddress;
                 updateClient.IDNumber = Client.IDNumber;
-                updateClient.ResidentialAddress = Client.ResidentialAddress;
+                updateClient.AddressLine1 = Client.AddressLine1;
+                updateClient.AddressLine2 = Client.AddressLine2;
+                updateClient.City = Client.City;
+                updateClient.CountryID = Client.CountryID;
                 updateClient.MobileNumber = Client.MobileNumber;
                 updateClient.DateOfBirth = Client.DateOfBirth;
                 updateClient.DepartmentID = Client.DepartmentID;
@@ -638,7 +644,7 @@ namespace SmartLogic
                         clientFee.ClientID = clientProduct.ClientID;
                         clientFee.ProductFeeID = productFee.ProductFeeID;
                         clientFee.Amount = productFee.Amount;
-                                               clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
                         clientFee.LastChangedDate = DateTime.Now;
                         clientFee.ClientProductID = clientProduct.ClientProductID;
                         clientFee.DueDate = dueDate;
@@ -653,7 +659,7 @@ namespace SmartLogic
                             clientFee.ClientID = clientProduct.ClientID;
                             clientFee.ProductFeeID = productFee.ProductFeeID;
                             clientFee.Amount = productFee.Amount;
-                                                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                            clientFee.LastChangedBy = UtilityService.CurrentUserName;
                             clientFee.LastChangedDate = DateTime.Now;
                             clientFee.ClientProductID = clientProduct.ClientProductID;
                             clientFee.DueDate = dueDate;
@@ -710,6 +716,8 @@ namespace SmartLogic
             return _context.Products.
             Where(t => productids.Contains(t.ProductID)).ToList();
         }
+
+
 
         //Client Course
         public async Task<ClientCourse> FindCourse(int id)
@@ -877,6 +885,65 @@ namespace SmartLogic
             }
 
             return schedules;
+        }
+        // ClientFees
+        public async Task<ClientFee> FindClientFee(int id)
+        {
+            return await _context.ClientFees.
+             Include(c => c.Client).
+             Include(c => c.ProductFee).
+             ThenInclude(c => c.Product).
+            Where(t => t.ClientFeeID == id).FirstOrDefaultAsync();
+        }
+
+
+
+        public async Task<int> PayFee(ClientFee clientFee)
+        {
+            int _TransactionID = 0;
+            ClientFee _clientFee = _context.ClientFees.
+            Include(c => c.ProductFee).
+            ThenInclude(c => c.Product).
+                       Where(c => c.ClientFeeID == clientFee.ClientFeeID).
+            FirstOrDefault();
+
+
+            Transaction addPaymentsFile = new Transaction()
+            {
+                Year = DateTime.Now.Year,
+                Month = DateTime.Now.Month,
+                Amount = UtilityService.HasPermission(Permissions.Override_Payment) ? clientFee.Amount : _clientFee.Amount,
+                ClientID = clientFee.ClientID,
+                               ProductID = clientFee.ProductID,
+                PaymentDate = DateTime.Now,
+                Narration = _clientFee.ProductFee.Name,
+                PaymentStatusID = (int)PaymentState.Paid,
+                TransactionDate = DateTime.Now,
+                LastChangedBy = UtilityService.CurrentUserName,
+                LastChangedDate = DateTime.Now,
+                BankAccountID = clientFee.BankAccountID,
+                TransactionTypeID = (int)TransactionTypeList.Fee,
+                //AssertID = paymentsFile.AssertID,
+                //AssertCategoryID = paymentsFile.AssertCategoryID
+
+            };
+
+            _TransactionID = await _transactionService.CreatePayment(addPaymentsFile, TransactionTypeList.Fee);
+
+
+
+            if (_TransactionID > 0)
+            {
+
+                _clientFee.DatePaid = DateTime.Now;
+                _clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                _clientFee.LastChangedDate = DateTime.Now;
+                _context.Update(_clientFee);
+                await _context.SaveChangesAsync();
+            }
+
+
+            return _TransactionID;
         }
     }
 }

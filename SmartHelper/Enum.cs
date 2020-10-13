@@ -712,6 +712,7 @@ namespace SmartHelper
         Make_Payment,
 
 
+
         // Menus
         Add_Menu,
         Update_Menu,
@@ -789,7 +790,9 @@ namespace SmartHelper
 
         View_Client_Outstanding_Payments,
         Generate_Invoices,
-        Remove_Invoice_Entries
+        Remove_Invoice_Entries,
+        View_Client_Deductions,
+        Override_Payment,
 
 
     }

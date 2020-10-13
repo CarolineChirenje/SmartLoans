@@ -838,6 +838,37 @@ namespace SmartSave.Controllers
             return View(clientCourse);
         }
 
+        public async Task<IActionResult> ClientFeePayment(int id)
+        {
+            if (id == 0)
+                return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+            ClientFee clientFee = await _service.FindClientFee(id);
+            GetDropDownLists();
+            if (UtilityService.IsNotNull(clientFee))
+                return View(clientFee);
+            return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ClientFeePayment(ClientFee clientFee)
+        {
+            ClientFee update = await _service.FindClientFee(clientFee.ClientFeeID);
+            if (UtilityService.IsNotNull(update))
+            {
+                clientFee.Amount = UtilityService.GetDecimalAmount(clientFee.InputAmount);
+                int result = await _service.PayFee(clientFee);
+                if (result == 0)
+                {
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return RedirectToAction("ViewClient", new { id = clientFee.ClientID });
+                }
+                else
+                    return RedirectToAction("ViewClientTransaction", new { id = result });
+            }
+            return RedirectToAction("ViewClient", new { id = clientFee.ClientID });
+        }
+        
+
         [HttpPost]
         public async Task<IActionResult> UpdateSessions(string[] selectedSessions, ClientCourse clientCourse)
         {
@@ -1072,8 +1103,14 @@ namespace SmartSave.Controllers
 
             ViewBag.AssertCategoryList = new SelectList(assertCategoryList, "AssertCategoryID", "Name");
 
-            
 
+            var country = _settingService.GetCountryList().Select(t => new
+            {
+                t.CountryID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.CountryList = new SelectList(country, "CountryID", "Name");
         }
     }
 }

@@ -7963,6 +7963,7 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAcco
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAccounts\BankAccounts.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\BankAccounts\ViewBankAccount.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\AddClient.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ClientFeePayment.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\Clients.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClient.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\ViewClientCourse.cshtml.g.cs

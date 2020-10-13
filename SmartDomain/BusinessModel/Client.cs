@@ -33,7 +33,12 @@ namespace SmartDomain
 
         public string MobileNumber { get; set; }
 
-        public string ResidentialAddress { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string City { get; set; }
+        [ForeignKey("CountryID")]
+        public int? CountryID { get; set; }
+        public virtual Country Country { get; set; }
 
         public DateTime RegistrationDate { get; set; }
         public int GenderID { get; set; }
@@ -56,6 +61,8 @@ namespace SmartDomain
         public virtual List<ClientProduct> ClientProducts { get; set; }
         public virtual List<ClientCourse> ClientCourses { get; set; }
         public virtual List<ClientFee> ClientFees { get; set; }
+        public virtual List<ClientDeduction> ClientDeductions { get; set; }
+        
         public virtual List<ClientOccupationHistory> ClientOccupationHistory { get; set; }
         
         [NotMapped]
