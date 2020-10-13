@@ -30,7 +30,7 @@ namespace SmartDataAccess
                     DisplayName = MenuGroups.Employees.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
-                    CSSClass = UtilityService.HtmlDecode("fa-users"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-user"),
                     OrderNo = 2,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -56,7 +56,7 @@ namespace SmartDataAccess
                     DisplayName = MenuGroups.Reporting.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-chart-bar"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-area-chart"),
                     OrderNo = 6,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -68,7 +68,7 @@ namespace SmartDataAccess
                     DisplayName = MenuGroups.Custom_Settings.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-tools"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-wrench"),
                     OrderNo = 7,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -93,7 +93,7 @@ namespace SmartDataAccess
                     DisplayName = MenuGroups.Developer_Menu.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
-                    CSSClass = UtilityService.HtmlDecode("fa fa - laptop"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-desktop"),
                     OrderNo = 9999,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"

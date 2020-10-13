@@ -8051,3 +8051,14 @@ D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\wwwroot\bower_comp
 D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\wwwroot\bower_components\select2\tests\vendor\qunit-1.23.1.css
 D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\wwwroot\bower_components\select2\tests\vendor\qunit-1.23.1.js
 D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\wwwroot\bower_components\select2\vendor\jquery-2.1.0.js
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Assert\AddAssert.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Assert\Assert.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Assert\ViewAssert.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Assert\ViewAssertCategory.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ClientFeePayment.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Product\ViewProductFee.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\GeneratedInvoices.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\GenerateSchedule.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\SalarySchedule.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\Schedule.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\ScheduleReport.cshtml.g.cs
