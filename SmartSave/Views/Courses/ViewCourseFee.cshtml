@@ -1,0 +1,196 @@
+﻿@model SmartDomain.CourseFee
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+        Course Fees
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+            <h3 class="box-title">@Model.Course.Title</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="/Courses/ViewCourse">
+
+            @if (TempData["Error"] != null)
+            {<div class="container">
+                    <div class="text-danger">@TempData["Error"].ToString()</div>
+                </div>
+            }
+
+            @if (TempData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@TempData["Success"].ToString()</div>
+                </div>
+            }
+            @if (TempData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@TempData["Warning"].ToString()</div>
+                </div>
+            }
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Title" value="@Model.Course.Title">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Sessions</label>
+                    <div class="col-sm-10">
+                        <a asp-controller="Courses" asp-action="CourseOutlines" asp-route-id="@Model.CourseID">@Model.Course.CourseOutlines?.Count()</a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                    <div class="col-sm-2">
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.Course.IsActive)
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.Course.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.Course.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="CourseID" value="@Model.CourseID" />
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Courses" asp-action="Courses">Cancel</a>
+                <button type="submit" class="btn btn-info pull-right">Update</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Information
+                    </div>
+                    <!-- /.panel-heading -->
+                    <form method="post" asp-controller="Courses" asp-action="ViewCourseFee">
+
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                                <input type="text" class="form-control" name="Name" value="@Model.Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Description</label>
+                                <textarea class="form-control" name="Description">@Model.Description</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Amount</label>
+                                <input type="text" class="form-control" name="Amount" value="@Model.Amount">
+                                <span id="AmountError" class="text-danger text-bold"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Frequency</label>
+
+                                <select asp-for="FrequencyID" class="form-control" asp-items="ViewBag.FrequencyList">
+                                    <option value="">----</option>
+                                </select>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="@Model.IsActive" />
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+
+                            </div>
+
+
+
+                            <input type="hidden" name="CourseFeeID" value="@Model.CourseFeeID" />
+
+                        </div>
+                        <div class="modal-footer">
+                            @if (UtilityService.HasPermission(Permissions.Update_Course_Fee))
+                            {
+                                <button type="submit" class="btn btn-primary">Update</button>
+
+                            }
+                            @if (UtilityService.HasPermission(Permissions.Delete_Course_Fee))
+                            {
+                                <a class="btn btn-danger" asp-controller="Courses" asp-action="ActionCourseFee" asp-route-courseFeeID="@Model.CourseFeeID" asp-route-courseID="@Model.CourseID">Delete</a>
+                            }
+                            @if (UtilityService.HasPermission(Permissions.View_Course))
+                            {
+                                <a class="btn btn-info" asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@Model.CourseID">View More Fees</a>
+                            } <a class="btn btn-default" asp-controller="Courses" asp-action="Courses">Cancel</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.box -->
+</section>
+
+<script>
+
+
+    $(document).ready(function () {
+
+    });
+
+        $('#Amount').blur(function () {
+            var tempVal = $('#Amount').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#AmountError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#AmountError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+    })
+
+
+
+    }
+</script>

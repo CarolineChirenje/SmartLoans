@@ -186,6 +186,8 @@ namespace SmartDataAccess
 
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseOutline> CourseOutlines { get; set; }
+        public DbSet<CourseFee> CourseFees { get; set; }
+        public DbSet<CourseFeeHistory> CourseFeeHistory { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<PriorityRank> PriorityRanks { get; set; }

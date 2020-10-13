@@ -56,6 +56,7 @@ namespace SmartLogic
         {
             return await _context.Courses.
             Include(c=>c.CourseOutlines).
+            Include(c=>c.CourseFees).
             Where(r => r.CourseID == id)
                .AsNoTracking().FirstOrDefaultAsync();
         }
@@ -131,6 +132,77 @@ namespace SmartLogic
             return _context.CourseOutlines
            .Where(c => c.CourseID == courseID).ToList();
 
+        }
+        // Course Fee
+
+        public async Task<CourseFee> FindCourseFee(int id)
+        {
+            return await _context.CourseFees.
+                 Include(c => c.Course).
+                Where(c => c.CourseFeeID == id).FirstOrDefaultAsync();
+        }
+        public async Task<int> Save(CourseFee courseFee)
+        {
+            courseFee.LastChangedBy = UtilityService.CurrentUserName;
+            courseFee.LastChangedDate = DateTime.Now;
+            _context.Add(courseFee);
+            return (await _context.SaveChangesAsync());
+
+        }
+        public async Task<int> Update(CourseFee courseFee)
+        {
+            CourseFee update = _context.CourseFees.
+            Where(t => t.CourseFeeID == courseFee.CourseFeeID).FirstOrDefault();
+
+            update.Name = courseFee.Name;
+            update.FrequencyID = courseFee.FrequencyID;
+            update.IsActive = courseFee.IsActive;
+            update.Amount = courseFee.Amount;
+            update.Description = courseFee.Description;
+            update.LastChangedBy = UtilityService.CurrentUserName;
+            update.LastChangedDate = DateTime.Now;
+            _context.Entry(update).State = EntityState.Modified;
+
+            AddCourseFeeHistory(courseFee);
+            return await _context.SaveChangesAsync();
+        }
+
+
+        void AddCourseFeeHistory(CourseFee courseFee)
+
+        {  //Fee History
+            CourseFeeHistory feeHistory = new CourseFeeHistory();
+            feeHistory.Amount = courseFee.Amount;
+            feeHistory.Description = courseFee.Description;
+            feeHistory.IsActive = courseFee.IsActive;
+            feeHistory.FrequencyID = courseFee.FrequencyID;
+            feeHistory.Name = courseFee.Name;
+            feeHistory.CourseID = courseFee.CourseID;
+            feeHistory.CourseFeeID = courseFee.CourseFeeID;
+            feeHistory.LastChangedBy = courseFee.LastChangedBy;
+            feeHistory.LastChangedDate = courseFee.LastChangedDate;
+            _context.Add(feeHistory);
+
+        }
+        public async Task<int> ActionCourseFee(int id, DatabaseAction action)
+        {
+
+            CourseFee courseFee = await FindCourseFee(id);
+            AddCourseFeeHistory(courseFee);
+            if (DatabaseAction.Remove == action)
+            {
+
+                _context.CourseFees.Remove(courseFee);
+
+            }
+            else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+            {
+                courseFee.LastChangedBy = UtilityService.CurrentUserName;
+                courseFee.LastChangedDate = DateTime.Now;
+                _context.Update(courseFee);
+            }
+
+            return (await _context.SaveChangesAsync());
         }
     }
 }

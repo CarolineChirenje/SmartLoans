@@ -27,5 +27,12 @@ namespace SmartLogic
         Task<CourseOutline> FindCourseOutline(int id);
         List<CourseOutline> GetCourseOutlines(int courseID);
 
+
+
+        //Course Fee
+        Task<CourseFee> FindCourseFee(int id);
+        Task<int> Save(CourseFee courseFee);
+        Task<int> Update(CourseFee courseFee);
+        Task<int> ActionCourseFee(int id, DatabaseAction action);
     }
 }

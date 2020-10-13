@@ -793,6 +793,10 @@ namespace SmartHelper
         Remove_Invoice_Entries,
         View_Client_Deductions,
         Override_Payment,
+        View_Course_Fee,
+        Add_Course_Fee,
+        Update_Course_Fee,
+        Delete_Course_Fee
 
 
     }
