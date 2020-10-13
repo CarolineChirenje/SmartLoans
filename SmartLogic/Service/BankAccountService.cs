@@ -74,7 +74,13 @@ namespace SmartLogic
 
         public async Task<int> Update(BankAccount Bank)
         {
-            BankAccount update = await FindBank(Bank.BankAccountID);
+            BankAccount update = _context.BankAccounts.Where(r => r.BankAccountID == Bank.BankAccountID).FirstOrDefault();
+            update.AccountNumber = Bank.AccountNumber;
+            update.AccountCode = Bank.AccountCode;
+            update.AccountName = Bank.AccountName;
+            update.BankAccountTypeID = Bank.BankAccountTypeID;
+            update.CurrencyID = Bank.CurrencyID;
+            update.IsActive = Bank.IsActive;
             update.LastChangedBy = UtilityService.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);

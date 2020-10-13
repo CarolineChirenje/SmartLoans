@@ -88,9 +88,9 @@ namespace SmartSave.Controllers
 
                         
                         email.AttachmentFromMemory = null;
-                        string _emailBody = @"Your user account has been created successfully  account on " + UtilityService.ApplicationName + ".<br/><br/>" +
+                        string _emailBody = @"Dear  "+ user.UserFullName + ",<br/><br/> Your user account has been created successfully  account on " + UtilityService.ApplicationName + ".<br/><br/>" +
                                    "We recommend that you keep your account details secure and not share it with anyone.If you feel your credentials have  been compromised, " +
-                                @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ". Your login password is <b>" + _service.GetCredential(result) + "</b>.<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
+                                @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + " customer service  at  " + UtilityService.CustomerServiceNumber + ". Your login password is <b>" + _service.GetCredential(result) + "</b>.<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
                         email.Body = UtilityService.HtmlDecode(_emailBody);
                         email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
                     }

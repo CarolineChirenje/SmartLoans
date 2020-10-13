@@ -131,6 +131,9 @@ namespace SmartDataAccess
             Data.GetEmailTypes());
 
 
+            modelBuilder.Entity<EmailTemplate>().HasData(
+           Data.GetEmailTemplates());
+
             //custom settings
             modelBuilder.Entity<CustomSetting>().HasData(
               Data.GetApplicationSettings());

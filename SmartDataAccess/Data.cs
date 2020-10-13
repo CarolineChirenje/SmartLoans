@@ -830,6 +830,15 @@ namespace SmartDataAccess
                 new RelationshipType()
                 {
                     RelationshipTypeID =5,
+                    Name = "Self",
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new RelationshipType()
+                {
+                    RelationshipTypeID =6,
                     Name = "Other",
                     IsActive = true,
                     LastChangedDate = DateTime.Now,
@@ -1409,6 +1418,35 @@ namespace SmartDataAccess
 
             }
             return emailTypes.ToArray();
+        }
+
+        public static EmailTemplate[] GetEmailTemplates()
+        {
+            List<EmailTemplate> emailTemplates = new List<EmailTemplate>
+            {
+                new EmailTemplate()
+                {
+                    EmailTemplateID =1,
+                    EmailTypeID=(int)EmailTypeList.Client_Statement,
+                    Subject ="Account Statement",
+                    Body = @"Dear Customer, 
+
+                        Attached is your Account statement. To view it you will need to open the PDF attachment and insert your password. Your password is your ID number. To view your statement you need to have Adobe PDF Reader installed. If you do not have it, you will need to do the following: - Copy and paste this URL into your browser: www.get.adobe.com/reader/?promoid=BUIGO - Go to the website - Click the download button and follow the easy instructions.
+
+
+                        Regards,
+
+                        Smart Saver",
+                    PriorityRankID=(int)Priority.High,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                }
+                
+            };
+
+            return emailTemplates.ToArray();
+
         }
     }
 

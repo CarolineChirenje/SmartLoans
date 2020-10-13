@@ -98,8 +98,8 @@
                     <div class="col-sm-10">
                         @if (UtilityService.HasPermission(Permissions.View_Role))
                         {
-                            <a asp-controller="User" asp-action="UserRoles" asp-route-id="@Model.UserID">@Model.UserRoles?.Count()</a>
-                        }
+                        <a data-toggle="modal" data-target="#AddUserRoles">@Model.UserRoles?.Count()</a>
+                                                }
                         else
                         {
                             <a>@Model.UserRoles?.Count()</a>

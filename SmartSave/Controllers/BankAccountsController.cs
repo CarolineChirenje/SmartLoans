@@ -81,10 +81,13 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(BankAccount)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                else
+                        return RedirectToAction("ViewBankAccount", new { id = BankAccount.BankAccountID });
+
                 }
             }
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return View(BankAccount);
+            return RedirectToAction("ViewBankAccount", new { id = BankAccount.BankAccountID });
         }
 
 
