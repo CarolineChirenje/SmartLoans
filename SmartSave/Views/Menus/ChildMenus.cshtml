@@ -82,11 +82,14 @@
                     </table>
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer">
-                    <a asp-controller="Menus" asp-action="ViewParentMenu" asp-route-id="@ViewBag.MenuGroupID" class="btn btn-default">Cancel</a>
-                    <a asp-controller="Menus" asp-action="AddMenu" class="btn btn-info pull-right">New Menu</a><br />
-                    <br />
-                </div>
+                 <div class="box-footer">
+                     <a asp-controller="Menus" asp-action="MainMenu" class="btn btn-default">Cancel</a>
+                     @if (UtilityService.HasPermission(Permissions.Add_Menu))
+                     {
+                         <a asp-controller="Menus" asp-action="AddMenu" class="btn btn-info pull-right">New Menu</a><br />
+                     }
+                         <br />
+                     </div>
             </div>
             <!-- /.box -->
         </div>

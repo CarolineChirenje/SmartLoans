@@ -110,15 +110,14 @@ namespace SmartSave.Controllers
                 Menu update = await (_service.FindMenu(menu.MenuID));
                 if (UtilityService.IsNotNull(update))
                 {
-                    if (await (_service.Update(update)) == 0)
+                    if (await (_service.Update(menu)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ChildMenus", new { menu.MenuGroupID });
+                   
                 }
-               // ViewBag.MenuGroups = GetMenuGroups();
-                return View(update);
+                return RedirectToAction("ViewMenu", new { id = menu.MenuID });
             }
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction(nameof(MainMenu));
+            return RedirectToAction("ViewMenu", new { id = menu.MenuID });
         }
         [HttpGet]
         public IActionResult AddMenu(int id)

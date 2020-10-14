@@ -30,7 +30,7 @@ namespace SmartDataAccess
                     DisplayName = MenuGroups.Employees.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-user"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-users"),
                     OrderNo = 2,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -118,7 +118,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "Clients",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-users-cog"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-users"),
                     OrderNo = 1,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -132,7 +132,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "MyAccount",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-users-user"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-heart"),
                     OrderNo = 0,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -215,7 +215,7 @@ namespace SmartDataAccess
                     ControllerName = "User",
                     ActionName = "Users",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-user"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-users"),
                     OrderNo = 8,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -258,7 +258,7 @@ namespace SmartDataAccess
                     ControllerName = "Company",
                     ActionName = "Companies",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa-building-o"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-building"),
                     OrderNo =11,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
