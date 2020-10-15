@@ -316,7 +316,7 @@ namespace SmartDataAccess
                     ControllerName = "NoticeBoard",
                     ActionName = "NoticeBoard",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa broadcast-tower"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-bell"),
                     OrderNo =15,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"

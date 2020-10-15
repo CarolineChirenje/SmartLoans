@@ -325,7 +325,7 @@
                                 </li>
                             }
 
-                           
+
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
@@ -452,7 +452,7 @@
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>Date Registered</th>
-                                                    <th>Sessions Completed</th>
+                                                    <th>Sessions</th>
                                                     <th>Is De-Registered</th>
 
                                                 </tr>
@@ -670,7 +670,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Trans Ref</th>
-                                                                                                        <th>Entity</th>
+                                                    <th>Entity</th>
                                                     <th>Transaction Type</th>
 
                                                     <th>Amount</th>
@@ -695,9 +695,9 @@
 
 
                                                             }
-                                                            
+
                                                             <td><a asp-controller="Client" asp-action="ViewClientTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
-                                                            
+
                                                             <td>@Html.DisplayFor(modelItem => item.Entity)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.TransactionType.TransType)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.TotalPaid)</td>
@@ -706,8 +706,8 @@
                                                             <td>@paymentdate</td>
                                                             <td>@transactiondate</td>
                                                         </tr>
-                                                                }
-                                                                }
+                                                    }
+                                                }
 
                                         </table>
                                     </div>
@@ -734,7 +734,7 @@
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Statement Type:</label>
                                             <select asp-for="StatementID" class="form-control" asp-items="ViewBag.ClientStatement" onchange="showProduct(this.value)">
-                                                                                            </select>
+                                            </select>
 
                                         </div>
                                         <div id="ddlProduct" class="form-group">
@@ -770,7 +770,7 @@
                                 </div>
                             </div>
 
-           <div class="tab-pane fade" id="Dependents">
+                            <div class="tab-pane fade" id="Dependents">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         Dependents
@@ -833,7 +833,7 @@
                                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                             <thead>
                                                 <tr>
-                                                   
+
                                                     <th>Entity</th>
                                                     <th>Fee Name</th>
                                                     <th>Amount</th>
@@ -1411,7 +1411,7 @@
 
 
 <script>
-      $(document).ready(function () {
+    $(document).ready(function () {
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
             localStorage.setItem('activeTab', $(e.target).attr('href'));
         });
@@ -1419,12 +1419,12 @@
         if (activeTab) {
             $('#myTab a[href="' + activeTab + '"]').tab('show');
         }
-       
+
         var futureDate = new Date();
         futureDate.setDate(futureDate.getDate() + 60);
         var previousDate = new Date();
         previousDate.setDate(previousDate.getDate() - 60);
-           document.getElementById('DueDate').value = new Date().toISOString().substring(0, 10);
+        document.getElementById('DueDate').value = new Date().toISOString().substring(0, 10);
         document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
         document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
     });
@@ -1443,15 +1443,15 @@
         })
     });
     function showProduct(_statementID) {
-       
-                if (_statementID !=1) {
-                    $("#ddlProduct").hide();
-                }
-                else {
-                    $("#ddlProduct").show();
-                }
-              
-          
-           }
+
+        if (_statementID != 1) {
+            $("#ddlProduct").hide();
+        }
+        else {
+            $("#ddlProduct").show();
+        }
+
+
+    }
 </script>
 

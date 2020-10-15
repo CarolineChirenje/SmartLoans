@@ -71,7 +71,7 @@
                                         <td>@activeTab</td>
                                         @if (UtilityService.HasPermission(Permissions.View_Menu))
                                         {
-                                            <td><a asp-controller="Menus" asp-action="ChildMenus" asp-route-id="@item.MenuGroupID">@item.Menus?.Count()</a></td>
+                                            <td><a>@item.Menus?.Count()</a></td>
 
                                         }
                                         else

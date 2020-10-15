@@ -121,7 +121,9 @@ namespace SmartLogic
                     LastChangedDate = DateTime.Now,
                     TransactionTypeID = (int)transaction,
                     PaymentStatusID = (int)PaymentState.Reversed,
-                    BankAccountID = PaymentsFile.BankAccountID
+                    BankAccountID = PaymentsFile.BankAccountID,
+                    AssertCategoryID = PaymentsFile.AssertCategoryID,
+                    AssertID = PaymentsFile.AssertID
                 };
                 if (PaymentsFile.ProductID.HasValue)
                     newPaymentFile.ProductID = PaymentsFile.ProductID;
@@ -137,16 +139,16 @@ namespace SmartLogic
 
                 updateOldPayment(transactionID, oldPaymentStatus, newPaymentFile.TransRef);
 
-                if(PaymentsFile.ClientFeeID.HasValue)
+                if (PaymentsFile.ClientFeeID.HasValue)
                 {
                     ClientFee clientFee = _context.ClientFees.Find(PaymentsFile.ClientFeeID);
-                    if(UtilityService.IsNotNull(clientFee))
+                    if (UtilityService.IsNotNull(clientFee))
                     {
                         clientFee.DatePaid = null;
                         clientFee.LastChangedBy = UtilityService.CurrentUserName;
                         clientFee.LastChangedDate = DateTime.Now;
                         _context.Update(clientFee);
-                       
+
                     }
                 }
 
@@ -192,7 +194,8 @@ namespace SmartLogic
             return await _context.Transactions.Where(p => p.ClientID == ClientID)
              .Include(p => p.Client)
              .Include(p => p.Product)
-                           .Include(p => p.PaymentStatus)
+             .Include(p => p.Course)
+             .Include(p => p.PaymentStatus)
               .Include(p => p.TransactionType)
                .ThenInclude(p => p.TransactionStatus)
               .Include(p => p.BankAccount)
@@ -205,7 +208,8 @@ namespace SmartLogic
             return await _context.Transactions
               .Include(p => p.Client)
              .Include(p => p.Product)
-                        .Include(p => p.PaymentStatus)
+             .Include(p => p.Course)
+              .Include(p => p.PaymentStatus)
               .Include(p => p.TransactionType)
               .ThenInclude(p => p.TransactionStatus)
                .Include(p => p.BankAccount)
@@ -218,6 +222,7 @@ namespace SmartLogic
             .Include(p => p.Client)
              .Include(p => p.Client)
              .Include(p => p.Product)
+             .Include(p => p.Course)
              .Include(p => p.PaymentStatus)
              .Include(p => p.TransactionType)
              .ThenInclude(p => p.TransactionStatus)
@@ -235,7 +240,7 @@ namespace SmartLogic
             return await _context.Transactions
              .Include(p => p.Client)
              .Include(p => p.Product)
-             .Include(p=>p.Course)
+             .Include(p => p.Course)
              .Include(p => p.PaymentStatus)
              .Include(p => p.TransactionType)
              .ThenInclude(p => p.TransactionStatus)
@@ -339,7 +344,7 @@ namespace SmartLogic
 
             var deductions = _context.ClientDeductions.
             Include(c => c.Client).Include(p => p.Product).
-            Where(cd => cd.InvoiceDate >= DateFrom && cd.InvoiceDate <= DateTo);
+                        Where(cd => cd.InvoiceDate >= DateFrom && cd.InvoiceDate <= DateTo);
             if (ProductID == 0)
                 return deductions.ToList();
             else
