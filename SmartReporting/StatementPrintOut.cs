@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace SmartReporting
 {
-  public  class StatementPrintOut
+    public class StatementPrintOut
     {
         Document document;
         Table table;
@@ -27,7 +27,7 @@ namespace SmartReporting
         CultureInfo culture;
         Section section;
         Style style;
-       
+
         public Document Print(Statement statement)
         {
             try
@@ -38,7 +38,7 @@ namespace SmartReporting
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Statement of Account");
                 this._statement = statement;
                 this.culture = new CultureInfo("en-US");
-                               style = ReportingUtilities.DefineStyles(this.document);
+                style = ReportingUtilities.DefineStyles(this.document);
                 AddressAndHeader();
                 AccountDetails();
                 TransactionDetails();
@@ -219,72 +219,261 @@ namespace SmartReporting
 
                 Paragraph paragraph = this.addressFrame.AddParagraph();
 
-               
 
 
-                    // Each item fills two rows
-                    Row tblrow = this.table.AddRow();
 
-                    tblrow.TopPadding = 1.5;
-                    tblrow.Cells[0].Borders.Visible = false;
-                    tblrow.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                    tblrow.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                    tblrow.Cells[0].Format.Font.Bold = true;
-                    tblrow.Cells[0].AddParagraph("Product");
+                // Each item fills two rows
+                Row tblrow = this.table.AddRow();
 
-                    tblrow.Cells[1].Borders.Visible = false;
-                    tblrow.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-                    tblrow.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                tblrow.Cells[1].AddParagraph(UtilityService.IsNull(_statement.Product) ? " All ": _statement.Product.Name) ;
+                tblrow.TopPadding = 1.5;
+                tblrow.Cells[0].Borders.Visible = false;
+                tblrow.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                tblrow.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                tblrow.Cells[0].Format.Font.Bold = true;
+                tblrow.Cells[0].AddParagraph("Product");
 
-                    tblrow.Cells[2].Borders.Visible = false;
-                    tblrow.Cells[2].Format.Alignment = ParagraphAlignment.Left;
-                    tblrow.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
-                    tblrow.Cells[2].Format.Font.Bold = true;
-                    tblrow.Cells[2].AddParagraph("Account Number");
+                tblrow.Cells[1].Borders.Visible = false;
+                tblrow.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
+                tblrow.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+                tblrow.Cells[1].AddParagraph(UtilityService.IsNull(_statement.Product) ? " All " : _statement.Product.Name);
 
-                    tblrow.Cells[3].Borders.Visible = false;
-                    tblrow.Cells[3].Format.Alignment = ParagraphAlignment.Left;
-                    tblrow.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
-                    tblrow.Cells[3].AddParagraph(_statement.Client.AccountNumber);
+                tblrow.Cells[2].Borders.Visible = false;
+                tblrow.Cells[2].Format.Alignment = ParagraphAlignment.Left;
+                tblrow.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
+                tblrow.Cells[2].Format.Font.Bold = true;
+                tblrow.Cells[2].AddParagraph("Account Number");
 
-                    Row tblrow1 = this.table.AddRow();
-                    tblrow1.Borders.Visible = false;
-                    tblrow1.TopPadding = 1.5;
-                    tblrow1.Cells[0].Borders.Visible = false;
-                    tblrow1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                    tblrow1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                    tblrow1.Cells[0].Format.Font.Bold = true;
-                    tblrow1.Cells[0].AddParagraph("Statement Period");
+                tblrow.Cells[3].Borders.Visible = false;
+                tblrow.Cells[3].Format.Alignment = ParagraphAlignment.Left;
+                tblrow.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
+                tblrow.Cells[3].AddParagraph(_statement.Client.AccountNumber);
 
-                    tblrow1.Cells[1].Borders.Visible = false;
-                    tblrow1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-                    tblrow1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                    tblrow1.Cells[1].AddParagraph($"{_statement.StartDate.ToString("dd-MMM-yyyy")} to {_statement.EndDate.ToString("dd-MMM-yyyy")}");
+                Row tblrow1 = this.table.AddRow();
+                tblrow1.Borders.Visible = false;
+                tblrow1.TopPadding = 1.5;
+                tblrow1.Cells[0].Borders.Visible = false;
+                tblrow1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                tblrow1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                tblrow1.Cells[0].Format.Font.Bold = true;
+                tblrow1.Cells[0].AddParagraph("Statement Period");
 
-                    tblrow1.Cells[2].Borders.Visible = false;
-                    tblrow1.Cells[2].Format.Alignment = ParagraphAlignment.Left;
-                    tblrow1.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
-                    tblrow1.Cells[2].Format.Font.Bold = true;
-                    tblrow1.Cells[2].AddParagraph("Print Date");
+                tblrow1.Cells[1].Borders.Visible = false;
+                tblrow1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
+                tblrow1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+                tblrow1.Cells[1].AddParagraph($"{_statement.StartDate.ToString("dd-MMM-yyyy")} to {_statement.EndDate.ToString("dd-MMM-yyyy")}");
 
-                    tblrow1.Cells[3].Borders.Visible = false;
-                    tblrow1.Cells[3].Format.Alignment = ParagraphAlignment.Left;
-                    tblrow1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
-                    tblrow1.Cells[3].AddParagraph(DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                tblrow1.Cells[2].Borders.Visible = false;
+                tblrow1.Cells[2].Format.Alignment = ParagraphAlignment.Left;
+                tblrow1.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
+                tblrow1.Cells[2].Format.Font.Bold = true;
+                tblrow1.Cells[2].AddParagraph("Print Date");
+
+                tblrow1.Cells[3].Borders.Visible = false;
+                tblrow1.Cells[3].Format.Alignment = ParagraphAlignment.Left;
+                tblrow1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
+                tblrow1.Cells[3].AddParagraph(DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
 
 
-                                 paragraph = section.AddParagraph();
+                paragraph = section.AddParagraph();
             }
 
             catch (Exception e)
             {
 
-              //  ErrorLog.Log(e, ErrorSource.Reporting);
+                //  ErrorLog.Log(e, ErrorSource.Reporting);
             }
         }
         void TransactionDetails()
         {
+            Statements statements = (Statements)_statement.StatementID;
+            switch (statements)
+            {
+                case Statements.Product_Based_Statement:
+                    ProductBasedStatement();
+                    break;
+                case Statements.Transaction_List:
+                    TransactionList();
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+        void TransactionList()
+        {
+
+            try
+            {
+
+
+                string _selectClause = @";WITH CTE_Trans AS (
+                                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Entity
+                                        FROM Transactions t
+                                        INNER JOIN Products p ON p.ProductID=t.ProductID
+                                        INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
+                                        UNION ALL
+                                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,c.Title AS Entity
+                                        FROM Transactions t
+                                        INNER JOIN Courses c ON c.CourseID=t.CourseID
+                                        INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
+                                        )
+                                        SELECT * FROM CTE_Trans t ";
+                string sqlQuery = _selectClause + $"WHERE t.ClientID={_statement.ClientID}  AND t.TransactionDate>'{_statement.StartDate.ToString("yyyy-MM-dd")}' AND t.TransactionDate < '{ _statement.EndDate.ToString("yyyy-MM-dd")}'";
+
+                DataTable Transactions = GetData.GetDataTable(sqlQuery);
+
+
+
+                // Create the item table
+                this.table = section.AddTable();
+                this.table.Style = "Table";
+                this.table.Borders.Color = TableBorder;
+                if (UtilityService.StatementShowTableBoarders)
+                {
+                    this.table.Borders.Width = 0.25;
+                    this.table.Borders.Left.Width = 0.25;
+                    this.table.Borders.Right.Width = 0.25;
+
+                }
+
+                else
+                {
+
+                    this.table.Borders.Width = 0;
+                    this.table.Borders.Left.Width = 0;
+                    this.table.Borders.Right.Width = 0;
+                    this.table.Rows.LeftIndent = 0;
+                }
+
+                // Before you can add a row, you must define the columns
+                Column column = this.table.AddColumn("2cm");
+                column.Format.Alignment = ParagraphAlignment.Center;
+
+                column = this.table.AddColumn("2cm");
+                column.Format.Alignment = ParagraphAlignment.Right;
+
+                column = this.table.AddColumn("5cm");
+                column.Format.Alignment = ParagraphAlignment.Right;
+
+                column = this.table.AddColumn("6cm");
+                column.Format.Alignment = ParagraphAlignment.Right;
+
+                column = this.table.AddColumn("2cm");
+                column.Format.Alignment = ParagraphAlignment.Right;
+
+                // Create the header of the table
+                Row row = table.AddRow();
+                row.HeadingFormat = true;
+                row.Format.Alignment = ParagraphAlignment.Center;
+                row.Format.Font.Bold = true;
+                row.Shading.Color = HeaderColor;
+                int countCellColumn = 0;
+                row.Cells[countCellColumn].AddParagraph("Trans Date");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                countCellColumn++;
+                row.Cells[countCellColumn].AddParagraph("Trans Code");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                countCellColumn++;
+
+                row.Cells[countCellColumn].AddParagraph("Entity");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                countCellColumn++;
+
+                row.Cells[countCellColumn].AddParagraph("Counter");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                countCellColumn++;
+                row.Cells[countCellColumn].AddParagraph("Amount");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+
+                if (UtilityService.StatementShowTableBoarders)
+                    this.table.SetEdge(0, 0, countCellColumn + 1, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
+
+                Paragraph paragraph = this.addressFrame.AddParagraph();
+
+                int finalCountCellValue = 0;
+                foreach (DataRow transaction in Transactions.Rows)
+                {
+                    int countCellValue = 0;
+                    // Each item fills two rows
+                    Row row1 = this.table.AddRow();
+
+                    row1.TopPadding = 1.5;
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
+                    row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
+                    countCellValue++;
+
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
+                    row1.Cells[countCellValue].AddParagraph(transaction.Field<string>("TransCode"));
+                    countCellValue++;
+
+
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
+                    row1.Cells[countCellValue].AddParagraph(transaction.Field<string>("Entity"));
+                    countCellValue++;
+
+                    string _transactionDescription = transaction.Field<string>("Counter");
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Left;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].AddParagraph(_transactionDescription);
+                    countCellValue++;
+
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Right;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].AddParagraph(String.Format(culture, "{0:C}", transaction.Field<decimal>("Amount")));
+                    finalCountCellValue = countCellValue;
+                    if (UtilityService.StatementShowTableBoarders)
+                        this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue + 1, 1, Edge.Box, BorderStyle.Single, 0.75);
+                }
+
+                // Add an invisible row as a space line to the table
+                Row row2 = this.table.AddRow();
+                row2.Borders.Visible = false;
+
+                decimal TotalPaid = Transactions.AsEnumerable().Sum(transaction => transaction.Field<decimal>("Amount"));
+                // Add the total due row
+                row2 = this.table.AddRow();
+                row2.Cells[0].Borders.Visible = false;
+                row2.Cells[0].Format.Font.Bold = true;
+                row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
+                row2.Cells[0].MergeRight = finalCountCellValue - 1;
+                row2.Cells[0].AddParagraph("Total Amount");
+                row2.Cells[finalCountCellValue].AddParagraph(String.Format(culture, "{0:C}", TotalPaid));
+
+                // Set the borders of the specified cell range
+                if (UtilityService.StatementShowTableBoarders)
+                    this.table.SetEdge(finalCountCellValue, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
+                // Add the notes paragraph
+                paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
+            }
+            catch (Exception e)
+            {
+
+                // ErrorLog.Log(e, ErrorSource.Reporting);
+            }
+        }
+
+        void ProductBasedStatement()
+        {
+
             try
             {
 
@@ -293,7 +482,7 @@ namespace SmartReporting
                                             FROM Transactions t
                                             INNER JOIN Products p ON p.ProductID=t.ProductID
                                             INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
-                
+
                 string sqlQuery = _selectClause + $"WHERE t.ClientID={_statement.ClientID}  AND t.TransactionDate>'{_statement.StartDate.ToString("yyyy-MM-dd")}' AND t.TransactionDate < '{ _statement.EndDate.ToString("yyyy-MM-dd")}'";
 
                 if (_statement.ProductID > 0)
@@ -316,7 +505,7 @@ namespace SmartReporting
 
                 else
                 {
-                   
+
                     this.table.Borders.Width = 0;
                     this.table.Borders.Left.Width = 0;
                     this.table.Borders.Right.Width = 0;
@@ -338,7 +527,7 @@ namespace SmartReporting
 
                 column = this.table.AddColumn("6cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
-                
+
                 column = this.table.AddColumn("3cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
 
@@ -370,16 +559,16 @@ namespace SmartReporting
                 }
                 row.Cells[countCellColumn].AddParagraph("Counter");
                 row.Cells[countCellColumn].Format.Font.Bold = true;
-                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left; 
+                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
                 row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
                 countCellColumn++;
                 row.Cells[countCellColumn].AddParagraph("Amount");
                 row.Cells[countCellColumn].Format.Font.Bold = true;
                 row.Cells[countCellColumn].Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
-                
+
                 if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(0, 0, countCellColumn + 1 , 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
+                    this.table.SetEdge(0, 0, countCellColumn + 1, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
                 Paragraph paragraph = this.addressFrame.AddParagraph();
 
@@ -426,20 +615,20 @@ namespace SmartReporting
                     row1.Cells[countCellValue].AddParagraph(String.Format(culture, "{0:C}", transaction.Field<decimal>("Amount")));
                     finalCountCellValue = countCellValue;
                     if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue +1 , 1, Edge.Box,BorderStyle.Single, 0.75);
+                        this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue + 1, 1, Edge.Box, BorderStyle.Single, 0.75);
                 }
 
                 // Add an invisible row as a space line to the table
                 Row row2 = this.table.AddRow();
                 row2.Borders.Visible = false;
 
-               decimal TotalPaid= Transactions.AsEnumerable().Sum(transaction => transaction.Field<decimal>("Amount"));
+                decimal TotalPaid = Transactions.AsEnumerable().Sum(transaction => transaction.Field<decimal>("Amount"));
                 // Add the total due row
                 row2 = this.table.AddRow();
                 row2.Cells[0].Borders.Visible = false;
                 row2.Cells[0].Format.Font.Bold = true;
                 row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-                row2.Cells[0].MergeRight = finalCountCellValue-1;
+                row2.Cells[0].MergeRight = finalCountCellValue - 1;
                 row2.Cells[0].AddParagraph("Total Amount");
                 row2.Cells[finalCountCellValue].AddParagraph(String.Format(culture, "{0:C}", TotalPaid));
 

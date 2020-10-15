@@ -187,8 +187,8 @@ namespace SmartHelper
 
             }
         }
-        
-       
+
+
         public static bool StatementShowTableBoarders
         {
             get
@@ -389,7 +389,7 @@ namespace SmartHelper
         }
 
 
-     
+
         public static byte[] CompanyLogo
         {
             get
@@ -614,9 +614,9 @@ namespace SmartHelper
 
             decimal _amount = 0;
             var cul = CultureInfo.GetCultureInfo("EN-us");
-            Amount=Amount.Replace(",", ".");
+            Amount = Amount.Replace(",", ".");
             decimal.TryParse(Amount, NumberStyles.AllowDecimalPoint, cul, out _amount);
-                    return _amount;
+            return _amount;
         }
         // GET:
         public static string HtmlDecode(string htmlValue) => WebUtility.HtmlDecode(htmlValue);
@@ -637,18 +637,14 @@ namespace SmartHelper
         ///Generate QueryRef
         internal static string GenerateQueryRef()
         {
-            string sAlphNum = RandomAlphanumeric();
             string queryRef = $"Q{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MMM").ToUpper()}{RandomAlphanumeric()}";
             return queryRef;
-
         }
         public static string GenerateTransactionRef(string ClientRef)
         {
-            string sAlphNum = RandomAlphanumeric();
-            string queryRef = $"T{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MM").ToUpper()}{ DateTime.Now.ToString("dd").ToUpper()}{RandomAlphanumeric(2)}";
+            string queryRef = $"T{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MM").ToUpper()}{ DateTime.Now.ToString("dd").ToUpper()}{GenerateRandomNumbers(2)}";
             return queryRef.ToUpper();
         }
-
 
         public static string GetUserType(int userTypeID)
         {

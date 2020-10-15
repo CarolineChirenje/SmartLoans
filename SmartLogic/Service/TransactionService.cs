@@ -132,7 +132,7 @@ namespace SmartLogic
                 newPaymentFile.Amount = (AmountInclVat * -1);
                 newPaymentFile.VAT = (VATAmount * -1);
                 newPaymentFile.AmountExclVAT = (AmountExclVat * -1);
-                newPaymentFile.Narration = $"Reversal of  Transaction Ref - {PaymentsFile.TransRef}";
+                newPaymentFile.Narration = $"(R)-{PaymentsFile.TransRef}";
                 _context.Add(newPaymentFile);
 
                 updateOldPayment(transactionID, oldPaymentStatus, newPaymentFile.TransRef);
@@ -171,7 +171,7 @@ namespace SmartLogic
                 //update status of old payment
                 Transaction oldPaymentsFile = _context.Transactions.Find(transactionID);
                 string old_Narration = oldPaymentsFile.Narration;
-                string append_Narration = $"Transaction Reversed Refer to Trans Ref  {newTransRef}.";
+                string append_Narration = $"(R)-{newTransRef}.";
                 oldPaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
                 oldPaymentsFile.LastChangedDate = DateTime.Now;
                 oldPaymentsFile.PaymentStatusID = oldPaymentStatus;
