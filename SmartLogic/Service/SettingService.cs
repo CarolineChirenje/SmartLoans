@@ -22,6 +22,7 @@ namespace SmartLogic
         public List<Currency> GetCurrencies() => _context.Currencies.Where(x => x.IsActive).ToList();
         public List<DocumentFormat> GetDocumentFormats() => _context.DocumentFormats.Where(x => x.IsActive).ToList();
         public List<Frequency> GetFrequencyList() => _context.Frequencies.Where(x => x.IsActive).ToList();
+        public List<StatementList> GetStatementList() => _context.StatementLists.ToList();
         public Product FindProduct(int id)
         {
             return _context.Products.Find(id);
@@ -39,24 +40,7 @@ namespace SmartLogic
                       Where(r => r.DocumentTypeID == DocumentTypeID).FirstOrDefault();
 
         }
-        public List<CustomSelectList> GetYears()
-        {
-            List<CustomSelectList> years = new List<CustomSelectList>();
-            int MinYear = Convert.ToInt32(_settingService.GetSettingValue(AppSetting.Minimum_Year));
-            int MaxYear = DateTime.Now.AddYears(1).Year;
-            for (var i = MinYear; i <= MaxYear; i++)
-            {
-                years.Add(new CustomSelectList()
-                {
-                    ID = i,
-                    Name = i.ToString()
-                });
-            }
-
-            return years;
-
-        }
-
+      
         public List<TransactionType> GetActiveTransactionTypeList() => _context.TransactionType.Where(T => T.IsActive && T.TransactionTypeID != (int)TransactionTypeList.Reversal).ToList();
         public List<CustomSettingType> GetCustomSettingsTypes() => _context.CustomSettingTypes.Where(x => x.IsActive).ToList();
 

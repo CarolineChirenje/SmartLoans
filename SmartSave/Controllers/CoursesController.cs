@@ -24,8 +24,11 @@ namespace SmartSave.Controllers
             _settingService = settingService;
         }
 
-        public async Task<IActionResult> Courses()
-        {
+        public async Task<IActionResult> Courses(bool newCoursesOnly = false)
+        {   
+        if (newCoursesOnly)
+                return View(await _service.NewCourses());
+
             return View(await _service.Courses());
         }
 

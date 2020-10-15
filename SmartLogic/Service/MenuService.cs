@@ -55,6 +55,8 @@ namespace SmartLogic
             update.IsActiveMenu = ParentMenu.IsActive; // rule must be at least 1 active tab for all
             update.DisplayName = ParentMenu.DisplayName;
             update.CSSClass = UtilityService.HtmlDecode(ParentMenu.CSSClass);
+            update.ActionName = ParentMenu.ActionName;
+            update.DisplayName = ParentMenu.DisplayName;
             update.OrderNo = ParentMenu.OrderNo;
             update.IsActive = ParentMenu.IsActive;
             update.LastChangedBy = UtilityService.CurrentUserName;

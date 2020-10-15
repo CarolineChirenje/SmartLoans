@@ -1,4 +1,5 @@
-﻿@model SmartDomain.ClientGuarantor
+﻿@model SmartDomain.ClientFee
+
 @using SmartHelper;
 @using System.Collections.Generic;
 @{
@@ -20,7 +21,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" action="ViewClientGuarantor">
+        <form class="form-horizontal" method="post" action="ViewClientProduct">
             <div class="box-body">
 
                 @if (TempData["Error"] != null)
@@ -144,6 +145,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Occupation</label>
                     <div class="col-sm-10">
@@ -208,77 +210,56 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                       Information
+                        Information
                     </div>
                     <!-- /.panel-heading -->
-                    <form method="post" asp-controller="Client" asp-action="ViewClientGuarantor">
+                    <form method="post" asp-controller="Client" asp-action="ClientFeePayment">
 
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Firstname:</label>
-                                <input type="text" class="form-control" name="FirstName" value="@Model.FirstName">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Lastname:</label>
-                                <input type="text" class="form-control" name="LastName" value="@Model.LastName">
-                            </div>
+                                <label for="inputEmail3" class="col-sm-2 control-label">Bank Account</label>
+                                <select asp-for="BankAccountID" class="form-control" asp-items="ViewBag.BankAccountList" required>
+                                    <option value="">----</option>
+                                </select>
 
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">ID Number:</label>
-                                <input type="text" class="form-control" name="IDNumber" value="@Model.IDNumber">
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Email Address:</label>
-                                <input type="text" class="form-control" name="EmailAddress" value="@Model.EmailAddress">
-                            </div>
+                                <label for="inputEmail3" class="col-sm-2 control-label">Course</label>
 
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number:</label>
-                                <input type="tel" class="form-control" name="MobileNumber" value="@Model.MobileNumber">
-                            </div>
+                                <input type="text" class="form-control" name="Course" disabled="disabled" value="@Model.CourseFee.Course.Title">
 
+                            </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Residential Address:</label>
-                                <textarea class="form-control" name="PhysicalAddress" rows="6" cols="40">@Model.PhysicalAddress</textarea>
+                                <label for="inputEmail3" class="col-sm-2 control-label">Fee</label>
+                                <input type="text" class="form-control" name="Fee" disabled="disabled" value="@Model.CourseFee.Name">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Amount</label>
+                                <input type="text" class="form-control" id="InputAmount" name="InputAmount" value="@Model.Amount">
+                                <span id="InputAmountError" class="text-danger text-bold"></span>
                             </div>
 
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Is Main Guarantor</label>
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="@Model.IsMainGuarantor" />
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
-
-                                <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
-
+                                <label for="inputEmail3" class="col-sm-2 control-label">Due Date</label>
+                                <input type="text" class="form-control" name="DueDate" disabled="disabled" value="@UtilityService.ShowDate(@Model.DueDate)">
                             </div>
 
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
 
-                                <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
-
-                            </div>
-                            <input type="hidden" name="ClientGuarantorID" value="@Model.ClientGuarantorID" />
+                            <input type="hidden" name="ClientFeeID" value="@Model.ClientFeeID" />
+                            <input type="hidden" name="CourseFeeID" value="@Model.CourseFeeID" />
+                            <input type="hidden" name="CourseID" value="@Model.CourseFee.Course.CourseID" />
                             <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
                         </div>
                         <div class="modal-footer">
-                            @if (UtilityService.HasPermission(Permissions.Update_Client_Guarantor))
+                            @if (UtilityService.HasPermission(Permissions.Capture_Payment))
                             {
-                                <button type="submit" class="btn btn-primary">Update</button>}
-                            @if (UtilityService.HasPermission(Permissions.Delete_Client_Guarantor))
-                            {
-                                <a class="btn btn-danger" asp-controller="Client" asp-action="ActionGuarantor" asp-route-guarantorid="@Model.ClientGuarantorID" asp-route-Clientid="@Model.ClientID">Delete</a>
-                            }
+                                <button type="submit" class="btn btn-primary">Capture</button>}
                             @if (UtilityService.HasPermission(Permissions.View_Client))
-                            {
-                                <a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Details</a>
-                            }<a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                            </div>
+                            {<a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">Back To Client Details</a>
+                            } <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                        </div>
 
                     </form>
                 </div>
@@ -288,5 +269,34 @@
     </div>
     <!-- /.box -->
 </section>
+
+<script>
+
+
+    $(document).ready(function () {
+
+       
+
+    });
+
+
+    $(function () {
+        $('#InputAmount').blur(function () {
+            var tempVal = $('#InputAmount').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#InputAmountError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#InputAmountError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+    })
+
+
+
+  
+</script>
 
 

@@ -40,6 +40,14 @@ namespace SmartLogic
                 AsNoTracking().
                 ToListAsync();
         }
+        public async Task<List<Course>> NewCourses()
+        {
+            return await _context.Courses.
+                Include(c => c.CourseOutlines).
+                  Where(c => c.DateCreated.Date >= DateTime.Now.AddDays(-1).Date && c.DateCreated.Date <= DateTime.Now.Date).ToListAsync();
+        }
+
+     
         public async Task<bool> IsDuplicate(Course _course)
         {
             Course course = await _context.Courses.Where(b => b.Title.Equals(_course.Title)).FirstOrDefaultAsync();
@@ -57,6 +65,7 @@ namespace SmartLogic
             return await _context.Courses.
             Include(c=>c.CourseOutlines).
             Include(c=>c.CourseFees).
+            ThenInclude(c=>c.Frequency).
             Where(r => r.CourseID == id)
                .AsNoTracking().FirstOrDefaultAsync();
         }
@@ -64,6 +73,7 @@ namespace SmartLogic
         public async Task<int> Save(Course Course)
         {
             Course.LastChangedBy = UtilityService.CurrentUserName;
+            Course.DateCreated = DateTime.Now;
             Course.LastChangedDate = DateTime.Now;
             _context.Add(Course);
             return (await _context.SaveChangesAsync());

@@ -57,8 +57,7 @@ namespace SmartDomain
         public virtual List<ClientNote> ClientNotes { get; set; }
         public virtual List<ClientMedicalDetail> ClientMedicalDetails { get; set; }
         public virtual List<ClientDependent> ClientDependents { get; set; }
-        public virtual List<ClientGuarantor> ClientGuarantors { get; set; }
-        public virtual List<ClientProduct> ClientProducts { get; set; }
+               public virtual List<ClientProduct> ClientProducts { get; set; }
         public virtual List<ClientCourse> ClientCourses { get; set; }
         public virtual List<ClientFee> ClientFees { get; set; }
         public virtual List<ClientDeduction> ClientDeductions { get; set; }

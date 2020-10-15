@@ -19,9 +19,8 @@ namespace SmartSave.Controllers
             DashBoardViewModel dashboard = new DashBoardViewModel
             {
                 ProductPayments = _service.GetProductPayments(),
-                Enquiries = 0,//_service.GetOpenEnquiries(),
-                NewClientsCount = _service.GetNewClientRegistrations(),
-                EventsThisWeek = 0,//_service.GetEventsThisWeek(),
+                               NewClientsCount = _service.GetNewClientRegistrations(),
+                CoursePrograms = _service.GetNewCourses(),
                 Notices = _service.GetOpenNotices()
               
             };

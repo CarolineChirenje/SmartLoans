@@ -234,34 +234,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                new CustomSetting()
-                {
-
-                    CustomSettingID = (int)AppSetting.Minimum_Year,
-                    Name = AppSetting.Minimum_Year.ToString().Replace("_", " "),
-                    Value="2000",
-                    Description="Displays the minimum year that can be selected  from the system",
-                    CustomVariableTypeID=(int)VariableType.Integer,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-             new CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.BroadCast_Messages,
-                    Name = AppSetting.BroadCast_Messages.ToString().Replace("_", " "),
-                    Value="true",
-                    Description="Allows system to BroadCast System Messages",
-                    CustomVariableTypeID=(int)VariableType.Boolean,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-
+             
                 new CustomSetting()
                 {
 
@@ -439,21 +412,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-
-                new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Report_Logo_Path,
-                    Name = AppSetting.Report_Logo_Path.ToString().Replace("_", " "),
-                    Value=@"D:\Dev Projects\SmartSave\SmartSave\SmartResources\SmartLogo.png",
-                    Description="Physical Location of Logo that is to be used on Reports",
-                    CustomVariableTypeID=(int)VariableType.String,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-
+   
                 new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Report_FootNotes,
@@ -481,35 +440,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-
-
-                new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Statement_Save_To_Folder,
-                    Name = AppSetting.Statement_Save_To_Folder.ToString().Replace("_", " "),
-                    Value="false",
-                    Description="Option to Save Generated Statement To A physical Location on the Server",
-                    CustomVariableTypeID=(int)VariableType.Boolean,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Statement_Save_To_Physical_Location,
-                    Name = AppSetting.Statement_Save_To_Physical_Location.ToString().Replace("_", " "),
-                    Value=@"C:\SmartApp\Statements",
-                    Description="Physical Location on the Server where  Statements Are Generated",
-                    CustomVariableTypeID=(int)VariableType.String,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                new SmartDomain.CustomSetting()
+            new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Statement_Password_For_Admin,
                     Name = AppSetting.Statement_Password_For_Admin.ToString().Replace("_", " "),
@@ -724,7 +655,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Application_Is_VAT_Compliant,
                     Name = AppSetting.Application_Is_VAT_Compliant.ToString().Replace("_", " "),
-                    Value="true",
+                    Value="false",
                     Description="Allows System To Be VAT Compliant and Show calculated VAT Amounts ",
                     CustomVariableTypeID=(int)VariableType.Boolean,
                     CustomSettingTypeID=(int)SettingType.All,
@@ -788,10 +719,18 @@ namespace SmartDataAccess
         public static RelationshipType[] GetRelationshipTypes()
         {
             List<RelationshipType> RelationshipTypes = new List<RelationshipType>
-            {
-                new RelationshipType()
+            {  new RelationshipType()
                 {
                     RelationshipTypeID =1,
+                    Name = "Self",
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new RelationshipType()
+                {
+                    RelationshipTypeID =2,
                     Name = "Mother",
                     IsActive = true,
                                        LastChangedDate = DateTime.Now,
@@ -800,7 +739,7 @@ namespace SmartDataAccess
                 },
                new RelationshipType()
                 {
-                     RelationshipTypeID =2,
+                     RelationshipTypeID =3,
                     Name = "Father",
                     IsActive = true,
                                        LastChangedDate = DateTime.Now,
@@ -809,7 +748,7 @@ namespace SmartDataAccess
                 },
                 new RelationshipType()
                 {
-                    RelationshipTypeID =3,
+                    RelationshipTypeID =4,
                     Name = "Sibling",
                     IsActive = true,
                     LastChangedDate = DateTime.Now,
@@ -819,24 +758,14 @@ namespace SmartDataAccess
                 ,
                 new RelationshipType()
                 {
-                    RelationshipTypeID =4,
+                    RelationshipTypeID =5,
                     Name = "Spouse",
                     IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
-                }
-                  ,
-                new RelationshipType()
-                {
-                    RelationshipTypeID =5,
-                    Name = "Self",
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
                 },
-                new RelationshipType()
+                                 new RelationshipType()
                 {
                     RelationshipTypeID =6,
                     Name = "Other",
@@ -1396,6 +1325,28 @@ namespace SmartDataAccess
 
             }
             return documentTypes.ToArray();
+        }
+
+        public static StatementList[] GetStatementList()
+        {
+
+            List<StatementList> statementTypes = new List<StatementList>();
+            var eTypes = from Statements s in Enum.GetValues(typeof(Statements))
+                         select new { ID = s, Name = s.ToString() };
+
+            foreach (var x in eTypes)
+            {
+                statementTypes.Add(new StatementList()
+                {
+                    StatementID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+
+            }
+            return statementTypes.ToArray();
         }
 
         public static EmailType[] GetEmailTypes()

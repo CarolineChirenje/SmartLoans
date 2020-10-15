@@ -91,12 +91,10 @@ namespace SmartSave.Models
     {
         public int NewClientsCount { get; set; }
         public int ProductPayments { get; set; }
-        public int Enquiries { get; set; }
-        public int FullyBookedEquipment { get; set; }
-        public int EventsThisWeek { get; set; }
-        public int Notices { get; set; }
+        public int CoursePrograms { get; set; }
+                public int Notices { get; set; }
 
-        public int ActiveNotices { get; set; }
+       
 
     }
     public class PaymentViewModel

@@ -441,7 +441,7 @@ namespace SmartReporting
                 row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
 
                 if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(0, 0, countCellColumn, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
+                    this.table.SetEdge(0, 0, countCellColumn + 1 , 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
                 Paragraph paragraph = this.addressFrame.AddParagraph();
 
@@ -479,10 +479,6 @@ namespace SmartReporting
                         row1.Cells[countCellValue].AddParagraph(transaction.Field<string>("Product"));
                         countCellValue++;
                     }
-
-
-
-
                     row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                     row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Right;
                     row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
@@ -491,7 +487,7 @@ namespace SmartReporting
 
                     finalCountCellValue = countCellValue;
                     if (UtilityService.StatementShowTableBoarders)
-                        this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue, 1, Edge.Box, BorderStyle.Single, 0.75);
+                        this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue + 1 , 1, Edge.Box, BorderStyle.Single, 0.75);
                 }
 
                 // Add an invisible row as a space line to the table

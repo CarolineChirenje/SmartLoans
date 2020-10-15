@@ -27,9 +27,7 @@ namespace SmartReporting
         CultureInfo culture;
         Section section;
         Style style;
-        ClientGuarantor guarantor;
-
-
+       
         public Document Print(Statement statement)
         {
             try
@@ -40,10 +38,7 @@ namespace SmartReporting
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Statement of Account");
                 this._statement = statement;
                 this.culture = new CultureInfo("en-US");
-                List<ClientGuarantor> guarantors = statement.Client.ClientGuarantors;
-                if (guarantors != null && guarantors.Count > 0)
-                    this.guarantor = guarantors.Where(g => g.IsMainGuarantor)?.SingleOrDefault();
-                style = ReportingUtilities.DefineStyles(this.document);
+                               style = ReportingUtilities.DefineStyles(this.document);
                 AddressAndHeader();
                 AccountDetails();
                 TransactionDetails();
@@ -109,41 +104,82 @@ namespace SmartReporting
 
                 // Each item fills two rows
                 Row tblrow = this.table.AddRow();
-
                 tblrow.TopPadding = 1.5;
                 tblrow.Cells[0].Borders.Visible = false;
                 tblrow.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                 tblrow.Cells[0].Format.Font.Bold = true;
-                tblrow.Cells[0].AddParagraph(UtilityService.IsNotNull(guarantor) ? guarantor.GuarantorFullName : _statement.Client.ClientFullName.Trim());
+                tblrow.Cells[0].AddParagraph(_statement.Client.ClientFullName);
 
+                if (!String.IsNullOrEmpty(_statement.Client.AddressLine1))
+                {
+                    Row tblrow1 = this.table.AddRow();
+                    tblrow1.Borders.Visible = false;
+                    tblrow1.TopPadding = 1.5;
+                    tblrow1.Cells[0].Borders.Visible = false;
+                    tblrow1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow1.Cells[0].AddParagraph(_statement.Client.AddressLine1);
 
-                Row tblrow1 = this.table.AddRow();
-                tblrow1.Borders.Visible = false;
-                tblrow1.TopPadding = 1.5;
+                }
+                if (!String.IsNullOrEmpty(_statement.Client.AddressLine2))
+                {
+                    Row tblrow2 = this.table.AddRow();
+                    tblrow2.Borders.Visible = false;
+                    tblrow2.TopPadding = 1.5;
+                    tblrow2.Cells[0].Borders.Visible = false;
+                    tblrow2.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow2.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow2.Cells[0].AddParagraph(_statement.Client.AddressLine2);
+                }
+                if (!String.IsNullOrEmpty(_statement.Client.City))
+                {
+                    Row tblrow3 = this.table.AddRow();
+                    tblrow3.Borders.Visible = false;
+                    tblrow3.TopPadding = 1.5;
+                    tblrow3.Cells[0].Borders.Visible = false;
+                    tblrow3.Cells[0].Format.Font.Bold = false;
+                    tblrow3.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow3.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow3.Cells[0].AddParagraph(_statement.Client.City);
+                }
+                if (UtilityService.IsNotNull(_statement.Client.Country))
+                {
+                    if (!String.IsNullOrEmpty(_statement.Client.Country.Name))
+                    {
+                        Row tblrow4 = this.table.AddRow();
+                        tblrow4.Borders.Visible = false;
+                        tblrow4.TopPadding = 1.5;
+                        tblrow4.Cells[0].Borders.Visible = false;
+                        tblrow4.Cells[0].Format.Font.Bold = false;
+                        tblrow4.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                        tblrow4.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                        tblrow4.Cells[0].AddParagraph(_statement.Client.Country.Name);
+                    }
+                }
+                if (!String.IsNullOrEmpty(_statement.Client.MobileNumber))
+                {
+                    Row tblrow5 = this.table.AddRow();
+                    tblrow5.Borders.Visible = false;
+                    tblrow5.TopPadding = 1.5;
+                    tblrow5.Cells[0].Borders.Visible = false;
+                    tblrow5.Cells[0].Format.Font.Bold = false;
+                    tblrow5.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow5.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow5.Cells[0].AddParagraph($"{_statement.Client.MobileNumber}");
+                }
 
-                tblrow1.Cells[0].Borders.Visible = false;
-                tblrow1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                tblrow1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                tblrow1.Cells[0].AddParagraph(UtilityService.IsNotNull(guarantor) ? guarantor.PhysicalAddress : _statement.Client.AddressLine1.Trim());
-
-                Row tblrow2 = this.table.AddRow();
-                tblrow2.Borders.Visible = false;
-                tblrow2.TopPadding = 1.5;
-                tblrow2.Cells[0].Borders.Visible = false;
-                tblrow2.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                tblrow2.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                tblrow2.Cells[0].AddParagraph(UtilityService.IsNotNull(guarantor) ? guarantor.EmailAddress : _statement.Client.EmailAddress);
-
-                Row tblrow3 = this.table.AddRow();
-                tblrow3.Borders.Visible = false;
-                tblrow3.TopPadding = 1.5;
-                tblrow3.Cells[0].Borders.Visible = false;
-                tblrow3.Cells[0].Format.Font.Bold = true;
-                tblrow3.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                tblrow3.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                tblrow3.Cells[0].AddParagraph(UtilityService.IsNotNull(guarantor) ? guarantor.MobileNumber : _statement.Client.MobileNumber.Trim());
-
+                if (!String.IsNullOrEmpty(_statement.Client.EmailAddress))
+                {
+                    Row tblrow6 = this.table.AddRow();
+                    tblrow6.Borders.Visible = false;
+                    tblrow6.TopPadding = 1.5;
+                    tblrow6.Cells[0].Borders.Visible = false;
+                    tblrow6.Cells[0].Format.Font.Bold = false;
+                    tblrow6.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow6.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow6.Cells[0].AddParagraph($"{_statement.Client.EmailAddress}");
+                }
 
                 paragraph = section.AddParagraph();
             }
@@ -199,7 +235,7 @@ namespace SmartReporting
                     tblrow.Cells[1].Borders.Visible = false;
                     tblrow.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
                     tblrow.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                tblrow.Cells[1].AddParagraph(UtilityService.IsNull(_statement.Product) ? " - ": _statement.Product.Name) ;
+                tblrow.Cells[1].AddParagraph(UtilityService.IsNull(_statement.Product) ? " All ": _statement.Product.Name) ;
 
                     tblrow.Cells[2].Borders.Visible = false;
                     tblrow.Cells[2].Format.Alignment = ParagraphAlignment.Left;
@@ -253,13 +289,15 @@ namespace SmartReporting
             {
 
 
-                string _selectClause = @"SELECT t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount
+                string _selectClause = @"SELECT t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Product
                                             FROM Transactions t
                                             INNER JOIN Products p ON p.ProductID=t.ProductID
                                             INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
                 
-                string sqlQuery = _selectClause + $"WHERE t.ClientID={_statement.ClientID}  AND t.ProductID={_statement.ProductID} AND t.TransactionDate>'{_statement.StartDate.ToString("yyyy-MM-dd")}' AND t.TransactionDate < '{ _statement.EndDate.ToString("yyyy-MM-dd")}'";
+                string sqlQuery = _selectClause + $"WHERE t.ClientID={_statement.ClientID}  AND t.TransactionDate>'{_statement.StartDate.ToString("yyyy-MM-dd")}' AND t.TransactionDate < '{ _statement.EndDate.ToString("yyyy-MM-dd")}'";
 
+                if (_statement.ProductID > 0)
+                    sqlQuery = sqlQuery + $" AND t.ProductID={_statement.ProductID}";
                 DataTable Transactions = GetData.GetDataTable(sqlQuery);
 
 
@@ -286,17 +324,21 @@ namespace SmartReporting
                 }
 
                 // Before you can add a row, you must define the columns
-                Column column = this.table.AddColumn("3cm");
+                Column column = this.table.AddColumn("2cm");
                 column.Format.Alignment = ParagraphAlignment.Center;
 
-                column = this.table.AddColumn("3cm");
+                column = this.table.AddColumn("2cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
 
-                column = this.table.AddColumn("8cm");
+                if (_statement.ProductID == 0)
+                {
+                    column = this.table.AddColumn("3cm");
+                    column.Format.Alignment = ParagraphAlignment.Right;
+                }
+
+                column = this.table.AddColumn("6cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
-
-
-
+                
                 column = this.table.AddColumn("3cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
 
@@ -306,64 +348,85 @@ namespace SmartReporting
                 row.Format.Alignment = ParagraphAlignment.Center;
                 row.Format.Font.Bold = true;
                 row.Shading.Color = HeaderColor;
+                int countCellColumn = 0;
+                row.Cells[countCellColumn].AddParagraph("Trans Date");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                countCellColumn++;
+                row.Cells[countCellColumn].AddParagraph("Trans Code");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                countCellColumn++;
 
-                row.Cells[0].AddParagraph("Trans Date");
-                row.Cells[0].Format.Font.Bold = true;
-                row.Cells[0].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
-                row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-
-                row.Cells[1].AddParagraph("Trans Code");
-                row.Cells[1].Format.Font.Bold = true;
-                row.Cells[1].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
-                row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-
-                row.Cells[2].AddParagraph("Counter");
-                row.Cells[2].Format.Font.Bold = true;
-                row.Cells[2].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left; 
-                row.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
-
-                row.Cells[3].AddParagraph("Amount");
-                row.Cells[3].Format.Font.Bold = true;
-                row.Cells[3].Format.Alignment = ParagraphAlignment.Center;
-                row.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
-
+                if (_statement.ProductID == 0)
+                {
+                    row.Cells[countCellColumn].AddParagraph("Product");
+                    row.Cells[countCellColumn].Format.Font.Bold = true;
+                    row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
+                    row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                    countCellColumn++;
+                }
+                row.Cells[countCellColumn].AddParagraph("Counter");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left; 
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                countCellColumn++;
+                row.Cells[countCellColumn].AddParagraph("Amount");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                
                 if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(0, 0, 4, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
+                    this.table.SetEdge(0, 0, countCellColumn + 1 , 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
                 Paragraph paragraph = this.addressFrame.AddParagraph();
 
-
+                int finalCountCellValue = 0;
                 foreach (DataRow transaction in Transactions.Rows)
                 {
-
+                    int countCellValue = 0;
                     // Each item fills two rows
                     Row row1 = this.table.AddRow();
 
                     row1.TopPadding = 1.5;
-                    row1.Cells[0].Borders.Visible = UtilityService.StatementShowTableBoarders;
-                    row1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                    row1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                    row1.Cells[0].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
+                    row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
+                    countCellValue++;
 
-                    row1.Cells[1].Borders.Visible = UtilityService.StatementShowTableBoarders;
-                    row1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-                    row1.Cells[1].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
-                    row1.Cells[1].AddParagraph(transaction.Field<string>("TransCode"));
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
+                    row1.Cells[countCellValue].AddParagraph(transaction.Field<string>("TransCode"));
+                    countCellValue++;
+
+                    if (_statement.ProductID == 0)
+                    {
+                        row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                        row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                        row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
+                        row1.Cells[countCellValue].AddParagraph(transaction.Field<string>("Product"));
+                        countCellValue++;
+                    }
 
 
                     string _transactionDescription = transaction.Field<string>("Counter");
-                    row1.Cells[2].Borders.Visible = UtilityService.StatementShowTableBoarders;
-                    row1.Cells[2].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Left;
-                    row1.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
-                    row1.Cells[2].AddParagraph(_transactionDescription);
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Left;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].AddParagraph(_transactionDescription);
+                    countCellValue++;
 
-                    row1.Cells[3].Borders.Visible = UtilityService.StatementShowTableBoarders;
-                    row1.Cells[3].Format.Alignment = ParagraphAlignment.Right;
-                    row1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
-                    row1.Cells[3].AddParagraph(String.Format(culture, "{0:C}", transaction.Field<decimal>("Amount")));
-
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Right;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].AddParagraph(String.Format(culture, "{0:C}", transaction.Field<decimal>("Amount")));
+                    finalCountCellValue = countCellValue;
                     if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(0, this.table.Rows.Count - 1, 4, 1, Edge.Box,BorderStyle.Single, 0.75);
+                    this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue +1 , 1, Edge.Box,BorderStyle.Single, 0.75);
                 }
 
                 // Add an invisible row as a space line to the table
@@ -376,16 +439,13 @@ namespace SmartReporting
                 row2.Cells[0].Borders.Visible = false;
                 row2.Cells[0].Format.Font.Bold = true;
                 row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-                row2.Cells[0].MergeRight = 2;
+                row2.Cells[0].MergeRight = finalCountCellValue-1;
                 row2.Cells[0].AddParagraph("Total Amount");
-                row2.Cells[3].AddParagraph(String.Format(culture, "{0:C}", TotalPaid));
+                row2.Cells[finalCountCellValue].AddParagraph(String.Format(culture, "{0:C}", TotalPaid));
 
                 // Set the borders of the specified cell range
                 if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(3, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
-
-
-
+                    this.table.SetEdge(finalCountCellValue, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
                 // Add the notes paragraph
                 paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
             }

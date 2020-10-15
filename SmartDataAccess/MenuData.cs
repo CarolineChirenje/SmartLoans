@@ -16,6 +16,8 @@ namespace SmartDataAccess
                 {
                     MenuGroupID = (int)MenuGroups.DashBoard,
                     DisplayName = MenuGroups.DashBoard.ToString().Replace("_", " "),
+                    ControllerName = "Home",
+                    ActionName = "Dashboard",
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-umbrella"),

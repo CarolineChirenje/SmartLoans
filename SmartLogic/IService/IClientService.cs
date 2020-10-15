@@ -52,14 +52,7 @@ namespace SmartLogic
         Task<int> Update(ClientMedicalDetail ClientMedicalDetail);
         Task<int> ActionMedicalDetail(int id, DatabaseAction action);
 
-
-        //Guarantor
-        Task<ClientGuarantor> FindGuarantor(int id);
-        Task<int> Save(ClientGuarantor ClientGuarantor);
-        Task<int> Update(ClientGuarantor ClientGuarantor);
-        Task<int> ActionGuarantor(int id, DatabaseAction action);
-
-        //Dependent
+     //Dependent
         Task<ClientDependent> FindDependent(int id);
         Task<int> Save(ClientDependent ClientDependent);
         Task<int> Update(ClientDependent ClientDependent);

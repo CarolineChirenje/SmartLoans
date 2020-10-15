@@ -61,15 +61,6 @@ namespace SmartHelper
             }
         }
 
-        public static string ReportLogo
-        {
-            get
-            {
-                return GetData.GetSettingValue((int)AppSetting.Report_Logo_Path)?.Value;
-
-            }
-        }
-
         public static string Report_Footer_1
         {
             get
@@ -196,29 +187,8 @@ namespace SmartHelper
 
             }
         }
-        public static bool SaveStatementsToFolder
-        {
-            get
-            {
-
-                string value = GetData.GetSettingValue((int)AppSetting.Statement_Save_To_Folder)?.Value;
-                return value.Equals("true") ? true : false;
-
-            }
-        }
-
-        public static string StatementsSavePath
-        {
-            get
-            {
-
-                string value = GetData.GetSettingValue((int)AppSetting.Statement_Save_To_Physical_Location)?.Value;
-                return value;
-
-            }
-        }
-
-
+        
+       
         public static bool StatementShowTableBoarders
         {
             get
@@ -675,7 +645,7 @@ namespace SmartHelper
         public static string GenerateTransactionRef(string ClientRef)
         {
             string sAlphNum = RandomAlphanumeric();
-            string queryRef = $"T-{ClientRef}-{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MM").ToUpper()}-{RandomAlphanumeric(2)}";
+            string queryRef = $"T{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MM").ToUpper()}{ DateTime.Now.ToString("dd").ToUpper()}{RandomAlphanumeric(2)}";
             return queryRef.ToUpper();
         }
 

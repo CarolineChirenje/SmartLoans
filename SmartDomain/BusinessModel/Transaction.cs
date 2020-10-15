@@ -17,8 +17,10 @@ namespace SmartDomain
         public string Narration { get; set; }
         public int ClientID { get; set; }
         public virtual Client Client { get; set; }
-        public int ProductID { get; set; }
+        public int? ProductID { get; set; }
         public virtual Product Product { get; set; }
+        public int? CourseID { get; set; }
+        public virtual Course Course { get; set; }
         public int AssertID { get; set; }
         public int AssertCategoryID { get; set; }
         public int BankAccountID { get; set; }
@@ -29,6 +31,7 @@ namespace SmartDomain
         public virtual TransactionType TransactionType { get; set; }
         public int PaymentStatusID { get; set; }
         public virtual PaymentStatus PaymentStatus { get; set; }
+        public int? ClientFeeID { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
         [Column(TypeName = "decimal(18,2)")]
@@ -43,7 +46,8 @@ namespace SmartDomain
         public int? ParentPaymentID { get; set; }
 
         public string Reason { get; set; }
-
+        [NotMapped]
+        public string Entity { get { return ProductID.HasValue ? $"Product - {Product.Name} " : (CourseID.HasValue ? $"Course - {Course.Title}" : "" ); } }
 
 
 

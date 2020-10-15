@@ -76,16 +76,20 @@ namespace SmartLogic
                             ThenInclude(document => document.DocumentType).
                             ThenInclude(docFormat => docFormat.DocumentFormat).
                             Include(sm => sm.ClientMedicalDetails).
-                            Include(sg => sg.ClientGuarantors).
                             Include(p => p.ClientProducts).ThenInclude(p => p.Product).
                             Include(p => p.ClientFees).ThenInclude(p => p.ProductFee).ThenInclude(p => p.Product).
                             Include(p => p.ClientFees).ThenInclude(p => p.ProductFee).ThenInclude(p => p.Frequency).
+                            Include(p => p.ClientFees).ThenInclude(p => p.CourseFee).ThenInclude(p => p.Frequency).
                             Include(d => d.ClientDependents).
                             Include(c => c.ClientCourses).
                             ThenInclude(c => c.Course).
                              ThenInclude(c => c.CourseOutlines).
                              Include(c => c.ClientDeductions).
                              ThenInclude(c => c.Product).
+                            //Include(c => c.ClientCourses).ThenInclude(c => c.Course).
+                            //Include(c => c.ClientFees).ThenInclude(c => c.CourseFee).ThenInclude(c => c.Course).
+                            //Include(c => c.ClientFees).ThenInclude(c => c.CourseFee).ThenInclude(c => c.Frequency).
+
                             Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
                 return await ClientResults;
 
@@ -467,109 +471,80 @@ namespace SmartLogic
             return (await _context.SaveChangesAsync());
         }
         // Client Guarantor
-        public async Task<ClientGuarantor> FindGuarantor(int id)
-        {
-            return await _context.ClientGuarantors.
-            Include(s => s.Client).
-            Where(t => t.ClientGuarantorID == id).FirstOrDefaultAsync();
-        }
-        public async Task<List<ClientGuarantor>> FindGuarantors(int ClientID)
-        {
-            return await _context.ClientGuarantors.Where(t => t.ClientID == ClientID).ToListAsync();
-        }
-        public async Task<int> Save(ClientGuarantor ClientGuarantor)
-        {
-            List<ClientGuarantor> ClientGuarantors = await FindGuarantors(ClientGuarantor.ClientID);
-            if (ClientGuarantors == null || ClientGuarantors.Count() == 0)
-                ClientGuarantor.IsMainGuarantor = true;
+               //public async Task<int> Save(ClientGuarantor ClientGuarantor)
+        //{
+        //    List<ClientGuarantor> ClientGuarantors = await FindGuarantors(ClientGuarantor.ClientID);
+        //    if (ClientGuarantors == null || ClientGuarantors.Count() == 0)
+        //        ClientGuarantor.IsMainGuarantor = true;
 
-            else
-            {
-                if (ClientGuarantor.IsMainGuarantor)
-                {
-                    try
-                    {
-                        // if this has been set as the main guarator then all the gurantors already in the DB  should have that column set to false
-                        var guarantors = _context.ClientGuarantors.Where(s => s.ClientID == ClientGuarantor.ClientID).ToList();
-                        guarantors.ForEach(a => a.IsMainGuarantor = false);
-                        _context.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
+        //    else
+        //    {
+        //        if (ClientGuarantor.IsMainGuarantor)
+        //        {
+        //            try
+        //            {
+        //                // if this has been set as the main guarator then all the gurantors already in the DB  should have that column set to false
+        //                var guarantors = _context.ClientGuarantors.Where(s => s.ClientID == ClientGuarantor.ClientID).ToList();
+        //                guarantors.ForEach(a => a.IsMainGuarantor = false);
+        //                _context.SaveChanges();
+        //            }
+        //            catch (Exception ex)
+        //            {
 
-                        //throw;
-                    }
+        //                //throw;
+        //            }
 
-                }
-            }
-            ClientGuarantor.LastChangedBy = UtilityService.CurrentUserName;
-            ClientGuarantor.LastChangedDate = DateTime.Now;
-            _context.Add(ClientGuarantor);
-            return (await _context.SaveChangesAsync());
+        //        }
+        //    }
+        //    ClientGuarantor.LastChangedBy = UtilityService.CurrentUserName;
+        //    ClientGuarantor.LastChangedDate = DateTime.Now;
+        //    _context.Add(ClientGuarantor);
+        //    return (await _context.SaveChangesAsync());
 
-        }
-        public async Task<int> Update(ClientGuarantor ClientGuarantor)
-        {
-            ClientGuarantor mainGuarantor = _context.ClientGuarantors.Where(s => s.ClientID == ClientGuarantor.ClientID && s.IsMainGuarantor).FirstOrDefault();
-            if (UtilityService.IsNull(mainGuarantor))
-                ClientGuarantor.IsMainGuarantor = true;
+        //}
+        //public async Task<int> Update(ClientGuarantor ClientGuarantor)
+        //{
+        //    ClientGuarantor mainGuarantor = _context.ClientGuarantors.Where(s => s.ClientID == ClientGuarantor.ClientID && s.IsMainGuarantor).FirstOrDefault();
+        //    if (UtilityService.IsNull(mainGuarantor))
+        //        ClientGuarantor.IsMainGuarantor = true;
 
-            else
-            {
-                if (ClientGuarantor.IsMainGuarantor)
-                {
-                    try
-                    {
-                        if (UtilityService.IsNotNull(mainGuarantor))
-                            mainGuarantor.IsMainGuarantor = false;
-                        _context.Update(mainGuarantor);
-                        _context.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
+        //    else
+        //    {
+        //        if (ClientGuarantor.IsMainGuarantor)
+        //        {
+        //            try
+        //            {
+        //                if (UtilityService.IsNotNull(mainGuarantor))
+        //                    mainGuarantor.IsMainGuarantor = false;
+        //                _context.Update(mainGuarantor);
+        //                _context.SaveChanges();
+        //            }
+        //            catch (Exception ex)
+        //            {
 
-                        //throw;
-                    }
+        //                //throw;
+        //            }
 
 
-                }
+        //        }
 
-            }
-            ClientGuarantor guarantor = _context.ClientGuarantors.Find(ClientGuarantor.ClientGuarantorID);
-            guarantor.MobileNumber = ClientGuarantor.MobileNumber;
-            guarantor.IDNumber = ClientGuarantor.IDNumber;
-            guarantor.EmailAddress = ClientGuarantor.EmailAddress;
-            guarantor.FirstName = ClientGuarantor.FirstName;
-            guarantor.IsMainGuarantor = ClientGuarantor.IsMainGuarantor;
-            guarantor.PhysicalAddress = ClientGuarantor.PhysicalAddress;
-            guarantor.ClientID = ClientGuarantor.ClientID;
-            guarantor.LastName = ClientGuarantor.LastName;
-            guarantor.LastChangedBy = UtilityService.CurrentUserName;
-            guarantor.LastChangedDate = DateTime.Now;
-            _context.Update(guarantor);
-            return await _context.SaveChangesAsync();
-        }
+        //    }
+        //    ClientGuarantor guarantor = _context.ClientGuarantors.Find(ClientGuarantor.ClientGuarantorID);
+        //    guarantor.MobileNumber = ClientGuarantor.MobileNumber;
+        //    guarantor.IDNumber = ClientGuarantor.IDNumber;
+        //    guarantor.EmailAddress = ClientGuarantor.EmailAddress;
+        //    guarantor.FirstName = ClientGuarantor.FirstName;
+        //    guarantor.IsMainGuarantor = ClientGuarantor.IsMainGuarantor;
+        //    guarantor.PhysicalAddress = ClientGuarantor.PhysicalAddress;
+        //    guarantor.ClientID = ClientGuarantor.ClientID;
+        //    guarantor.LastName = ClientGuarantor.LastName;
+        //    guarantor.LastChangedBy = UtilityService.CurrentUserName;
+        //    guarantor.LastChangedDate = DateTime.Now;
+        //    _context.Update(guarantor);
+        //    return await _context.SaveChangesAsync();
+        //}
 
-        public async Task<int> ActionGuarantor(int id, DatabaseAction action)
-        {
-
-            ClientGuarantor ClientGuarantor = await FindGuarantor(id);
-
-            if (DatabaseAction.Remove == action)
-                _context.ClientGuarantors.Remove(ClientGuarantor);
-            else if (DatabaseAction.IsDefault == action)
-            {
-                // TODO: Make additional changes to guarantor logic 
-                // need to remove default on the one who is recently default; if its the first  then make the person maingurantor
-                ClientGuarantor.IsMainGuarantor = true;
-                ClientGuarantor.LastChangedBy = UtilityService.CurrentUserName;
-                ClientGuarantor.LastChangedDate = DateTime.Now;
-                _context.Update(ClientGuarantor);
-            }
-
-            return (await _context.SaveChangesAsync());
-        }
-
+    
 
         // Client Dependent
         public async Task<ClientDependent> FindDependent(int id)
@@ -735,8 +710,52 @@ namespace SmartLogic
             ClientCourse.LastChangedDate = DateTime.Now;
             _context.Add(ClientCourse);
             int _result = await _context.SaveChangesAsync();
-            return _result;
+            if (_result > 0)
+            {
+                //Add Fees to client
+                var courseFees = _context.CourseFees.Where(c => c.CourseID == ClientCourse.CourseID);
+                foreach (var courseFee in courseFees)
+                {
+                    DateTime dueDate = DateTime.Now;
+                    FrequencyList frequencyList = (FrequencyList)courseFee.FrequencyID;
+                    if (frequencyList == FrequencyList.Once_Off)
+                    {
+                        ClientFee clientFee = new ClientFee();
+                        clientFee.ClientID = ClientCourse.ClientID;
+                        clientFee.CourseFeeID = courseFee.CourseFeeID;
+                        clientFee.Amount = courseFee.Amount;
+                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                        clientFee.LastChangedDate = DateTime.Now;
+                        clientFee.ClientCourseID = ClientCourse.ClientCourseID;
+                        clientFee.DueDate = dueDate;
+                        _context.Add(clientFee);
+                    }
 
+                    if (frequencyList == FrequencyList.Monthly)
+                    {
+                        for (int i = 1; i < 13; i++)
+                        {
+                            ClientFee clientFee = new ClientFee();
+                            clientFee.ClientID = ClientCourse.ClientID;
+                            clientFee.CourseFeeID = courseFee.CourseFeeID;
+                            clientFee.Amount = courseFee.Amount;
+                            clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                            clientFee.LastChangedDate = DateTime.Now;
+                            clientFee.ClientCourseID = ClientCourse.ClientCourseID;
+                            clientFee.DueDate = dueDate;
+                            _context.Add(clientFee);
+
+                            dueDate = dueDate.AddMonths(i);
+                        }
+
+                    }
+
+                }
+                if (courseFees.Count() > 0)
+                    _result = await _context.SaveChangesAsync();
+            }
+
+            return _result;
         }
 
         public async Task<int> Update(ClientCourse Course)
@@ -893,6 +912,8 @@ namespace SmartLogic
              Include(c => c.Client).
              Include(c => c.ProductFee).
              ThenInclude(c => c.Product).
+             Include(c => c.CourseFee).
+             ThenInclude(c => c.Course).
             Where(t => t.ClientFeeID == id).FirstOrDefaultAsync();
         }
 
@@ -901,12 +922,17 @@ namespace SmartLogic
         public async Task<int> PayFee(ClientFee clientFee)
         {
             int _TransactionID = 0;
-            ClientFee _clientFee = _context.ClientFees.
-            Include(c => c.ProductFee).
-            ThenInclude(c => c.Product).
-                       Where(c => c.ClientFeeID == clientFee.ClientFeeID).
-            FirstOrDefault();
+            ClientFee _clientFee = _clientFee = _context.ClientFees.
+               Include(c => c.ProductFee).
+               ThenInclude(c => c.Product).
+                 Include(c => c.CourseFee).
+             ThenInclude(c => c.Course).
+                          Where(c => c.ClientFeeID == clientFee.ClientFeeID).
+               FirstOrDefault();
 
+
+            if (UtilityService.IsNull(_clientFee))
+                return 0;
 
             Transaction addPaymentsFile = new Transaction()
             {
@@ -914,24 +940,26 @@ namespace SmartLogic
                 Month = DateTime.Now.Month,
                 Amount = UtilityService.HasPermission(Permissions.Override_Payment) ? clientFee.Amount : _clientFee.Amount,
                 ClientID = clientFee.ClientID,
-                               ProductID = clientFee.ProductID,
                 PaymentDate = DateTime.Now,
-                Narration = _clientFee.ProductFee.Name,
                 PaymentStatusID = (int)PaymentState.Paid,
                 TransactionDate = DateTime.Now,
                 LastChangedBy = UtilityService.CurrentUserName,
                 LastChangedDate = DateTime.Now,
                 BankAccountID = clientFee.BankAccountID,
                 TransactionTypeID = (int)TransactionTypeList.Fee,
-                //AssertID = paymentsFile.AssertID,
-                //AssertCategoryID = paymentsFile.AssertCategoryID
-
+                ClientFeeID = _clientFee.ClientFeeID,
             };
-
+            if (clientFee.ProductFeeID.HasValue)
+            {
+                addPaymentsFile.ProductID = clientFee.ProductID;
+                addPaymentsFile.Narration = _clientFee.ProductFee.Name;
+            }
+            if (clientFee.CourseFeeID.HasValue)
+            {
+                addPaymentsFile.CourseID = clientFee.CourseID;
+                addPaymentsFile.Narration = _clientFee.CourseFee.Name;
+            }
             _TransactionID = await _transactionService.CreatePayment(addPaymentsFile, TransactionTypeList.Fee);
-
-
-
             if (_TransactionID > 0)
             {
 
@@ -941,8 +969,6 @@ namespace SmartLogic
                 _context.Update(_clientFee);
                 await _context.SaveChangesAsync();
             }
-
-
             return _TransactionID;
         }
     }

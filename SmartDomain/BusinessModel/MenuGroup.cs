@@ -11,7 +11,8 @@ namespace SmartDomain
         [Key]
         public int MenuGroupID { get; set; }
         public string DisplayName { get; set; }
-        public string Description { get; set; }
+        public string ControllerName { get; set; }
+        public string ActionName { get; set; }
         public string CSSClass { get; set; }
         public int OrderNo { get; set; }
         public bool IsActive { get; set; }

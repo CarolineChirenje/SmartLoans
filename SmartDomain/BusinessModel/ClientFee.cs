@@ -13,9 +13,12 @@ namespace SmartDomain
         public int ClientFeeID { get; set; }
         public int ClientID { get; set; }
         public virtual Client Client { get; set; }
-        public int ClientProductID { get; set; }
-        public int ProductFeeID { get; set; }
+        public int? ClientProductID { get; set; }
+        public int? ProductFeeID { get; set; }
         public virtual ProductFee ProductFee { get; set; }
+        public int? ClientCourseID { get; set; }
+        public int? CourseFeeID { get; set; }
+        public virtual CourseFee CourseFee { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
         public DateTime DueDate { get; set; }
@@ -28,6 +31,9 @@ namespace SmartDomain
         public string InputAmount { get; set; }
         [NotMapped]
         public int ProductID { get; set; }
+
+        [NotMapped]
+        public int CourseID { get; set; }
 
 
 

@@ -63,13 +63,13 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>@Model.EventsThisWeek</h3>
-                        <p>Events this week </p>
+                        <h3>@Model.CoursePrograms</h3>
+                        <p>New Course Programmes </p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-android-calendar"></i>
                     </div>
-                    <a asp-controller="Events" asp-action="Events" thisWeek="true" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a asp-controller="Courses" asp-action="Courses" newCoursesOnly="true" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -231,7 +231,7 @@
         {label: "Notices", value: @Model.Notices},
         {label: "New Clients", value: @Model.NewClientsCount},
         { label: "Product Payments", value: @Model.ProductPayments}
-        { label: "Events This Week", value: @Model.EventsThisWeek}
+        { label: "New Courses", value: @Model.CoursePrograms}
 
       ],
       hideHover: 'auto'

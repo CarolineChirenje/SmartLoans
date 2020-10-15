@@ -28,7 +28,12 @@ namespace SmartLogic
             return  _context.Clients.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).Count(); 
         }
 
-              public int GetOpenNotices()
+
+        public int GetNewCourses()
+        {
+            return _context.Courses.Where(c => c.DateCreated.Date >= DateTime.Now.AddDays(-1).Date && c.DateCreated.Date <= DateTime.Now.Date).Count();
+        }
+        public int GetOpenNotices()
         {
             return _context.NoticeBoard.
             Where(r =>

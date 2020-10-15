@@ -401,14 +401,14 @@ namespace SmartSave.Controllers
                     pdfRenderer.Document = document;
                     pdfRenderer.RenderDocument();
                     pdfRenderer.PdfDocument.Save(stream, false);
-                    if (UtilityService.SaveStatementsToFolder)
-                    {
+                    //if (UtilityService.SaveStatementsToFolder)
+                    //{
 
-                        string _filename = UtilityService.AppendFileTimeStamp(filename + ".pdf");
-                        string filePath = $"{CreateSubFolder()}\\{_filename}";
-                        // Save the document...
-                        pdfRenderer.PdfDocument.Save(filePath);
-                    }
+                    //    string _filename = UtilityService.AppendFileTimeStamp(filename + ".pdf");
+                    //    string filePath = $"{CreateSubFolder()}\\{_filename}";
+                    //    // Save the document...
+                    //    pdfRenderer.PdfDocument.Save(filePath);
+                    //}
                     return File(stream.ToArray(), "application/pdf", filename + ".pdf");
                 }
 
@@ -445,14 +445,14 @@ namespace SmartSave.Controllers
         }
 
 
-        private string CreateSubFolder()
+        //private string CreateSubFolder()
 
-        {
-            string subFolder = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString();
-            string filePath = $"{UtilityService.StatementsSavePath}\\{subFolder}";
-            System.IO.Directory.CreateDirectory(filePath);
-            return filePath;
-        }
+        //{
+        //    string subFolder = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString();
+        //    string filePath = $"{UtilityService.StatementsSavePath}\\{subFolder}";
+        //    System.IO.Directory.CreateDirectory(filePath);
+        //    return filePath;
+        //}
 
 
         private byte[] GeneratePDFStatement(Statement statement)
@@ -627,61 +627,7 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewClient", new { id = Clientid });
         }
 
-
-        //Guarantor Details
-        [HttpPost]
-        public async Task<IActionResult> AddClientGuarantor(ClientGuarantor ClientGuarantor)
-        {
-            if (ModelState.IsValid)
-            {
-                if (await (_service.Save(ClientGuarantor)) == 0)
-                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
-            }
-            return RedirectToAction("ViewClient", new { id = ClientGuarantor.ClientID });
-        }
-
-
-        public async Task<IActionResult> ViewClientGuarantor(int id, int Clientid)
-        {
-            if (id == 0)
-                return RedirectToAction("ViewClient", new { id = Clientid });
-
-            ClientGuarantor ClientGuarantor = await _service.FindGuarantor(id);
-            if (UtilityService.IsNull(ClientGuarantor))
-                return RedirectToAction("ViewClient", new { id = Clientid });
-
-            return View(ClientGuarantor);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ViewClientGuarantor(ClientGuarantor ClientGuarantor)
-        {
-            if (ModelState.IsValid)
-            {
-                ClientGuarantor update = await _service.FindGuarantor(ClientGuarantor.ClientGuarantorID);
-                if (UtilityService.IsNotNull(update))
-                {
-                    if (await (_service.Update(ClientGuarantor)) == 0)
-                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewClientGuarantor", new { id = ClientGuarantor.ClientGuarantorID });
-                }
-                return RedirectToAction("ViewClientGuarantor", new { id = ClientGuarantor.ClientGuarantorID });
-            }
-            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction("ViewClient", new { id = ClientGuarantor.ClientID });
-        }
-
-        public async Task<IActionResult> ActionGuarantor(int guarantorid, int Clientid)
-        {
-            if (await (_service.ActionGuarantor(guarantorid, DatabaseAction.Remove)) == 0)
-            {
-                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("ViewClient", new { id = Clientid });
-            }
-            return RedirectToAction("ViewClient", new { id = Clientid });
-        }
-
+ 
         //Dependent Details
         [HttpPost]
         public async Task<IActionResult> AddClientDependent(ClientDependent ClientDependent)
@@ -867,7 +813,21 @@ namespace SmartSave.Controllers
             }
             return RedirectToAction("ViewClient", new { id = clientFee.ClientID });
         }
-        
+
+
+        public async Task<IActionResult> ClientCourseFeePayment(int id)
+        {
+            if (id == 0)
+                return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+            ClientFee clientFee = await _service.FindClientFee(id);
+            GetDropDownLists();
+            if (UtilityService.IsNotNull(clientFee))
+                return View(clientFee);
+            return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+        }
+
+       
+
 
         [HttpPost]
         public async Task<IActionResult> UpdateSessions(string[] selectedSessions, ClientCourse clientCourse)
@@ -1111,6 +1071,15 @@ namespace SmartSave.Controllers
             }).OrderBy(t => t.Name);
 
             ViewBag.CountryList = new SelectList(country, "CountryID", "Name");
+
+            var statementList = _settingService.GetStatementList().Select(t => new
+            {
+                t.StatementID,
+                 t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.ClientStatement= new SelectList(statementList, "StatementID", "Name", (int)Statements.Product_Based_Statement);
+
         }
     }
 }

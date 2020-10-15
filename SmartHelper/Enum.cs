@@ -551,8 +551,6 @@ namespace SmartHelper
     {
         Application_Name = 1,
         System_Version,
-        Minimum_Year,
-        BroadCast_Messages,
         Show_Custom_Exceptions_To_Users,
         Account_Number_Length,
         Date_Format,
@@ -569,13 +567,10 @@ namespace SmartHelper
         Application_Name_Prefix,
         Report_Footer_1,
         Report_Footer_2,
-        Report_Logo_Path,
         Report_FootNotes,
         Capture_VAT_Inclusive_Payments,
         Default_Company_ID,
         Mail_Default_Subject,
-        Statement_Save_To_Folder,
-        Statement_Save_To_Physical_Location,
         Statement_Password_Protect,
         Statement_Password_For_Admin,
         Statement_Show_Table_Boarders,
@@ -591,7 +586,7 @@ namespace SmartHelper
         Site_Create_Account_URL,
         Password_Validity_Period,
         Account_Number_Auto_Generate,
-         Application_Is_VAT_Compliant,
+        Application_Is_VAT_Compliant,
         Date_Time_Format
 
 
@@ -615,7 +610,7 @@ namespace SmartHelper
         Once_Off = 1,
         Monthly
     }
-  
+
     public enum PaymentState
     {
         Paid = 1,
@@ -654,10 +649,6 @@ namespace SmartHelper
         Update_Client_Dependent,
         Delete_Client_Dependent,
         View_Client_Dependent,
-        Add_Client_Guarantor,
-        Update_Client_Guarantor,
-        Delete_Client_Guarantor,
-        View_Client_Guarantor,
         Add_Client_Course,
         Update_Client_Course,
         Delete_Client_Course,
@@ -696,21 +687,16 @@ namespace SmartHelper
         Delete_Department,
         View_Department,
 
-        // Enquiries Module
-        Respond_To_Enquiry,
-        Route_Enquiry,
-        Suspend_Enquiry,
-        Close_Enquiry,
-
 
         // Payment/Transactions
         Capture_Payment,
-        Refund_Payment,
         Reverse_Payment,
-        Void_Payment,
         View_Payment,
-        Make_Payment,
-
+        View_Client_Outstanding_Payments,
+        Generate_Invoices,
+        Remove_Invoice_Entries,
+        View_Client_Deductions,
+        Override_Payment,
 
 
         // Menus
@@ -727,6 +713,11 @@ namespace SmartHelper
         Update_Course,
         Delete_Course,
         View_Course,
+        View_Course_Fee,
+        Add_Course_Fee,
+        Update_Course_Fee,
+        Delete_Course_Fee,
+
 
         // Custom Setting
         Update_Custom_Setting,
@@ -770,6 +761,8 @@ namespace SmartHelper
 
         View_Dashboard_Notices,
         Client_Update_Personal_Details,
+
+
         Update_Transaction_Type,
         View_Transaction_Type,
 
@@ -788,15 +781,7 @@ namespace SmartHelper
         Delete_Assert,
         View_Assert,
 
-        View_Client_Outstanding_Payments,
-        Generate_Invoices,
-        Remove_Invoice_Entries,
-        View_Client_Deductions,
-        Override_Payment,
-        View_Course_Fee,
-        Add_Course_Fee,
-        Update_Course_Fee,
-        Delete_Course_Fee
+
 
 
     }
@@ -883,6 +868,13 @@ namespace SmartHelper
         High = 2,
         Medium = 3,
         Low = 4,
+    }
+
+    public enum Statements
+    {
+        Product_Based_Statement = 1,
+        Transaction_List = 2,
+      
     }
 }
 

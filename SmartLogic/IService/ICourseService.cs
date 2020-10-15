@@ -18,9 +18,9 @@ namespace SmartLogic
         Task<int> ActionCourse(int id, DatabaseAction action);
         Task<Course> FindCourse(int id);
         Task<List<Course>> Courses();
+        Task<List<Course>> NewCourses();
 
-
-       // Course Outline
+        // Course Outline
         Task<int> Save(CourseOutline CourseOutline);
         Task<int> Update(CourseOutline CourseOutline);
         Task<int> ActionCourseOutline(int id, DatabaseAction action);

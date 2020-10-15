@@ -78,18 +78,18 @@ namespace SmartLogic
                 PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1); ;
             }
             var client = _context.Clients.Find(PaymentsFile.ClientID);
-            if(UtilityService.IsNotNull(client))
-            PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(client.AccountNumber.ToString());
+            if (UtilityService.IsNotNull(client))
+                PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(client.AccountNumber.ToString());
             else
-            PaymentsFile.TransRef = UtilityService.GenerateTransactionRef("");
+                PaymentsFile.TransRef = UtilityService.GenerateTransactionRef("");
 
             PaymentsFile.TransactionTypeID = (int)transaction;
             PaymentsFile.PaymentStatusID = (int)PaymentState.Paid;
             PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
             PaymentsFile.LastChangedDate = DateTime.Now;
             _context.Add(PaymentsFile);
-           await _context.SaveChangesAsync();
-            return  PaymentsFile.TransactionID;
+            await _context.SaveChangesAsync();
+            return PaymentsFile.TransactionID;
         }
 
         public async Task<int> ReversePayment(Transaction PaymentsFile, TransactionTypeList transaction)
@@ -112,7 +112,6 @@ namespace SmartLogic
                 {
                     TransRef = UtilityService.GenerateTransactionRef(PaymentsFile.Client.AccountNumber),
                     ClientID = PaymentsFile.ClientID,
-                    ProductID = PaymentsFile.ProductID,
                     PaymentDate = DateTime.Now,
                     TransactionDate = DateTime.Now,
                     Year = DateTime.Now.Year,
@@ -124,6 +123,11 @@ namespace SmartLogic
                     PaymentStatusID = (int)PaymentState.Reversed,
                     BankAccountID = PaymentsFile.BankAccountID
                 };
+                if (PaymentsFile.ProductID.HasValue)
+                    newPaymentFile.ProductID = PaymentsFile.ProductID;
+
+                if (PaymentsFile.CourseID.HasValue)
+                    newPaymentFile.CourseID = PaymentsFile.CourseID;
 
                 newPaymentFile.Amount = (AmountInclVat * -1);
                 newPaymentFile.VAT = (VATAmount * -1);
@@ -132,6 +136,19 @@ namespace SmartLogic
                 _context.Add(newPaymentFile);
 
                 updateOldPayment(transactionID, oldPaymentStatus, newPaymentFile.TransRef);
+
+                if(PaymentsFile.ClientFeeID.HasValue)
+                {
+                    ClientFee clientFee = _context.ClientFees.Find(PaymentsFile.ClientFeeID);
+                    if(UtilityService.IsNotNull(clientFee))
+                    {
+                        clientFee.DatePaid = null;
+                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                        clientFee.LastChangedDate = DateTime.Now;
+                        _context.Update(clientFee);
+                       
+                    }
+                }
 
             }
             catch (Exception ex)
@@ -218,6 +235,7 @@ namespace SmartLogic
             return await _context.Transactions
              .Include(p => p.Client)
              .Include(p => p.Product)
+             .Include(p=>p.Course)
              .Include(p => p.PaymentStatus)
              .Include(p => p.TransactionType)
              .ThenInclude(p => p.TransactionStatus)

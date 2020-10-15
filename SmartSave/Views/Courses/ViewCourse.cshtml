@@ -147,7 +147,7 @@
 
                                                         @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
                                                         {
-                                                            <td><a asp-controller="Course" asp-action="ViewCourseFee" asp-route-id="@item.CourseFeeID">@item.Name</a></td>
+                                                            <td><a asp-controller="Courses" asp-action="ViewCourseFee" asp-route-id="@item.CourseFeeID">@item.Name</a></td>
                                                         }
                                                         else
                                                         {

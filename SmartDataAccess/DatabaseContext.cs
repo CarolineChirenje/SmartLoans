@@ -144,7 +144,10 @@ namespace SmartDataAccess
 
             modelBuilder.Entity<TransactionStatus>().HasData(
            Data.GetTransactionStatus());
-            
+
+            modelBuilder.Entity<StatementList>().HasData(
+         Data.GetStatementList());
+
 
 
         }
@@ -164,8 +167,7 @@ namespace SmartDataAccess
         public DbSet<ClientTranscript> ClientTranscripts { get; set; }
         public DbSet<ClientContact> ClientContacts { get; set; }
         public DbSet<ClientDocument> ClientDocuments { get; set; }
-        public DbSet<ClientGuarantor> ClientGuarantors { get; set; }
-        public DbSet<ClientNote> ClientNotes { get; set; }
+               public DbSet<ClientNote> ClientNotes { get; set; }
         public DbSet<ClientDependent> ClientDependents { get; set; }
         public DbSet<ClientProduct> ClientProducts { get; set; }
         public DbSet<ClientFee> ClientFees { get; set; }
@@ -195,7 +197,7 @@ namespace SmartDataAccess
         public DbSet<WeekDay> WeekDays { get; set; }
         public DbSet<Frequency> Frequencies { get; set; }
         public DbSet<Gender> Genders { get; set; }
-
+        public DbSet<StatementList> StatementLists { get; set; }
         public DbSet<RelationshipType> RelationshipTypes { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Role> Roles { get; set; }

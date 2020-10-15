@@ -10,5 +10,6 @@ namespace SmartLogic
         int GetNewClientRegistrations();
         int GetProductPayments();
         int GetOpenNotices();
+        int GetNewCourses();
     }
 }

@@ -10,8 +10,6 @@ namespace SmartLogic
        
         List<ContactType> GetContactTypes();
         List<RelationshipType> GetRelationshipTypes();
-
-        List<CustomSelectList> GetYears();
         List<CustomSettingType> GetCustomSettingsTypes();
         List<CustomVariableType> GetCustomVariableTypes();
         List<PriorityRank> GetPriorityRanks();
@@ -21,7 +19,7 @@ namespace SmartLogic
         List<Course> GetActiveCourseList();
         Product FindProduct(int productid);
         Company FindDefaultCompany();
-
+        List<StatementList> GetStatementList();
         List<WeekDay> GetWeekDays();
         List<Course> GetCourseList();
         List<DocumentType> GetDocumentTypes();
