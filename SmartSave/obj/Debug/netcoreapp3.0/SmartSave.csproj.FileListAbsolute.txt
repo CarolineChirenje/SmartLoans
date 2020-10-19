@@ -8061,3 +8061,4 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\staticwebassets\Smar
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.genruntimeconfig.cache
+D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\ServiceDependencies\SmartSave - Web Deploy1\profile.arm.json

@@ -175,7 +175,7 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="Salary" name="SalaryAmount" value="@Model.Salary">
                         <span id="SalaryError" class="text-danger text-bold"></span>
-                        <span><a href=""  class="text-success" data-toggle="modal" data-target="#SalaryHistory">History</a></span>
+                        <span><a href="" class="text-success" data-toggle="modal" data-target="#SalaryHistory">History</a></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -366,8 +366,14 @@
                                                                 string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
 
                                                             }
-
-                                                            <td><a asp-controller="Client" asp-action="ViewClientProduct" asp-route-id="@item.ClientProductID">@item.Product.Name</a></td>
+                                                            @if (UtilityService.HasPermission(Permissions.Add_Client_Product))
+                                                            {
+                                                                <td><a asp-controller="Client" asp-action="ViewClientProduct" asp-route-id="@item.ClientProductID">@item.Product.Name</a></td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>@item.Product.Name</td>
+                                                            }
                                                             <td>@dateRegistered</td>
                                                             <td>@activeStatus</td>
                                                             <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
