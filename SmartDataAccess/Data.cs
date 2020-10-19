@@ -266,7 +266,7 @@ namespace SmartDataAccess
                    new CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Date_Time_Format,
-                    Name = AppSetting.Date_Format.ToString().Replace("_", " "),
+                    Name = AppSetting.Date_Time_Format.ToString().Replace("_", " "),
                     Value="yyyy-MMM-dd HH:mm",
                     Description ="Format Used to display date time",
                     CustomVariableTypeID=(int)VariableType.Date_Time,
