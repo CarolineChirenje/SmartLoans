@@ -10,7 +10,7 @@ namespace SmartLogic
     {
         Task<User> Login(string username, string password);
 
-        Task<string> ResetPassword(string emailaddress, bool isAccountCreation=false);
+        Task<string> ResetPassword(string emailaddress, string idnumber,bool isAccountCreation=false);
         Task<UserAuthenticationCode> ConfirmCode(string  code, bool isAccountCreation = false);
         Task<int> PasswordChange( int userid, string password);
         Task<bool> UserAccountExists(string emailaddress, string idnumber);

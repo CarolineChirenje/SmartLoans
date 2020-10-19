@@ -134,7 +134,6 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ViewClient.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ViewClientCourse.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ViewClientDependent.cshtml.g.cs
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ViewClientGuarantor.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ViewClientNote.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ViewClientProduct.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ViewContact.cshtml.g.cs
@@ -174,7 +173,6 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Login\
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Login\Login.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Login\PasswordReset.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Menus\AddMenu.cshtml.g.cs
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Menus\ChildMenus.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Menus\MainMenu.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Menus\ViewMenu.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Menus\ViewMenuGroup.cshtml.g.cs
@@ -8061,3 +8059,5 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transa
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\SalarySchedule.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\Schedule.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\ScheduleReport.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ClientCourseFeePayment.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Courses\ViewCourseFee.cshtml.g.cs

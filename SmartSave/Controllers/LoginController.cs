@@ -115,7 +115,7 @@ namespace SmartSave.Controllers
                 return View(model);
             }
 
-            string pincode = await _service.ResetPassword(model.EmailAddress);
+            string pincode = await _service.ResetPassword(model.EmailAddress,null,false);
             if (UtilityService.IsNotNull(pincode))
             {
 
@@ -240,7 +240,7 @@ namespace SmartSave.Controllers
                     TempData[MessageDisplayType.Error.ToString()] = $"An account registered  with the following Email Address {client.EmailAddress} and ID Number {client.IDNumber} already exists please try to do a password reset if you have forgotten your details or contact our Customer Service Support on {UtilityService.CustomerServiceNumber}   for further help";
                     return View(model);
                 }
-                string pincode = await _service.ResetPassword(model.EmailAddress, true);
+                string pincode = await _service.ResetPassword(model.EmailAddress,  model.IDNumber,true);
                 if (UtilityService.IsNotNull(pincode))
                 {
                     Email email = new Email();
@@ -301,7 +301,7 @@ namespace SmartSave.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("FinaliseAccount", new { id = pinReset.UserID });
+                    return RedirectToAction("FinaliseAccount", new { id = pinReset.ClientID });
 
                 }
 

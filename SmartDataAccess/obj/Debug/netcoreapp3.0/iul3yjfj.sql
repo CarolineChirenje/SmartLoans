@@ -1,0 +1,5572 @@
+﻿ALTER TABLE [UserAuthenticationCodes] DROP CONSTRAINT [FK_UserAuthenticationCodes_Users_UserID];
+
+GO
+
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[UserAuthenticationCodes]') AND [c].[name] = N'UserID');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [UserAuthenticationCodes] DROP CONSTRAINT [' + @var0 + '];');
+ALTER TABLE [UserAuthenticationCodes] ALTER COLUMN [UserID] int NULL;
+
+GO
+
+ALTER TABLE [UserAuthenticationCodes] ADD [ClientID] int NULL;
+
+GO
+
+UPDATE [BankAccountTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2049856+02:00'
+WHERE [BankAccountTypeID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [BankAccountTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2050451+02:00'
+WHERE [BankAccountTypeID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [BankAccountTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2050457+02:00'
+WHERE [BankAccountTypeID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [BankAccountTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2050461+02:00'
+WHERE [BankAccountTypeID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [ContactTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2127649+02:00'
+WHERE [ContactTypeID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [ContactTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2127644+02:00'
+WHERE [ContactTypeID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [ContactTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2127638+02:00'
+WHERE [ContactTypeID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [ContactTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2127449+02:00'
+WHERE [ContactTypeID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [ContactTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2127653+02:00'
+WHERE [ContactTypeID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2180630+02:00'
+WHERE [CountryID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2180963+02:00'
+WHERE [CountryID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2180970+02:00'
+WHERE [CountryID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2180977+02:00'
+WHERE [CountryID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2180980+02:00'
+WHERE [CountryID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2180988+02:00'
+WHERE [CountryID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2180991+02:00'
+WHERE [CountryID] = 7;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2180994+02:00'
+WHERE [CountryID] = 8;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2180998+02:00'
+WHERE [CountryID] = 9;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181002+02:00'
+WHERE [CountryID] = 10;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181005+02:00'
+WHERE [CountryID] = 11;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181008+02:00'
+WHERE [CountryID] = 12;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181011+02:00'
+WHERE [CountryID] = 13;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181014+02:00'
+WHERE [CountryID] = 14;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181017+02:00'
+WHERE [CountryID] = 15;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181021+02:00'
+WHERE [CountryID] = 16;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181024+02:00'
+WHERE [CountryID] = 17;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181037+02:00'
+WHERE [CountryID] = 18;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181040+02:00'
+WHERE [CountryID] = 19;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181043+02:00'
+WHERE [CountryID] = 20;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181046+02:00'
+WHERE [CountryID] = 21;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181049+02:00'
+WHERE [CountryID] = 22;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181052+02:00'
+WHERE [CountryID] = 23;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181054+02:00'
+WHERE [CountryID] = 24;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181057+02:00'
+WHERE [CountryID] = 25;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181060+02:00'
+WHERE [CountryID] = 26;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181064+02:00'
+WHERE [CountryID] = 27;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181067+02:00'
+WHERE [CountryID] = 28;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181070+02:00'
+WHERE [CountryID] = 29;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181075+02:00'
+WHERE [CountryID] = 30;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181077+02:00'
+WHERE [CountryID] = 31;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181080+02:00'
+WHERE [CountryID] = 32;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181084+02:00'
+WHERE [CountryID] = 33;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181089+02:00'
+WHERE [CountryID] = 34;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181092+02:00'
+WHERE [CountryID] = 35;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181094+02:00'
+WHERE [CountryID] = 36;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181097+02:00'
+WHERE [CountryID] = 37;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181100+02:00'
+WHERE [CountryID] = 38;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181104+02:00'
+WHERE [CountryID] = 39;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181107+02:00'
+WHERE [CountryID] = 40;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181111+02:00'
+WHERE [CountryID] = 41;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181114+02:00'
+WHERE [CountryID] = 42;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181117+02:00'
+WHERE [CountryID] = 43;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181120+02:00'
+WHERE [CountryID] = 44;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181122+02:00'
+WHERE [CountryID] = 45;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181126+02:00'
+WHERE [CountryID] = 46;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181130+02:00'
+WHERE [CountryID] = 47;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181134+02:00'
+WHERE [CountryID] = 48;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181137+02:00'
+WHERE [CountryID] = 49;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181141+02:00'
+WHERE [CountryID] = 50;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181144+02:00'
+WHERE [CountryID] = 51;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181147+02:00'
+WHERE [CountryID] = 52;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181150+02:00'
+WHERE [CountryID] = 53;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181153+02:00'
+WHERE [CountryID] = 54;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181156+02:00'
+WHERE [CountryID] = 55;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181159+02:00'
+WHERE [CountryID] = 56;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181162+02:00'
+WHERE [CountryID] = 57;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181165+02:00'
+WHERE [CountryID] = 58;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181169+02:00'
+WHERE [CountryID] = 59;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181172+02:00'
+WHERE [CountryID] = 60;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181175+02:00'
+WHERE [CountryID] = 61;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181178+02:00'
+WHERE [CountryID] = 62;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181182+02:00'
+WHERE [CountryID] = 63;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181186+02:00'
+WHERE [CountryID] = 64;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181189+02:00'
+WHERE [CountryID] = 65;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181193+02:00'
+WHERE [CountryID] = 66;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181196+02:00'
+WHERE [CountryID] = 67;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181199+02:00'
+WHERE [CountryID] = 68;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181202+02:00'
+WHERE [CountryID] = 69;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181205+02:00'
+WHERE [CountryID] = 70;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181208+02:00'
+WHERE [CountryID] = 71;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181218+02:00'
+WHERE [CountryID] = 72;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181222+02:00'
+WHERE [CountryID] = 73;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181225+02:00'
+WHERE [CountryID] = 74;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181229+02:00'
+WHERE [CountryID] = 75;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181232+02:00'
+WHERE [CountryID] = 76;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181235+02:00'
+WHERE [CountryID] = 77;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181237+02:00'
+WHERE [CountryID] = 78;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181240+02:00'
+WHERE [CountryID] = 79;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181243+02:00'
+WHERE [CountryID] = 80;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181246+02:00'
+WHERE [CountryID] = 81;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181249+02:00'
+WHERE [CountryID] = 82;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181252+02:00'
+WHERE [CountryID] = 83;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181255+02:00'
+WHERE [CountryID] = 84;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181257+02:00'
+WHERE [CountryID] = 85;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181260+02:00'
+WHERE [CountryID] = 86;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181263+02:00'
+WHERE [CountryID] = 87;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181266+02:00'
+WHERE [CountryID] = 88;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181270+02:00'
+WHERE [CountryID] = 89;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181272+02:00'
+WHERE [CountryID] = 90;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181275+02:00'
+WHERE [CountryID] = 91;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181278+02:00'
+WHERE [CountryID] = 92;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181281+02:00'
+WHERE [CountryID] = 93;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181284+02:00'
+WHERE [CountryID] = 94;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181287+02:00'
+WHERE [CountryID] = 95;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181290+02:00'
+WHERE [CountryID] = 96;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181293+02:00'
+WHERE [CountryID] = 97;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181295+02:00'
+WHERE [CountryID] = 98;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181298+02:00'
+WHERE [CountryID] = 99;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181301+02:00'
+WHERE [CountryID] = 100;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181305+02:00'
+WHERE [CountryID] = 101;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181308+02:00'
+WHERE [CountryID] = 102;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181311+02:00'
+WHERE [CountryID] = 103;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181313+02:00'
+WHERE [CountryID] = 104;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181316+02:00'
+WHERE [CountryID] = 105;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181319+02:00'
+WHERE [CountryID] = 106;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181322+02:00'
+WHERE [CountryID] = 107;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181325+02:00'
+WHERE [CountryID] = 108;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181328+02:00'
+WHERE [CountryID] = 109;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181331+02:00'
+WHERE [CountryID] = 110;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181334+02:00'
+WHERE [CountryID] = 111;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181337+02:00'
+WHERE [CountryID] = 112;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181340+02:00'
+WHERE [CountryID] = 113;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181343+02:00'
+WHERE [CountryID] = 114;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181346+02:00'
+WHERE [CountryID] = 115;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181350+02:00'
+WHERE [CountryID] = 116;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181353+02:00'
+WHERE [CountryID] = 117;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181356+02:00'
+WHERE [CountryID] = 118;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181358+02:00'
+WHERE [CountryID] = 119;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181361+02:00'
+WHERE [CountryID] = 120;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181364+02:00'
+WHERE [CountryID] = 121;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181367+02:00'
+WHERE [CountryID] = 122;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181370+02:00'
+WHERE [CountryID] = 123;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181373+02:00'
+WHERE [CountryID] = 124;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181376+02:00'
+WHERE [CountryID] = 125;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181379+02:00'
+WHERE [CountryID] = 126;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181381+02:00'
+WHERE [CountryID] = 127;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181384+02:00'
+WHERE [CountryID] = 128;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181387+02:00'
+WHERE [CountryID] = 129;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181398+02:00'
+WHERE [CountryID] = 130;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181401+02:00'
+WHERE [CountryID] = 131;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181405+02:00'
+WHERE [CountryID] = 132;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181408+02:00'
+WHERE [CountryID] = 133;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181410+02:00'
+WHERE [CountryID] = 134;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181413+02:00'
+WHERE [CountryID] = 135;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181416+02:00'
+WHERE [CountryID] = 136;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181419+02:00'
+WHERE [CountryID] = 137;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181423+02:00'
+WHERE [CountryID] = 138;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181426+02:00'
+WHERE [CountryID] = 139;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181429+02:00'
+WHERE [CountryID] = 140;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181432+02:00'
+WHERE [CountryID] = 141;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181434+02:00'
+WHERE [CountryID] = 142;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181438+02:00'
+WHERE [CountryID] = 143;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181440+02:00'
+WHERE [CountryID] = 144;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181443+02:00'
+WHERE [CountryID] = 145;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181446+02:00'
+WHERE [CountryID] = 146;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181449+02:00'
+WHERE [CountryID] = 147;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181452+02:00'
+WHERE [CountryID] = 148;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181456+02:00'
+WHERE [CountryID] = 149;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181460+02:00'
+WHERE [CountryID] = 150;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181464+02:00'
+WHERE [CountryID] = 151;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181466+02:00'
+WHERE [CountryID] = 152;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181469+02:00'
+WHERE [CountryID] = 153;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181472+02:00'
+WHERE [CountryID] = 154;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181476+02:00'
+WHERE [CountryID] = 155;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181479+02:00'
+WHERE [CountryID] = 156;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181482+02:00'
+WHERE [CountryID] = 157;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181485+02:00'
+WHERE [CountryID] = 158;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181488+02:00'
+WHERE [CountryID] = 159;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181491+02:00'
+WHERE [CountryID] = 160;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181495+02:00'
+WHERE [CountryID] = 161;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181497+02:00'
+WHERE [CountryID] = 162;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181500+02:00'
+WHERE [CountryID] = 163;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181503+02:00'
+WHERE [CountryID] = 164;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181506+02:00'
+WHERE [CountryID] = 165;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181509+02:00'
+WHERE [CountryID] = 166;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181512+02:00'
+WHERE [CountryID] = 167;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181515+02:00'
+WHERE [CountryID] = 168;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181518+02:00'
+WHERE [CountryID] = 169;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181521+02:00'
+WHERE [CountryID] = 170;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181524+02:00'
+WHERE [CountryID] = 171;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181527+02:00'
+WHERE [CountryID] = 172;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181530+02:00'
+WHERE [CountryID] = 173;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181534+02:00'
+WHERE [CountryID] = 174;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181538+02:00'
+WHERE [CountryID] = 175;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181542+02:00'
+WHERE [CountryID] = 176;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181546+02:00'
+WHERE [CountryID] = 177;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181549+02:00'
+WHERE [CountryID] = 178;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181553+02:00'
+WHERE [CountryID] = 179;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181557+02:00'
+WHERE [CountryID] = 180;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181560+02:00'
+WHERE [CountryID] = 181;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181563+02:00'
+WHERE [CountryID] = 182;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181566+02:00'
+WHERE [CountryID] = 183;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181569+02:00'
+WHERE [CountryID] = 184;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181572+02:00'
+WHERE [CountryID] = 185;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181575+02:00'
+WHERE [CountryID] = 186;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181578+02:00'
+WHERE [CountryID] = 187;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181581+02:00'
+WHERE [CountryID] = 188;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181584+02:00'
+WHERE [CountryID] = 189;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181587+02:00'
+WHERE [CountryID] = 190;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181591+02:00'
+WHERE [CountryID] = 191;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181593+02:00'
+WHERE [CountryID] = 192;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181597+02:00'
+WHERE [CountryID] = 193;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181606+02:00'
+WHERE [CountryID] = 194;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181609+02:00'
+WHERE [CountryID] = 195;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181611+02:00'
+WHERE [CountryID] = 196;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181614+02:00'
+WHERE [CountryID] = 197;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181617+02:00'
+WHERE [CountryID] = 198;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181620+02:00'
+WHERE [CountryID] = 199;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181623+02:00'
+WHERE [CountryID] = 200;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181626+02:00'
+WHERE [CountryID] = 201;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181629+02:00'
+WHERE [CountryID] = 202;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181632+02:00'
+WHERE [CountryID] = 203;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181635+02:00'
+WHERE [CountryID] = 204;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181637+02:00'
+WHERE [CountryID] = 205;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181641+02:00'
+WHERE [CountryID] = 206;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181644+02:00'
+WHERE [CountryID] = 207;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181646+02:00'
+WHERE [CountryID] = 208;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181650+02:00'
+WHERE [CountryID] = 209;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181653+02:00'
+WHERE [CountryID] = 210;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181656+02:00'
+WHERE [CountryID] = 211;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181659+02:00'
+WHERE [CountryID] = 212;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181661+02:00'
+WHERE [CountryID] = 213;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181665+02:00'
+WHERE [CountryID] = 214;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181669+02:00'
+WHERE [CountryID] = 215;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181672+02:00'
+WHERE [CountryID] = 216;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181675+02:00'
+WHERE [CountryID] = 217;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181678+02:00'
+WHERE [CountryID] = 218;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181681+02:00'
+WHERE [CountryID] = 219;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181684+02:00'
+WHERE [CountryID] = 220;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181686+02:00'
+WHERE [CountryID] = 221;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181690+02:00'
+WHERE [CountryID] = 222;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181693+02:00'
+WHERE [CountryID] = 223;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181696+02:00'
+WHERE [CountryID] = 224;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181699+02:00'
+WHERE [CountryID] = 225;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181702+02:00'
+WHERE [CountryID] = 226;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181705+02:00'
+WHERE [CountryID] = 227;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Countries] SET [LastChangedDate] = '2020-10-19T16:33:22.2181708+02:00'
+WHERE [CountryID] = 228;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071289+02:00'
+WHERE [CurrencyID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071608+02:00'
+WHERE [CurrencyID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071615+02:00'
+WHERE [CurrencyID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071618+02:00'
+WHERE [CurrencyID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071621+02:00'
+WHERE [CurrencyID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071629+02:00'
+WHERE [CurrencyID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071632+02:00'
+WHERE [CurrencyID] = 7;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071634+02:00'
+WHERE [CurrencyID] = 8;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071637+02:00'
+WHERE [CurrencyID] = 9;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071641+02:00'
+WHERE [CurrencyID] = 10;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071644+02:00'
+WHERE [CurrencyID] = 11;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071647+02:00'
+WHERE [CurrencyID] = 12;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071650+02:00'
+WHERE [CurrencyID] = 13;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071652+02:00'
+WHERE [CurrencyID] = 14;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071655+02:00'
+WHERE [CurrencyID] = 15;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071658+02:00'
+WHERE [CurrencyID] = 16;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071660+02:00'
+WHERE [CurrencyID] = 17;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071664+02:00'
+WHERE [CurrencyID] = 18;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071667+02:00'
+WHERE [CurrencyID] = 19;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071670+02:00'
+WHERE [CurrencyID] = 20;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071673+02:00'
+WHERE [CurrencyID] = 21;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071675+02:00'
+WHERE [CurrencyID] = 22;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071678+02:00'
+WHERE [CurrencyID] = 23;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071681+02:00'
+WHERE [CurrencyID] = 24;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071683+02:00'
+WHERE [CurrencyID] = 25;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071686+02:00'
+WHERE [CurrencyID] = 26;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071689+02:00'
+WHERE [CurrencyID] = 27;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071691+02:00'
+WHERE [CurrencyID] = 28;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071694+02:00'
+WHERE [CurrencyID] = 29;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071697+02:00'
+WHERE [CurrencyID] = 30;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071699+02:00'
+WHERE [CurrencyID] = 31;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071702+02:00'
+WHERE [CurrencyID] = 32;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071705+02:00'
+WHERE [CurrencyID] = 33;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071709+02:00'
+WHERE [CurrencyID] = 34;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071712+02:00'
+WHERE [CurrencyID] = 35;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071714+02:00'
+WHERE [CurrencyID] = 36;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071717+02:00'
+WHERE [CurrencyID] = 37;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071720+02:00'
+WHERE [CurrencyID] = 38;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071722+02:00'
+WHERE [CurrencyID] = 39;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071742+02:00'
+WHERE [CurrencyID] = 40;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071745+02:00'
+WHERE [CurrencyID] = 41;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071748+02:00'
+WHERE [CurrencyID] = 42;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071751+02:00'
+WHERE [CurrencyID] = 43;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071753+02:00'
+WHERE [CurrencyID] = 44;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071756+02:00'
+WHERE [CurrencyID] = 45;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071759+02:00'
+WHERE [CurrencyID] = 46;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071761+02:00'
+WHERE [CurrencyID] = 47;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071764+02:00'
+WHERE [CurrencyID] = 48;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071767+02:00'
+WHERE [CurrencyID] = 49;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071769+02:00'
+WHERE [CurrencyID] = 50;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071772+02:00'
+WHERE [CurrencyID] = 51;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071774+02:00'
+WHERE [CurrencyID] = 52;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071777+02:00'
+WHERE [CurrencyID] = 53;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071780+02:00'
+WHERE [CurrencyID] = 54;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071782+02:00'
+WHERE [CurrencyID] = 55;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071785+02:00'
+WHERE [CurrencyID] = 56;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071788+02:00'
+WHERE [CurrencyID] = 57;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071790+02:00'
+WHERE [CurrencyID] = 58;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071793+02:00'
+WHERE [CurrencyID] = 59;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071795+02:00'
+WHERE [CurrencyID] = 60;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071798+02:00'
+WHERE [CurrencyID] = 61;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071801+02:00'
+WHERE [CurrencyID] = 62;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071804+02:00'
+WHERE [CurrencyID] = 63;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071806+02:00'
+WHERE [CurrencyID] = 64;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071809+02:00'
+WHERE [CurrencyID] = 65;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071814+02:00'
+WHERE [CurrencyID] = 66;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071816+02:00'
+WHERE [CurrencyID] = 67;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071819+02:00'
+WHERE [CurrencyID] = 68;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071821+02:00'
+WHERE [CurrencyID] = 69;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071824+02:00'
+WHERE [CurrencyID] = 70;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071827+02:00'
+WHERE [CurrencyID] = 71;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071829+02:00'
+WHERE [CurrencyID] = 72;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071832+02:00'
+WHERE [CurrencyID] = 73;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071835+02:00'
+WHERE [CurrencyID] = 74;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071838+02:00'
+WHERE [CurrencyID] = 75;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071840+02:00'
+WHERE [CurrencyID] = 76;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071843+02:00'
+WHERE [CurrencyID] = 77;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071846+02:00'
+WHERE [CurrencyID] = 78;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071848+02:00'
+WHERE [CurrencyID] = 79;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071851+02:00'
+WHERE [CurrencyID] = 80;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071853+02:00'
+WHERE [CurrencyID] = 81;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071857+02:00'
+WHERE [CurrencyID] = 82;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071860+02:00'
+WHERE [CurrencyID] = 83;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071862+02:00'
+WHERE [CurrencyID] = 84;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071865+02:00'
+WHERE [CurrencyID] = 85;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071867+02:00'
+WHERE [CurrencyID] = 86;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071870+02:00'
+WHERE [CurrencyID] = 87;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071873+02:00'
+WHERE [CurrencyID] = 88;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071875+02:00'
+WHERE [CurrencyID] = 89;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071878+02:00'
+WHERE [CurrencyID] = 90;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071880+02:00'
+WHERE [CurrencyID] = 91;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071883+02:00'
+WHERE [CurrencyID] = 92;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071886+02:00'
+WHERE [CurrencyID] = 93;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071889+02:00'
+WHERE [CurrencyID] = 94;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071892+02:00'
+WHERE [CurrencyID] = 95;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071894+02:00'
+WHERE [CurrencyID] = 96;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071897+02:00'
+WHERE [CurrencyID] = 97;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071899+02:00'
+WHERE [CurrencyID] = 98;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071902+02:00'
+WHERE [CurrencyID] = 99;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071905+02:00'
+WHERE [CurrencyID] = 100;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071907+02:00'
+WHERE [CurrencyID] = 101;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071910+02:00'
+WHERE [CurrencyID] = 102;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071913+02:00'
+WHERE [CurrencyID] = 103;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071915+02:00'
+WHERE [CurrencyID] = 104;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071918+02:00'
+WHERE [CurrencyID] = 105;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071921+02:00'
+WHERE [CurrencyID] = 106;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071923+02:00'
+WHERE [CurrencyID] = 107;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071926+02:00'
+WHERE [CurrencyID] = 108;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071936+02:00'
+WHERE [CurrencyID] = 109;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071938+02:00'
+WHERE [CurrencyID] = 110;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071941+02:00'
+WHERE [CurrencyID] = 111;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071944+02:00'
+WHERE [CurrencyID] = 112;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071946+02:00'
+WHERE [CurrencyID] = 113;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071949+02:00'
+WHERE [CurrencyID] = 114;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071952+02:00'
+WHERE [CurrencyID] = 115;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071954+02:00'
+WHERE [CurrencyID] = 116;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071957+02:00'
+WHERE [CurrencyID] = 117;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071960+02:00'
+WHERE [CurrencyID] = 118;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071962+02:00'
+WHERE [CurrencyID] = 119;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071965+02:00'
+WHERE [CurrencyID] = 120;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071967+02:00'
+WHERE [CurrencyID] = 121;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071970+02:00'
+WHERE [CurrencyID] = 122;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071973+02:00'
+WHERE [CurrencyID] = 123;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071975+02:00'
+WHERE [CurrencyID] = 124;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071978+02:00'
+WHERE [CurrencyID] = 125;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071981+02:00'
+WHERE [CurrencyID] = 126;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071983+02:00'
+WHERE [CurrencyID] = 127;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071986+02:00'
+WHERE [CurrencyID] = 128;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071989+02:00'
+WHERE [CurrencyID] = 129;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071993+02:00'
+WHERE [CurrencyID] = 130;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071996+02:00'
+WHERE [CurrencyID] = 131;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2071999+02:00'
+WHERE [CurrencyID] = 132;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072001+02:00'
+WHERE [CurrencyID] = 133;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072004+02:00'
+WHERE [CurrencyID] = 134;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072007+02:00'
+WHERE [CurrencyID] = 135;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072009+02:00'
+WHERE [CurrencyID] = 136;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072012+02:00'
+WHERE [CurrencyID] = 137;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072015+02:00'
+WHERE [CurrencyID] = 138;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072017+02:00'
+WHERE [CurrencyID] = 139;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072020+02:00'
+WHERE [CurrencyID] = 140;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072022+02:00'
+WHERE [CurrencyID] = 141;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072025+02:00'
+WHERE [CurrencyID] = 142;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072028+02:00'
+WHERE [CurrencyID] = 143;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072030+02:00'
+WHERE [CurrencyID] = 144;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072033+02:00'
+WHERE [CurrencyID] = 145;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072035+02:00'
+WHERE [CurrencyID] = 146;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072038+02:00'
+WHERE [CurrencyID] = 147;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072041+02:00'
+WHERE [CurrencyID] = 148;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072043+02:00'
+WHERE [CurrencyID] = 149;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072046+02:00'
+WHERE [CurrencyID] = 150;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072048+02:00'
+WHERE [CurrencyID] = 151;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072051+02:00'
+WHERE [CurrencyID] = 152;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072054+02:00'
+WHERE [CurrencyID] = 153;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072056+02:00'
+WHERE [CurrencyID] = 154;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072059+02:00'
+WHERE [CurrencyID] = 155;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072062+02:00'
+WHERE [CurrencyID] = 156;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072064+02:00'
+WHERE [CurrencyID] = 157;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072067+02:00'
+WHERE [CurrencyID] = 158;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072069+02:00'
+WHERE [CurrencyID] = 159;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072072+02:00'
+WHERE [CurrencyID] = 160;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072075+02:00'
+WHERE [CurrencyID] = 161;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Currencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2072077+02:00'
+WHERE [CurrencyID] = 162;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettingTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2142221+02:00'
+WHERE [CustomSettingTypeID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettingTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2142294+02:00'
+WHERE [CustomSettingTypeID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettingTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2142299+02:00'
+WHERE [CustomSettingTypeID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettingTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2142302+02:00'
+WHERE [CustomSettingTypeID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396588+02:00'
+WHERE [CustomSettingID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396752+02:00'
+WHERE [CustomSettingID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396774+02:00'
+WHERE [CustomSettingID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396758+02:00'
+WHERE [CustomSettingID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396779+02:00'
+WHERE [CustomSettingID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396789+02:00'
+WHERE [CustomSettingID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396822+02:00'
+WHERE [CustomSettingID] = 7;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396828+02:00'
+WHERE [CustomSettingID] = 8;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396833+02:00'
+WHERE [CustomSettingID] = 9;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396838+02:00'
+WHERE [CustomSettingID] = 10;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396897+02:00'
+WHERE [CustomSettingID] = 11;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396902+02:00'
+WHERE [CustomSettingID] = 12;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396907+02:00'
+WHERE [CustomSettingID] = 13;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396913+02:00'
+WHERE [CustomSettingID] = 14;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396763+02:00'
+WHERE [CustomSettingID] = 15;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396745+02:00'
+WHERE [CustomSettingID] = 16;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396920+02:00'
+WHERE [CustomSettingID] = 17;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396924+02:00'
+WHERE [CustomSettingID] = 18;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396929+02:00'
+WHERE [CustomSettingID] = 19;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396935+02:00'
+WHERE [CustomSettingID] = 20;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396955+02:00'
+WHERE [CustomSettingID] = 22;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396945+02:00'
+WHERE [CustomSettingID] = 23;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396940+02:00'
+WHERE [CustomSettingID] = 24;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396950+02:00'
+WHERE [CustomSettingID] = 25;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396961+02:00'
+WHERE [CustomSettingID] = 26;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396966+02:00'
+WHERE [CustomSettingID] = 27;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396970+02:00'
+WHERE [CustomSettingID] = 28;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396976+02:00'
+WHERE [CustomSettingID] = 29;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396981+02:00'
+WHERE [CustomSettingID] = 30;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396986+02:00'
+WHERE [CustomSettingID] = 31;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396991+02:00'
+WHERE [CustomSettingID] = 32;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396996+02:00'
+WHERE [CustomSettingID] = 33;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2397003+02:00'
+WHERE [CustomSettingID] = 34;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2397008+02:00'
+WHERE [CustomSettingID] = 35;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2397013+02:00'
+WHERE [CustomSettingID] = 36;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2397018+02:00'
+WHERE [CustomSettingID] = 37;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2397023+02:00'
+WHERE [CustomSettingID] = 38;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [CustomSettings] SET [LastChangedDate] = '2020-10-19T16:33:22.2396784+02:00'
+WHERE [CustomSettingID] = 39;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentFormats] SET [LastChangedDate] = '2020-10-19T16:33:22.2257130+02:00'
+WHERE [DocumentFormatID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentFormats] SET [LastChangedDate] = '2020-10-19T16:33:22.2257429+02:00'
+WHERE [DocumentFormatID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentFormats] SET [LastChangedDate] = '2020-10-19T16:33:22.2257435+02:00'
+WHERE [DocumentFormatID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentFormats] SET [LastChangedDate] = '2020-10-19T16:33:22.2257438+02:00'
+WHERE [DocumentFormatID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentFormats] SET [LastChangedDate] = '2020-10-19T16:33:22.2257440+02:00'
+WHERE [DocumentFormatID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentFormats] SET [LastChangedDate] = '2020-10-19T16:33:22.2257447+02:00'
+WHERE [DocumentFormatID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2278663+02:00'
+WHERE [DocumentTypeID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2279615+02:00'
+WHERE [DocumentTypeID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2279636+02:00'
+WHERE [DocumentTypeID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [DocumentTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2279639+02:00'
+WHERE [DocumentTypeID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [EmailTemplates] SET [LastChangedDate] = '2020-10-19T16:33:22.2362376+02:00'
+WHERE [EmailTemplateID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [EmailTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2357280+02:00'
+WHERE [EmailTypeID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [EmailTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2357720+02:00'
+WHERE [EmailTypeID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [EmailTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2357726+02:00'
+WHERE [EmailTypeID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [EmailTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2357731+02:00'
+WHERE [EmailTypeID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [FeatureFlags] SET [LastChangedDate] = '2020-10-19T16:33:22.2235959+02:00'
+WHERE [FeatureFlagID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [FeatureFlags] SET [LastChangedDate] = '2020-10-19T16:33:22.2236417+02:00'
+WHERE [FeatureFlagID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [FeatureFlags] SET [LastChangedDate] = '2020-10-19T16:33:22.2236426+02:00'
+WHERE [FeatureFlagID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Frequencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2091217+02:00'
+WHERE [FrequencyID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Frequencies] SET [LastChangedDate] = '2020-10-19T16:33:22.2091471+02:00'
+WHERE [FrequencyID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Genders] SET [LastChangedDate] = '2020-10-19T16:33:22.2158304+02:00'
+WHERE [GenderID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Genders] SET [LastChangedDate] = '2020-10-19T16:33:22.2158633+02:00'
+WHERE [GenderID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [MenuGroups] SET [LastChangedDate] = '2020-10-19T16:33:22.2298494+02:00'
+WHERE [MenuGroupID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [MenuGroups] SET [LastChangedDate] = '2020-10-19T16:33:22.2298618+02:00'
+WHERE [MenuGroupID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [MenuGroups] SET [LastChangedDate] = '2020-10-19T16:33:22.2298630+02:00'
+WHERE [MenuGroupID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [MenuGroups] SET [LastChangedDate] = '2020-10-19T16:33:22.2298636+02:00'
+WHERE [MenuGroupID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [MenuGroups] SET [LastChangedDate] = '2020-10-19T16:33:22.2298667+02:00'
+WHERE [MenuGroupID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [MenuGroups] SET [LastChangedDate] = '2020-10-19T16:33:22.2298680+02:00'
+WHERE [MenuGroupID] = 999;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [MenuGroups] SET [LastChangedDate] = '2020-10-19T16:33:22.2298675+02:00'
+WHERE [MenuGroupID] = 9998;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316706+02:00'
+WHERE [MenuID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316812+02:00'
+WHERE [MenuID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316816+02:00'
+WHERE [MenuID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316819+02:00'
+WHERE [MenuID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316823+02:00'
+WHERE [MenuID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316829+02:00'
+WHERE [MenuID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316832+02:00'
+WHERE [MenuID] = 7;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316836+02:00'
+WHERE [MenuID] = 8;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316839+02:00'
+WHERE [MenuID] = 9;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316844+02:00'
+WHERE [MenuID] = 10;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316847+02:00'
+WHERE [MenuID] = 11;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316851+02:00'
+WHERE [MenuID] = 12;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316854+02:00'
+WHERE [MenuID] = 13;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316857+02:00'
+WHERE [MenuID] = 14;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [CSSClass] = N'fa fa-bell', [LastChangedDate] = '2020-10-19T16:33:22.2316860+02:00'
+WHERE [MenuID] = 15;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316864+02:00'
+WHERE [MenuID] = 16;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316867+02:00'
+WHERE [MenuID] = 17;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316873+02:00'
+WHERE [MenuID] = 18;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316877+02:00'
+WHERE [MenuID] = 19;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316880+02:00'
+WHERE [MenuID] = 20;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316883+02:00'
+WHERE [MenuID] = 9998;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Menus] SET [LastChangedDate] = '2020-10-19T16:33:22.2316886+02:00'
+WHERE [MenuID] = 9999;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [PaymentStatus] SET [LastChangedDate] = '2020-10-19T16:33:22.2004255+02:00'
+WHERE [PaymentStatusID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [PaymentStatus] SET [LastChangedDate] = '2020-10-19T16:33:22.2004858+02:00'
+WHERE [PaymentStatusID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [PaymentStatus] SET [LastChangedDate] = '2020-10-19T16:33:22.2004864+02:00'
+WHERE [PaymentStatusID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [PaymentStatus] SET [LastChangedDate] = '2020-10-19T16:33:22.2004867+02:00'
+WHERE [PaymentStatusID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [PaymentStatus] SET [LastChangedDate] = '2020-10-19T16:33:22.2004870+02:00'
+WHERE [PaymentStatusID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976233+02:00'
+WHERE [PermissionID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976654+02:00'
+WHERE [PermissionID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976662+02:00'
+WHERE [PermissionID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976666+02:00'
+WHERE [PermissionID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976670+02:00'
+WHERE [PermissionID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976680+02:00'
+WHERE [PermissionID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976683+02:00'
+WHERE [PermissionID] = 7;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976687+02:00'
+WHERE [PermissionID] = 8;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976691+02:00'
+WHERE [PermissionID] = 9;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976696+02:00'
+WHERE [PermissionID] = 10;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976701+02:00'
+WHERE [PermissionID] = 11;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976705+02:00'
+WHERE [PermissionID] = 12;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976708+02:00'
+WHERE [PermissionID] = 13;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976712+02:00'
+WHERE [PermissionID] = 14;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976716+02:00'
+WHERE [PermissionID] = 15;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976720+02:00'
+WHERE [PermissionID] = 16;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976724+02:00'
+WHERE [PermissionID] = 17;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976729+02:00'
+WHERE [PermissionID] = 18;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976732+02:00'
+WHERE [PermissionID] = 19;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976736+02:00'
+WHERE [PermissionID] = 20;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976740+02:00'
+WHERE [PermissionID] = 21;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976743+02:00'
+WHERE [PermissionID] = 22;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976748+02:00'
+WHERE [PermissionID] = 23;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976752+02:00'
+WHERE [PermissionID] = 24;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976756+02:00'
+WHERE [PermissionID] = 25;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976760+02:00'
+WHERE [PermissionID] = 26;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976764+02:00'
+WHERE [PermissionID] = 27;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976768+02:00'
+WHERE [PermissionID] = 28;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976772+02:00'
+WHERE [PermissionID] = 29;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976776+02:00'
+WHERE [PermissionID] = 30;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976781+02:00'
+WHERE [PermissionID] = 31;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976785+02:00'
+WHERE [PermissionID] = 32;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976789+02:00'
+WHERE [PermissionID] = 33;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976794+02:00'
+WHERE [PermissionID] = 34;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976798+02:00'
+WHERE [PermissionID] = 35;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976802+02:00'
+WHERE [PermissionID] = 36;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976805+02:00'
+WHERE [PermissionID] = 37;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976809+02:00'
+WHERE [PermissionID] = 38;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976813+02:00'
+WHERE [PermissionID] = 39;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976826+02:00'
+WHERE [PermissionID] = 40;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976830+02:00'
+WHERE [PermissionID] = 41;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976834+02:00'
+WHERE [PermissionID] = 42;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976838+02:00'
+WHERE [PermissionID] = 43;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976842+02:00'
+WHERE [PermissionID] = 44;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976846+02:00'
+WHERE [PermissionID] = 45;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976850+02:00'
+WHERE [PermissionID] = 46;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976854+02:00'
+WHERE [PermissionID] = 47;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976858+02:00'
+WHERE [PermissionID] = 48;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976861+02:00'
+WHERE [PermissionID] = 49;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976865+02:00'
+WHERE [PermissionID] = 50;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976868+02:00'
+WHERE [PermissionID] = 51;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976872+02:00'
+WHERE [PermissionID] = 52;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976876+02:00'
+WHERE [PermissionID] = 53;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976879+02:00'
+WHERE [PermissionID] = 54;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976883+02:00'
+WHERE [PermissionID] = 55;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976886+02:00'
+WHERE [PermissionID] = 56;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976890+02:00'
+WHERE [PermissionID] = 57;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976893+02:00'
+WHERE [PermissionID] = 58;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976898+02:00'
+WHERE [PermissionID] = 59;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976902+02:00'
+WHERE [PermissionID] = 60;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976906+02:00'
+WHERE [PermissionID] = 61;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976910+02:00'
+WHERE [PermissionID] = 62;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976914+02:00'
+WHERE [PermissionID] = 63;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976917+02:00'
+WHERE [PermissionID] = 64;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976921+02:00'
+WHERE [PermissionID] = 65;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976926+02:00'
+WHERE [PermissionID] = 66;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976930+02:00'
+WHERE [PermissionID] = 67;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976934+02:00'
+WHERE [PermissionID] = 68;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976937+02:00'
+WHERE [PermissionID] = 69;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976941+02:00'
+WHERE [PermissionID] = 70;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976944+02:00'
+WHERE [PermissionID] = 71;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976947+02:00'
+WHERE [PermissionID] = 72;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976951+02:00'
+WHERE [PermissionID] = 73;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976955+02:00'
+WHERE [PermissionID] = 74;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976959+02:00'
+WHERE [PermissionID] = 75;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976962+02:00'
+WHERE [PermissionID] = 76;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976966+02:00'
+WHERE [PermissionID] = 77;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976970+02:00'
+WHERE [PermissionID] = 78;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976973+02:00'
+WHERE [PermissionID] = 79;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976977+02:00'
+WHERE [PermissionID] = 80;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976987+02:00'
+WHERE [PermissionID] = 81;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976991+02:00'
+WHERE [PermissionID] = 82;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976995+02:00'
+WHERE [PermissionID] = 83;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1976998+02:00'
+WHERE [PermissionID] = 84;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977002+02:00'
+WHERE [PermissionID] = 85;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977005+02:00'
+WHERE [PermissionID] = 86;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977009+02:00'
+WHERE [PermissionID] = 87;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977013+02:00'
+WHERE [PermissionID] = 88;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977017+02:00'
+WHERE [PermissionID] = 89;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977020+02:00'
+WHERE [PermissionID] = 90;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977024+02:00'
+WHERE [PermissionID] = 91;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977028+02:00'
+WHERE [PermissionID] = 92;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977032+02:00'
+WHERE [PermissionID] = 93;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977035+02:00'
+WHERE [PermissionID] = 94;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977039+02:00'
+WHERE [PermissionID] = 95;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977043+02:00'
+WHERE [PermissionID] = 96;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977046+02:00'
+WHERE [PermissionID] = 97;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977050+02:00'
+WHERE [PermissionID] = 98;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977053+02:00'
+WHERE [PermissionID] = 99;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977057+02:00'
+WHERE [PermissionID] = 100;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977060+02:00'
+WHERE [PermissionID] = 101;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977064+02:00'
+WHERE [PermissionID] = 102;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977068+02:00'
+WHERE [PermissionID] = 103;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977072+02:00'
+WHERE [PermissionID] = 104;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977076+02:00'
+WHERE [PermissionID] = 105;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977080+02:00'
+WHERE [PermissionID] = 106;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977083+02:00'
+WHERE [PermissionID] = 107;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977087+02:00'
+WHERE [PermissionID] = 108;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977091+02:00'
+WHERE [PermissionID] = 109;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977095+02:00'
+WHERE [PermissionID] = 110;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977098+02:00'
+WHERE [PermissionID] = 111;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977102+02:00'
+WHERE [PermissionID] = 112;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977106+02:00'
+WHERE [PermissionID] = 113;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977109+02:00'
+WHERE [PermissionID] = 114;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977112+02:00'
+WHERE [PermissionID] = 115;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Permissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1977116+02:00'
+WHERE [PermissionID] = 116;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [PriorityRanks] SET [LastChangedDate] = '2020-10-19T16:33:22.2188217+02:00'
+WHERE [PriorityRankID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [PriorityRanks] SET [LastChangedDate] = '2020-10-19T16:33:22.2188295+02:00'
+WHERE [PriorityRankID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [PriorityRanks] SET [LastChangedDate] = '2020-10-19T16:33:22.2188300+02:00'
+WHERE [PriorityRankID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [PriorityRanks] SET [LastChangedDate] = '2020-10-19T16:33:22.2188303+02:00'
+WHERE [PriorityRankID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RelationshipTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2134811+02:00'
+WHERE [RelationshipTypeID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RelationshipTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2134936+02:00'
+WHERE [RelationshipTypeID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RelationshipTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2134939+02:00'
+WHERE [RelationshipTypeID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RelationshipTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2134941+02:00'
+WHERE [RelationshipTypeID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RelationshipTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2134943+02:00'
+WHERE [RelationshipTypeID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RelationshipTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2134948+02:00'
+WHERE [RelationshipTypeID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402581+02:00'
+WHERE [RoleMenuID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402659+02:00'
+WHERE [RoleMenuID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402661+02:00'
+WHERE [RoleMenuID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402663+02:00'
+WHERE [RoleMenuID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402665+02:00'
+WHERE [RoleMenuID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402669+02:00'
+WHERE [RoleMenuID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402670+02:00'
+WHERE [RoleMenuID] = 7;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402672+02:00'
+WHERE [RoleMenuID] = 8;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402673+02:00'
+WHERE [RoleMenuID] = 9;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402676+02:00'
+WHERE [RoleMenuID] = 10;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402678+02:00'
+WHERE [RoleMenuID] = 11;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402680+02:00'
+WHERE [RoleMenuID] = 12;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402681+02:00'
+WHERE [RoleMenuID] = 13;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402683+02:00'
+WHERE [RoleMenuID] = 14;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402685+02:00'
+WHERE [RoleMenuID] = 15;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402686+02:00'
+WHERE [RoleMenuID] = 16;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402688+02:00'
+WHERE [RoleMenuID] = 17;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402691+02:00'
+WHERE [RoleMenuID] = 18;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402692+02:00'
+WHERE [RoleMenuID] = 19;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402694+02:00'
+WHERE [RoleMenuID] = 20;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402696+02:00'
+WHERE [RoleMenuID] = 21;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RoleMenus] SET [LastChangedDate] = '2020-10-19T16:33:22.2402697+02:00'
+WHERE [RoleMenuID] = 22;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983166+02:00'
+WHERE [RolePermissionID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983257+02:00'
+WHERE [RolePermissionID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983259+02:00'
+WHERE [RolePermissionID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983261+02:00'
+WHERE [RolePermissionID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983262+02:00'
+WHERE [RolePermissionID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983266+02:00'
+WHERE [RolePermissionID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983268+02:00'
+WHERE [RolePermissionID] = 7;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983269+02:00'
+WHERE [RolePermissionID] = 8;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983271+02:00'
+WHERE [RolePermissionID] = 9;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983274+02:00'
+WHERE [RolePermissionID] = 10;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983275+02:00'
+WHERE [RolePermissionID] = 11;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983277+02:00'
+WHERE [RolePermissionID] = 12;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983278+02:00'
+WHERE [RolePermissionID] = 13;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983280+02:00'
+WHERE [RolePermissionID] = 14;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983281+02:00'
+WHERE [RolePermissionID] = 15;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983283+02:00'
+WHERE [RolePermissionID] = 16;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983284+02:00'
+WHERE [RolePermissionID] = 17;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983287+02:00'
+WHERE [RolePermissionID] = 18;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983289+02:00'
+WHERE [RolePermissionID] = 19;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983290+02:00'
+WHERE [RolePermissionID] = 20;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983292+02:00'
+WHERE [RolePermissionID] = 21;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983293+02:00'
+WHERE [RolePermissionID] = 22;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983295+02:00'
+WHERE [RolePermissionID] = 23;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983296+02:00'
+WHERE [RolePermissionID] = 24;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983298+02:00'
+WHERE [RolePermissionID] = 25;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983299+02:00'
+WHERE [RolePermissionID] = 26;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983301+02:00'
+WHERE [RolePermissionID] = 27;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983302+02:00'
+WHERE [RolePermissionID] = 28;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983304+02:00'
+WHERE [RolePermissionID] = 29;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983305+02:00'
+WHERE [RolePermissionID] = 30;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983307+02:00'
+WHERE [RolePermissionID] = 31;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983308+02:00'
+WHERE [RolePermissionID] = 32;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983310+02:00'
+WHERE [RolePermissionID] = 33;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983322+02:00'
+WHERE [RolePermissionID] = 34;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983324+02:00'
+WHERE [RolePermissionID] = 35;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983325+02:00'
+WHERE [RolePermissionID] = 36;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983327+02:00'
+WHERE [RolePermissionID] = 37;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983328+02:00'
+WHERE [RolePermissionID] = 38;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983330+02:00'
+WHERE [RolePermissionID] = 39;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983331+02:00'
+WHERE [RolePermissionID] = 40;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983333+02:00'
+WHERE [RolePermissionID] = 41;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983334+02:00'
+WHERE [RolePermissionID] = 42;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983336+02:00'
+WHERE [RolePermissionID] = 43;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983338+02:00'
+WHERE [RolePermissionID] = 44;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983339+02:00'
+WHERE [RolePermissionID] = 45;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983341+02:00'
+WHERE [RolePermissionID] = 46;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983342+02:00'
+WHERE [RolePermissionID] = 47;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983344+02:00'
+WHERE [RolePermissionID] = 48;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983345+02:00'
+WHERE [RolePermissionID] = 49;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983347+02:00'
+WHERE [RolePermissionID] = 50;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983348+02:00'
+WHERE [RolePermissionID] = 51;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983350+02:00'
+WHERE [RolePermissionID] = 52;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983351+02:00'
+WHERE [RolePermissionID] = 53;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983353+02:00'
+WHERE [RolePermissionID] = 54;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983354+02:00'
+WHERE [RolePermissionID] = 55;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983356+02:00'
+WHERE [RolePermissionID] = 56;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983357+02:00'
+WHERE [RolePermissionID] = 57;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983359+02:00'
+WHERE [RolePermissionID] = 58;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983360+02:00'
+WHERE [RolePermissionID] = 59;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983362+02:00'
+WHERE [RolePermissionID] = 60;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983363+02:00'
+WHERE [RolePermissionID] = 61;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983365+02:00'
+WHERE [RolePermissionID] = 62;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983367+02:00'
+WHERE [RolePermissionID] = 63;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983368+02:00'
+WHERE [RolePermissionID] = 64;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983370+02:00'
+WHERE [RolePermissionID] = 65;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983373+02:00'
+WHERE [RolePermissionID] = 66;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983374+02:00'
+WHERE [RolePermissionID] = 67;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983376+02:00'
+WHERE [RolePermissionID] = 68;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983377+02:00'
+WHERE [RolePermissionID] = 69;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983379+02:00'
+WHERE [RolePermissionID] = 70;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983380+02:00'
+WHERE [RolePermissionID] = 71;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983382+02:00'
+WHERE [RolePermissionID] = 72;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983383+02:00'
+WHERE [RolePermissionID] = 73;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983385+02:00'
+WHERE [RolePermissionID] = 74;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983386+02:00'
+WHERE [RolePermissionID] = 75;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983388+02:00'
+WHERE [RolePermissionID] = 76;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983389+02:00'
+WHERE [RolePermissionID] = 77;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983391+02:00'
+WHERE [RolePermissionID] = 78;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983392+02:00'
+WHERE [RolePermissionID] = 79;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983394+02:00'
+WHERE [RolePermissionID] = 80;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983396+02:00'
+WHERE [RolePermissionID] = 81;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983397+02:00'
+WHERE [RolePermissionID] = 82;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983399+02:00'
+WHERE [RolePermissionID] = 83;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983400+02:00'
+WHERE [RolePermissionID] = 84;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983402+02:00'
+WHERE [RolePermissionID] = 85;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983403+02:00'
+WHERE [RolePermissionID] = 86;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983405+02:00'
+WHERE [RolePermissionID] = 87;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983406+02:00'
+WHERE [RolePermissionID] = 88;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983408+02:00'
+WHERE [RolePermissionID] = 89;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983409+02:00'
+WHERE [RolePermissionID] = 90;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983411+02:00'
+WHERE [RolePermissionID] = 91;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983412+02:00'
+WHERE [RolePermissionID] = 92;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983414+02:00'
+WHERE [RolePermissionID] = 93;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983415+02:00'
+WHERE [RolePermissionID] = 94;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983417+02:00'
+WHERE [RolePermissionID] = 95;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983418+02:00'
+WHERE [RolePermissionID] = 96;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983420+02:00'
+WHERE [RolePermissionID] = 97;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983421+02:00'
+WHERE [RolePermissionID] = 98;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983423+02:00'
+WHERE [RolePermissionID] = 99;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983424+02:00'
+WHERE [RolePermissionID] = 100;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983426+02:00'
+WHERE [RolePermissionID] = 101;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983428+02:00'
+WHERE [RolePermissionID] = 102;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983429+02:00'
+WHERE [RolePermissionID] = 103;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983431+02:00'
+WHERE [RolePermissionID] = 104;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983432+02:00'
+WHERE [RolePermissionID] = 105;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983434+02:00'
+WHERE [RolePermissionID] = 106;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983435+02:00'
+WHERE [RolePermissionID] = 107;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983437+02:00'
+WHERE [RolePermissionID] = 108;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983438+02:00'
+WHERE [RolePermissionID] = 109;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983440+02:00'
+WHERE [RolePermissionID] = 110;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983441+02:00'
+WHERE [RolePermissionID] = 111;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983443+02:00'
+WHERE [RolePermissionID] = 112;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983444+02:00'
+WHERE [RolePermissionID] = 113;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983446+02:00'
+WHERE [RolePermissionID] = 114;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983447+02:00'
+WHERE [RolePermissionID] = 115;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [RolePermissions] SET [LastChangedDate] = '2020-10-19T16:33:22.1983449+02:00'
+WHERE [RolePermissionID] = 116;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Roles] SET [LastChangedDate] = '2020-10-19T16:33:22.1917735+02:00'
+WHERE [RoleID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Roles] SET [LastChangedDate] = '2020-10-19T16:33:22.1930752+02:00'
+WHERE [RoleID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Roles] SET [LastChangedDate] = '2020-10-19T16:33:22.1931087+02:00'
+WHERE [RoleID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [StatementLists] SET [LastChangedDate] = '2020-10-19T16:33:22.2446327+02:00'
+WHERE [StatementID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [StatementLists] SET [LastChangedDate] = '2020-10-19T16:33:22.2446860+02:00'
+WHERE [StatementID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [SystemVariableTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2151273+02:00'
+WHERE [CustomVariableTypeID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [SystemVariableTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2151376+02:00'
+WHERE [CustomVariableTypeID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [SystemVariableTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2151373+02:00'
+WHERE [CustomVariableTypeID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [SystemVariableTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2151369+02:00'
+WHERE [CustomVariableTypeID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [SystemVariableTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2151364+02:00'
+WHERE [CustomVariableTypeID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [SystemVariableTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2151382+02:00'
+WHERE [CustomVariableTypeID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [SystemVariableTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2151390+02:00'
+WHERE [CustomVariableTypeID] = 7;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [SystemVariableTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2151393+02:00'
+WHERE [CustomVariableTypeID] = 8;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [SystemVariableTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2151396+02:00'
+WHERE [CustomVariableTypeID] = 9;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [TransactionType] SET [LastChangedDate] = '2020-10-19T16:33:22.2028737+02:00'
+WHERE [TransactionTypeID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [TransactionType] SET [LastChangedDate] = '2020-10-19T16:33:22.2029286+02:00'
+WHERE [TransactionTypeID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [TransactionType] SET [LastChangedDate] = '2020-10-19T16:33:22.2029370+02:00'
+WHERE [TransactionTypeID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [TransactionType] SET [LastChangedDate] = '2020-10-19T16:33:22.2029441+02:00'
+WHERE [TransactionTypeID] = 4;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [TransactionType] SET [LastChangedDate] = '2020-10-19T16:33:22.2029528+02:00'
+WHERE [TransactionTypeID] = 5;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [TransactionType] SET [LastChangedDate] = '2020-10-19T16:33:22.2029598+02:00'
+WHERE [TransactionTypeID] = 6;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [TransactionType] SET [LastChangedDate] = '2020-10-19T16:33:22.2029655+02:00'
+WHERE [TransactionTypeID] = 7;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [TransactionType] SET [LastChangedDate] = '2020-10-19T16:33:22.2029709+02:00'
+WHERE [TransactionTypeID] = 8;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [UserRoles] SET [LastChangedDate] = '2020-10-19T16:33:22.2283935+02:00'
+WHERE [UserID] = 1 AND [RoleID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [UserRoles] SET [LastChangedDate] = '2020-10-19T16:33:22.2284001+02:00'
+WHERE [UserID] = 2 AND [RoleID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [UserTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2112182+02:00'
+WHERE [UserTypeID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [UserTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2112949+02:00'
+WHERE [UserTypeID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [UserTypes] SET [LastChangedDate] = '2020-10-19T16:33:22.2112959+02:00'
+WHERE [UserTypeID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Users] SET [LastChangedDate] = '2020-10-19T16:33:22.2193865+02:00'
+WHERE [UserID] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Users] SET [LastChangedDate] = '2020-10-19T16:33:22.2214079+02:00'
+WHERE [UserID] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+UPDATE [Users] SET [LastChangedDate] = '2020-10-19T16:33:22.2214232+02:00'
+WHERE [UserID] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+CREATE INDEX [IX_UserAuthenticationCodes_ClientID] ON [UserAuthenticationCodes] ([ClientID]);
+
+GO
+
+ALTER TABLE [UserAuthenticationCodes] ADD CONSTRAINT [FK_UserAuthenticationCodes_Clients_ClientID] FOREIGN KEY ([ClientID]) REFERENCES [Clients] ([ClientID]) ON DELETE NO ACTION;
+
+GO
+
+ALTER TABLE [UserAuthenticationCodes] ADD CONSTRAINT [FK_UserAuthenticationCodes_Users_UserID] FOREIGN KEY ([UserID]) REFERENCES [Users] ([UserID]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201019143324_AlterUserAuthenticateCodes', N'3.1.8');
+
+GO
+

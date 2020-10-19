@@ -220,6 +220,10 @@ namespace SmartDataAccess
 
         public DbSet<Menu> Menus { get; set; }
         public DbSet<MenuGroup> MenuGroups { get; set; }
+
+
+       // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
+       // Script-Migration -From 20180904195021_InitialCreate
     }
 }
 

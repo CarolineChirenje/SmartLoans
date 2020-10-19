@@ -60,12 +60,12 @@ namespace SmartLogic
 
 
         #endregion PinCode
-        public async Task<string> ResetPassword(string emailaddress, bool isAccountCreation)
+        public async Task<string> ResetPassword(string emailaddress, string idnumber, bool isAccountCreation)
         {
             Client client=new Client();
             User user = new User();
             if (isAccountCreation) {
-                client = await _context.Clients.FirstOrDefaultAsync(u => u.EmailAddress.Equals(emailaddress));
+                client = await _context.Clients.FirstOrDefaultAsync(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber));
                 if (UtilityService.IsNull(client))
                     return "";
             }
@@ -77,7 +77,10 @@ namespace SmartLogic
             }
             string encryptedPinCode = NewPinCode;
             UserAuthenticationCode pin = new UserAuthenticationCode();
-            pin.UserID = isAccountCreation? client.ClientID  : user.UserID;
+             if( isAccountCreation)
+                pin.ClientID = client.ClientID;
+            else
+            pin.UserID = user.UserID;
             pin.DateRequested = DateTime.Now;
             pin.PinCode = encryptedPinCode;
             pin.ExpiryDate = pin.DateRequested.AddDays(UtilityService.PinCodeValidityPeriod);

@@ -86,11 +86,8 @@ namespace SmartLogic
                              ThenInclude(c => c.CourseOutlines).
                              Include(c => c.ClientDeductions).
                              ThenInclude(c => c.Product).
-                            //Include(c => c.ClientCourses).ThenInclude(c => c.Course).
-                            //Include(c => c.ClientFees).ThenInclude(c => c.CourseFee).ThenInclude(c => c.Course).
-                            //Include(c => c.ClientFees).ThenInclude(c => c.CourseFee).ThenInclude(c => c.Frequency).
-
-                            Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
+                            Include(c => c.ClientOccupationHistory).
+                                                       Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
                 return await ClientResults;
 
             }
