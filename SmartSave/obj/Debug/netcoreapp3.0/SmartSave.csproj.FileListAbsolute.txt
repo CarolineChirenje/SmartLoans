@@ -14,11 +14,8 @@ D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Custom\vendors\flot\
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Custom\vendors\flot\package.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\launchSettings.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\serviceDependencies.json
-D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\serviceDependencies.SmartSave - Web Deploy.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\serviceDependencies.SmartSave2020 - Web Deploy.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\serviceDependencies.SmartSave20200924134030 - Web Deploy.json
-D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\ServiceDependencies\SmartSave - Web Deploy\mssql1.arm.json
-D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\ServiceDependencies\SmartSave - Web Deploy\profile.arm.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\ServiceDependencies\SmartSave2020 - Web Deploy\mssql1.arm.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\ServiceDependencies\SmartSave2020 - Web Deploy\profile.arm.json
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\ServiceDependencies\SmartSave20200924134030 - Web Deploy\profile.arm.json
@@ -8061,4 +8058,3 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\staticwebassets\Smar
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.genruntimeconfig.cache
-D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\Properties\ServiceDependencies\SmartSave - Web Deploy1\profile.arm.json

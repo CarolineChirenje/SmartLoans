@@ -5,30 +5,14 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\SmartSave</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\Publish\SmartSave</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <DestinationConnectionStrings Include="SSDBConnection">
-      <Value>Server=WEKWACHIRENJE\WEKWACHIRENJE%3bDatabase=SmartSave%3bTrusted_Connection=True%3bMultipleActiveResultSets=True%3b</Value>
+      <Value>Data Source=172.105.28.87%3bInitial Catalog=SmartSave%3bUser Id=sa%3bPassword=Ch1gumbu6299##</Value>
     </DestinationConnectionStrings>
-  </ItemGroup>
-  <ItemGroup>
-    <EFMigrations Include="SmartDataAccess.DatabaseContext">
-      <Value>Server=WEKWACHIRENJE\WEKWACHIRENJE%3bDatabase=SmartSave%3bTrusted_Connection=True%3bMultipleActiveResultSets=True%3b</Value>
-    </EFMigrations>
-  </ItemGroup>
-  <ItemGroup>
-    <File Include="wwwroot/dist/css/AdminLTE.css">
-      <publishTime>09/28/2020 10:48:27</publishTime>
-    </File>
-    <File Include="wwwroot/dist/css/adminlte.css.map">
-      <publishTime>05/04/2019 17:28:56</publishTime>
-    </File>
-    <File Include="wwwroot/dist/css/AdminLTE.min.css">
-      <publishTime>09/17/2020 12:50:45</publishTime>
-    </File>
-    <File Include="wwwroot/dist/css/adminlte.min.css.map">
-      <publishTime>05/04/2019 17:28:56</publishTime>
-    </File>
+    <DestinationConnectionStrings Include="SSDBConnectionPROD">
+      <Value>Data Source=172.105.28.87%3bInitial Catalog=SmartSave%3bUser Id=sa%3bPassword=Ch1gumbu6299##</Value>
+    </DestinationConnectionStrings>
   </ItemGroup>
 </Project>

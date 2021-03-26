@@ -232,20 +232,19 @@ namespace SmartHelper
         {
             get
             {
-                return GetData.GetSettingValue((int)AppSetting.Site_Reset_Password_URL)?.Value;
+                return @$"{SiteURL}/Login/ForgotPasswordConfirmation";
 
             }
         }
-
-
         public static string SiteURLAccountCreation
         {
             get
             {
-                return GetData.GetSettingValue((int)AppSetting.Site_Create_Account_URL)?.Value;
+                return @$"{SiteURL}/Login/CreateAccountConfirmation";
 
             }
         }
+
 
         public static int PasswordValidityPeriod
         {

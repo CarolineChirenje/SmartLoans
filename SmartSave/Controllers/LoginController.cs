@@ -126,8 +126,8 @@ namespace SmartSave.Controllers
                               "To reset your password for <a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + "</a>, please follow the link below:<a href = " + UtilityService.SiteURLPasswordReset + ">Password Reset Link </a>." +
                               "CONFIRMATION CODE <b>" + Encryption.Decrypt(pincode) + "</b><br/><br/>" +
                                "We recommend that you keep your password secure and not share it with anyone.If you feel your password has been compromised, you can change it by going to your " +
-                               "<a href = " + UtilityService.SiteURL + " >" + UtilityService.ApplicationName + " </ a > logging in and going to your profile and click the  'Change Email Address or Password' link.<br/><br/>" +
-                               @"If you need help, or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
+                               "<a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + " </a> logging in and going to your profile and clicking the  <b>'Change Email Address or Password'</b> link.<br/><br/>" +
+                               @"If you need help, or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/><b>" + UtilityService.ApplicationName + " Customer Service</b>.";
                 email.Body = UtilityService.HtmlDecode(_emailBody);
                 email.Subject = $"Password Reset -{UtilityService.ApplicationName}";
 

@@ -18,9 +18,7 @@ namespace SmartReporting
         }
         public static Image PrintHeaderLogo(Section section)
         {
-
-
-            // Put a logo in the header
+                    // Put a logo in the header
             string imagePath = UtilityService.IsNotNull((UtilityService.CompanyLogo))? MigraDocFilenameFromByteArray(UtilityService.CompanyLogo):"";
             Image image = section.Headers.Primary.AddImage(imagePath);
             image.Height = "1.5cm";
@@ -32,9 +30,15 @@ namespace SmartReporting
             image.WrapFormat.Style = WrapStyle.Through;
             return image;
         }
-
+        public static Section SetMargins(Section section)
+        {
+            section.PageSetup.TopMargin = Unit.FromCentimeter(3);
+            section.PageSetup.BottomMargin = Unit.FromCentimeter(3);
+            return section;
+        }
         public static Paragraph PrintFooter(Section section)
         {
+            
             Paragraph paragraph = section.Footers.Primary.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.AddText(UtilityService.Report_Footer_1);
@@ -50,7 +54,7 @@ namespace SmartReporting
         public static Paragraph PrintFootNotes(Paragraph paragraph)
         {
 
-            paragraph.Format.SpaceBefore = "2cm";
+            paragraph.Format.SpaceBefore = "3cm";
             paragraph.Format.Font.Size = 8;
             // paragraph.Format.Font.ApplyFont(new Font("Lucida Handwriting"));
             paragraph.Format.Alignment = ParagraphAlignment.Center;
@@ -116,7 +120,7 @@ namespace SmartReporting
                 style.ParagraphFormat.TabStops.AddTabStop("2.5cm", TabAlignment.Left);
                 style.Font.Size = 8;
 
-
+               
             }
             catch (Exception e)
             {

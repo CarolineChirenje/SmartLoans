@@ -53,7 +53,8 @@ namespace SmartLogic
 
             else
             {
-                mMailMessage.To.Add(new MailAddress(UtilityService.TestEmailAddress));
+                string mailAddress = UtilityService.TestEmailAddress;
+                mMailMessage.To.Add(new MailAddress(mailAddress));
             }
             //set the subject of the mail message
             mMailMessage.Subject = string.IsNullOrEmpty(email.Subject) ? DEFAULTEMAILSUBJECT : email.Subject;

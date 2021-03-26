@@ -791,6 +791,7 @@ namespace SmartHelper
     {
         Test = 1,
         Production = 2,
+        Development
 
     }
     public enum QueryType

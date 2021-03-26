@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartDataAccess;
+using SmartHelper;
 using SmartLogic;
 using SmartLogic.IService;
 
@@ -13,9 +14,16 @@ namespace SmartSave
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
+            
             Configuration = configuration;
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+            this.Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -31,7 +39,9 @@ namespace SmartSave
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            string _configValue = Configuration.GetConnectionString("SSDBConnection");
+            string _configValue = GetData.SSDBConnection;
+            if(string.IsNullOrEmpty(_configValue))
+            _configValue = "Data Source=172.105.28.87;Initial Catalog=SmartSave; User Id=sa; Password=Ch1gumbu6299##";
             services.AddDbContext<DatabaseContext>(options =>
        options.UseSqlServer(_configValue));
 

@@ -96,6 +96,7 @@ namespace SmartReporting
             {
                 // Each MigraDoc document needs at least one section.
                 section = this.document.AddSection();
+                section = ReportingUtilities.SetMargins(section);
                 Image image = ReportingUtilities.PrintHeaderLogo(section);
                 // Create footer
                 Paragraph paragraph = ReportingUtilities.PrintFooter(section);

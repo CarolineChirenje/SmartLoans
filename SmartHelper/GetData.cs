@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -90,15 +91,18 @@ namespace SmartHelper
         public static string SSDBConnectionValue()
         {
             IConfiguration _configuration;
-
             _configuration = new ConfigurationBuilder()
           .AddJsonFile(
                 "appsettings.json", true, true)
           .Build();
+          
+            string _environment = _configuration.GetSection("SiteEnvironment").Value;
+            if (String.IsNullOrEmpty(_environment))
+                _environment = SiteEnvironment.Test.ToString();
+            string connectionStringName = $"SSDBConnection{_environment}";
+                string configValue = _configuration.GetConnectionString(connectionStringName);
+            return string.IsNullOrEmpty(configValue) ? "Data Source=172.105.28.87;Initial Catalog=SmartSave;User Id=sa;Password=Ch1gumbu6299##" : configValue; 
 
-            string configValue = _configuration.GetConnectionString("SSDBConnection");
-
-            return string.IsNullOrEmpty(configValue) ? "Data Source=WEKWACHIRENJE\\WEKWACHIRENJE;Initial Catalog=SSProd;Trusted_Connection=True;MultipleActiveResultSets=True;" : configValue;
         }
 
     }

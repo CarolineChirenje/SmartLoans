@@ -531,20 +531,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                 new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Site_Reset_Password_URL,
-                    Name = AppSetting.Site_Reset_Password_URL.ToString().Replace("_", " "),
-                    Value=@"https://localhost:5001/Login/ForgotPasswordConfirmation",
-                    Description="Site Reset Password URL",
-                    CustomVariableTypeID=(int)VariableType.String,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                 new SmartDomain.CustomSetting()
+                           new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Site_Customer_Service_Email,
                     Name = AppSetting.Site_Customer_Service_Email.ToString().Replace("_", " "),
@@ -611,19 +598,8 @@ namespace SmartDataAccess
 
                 }
                 ,
-                 new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Site_Create_Account_URL,
-                    Name = AppSetting.Site_Create_Account_URL.ToString().Replace("_", " "),
-                    Value=@"https://localhost:5001/Login/CreateAccountConfirmation",
-                    Description="Site Client Create Account URL",
-                    CustomVariableTypeID=(int)VariableType.String,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
+                
+                  
                   new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Password_Validity_Period,
