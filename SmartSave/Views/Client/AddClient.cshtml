@@ -27,7 +27,11 @@
                 {<div class="container">
                         <div class="text-danger">@TempData["Error"].ToString()</div>
                     </div>
+                    <br />
                 }
+                <div class="container">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                </div>
 
                 @if (TempData["Success"] != null)
                 {<div class="container">
@@ -39,7 +43,16 @@
                         <div class="text-warning">@TempData["Warning"].ToString()</div>
                     </div>
                 }
+                @{ var jointAccountValue = (int)Client_AccountType.Joint; }
+                <input type="hidden" id="JointAccountEnumValue" value="@jointAccountValue" />
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Account Type</label>
 
+                    <div class="col-sm-10">
+                        <select id="ClientAccountTypeID" asp-for="ClientAccountTypeID" class="form-control" asp-items="ViewBag.AccountTypes" onchange="showCoApplicantForm(this.value)">
+                        </select>
+                    </div>
+                </div>
                 @if (!SmartHelper.UtilityService.AutoGenerateAccountNumber)
                 {<div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Employee Number</label>
@@ -49,120 +62,251 @@
                         </div>
                     </div>
                 }
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" required>
-
+                <section>
+                    <h5 class="box-title">Applicant Information</h5>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                        <div class="col-sm-10">
+                            <select asp-for="TitleID" class="form-control" asp-items="ViewBag.TitleList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" required>
-
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Initials</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Initials" placeholder="Initials" required>
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="FirstName" placeholder="First Name" required>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">ID/Birth Entry No.</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="IDNumber" placeholder="National ID" required>
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Date Of Birth</label>
-
-                    <div class="col-sm-10">
-                        <input type="date" class="form-control" name="DateOfBirth" required>
+                        </div>
                     </div>
 
-                </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="LastName" placeholder="Last Name" required>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
-                    <div class="col-sm-10">
-                        <select asp-for="GenderID" class="form-control" asp-items="ViewBag.GenderList">
-                            <option value="">----</option>
-                        </select>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" name="EmailAddress" placeholder="Email Address" required>
+                        </div>
                     </div>
 
-                </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">ID/Birth Entry No.</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="IDNumber" placeholder="National ID" required>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="AddressLine1" placeholder="Address Line 1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Date Of Birth</label>
+
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" name="DateOfBirth" required>
+                        </div>
 
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="AddressLine2"  placeholder="Address Line 2">
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+                        <div class="col-sm-10">
+                            <select asp-for="GenderID" class="form-control" asp-items="ViewBag.GenderList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="EmailAddress" placeholder="Email Address" required>
+                        </div>
 
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">City</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="City" placeholder="City">
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="AddressLine1" placeholder="Address Line 1">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="AddressLine2" placeholder="Address Line 2">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">City</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="City" placeholder="City">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                        <div class="col-sm-10">
+                            <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="MobileNumber" placeholder="Mobile Number">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DepartmentID" class="col-sm-2 control-label">Department</label>
+
+                        <div class="col-sm-10">
+                            <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartmentList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Occupation</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Occupation" placeholder="Occupation" required>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Salary</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Salary" name="SalaryAmount" required>
+                            <span id="SalaryError" class="text-danger text-bold"></span>
+                        </div>
+                    </div>
+                </section>
+                <section id="CoApplicantInfo" hidden>
+                    <h5 class="box-title">Co-Applicant Information</h5>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Relation</label>
+                        <div class="col-sm-10">
+                            <select asp-for="JointApplicant.RelationshipTypeID" class="form-control" asp-items="ViewBag.RelationTypes">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                        <div class="col-sm-10">
+                            <select asp-for="JointApplicant.ApplicantTitleID" class="form-control" asp-items="ViewBag.TitleList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Initials</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" asp-for="@Model.JointApplicant.Initials" placeholder="Initials" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" asp-for="JointApplicant.FirstName" placeholder="First Name">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" asp-for="JointApplicant.LastName" placeholder="Last Name" required>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">ID Number</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" asp-for="JointApplicant.IDNumber" placeholder="National ID" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Date Of Birth</label>
+
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" asp-for="JointApplicant.DateOfBirth" required>
+                        </div>
 
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
-                    <div class="col-sm-10">
-                        <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
-                            <option value="">----</option>
-                        </select>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+                        <div class="col-sm-10">
+                            <select asp-for="JointApplicant.ApplicantGenderID" class="form-control" asp-items="ViewBag.GenderList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="MobileNumber" placeholder="Mobile Number">
 
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DepartmentID" class="col-sm-2 control-label">Department</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 
-                    <div class="col-sm-10">
-                        <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartmentList">
-                            <option value="">----</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Occupation</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Occupation" placeholder="Occupation" required>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" asp-for="JointApplicant.EmailAddress" placeholder="Email Address" required>
+                        </div>
 
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Salary</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Salary" name="SalaryAmount" required>
-                        <span id="SalaryError" class="text-danger text-bold"></span>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" asp-for="JointApplicant.AddressLine1" placeholder="Address Line 1">
+
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" asp-for="JointApplicant.AddressLine2" placeholder="Address Line 2">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">City</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" asp-for="JointApplicant.City" placeholder="City">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                        <div class="col-sm-10">
+                            <select asp-for="JointApplicant.CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" asp-for="JointApplicant.MobileNumber" placeholder="Mobile Number">
+
+                        </div>
+                    </div>
+                </section>
 
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
@@ -189,8 +333,11 @@
     <!-- /.box -->
 </section>
 <script>
-  
-    document.getElementById('DateOfBirth').value = new Date().toISOString().substring(0, 10);
+
+
+    $(document).ready(function () {
+               document.getElementById('DateOfBirth').value = new Date().toISOString().substring(0, 10);
+         });
     $(function () {
         $('#Salary').blur(function () {
             var tempVal = $('#Salary').val();
@@ -204,4 +351,13 @@
             }
         })
     });
- </script>
+
+    function showCoApplicantForm(AccountTypeID) {
+        var jointAccount = $("#JointAccountEnumValue").val();
+        if (AccountTypeID === jointAccount) {
+            $("#CoApplicantInfo").show();
+        } else {
+            $("#CoApplicantInfo").hide();
+        }
+    }
+</script>

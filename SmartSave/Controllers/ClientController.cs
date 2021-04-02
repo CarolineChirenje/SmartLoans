@@ -1080,6 +1080,23 @@ namespace SmartSave.Controllers
 
             ViewBag.ClientStatement= new SelectList(statementList, "StatementID", "Name", (int)Statements.Product_Based_Statement);
 
+            var titleList = _settingService.GetTitles().Select(t => new
+            {
+                t.TitleID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.TitleList = new SelectList(titleList, "TitleID", "Name");
+
+            var clientAccountTypeList = _settingService.GetClientAccountTypes().Select(t => new
+            {
+                t.ID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.AccountTypes = new SelectList(clientAccountTypeList, "ID", "Name", (int)Client_AccountType.Individual);
+
+
         }
     }
 }

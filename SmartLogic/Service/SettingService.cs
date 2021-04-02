@@ -31,7 +31,7 @@ namespace SmartLogic
         public Company FindDefaultCompany()
         {
 
-          return  _context.Companies.Where(c => c.IsDefault).FirstOrDefault();
+            return _context.Companies.Where(c => c.IsDefault).FirstOrDefault();
         }
         public DocumentType FindDocumentTypes(int DocumentTypeID)
         {
@@ -40,7 +40,7 @@ namespace SmartLogic
                       Where(r => r.DocumentTypeID == DocumentTypeID).FirstOrDefault();
 
         }
-      
+
         public List<TransactionType> GetActiveTransactionTypeList() => _context.TransactionType.Where(T => T.IsActive && T.TransactionTypeID != (int)TransactionTypeList.Reversal).ToList();
         public List<CustomSettingType> GetCustomSettingsTypes() => _context.CustomSettingTypes.Where(x => x.IsActive).ToList();
 
@@ -132,26 +132,28 @@ namespace SmartLogic
 
         public List<AssertCategory> GetAssertCategory(int assertID)
         {
-
             var categories = _context.AssertCategories.Where(a => a.AssertID == assertID && a.IsActive).AsNoTracking().ToList();
             return categories;
         }
 
 
-        public List<Assert> GetAssertsList()
-        {
-                 
-            return _context.Asserts.ToList();
-
-        }
-
+        public List<Assert> GetAssertsList() => _context.Asserts.ToList();
 
         public List<AssertCategory> GetAssertCategoryList()
         {
-
             var categories = _context.AssertCategories.AsNoTracking().ToList();
             return categories;
         }
+        public List<Titles> GetTitles()
+        {
+            var titles = _context.Titles.Where(t => t.IsActive).AsNoTracking().ToList();
+            return titles;
+        }
 
+        public List<ClientAccountType> GetClientAccountTypes()
+        {
+            var accountTypes = _context.ClientAccountTypes.Where(cat=>cat.IsActive).AsNoTracking().ToList();
+            return accountTypes;
+        }
     }
 }

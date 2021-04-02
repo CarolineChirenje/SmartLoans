@@ -121,6 +121,8 @@ namespace SmartDataAccess
 
             return variableTypes.ToArray();
         }
+
+      
         public static PriorityRank[] GetPriorityRanks()
         {
             List<PriorityRank> priorityRanks = new List<PriorityRank>
@@ -234,7 +236,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-             
+
                 new CustomSetting()
                 {
 
@@ -412,7 +414,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-   
+
                 new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Report_FootNotes,
@@ -598,8 +600,8 @@ namespace SmartDataAccess
 
                 }
                 ,
-                
-                  
+
+
                   new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Password_Validity_Period,
@@ -709,7 +711,7 @@ namespace SmartDataAccess
                     RelationshipTypeID =2,
                     Name = "Mother",
                     IsActive = true,
-                                       LastChangedDate = DateTime.Now,
+                    LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
@@ -718,7 +720,7 @@ namespace SmartDataAccess
                      RelationshipTypeID =3,
                     Name = "Father",
                     IsActive = true,
-                                       LastChangedDate = DateTime.Now,
+                  LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
@@ -741,9 +743,18 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                                 new RelationshipType()
+                 new RelationshipType()
                 {
                     RelationshipTypeID =6,
+                    Name = "Business Partner",
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+               new RelationshipType()
+                {
+                    RelationshipTypeID =7,
                     Name = "Other",
                     IsActive = true,
                     LastChangedDate = DateTime.Now,
@@ -833,9 +844,6 @@ namespace SmartDataAccess
             }
             return userTypes.ToArray();
         }
-
-
-   
         public static Frequency[] GetFrequencies()
         {
 
@@ -949,7 +957,7 @@ namespace SmartDataAccess
                     TransactionTypeID = (int)x.ID,
                     Name = x.Name.Replace("_", " "),
                     Code = ((TransactionTypeList)x.ID).DescriptionAttr(),
-                    TransactionStatusID=(int)TransactionState.Positive,
+                    TransactionStatusID = (int)TransactionState.Positive,
                     IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -1166,7 +1174,7 @@ namespace SmartDataAccess
 
             List<TransactionStatus> transactions = new List<TransactionStatus>();
             var transState = from TransactionState s in Enum.GetValues(typeof(TransactionState))
-                               select new { ID = s, Name = s.ToString() };
+                             select new { ID = s, Name = s.ToString() };
 
             foreach (var x in transState)
             {
@@ -1174,7 +1182,7 @@ namespace SmartDataAccess
                 {
                     TransactionStatusID = (int)x.ID,
                     Name = x.Name.Replace("_", " "),
-                  
+
                 });
 
             }
@@ -1277,8 +1285,6 @@ namespace SmartDataAccess
             }
             return documentFormats.ToArray();
         }
-
-
         public static DocumentType[] GetDocumentTypes()
         {
 
@@ -1302,7 +1308,6 @@ namespace SmartDataAccess
             }
             return documentTypes.ToArray();
         }
-
         public static StatementList[] GetStatementList()
         {
 
@@ -1369,12 +1374,82 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 }
-                
+
             };
 
             return emailTemplates.ToArray();
 
         }
+
+        public static Titles[] GetTitles()
+        {
+
+            List<Titles>  titleList = new List<Titles>();
+            var titles = from Title t in Enum.GetValues(typeof(Title))
+                        select new { ID = t, Name = t.ToString() };
+            foreach (var title in titles)
+            {
+                titleList.Add(new Titles()
+                {
+                    TitleID = (int)title.ID,
+                    Name = title.Name.Replace("_", " "),
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+            }
+            return titleList.ToArray();
+
+        }
+       
+        public static ClientAccountType[] GetClientAccountTypes()
+    {
+
+            List<ClientAccountType> accountTypesList = new List<ClientAccountType>();
+            var accountTypes = from Client_AccountType t in Enum.GetValues(typeof(Client_AccountType))
+                         select new { ID = t, Name = t.ToString() };
+            foreach (var accountType in accountTypes)
+            {
+                accountTypesList.Add(new ClientAccountType()
+                {
+                    ID = (int)accountType.ID,
+                    Name = accountType.Name.Replace("_", " "),
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+            }
+            return accountTypesList.ToArray();
+
+        }
+
+        public static RecordStatus[] GetRecordStatuses()
+        {
+
+            List<RecordStatus> statusList = new List<RecordStatus>();
+            var statuses = from RecordState t in Enum.GetValues(typeof(RecordState))
+                         select new { ID = t, Name = t.ToString() };
+            foreach (var status in statuses)
+            {
+                statusList.Add(new RecordStatus()
+                {
+                    RecordStatusID = (int)status.ID,
+                    Name = status.Name.Replace("_", " "),
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+            }
+            return statusList.ToArray();
+
+        }
+
     }
 
 }

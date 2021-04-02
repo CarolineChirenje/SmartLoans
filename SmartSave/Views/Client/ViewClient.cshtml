@@ -24,13 +24,15 @@
         <form class="form-horizontal" method="post" action="ViewClient">
             <div class="box-body">
 
-
                 @if (TempData["Error"] != null)
                 {<div class="container">
                         <div class="text-danger">@TempData["Error"].ToString()</div>
                     </div>
+                    <br/>
                 }
-
+                <div class="container">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                </div>
                 @if (TempData["Success"] != null)
                 {<div class="container">
                         <div class="text-success">@TempData["Success"].ToString()</div>
@@ -41,150 +43,302 @@
                         <div class="text-warning">@TempData["Warning"].ToString()</div>
                     </div>
                 }
-                <div class="form-group">
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Employee Number</label>
-                        <div class="col-sm-10">
-                            <label for="inputEmail3" class="form-control label-default">@Model.AccountNumber</label>
-                        </div>
-                    </div>
-
-                    <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" value="@Model.FirstName">
-
-                    </div>
-                </div>
 
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" value="@Model.LastName">
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">National ID / Birth Entry No</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="IDNumber" placeholder="National ID" value="@Model.IDNumber">
-
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <label asp-for="DateOfBirth" class="col-sm-2 control-label">Date Of Birth</label>
-                    <div class="col-sm-10">
-                        <input asp-for="DateOfBirth" type="date" class="form-control" />
-                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+                    <label asp-for="ClientAccountTypeID" class="col-sm-2 control-label">Account Type</label>
 
                     <div class="col-sm-10">
-                        <select asp-for="@Model.GenderID" class="form-control"
-                                asp-items="ViewBag.GenderList">
-                            <option></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" name="EmailAddress" value="@Model.EmailAddress">
-                    </div>
-
-                </div>
-
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="AddressLine1" value="@Model.AddressLine1">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="AddressLine2" value="@Model.AddressLine2">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">City</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="City" value="@Model.City">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
-                    <div class="col-sm-10">
-                        <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                        <select asp-for="ClientAccountTypeID" class="form-control" asp-items="ViewBag.AccountTypes" onchange="showCoApplicantForm(this.value)">
                             <option value="">----</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Employee Number</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="MobileNumber" value="@Model.MobileNumber">
-
+                        <label for="inputEmail3" class="form-control label-default">@Model.AccountNumber</label>
                     </div>
                 </div>
+                <section>
+                    <h5 class="box-title">Applicant Information</h5>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                        <div class="col-sm-10">
+                            <select asp-for="TitleID" class="form-control" asp-items="ViewBag.TitleList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Initials</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Initials" placeholder="Initials" value="@Model.Initials">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="LastName" placeholder="Last Name" value="@Model.LastName">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="FirstName" placeholder="First Name" value="@Model.FirstName">
+                        </div>
+                    </div>
 
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
-                    <div class="col-sm-10 checkbox">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="LastName" placeholder="Last Name" value="@Model.LastName">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">National ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="IDNumber" placeholder="National ID" value="@Model.IDNumber">
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="DateOfBirth" class="col-sm-2 control-label">Date Of Birth</label>
+                        <div class="col-sm-10">
+                            <input asp-for="DateOfBirth" type="date" class="form-control" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+
+                        <div class="col-sm-10">
+                            <select asp-for="@Model.GenderID" class="form-control"
+                                    asp-items="ViewBag.GenderList">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="EmailAddress" value="@Model.EmailAddress">
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="AddressLine1" value="@Model.AddressLine1">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="AddressLine2" value="@Model.AddressLine2">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">City</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="City" value="@Model.City">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                        <div class="col-sm-10">
+                            <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="MobileNumber" value="@Model.MobileNumber">
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                        <div class="col-sm-10 checkbox">
+                            <div class="form-group">
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="IsActive" />
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DepartmentID" class="col-sm-2 control-label">Department</label>
+
+                        <div class="col-sm-10">
+                            <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartmentList">
+                                <option value="">----</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Occupation</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Occupation" value="@Model.Occupation">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Salary</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Salary" name="SalaryAmount" value="@Model.Salary">
+                            <span id="SalaryError" class="text-danger text-bold"></span>
+                            <span><a href="" class="text-success" data-toggle="modal" data-target="#SalaryHistory">History</a></span>
+                        </div>
+                    </div>
+                </section>
+                @if (Model.IsJointAccount && UtilityService.IsNotNull(Model.JointApplicant))
+                {
+                    <section id="CoApplicantInfo">
+                        <h5 class="box-title">Co-Applicant Information</h5>
                         <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Relation</label>
+                            <div class="col-sm-10">
+                                <select asp-for="JointApplicant.RelationshipTypeID" class="form-control" asp-items="ViewBag.RelationTypes">
+                                    <option value="">----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                            <div class="col-sm-10">
+                                <select asp-for="JointApplicant.ApplicantTitleID" class="form-control" asp-items="ViewBag.TitleList">
+                                    <option value="">----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Initials</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" asp-for="JointApplicant.Initials" value="@Model.JointApplicant.Initials">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" asp-for="JointApplicant.FirstName" value="@Model.JointApplicant.FirstName">
 
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="IsActive" />
-                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" asp-for="JointApplicant.LastName" value="@Model.JointApplicant.LastName" required>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">ID Number</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" asp-for="JointApplicant.IDNumber" value="@Model.JointApplicant.IDNumber" required>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Date Of Birth</label>
+
+                            <div class="col-sm-10">
+                                <input asp-for="@Model.JointApplicant.DateOfBirth" type="date" class="form-control" />
+                                <span asp-validation-for="JointApplicant.DateOfBirth" class="text-danger"></span>
                             </div>
 
                         </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DepartmentID" class="col-sm-2 control-label">Department</label>
 
-                    <div class="col-sm-10">
-                        <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartmentList">
-                            <option value="">----</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Occupation</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Occupation" value="@Model.Occupation">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+                            <div class="col-sm-10">
+                                <select asp-for="JointApplicant.ApplicantGenderID" class="form-control" asp-items="ViewBag.GenderList">
+                                    <option value="">----</option>
+                                </select>
+                            </div>
+                        </div>
 
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Salary</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Salary" name="SalaryAmount" value="@Model.Salary">
-                        <span id="SalaryError" class="text-danger text-bold"></span>
-                        <span><a href="" class="text-success" data-toggle="modal" data-target="#SalaryHistory">History</a></span>
-                    </div>
-                </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" asp-for="JointApplicant.EmailAddress" value="@Model.JointApplicant.EmailAddress" required>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" asp-for="JointApplicant.AddressLine1" value="@Model.JointApplicant.AddressLine1">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" asp-for="JointApplicant.AddressLine2" value="@Model.JointApplicant.AddressLine2">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">City</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" asp-for="JointApplicant.City" value="@Model.JointApplicant.City">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                            <div class="col-sm-10">
+                                <select asp-for="JointApplicant.CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                                    <option value="">----</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Mobile Number</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" asp-for="JointApplicant.MobileNumber" value="@Model.JointApplicant.MobileNumber">
+
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="@Model.JointApplicant.JointApplicantID" value="@Model.JointApplicant.JointApplicantID" />
+                    </section>
+                }
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Registration Date</label>
                     <div class="col-sm-10">
                         <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.RegistrationDate)</label>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
                     <div class="col-sm-10">
@@ -204,13 +358,13 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Client" asp-action="Clients">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Client))
+                @if (UtilityService.HasPermission(Permissions.Update_Client) && (UtilityService.UserType != (int)TypeOfUser.Employee))
                 {
                     <button type="submit" class="btn btn-info pull-right">Update</button>
                 }
                 @if (UtilityService.HasPermission(Permissions.Client_Update_Personal_Details) && (UtilityService.UserType == (int)TypeOfUser.Employee))
                 {
-                    <button type="submit" class="btn btn-info pull-right">Update My Personal Details</button>
+                    <button type="submit" class="btn btn-info pull-right">Update My Personal Details</button>@String.Empty;
                 }
 
                 @if (UtilityService.HasPermission(Permissions.Delete_Client))
@@ -251,15 +405,18 @@
 
                             @if (UtilityService.HasPermission(Permissions.View_Client_Outstanding_Payments))
                             {
-                                var fees = Model.ClientFees.Where(cf => !cf.IsPaid);
-                                if (fees != null)
+                                if (Model.ClientFees != null)
                                 {
-                                    if (fees.Count() > 0)
+                                    var fees = Model.ClientFees.Where(cf => !cf.IsPaid);
+                                    if (fees != null)
                                     {
-                                        <li>
-                                            <a href="#OutstandingPayments" data-toggle="tab">Outstanding Payments</a>
-                                        </li>
+                                        if (fees.Count() > 0)
+                                        {
+                                            <li>
+                                                <a href="#OutstandingPayments" data-toggle="tab">Outstanding Payments</a>
+                                            </li>
 
+                                        }
                                     }
                                 }
 
@@ -854,109 +1011,111 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @{ var outstandingProductPayments = Model.ClientFees.Where(p => p.ProductFeeID.HasValue);
+                                                @if (Model.ClientFees != null)
+                                                {
+                                                    var outstandingProductPayments = Model.ClientFees.Where(p => p.ProductFeeID.HasValue);
 
                                                     var outstandingCoursePayments = Model.ClientFees.Where(c => c.CourseFeeID.HasValue);
-                                                }
-                                                @if (outstandingProductPayments != null)
-                                                {
-                                                    var cutoffDate = DateTime.Now.AddMonths(1);
-                                                    var clientFees = outstandingProductPayments.Where(c => !c.IsPaid && c.DueDate.Date < cutoffDate.Date).OrderByDescending(x => x.DueDate);
-                                                    @foreach (var item in clientFees)
+
+                                                    if (outstandingProductPayments != null)
                                                     {
-                                                        <tr>
-                                                            @{
+                                                        var cutoffDate = DateTime.Now.AddMonths(1);
+                                                        var clientFees = outstandingProductPayments.Where(c => !c.IsPaid && c.DueDate.Date < cutoffDate.Date).OrderByDescending(x => x.DueDate);
+                                                        @foreach (var item in clientFees)
+                                                        {
+                                                            <tr>
+                                                                @{
 
-                                                                string duedate = UtilityService.ShowDate(item.DueDate);
-                                                                string entity = "Product - " + item.ProductFee.Product.Name;
-                                                            }
+                                                                    string duedate = UtilityService.ShowDate(item.DueDate);
+                                                                    string entity = "Product - " + item.ProductFee.Product.Name;
+                                                                }
 
-                                                            @if (UtilityService.HasPermission(Permissions.View_Product))
-                                                            {
-                                                                <td><a target="_blank" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductFee.ProductID">@entity</a></td>
+                                                                @if (UtilityService.HasPermission(Permissions.View_Product))
+                                                                {
+                                                                    <td><a target="_blank" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductFee.ProductID">@entity</a></td>
 
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>@entity</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@entity</td>
 
-                                                            }
-                                                            @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
-                                                            {
-                                                                <td><a target="_blank" asp-controller="Product" asp-action="ViewProductFee" asp-route-id="@item.ProductFee.ProductFeeID">@item.ProductFee.Name</a></td>
+                                                                }
+                                                                @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
+                                                                {
+                                                                    <td><a target="_blank" asp-controller="Product" asp-action="ViewProductFee" asp-route-id="@item.ProductFee.ProductFeeID">@item.ProductFee.Name</a></td>
 
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>@Html.DisplayFor(modelItem => item.ProductFee.Name)</td>
-                                                            }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@Html.DisplayFor(modelItem => item.ProductFee.Name)</td>
+                                                                }
 
 
-                                                            <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.ProductFee.Frequency.Name)</td>
-                                                            <td>
-                                                                @duedate
-                                                            </td>
-                                                            @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
-                                                            {
+                                                                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.ProductFee.Frequency.Name)</td>
+                                                                <td>
+                                                                    @duedate
+                                                                </td>
+                                                                @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
+                                                                {
 
-                                                                <td><a asp-controller="Client" asp-action="ClientFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
-                                                            }
-                                                        </tr>
+                                                                    <td><a asp-controller="Client" asp-action="ClientFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
+                                                                }
+                                                            </tr>
+                                                        }
+
                                                     }
 
-                                                }
-
-                                                @if (outstandingCoursePayments != null)
-                                                {
-                                                    var cutoffDate = DateTime.Now.AddMonths(1);
-                                                    var clientFees = outstandingCoursePayments.Where(c => !c.IsPaid && c.DueDate.Date < cutoffDate.Date).OrderByDescending(x => x.DueDate);
-                                                    @foreach (var item in clientFees)
+                                                    @if (outstandingCoursePayments != null)
                                                     {
-                                                        <tr>
-                                                            @{
+                                                        var cutoffDate = DateTime.Now.AddMonths(1);
+                                                        var clientFees = outstandingCoursePayments.Where(c => !c.IsPaid && c.DueDate.Date < cutoffDate.Date).OrderByDescending(x => x.DueDate);
+                                                        @foreach (var item in clientFees)
+                                                        {
+                                                            <tr>
+                                                                @{
 
-                                                                string duedate = UtilityService.ShowDate(item.DueDate);
-                                                                string courseentity = "Course - " + item.CourseFee.Course.Title;
+                                                                    string duedate = UtilityService.ShowDate(item.DueDate);
+                                                                    string courseentity = "Course - " + item.CourseFee.Course.Title;
 
-                                                            }
+                                                                }
 
-                                                            @if (UtilityService.HasPermission(Permissions.View_Course))
-                                                            {
-                                                                <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseFee.CourseID">@courseentity</a></td>
+                                                                @if (UtilityService.HasPermission(Permissions.View_Course))
+                                                                {
+                                                                    <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseFee.CourseID">@courseentity</a></td>
 
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>@courseentity</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@courseentity</td>
 
-                                                            }
-                                                            @if (UtilityService.HasPermission(Permissions.View_Course_Fee))
-                                                            {
-                                                                <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseFee" asp-route-id="@item.CourseFee.CourseFeeID">@item.CourseFee.Name</a></td>
+                                                                }
+                                                                @if (UtilityService.HasPermission(Permissions.View_Course_Fee))
+                                                                {
+                                                                    <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseFee" asp-route-id="@item.CourseFee.CourseFeeID">@item.CourseFee.Name</a></td>
 
-                                                            }
-                                                            else
-                                                            {
-                                                                <td>@Html.DisplayFor(modelItem => item.CourseFee.Name)</td>
-                                                            }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@Html.DisplayFor(modelItem => item.CourseFee.Name)</td>
+                                                                }
 
 
-                                                            <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                                                            <td>@Html.DisplayFor(modelItem => item.CourseFee.Frequency.Name)</td>
-                                                            <td>
-                                                                @duedate
-                                                            </td>
-                                                            @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
-                                                            {
+                                                                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.CourseFee.Frequency.Name)</td>
+                                                                <td>
+                                                                    @duedate
+                                                                </td>
+                                                                @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
+                                                                {
 
-                                                                <td><a asp-controller="Client" asp-action="ClientCourseFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
-                                                            }
-                                                        </tr>
+                                                                    <td><a asp-controller="Client" asp-action="ClientCourseFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
+                                                                }
+                                                            </tr>
+                                                        }
+
                                                     }
-
                                                 }
-
                                         </table>
                                     </div>
                                     <div class="box-footer">
@@ -1173,7 +1332,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="ClientID" value="@Model.ClientID" />
-
+                    <input type="hidden" name="JointAccountEnumValue" value="@Model.JointAccountEnumValue" />
                 </div>
                 <div class="modal-footer">
                     @if (UtilityService.HasPermission(Permissions.Add_Client_Product))
@@ -1475,10 +1634,6 @@
     </div>
 </div>
 
-
-
-
-
 <script>
     $(document).ready(function () {
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -1496,6 +1651,8 @@
         document.getElementById('DueDate').value = new Date().toISOString().substring(0, 10);
         document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
         document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
+        showCoApplicantForm();
+
     });
     $(function () {
         $('#Salary').blur(function () {
@@ -1522,5 +1679,14 @@
 
 
     }
+    function showCoApplicantForm(AccountTypeID) {
+        var jointAccount = $("#JointAccountEnumValue").val();
+        if (AccountTypeID === jointAccount) {
+            $("#CoApplicantInfo").show();
+        } else {
+            $("#CoApplicantInfo").hide();
+        }
+    }
+
 </script>
 

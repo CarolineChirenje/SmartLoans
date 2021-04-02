@@ -116,7 +116,7 @@ namespace SmartHelper
 
     {
 
-        AED = 1
+AED = 1
 , AFN
 , ALL
 , AMD
@@ -876,6 +876,30 @@ namespace SmartHelper
         Product_Based_Statement = 1,
         Transaction_List = 2,
       
+    }
+
+    public enum Title
+    {
+        Mr = 1,
+        Mrs = 2,
+        Miss,
+        Ms,
+        Dr,
+        Prof
+    }
+
+    public enum Client_AccountType
+    {
+        Individual = 1,
+        Joint = 2,
+    }
+
+
+    public enum RecordState
+    {
+        Active = 1,
+        Deleted = 2,
+        History
     }
 }
 

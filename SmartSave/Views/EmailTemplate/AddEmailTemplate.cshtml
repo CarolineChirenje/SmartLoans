@@ -17,13 +17,15 @@
         <!-- form start -->
         <form class="form-horizontal" method="post" action="AddEmailTemplate">
             <div class="box-body">
-
-                @if (TempData["Error"] != null)
+                                @if (TempData["Error"] != null)
                 {<div class="container">
                         <div class="text-danger">@TempData["Error"].ToString()</div>
                     </div>
+                    <br />
                 }
-
+                <div class="container">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                </div>
                 @if (TempData["Success"] != null)
                 {<div class="container">
                         <div class="text-success">@TempData["Success"].ToString()</div>

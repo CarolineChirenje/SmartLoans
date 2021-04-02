@@ -18,21 +18,25 @@
         <form class="form-horizontal" method="post" action="/BankAccounts/ViewBankAccount">
 
             @if (TempData["Error"] != null)
-        {<div class="container">
-                <div class="text-danger">@TempData["Error"].ToString()</div>
+            {<div class="container">
+                    <div class="text-danger">@TempData["Error"].ToString()</div>
+                </div>
+                <br />
+            }
+            <div class="container">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             </div>
-        }
 
             @if (TempData["Success"] != null)
-        {<div class="container">
-                <div class="text-success">@TempData["Success"].ToString()</div>
-            </div>
-        }
+            {<div class="container">
+                    <div class="text-success">@TempData["Success"].ToString()</div>
+                </div>
+            }
             @if (TempData["Warning"] != null)
-        {<div class="container">
-                <div class="text-warning">@TempData["Warning"].ToString()</div>
-            </div>
-        }
+            {<div class="container">
+                    <div class="text-warning">@TempData["Warning"].ToString()</div>
+                </div>
+            }
             <div class="box-body">
 
                 <div class="form-group">
@@ -109,11 +113,11 @@
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="BankAccounts" asp-action="BankAccounts">Cancel</a>
                 @if (UtilityService.HasPermission(Permissions.Update_Bank_Account))
-            {<button type="submit" class="btn btn-info">Update</button>
-            }
+                {<button type="submit" class="btn btn-info">Update</button>
+                }
                 @if (UtilityService.HasPermission(Permissions.Delete_Bank_Account))
-            {<a class="btn btn-danger" asp-controller="BankAccounts" asp-action="Delete" asp-route-id="@Model.BankAccountID">Delete</a>
-            }
+                {<a class="btn btn-danger" asp-controller="BankAccounts" asp-action="Delete" asp-route-id="@Model.BankAccountID">Delete</a>
+                }
             </div>
             <!-- /.box-footer -->
         </form>

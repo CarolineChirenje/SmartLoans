@@ -86,8 +86,12 @@ namespace SmartLogic
                              ThenInclude(c => c.CourseOutlines).
                              Include(c => c.ClientDeductions).
                              ThenInclude(c => c.Product).
-                            Include(c => c.ClientOccupationHistory).
-                                                       Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
+                             Include(c => c.ClientOccupationHistory).
+                             Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
+                             Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+                             Include(c => c.Title).
+                             Include(at => at.ClientAccountType).
+                             Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
                 return await ClientResults;
 
             }
@@ -108,12 +112,16 @@ namespace SmartLogic
             Client.IsActive = true;
             _context.Add(Client);
             await _context.SaveChangesAsync();
+            if (Client.ClientAccountTypeID == (int)Client_AccountType.Joint)
+            {
+                if (UtilityService.IsNotNull(Client.JointApplicant))
+                {
+                    Client.JointApplicant.ClientID = Client.ClientID;
+                    await Save(Client.JointApplicant);
+                }
+            }
             return Client.ClientID;
         }
-
-
-
-
         public async Task<int> Update(Client Client)
         {
             Client updateClient = await _context.Clients.FindAsync(Client.ClientID);
@@ -134,6 +142,8 @@ namespace SmartLogic
             if (UtilityService.IsNotNull(updateClient))
             {
                 updateClient.FirstName = Client.FirstName;
+                updateClient.TitleID = Client.TitleID;
+                updateClient.Initials = Client.Initials;
                 updateClient.LastName = Client.LastName;
                 updateClient.IsActive = Client.IsActive;
                 updateClient.EmailAddress = Client.EmailAddress;
@@ -150,6 +160,7 @@ namespace SmartLogic
                 updateClient.LastChangedDate = DateTime.Now;
                 updateClient.Salary = Client.Salary;
                 updateClient.Occupation = Client.Occupation;
+                updateClient.ClientAccountTypeID = Client.ClientAccountTypeID;
                 _context.Update(updateClient);
             }
             int result = await _context.SaveChangesAsync();
@@ -167,12 +178,67 @@ namespace SmartLogic
 
                 }
 
+                if (Client.ClientAccountTypeID == (int)Client_AccountType.Joint)
+                {
+                    if (UtilityService.IsNotNull(Client.JointApplicant))
+                    {
+                        Client.JointApplicant.ClientID = Client.ClientID;
+                        await Update(Client.JointApplicant);
+                    }
+                }
+
             }
 
 
             return result;
         }
 
+        public async Task<int> Save(JointApplicant applicant)
+        {
+            applicant.LastChangedBy = UtilityService.CurrentUserName;
+            applicant.LastChangedDate = DateTime.Now;
+            _context.Add(applicant);
+            await _context.SaveChangesAsync();
+
+            return applicant.JointApplicantID;
+        }
+
+        public async Task<int> Update(JointApplicant applicant)
+        {
+            JointApplicant updateApplicant = await _context.JointApplicants.FindAsync(applicant.JointApplicantID);
+            if (UtilityService.IsNull(updateApplicant))
+                updateApplicant = await _context.JointApplicants.Where(ja => ja.ClientID == applicant.ClientID).FirstOrDefaultAsync();
+
+            if (UtilityService.IsNotNull(updateApplicant))
+            {
+                updateApplicant.ApplicantTitleID = applicant.ApplicantTitleID;
+
+                updateApplicant.FirstName = applicant.FirstName;
+                updateApplicant.LastName = applicant.LastName;
+                updateApplicant.Initials = applicant.Initials;
+                updateApplicant.EmailAddress = applicant.EmailAddress;
+                updateApplicant.IDNumber = applicant.IDNumber;
+                updateApplicant.AddressLine1 = applicant.AddressLine1;
+                updateApplicant.AddressLine2 = applicant.AddressLine2;
+                updateApplicant.City = applicant.City;
+                updateApplicant.CountryID = applicant.CountryID;
+                updateApplicant.RelationshipTypeID = applicant.RelationshipTypeID;
+                updateApplicant.MobileNumber = applicant.MobileNumber;
+                updateApplicant.DateOfBirth = applicant.DateOfBirth;
+                updateApplicant.ApplicantGenderID = applicant.ApplicantGenderID;
+                updateApplicant.LastChangedBy = UtilityService.CurrentUserName;
+                updateApplicant.LastChangedDate = DateTime.Now;
+                updateApplicant.RelationshipTypeID = applicant.RelationshipTypeID;
+                _context.Update(updateApplicant);
+                int result = await _context.SaveChangesAsync();
+                return result;
+            }
+            else
+            {
+                return await Save(applicant);
+            }
+
+        }
 
         public async Task<List<Client>> Clients()
         {
@@ -184,7 +250,13 @@ namespace SmartLogic
                 Include(d => d.ClientDocuments).
                 ThenInclude(document => document.DocumentType).
                 ThenInclude(docFormat => docFormat.DocumentFormat).
-                Include(sa => sa.ClientMedicalDetails)
+                Include(sa => sa.ClientMedicalDetails).
+                Include(at => at.ClientAccountType).
+                Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
+                Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+                Include(c => c.Title).
+                Include(at => at.ClientAccountType).
+                OrderByDescending(c => c.RegistrationDate)
                 .ToListAsync();
         }
 
@@ -209,6 +281,7 @@ namespace SmartLogic
                 ThenInclude(document => document.DocumentType).
                 ThenInclude(docFormat => docFormat.DocumentFormat).
                 Include(sa => sa.ClientMedicalDetails).
+                Include(at => at.ClientAccountType).
                 Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).ToListAsync();
         }
 
@@ -272,9 +345,11 @@ namespace SmartLogic
         public async Task<ClientNote> FindNote(int id)
         {
             return await _context.ClientNotes.
-                 Include(ut => ut.UserType).
-                 Include(s => s.Client).
-                Where(t => t.ClientNoteID == id).FirstOrDefaultAsync();
+             Include(ut => ut.UserType).
+             Include(c => c.Client).ThenInclude(c => c.Title).
+             Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+             Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
+            Where(t => t.ClientNoteID == id).FirstOrDefaultAsync();
         }
         public async Task<int> Save(ClientNote ClientNote)
         {
@@ -332,10 +407,12 @@ namespace SmartLogic
         public async Task<ClientContact> FindContact(int id)
         {
             return await _context.ClientContacts.
-                 Include(ct => ct.Client).
-                 Include(ct => ct.RelationshipType).
-                  Include(ct => ct.ContactType).
-                Where(t => t.ClientContactID == id).FirstOrDefaultAsync();
+             Include(c => c.Client).ThenInclude(c => c.Title).
+             Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+             Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
+             Include(ct => ct.RelationshipType).
+             Include(ct => ct.ContactType).
+             Where(t => t.ClientContactID == id).FirstOrDefaultAsync();
         }
         public async Task<int> Save(ClientContact ClientContact)
         {
@@ -383,9 +460,11 @@ namespace SmartLogic
         public async Task<ClientDocument> FindDocument(int id)
         {
             return await _context.ClientDocuments.
-                 Include(dt => dt.DocumentType).
-                 Include(s => s.Client).
-                Where(t => t.ClientDocumentID == id).FirstOrDefaultAsync();
+             Include(dt => dt.DocumentType).
+             Include(c => c.Client).ThenInclude(c => c.Title).
+             Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+             Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
+             Where(t => t.ClientDocumentID == id).FirstOrDefaultAsync();
         }
 
 
@@ -421,7 +500,9 @@ namespace SmartLogic
         public async Task<ClientMedicalDetail> FindMedicalDetail(int id)
         {
             return await _context.ClientMedicalDetails.
-             Include(s => s.Client).
+             Include(c => c.Client).ThenInclude(c => c.Title).
+             Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+             Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
             Where(t => t.ClientMedicalID == id).FirstOrDefaultAsync();
         }
         public async Task<int> Save(ClientMedicalDetail ClientMedicalDetail)
@@ -467,88 +548,14 @@ namespace SmartLogic
 
             return (await _context.SaveChangesAsync());
         }
-        // Client Guarantor
-               //public async Task<int> Save(ClientGuarantor ClientGuarantor)
-        //{
-        //    List<ClientGuarantor> ClientGuarantors = await FindGuarantors(ClientGuarantor.ClientID);
-        //    if (ClientGuarantors == null || ClientGuarantors.Count() == 0)
-        //        ClientGuarantor.IsMainGuarantor = true;
 
-        //    else
-        //    {
-        //        if (ClientGuarantor.IsMainGuarantor)
-        //        {
-        //            try
-        //            {
-        //                // if this has been set as the main guarator then all the gurantors already in the DB  should have that column set to false
-        //                var guarantors = _context.ClientGuarantors.Where(s => s.ClientID == ClientGuarantor.ClientID).ToList();
-        //                guarantors.ForEach(a => a.IsMainGuarantor = false);
-        //                _context.SaveChanges();
-        //            }
-        //            catch (Exception ex)
-        //            {
-
-        //                //throw;
-        //            }
-
-        //        }
-        //    }
-        //    ClientGuarantor.LastChangedBy = UtilityService.CurrentUserName;
-        //    ClientGuarantor.LastChangedDate = DateTime.Now;
-        //    _context.Add(ClientGuarantor);
-        //    return (await _context.SaveChangesAsync());
-
-        //}
-        //public async Task<int> Update(ClientGuarantor ClientGuarantor)
-        //{
-        //    ClientGuarantor mainGuarantor = _context.ClientGuarantors.Where(s => s.ClientID == ClientGuarantor.ClientID && s.IsMainGuarantor).FirstOrDefault();
-        //    if (UtilityService.IsNull(mainGuarantor))
-        //        ClientGuarantor.IsMainGuarantor = true;
-
-        //    else
-        //    {
-        //        if (ClientGuarantor.IsMainGuarantor)
-        //        {
-        //            try
-        //            {
-        //                if (UtilityService.IsNotNull(mainGuarantor))
-        //                    mainGuarantor.IsMainGuarantor = false;
-        //                _context.Update(mainGuarantor);
-        //                _context.SaveChanges();
-        //            }
-        //            catch (Exception ex)
-        //            {
-
-        //                //throw;
-        //            }
-
-
-        //        }
-
-        //    }
-        //    ClientGuarantor guarantor = _context.ClientGuarantors.Find(ClientGuarantor.ClientGuarantorID);
-        //    guarantor.MobileNumber = ClientGuarantor.MobileNumber;
-        //    guarantor.IDNumber = ClientGuarantor.IDNumber;
-        //    guarantor.EmailAddress = ClientGuarantor.EmailAddress;
-        //    guarantor.FirstName = ClientGuarantor.FirstName;
-        //    guarantor.IsMainGuarantor = ClientGuarantor.IsMainGuarantor;
-        //    guarantor.PhysicalAddress = ClientGuarantor.PhysicalAddress;
-        //    guarantor.ClientID = ClientGuarantor.ClientID;
-        //    guarantor.LastName = ClientGuarantor.LastName;
-        //    guarantor.LastChangedBy = UtilityService.CurrentUserName;
-        //    guarantor.LastChangedDate = DateTime.Now;
-        //    _context.Update(guarantor);
-        //    return await _context.SaveChangesAsync();
-        //}
-
-    
-
-        // Client Dependent
         public async Task<ClientDependent> FindDependent(int id)
         {
             return await _context.ClientDependents.
-            Include(s => s.Client).
-                     Where(t => t.ClientDependentID == id).FirstOrDefaultAsync();
+            Include(c => c.Client).ThenInclude(c => c.Title).
+             Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+             Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
+             Where(t => t.ClientDependentID == id).FirstOrDefaultAsync();
         }
 
         public async Task<int> Save(ClientDependent ClientDependent)
@@ -591,7 +598,9 @@ namespace SmartLogic
         {
             return await _context.ClientProducts.
             Include(c => c.Product).
-            Include(s => s.Client).
+            Include(c => c.Client).ThenInclude(c => c.Title).
+            Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+            Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
             Where(t => t.ClientProductID == id).FirstOrDefaultAsync();
         }
 
@@ -695,7 +704,9 @@ namespace SmartLogic
         public async Task<ClientCourse> FindCourse(int id)
         {
             return await _context.ClientCourses.
-             Include(c => c.Client).
+            Include(c => c.Client).ThenInclude(c => c.Title).
+             Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+             Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
              Include(c => c.Course).
              ThenInclude(c => c.CourseOutlines).
             Where(t => t.ClientCourseID == id).FirstOrDefaultAsync();
@@ -906,7 +917,9 @@ namespace SmartLogic
         public async Task<ClientFee> FindClientFee(int id)
         {
             return await _context.ClientFees.
-             Include(c => c.Client).
+             Include(c => c.Client).ThenInclude(c => c.Title).
+             Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+             Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
              Include(c => c.ProductFee).
              ThenInclude(c => c.Product).
              Include(c => c.CourseFee).

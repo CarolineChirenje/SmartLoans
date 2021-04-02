@@ -23,11 +23,16 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+
                     @if (TempData["Error"] != null)
                     {<div class="container">
                             <div class="text-danger">@TempData["Error"].ToString()</div>
                         </div>
+                        <br />
                     }
+                    <div class="container">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    </div>
 
                     @if (TempData["Success"] != null)
                     {<div class="container">
@@ -43,6 +48,7 @@
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                                 <tr>
+                                    <th>Account Type</th>
                                     <th>Employee Number</th>
                                     <th>Full Name</th>
                                     <th>Date of Birth</th>
@@ -65,6 +71,7 @@
                                             string gender = UtilityService.ShowGender(@item.GenderID);
 
                                         }
+                                        <td>@Html.DisplayFor(modelItem => item.ClientAccountType.Name)</td>
                                         @if (UtilityService.HasPermission(Permissions.View_Client))
                                         {
                                             <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@Html.DisplayFor(modelItem => item.AccountNumber)</a> </td>

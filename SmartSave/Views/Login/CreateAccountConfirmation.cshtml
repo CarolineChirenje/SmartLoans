@@ -24,12 +24,14 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
-    <section class="content-header">
-        @if (TempData["Error"] != null)
-        {<div class="container">
-                <div class="text-danger">@TempData["Error"].ToString()</div>
-            </div>
-        }
+    <sec @if (TempData["Error"] != null) {<div class="container">
+                        <div class="text-danger">@TempData["Error"].ToString()</div>
+                    </div>
+                    <br/>
+                }
+                <div class="container">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                </div>
 
         @if (TempData["Success"] != null)
         {<div class="container">

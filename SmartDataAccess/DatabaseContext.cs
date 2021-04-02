@@ -15,19 +15,19 @@ namespace SmartDataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           // modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            // modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Entity<UserRole>().HasKey(sc => new { sc.UserID, sc.RoleID });
 
-                //System Roles
-                modelBuilder.Entity<Role>().HasData(
-                    Data.GetRoles());
-                // permissions
-                modelBuilder.Entity<Permission>().HasData(
-                Data.GetPermissions());
+            //System Roles
+            modelBuilder.Entity<Role>().HasData(
+                Data.GetRoles());
+            // permissions
+            modelBuilder.Entity<Permission>().HasData(
+            Data.GetPermissions());
 
-                // rolePermissions
-                modelBuilder.Entity<RolePermission>().HasData(
-              Data.GetPermissionsForSuperUserRole());
+            // rolePermissions
+            modelBuilder.Entity<RolePermission>().HasData(
+          Data.GetPermissionsForSuperUserRole());
             // paymentstatus
             modelBuilder.Entity<PaymentStatus>().HasData(
           Data.GetPaymentStatuses());
@@ -86,28 +86,21 @@ namespace SmartDataAccess
               Data.GetPriorityRanks());
 
 
-
             //users
             modelBuilder.Entity<User>().HasData(
                      Data.GetUsers());
 
-
-
             // feature flags
             modelBuilder.Entity<FeatureFlag>().HasData(
                   Data.GetFeatureFlags());
-
 
             // document format and document types
 
             modelBuilder.Entity<DocumentFormat>().HasData(
                   Data.GetDocumentFormats());
 
-
             modelBuilder.Entity<DocumentType>().HasData(
                   Data.GetDocumentTypes());
-
-
 
             //roles
             modelBuilder.Entity<UserRole>().HasData(Data.GetUserRoles());
@@ -124,9 +117,7 @@ namespace SmartDataAccess
             modelBuilder.Entity<WeekDay>().HasData(
             Data.GetWeekDays());
 
-
-
-           // email types
+            // email types
             modelBuilder.Entity<EmailType>().HasData(
             Data.GetEmailTypes());
 
@@ -141,19 +132,25 @@ namespace SmartDataAccess
             modelBuilder.Entity<RoleMenu>().HasData(
            Data.GetRoleMenus());
 
-
             modelBuilder.Entity<TransactionStatus>().HasData(
-           Data.GetTransactionStatus());
+             Data.GetTransactionStatus());
 
             modelBuilder.Entity<StatementList>().HasData(
          Data.GetStatementList());
 
+            modelBuilder.Entity<Titles>().HasData(
+           Data.GetTitles());
 
+            modelBuilder.Entity<ClientAccountType>().HasData(
+          Data.GetClientAccountTypes());
+
+            modelBuilder.Entity<RecordStatus>().HasData(
+           Data.GetRecordStatuses());
 
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
-
+        public DbSet<RecordStatus> RecordStatus { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<BankAccountType> BankAccountTypes { get; set; }
@@ -163,16 +160,18 @@ namespace SmartDataAccess
         public DbSet<TransactionStatus> TransactionStatus { get; set; }
 
         public DbSet<Client> Clients { get; set; }
+        public DbSet<JointApplicant> JointApplicants { get; set; }
         public DbSet<ClientCourse> ClientCourses { get; set; }
         public DbSet<ClientTranscript> ClientTranscripts { get; set; }
         public DbSet<ClientContact> ClientContacts { get; set; }
         public DbSet<ClientDocument> ClientDocuments { get; set; }
-               public DbSet<ClientNote> ClientNotes { get; set; }
+        public DbSet<ClientNote> ClientNotes { get; set; }
         public DbSet<ClientDependent> ClientDependents { get; set; }
         public DbSet<ClientProduct> ClientProducts { get; set; }
         public DbSet<ClientFee> ClientFees { get; set; }
         public DbSet<ClientDeduction> ClientDeductions { get; set; }
         public DbSet<ClientOccupationHistory> ClientOccupationHistory { get; set; }
+        public DbSet<ClientAccountType> ClientAccountTypes { get; set; }
 
         public DbSet<UserAuthenticationCode> UserAuthenticationCodes { get; set; }
         public DbSet<ClientMedicalDetail> ClientMedicalDetails { get; set; }
@@ -203,7 +202,7 @@ namespace SmartDataAccess
         public DbSet<Role> Roles { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<RoleMenu> RoleMenus { get; set; }
-        
+        public DbSet<Titles> Titles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<CustomVariableType> SystemVariableTypes { get; set; }
         public DbSet<CustomSettingType> CustomSettingTypes { get; set; }
@@ -222,8 +221,8 @@ namespace SmartDataAccess
         public DbSet<MenuGroup> MenuGroups { get; set; }
 
 
-       // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
-       // Script-Migration -From 20180904195021_InitialCreate
+        // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
+        // Script-Migration -From 20180904195021_InitialCreate
     }
 }
 

@@ -17,11 +17,16 @@
         <!-- form start -->
         <form class="form-horizontal" method="post" action="/Roles/ViewRole">
 
+
             @if (TempData["Error"] != null)
             {<div class="container">
                     <div class="text-danger">@TempData["Error"].ToString()</div>
                 </div>
+                <br />
             }
+            <div class="container">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
 
             @if (TempData["Success"] != null)
             {<div class="container">
@@ -88,8 +93,8 @@
                 {@if (!Model.Name.Contains("Super"))
                     {
                         <button type="submit" class="btn btn-info pull-right">Update</button>
-                }
-                }
+                    }
+            }
                 @if (UtilityService.HasPermission(Permissions.Delete_Role))
                 {
                     @if (!Model.Name.Contains("Super"))

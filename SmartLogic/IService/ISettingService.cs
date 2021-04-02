@@ -41,6 +41,9 @@ namespace SmartLogic
         List<Assert> GetAssertsList();
         List<AssertCategory> GetAssertCategoryList();
 
+        List<Titles> GetTitles();
+        List<ClientAccountType> GetClientAccountTypes();
+
     }
 
 

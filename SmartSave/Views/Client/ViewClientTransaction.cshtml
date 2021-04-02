@@ -21,7 +21,11 @@
             {<div class="container">
                     <div class="text-danger">@TempData["Error"].ToString()</div>
                 </div>
+                <br />
             }
+            <div class="container">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
 
             @if (TempData["Success"] != null)
             {<div class="container">
@@ -33,120 +37,120 @@
                     <div class="text-warning">@TempData["Warning"].ToString()</div>
                 </div>
             }
-        <div class="box-body">
+            <div class="box-body">
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Transaction Ref</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="TransRef" disabled="disabled" value="@Model.TransRef">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Transaction Ref</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="TransRef" disabled="disabled" value="@Model.TransRef">
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
-                <div class="col-sm-10">
-                    <select asp-for="ProductID" class="form-control" asp-items="ViewBag.RegisteredProducts" disabled>
-                        <option value="">----</option>
-                    </select>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
+                    <div class="col-sm-10">
+                        <select asp-for="ProductID" class="form-control" asp-items="ViewBag.RegisteredProducts" disabled>
+                            <option value="">----</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Assert Class</label>
-                <div class="col-sm-10">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Assert Class</label>
+                    <div class="col-sm-10">
 
-                    <select asp-for="AssertID" class="form-control" asp-items="ViewBag.AssertList" disabled>
-                        <option value="">----</option>
-                    </select>
+                        <select asp-for="AssertID" class="form-control" asp-items="ViewBag.AssertList" disabled>
+                            <option value="">----</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Assert Category</label>
-                <div class="col-sm-10">
-                    <select asp-for="AssertCategoryID" class="form-control" asp-items="ViewBag.AssertCategoryList" disabled>
-                        <option value="">----</option>
-                    </select>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Assert Category</label>
+                    <div class="col-sm-10">
+                        <select asp-for="AssertCategoryID" class="form-control" asp-items="ViewBag.AssertCategoryList" disabled>
+                            <option value="">----</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Bank Account</label>
-                <div class="col-sm-10">
-                    <select asp-for="BankAccountID" class="form-control" asp-items="ViewBag.BankAccountList" disabled>
-                        <option value="">----</option>
-                    </select>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Bank Account</label>
+                    <div class="col-sm-10">
+                        <select asp-for="BankAccountID" class="form-control" asp-items="ViewBag.BankAccountList" disabled>
+                            <option value="">----</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Transaction Date</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="TransactionDate" disabled="disabled" value="@UtilityService.ShowDateTime(@Model.TransactionDate)">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Transaction Date</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="TransactionDate" disabled="disabled" value="@UtilityService.ShowDateTime(@Model.TransactionDate)">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Payment Date</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="PaymentDate" disabled="disabled" value="@UtilityService.ShowDateTime(Model.PaymentDate)">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Payment Date</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="PaymentDate" disabled="disabled" value="@UtilityService.ShowDateTime(Model.PaymentDate)">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Narration:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="Narration" value="@Model.Narration" disabled>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Narration:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Narration" value="@Model.Narration" disabled>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Client Details</label>
-                <div class="col-sm-10">
-                    @if (UtilityService.HasPermission(Permissions.View_Client))
-                    {<a asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">@Model.Client.ClientRef</a>
-                }
-                else
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Client Details</label>
+                    <div class="col-sm-10">
+                        @if (UtilityService.HasPermission(Permissions.View_Client))
+                        {<a asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">@Model.Client.ClientRef</a>
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" disabled="disabled" value="@Model.Client.ClientRef">
+                    }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Transaction Type</label>
+                    <div class="col-sm-10">
+
+                        <input type="text" class="form-control" name="TransactionTypeID" disabled="disabled" value="@Model.TransactionType.Name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Payment Type</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" disabled="disabled" value="@Model.Entity">
+                    </div>
+                </div>
+                @if (SmartHelper.UtilityService.ApplicationIsVATCompliant)
                 {
-                    <input type="text" class="form-control" disabled="disabled" value="@Model.Client.ClientRef">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Amount Excl VAT</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="AmountExclVAT" disabled="disabled" value="@Model.AmountExclVAT">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">VAT</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="VAT" disabled="disabled" value="@Model.VAT">
+                        </div>
+                    </div>
                 }
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Transaction Type</label>
-                <div class="col-sm-10">
-
-                    <input type="text" class="form-control" name="TransactionTypeID" disabled="disabled" value="@Model.TransactionType.Name">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Payment Type</label>
-                <div class="col-sm-10">
-                     <input type="text" class="form-control" disabled="disabled" value="@Model.Entity">
-                </div>
-            </div>
-            @if (SmartHelper.UtilityService.ApplicationIsVATCompliant)
-            {
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Amount Excl VAT</label>
+                    @{
+                        var displayLabel = SmartHelper.UtilityService.ApplicationIsVATCompliant ? "Amount Incl VAT" : "Amount";
+                    }
+                    <label for="inputEmail3" class="col-sm-2 control-label">@displayLabel</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="AmountExclVAT" disabled="disabled" value="@Model.AmountExclVAT">
+                        <input type="text" class="form-control" name="Amount" disabled="disabled" value="@Model.Amount">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">VAT</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="VAT" disabled="disabled" value="@Model.VAT">
-                    </div>
-                </div>
-            }
-        <div class="form-group">
-            @{
-                var displayLabel = SmartHelper.UtilityService.ApplicationIsVATCompliant ? "Amount Incl VAT" : "Amount";
-            }
-            <label for="inputEmail3" class="col-sm-2 control-label">@displayLabel</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="Amount" disabled="disabled" value="@Model.Amount">
-            </div>
-        </div>
 
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Total Paid</label>
