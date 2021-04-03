@@ -55,7 +55,7 @@ namespace SmartReporting
         {
 
             paragraph.Format.SpaceBefore = "3cm";
-            paragraph.Format.Font.Size = 8;
+            paragraph.Format.Font.Size = 7;
             // paragraph.Format.Font.ApplyFont(new Font("Lucida Handwriting"));
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.AddText("");

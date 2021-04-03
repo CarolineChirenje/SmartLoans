@@ -10,6 +10,10 @@ using SmartHelper;
 using SmartDomain;
 using Microsoft.AspNetCore.Http;
 using SmartSave.Models;
+using System.IO;
+using MigraDoc.Rendering;
+using SmartReporting;
+using MigraDoc.DocumentObjectModel;
 
 namespace SmartSave.Controllers
 {
@@ -25,8 +29,8 @@ namespace SmartSave.Controllers
         }
 
         public async Task<IActionResult> Courses(bool newCoursesOnly = false)
-        {   
-        if (newCoursesOnly)
+        {
+            if (newCoursesOnly)
                 return View(await _service.NewCourses());
 
             return View(await _service.Courses());
@@ -34,12 +38,11 @@ namespace SmartSave.Controllers
 
         public IActionResult AddCourse()
         {
-                       return View();
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> AddCourse(Course Course)
         {
-          
             if (ModelState.IsValid)
             {
                 if (await _service.IsDuplicate(Course))
@@ -57,7 +60,7 @@ namespace SmartSave.Controllers
         // GET:
         public async Task<IActionResult> ViewCourse(int id = 0)
         {
-            
+
             if (id == 0)
                 return RedirectToAction(nameof(Courses));
 
@@ -86,7 +89,7 @@ namespace SmartSave.Controllers
             return View(Course);
         }
 
-        
+
         public async Task<IActionResult> Delete(int id)
         {
             if (await (_service.ActionCourse(id, DatabaseAction.Remove)) == 0)
@@ -99,14 +102,12 @@ namespace SmartSave.Controllers
 
         }
 
-
         /// <summary>
         /// Course Outline
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         /// 
-
         [HttpPost]
         public async Task<IActionResult> AddCourseOutline(CourseOutline courseOutline)
         {
@@ -122,30 +123,28 @@ namespace SmartSave.Controllers
             }
             return RedirectToAction("ViewCourse", new { id = courseOutline.CourseID });
         }
-
         public async Task<IActionResult> ViewCourseOutline(int outlineid, int courseid)
         {
             if (outlineid == 0)
-                return RedirectToAction("ViewCourse", new { id = courseid});
+                return RedirectToAction("ViewCourse", new { id = courseid });
 
             return View(await _service.FindCourseOutline(outlineid));
         }
-
-
         [HttpPost]
         public async Task<IActionResult> ViewCourseOutline(CourseOutline courseoutline)
         {
             CourseOutline _courseoutline = await _service.FindCourseOutline(courseoutline.CourseOutlineID);
             if (ModelState.IsValid)
             {
-               
+
                 if (UtilityService.IsNotNull(_courseoutline))
                 {
                     if (await (_service.Update(courseoutline)) == 0)
                     {
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
                         return View(_courseoutline);
-                    } }
+                    }
+                }
                 _courseoutline = await _service.FindCourseOutline(courseoutline.CourseOutlineID);
 
                 return View(_courseoutline);
@@ -196,8 +195,6 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewCourseFee(CourseFee courseFee)
         {
-
-
             PopulateDropDownList();
             CourseFee update = await _service.FindCourseFee(courseFee.CourseFeeID);
             if (UtilityService.IsNotNull(update))
@@ -217,6 +214,113 @@ namespace SmartSave.Controllers
 
             return RedirectToAction("ViewCourse", new { id = courseID });
         }
+
+
+        /// <summary>
+        /// Course Intakes
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// 
+        [HttpPost]
+        public async Task<IActionResult> AddCourseIntake(CourseIntake courseIntake)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (await (_service.Save(courseIntake)) == 0)
+                {
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return RedirectToAction("ViewCourse", new { id = courseIntake.CourseID });
+                }
+
+            }
+            return RedirectToAction("ViewCourse", new { id = courseIntake.CourseID });
+        }
+        public async Task<IActionResult> ViewCourseIntake(int intakeId, int courseid)
+        {
+            if (intakeId == 0)
+                return RedirectToAction("ViewCourse", new { id = courseid });
+
+            HttpContext.Session.SetString("CourseIntakeID", intakeId.ToString());
+            PopulateDropDownList();
+
+            return View(await _service.FindCourseIntake(intakeId));
+        }
+        [HttpPost]
+        public async Task<IActionResult> ViewCourseIntake(CourseIntake courseIntake)
+        {
+            PopulateDropDownList();
+            CourseIntake _courseIntake = await _service.FindCourseIntake(courseIntake.CourseIntakeID);
+            if (ModelState.IsValid)
+            {
+
+                if (UtilityService.IsNotNull(_courseIntake))
+                {
+                    if (await (_service.Update(_courseIntake)) == 0)
+                    {
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        return View(_courseIntake);
+                    }
+                }
+                _courseIntake = await _service.FindCourseIntake(_courseIntake.CourseIntakeID);
+
+                return View(_courseIntake);
+            }
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            return View(_courseIntake);
+        }
+        public async Task<IActionResult> ActionCourseIntake(int courseIntakeId, int courseid)
+        {
+            if (await (_service.ActionCourseIntake(courseIntakeId, DatabaseAction.Remove)) == 0)
+            {
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                return RedirectToAction("ViewCourseIntake", new { id = courseIntakeId });
+            }
+            return RedirectToAction("ViewCourse", new { id = courseid });
+        }
+        [HttpPost]
+        public async Task<IActionResult> MarkRegister(string[] enrolmentList, CourseIntake intake)
+        {
+            bool registerExists = _service.RegisterExist(intake.CourseIntakeID, intake.AttendanceDate.ToString("yyyy-MMM-dd"));
+            if (registerExists)
+                TempData[MessageDisplayType.Error.ToString()] = "Register already exists! Cannot recreate register for the same day";
+            else
+            {
+                CourseIntake update = await (_service.FindCourseIntake(intake.CourseIntakeID));
+                if (UtilityService.IsNotNull(update))
+                {
+                    if (await (_service.MarkRegister(intake, enrolmentList)) == 0)
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                }
+            }
+            return RedirectToAction("ViewCourseIntake", new { intakeId = intake.CourseIntakeID, courseid = intake.CourseID });
+        }
+
+        public ActionResult DownloadRegister(int id)
+        {
+
+            AttendanceRegister register = _service.FindRegister(id).Result;
+            if (UtilityService.IsNull(register))
+            {
+
+                TempData[MessageDisplayType.Error.ToString()] = $"Failed to download attendance register";
+                return RedirectToAction("ViewCourseIntake", new { intakeId = Convert.ToInt32(HttpContext.Session.GetString("CourseIntakeID")), courseid = Convert.ToInt32(HttpContext.Session.GetString("CourseID")) });
+            }
+            AttendanceRegisterPrintOut printOut = new AttendanceRegisterPrintOut();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                Document document = printOut.Print(register); ;
+                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                pdfRenderer.Document = document;
+                pdfRenderer.RenderDocument();
+                pdfRenderer.PdfDocument.Save(stream, false);
+
+                return File(stream.ToArray(), "application/pdf", $"Register_{register.AttendanceDate}.pdf");
+            }
+
+        }
+
         public void PopulateDropDownList()
         {
             int courseID = Convert.ToInt32(HttpContext.Session.GetString("CourseID"));
@@ -228,7 +332,7 @@ namespace SmartSave.Controllers
                 {
                     ID = session.CourseOutlineID,
                     Name = session.Name,
-                    IsChecked =false
+                    IsChecked = false
                 });
             }
             ViewBag.SessionsList = viewModel;
@@ -240,6 +344,27 @@ namespace SmartSave.Controllers
             }).OrderBy(t => t.Name);
 
             ViewBag.FrequencyList = new SelectList(frequency, "FrequencyID", "Name");
+            var outlines = courseOutlines.Select(t => new
+            {
+                t.CourseOutlineID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+            ViewBag.CourseOutlineList = new SelectList(outlines, "CourseOutlineID", "Name");
+
+            int intakeID = Convert.ToInt32(HttpContext.Session.GetString("CourseIntakeID"));
+            var enrolmentList = _service.GetEnrollmentList(intakeID)?.OrderBy(r => r.ClientFullName);
+            var enrolViewModel = new List<CheckBoxListItem>();
+            foreach (var enrol in enrolmentList)
+            {
+                enrolViewModel.Add(new CheckBoxListItem
+                {
+                    ID = enrol.ClientID,
+                    Name = enrol.ClientFullName,
+                    IsChecked = false
+                });
+            }
+            ViewBag.EnrolmentList = enrolViewModel;
+
         }
     }
 }

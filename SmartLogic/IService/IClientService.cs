@@ -22,7 +22,7 @@ namespace SmartLogic
         Task<List<Client>> NewClients();
         Task<List<string>> ClientAccountNumbers(string account);
         Task<Client> ClientDetails(string emailAddress, string idnumber);
-        
+        Task<List<AttendanceRegisterDetail>> AttendanceRegisters(int clientID);
 
 
         //Notes

@@ -155,5 +155,13 @@ namespace SmartLogic
             var accountTypes = _context.ClientAccountTypes.Where(cat=>cat.IsActive).AsNoTracking().ToList();
             return accountTypes;
         }
+
+        public List<CourseIntake> GetCourseIntakes(bool activeOnly= false)
+        {
+            var courseIntakes = _context.CourseIntakes.AsNoTracking().ToList();
+            if (activeOnly)
+                courseIntakes = courseIntakes.Where(ci => ci.IsActive).ToList();
+            return courseIntakes;
+        }
     }
 }

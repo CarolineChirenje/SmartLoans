@@ -781,9 +781,17 @@ AED = 1
         Delete_Assert,
         View_Assert,
 
+        Add_Course_Outline,
+        Update_Course_Outline,
+        Delete_Course_Outline,
+        View_Course_Outline,
 
-
-
+        Add_Course_Intake,
+        Update_Course_Intake,
+        Delete_Course_Intake,
+        View_Course_Intake,
+        View_Course_Intake_Register,
+        Generate_Attendance_Register,
     }
 
 

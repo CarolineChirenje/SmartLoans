@@ -374,11 +374,17 @@
 
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
+                                <label for="inputEmail3" class="col-sm-2 control-label">Course Programe</label>
                                 <select asp-for="CourseID" class="form-control" asp-items="ViewBag.CourseList">
                                     <option value="">----</option>
                                 </select>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Intake</label>
+                                <select asp-for="CourseIntakeID" class="form-control" asp-items="ViewBag.CourseIntakeList">
+                                    <option value="">----</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Sessions</label>
@@ -390,15 +396,15 @@
                                         }
                                         @if (UtilityService.HasPermission(Permissions.Update_Client_Course))
                                         {
-                                        <label>
-                                            <a data-toggle="modal" data-target="#CourseSessions">@sessions</a>
-                                        </label>
+                                            <label>
+                                                <a data-toggle="modal" data-target="#CourseSessions">@sessions</a>
+                                            </label>
                                         }
                                         else
                                         {
-                                        <label>
-                                            <a>@sessions</a>
-                                        </label>
+                                            <label>
+                                                <a>@sessions</a>
+                                            </label>
                                         }
 
                                     </div>

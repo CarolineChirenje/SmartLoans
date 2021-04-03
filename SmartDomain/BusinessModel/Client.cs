@@ -45,7 +45,7 @@ namespace SmartDomain
         public virtual List<ClientCourse> ClientCourses { get; set; }
         public virtual List<ClientFee> ClientFees { get; set; }
         public virtual List<ClientDeduction> ClientDeductions { get; set; }
-
+        public List<AttendanceRegisterDetail> AttendanceRegister { get; set; }
         public virtual List<ClientOccupationHistory> ClientOccupationHistory { get; set; }
         [NotMapped]
         public bool IsJointAccount { get { return ClientAccountTypeID == (int)Client_AccountType.Joint; } }
@@ -71,6 +71,9 @@ namespace SmartDomain
 
         [NotMapped]
         public int CourseID { get; set; }
+
+        [NotMapped]
+        public int CourseIntakeID { get; set; }
 
         [NotMapped]
         [DisplayName("Product Type")]

@@ -15,7 +15,7 @@ namespace SmartDomain
         public bool IsActive { get; set; }
         public virtual List<CourseOutline> CourseOutlines { get; set; }
         public virtual List<CourseFee> CourseFees { get; set; }
-
+        public virtual List<CourseIntake> CourseIntakes { get; set; }
         [NotMapped]
         public int FrequencyID { get; set; }
 

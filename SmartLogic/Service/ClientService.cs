@@ -83,9 +83,12 @@ namespace SmartLogic
                             Include(d => d.ClientDependents).
                             Include(c => c.ClientCourses).
                             ThenInclude(c => c.Course).
-                             ThenInclude(c => c.CourseOutlines).
-                             Include(c => c.ClientDeductions).
-                             ThenInclude(c => c.Product).
+                            ThenInclude(c => c.CourseOutlines).
+                            Include(c => c.ClientCourses).
+                            ThenInclude(c => c.Course).
+                            ThenInclude(c => c.CourseIntakes).
+                            Include(c => c.ClientDeductions).
+                            ThenInclude(c => c.Product).
                              Include(c => c.ClientOccupationHistory).
                              Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
                              Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
@@ -239,7 +242,16 @@ namespace SmartLogic
             }
 
         }
-
+        public async Task<List<AttendanceRegisterDetail>> AttendanceRegisters(int clientID)
+        {
+            return await _context.AttendanceRegisterDetails.
+                Include(c => c.AttendanceRegister).
+                  ThenInclude(c => c.CourseIntake).
+                    ThenInclude(c => c.Course).
+                Include(c => c.Client).
+                Where(c => c.ClientID == clientID).
+                OrderByDescending(c => c.AttendanceRegister.AttendanceDate).ToListAsync();
+        }
         public async Task<List<Client>> Clients()
         {
             return await _context.Clients.
@@ -709,6 +721,8 @@ namespace SmartLogic
              Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
              Include(c => c.Course).
              ThenInclude(c => c.CourseOutlines).
+             Include(c => c.Course).
+             ThenInclude(c=>c.CourseIntakes).
             Where(t => t.ClientCourseID == id).FirstOrDefaultAsync();
         }
         public async Task<int> Save(ClientCourse ClientCourse)

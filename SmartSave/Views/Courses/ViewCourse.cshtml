@@ -112,12 +112,20 @@
                                 <a href="#Fees" data-toggle="tab">Fees</a>
                             </li>
                         }
-                       
+                        @if (UtilityService.HasPermission(Permissions.View_Course_Outline))
+                        {
                             <li>
                                 <a href="#CourseOutline" data-toggle="tab">Sessions</a>
                             </li>
-                       
-                        </ul>
+                        }
+
+                        @if (UtilityService.HasPermission(Permissions.View_Course_Intake))
+                        {
+                            <li>
+                                <a href="#CourseIntake" data-toggle="tab">Intakes</a>
+                            </li>
+                        }
+                    </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="tab-pane fade in active " id="Fees">
@@ -218,6 +226,54 @@
                                 <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddCourseOutline">Add Session</a>
                             </div>
                         </div>
+                        <div class="tab-pane fade in" id="CourseIntake">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Information
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="dataTable_wrapper">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Duration</th>
+                                                <th>Maximum Capacity</th>
+                                                <th>Is Active</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.CourseIntakes != null)
+                                            {
+
+                                                foreach (var item in Model.CourseIntakes)
+                                                {
+                                            <tr>
+                                                @{
+                                                    string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+
+                                                }
+                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Duration)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.MaximumCapacity)</td>
+                                                <td>@activeStatus</td>
+                                                <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseIntake" asp-route-intakeId="@item.CourseIntakeID" asp-route-courseid="@item.CourseID">View</a> | <a asp-controller="Courses" asp-action="ActionCourseIntake" asp-route-courseIntakeId="@item.CourseIntakeID" asp-route-courseid="@item.CourseID">Delete</a></td>
+                                            </tr>
+                                                }
+                                            }
+                                    </table>
+                                </div>
+                            </div>
+                            @if (UtilityService.HasPermission(Permissions.Add_Course_Intake))
+                            {
+                                <div class="box-footer">
+                                    <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddCourseIntake">Add Intake</a>
+                                </div>
+                            }
+                            </div>
 
                         <!-- /.panel-body -->
                     </div>
@@ -270,7 +326,65 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="AddCourseIntake" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Courses" asp-action="AddCourseIntake">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Course:</label>
+                        <input type="text" class="form-control" value="@Model.Title" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Intake Name:</label>
+                        <input type="text" class="form-control" name="Name">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Start Date</label>
+                            <input type="date" class="form-control" name="StartDate" ID="StartDate" required>
+                        </div>
+                    </div>
 
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">End Date</label>
+                            <input type="date" class="form-control" name="EndDate" ID="EndDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Maximum Capacity:</label>
+                        <input type="text" class="form-control" name="MaximumCapacity">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label"> Is Active</label>
+                        <div class="checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" data-val="true" id="IsActive"
+                                       name="IsActive" value="true">
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="CourseID" value="@Model.CourseID" />
+
+                </div>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Add_Course_Intake))
+                    {<button type="submit" class="btn btn-primary">Save Intake</button>}
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="CourseSessions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -392,7 +506,12 @@
 
 
     $(document).ready(function () {
-
+        var futureDate = new Date();
+        futureDate.setDate(futureDate.getDate() + 60);
+        var previousDate = new Date();
+        previousDate.setDate(previousDate.getDate() - 60);
+        document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
+        document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
     });
 
         $('#Amount').blur(function () {

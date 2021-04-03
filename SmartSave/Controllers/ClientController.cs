@@ -116,6 +116,7 @@ namespace SmartSave.Controllers
             Client Client = await _service.FindClient(id);
             if (UtilityService.IsNotNull(Client))
             {
+                Client.AttendanceRegister = await _service.AttendanceRegisters(id);
                 HttpContext.Session.SetString("ClientID", Client.ClientID.ToString());
 
                 GetDropDownLists();
@@ -1093,9 +1094,14 @@ namespace SmartSave.Controllers
                 t.ID,
                 t.Name,
             }).OrderBy(t => t.Name);
-
             ViewBag.AccountTypes = new SelectList(clientAccountTypeList, "ID", "Name", (int)Client_AccountType.Individual);
 
+            var intakeList = _settingService.GetCourseIntakes(true).Select(t => new
+            {
+                t.CourseIntakeID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+            ViewBag.CourseIntakeList = new SelectList(intakeList, "CourseIntakeID", "Name");
 
         }
     }

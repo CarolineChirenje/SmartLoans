@@ -43,6 +43,7 @@ namespace SmartLogic
 
         List<Titles> GetTitles();
         List<ClientAccountType> GetClientAccountTypes();
+        List<CourseIntake> GetCourseIntakes(bool activeOnly=false);
 
     }
 

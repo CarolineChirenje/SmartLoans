@@ -2850,7 +2850,8 @@
         "framework": ".NETCoreApp,Version=v3.0",
         "dependencies": {
           "SmartDataAccess": "1.0.0",
-          "SmartDomain": "1.0.0"
+          "SmartDomain": "1.0.0",
+          "SmartReporting": "1.0.0"
         },
         "compile": {
           "bin/placeholder/SmartLogic.dll": {}

@@ -4,8 +4,10 @@ D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartLogic.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartDataAccess.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartDomain.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartReporting.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartDataAccess.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartReporting.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartHelper.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
 D:\Dev Projects\SmartSave\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.csprojAssemblyReference.cache
