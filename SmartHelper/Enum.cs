@@ -795,6 +795,7 @@ AED = 1
         View_Course_Intake,
         View_Course_Intake_Register,
         Generate_Attendance_Register,
+        View_Invoice_Details
     }
 
 

@@ -13,7 +13,7 @@
         <li class="active">@TempData["Title"]</li>
     </ol>
 </section>
-<!-- Main content -->
+ <!-- Main content -->
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
@@ -51,8 +51,7 @@
                                 <tr>
                                     @{
                                         string duedate = UtilityService.ShowDate(item.ClientDeduction.DueDate);
-
-                                    }
+                                                                        }
                                     @if (UtilityService.HasPermission(Permissions.View_User))
                                     {
                                         <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@item.Client.ClientFullName</a></td>
@@ -84,8 +83,8 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                  
-                        <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="PrintSchedule">Print Schedule</a><br />
+                 
+                        <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="PrintSchedule" asp-route-id="0">Print Schedule</a><br />
                    
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
 

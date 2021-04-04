@@ -2,7 +2,6 @@
 using SmartHelper;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartLogic
@@ -18,7 +17,9 @@ namespace SmartLogic
         Task<long> NewPayments();
         Task<int> CalculateDeductions(List<int> ClientProductIDs, DateTime InvoiceDate, DateTime DueDate);
         Task<int> RemoveDeductions(List<int> clientDeductionID);
-        List<ClientDeductionDetails> GetSchedule(int ProductID, DateTime DateFrom, DateTime DateTo);
+        List<ClientDeduction> GetSchedule( DateTime DateFrom, DateTime DateTo);
+        List<ClientDeductionDetails> GetSchedule(int clientDeductionID);
+        ClientDeduction GetClientDeductionSchedule(int clientDeductionID);
         bool DeductionExists(DateTime CutOffDate);
         Task<List<ClientDeductionDetails>> GetClientDeductions(List<int> ClientProductIDs, DateTime InvoiceDate);
     }

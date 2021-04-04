@@ -333,9 +333,11 @@ namespace SmartLogic
                         _context.Add(deductionDetails);
                     }
                     if (clientProduct.Count() > 0)
-                        result = await _context.SaveChangesAsync();
+                        await _context.SaveChangesAsync();
 
                 }
+
+                result = deduction.ClientDeductionID;
                 return result;
             }
             catch (Exception ex)
@@ -354,17 +356,43 @@ namespace SmartLogic
                .Where(t => t.ClientDeduction.InvoiceDate == InvoiceDate && ClientProductIDs.Contains(t.ClientProductID)).ToListAsync();
         }
 
-        public List<ClientDeductionDetails> GetSchedule(int ProductID, DateTime DateFrom, DateTime DateTo)
+        public List<ClientDeduction> GetSchedule(DateTime DateFrom, DateTime DateTo)
+        {
+
+            var deductions = _context.ClientDeductions
+            .Include(c=>c.ClientDeductionDetails)
+             .Where(cd => cd.InvoiceDate >= DateFrom && cd.InvoiceDate <= DateTo).ToList();
+            return deductions;
+        }
+
+        public List<ClientDeductionDetails> GetSchedule(int clientDeductionID)
         {
 
             var deductions = _context.ClientDeductionDetails
             .Include(c => c.ClientDeduction)
             .Include(c => c.Client).Include(p => p.Product)
-             .Where(cd => cd.ClientDeduction.InvoiceDate >= DateFrom && cd.ClientDeduction.InvoiceDate <= DateTo);
-            if (ProductID == 0)
-                return deductions.ToList();
-            else
-                return deductions.Where(cd => cd.ProductID == ProductID).ToList();
+             .Where(cd => cd.ClientDeductionID==clientDeductionID).ToList();
+            return deductions;
+          
+        }
+
+       public ClientDeduction GetClientDeductionSchedule(int clientDeductionID)
+       {
+
+            var deductions = _context.ClientDeductions
+              .Include(c => c.ClientDeductionDetails)
+              .ThenInclude(c=>c.Client)
+              .ThenInclude(c=>c.Title)
+               .Include(c => c.ClientDeductionDetails)
+               .ThenInclude(c => c.Client)
+              .ThenInclude(c=>c.JointApplicant)
+              .ThenInclude(c=>c.Title)
+               .Include(c => c.ClientDeductionDetails)
+               .ThenInclude(c=>c.Product)
+
+
+               .Where(cd => cd.ClientDeductionID==clientDeductionID).FirstOrDefault();
+            return deductions;
         }
     }
 }

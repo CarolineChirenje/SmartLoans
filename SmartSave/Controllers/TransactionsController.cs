@@ -198,12 +198,19 @@ namespace SmartSave.Controllers
         {
             HttpContext.Session.SetString("DateFrom", model.DateFrom.ToString());
             HttpContext.Session.SetString("DateTo", model.DateTo.ToString());
-            HttpContext.Session.SetString("ProductID", model.ProductID.ToString());
-            var deductions = _service.GetSchedule(model.ProductID, model.DateFrom, model.DateTo);
+           // HttpContext.Session.SetString("ProductID", model.ProductID.ToString());
+            var deductions = _service.GetSchedule(model.DateFrom, model.DateTo);
             return View(deductions);
 
         }
+        [HttpGet]
+        public IActionResult InvoiceDetails( int id)
+        {
+            HttpContext.Session.SetString("ClientDeductionID", id.ToString());
+            var deductions = _service.GetSchedule(id);
 
+            return View(deductions);
+        }
         [HttpPost]
         public ActionResult DeleteInvoiceEntries(IFormCollection formCollection)
         {
@@ -259,12 +266,12 @@ namespace SmartSave.Controllers
                     return RedirectToAction(nameof(Schedule));
                 }
 
-                int result = _service.CalculateDeductions(clientProductID, InvoiceDate, DueDate).Result;
-                if (result > 0)
+                int  deductionID = _service.CalculateDeductions(clientProductID, InvoiceDate, DueDate).Result;
+                if (deductionID > 0)
                 {
-
+                    HttpContext.Session.SetString("ClientDeductionID", deductionID.ToString());
                     var deductions = _service.GetClientDeductions(clientProductID, InvoiceDate).Result;
-                    return View(deductions);
+                                      return View(deductions);
                 }
             }
 
@@ -272,113 +279,34 @@ namespace SmartSave.Controllers
         }
 
         [HttpGet]
-        public ActionResult PrintGeneratedSchedule()
+        public ActionResult PrintSchedule( int id)
         {
-            DateTime DateFrom = DateTime.MinValue;
-            DateTime DateTo = DateTime.MinValue;
-            int ProductID = 0;
-            try
+            if(id==0)
             {
-                DateFrom = Convert.ToDateTime(HttpContext.Session.GetString("DateFrom"));
-            }
-            catch (Exception ex)
-            {
-            }
-
-            try
-            {
-                DateTo = Convert.ToDateTime(HttpContext.Session.GetString("DateTo"));
-            }
-            catch (Exception ex)
-            {
-            }
-
-            try
-            {
-                ProductID = Convert.ToInt32(HttpContext.Session.GetString("ProductID"));
-            }
-            catch (Exception ex)
-            {
-            }
-            Product product;
-
-            if (ProductID > 0)
-                product = _settingService.FindProduct(ProductID);
-            else
-                product = new Product
+                try
                 {
-                    ProductID = 0,
-                    Name = "All",
-                };
-
+                    id = Convert.ToInt32(HttpContext.Session.GetString("ClientDeductionID"));
+                }
+                catch (Exception ex)
+                {
+                }
+            }
             Company company = _settingService.FindDefaultCompany();
+            ClientDeduction clientDeduction = _service.GetClientDeductionSchedule(id);
             SchedulePrintOut printOut = new SchedulePrintOut();
 
             using (MemoryStream stream = new MemoryStream())
             {
-                Document document = printOut.PrintGeneratedSchedule(product, company, DateFrom, DateTo);
+                Document document = printOut.Print(company,clientDeduction);
                 PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
                 pdfRenderer.Document = document;
                 pdfRenderer.RenderDocument();
                 pdfRenderer.PdfDocument.Save(stream, false);
-                return File(stream.ToArray(), "application/pdf", $"SalarySchedule{product.Name}.pdf");
+                return File(stream.ToArray(), "application/pdf", $"SalarySchedule.pdf");
             }
         }
 
-        [HttpGet]
-        public ActionResult PrintSchedule()
-        {
-            DateTime InvoiceDate = DateTime.MinValue;
-            DateTime DueDate = DateTime.MinValue;
-            int ProductID = 0;
-            try
-            {
-                InvoiceDate = Convert.ToDateTime(HttpContext.Session.GetString("InvoiceDate"));
-            }
-            catch (Exception ex)
-            {
-            }
-
-            try
-            {
-                DueDate = Convert.ToDateTime(HttpContext.Session.GetString("DueDate"));
-            }
-            catch (Exception ex)
-            {
-            }
-
-            try
-            {
-                ProductID = Convert.ToInt32(HttpContext.Session.GetString("ProductID"));
-            }
-            catch (Exception ex)
-            {
-            }
-            Product product;
-
-            if (ProductID > 0)
-                product = _settingService.FindProduct(ProductID);
-            else
-                product = new Product
-                {
-                    ProductID = 0,
-                    Name = "All",
-                };
-
-            Company company = _settingService.FindDefaultCompany();
-            SchedulePrintOut printOut = new SchedulePrintOut();
-
-            using (MemoryStream stream = new MemoryStream())
-            {
-                Document document = printOut.Print(product, company, InvoiceDate, DueDate);
-                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                pdfRenderer.Document = document;
-                pdfRenderer.RenderDocument();
-                pdfRenderer.PdfDocument.Save(stream, false);
-                return File(stream.ToArray(), "application/pdf", $"SalarySchedule{product.Name}.pdf");
-            }
-        }
-
+     
 
         private void GetDropDownLists()
         {

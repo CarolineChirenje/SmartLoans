@@ -21,19 +21,14 @@ namespace SmartReporting
         Color WhiteColor = Colors.White;
         Color HeaderColor = Colors.LightGray;
         TextFrame addressFrame;
-        DateTime _InvoiceDate;
-        DateTime _DueDate;
-        DateTime _DateFrom;
-        DateTime _DateTo;
-        CultureInfo culture;
+               CultureInfo culture;
         Section section;
         Style style;
-        Product _Product;
-        Company _Company;
-        bool _PrintGeneratedSchedule = false;
+              Company _Company;
+        ClientDeduction _clientDeduction;
+      
 
-
-        public Document Print(Product Product, Company Company, DateTime InvoiceDate, DateTime DueDate)
+        public Document Print(Company Company, ClientDeduction clientDeduction)
         {
             try
             {
@@ -41,42 +36,11 @@ namespace SmartReporting
                 // Create a new MigraDoc document
                 this.document = new Document();
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Salary Schedule");
-                this._Product = Product;
+                this._clientDeduction = clientDeduction;
                 this._Company = Company;
-                this._InvoiceDate = InvoiceDate;
-                this._DueDate = DueDate;
+              
                 this.culture = new CultureInfo("en-US");
                 style = ReportingUtilities.DefineStyles(this.document);
-                AddressAndHeader();
-                ProductDetails();
-                ScheduleDetails();
-
-
-            }
-            catch (Exception e)
-            {
-
-                //  ErrorLog.Log(e, ErrorSource.Reporting);
-            }
-            return this.document;
-        }
-
-
-        public Document PrintGeneratedSchedule(Product Product, Company Company, DateTime DateFrom, DateTime DateTo)
-        {
-            try
-            {
-
-                // Create a new MigraDoc document
-                this.document = new Document();
-                this.document = ReportingUtilities.DocumentMetaData(this.document, "Salary Schedule");
-                this._Product = Product;
-                this._Company = Company;
-                this._DateFrom = DateFrom;
-                this._DateTo = DateTo;
-                this.culture = new CultureInfo("en-US");
-                style = ReportingUtilities.DefineStyles(this.document);
-                _PrintGeneratedSchedule = true;
                 AddressAndHeader();
                 ProductDetails();
                 ScheduleDetails();
@@ -253,6 +217,8 @@ namespace SmartReporting
                 this.table.Rows.LeftIndent = 0;
 
                 // Before you can add a row, you must define the columns
+
+                // Before you can add a row, you must define the columns
                 Column column = this.table.AddColumn("3cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
 
@@ -279,25 +245,26 @@ namespace SmartReporting
                 tblrow.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                 tblrow.Cells[0].Format.Font.Bold = true;
-                tblrow.Cells[0].AddParagraph("Product");
+                tblrow.Cells[0].AddParagraph("Invoice Number");
 
                 tblrow.Cells[1].Borders.Visible = false;
                 tblrow.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                tblrow.Cells[1].AddParagraph(UtilityService.IsNull(_Product) ? " - " : _Product.Name);
+                tblrow.Cells[1].AddParagraph(_clientDeduction.ClientDeductionID.ToString());
 
-                string column2Name = _PrintGeneratedSchedule ? "Period" : "Cut Off Date";
+                string column2Name = "Due Date";
                 tblrow.Cells[2].Borders.Visible = false;
                 tblrow.Cells[2].Format.Alignment = ParagraphAlignment.Left;
                 tblrow.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow.Cells[2].Format.Font.Bold = true;
                 tblrow.Cells[2].AddParagraph(column2Name);
 
-                string column2Value = _PrintGeneratedSchedule ? $"{UtilityService.ShowDate(_DateFrom)} => {UtilityService.ShowDate(_DateTo)}" : UtilityService.ShowDate(_InvoiceDate);
+                string column2Value = UtilityService.ShowDate(_clientDeduction.InvoiceDate);
                 tblrow.Cells[3].Borders.Visible = false;
                 tblrow.Cells[3].Format.Alignment = ParagraphAlignment.Left;
                 tblrow.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow.Cells[3].AddParagraph(column2Value);
+
 
                 Row tblrow1 = this.table.AddRow();
                 tblrow1.Borders.Visible = false;
@@ -339,29 +306,7 @@ namespace SmartReporting
 
             try
             {
-                string sqlQuery;
-                string _selectClause = @"SELECT CONCAT(c.AccountNumber,' - ',c.LastName,' ', c.FirstName) AS ClientName, cd.InvoiceNumber, p.Name AS Product,cd.DeductedAmount AS AmountDue, cd.DueDate,cd.InvoiceDate, c.Occupation FROM ClientDeductions cd
-                                            INNER JOIN Clients c ON cd.ClientID=c.ClientID
-                                            INNER JOIN Products p ON p.ProductID=cd.ProductID ";
-                if (_PrintGeneratedSchedule)
-                {
-                    sqlQuery = _selectClause + $"WHERE  cd.InvoiceDate>='{_DateFrom.ToString("yyyy-MM-dd")}' AND cd.InvoiceDate<='{_DateTo.ToString("yyyy-MM-dd")}' ";
-                }
-                else
-                {
-                    sqlQuery = _selectClause + $"WHERE  cd.InvoiceDate='{_InvoiceDate.ToString("yyyy-MM-dd")}'";
-                }
-
-                if (_Product.ProductID > 0)
-                    sqlQuery = sqlQuery + $" AND cd.ProductID={_Product.ProductID}";
-
-
-                sqlQuery = sqlQuery + $" ORDER BY cd.InvoiceNumber,CONCAT(c.AccountNumber,' - ',c.LastName,' ', c.FirstName)";
-
-                DataTable Transactions = GetData.GetDataTable(sqlQuery);
-
-
-
+              
                 // Create the item table
                 this.table = section.AddTable();
                 this.table.Style = "Table";
@@ -384,21 +329,20 @@ namespace SmartReporting
                 }
 
                 // Before you can add a row, you must define the columns
-                Column column = this.table.AddColumn("2cm");
-                column.Format.Alignment = ParagraphAlignment.Center;
-
-                column = this.table.AddColumn("5cm");
+                Column column = this.table.AddColumn("2.5cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
 
                 column = this.table.AddColumn("4cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
-                if (_Product.ProductID == 0)
-                {
-                    column = this.table.AddColumn("4cm");
-                    column.Format.Alignment = ParagraphAlignment.Left;
-                }
 
-                column = this.table.AddColumn("3cm");
+                column = this.table.AddColumn("4cm");
+                column.Format.Alignment = ParagraphAlignment.Left;
+                
+                    column = this.table.AddColumn("3.5cm");
+                    column.Format.Alignment = ParagraphAlignment.Left;
+                
+
+                column = this.table.AddColumn("2.5cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
                 int countCellColumn = 0;
 
@@ -409,7 +353,7 @@ namespace SmartReporting
                 row.Format.Font.Bold = true;
                 row.Shading.Color = HeaderColor;
 
-                row.Cells[countCellColumn].AddParagraph("Invoice Number");
+                row.Cells[countCellColumn].AddParagraph("Sub Invoice");
                 row.Cells[countCellColumn].Format.Font.Bold = true;
                 row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
                 row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
@@ -427,14 +371,12 @@ namespace SmartReporting
 
                 countCellColumn++;
 
-                if (_Product.ProductID == 0)
-                {
                     row.Cells[countCellColumn].AddParagraph("Product");
                     row.Cells[countCellColumn].Format.Font.Bold = true;
                     row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
                     row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
                     countCellColumn++;
-                }
+                
 
                 row.Cells[countCellColumn].AddParagraph("Amount Due");
                 row.Cells[countCellColumn].Format.Font.Bold = true;
@@ -447,7 +389,7 @@ namespace SmartReporting
                 Paragraph paragraph = this.addressFrame.AddParagraph();
 
                 int finalCountCellValue = 0;
-                foreach (DataRow transaction in Transactions.Rows)
+                foreach (var transaction in _clientDeduction.ClientDeductionDetails)
                 {
                     int countCellValue = 0;
 
@@ -458,32 +400,31 @@ namespace SmartReporting
                     row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                     row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
-                    row1.Cells[countCellValue].AddParagraph(transaction.Field<int>("InvoiceNumber").ToString());
+                    row1.Cells[countCellValue].AddParagraph(transaction.InvoiceNumber);
                     countCellValue++;
 
                     row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                     row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
-                    row1.Cells[countCellValue].AddParagraph(transaction.Field<string>("ClientName"));
+                    row1.Cells[countCellValue].AddParagraph(transaction.Client.ClientFullName);
                     countCellValue++;
 
                     row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                     row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
-                    row1.Cells[countCellValue].AddParagraph(transaction.Field<string>("Occupation"));
+                    row1.Cells[countCellValue].AddParagraph(transaction.Client.Occupation);
                     countCellValue++;
-                    if (_Product.ProductID == 0)
-                    {
+                   
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
                         row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
-                        row1.Cells[countCellValue].AddParagraph(transaction.Field<string>("Product"));
+                        row1.Cells[countCellValue].AddParagraph(transaction.Product.Name);
                         countCellValue++;
-                    }
+                  
                     row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                     row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Right;
                     row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
-                    row1.Cells[countCellValue].AddParagraph(String.Format(culture, "{0:C}", transaction.Field<decimal>("AmountDue")));
+                    row1.Cells[countCellValue].AddParagraph(String.Format(culture, "{0:C}", transaction.DeductedAmount));
 
 
                     finalCountCellValue = countCellValue;
@@ -495,7 +436,7 @@ namespace SmartReporting
                 Row row2 = this.table.AddRow();
                 row2.Borders.Visible = false;
 
-                decimal TotalPaid = Transactions.AsEnumerable().Sum(transaction => transaction.Field<decimal>("AmountDue"));
+                decimal TotalPaid = _clientDeduction.ClientDeductionDetails.AsEnumerable().Sum(transaction => transaction.DeductedAmount);
                 // Add the total due row
                 row2 = this.table.AddRow();
                 row2.Cells[0].Borders.Visible = false;
