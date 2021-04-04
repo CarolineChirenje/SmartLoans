@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SmartDomain.ClientDeduction>
+﻿@model IEnumerable<SmartDomain.ClientDeductionDetails>
 @using SmartHelper;
 @{
     TempData["Title"] = "Deductions";
@@ -37,6 +37,7 @@
                                 <tr>
 
                                     <th>Name</th>
+                                    <th>Invoice Number</th>
                                     <th>Occupation</th>
                                     <th>Salary</th>
                                     <th>Product</th>
@@ -49,7 +50,7 @@
                                 {
                                 <tr>
                                     @{
-                                        string duedate = UtilityService.ShowDate(item.DueDate);
+                                        string duedate = UtilityService.ShowDate(item.ClientDeduction.DueDate);
 
                                     }
                                     @if (UtilityService.HasPermission(Permissions.View_User))
@@ -60,6 +61,7 @@
                                     {
                                         <td>@item.Client.ClientFullName</td>
                                     }
+                                    <td>@item.InvoiceNumber</td>
                                     <td>@Html.DisplayFor(modelItem => item.Client.Occupation)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Client.Salary)</td>
                                     @if (UtilityService.HasPermission(Permissions.View_Product))

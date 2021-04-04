@@ -348,8 +348,11 @@ namespace SmartReporting
                     }
 
                     // Before you can add a row, you must define the columns
-                    Column column = this.table.AddColumn("2cm");
+                    Column column = this.table.AddColumn("3cm");
                     column.Format.Alignment = ParagraphAlignment.Center;
+
+                    //column = this.table.AddColumn("2cm");
+                    //column.Format.Alignment = ParagraphAlignment.Center;
 
                     column = this.table.AddColumn("2cm");
                     column.Format.Alignment = ParagraphAlignment.Right;
@@ -370,11 +373,18 @@ namespace SmartReporting
                     row.Format.Font.Bold = true;
                     row.Shading.Color = HeaderColor;
                     int countCellColumn = 0;
-                    row.Cells[countCellColumn].AddParagraph("Trans Date");
+                    //row.Cells[countCellColumn].AddParagraph("Transaction Date");
+                    //row.Cells[countCellColumn].Format.Font.Bold = true;
+                    //row.Cells[countCellColumn].Format.Alignment = ParagraphAlignment.Left;
+                    //row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                    //countCellColumn++;
+
+                    row.Cells[countCellColumn].AddParagraph("Transaction Date");
                     row.Cells[countCellColumn].Format.Font.Bold = true;
                     row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
                     row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
                     countCellColumn++;
+
                     row.Cells[countCellColumn].AddParagraph("Trans Code");
                     row.Cells[countCellColumn].Format.Font.Bold = true;
                     row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
@@ -413,8 +423,14 @@ namespace SmartReporting
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
                         row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
-                        row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
+                        row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("TransactionDate").ToString("yyyy-MM-dd HH:mm:ss"));
                         countCellValue++;
+
+                        //row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                        //row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                        //row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
+                        //row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
+                        //countCellValue++;
 
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
@@ -482,7 +498,7 @@ namespace SmartReporting
             {
 
 
-                string _selectClause = @"SELECT t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Product
+                string _selectClause = @"SELECT t.PaymentDate,t.TransactionDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Product
                                             FROM Transactions t
                                             INNER JOIN Products p ON p.ProductID=t.ProductID
                                             INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
@@ -517,7 +533,10 @@ namespace SmartReporting
                     }
 
                     // Before you can add a row, you must define the columns
-                    Column column = this.table.AddColumn("2cm");
+                    Column column = this.table.AddColumn("3cm");
+                    column.Format.Alignment = ParagraphAlignment.Left;
+
+                    column = this.table.AddColumn("2cm");
                     column.Format.Alignment = ParagraphAlignment.Center;
 
                     column = this.table.AddColumn("2cm");
@@ -542,11 +561,17 @@ namespace SmartReporting
                     row.Format.Font.Bold = true;
                     row.Shading.Color = HeaderColor;
                     int countCellColumn = 0;
-                    row.Cells[countCellColumn].AddParagraph("Trans Date");
+                    row.Cells[countCellColumn].AddParagraph("Transaction Date");
+                    row.Cells[countCellColumn].Format.Font.Bold = true;
+                    row.Cells[countCellColumn].Format.Alignment =  ParagraphAlignment.Left;
+                    row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                    countCellColumn++;
+                    row.Cells[countCellColumn].AddParagraph("Payment Date");
                     row.Cells[countCellColumn].Format.Font.Bold = true;
                     row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
                     row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
                     countCellColumn++;
+
                     row.Cells[countCellColumn].AddParagraph("Trans Code");
                     row.Cells[countCellColumn].Format.Font.Bold = true;
                     row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
@@ -583,6 +608,12 @@ namespace SmartReporting
                         Row row1 = this.table.AddRow();
 
                         row1.TopPadding = 1.5;
+                        row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                        row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                        row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
+                        row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("TransactionDate").ToString("yyyy-MM-dd HH:mm:ss"));
+                        countCellValue++;
+
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
                         row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;

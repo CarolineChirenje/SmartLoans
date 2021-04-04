@@ -175,10 +175,14 @@
 </section>
 <script>
 
-
     $(document).ready(function () {
-         document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
+        document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
+        $('#ClientID').change(function (e) {
+            // Your event handler
+        });
 
+        // And now fire change event when the DOM is ready
+        $('#ClientID').trigger('change');
 
     });
 

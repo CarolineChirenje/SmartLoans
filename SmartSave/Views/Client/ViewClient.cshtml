@@ -424,9 +424,9 @@
 
                             @if (UtilityService.HasPermission(Permissions.View_Client_Deductions))
                             {
-                                if (Model.ClientDeductions != null)
+                                if (Model.ClientDeductionDetails != null)
                                 {
-                                    if (Model.ClientDeductions.Count() > 0)
+                                    if (Model.ClientDeductionDetails.Count() > 0)
                                     {
                                         <li>
                                             <a href="#ClientDeductions" data-toggle="tab">Deduction Schedules</a>
@@ -1156,14 +1156,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="odd gradeX">
-                                                @if (Model.ClientDeductions != null)
+                                                @if (Model.ClientDeductionDetails != null)
                                                 {
-                                                    @foreach (var item in Model.ClientDeductions)
+                                                    @foreach (var item in Model.ClientDeductionDetails)
                                                     {
                                                         <tr>
                                                             @{
-                                                                string duedate = UtilityService.ShowDate(item.DueDate);
-                                                                string invoicedate = UtilityService.ShowDate(item.InvoiceDate);
+                                                                string duedate = UtilityService.ShowDate(item.ClientDeduction.DueDate);
+                                                                string invoicedate = UtilityService.ShowDate(item.ClientDeduction.InvoiceDate);
                                                             }
 
                                                             <td>@Html.DisplayFor(modelItem => item.Client.Occupation)</td>
@@ -1191,10 +1191,7 @@
                                         </table>
                                     </div>
                                     <div class="box-footer">
-                                        @*@if (UtilityService.HasPermission(Permissions.Capture_Payment))
-                                            {
-                                                <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#">Pay</a>
-                                            }*@
+
                                     </div>
                                 </div>
                             </div>
@@ -1230,149 +1227,255 @@
 
                                                             <td>@item.AttendanceRegister.AttendanceDate</td>
                                                             <td>@item.AttendanceRegister.AttendanceRegisterDetails.FirstOrDefault()?.AttendanceStatus</td>
-                                                        </tr>}
-                                                        }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="box-footer">
-                                           
-                                                    <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#">Print</a>
-                                                                                  </div>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
+                                    <div class="box-footer">
 
-
-                                <!-- /.panel-body -->
-                            </div>
-                            <!-- /.panel -->
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- /.box -->
-    </section>
-
-    <!-- Modal HTML Markup -->
-    <!-- Modal -->
-    <div class="modal fade" id="NotesForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" asp-controller="Client" asp-action="AddClientNote">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Comment:</label>
-                            <textarea class="form-control" name="Comment" rows="5"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Due Date:</label>
-                            <input type="date" class="form-control" name="DueDate" id="DueDate">
-                        </div>
-
-                        @if (UtilityService.UserType != (int)TypeOfUser.Employee)
-                        {
-                            <div class="form-group">
-                                <div>
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Visible To Admin Only:</label>
-
-                                    <div class="checkbox">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" data-val="true" id="VisibleToAdminOnly"
-                                                   name="VisibleToAdminOnly" value="true">
-                                        </label>
+                                        <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#">Print</a>
                                     </div>
                                 </div>
                             </div>
-                        }
-                        <input type="hidden" name="ClientID" value="@Model.ClientID" />
 
-                    </div>
-                    <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Add_Client_Note))
-                        {<button type="submit" class="btn btn-primary">Save Note</button>}
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
                     </div>
-                </form>
+
+                </div>
             </div>
         </div>
+
     </div>
+    <!-- /.box -->
+</section>
 
-    <div class="modal fade" id="DocumentForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" style="width:800px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" asp-controller="Client" asp-action="AddClientDocument" enctype="multipart/form-data">
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Document Type</label>
-                            <select asp-for="DocumentTypeID" class="form-control" asp-items="ViewBag.DocumentsList">
-                                <option value="">----</option>
-                            </select>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Comment:</label>
-                            <textarea class="form-control" name="Comment"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label"></label>
-
-                            <input type="file" class="form-control" name="FileBytes">
-
-                        </div>
-                        <input type="hidden" name="ClientID" value="@Model.ClientID" />
-
-                    </div>
-                    <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Client_Upload_Document))
-                        {
-                            <button type="submit" class="btn btn-primary">Upload</button>
-                        }
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                    </div>
-                </form>
+<!-- Modal HTML Markup -->
+<!-- Modal -->
+<div class="modal fade" id="NotesForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientNote">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Comment:</label>
+                        <textarea class="form-control" name="Comment" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Due Date:</label>
+                        <input type="date" class="form-control" name="DueDate" id="DueDate">
+                    </div>
+
+                    @if (UtilityService.UserType != (int)TypeOfUser.Employee)
+                    {
+                        <div class="form-group">
+                            <div>
+                                <label for="inputEmail3" class="col-sm-2 control-label">Visible To Admin Only:</label>
+
+                                <div class="checkbox">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" data-val="true" id="VisibleToAdminOnly"
+                                               name="VisibleToAdminOnly" value="true">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Add_Client_Note))
+                    {<button type="submit" class="btn btn-primary">Save Note</button>}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="ProductsForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<div class="modal fade" id="DocumentForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientDocument" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Document Type</label>
+                        <select asp-for="DocumentTypeID" class="form-control" asp-items="ViewBag.DocumentsList">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Comment:</label>
+                        <textarea class="form-control" name="Comment"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label"></label>
+
+                        <input type="file" class="form-control" name="FileBytes">
+
+                    </div>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
                 </div>
-                <form method="post" asp-controller="Client" asp-action="AddClientProduct">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
-                            <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductsAvailable">
-                                <option value="">----</option>
-                            </select>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Client_Upload_Document))
+                    {
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    }
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ProductsForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientProduct">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
+                        <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductsAvailable">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Deduction</label>
+                        <input type="text" class="form-control" asp-for="DeductionAmount" id="DeductionPercentage">
+                        <span id="DeductionPercentageError" class="text-danger text-bold"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Deduction After Salary Increment</label>
+                        <input type="text" class="form-control" asp-for="IncreamentAmount" id="IncreamentPercentage">
+                        <span id="IncreamentPercentageError" class="text-danger text-bold"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                        <div class="checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" data-val="true" id="IsActive"
+                                       name="IsActive" value="true">
+                            </label>
                         </div>
+                    </div>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+                    <input type="hidden" name="JointAccountEnumValue" value="@Model.JointAccountEnumValue" />
+                </div>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Add_Client_Product))
+                    {
+                        <button type="submit" class="btn btn-primary">Save Product</button>}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                        <div class="form-group">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CourseForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientCourse">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Course</label>
+                        <select asp-for="CourseID" class="form-control" asp-items="ViewBag.CourseList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Intake</label>
+                        <select asp-for="CourseIntakeID" class="form-control" asp-items="ViewBag.CourseIntakeList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+                </div>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Add_Client_Course))
+                    {
+                        <button type="submit" class="btn btn-primary">Register</button>}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ContactForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientContact">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Contact Type</label>
+                        <select asp-for="ContactTypeID" class="form-control" asp-items="ViewBag.ContactTypes">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Contact Person:</label>
+                        <input type="text" class="form-control" name="ContactPerson">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Relationship:</label>
+                        <select asp-for="RelationshipTypeID" class="form-control" asp-items="ViewBag.RelationTypes">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Contact:</label>
+                        <textarea class="form-control" name="Contact"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div>
                             <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
                             <div class="checkbox">
                                 <label class="checkbox-inline">
@@ -1381,356 +1484,286 @@
                                 </label>
                             </div>
                         </div>
-                        <input type="hidden" name="ClientID" value="@Model.ClientID" />
-                        <input type="hidden" name="JointAccountEnumValue" value="@Model.JointAccountEnumValue" />
                     </div>
-                    <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Add_Client_Product))
-                        {
-                            <button type="submit" class="btn btn-primary">Save Product</button>}
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+                </div>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Add_Client_Contact))
+                    {<button type="submit" class="btn btn-primary">Save Contact</button>}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="CourseForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" asp-controller="Client" asp-action="AddClientCourse">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Course</label>
-                            <select asp-for="CourseID" class="form-control" asp-items="ViewBag.CourseList">
-                                <option value="">----</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Intake</label>
-                            <select asp-for="CourseIntakeID" class="form-control" asp-items="ViewBag.CourseIntakeList">
-                                <option value="">----</option>
-                            </select>
-                        </div>
-                        <input type="hidden" name="ClientID" value="@Model.ClientID" />
-                    </div>
-                    <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Add_Client_Course))
-                        {
-                            <button type="submit" class="btn btn-primary">Register</button>}
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                    </div>
-                </form>
+<div class="modal fade" id="ClientMedicalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientMedicalDetail">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Allergies <i>(If Any)</i>:</label>
+                        <textarea class="form-control" name="Allergies"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Prescribed Medication  <i>(If Any)</i>:</label>
+                        <textarea class="form-control" name="PrescribedMedication"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Preffered Hospital:</label>
+                        <input type="text" class="form-control" name="Hospital">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Preffered Doctor:</label>
+                        <input type="text" class="form-control" name="Doctor">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Doctor Phone Number:</label>
+                        <input type="tel" class="form-control" name="Telephone">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Medical Aid Name:</label>
+                        <input type="text" class="form-control" name="MedicalAid">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Medical Aid Number:</label>
+                        <input type="tel" class="form-control" name="MedicalAidNo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Other Information  <i>(If Any)</i>:</label>
+                        <textarea class="form-control" name="Other"></textarea>
+                    </div>
+
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Add_Client_Medical_Details))
+                    {
+                        <button type="submit" class="btn btn-primary">Save</button>}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="ContactForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" asp-controller="Client" asp-action="AddClientContact">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Contact Type</label>
-                            <select asp-for="ContactTypeID" class="form-control" asp-items="ViewBag.ContactTypes">
-                                <option value="">----</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Contact Person:</label>
-                            <input type="text" class="form-control" name="ContactPerson">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Relationship:</label>
-                            <select asp-for="RelationshipTypeID" class="form-control" asp-items="ViewBag.RelationTypes">
-                                <option value="">----</option>
-                            </select>
+<div class="modal fade" id="DependentForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientDependent">
+                <div class="modal-body">
 
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Contact:</label>
-                            <textarea class="form-control" name="Contact"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
-                                <div class="checkbox">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" data-val="true" id="IsActive"
-                                               name="IsActive" value="true">
-                                    </label>
-                                </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Firstname:</label>
+                        <input type="text" class="form-control" name="FirstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Lastname:</label>
+                        <input type="text" class="form-control" name="LastName">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">ID Number:</label>
+                        <input type="tel" class="form-control" name="IDNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Date Of Birth</label>
+                        <input type="date" class="form-control" name="DateOfBirth" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+
+                        <select asp-for="GenderID" class="form-control" asp-items="ViewBag.DependentGenderList">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Occupation:</label>
+                        <input type="text" class="form-control" name="Occupation">
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                            <div class="checkbox">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" data-val="true" id="IsActive"
+                                           name="IsActive" value="true">
+                                </label>
                             </div>
                         </div>
-                        <input type="hidden" name="ClientID" value="@Model.ClientID" />
                     </div>
-                    <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Add_Client_Contact))
-                        {<button type="submit" class="btn btn-primary">Save Contact</button>}
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
 
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Add_Client_Dependent))
+                    {
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    }
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="ClientMedicalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" asp-controller="Client" asp-action="AddClientMedicalDetail">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Allergies <i>(If Any)</i>:</label>
-                            <textarea class="form-control" name="Allergies"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Prescribed Medication  <i>(If Any)</i>:</label>
-                            <textarea class="form-control" name="PrescribedMedication"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Preffered Hospital:</label>
-                            <input type="text" class="form-control" name="Hospital">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Preffered Doctor:</label>
-                            <input type="text" class="form-control" name="Doctor">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Doctor Phone Number:</label>
-                            <input type="tel" class="form-control" name="Telephone">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Medical Aid Name:</label>
-                            <input type="text" class="form-control" name="MedicalAid">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Medical Aid Number:</label>
-                            <input type="tel" class="form-control" name="MedicalAidNo">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Other Information  <i>(If Any)</i>:</label>
-                            <textarea class="form-control" name="Other"></textarea>
-                        </div>
-
-                        <input type="hidden" name="ClientID" value="@Model.ClientID" />
-
-                    </div>
-                    <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Add_Client_Medical_Details))
-                        {
-                            <button type="submit" class="btn btn-primary">Save</button>}
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                    </div>
-                </form>
+<div class="modal fade" id="SalaryHistory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
-    </div>
+            <form>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Occupation</th>
+                                        <th>Salary</th>
+                                        <th>Last Changed By</th>
+                                        <th>Last Changed Date</th>
 
-    <div class="modal fade" id="DependentForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" asp-controller="Client" asp-action="AddClientDependent">
-                    <div class="modal-body">
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.ClientOccupationHistory != null)
+                                    {
 
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Firstname:</label>
-                            <input type="text" class="form-control" name="FirstName">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Lastname:</label>
-                            <input type="text" class="form-control" name="LastName">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">ID Number:</label>
-                            <input type="tel" class="form-control" name="IDNumber">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Date Of Birth</label>
-                            <input type="date" class="form-control" name="DateOfBirth" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
-
-                            <select asp-for="GenderID" class="form-control" asp-items="ViewBag.DependentGenderList">
-                                <option value="">----</option>
-                            </select>
-
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Occupation:</label>
-                            <input type="text" class="form-control" name="Occupation">
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
-                                <div class="checkbox">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" data-val="true" id="IsActive"
-                                               name="IsActive" value="true">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="hidden" name="ClientID" value="@Model.ClientID" />
-
-                    </div>
-                    <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Add_Client_Dependent))
-                        {
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        }
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="SalaryHistory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Model.ClientRef</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form>
-                    <div class="modal-body">
-                        <div class="panel-body">
-                            <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th>Occupation</th>
-                                            <th>Salary</th>
-                                            <th>Last Changed By</th>
-                                            <th>Last Changed Date</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (Model.ClientOccupationHistory != null)
+                                        foreach (var item in Model.ClientOccupationHistory)
                                         {
 
-                                            foreach (var item in Model.ClientOccupationHistory)
-                                            {
+                                            <tr>
+                                                @{
+                                                    string lastChangedDate = UtilityService.ShowDateTime(item.LastChangedDate);
+                                                }
 
-                                                <tr>
-                                                    @{
-                                                        string lastChangedDate = UtilityService.ShowDateTime(item.LastChangedDate);
-                                                    }
+                                                <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Salary)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                                <td>@lastChangedDate</td>
 
-                                                    <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.Salary)</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-                                                    <td>@lastChangedDate</td>
-
-                                                </tr>
-                                            }
+                                            </tr>
                                         }
-                                </table>
-                            </div>
+                                    }
+                            </table>
                         </div>
-
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <script>
-        $(document).ready(function () {
-            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-                localStorage.setItem('activeTab', $(e.target).attr('href'));
-            });
-            var activeTab = localStorage.getItem('activeTab');
-            if (activeTab) {
-                $('#myTab a[href="' + activeTab + '"]').tab('show');
-            }
-            StartDate
-            var futureDate = new Date();
-            futureDate.setDate(futureDate.getDate() + 60);
-            var previousDate = new Date();
-            previousDate.setDate(previousDate.getDate() - 60);
-            document.getElementById('DueDate').value = new Date().toISOString().substring(0, 10);
-            document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
-            document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
-            showCoApplicantForm();
-
+<script>
+    $(document).ready(function () {
+        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
         });
-        $(function () {
-            $('#Salary').blur(function () {
-                var tempVal = $('#Salary').val();
-                console.debug(tempVal);
-                if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
-                    $("#SalaryError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
-                    $(":submit").attr("disabled", true);
-                }
-                else {
-                    $("#SalaryError").text("");
-                    $(":submit").removeAttr("disabled");
-                }
-            })
-        });
-        function showProduct(_statementID) {
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab) {
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+        StartDate
+        var futureDate = new Date();
+        futureDate.setDate(futureDate.getDate() + 60);
+        var previousDate = new Date();
+        previousDate.setDate(previousDate.getDate() - 60);
+        document.getElementById('DueDate').value = new Date().toISOString().substring(0, 10);
+        document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
+        document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
+        showCoApplicantForm();
 
-            if (_statementID != 1) {
-                $("#ddlProduct").hide();
+    });
+    $(function () {
+        $('#Salary').blur(function () {
+            var tempVal = $('#Salary').val();
+            console.debug(tempVal);
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#SalaryError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
             }
             else {
-                $("#ddlProduct").show();
+                $("#SalaryError").text("");
+                $(":submit").removeAttr("disabled");
             }
+        })
 
-
-        }
-        function showCoApplicantForm(AccountTypeID) {
-            var jointAccount = $("#JointAccountEnumValue").val();
-            if (AccountTypeID === jointAccount) {
-                $("#CoApplicantInfo").show();
-            } else {
-                $("#CoApplicantInfo").hide();
+        $('#DeductionPercentage').blur(function () {
+            var tempVal = $('#DeductionPercentage').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#DeductionPercentageError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
             }
+            else {
+                $("#DeductionPercentageError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+
+        $('#IncreamentPercentage').blur(function () {
+            var tempVal = $('#IncreamentPercentage').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#IncreamentPercentageError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#IncreamentPercentageError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+    })
+    function showProduct(_statementID) {
+
+        if (_statementID != 1) {
+            $("#ddlProduct").hide();
+        }
+        else {
+            $("#ddlProduct").show();
         }
 
-    </script>
+
+    }
+    function showCoApplicantForm(AccountTypeID) {
+        var jointAccount = $("#JointAccountEnumValue").val();
+        if (AccountTypeID === jointAccount) {
+            $("#CoApplicantInfo").show();
+        } else {
+            $("#CoApplicantInfo").hide();
+        }
+    }
+
+</script>
 

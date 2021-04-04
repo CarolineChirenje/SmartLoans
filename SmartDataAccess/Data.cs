@@ -122,7 +122,7 @@ namespace SmartDataAccess
             return variableTypes.ToArray();
         }
 
-      
+
         public static PriorityRank[] GetPriorityRanks()
         {
             List<PriorityRank> priorityRanks = new List<PriorityRank>
@@ -533,7 +533,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                           new SmartDomain.CustomSetting()
+                new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Site_Customer_Service_Email,
                     Name = AppSetting.Site_Customer_Service_Email.ToString().Replace("_", " "),
@@ -598,9 +598,7 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
-                }
-                ,
-
+                },
 
                   new SmartDomain.CustomSetting()
                 {
@@ -642,8 +640,58 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Generate_Receipt_On_Payment_Upload,
+                    Name = AppSetting.Generate_Receipt_On_Payment_Upload.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Generates Receipt on Payment Upload",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
 
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Auto_Email_Invoices,
+                    Name = AppSetting.Auto_Email_Invoices.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Automatically Emails Generated Invoices",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
 
+                },
+                   new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Auto_Email_Receipts,
+                    Name = AppSetting.Auto_Email_Receipts.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Automatically Emails Generated Receipts",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                      new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Auto_Email_Statements,
+                    Name = AppSetting.Auto_Email_Statements.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Automatically Emails Generated Statements",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
                 };
 
             return settings.ToArray();
@@ -1384,9 +1432,9 @@ namespace SmartDataAccess
         public static Titles[] GetTitles()
         {
 
-            List<Titles>  titleList = new List<Titles>();
+            List<Titles> titleList = new List<Titles>();
             var titles = from Title t in Enum.GetValues(typeof(Title))
-                        select new { ID = t, Name = t.ToString() };
+                         select new { ID = t, Name = t.ToString() };
             foreach (var title in titles)
             {
                 titleList.Add(new Titles()
@@ -1403,13 +1451,13 @@ namespace SmartDataAccess
             return titleList.ToArray();
 
         }
-       
+
         public static ClientAccountType[] GetClientAccountTypes()
-    {
+        {
 
             List<ClientAccountType> accountTypesList = new List<ClientAccountType>();
             var accountTypes = from Client_AccountType t in Enum.GetValues(typeof(Client_AccountType))
-                         select new { ID = t, Name = t.ToString() };
+                               select new { ID = t, Name = t.ToString() };
             foreach (var accountType in accountTypes)
             {
                 accountTypesList.Add(new ClientAccountType()
@@ -1432,7 +1480,7 @@ namespace SmartDataAccess
 
             List<RecordStatus> statusList = new List<RecordStatus>();
             var statuses = from RecordState t in Enum.GetValues(typeof(RecordState))
-                         select new { ID = t, Name = t.ToString() };
+                           select new { ID = t, Name = t.ToString() };
             foreach (var status in statuses)
             {
                 statusList.Add(new RecordStatus()

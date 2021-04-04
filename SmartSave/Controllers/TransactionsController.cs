@@ -77,16 +77,16 @@ namespace SmartSave.Controllers
                     TransactionTypeID = paymentsFile.TransactionTypeID,
                     AssertID = paymentsFile.AssertID,
                     AssertCategoryID = paymentsFile.AssertCategoryID
-
                 };
-
-                if (await (_service.CreatePayment(addPaymentsFile, (TransactionTypeList)paymentsFile.TransactionTypeID)) == 0)
+                int result = await (_service.CreatePayment(addPaymentsFile, (TransactionTypeList)paymentsFile.TransactionTypeID));
+                if (result == 0)
+                                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                                else
                 {
-                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    if (UtilityService.GenerateReceipt)
+                       return RedirectToAction("PrintTransaction", new { id = result });
                 }
-
-
-            }
+           }
             int clientID = 0;
             try
             {
@@ -199,9 +199,9 @@ namespace SmartSave.Controllers
             HttpContext.Session.SetString("DateFrom", model.DateFrom.ToString());
             HttpContext.Session.SetString("DateTo", model.DateTo.ToString());
             HttpContext.Session.SetString("ProductID", model.ProductID.ToString());
-            var deductions = _service.GetSchedule(model.ProductID, model.DateFrom,model.DateTo);
-                return View(deductions);
-                 
+            var deductions = _service.GetSchedule(model.ProductID, model.DateFrom, model.DateTo);
+            return View(deductions);
+
         }
 
         [HttpPost]
@@ -224,12 +224,12 @@ namespace SmartSave.Controllers
             }
             return RedirectToAction(nameof(ScheduleReport));
         }
-            [HttpPost]
+        [HttpPost]
         public ActionResult GenerateSchedule(IFormCollection formCollection)
         {
             var clientProductIDs = formCollection["ClientProductID"];
             List<int> clientProductID = new List<int>();
-                      foreach (string id in clientProductIDs)
+            foreach (string id in clientProductIDs)
             {
                 clientProductID.Add(int.Parse(id));
 
@@ -254,12 +254,12 @@ namespace SmartSave.Controllers
                 {
                 }
                 if (_service.DeductionExists(InvoiceDate))
-                 {
-                    TempData["Error"] = $"Invoices with a due date {UtilityService.ShowDate(InvoiceDate)} have already been generated, you can either deleted the invoices and start over or generate invoices for another date." ;
-                    return RedirectToAction (nameof(Schedule));
+                {
+                    TempData["Error"] = $"Invoices with a due date {UtilityService.ShowDate(InvoiceDate)} have already been generated, you can either deleted the invoices and start over or generate invoices for another date.";
+                    return RedirectToAction(nameof(Schedule));
                 }
-               
-                int result = _service.CalculateDeductions(clientProductID, InvoiceDate,DueDate).Result;
+
+                int result = _service.CalculateDeductions(clientProductID, InvoiceDate, DueDate).Result;
                 if (result > 0)
                 {
 
@@ -359,25 +359,26 @@ namespace SmartSave.Controllers
             if (ProductID > 0)
                 product = _settingService.FindProduct(ProductID);
             else
-                product = new Product {
+                product = new Product
+                {
                     ProductID = 0,
                     Name = "All",
                 };
 
             Company company = _settingService.FindDefaultCompany();
-                SchedulePrintOut printOut = new SchedulePrintOut();
+            SchedulePrintOut printOut = new SchedulePrintOut();
 
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    Document document = printOut.Print(product,company, InvoiceDate,DueDate);
-                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                    pdfRenderer.Document = document;
-                    pdfRenderer.RenderDocument();
-                    pdfRenderer.PdfDocument.Save(stream, false);
-                    return File(stream.ToArray(), "application/pdf",    $"SalarySchedule{product.Name}.pdf");
-                }
+            using (MemoryStream stream = new MemoryStream())
+            {
+                Document document = printOut.Print(product, company, InvoiceDate, DueDate);
+                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                pdfRenderer.Document = document;
+                pdfRenderer.RenderDocument();
+                pdfRenderer.PdfDocument.Save(stream, false);
+                return File(stream.ToArray(), "application/pdf", $"SalarySchedule{product.Name}.pdf");
             }
-            
+        }
+
 
         private void GetDropDownLists()
         {

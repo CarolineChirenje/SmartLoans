@@ -87,8 +87,10 @@ namespace SmartLogic
                             Include(c => c.ClientCourses).
                             ThenInclude(c => c.Course).
                             ThenInclude(c => c.CourseIntakes).
-                            Include(c => c.ClientDeductions).
-                            ThenInclude(c => c.Product).
+                            Include(c => c.ClientDeductionDetails).
+                            ThenInclude(c => c.ClientDeduction).
+                             Include(c => c.ClientDeductionDetails).
+                             ThenInclude(c => c.Product).
                              Include(c => c.ClientOccupationHistory).
                              Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
                              Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
@@ -673,9 +675,9 @@ namespace SmartLogic
         }
         public async Task<int> Update(ClientProduct clientProduct)
         {
-
-
             ClientProduct ClientProduct = _context.ClientProducts.Find(clientProduct.ClientProductID);
+            ClientProduct.IncreamentPercentage = clientProduct.IncreamentPercentage;
+            ClientProduct.DeductionPercentage = clientProduct.DeductionPercentage;
             ClientProduct.IsActive = clientProduct.IsActive;
             ClientProduct.LastChangedBy = UtilityService.CurrentUserName;
             ClientProduct.LastChangedDate = DateTime.Now;
@@ -722,7 +724,7 @@ namespace SmartLogic
              Include(c => c.Course).
              ThenInclude(c => c.CourseOutlines).
              Include(c => c.Course).
-             ThenInclude(c=>c.CourseIntakes).
+             ThenInclude(c => c.CourseIntakes).
             Where(t => t.ClientCourseID == id).FirstOrDefaultAsync();
         }
         public async Task<int> Save(ClientCourse ClientCourse)

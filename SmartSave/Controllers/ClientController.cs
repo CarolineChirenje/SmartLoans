@@ -699,8 +699,18 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> AddClientProduct(ClientProduct ClientProduct)
         {
             if (ModelState.IsValid)
-            {
-
+            { if (!String.IsNullOrEmpty(ClientProduct.DeductionAmount))
+                {
+                    decimal _deductionAmount = UtilityService.GetDecimalAmount(ClientProduct.DeductionAmount);
+                    if(_deductionAmount>0)
+                    ClientProduct.DeductionPercentage = _deductionAmount;
+                }
+                if (!String.IsNullOrEmpty(ClientProduct.IncreamentAmount))
+                {
+                    decimal _increamentAmount = UtilityService.GetDecimalAmount(ClientProduct.IncreamentAmount);
+                    if(_increamentAmount>0)
+                    ClientProduct.IncreamentPercentage = _increamentAmount;
+                }
                 if (await (_service.Save(ClientProduct)) == 0)
                 {
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -726,9 +736,22 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             if (ModelState.IsValid)
             {
+                
                 ClientProduct update = await _service.FindProduct(clientProduct.ClientProductID);
                 if (UtilityService.IsNotNull(update))
                 {
+                    if (!String.IsNullOrEmpty(clientProduct.DeductionAmount))
+                    {
+                        decimal _deductionAmount = UtilityService.GetDecimalAmount(clientProduct.DeductionAmount);
+                        if(_deductionAmount>0)
+                        clientProduct.DeductionPercentage = _deductionAmount;
+                    }
+                    if (!String.IsNullOrEmpty(clientProduct.IncreamentAmount))
+                    {
+                        decimal _increamentAmount = UtilityService.GetDecimalAmount(clientProduct.IncreamentAmount);
+                        if (_increamentAmount > 0)
+                            clientProduct.IncreamentPercentage = _increamentAmount;
+                    }
                     if (await (_service.Update(clientProduct)) == 0)
                     {
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");

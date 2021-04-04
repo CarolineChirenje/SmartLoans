@@ -18,9 +18,9 @@ namespace SmartLogic
         Task<long> NewPayments();
         Task<int> CalculateDeductions(List<int> ClientProductIDs, DateTime InvoiceDate, DateTime DueDate);
         Task<int> RemoveDeductions(List<int> clientDeductionID);
-        List<ClientDeduction> GetSchedule(int ProductID, DateTime DateFrom, DateTime DateTo);
+        List<ClientDeductionDetails> GetSchedule(int ProductID, DateTime DateFrom, DateTime DateTo);
         bool DeductionExists(DateTime CutOffDate);
-        Task<List<ClientDeduction>> GetClientDeductions(List<int> ClientProductIDs, DateTime InvoiceDate);
+        Task<List<ClientDeductionDetails>> GetClientDeductions(List<int> ClientProductIDs, DateTime InvoiceDate);
     }
 
 }

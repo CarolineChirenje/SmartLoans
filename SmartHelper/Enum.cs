@@ -587,8 +587,11 @@ AED = 1
         Password_Validity_Period,
         Account_Number_Auto_Generate,
         Application_Is_VAT_Compliant,
-        Date_Time_Format
-
+        Date_Time_Format,
+        Generate_Receipt_On_Payment_Upload,
+        Auto_Email_Receipts,
+        Auto_Email_Statements,
+        Auto_Email_Invoices
 
     }
 

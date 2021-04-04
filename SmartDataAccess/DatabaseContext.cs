@@ -170,6 +170,7 @@ namespace SmartDataAccess
         public DbSet<ClientProduct> ClientProducts { get; set; }
         public DbSet<ClientFee> ClientFees { get; set; }
         public DbSet<ClientDeduction> ClientDeductions { get; set; }
+        public DbSet<ClientDeductionDetails> ClientDeductionDetails { get; set; }
         public DbSet<ClientOccupationHistory> ClientOccupationHistory { get; set; }
         public DbSet<ClientAccountType> ClientAccountTypes { get; set; }
 

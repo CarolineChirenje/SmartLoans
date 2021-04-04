@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SmartDomain.ClientDeduction>
+﻿@model IEnumerable<SmartDomain.ClientDeductionDetails>
 @using SmartHelper;
 @{
     TempData["Title"] = "Deductions";
@@ -54,10 +54,10 @@
                                     {
                                         <tr>
                                             @{
-                                                string duedate = UtilityService.ShowDate(item.DueDate);
-                                                string invoicedate = UtilityService.ShowDate(item.InvoiceDate);
+                                                string duedate = UtilityService.ShowDate(item.ClientDeduction.DueDate);
+                                                string invoicedate = UtilityService.ShowDate(item.ClientDeduction.InvoiceDate);
                                             }
-                                            <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientDeductionID" value="@item.ClientDeductionID" /></td>
+                                            <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientDeductionDetailID" value="@item.ClientDeductionDetailID" /></td>
                                             @if (UtilityService.HasPermission(Permissions.View_User))
                                             {
                                                 <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@item.Client.ClientFullName</a></td>
@@ -94,9 +94,9 @@
                         <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="PrintGeneratedSchedule">Print Schedule</a><br />
 
                         <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        @*@if (UtilityService.HasPermission(Permissions.Remove_Invoice_Entries))
-                            {*@   <button type="submit" class="btn btn-danger">Remove Multiple Invoice Entries</button>
-                        @* } *@
+                        @if (UtilityService.HasPermission(Permissions.Remove_Invoice_Entries))
+                            {   <button type="submit" class="btn btn-danger">Remove Multiple Invoice Entries</button>
+                         } 
 
                     </div>
 

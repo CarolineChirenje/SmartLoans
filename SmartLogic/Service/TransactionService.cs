@@ -158,16 +158,12 @@ namespace SmartLogic
 
                 throw;
             }
-
-            //}
-
             return await _context.SaveChangesAsync();
         }
 
 
         private void updateOldPayment(int transactionID, int oldPaymentStatus, string newTransRef)
         {
-
             try
             {
                 //update status of old payment
@@ -259,92 +255,112 @@ namespace SmartLogic
 
         public async Task<int> RemoveDeductions(List<int> clientDeductionID)
         {
-            var clientDeductions = _context.ClientDeductions.Where(cd => clientDeductionID.Contains(cd.ClientDeductionID));
+            var clientDeductions = _context.ClientDeductionDetails.Where(cd => clientDeductionID.Contains(cd.ClientDeductionID));
             _context.RemoveRange(clientDeductions);
             return await _context.SaveChangesAsync();
         }
         public async Task<int> CalculateDeductions(List<int> ClientProductIDs, DateTime InvoiceDate, DateTime DueDate)
         {
-            int result = 0;
-            var clientProduct = _context.ClientProducts.
-                Include(c => c.Product).
-                   Include(c => c.Client).
-                   ThenInclude(c => c.ClientOccupationHistory).
-                   Where(t => ClientProductIDs.Contains(t.ClientProductID)).ToList();
-
-
-
-            int _invoiceNumber = UtilityService.LastInvoiceNumber + 1;
-
-            foreach (var item in clientProduct)
+            try
             {
-                //1.
-                decimal _percentageDeduction = item.Product.DeductionPercentage;
-                decimal _percentageIncrement = item.Product.IncreamentPercentage;
-                decimal _currentSalary = item.Client.Salary;
-                decimal? _previousSalary = null;
-                decimal _totalDeductionPercentage = 0M;
-                decimal _totalDeduction = 0M;
-                var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
-                if (UtilityService.IsNotNull(_lastSalary))
-                    _previousSalary = _lastSalary.Salary;
-
-                if (_previousSalary.HasValue)
-                {
-                    if (_currentSalary > _previousSalary.Value)
-                        _totalDeductionPercentage = _percentageDeduction + _percentageIncrement;
-                    else
-                        _totalDeductionPercentage = _percentageDeduction;
-                }
-                else
-                    _totalDeductionPercentage = _percentageDeduction;
-
-                _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
 
 
+                int result = 0;
+                var clientProduct = _context.ClientProducts.
+                    Include(c => c.Product).
+                       Include(c => c.Client).
+                       ThenInclude(c => c.ClientOccupationHistory).
+                       Where(t => ClientProductIDs.Contains(t.ClientProductID)).ToList();
 
                 ClientDeduction deduction = new ClientDeduction
                 {
-                    ClientID = item.ClientID,
-                    ClientProductID = item.ClientProductID,
-                    Salary = _currentSalary,
-                    ProductID = item.ProductID,
+
                     InvoiceDate = InvoiceDate,
                     DueDate = DueDate,
-                    DeductedAmount = _totalDeduction,
-                    TotalDeductionPercentage = _totalDeductionPercentage,
-                    DeductionPercentage = _percentageDeduction,
-                    AdditionalDeductionPercentage = _percentageIncrement,
                     LastChangedBy = UtilityService.CurrentUserName,
                     LastChangedDate = DateTime.Now,
-                    InvoiceNumber = _invoiceNumber
 
                 };
 
                 _context.Add(deduction);
-            }
-            if (clientProduct.Count() > 0)
                 result = await _context.SaveChangesAsync();
+                if (result > 0)
+                {
+                    foreach (var item in clientProduct)
+                    {
+                        //1.
+                        decimal _percentageDeduction =item.DeductionPercentage.HasValue? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
+                        decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
+                        decimal _currentSalary = item.Client.Salary;
+                        decimal? _previousSalary = null;
+                        decimal _totalDeductionPercentage = 0M;
+                        decimal _totalDeduction = 0M;
+                        var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
+                        if (UtilityService.IsNotNull(_lastSalary))
+                            _previousSalary = _lastSalary.Salary;
 
-            return result;
+                        if (_previousSalary.HasValue)
+                        {
+                            if (_currentSalary > _previousSalary.Value)
+                                _totalDeductionPercentage = _percentageDeduction + _percentageIncrement;
+                            else
+                                _totalDeductionPercentage = _percentageDeduction;
+                        }
+                        else
+                            _totalDeductionPercentage = _percentageDeduction;
+
+                        _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
+
+
+
+                        ClientDeductionDetails deductionDetails = new ClientDeductionDetails
+                        {
+                            ClientID = item.ClientID,
+                            ClientProductID = item.ClientProductID,
+                            Salary = _currentSalary,
+                            ProductID = item.ProductID,
+                            ClientDeductionID = deduction.ClientDeductionID,
+                            DeductedAmount = _totalDeduction,
+                            TotalDeductionPercentage = _totalDeductionPercentage,
+                            DeductionPercentage = _percentageDeduction,
+                            AdditionalDeductionPercentage = _percentageIncrement,
+                            LastChangedBy = UtilityService.CurrentUserName,
+                            LastChangedDate = DateTime.Now,
+                            InvoiceNumber=$"{item.Client.AccountNumber}-INV-{deduction.ClientDeductionID}"
+
+                        };
+
+                        _context.Add(deductionDetails);
+                    }
+                    if (clientProduct.Count() > 0)
+                        result = await _context.SaveChangesAsync();
+
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
-        public async Task<List<ClientDeduction>> GetClientDeductions(List<int> ClientProductIDs, DateTime InvoiceDate)
+        public async Task<List<ClientDeductionDetails>> GetClientDeductions(List<int> ClientProductIDs, DateTime InvoiceDate)
         {
-            return await _context.ClientDeductions
-                .Include(p => p.Client)
+            return await _context.ClientDeductionDetails
+            .Include(c => c.ClientDeduction)
+              .Include(p => p.Client)
                 .Include(p => p.Product)
-
-               .Where(t => t.InvoiceDate == InvoiceDate && ClientProductIDs.Contains(t.ClientProductID)).ToListAsync();
-
+               .Where(t => t.ClientDeduction.InvoiceDate == InvoiceDate && ClientProductIDs.Contains(t.ClientProductID)).ToListAsync();
         }
 
-        public List<ClientDeduction> GetSchedule(int ProductID, DateTime DateFrom, DateTime DateTo)
+        public List<ClientDeductionDetails> GetSchedule(int ProductID, DateTime DateFrom, DateTime DateTo)
         {
 
-            var deductions = _context.ClientDeductions.
-            Include(c => c.Client).Include(p => p.Product).
-                        Where(cd => cd.InvoiceDate >= DateFrom && cd.InvoiceDate <= DateTo);
+            var deductions = _context.ClientDeductionDetails
+            .Include(c => c.ClientDeduction)
+            .Include(c => c.Client).Include(p => p.Product)
+             .Where(cd => cd.ClientDeduction.InvoiceDate >= DateFrom && cd.ClientDeduction.InvoiceDate <= DateTo);
             if (ProductID == 0)
                 return deductions.ToList();
             else

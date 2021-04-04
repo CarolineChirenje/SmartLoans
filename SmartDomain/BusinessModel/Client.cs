@@ -44,7 +44,7 @@ namespace SmartDomain
         public virtual List<ClientProduct> ClientProducts { get; set; }
         public virtual List<ClientCourse> ClientCourses { get; set; }
         public virtual List<ClientFee> ClientFees { get; set; }
-        public virtual List<ClientDeduction> ClientDeductions { get; set; }
+        public virtual List<ClientDeductionDetails> ClientDeductionDetails { get; set; }
         public List<AttendanceRegisterDetail> AttendanceRegister { get; set; }
         public virtual List<ClientOccupationHistory> ClientOccupationHistory { get; set; }
         [NotMapped]
@@ -54,7 +54,7 @@ namespace SmartDomain
         [NotMapped]
         public virtual Statement Statement { get; set; }
 
-         [NotMapped]
+        [NotMapped]
         [DisplayName("Document Type")]
         public int DocumentTypeID { get; set; }
 
@@ -66,7 +66,6 @@ namespace SmartDomain
         public int ClientProductID { get; set; }
 
         [NotMapped]
-        [DisplayName("Relationship Type")]
         public int RelationshipTypeID { get; set; }
 
         [NotMapped]
@@ -76,12 +75,17 @@ namespace SmartDomain
         public int CourseIntakeID { get; set; }
 
         [NotMapped]
-        [DisplayName("Product Type")]
         public int ProductID { get; set; }
 
         [NotMapped]
+        public string DeductionAmount { get; set; }
+
+        [NotMapped]
+        public string IncreamentAmount { get; set; }
+
+        [NotMapped]
         public int TransactionTypeID { get; set; }
-       
+
         [NotMapped]
         public int BankAccountID { get; set; }
         [NotMapped]
@@ -93,7 +97,7 @@ namespace SmartDomain
         [NotMapped]
         public string PrimaryApplicantName { get { return String.Concat(((Title)TitleID).ToString(), " ", Initials, " ", LastName); } }
         [NotMapped]
-        public string ClientRef { get { return String.Concat(AccountNumber, "-", LastName, " ", FirstName); } }
+        public string ClientRef { get { return String.Concat(AccountNumber, "-", ClientFullName); } }
 
         [NotMapped]
         public string CoApplicantSalutation { get { return JointApplicant != null ? String.Concat(((Title)JointApplicant.ApplicantTitleID).ToString(), " ", JointApplicant.Initials, " ", JointApplicant.LastName) : ""; } }
@@ -101,7 +105,7 @@ namespace SmartDomain
         public string ClientFullName { get { return IsJointAccount ? (String.Concat(PrimaryApplicantName, (JointApplicant != null ? $" & {CoApplicantSalutation}" : ""))) : PrimaryApplicantName; } }
         [NotMapped]
         public int JointAccountEnumValue { get { return (int)Client_AccountType.Joint; } }
-        
+
     }
 
 }

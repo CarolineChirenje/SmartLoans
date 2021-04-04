@@ -100,7 +100,16 @@ namespace SmartHelper
 
             }
         }
+        public static bool GenerateReceipt
+        {
+            get
+            {
 
+                string value = GetData.GetSettingValue((int)AppSetting.Generate_Receipt_On_Payment_Upload)?.Value;
+                return value.Equals("true") ? true : false;
+
+            }
+        }
         public static bool AutoGenerateAccountNumber
         {
             get
