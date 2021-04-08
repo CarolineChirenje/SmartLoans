@@ -18,8 +18,8 @@ namespace SmartReporting
         }
         public static Image PrintHeaderLogo(Section section)
         {
-                    // Put a logo in the header
-            string imagePath = UtilityService.IsNotNull((UtilityService.CompanyLogo))? MigraDocFilenameFromByteArray(UtilityService.CompanyLogo):"";
+            // Put a logo in the header
+            string imagePath = UtilityService.IsNotNull((UtilityService.CompanyLogo)) ? MigraDocFilenameFromByteArray(UtilityService.CompanyLogo) : "";
             Image image = section.Headers.Primary.AddImage(imagePath);
             image.Height = "1.5cm";
             image.LockAspectRatio = true;
@@ -38,36 +38,37 @@ namespace SmartReporting
         }
         public static Paragraph PrintFooter(Section section)
         {
-            
+
             Paragraph paragraph = section.Footers.Primary.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;
-            paragraph.AddText(UtilityService.Report_Footer_1);
+            string reportFooter1 = UtilityService.Report_Footer_1;
+            if (!String.IsNullOrEmpty(reportFooter1))
+                paragraph.AddText(reportFooter1);
             string reportFooter2 = UtilityService.Report_Footer_2;
             if (!String.IsNullOrEmpty(reportFooter2))
             {
                 paragraph.AddLineBreak();
                 paragraph.AddText(reportFooter2);
             }
-            paragraph.Format.Font.Size = 9;
+            paragraph.Format.Font.Size = 8;
             return paragraph;
         }
-        public static Paragraph PrintFootNotes(Paragraph paragraph)
-        {
+        //public static Paragraph PrintFootNotes(Paragraph paragraph)
+        //{
 
-            paragraph.Format.SpaceBefore = "3cm";
-            paragraph.Format.Font.Size = 7;
-            // paragraph.Format.Font.ApplyFont(new Font("Lucida Handwriting"));
-            paragraph.Format.Alignment = ParagraphAlignment.Center;
-            paragraph.AddText("");
-            paragraph.AddLineBreak();
-            paragraph.AddText("");
-            paragraph.AddLineBreak();
-            paragraph.AddText("");
-            paragraph.AddLineBreak();
-            paragraph.AddText("");
+        //    paragraph.Format.SpaceBefore = "2cm";
+        //    paragraph.Format.Font.Size = 7;
+        //    paragraph.Format.Alignment = ParagraphAlignment.Center;
+        //    paragraph.AddText("");
+        //    paragraph.AddLineBreak();
+        //    paragraph.AddText("");
+        //    //paragraph.AddLineBreak();
+        //    //paragraph.AddText("");
+        //    //paragraph.AddLineBreak();
+        //    //paragraph.AddText("");
 
-            return paragraph;
-        }
+        //    return paragraph;
+        //}
         public static Document DocumentMetaData(Document document, string DocumentTitle)
         {
             document.Info.Title = DocumentTitle;
@@ -120,7 +121,7 @@ namespace SmartReporting
                 style.ParagraphFormat.TabStops.AddTabStop("2.5cm", TabAlignment.Left);
                 style.Font.Size = 8;
 
-               
+
             }
             catch (Exception e)
             {
@@ -152,6 +153,6 @@ namespace SmartReporting
         }
 
 
-      
+
     }
 }

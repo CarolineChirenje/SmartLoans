@@ -315,9 +315,7 @@ namespace SmartReporting
                 }
                 else
                     paragraph = this.addressFrame.AddParagraph();
-               
-                // Add the notes paragraph
-                paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
+            
             }
             catch (Exception e)
             {

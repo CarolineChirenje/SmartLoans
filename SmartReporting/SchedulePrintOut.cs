@@ -450,11 +450,7 @@ namespace SmartReporting
                 if (UtilityService.StatementShowTableBoarders)
                     this.table.SetEdge(finalCountCellValue, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
 
-
-
-                // Add the notes paragraph
-                paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
-            }
+           }
             catch (Exception e)
             {
 

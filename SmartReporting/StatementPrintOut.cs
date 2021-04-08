@@ -357,7 +357,7 @@ namespace SmartReporting
                     column = this.table.AddColumn("2cm");
                     column.Format.Alignment = ParagraphAlignment.Right;
 
-                    column = this.table.AddColumn("5cm");
+                    column = this.table.AddColumn("3cm");
                     column.Format.Alignment = ParagraphAlignment.Right;
 
                     column = this.table.AddColumn("6cm");
@@ -482,7 +482,7 @@ namespace SmartReporting
                 else
                     paragraph = this.addressFrame.AddParagraph();
                 // Add the notes paragraph
-                paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
+              //  paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
             }
             catch (Exception e)
             {
@@ -673,7 +673,7 @@ namespace SmartReporting
                 else
                     paragraph = this.addressFrame.AddParagraph();
                 // Add the notes paragraph
-                paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
+               // paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
             }
             catch (Exception e)
             {

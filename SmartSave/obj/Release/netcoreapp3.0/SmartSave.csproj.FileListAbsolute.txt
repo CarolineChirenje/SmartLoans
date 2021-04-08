@@ -8058,3 +8058,5 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transa
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\ScheduleReport.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ClientCourseFeePayment.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Courses\ViewCourseFee.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Courses\ViewCourseIntake.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\InvoiceDetails.cshtml.g.cs

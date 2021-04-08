@@ -419,11 +419,6 @@ namespace SmartReporting
                 // Set the borders of the specified cell range
                 if (!UtilityService.StatementShowTableBoarders)
                     this.table.SetEdge(3, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
-
-
-
-                // Add the notes paragraph
-                paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
             }
             catch (Exception e)
             {
