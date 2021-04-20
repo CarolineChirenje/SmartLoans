@@ -12,10 +12,10 @@ using SmartHelper;
 using SmartLogic.IService;
 using System.IO;
 using SmartReporting;
-using MigraDoc.DocumentObjectModel;
-using MigraDoc.Rendering;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using MigraDocCore.Rendering;
+using MigraDocCore.DocumentObjectModel;
 
 namespace SmartSave.Controllers
 {

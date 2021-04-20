@@ -1,7 +1,7 @@
-﻿using MigraDoc.DocumentObjectModel;
-using MigraDoc.DocumentObjectModel.Shapes;
-using MigraDoc.DocumentObjectModel.Tables;
-using MigraDoc.Rendering;
+﻿
+using MigraDocCore.DocumentObjectModel;
+using MigraDocCore.DocumentObjectModel.Shapes;
+using MigraDocCore.DocumentObjectModel.Tables;
 using SmartDomain;
 using SmartHelper;
 using System;

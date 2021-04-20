@@ -366,9 +366,17 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
-            "PDFsharp-MigraDoc": {
+            "MigraDocCore.DocumentObjectModel": {
               "target": "Package",
-              "version": "[1.50.5147, )"
+              "version": "[0.1.1, )"
+            },
+            "MigraDocCore.Rendering": {
+              "target": "Package",
+              "version": "[0.1.1, )"
+            },
+            "PdfSharpCore": {
+              "target": "Package",
+              "version": "[1.2.16, )"
             },
             "System.Data.DataSetExtensions": {
               "target": "Package",

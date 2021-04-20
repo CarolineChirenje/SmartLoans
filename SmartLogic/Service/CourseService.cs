@@ -9,8 +9,7 @@ using SmartDomain;
 using SmartHelper;
 using SmartDataAccess;
 using System.IO;
-using MigraDoc.Rendering;
-using MigraDoc.DocumentObjectModel;
+
 using SmartReporting;
 
 namespace SmartLogic

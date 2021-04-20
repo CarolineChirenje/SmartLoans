@@ -13,10 +13,10 @@ using SmartHelper;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartLogic.IService;
 using SmartReporting;
-using MigraDoc.Rendering;
-using MigraDoc.DocumentObjectModel;
-using PdfSharp.Pdf.Security;
+using MigraDocCore.Rendering;
+using MigraDocCore.DocumentObjectModel;
 using System.Text;
+using PdfSharpCore.Pdf.Security;
 
 namespace SmartSave.Controllers
 {

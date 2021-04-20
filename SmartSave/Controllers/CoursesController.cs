@@ -11,10 +11,9 @@ using SmartDomain;
 using Microsoft.AspNetCore.Http;
 using SmartSave.Models;
 using System.IO;
-using MigraDoc.Rendering;
 using SmartReporting;
-using MigraDoc.DocumentObjectModel;
-
+using MigraDocCore.Rendering;
+using MigraDocCore.DocumentObjectModel;
 namespace SmartSave.Controllers
 {
     public class CoursesController : Controller

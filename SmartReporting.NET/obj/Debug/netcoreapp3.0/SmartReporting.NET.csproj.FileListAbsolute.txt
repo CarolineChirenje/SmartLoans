@@ -1,0 +1,17 @@
+D:\Dev Projects\SmartSave\SmartReporting.NET\bin\Debug\netcoreapp3.0\SmartReporting.NET.deps.json
+D:\Dev Projects\SmartSave\SmartReporting.NET\bin\Debug\netcoreapp3.0\SmartReporting.NET.dll
+D:\Dev Projects\SmartSave\SmartReporting.NET\bin\Debug\netcoreapp3.0\SmartReporting.NET.pdb
+D:\Dev Projects\SmartSave\SmartReporting.NET\bin\Debug\netcoreapp3.0\SmartDomain.dll
+D:\Dev Projects\SmartSave\SmartReporting.NET\bin\Debug\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartReporting.NET\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+D:\Dev Projects\SmartSave\SmartReporting.NET\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+D:\Dev Projects\SmartSave\SmartReporting.NET\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
+D:\Dev Projects\SmartSave\SmartReporting.NET\obj\Debug\netcoreapp3.0\SmartReporting.NET.csprojAssemblyReference.cache
+D:\Dev Projects\SmartSave\SmartReporting.NET\obj\Debug\netcoreapp3.0\SmartReporting.NET.Resource.resources
+D:\Dev Projects\SmartSave\SmartReporting.NET\obj\Debug\netcoreapp3.0\SmartReporting.NET.csproj.GenerateResource.cache
+D:\Dev Projects\SmartSave\SmartReporting.NET\obj\Debug\netcoreapp3.0\SmartReporting.NET.AssemblyInfoInputs.cache
+D:\Dev Projects\SmartSave\SmartReporting.NET\obj\Debug\netcoreapp3.0\SmartReporting.NET.AssemblyInfo.cs
+D:\Dev Projects\SmartSave\SmartReporting.NET\obj\Debug\netcoreapp3.0\SmartReporting.NET.csproj.CoreCompileInputs.cache
+D:\Dev Projects\SmartSave\SmartReporting.NET\obj\Debug\netcoreapp3.0\SmartReporting.NET.csproj.CopyComplete
+D:\Dev Projects\SmartSave\SmartReporting.NET\obj\Debug\netcoreapp3.0\SmartReporting.NET.dll
+D:\Dev Projects\SmartSave\SmartReporting.NET\obj\Debug\netcoreapp3.0\SmartReporting.NET.pdb

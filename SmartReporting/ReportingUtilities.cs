@@ -1,11 +1,16 @@
-﻿using MigraDoc.DocumentObjectModel;
-using MigraDoc.DocumentObjectModel.Shapes;
+﻿
+using MigraDocCore.DocumentObjectModel;
+using MigraDocCore.DocumentObjectModel.MigraDoc.DocumentObjectModel.Shapes;
+using MigraDocCore.DocumentObjectModel.Shapes;
+using PdfSharpCore.Utils;
+using SixLabors.ImageSharp.PixelFormats;
 using SmartHelper;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Text;
+using static MigraDocCore.DocumentObjectModel.MigraDoc.DocumentObjectModel.Shapes.ImageSource;
 
 namespace SmartReporting
 {
@@ -18,16 +23,30 @@ namespace SmartReporting
         }
         public static Image PrintHeaderLogo(Section section)
         {
-            // Put a logo in the header
-            string imagePath = UtilityService.IsNotNull((UtilityService.CompanyLogo)) ? MigraDocFilenameFromByteArray(UtilityService.CompanyLogo) : "";
-            Image image = section.Headers.Primary.AddImage(imagePath);
-            image.Height = "1.5cm";
-            image.LockAspectRatio = true;
-            image.RelativeVertical = RelativeVertical.Line;
-            image.RelativeHorizontal = RelativeHorizontal.Margin;
-            image.Top = ShapePosition.Center;
-            image.Left = ShapePosition.Center;
-            image.WrapFormat.Style = WrapStyle.Through;
+            Image image = null;
+            try
+            {
+                // Put a logo in the header
+                //string imagePath = UtilityService.IsNotNull((UtilityService.CompanyLogo)) ? MigraDocFilenameFromByteArray(UtilityService.CompanyLogo) : "";
+
+                if (ImageSource.ImageSourceImpl == null)
+                    ImageSource.ImageSourceImpl = new ImageSharpImageSource<Rgba32>();
+                var imageSource = FromBinary("logonew.png", () => UtilityService.CompanyLogo);
+                 image = section.Headers.Primary.AddImage(imageSource);
+                image.Height = "1.5cm";
+                image.LockAspectRatio = true;
+                image.RelativeVertical = RelativeVertical.Line;
+                image.RelativeHorizontal = RelativeHorizontal.Margin;
+                image.Top = ShapePosition.Center;
+                image.Left = ShapePosition.Center;
+                image.WrapFormat.Style = WrapStyle.Through;
+                
+            }
+            catch (Exception)
+            {
+
+                //  throw;
+            }
             return image;
         }
         public static Section SetMargins(Section section)
@@ -53,22 +72,7 @@ namespace SmartReporting
             paragraph.Format.Font.Size = 8;
             return paragraph;
         }
-        //public static Paragraph PrintFootNotes(Paragraph paragraph)
-        //{
-
-        //    paragraph.Format.SpaceBefore = "2cm";
-        //    paragraph.Format.Font.Size = 7;
-        //    paragraph.Format.Alignment = ParagraphAlignment.Center;
-        //    paragraph.AddText("");
-        //    paragraph.AddLineBreak();
-        //    paragraph.AddText("");
-        //    //paragraph.AddLineBreak();
-        //    //paragraph.AddText("");
-        //    //paragraph.AddLineBreak();
-        //    //paragraph.AddText("");
-
-        //    return paragraph;
-        //}
+      
         public static Document DocumentMetaData(Document document, string DocumentTitle)
         {
             document.Info.Title = DocumentTitle;

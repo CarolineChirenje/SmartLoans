@@ -1,6 +1,6 @@
-﻿using MigraDoc.DocumentObjectModel;
-using MigraDoc.DocumentObjectModel.Shapes;
-using MigraDoc.DocumentObjectModel.Tables;
+﻿using MigraDocCore.DocumentObjectModel;
+using MigraDocCore.DocumentObjectModel.Shapes;
+using MigraDocCore.DocumentObjectModel.Tables;
 using SmartDomain;
 using SmartHelper;
 using System;
@@ -54,8 +54,9 @@ namespace SmartReporting
             {
                 // Each MigraDoc document needs at least one section.
                 section = this.document.AddSection();
-                section = ReportingUtilities.SetMargins(section);
-                Image image = ReportingUtilities.PrintHeaderLogo(section);
+              
+                    Image image = ReportingUtilities.PrintHeaderLogo(section);
+                            
                 // Create footer
                 Paragraph paragraph = ReportingUtilities.PrintFooter(section);
 

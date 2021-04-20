@@ -456,6 +456,36 @@
           }
         }
       },
+      "MigraDocCore.DocumentObjectModel/0.1.1": {
+        "type": "package",
+        "dependencies": {
+          "PdfSharpCore": "0.1.1",
+          "System.Collections.NonGeneric": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/MigraDocCore.DocumentObjectModel.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MigraDocCore.DocumentObjectModel.dll": {}
+        }
+      },
+      "MigraDocCore.Rendering/0.1.1": {
+        "type": "package",
+        "dependencies": {
+          "MigraDocCore.DocumentObjectModel": "0.1.1",
+          "PdfSharpCore": "0.1.1",
+          "PdfSharpCore.Charting": "0.1.1",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/MigraDocCore.Rendering.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MigraDocCore.Rendering.dll": {}
+        }
+      },
       "Newtonsoft.Json/11.0.2": {
         "type": "package",
         "compile": {
@@ -465,38 +495,35 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
-      "PDFsharp-MigraDoc/1.50.5147": {
+      "PdfSharpCore/1.2.16": {
         "type": "package",
+        "dependencies": {
+          "SixLabors.Fonts": "1.0.0-beta0013",
+          "SixLabors.ImageSharp": "1.0.0"
+        },
         "compile": {
-          "lib/net20/MigraDoc.DocumentObjectModel.dll": {},
-          "lib/net20/MigraDoc.Rendering.dll": {},
-          "lib/net20/MigraDoc.RtfRendering.dll": {},
-          "lib/net20/PdfSharp.Charting.dll": {},
-          "lib/net20/PdfSharp.dll": {}
+          "lib/netstandard2.0/PdfSharpCore.dll": {}
         },
         "runtime": {
-          "lib/net20/MigraDoc.DocumentObjectModel.dll": {},
-          "lib/net20/MigraDoc.Rendering.dll": {},
-          "lib/net20/MigraDoc.RtfRendering.dll": {},
-          "lib/net20/PdfSharp.Charting.dll": {},
-          "lib/net20/PdfSharp.dll": {}
+          "lib/netstandard2.0/PdfSharpCore.dll": {}
         },
         "resource": {
-          "lib/net20/de/MigraDoc.DocumentObjectModel.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net20/de/MigraDoc.Rendering.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net20/de/MigraDoc.RtfRendering.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net20/de/PdfSharp.Charting.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net20/de/PdfSharp.resources.dll": {
+          "lib/netstandard2.0/de/PdfSharpCore.resources.dll": {
             "locale": "de"
           }
+        }
+      },
+      "PdfSharpCore.Charting/0.1.1": {
+        "type": "package",
+        "dependencies": {
+          "PdfSharpCore": "0.1.1",
+          "System.Collections.NonGeneric": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/PdfSharpCore.Charting.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/PdfSharpCore.Charting.dll": {}
         }
       },
       "runtime.native.System/4.3.0": {
@@ -545,6 +572,31 @@
             "assetType": "native",
             "rid": "win-x86"
           }
+        }
+      },
+      "SixLabors.Fonts/1.0.0-beta0013": {
+        "type": "package",
+        "dependencies": {
+          "System.Numerics.Vectors": "4.5.0",
+          "System.Runtime.CompilerServices.Unsafe": "4.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/SixLabors.Fonts.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/SixLabors.Fonts.dll": {}
+        }
+      },
+      "SixLabors.ImageSharp/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "4.7.1"
+        },
+        "compile": {
+          "lib/netcoreapp2.1/SixLabors.ImageSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/SixLabors.ImageSharp.dll": {}
         }
       },
       "System.Collections/4.3.0": {
@@ -599,7 +651,7 @@
           "System.Threading": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Collections.NonGeneric.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Collections.NonGeneric.dll": {}
@@ -739,7 +791,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Diagnostics.Debug.dll": {}
         }
       },
       "System.Diagnostics.DiagnosticSource/4.7.1": {
@@ -770,7 +822,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.5/_._": {}
+          "ref/netstandard1.5/System.Diagnostics.Tracing.dll": {}
         }
       },
       "System.Globalization/4.3.0": {
@@ -781,7 +833,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Globalization.dll": {}
         }
       },
       "System.Globalization.Extensions/4.3.0": {
@@ -930,6 +982,15 @@
         },
         "compile": {
           "ref/netstandard1.3/_._": {}
+        }
+      },
+      "System.Numerics.Vectors/4.5.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
         }
       },
       "System.Private.DataContractSerialization/4.3.0": {
@@ -1557,7 +1618,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.0",
         "dependencies": {
-          "PDFsharp-MigraDoc": "1.50.5147",
+          "MigraDocCore.DocumentObjectModel": "0.1.1",
+          "MigraDocCore.Rendering": "0.1.1",
+          "PdfSharpCore": "1.2.16",
           "SmartDomain": "1.0.0",
           "System.Data.DataSetExtensions": "4.5.0"
         },
@@ -2232,7 +2295,7 @@
       ]
     },
     "Microsoft.NETCore.Targets/1.1.0": {
-      "sha512": "aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
+      "sha512": "db9MIsW7/kkx6MTb433GmLH3BSF/KY02PBiPiHZULnAiMMTj9fqsVmyhBNGM5MfirWDfXAItr32vKkm080/v0Q==",
       "type": "package",
       "path": "microsoft.netcore.targets/1.1.0",
       "files": [
@@ -2286,6 +2349,32 @@
         "version.txt"
       ]
     },
+    "MigraDocCore.DocumentObjectModel/0.1.1": {
+      "sha512": "SUqQehBgsstNcGB47/gAIrKpml+KDxZCesCZhELwTJBLpeP2lF1Q14miy/81lmEEZY+AXA0qXhoGVbBLDiALxg==",
+      "type": "package",
+      "path": "migradoccore.documentobjectmodel/0.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard1.3/MigraDocCore.DocumentObjectModel.dll",
+        "lib/netstandard2.0/MigraDocCore.DocumentObjectModel.dll",
+        "migradoccore.documentobjectmodel.0.1.1.nupkg.sha512",
+        "migradoccore.documentobjectmodel.nuspec"
+      ]
+    },
+    "MigraDocCore.Rendering/0.1.1": {
+      "sha512": "aiB4I4TK3zW4fmC/ZI4/BUBoaPxU5BPYMI53vEGvUQK5M8858gxTYpmJrH42LXTxhmWyf2Letd1Eff4HzxFGDw==",
+      "type": "package",
+      "path": "migradoccore.rendering/0.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard1.3/MigraDocCore.Rendering.dll",
+        "lib/netstandard2.0/MigraDocCore.Rendering.dll",
+        "migradoccore.rendering.0.1.1.nupkg.sha512",
+        "migradoccore.rendering.nuspec"
+      ]
+    },
     "Newtonsoft.Json/11.0.2": {
       "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
       "type": "package",
@@ -2316,39 +2405,40 @@
         "newtonsoft.json.nuspec"
       ]
     },
-    "PDFsharp-MigraDoc/1.50.5147": {
-      "sha512": "YMtUVAQF281GuSrQwfs4x86S6ZaWuIYdjGoRRLZWCPG45keasqSpSGtUKIQN0zRSFT9jjvScVRfAJpfRV5L8DA==",
+    "PdfSharpCore/1.2.16": {
+      "sha512": "ZE79tkprM/1P+xsHEaLr/lM3GIU/bNjPI3Db2/+0ybAplL9C31mJXvTPZS+fvjKZFge1cWzWq7POe3Bi6mR1UQ==",
       "type": "package",
-      "path": "pdfsharp-migradoc/1.50.5147",
+      "path": "pdfsharpcore/1.2.16",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/net20/MigraDoc.DocumentObjectModel.dll",
-        "lib/net20/MigraDoc.DocumentObjectModel.xml",
-        "lib/net20/MigraDoc.Rendering.dll",
-        "lib/net20/MigraDoc.Rendering.xml",
-        "lib/net20/MigraDoc.RtfRendering.dll",
-        "lib/net20/MigraDoc.RtfRendering.xml",
-        "lib/net20/PdfSharp.Charting.dll",
-        "lib/net20/PdfSharp.Charting.xml",
-        "lib/net20/PdfSharp.dll",
-        "lib/net20/PdfSharp.xml",
-        "lib/net20/de/MigraDoc.DocumentObjectModel.resources.dll",
-        "lib/net20/de/MigraDoc.Rendering.resources.dll",
-        "lib/net20/de/MigraDoc.RtfRendering.resources.dll",
-        "lib/net20/de/PdfSharp.Charting.resources.dll",
-        "lib/net20/de/PdfSharp.resources.dll",
-        "pdfsharp-migradoc.1.50.5147.nupkg.sha512",
-        "pdfsharp-migradoc.nuspec"
+        "lib/netstandard1.3/PdfSharpCore.dll",
+        "lib/netstandard1.3/de/PdfSharpCore.resources.dll",
+        "lib/netstandard2.0/PdfSharpCore.dll",
+        "lib/netstandard2.0/de/PdfSharpCore.resources.dll",
+        "pdfsharpcore.1.2.16.nupkg.sha512",
+        "pdfsharpcore.nuspec"
+      ]
+    },
+    "PdfSharpCore.Charting/0.1.1": {
+      "sha512": "MDEoxTLa/Cct74S7oimG4HnMefpdSMUzoNp7/aNb4PLCObOo/ZFBz3P8IJa+9H/gbFtqw0fqNjgY/RSrjHZG7g==",
+      "type": "package",
+      "path": "pdfsharpcore.charting/0.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard1.3/PdfSharpCore.Charting.dll",
+        "lib/netstandard2.0/PdfSharpCore.Charting.dll",
+        "pdfsharpcore.charting.0.1.1.nupkg.sha512",
+        "pdfsharpcore.charting.nuspec"
       ]
     },
     "runtime.native.System/4.3.0": {
-      "sha512": "c/qWt2LieNZIj1jGnVNsE2Kl23Ya2aSTBuXMD6V7k9KWr6l16Tqdwq+hJScEpWER9753NWC8h96PaVNY5Ld7Jw==",
+      "sha512": "yimGQYcBAkqfdmq8sGnJsdjcJtDSHAtg4lFXx0MNlhm7N1i9dkjiFEUANCMT4Vlns1c0KbFHLWeMf57gN0Z44A==",
       "type": "package",
       "path": "runtime.native.system/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -2416,8 +2506,50 @@
         "version.txt"
       ]
     },
+    "SixLabors.Fonts/1.0.0-beta0013": {
+      "sha512": "NaD8R8GdHqnPP/3GUI6IbJNt3EHjU05CIJw/1gz11NoUBaePhtgDogG1XFguR2nSoXofGJ35W+TgW1ZTVp5W1Q==",
+      "type": "package",
+      "path": "sixlabors.fonts/1.0.0-beta0013",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard1.3/SixLabors.Fonts.dll",
+        "lib/netstandard1.3/SixLabors.Fonts.xml",
+        "lib/netstandard2.0/SixLabors.Fonts.dll",
+        "lib/netstandard2.0/SixLabors.Fonts.xml",
+        "lib/netstandard2.1/SixLabors.Fonts.dll",
+        "lib/netstandard2.1/SixLabors.Fonts.xml",
+        "sixlabors.fonts.1.0.0-beta0013.nupkg.sha512",
+        "sixlabors.fonts.128.png",
+        "sixlabors.fonts.nuspec"
+      ]
+    },
+    "SixLabors.ImageSharp/1.0.0": {
+      "sha512": "8amvsk8NXnCxZV0lvJppAZJknViWgBOO/2V59IGR6DVoD13mSmG+/Z9eg5IwrHQuRHp5RD9lfXBXDZyk8rTKDg==",
+      "type": "package",
+      "path": "sixlabors.imagesharp/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/SixLabors.ImageSharp.dll",
+        "lib/net472/SixLabors.ImageSharp.xml",
+        "lib/netcoreapp2.1/SixLabors.ImageSharp.dll",
+        "lib/netcoreapp2.1/SixLabors.ImageSharp.xml",
+        "lib/netcoreapp3.1/SixLabors.ImageSharp.dll",
+        "lib/netcoreapp3.1/SixLabors.ImageSharp.xml",
+        "lib/netstandard1.3/SixLabors.ImageSharp.dll",
+        "lib/netstandard1.3/SixLabors.ImageSharp.xml",
+        "lib/netstandard2.0/SixLabors.ImageSharp.dll",
+        "lib/netstandard2.0/SixLabors.ImageSharp.xml",
+        "lib/netstandard2.1/SixLabors.ImageSharp.dll",
+        "lib/netstandard2.1/SixLabors.ImageSharp.xml",
+        "sixlabors.imagesharp.1.0.0.nupkg.sha512",
+        "sixlabors.imagesharp.128.png",
+        "sixlabors.imagesharp.nuspec"
+      ]
+    },
     "System.Collections/4.3.0": {
-      "sha512": "3Dcj85/TBdVpL5Zr+gEEBUuFe2icOnLalmEh9hfck1PTYbbyWuZgh4fmm2ysCLTrqLQw6t3TgTyJ+VLp+Qb+Lw==",
+      "sha512": "xQkuo6I7zkc0EsKuZcFLnrWpcieaK6aMw8Ttkk62n70xCHUE+DpQqw3YPd3Sssu7x/i3cFdfXkK512j3S2SBmQ==",
       "type": "package",
       "path": "system.collections/4.3.0",
       "files": [
@@ -2484,7 +2616,7 @@
       ]
     },
     "System.Collections.Concurrent/4.3.0": {
-      "sha512": "ztl69Xp0Y/UXCL+3v3tEU+lIy+bvjKNUmopn1wep/a291pVPK7dxBd6T7WnlQqRog+d1a/hSsgRsmFnIBKTPLQ==",
+      "sha512": "+2dq2wbj71bmps57fR9xxcZ4Guvye4CwpzGx/8JiXb3NaJCOTJmeoo4erhx6YDxQ3RKhI81emAtbQxymgdLIzg==",
       "type": "package",
       "path": "system.collections.concurrent/4.3.0",
       "files": [
@@ -2577,12 +2709,11 @@
       ]
     },
     "System.Collections.NonGeneric/4.3.0": {
-      "sha512": "prtjIEMhGUnQq6RnPEYLpFt8AtLbp9yq2zxOSrY7KJJZrw25Fi97IzBqY7iqssbM61Ek5b8f3MG/sG1N2sN5KA==",
+      "sha512": "/otgGuOZpI12Zpg7W22j7koRWpbCJ7QI20h9K9kk+dXJrTcZ+syO9VqFAVGaGf8xuUQrmlVbPBbcHuvJFhFQXQ==",
       "type": "package",
       "path": "system.collections.nongeneric/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -2999,7 +3130,7 @@
       ]
     },
     "System.Diagnostics.Debug/4.3.0": {
-      "sha512": "ZUhUOdqmaG5Jk3Xdb8xi5kIyQYAA4PnTNlHx1mu9ZY3qv4ELIdKbnL/akbGaKi2RnNUWaZsAs31rvzFdewTj2g==",
+      "sha512": "mPdGxtVTGAFT81afM/YvZnQMdrMQWqN7IG8Y5rpSzYijpL4s08oGLVTXIOn5WaB6eb3WSvDsxdpSMyTFCkoRrQ==",
       "type": "package",
       "path": "system.diagnostics.debug/4.3.0",
       "files": [
@@ -3092,7 +3223,7 @@
       ]
     },
     "System.Diagnostics.Tools/4.3.0": {
-      "sha512": "UUvkJfSYJMM6x527dJg2VyWPSRqIVB0Z7dbjHst1zmwTXz5CcXSYJFWRpuigfbO1Lf7yfZiIaEUesfnl/g5EyA==",
+      "sha512": "gYgYGyuSOJqZxlYlBndXWQNRLUVUhQBZJS1EFSrjPSMDgABncRHbRlaPOSCQZgTc/0feNEE5/Fy9ENO3/iulLQ==",
       "type": "package",
       "path": "system.diagnostics.tools/4.3.0",
       "files": [
@@ -3148,7 +3279,7 @@
       ]
     },
     "System.Diagnostics.Tracing/4.3.0": {
-      "sha512": "rswfv0f/Cqkh78rA5S8eN8Neocz234+emGCtTF3lxPY96F+mmmUen6tbn0glN6PMvlKQb9bPAY5e9u7fgPTkKw==",
+      "sha512": "pN/W4ZdXHjSIV6HCOhdeG/GPx2ZQFQoE7SZe5U08Oj8apvsw5Ev6MjQH3jVIDM+SzZWcH0u8h46Y1sZhuGspUg==",
       "type": "package",
       "path": "system.diagnostics.tracing/4.3.0",
       "files": [
@@ -3237,7 +3368,7 @@
       ]
     },
     "System.Globalization/4.3.0": {
-      "sha512": "kYdVd2f2PAdFGblzFswE4hkNANJBKRmsfa2X5LG2AcWE1c7/4t0pYae1L8vfZ5xvE2nK/R9JprtToA61OSHWIg==",
+      "sha512": "o9T8qzbKYQwdUL6p+QA6AN08SmsHHB55ytITFDnG2QDT9IMmgsR7qroaF6Vw3GXhBFegvnOYZB2WZ/zz0UD0jA==",
       "type": "package",
       "path": "system.globalization/4.3.0",
       "files": [
@@ -3304,7 +3435,7 @@
       ]
     },
     "System.Globalization.Extensions/4.3.0": {
-      "sha512": "FhKmdR6MPG+pxow6wGtNAWdZh7noIOpdD5TwQ3CprzgIE1bBBoim0vbR1+AWsWjQmU7zXHgQo4TWSP6lCeiWcQ==",
+      "sha512": "y/5sAFUd80uvzWcD7lm0i3U0ebmB+OyP+BSLV6uq4NXbuAzZUdYCow9tomy7gq0nki4p9U3+N/Nh5E2BVTHeTw==",
       "type": "package",
       "path": "system.globalization.extensions/4.3.0",
       "files": [
@@ -3366,7 +3497,7 @@
       ]
     },
     "System.IO/4.3.0": {
-      "sha512": "3qjaHvxQPDpSOYICjUoTsmoq5u6QJAFRUITgeT/4gqkF1bajbSmb1kwSxEA8AHlofqgcKJcM8udgieRNhaJ5Cg==",
+      "sha512": "UVXizmsyBpltjIUxUb0kvfXpnJ0b2spyOQ05H/dD5pC4BuZUI6pw5WBktXr+O5CDJxvc6BvIiTIvoMlpKcuDOQ==",
       "type": "package",
       "path": "system.io/4.3.0",
       "files": [
@@ -3446,7 +3577,7 @@
       ]
     },
     "System.IO.FileSystem/4.3.0": {
-      "sha512": "3wEMARTnuio+ulnvi+hkRNROYwa1kylvYahhcLk4HSoVdl+xxTFVeVlYOfLwrDPImGls0mDqbMhrza8qnWPTdA==",
+      "sha512": "mgCdKXcbttQKu8CWVoQCKkdRKqnqHuEMB6NhzQmZmwNf0uAazaR7oAfrjm2y969xY+Hk+7Bo/VV/a0bXWKwcpw==",
       "type": "package",
       "path": "system.io.filesystem/4.3.0",
       "files": [
@@ -3483,12 +3614,11 @@
       ]
     },
     "System.IO.FileSystem.Primitives/4.3.0": {
-      "sha512": "6QOb2XFLch7bEc4lIcJH49nJN2HV+OC3fHDgsLVsBVBk3Y4hFAnOBGzJ2lUu7CyDDFo9IBWkSsnbkT6IBwwiMw==",
+      "sha512": "JCWYRIjw0TC7MfB9GaImTA4vUUqPinyC7tInQvKkZGSOaeV76xfCGmjyI4uhtQK4BfsAyw0AZLM4rSFUz8aCTg==",
       "type": "package",
       "path": "system.io.filesystem.primitives/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -3522,7 +3652,7 @@
       ]
     },
     "System.Linq/4.3.0": {
-      "sha512": "5DbqIUpsDp0dFftytzuMmc0oeMdQwjcP/EWxsksIz/w1TcFRkZ3yKKz0PqiYFMmEwPSWw+qNVqD7PJ889JzHbw==",
+      "sha512": "UT7701beYu4Lq5RovAXcpEkLr4WciO1/eQSh3Srvj/XZsMYp7y28mJE07TJTRQH7NUkiBJUfbGWNIsj4s1maOw==",
       "type": "package",
       "path": "system.linq/4.3.0",
       "files": [
@@ -3655,7 +3785,7 @@
       ]
     },
     "System.Net.Primitives/4.3.0": {
-      "sha512": "qOu+hDwFwoZPbzPvwut2qATe3ygjeQBDQj91xlsaqGFQUI5i4ZnZb8yyQuLGpDGivEPIt8EJkd1BVzVoP31FXA==",
+      "sha512": "U+V4LlPzJndlXMj9ujktnBUZQzkV+I5JN0eEl1deKx0h/rx8Pg6TaN+t3r5fSsoMEvsF/KKrNMKgOQOIpmzE6w==",
       "type": "package",
       "path": "system.net.primitives/4.3.0",
       "files": [
@@ -3732,6 +3862,53 @@
         "system.net.primitives.nuspec"
       ]
     },
+    "System.Numerics.Vectors/4.5.0": {
+      "sha512": "QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "type": "package",
+      "path": "system.numerics.vectors/4.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Numerics.Vectors.dll",
+        "lib/net46/System.Numerics.Vectors.xml",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.0/System.Numerics.Vectors.dll",
+        "lib/netstandard1.0/System.Numerics.Vectors.xml",
+        "lib/netstandard2.0/System.Numerics.Vectors.dll",
+        "lib/netstandard2.0/System.Numerics.Vectors.xml",
+        "lib/portable-net45+win8+wp8+wpa81/System.Numerics.Vectors.dll",
+        "lib/portable-net45+win8+wp8+wpa81/System.Numerics.Vectors.xml",
+        "lib/uap10.0.16299/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/System.Numerics.Vectors.dll",
+        "ref/net45/System.Numerics.Vectors.xml",
+        "ref/net46/System.Numerics.Vectors.dll",
+        "ref/net46/System.Numerics.Vectors.xml",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard1.0/System.Numerics.Vectors.dll",
+        "ref/netstandard1.0/System.Numerics.Vectors.xml",
+        "ref/netstandard2.0/System.Numerics.Vectors.dll",
+        "ref/netstandard2.0/System.Numerics.Vectors.xml",
+        "ref/uap10.0.16299/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.numerics.vectors.4.5.0.nupkg.sha512",
+        "system.numerics.vectors.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
     "System.Private.DataContractSerialization/4.3.0": {
       "sha512": "yDaJ2x3mMmjdZEDB4IbezSnCsnjQ4BxinKhRAaP6kEgL6Bb6jANWphs5SzyD8imqeC/3FxgsuXT6ykkiH1uUmA==",
       "type": "package",
@@ -3749,7 +3926,7 @@
       ]
     },
     "System.Reflection/4.3.0": {
-      "sha512": "KMiAFoW7MfJGa9nDFNcfu+FpEdiHpWgTcS2HdMpDvt9saK3y/G4GwprPyzqjFH9NTaGPQeWNHU+iDlDILj96aQ==",
+      "sha512": "5E2azWJf8BSFoqbrFtitL8EsUnBb089BSuQ0HQUHJBE1b3OwTvvSrPR6u4SXDQMKrMr2Msn47ffO6nGz/ef4UA==",
       "type": "package",
       "path": "system.reflection/4.3.0",
       "files": [
@@ -3829,7 +4006,7 @@
       ]
     },
     "System.Reflection.Emit/4.3.0": {
-      "sha512": "228FG0jLcIwTVJyz8CLFKueVqQK36ANazUManGaJHkO0icjiIypKW7YLWLIWahyIkdh5M7mV2dJepllLyA1SKg==",
+      "sha512": "GcWcGBX1Ktjw9+tn3EiRe4vh3H8UMb/f+1bGF8r/XeCLQCpgU1mWqA4MpYfREL6jPegJQQ09fcP8IkGOeVtyew==",
       "type": "package",
       "path": "system.reflection.emit/4.3.0",
       "files": [
@@ -3865,12 +4042,11 @@
       ]
     },
     "System.Reflection.Emit.ILGeneration/4.3.0": {
-      "sha512": "59tBslAk9733NXLrUJrwNZEzbMAcu8k344OYo+wfSVygcgZ9lgBdGIzH/nrg3LYhXceynyvTc8t5/GD4Ri0/ng==",
+      "sha512": "nwLHVoP1FE0G/rWFZkQXN/n9Rg85my2mjj8fAqKhA4NzXo8TkrX5D7HCWOk41GQ4m/dGkIkLcoc/LCn4lTvc0g==",
       "type": "package",
       "path": "system.reflection.emit.ilgeneration/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -3910,12 +4086,11 @@
       ]
     },
     "System.Reflection.Emit.Lightweight/4.3.0": {
-      "sha512": "oadVHGSMsTmZsAF864QYN1t1QzZjIcuKU3l2S9cZOwDdDueNTrqq1yRj7koFfIGEnKpt6NjpL3rOzRhs4ryOgA==",
+      "sha512": "PdEKAffziWkAEoApHdMQ50yghESB2dc22oNLlEN2Hul3jf8VAWVZDsRXW/+MjCqYH0ZurwdSew0HLW9f4fDIOA==",
       "type": "package",
       "path": "system.reflection.emit.lightweight/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -3955,7 +4130,7 @@
       ]
     },
     "System.Reflection.Extensions/4.3.0": {
-      "sha512": "rJkrJD3kBI5B712aRu4DpSIiHRtr6QlfZSQsb0hYHrDCZORXCFjQfoipo2LaMUHoT9i1B7j7MnfaEKWDFmFQNQ==",
+      "sha512": "03RCil02sN7oHmybZoL/LrCeQd8uMpGKdjLQ0aSTgvBEmXNGboNVNHm2PV23CY6l3ZUelu/WRbUjYOxX4N1iQA==",
       "type": "package",
       "path": "system.reflection.extensions/4.3.0",
       "files": [
@@ -4011,7 +4186,7 @@
       ]
     },
     "System.Reflection.Primitives/4.3.0": {
-      "sha512": "5RXItQz5As4xN2/YUDxdpsEkMhvw3e6aNveFXUn4Hl/udNTCNhnKp8lT9fnc3MhvGKh1baak5CovpuQUXHAlIA==",
+      "sha512": "V/c0XjgCwY6vXFKToFebUnfbO0qVCpS7CPzfbEuNNo8ClzonDNAC9R/vepjhWjks9+aTX0RIGNT+9o5R2LtgdA==",
       "type": "package",
       "path": "system.reflection.primitives/4.3.0",
       "files": [
@@ -4131,7 +4306,7 @@
       ]
     },
     "System.Resources.ResourceManager/4.3.0": {
-      "sha512": "/zrcPkkWdZmI4F92gL/TPumP98AVDu/Wxr3CSJGQQ+XN6wbRZcyfSKVoPo17ilb3iOr0cCRqJInGwNMolqhS8A==",
+      "sha512": "wQqYtlxXjUf5tf3veGVeN6zCfwaAH+eGzmQ3++n5lYL85MQ3OQoIgvPqEvJ8QMPfktK0P68dKEKibUxaTLi3RA==",
       "type": "package",
       "path": "system.resources.resourcemanager/4.3.0",
       "files": [
@@ -4187,7 +4362,7 @@
       ]
     },
     "System.Runtime/4.3.0": {
-      "sha512": "JufQi0vPQ0xGnAczR13AUFglDyVYt4Kqnz1AZaiKZ5+GICq0/1MH/mO/eAJHt/mHW1zjKBJd7kV26SrxddAhiw==",
+      "sha512": "MmcPNmrgaZBfikIXwintbBQepr7OHpGxt3n/Y6RuvPhpPnGrHMrhLHD/OJNPOSQfTQv4kYWf5QBaKUmu/y+9+g==",
       "type": "package",
       "path": "system.runtime/4.3.0",
       "files": [
@@ -4342,7 +4517,7 @@
       ]
     },
     "System.Runtime.Extensions/4.3.0": {
-      "sha512": "guW0uK0fn5fcJJ1tJVXYd7/1h5F+pea1r7FLSOz/f8vPEqbR2ZAknuRDvTQ8PzAilDveOxNjSfr0CHfIQfFk8g==",
+      "sha512": "RWrsn9FRwjtXp9Gf+0BV6hSm4F+xg+g2nYOuoPec3+I6BBnIEgcjSf/6YoD2XMhMrmiu5kSzPD1Dg8zTZO9cAA==",
       "type": "package",
       "path": "system.runtime.extensions/4.3.0",
       "files": [
@@ -4422,7 +4597,7 @@
       ]
     },
     "System.Runtime.Handles/4.3.0": {
-      "sha512": "OKiSUN7DmTWeYb3l51A7EYaeNMnvxwE249YtZz7yooT4gOZhmTjIn48KgSsw2k2lYdLgTKNJw/ZIfSElwDRVgg==",
+      "sha512": "nkaDBBnbtWdKPmtML8mHVAaiP0z93wABs/pm/wnAuYaY+ST7ua2QCY7nY8zBBkUbmJWkL1fwmWncVwB/MyQSYg==",
       "type": "package",
       "path": "system.runtime.handles/4.3.0",
       "files": [
@@ -4459,7 +4634,7 @@
       ]
     },
     "System.Runtime.InteropServices/4.3.0": {
-      "sha512": "uv1ynXqiMK8mp1GM3jDqPCFN66eJ5w5XNomaK2XD+TuCroNTLFGeZ+WCmBMcBDyTFKou3P6cR6J/QsaqDp7fGQ==",
+      "sha512": "7GUSuFZWZmVR6Tg/PtnqmOX23R+uSBNDckxzDB2E4m16vb2r1tIWZ6vpixMHpF8FznDhz6HCRuOaJX7ALWmtAA==",
       "type": "package",
       "path": "system.runtime.interopservices/4.3.0",
       "files": [
@@ -4816,7 +4991,7 @@
       ]
     },
     "System.Security.Cryptography.Primitives/4.3.0": {
-      "sha512": "7bDIyVFNL/xKeFHjhobUAQqSpJq9YTOpbEs6mR233Et01STBMXNAc/V+BM6dwYGc95gVh/Zf+iVXWzj3mE8DWg==",
+      "sha512": "L9sPEhNj4loEun6tzhXvbBHjoYKhLC6w82hsdXxdPme2br179k6N9P3Xm3Xj0jqVyseHGb75bPbDqKtf2MMFNw==",
       "type": "package",
       "path": "system.security.cryptography.primitives/4.3.0",
       "files": [
@@ -4990,7 +5165,7 @@
       ]
     },
     "System.Text.Encoding/4.3.0": {
-      "sha512": "BiIg+KWaSDOITze6jGQynxg64naAPtqGHBwDrLaCtixsa5bKiR8dpPOHA7ge3C0JJQizJE+sfkz1wV+BAKAYZw==",
+      "sha512": "EgQaeotX5F1BQn4uSqm/jPZpMt2byFtF8tVPADFvydYGf5wqsb7HyyHwU4AHZBU0XCEiIHgu2WB1wFVqvV8Z6A==",
       "type": "package",
       "path": "system.text.encoding/4.3.0",
       "files": [
@@ -5105,7 +5280,7 @@
       ]
     },
     "System.Text.Encoding.Extensions/4.3.0": {
-      "sha512": "YVMK0Bt/A43RmwizJoZ22ei2nmrhobgeiYwFzC4YAN+nue8RF6djXDMog0UCn+brerQoYVyaS+ghy9P/MUVcmw==",
+      "sha512": "U3Z9TPwykPwxAAHldPF1w8/THlUTQFjv8890addAUSTITOD7uw9tz47wfDzXUEynO/6KMwMJVnQ3ZvSYiwoLqA==",
       "type": "package",
       "path": "system.text.encoding.extensions/4.3.0",
       "files": [
@@ -5172,7 +5347,7 @@
       ]
     },
     "System.Text.RegularExpressions/4.3.0": {
-      "sha512": "RpT2DA+L660cBt1FssIE9CAGpLFdFPuheB7pLpKpn6ZXNby7jDERe8Ua/Ne2xGiwLVG2JOqziiaVCGDon5sKFA==",
+      "sha512": "L+bvs8aYYUCePs+swW3ZjdXPW5hIPmgQLe3jI2m8UizM9EWgpj7ZQGNvLRqtFLG5J9UnkyB1ICKw5pUOMEWBgQ==",
       "type": "package",
       "path": "system.text.regularexpressions/4.3.0",
       "files": [
@@ -5255,7 +5430,7 @@
       ]
     },
     "System.Threading/4.3.0": {
-      "sha512": "VkUS0kOBcUf3Wwm0TSbrevDDZ6BlM+b/HRiapRFWjM5O0NS0LviG0glKmFK+hhPDd1XFeSdU1GmlLhb2CoVpIw==",
+      "sha512": "2+hVRZ+9NH6HF5Vom+ZWJMyhwSMDGvvx8sJivNN/lbI6vDybD6H3dLRQMih664hR3wvDreXZUin4hQT2PkpVWg==",
       "type": "package",
       "path": "system.threading/4.3.0",
       "files": [
@@ -5325,7 +5500,7 @@
       ]
     },
     "System.Threading.Tasks/4.3.0": {
-      "sha512": "LbSxKEdOUhVe8BezB/9uOGGppt+nZf6e1VFyw6v3DN6lqitm0OSn2uXMOdtP0M3W4iMcqcivm2J6UgqiwwnXiA==",
+      "sha512": "bOL9U4RkcKdYQ2+cxTAfUgOQoz1A1xc4sjGLTrnQVBUteV66YzqTkGScUdJl12z5zy5kTTtWYHvPnbWTPS1Uiw==",
       "type": "package",
       "path": "system.threading.tasks/4.3.0",
       "files": [
@@ -5392,12 +5567,11 @@
       ]
     },
     "System.Threading.Tasks.Extensions/4.3.0": {
-      "sha512": "npvJkVKl5rKXrtl1Kkm6OhOUaYGEiF9wFbppFRWSMoApKzt2PiPHT2Bb8a5sAWxprvdOAtvaARS9QYMznEUtug==",
+      "sha512": "A9CO2tmPPTMxBVUPEcgrvthhz53sUvT4pAOj1RrhMFJcIvMMvktZKneZ9CwsLZfV1PFN1tu8IgN0m+imIxEDcg==",
       "type": "package",
       "path": "system.threading.tasks.extensions/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/System.Threading.Tasks.Extensions.dll",
@@ -5409,7 +5583,7 @@
       ]
     },
     "System.Xml.ReaderWriter/4.3.0": {
-      "sha512": "GrprA+Z0RUXaR4N7/eW71j1rgMnEnEVlgii49GZyAjTH7uliMnrOU3HNFBr6fEDBCJCIdlVNq9hHbaDR621XBA==",
+      "sha512": "38OlPBLGgtVJd0D0J+FKq6DaPp4EdBmQd5q0nmXdoTVm+1+sEqbbR36/nvIM3rZFeIXwTn5SXHT0gEjwWbG8sQ==",
       "type": "package",
       "path": "system.xml.readerwriter/4.3.0",
       "files": [
@@ -5480,7 +5654,7 @@
       ]
     },
     "System.Xml.XDocument/4.3.0": {
-      "sha512": "5zJ0XDxAIg8iy+t4aMnQAu0MqVbqyvfoUVl1yDV61xdo3Vth45oA2FoY4pPkxYAH5f8ixpmTqXeEIya95x0aCQ==",
+      "sha512": "mRH3hYGytaEWjPsS9eL3Q4bJwwd0BnWX0gu7jy9MCX+8btzMs32c+JiQ88Ps7l0q6vI9qpR24sqUF1OcQA3OcQ==",
       "type": "package",
       "path": "system.xml.xdocument/4.3.0",
       "files": [
@@ -5767,17 +5941,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'PDFsharp-MigraDoc 1.50.5147' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
-      "libraryId": "PDFsharp-MigraDoc",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.0"
-      ]
-    }
-  ]
+  }
 }
