@@ -44,8 +44,7 @@ namespace SmartSave
             _configValue = "Data Source=172.105.28.87;Initial Catalog=SmartSave; User Id=sa; Password=Ch1gumbu6299##";
             services.AddDbContext<DatabaseContext>(options =>
        options.UseSqlServer(_configValue));
-
-            // setup dependency injection in service container
+                  // setup dependency injection in service container
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
@@ -81,7 +80,7 @@ namespace SmartSave
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || GetData.ShowDeveloperException)
             {
                 app.UseDeveloperExceptionPage();
             }

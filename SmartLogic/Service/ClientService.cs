@@ -202,6 +202,7 @@ namespace SmartLogic
         {
             applicant.LastChangedBy = UtilityService.CurrentUserName;
             applicant.LastChangedDate = DateTime.Now;
+            applicant.RecordStatusID = (int)RecordState.Active;
             _context.Add(applicant);
             await _context.SaveChangesAsync();
 

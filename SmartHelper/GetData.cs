@@ -14,7 +14,10 @@ namespace SmartHelper
 {
     public static class GetData
     {
+      static  IConfiguration _configuration;
         public static string SSDBConnection => SSDBConnectionValue();
+
+        public static bool ShowDeveloperException => ShowDeveloperExceptions();
 
         public static CustomSetting GetSettingValue(int CustomSettingID)
         {
@@ -27,7 +30,7 @@ namespace SmartHelper
 
         public static DataTable GetDataTable(string sqlQuery)
         {
-            DataTable results= new DataTable(); ;
+            DataTable results = new DataTable(); ;
             using (SqlConnection conn = new SqlConnection(SSDBConnection))
             {
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
@@ -42,7 +45,7 @@ namespace SmartHelper
 
         public static string GetStringValue(string sqlQuery)
         {
-                       using (IDbConnection db = new SqlConnection(SSDBConnection))
+            using (IDbConnection db = new SqlConnection(SSDBConnection))
             {
                 return db.Query<string>(sqlQuery)?.SingleOrDefault();
             }
@@ -90,21 +93,43 @@ namespace SmartHelper
         }
         public static string SSDBConnectionValue()
         {
-            IConfiguration _configuration;
-            _configuration = new ConfigurationBuilder()
-          .AddJsonFile(
-                "appsettings.json", true, true)
-          .Build();
-          
+            _configuration = LoadAppConfigurations;
             string _environment = _configuration.GetSection("SiteEnvironment").Value;
             if (String.IsNullOrEmpty(_environment))
                 _environment = SiteEnvironment.Test.ToString();
             string connectionStringName = $"SSDBConnection{_environment}";
-                string configValue = _configuration.GetConnectionString(connectionStringName);
-            return string.IsNullOrEmpty(configValue) ? "Data Source=172.105.28.87;Initial Catalog=SmartSave;User Id=sa;Password=Ch1gumbu6299##" : configValue; 
+            string configValue = _configuration.GetConnectionString(connectionStringName);
+            return string.IsNullOrEmpty(configValue) ? "Data Source=172.105.28.87;Initial Catalog=SmartSave;User Id=sa;Password=Ch1gumbu6299##" : configValue;
 
         }
+        public static bool ShowDeveloperExceptions()
+        {
+          _configuration= LoadAppConfigurations;
+            bool showDeveloperExceptions = false;
+            try
+            {
+                showDeveloperExceptions = bool.Parse(_configuration.GetSection("ShowDeveloperExceptions").Value);
+            }
+            catch
+            {
 
+
+            }
+
+            return showDeveloperExceptions;
+
+        }
+        public static IConfiguration LoadAppConfigurations
+        {
+            get
+            {
+                return new ConfigurationBuilder()
+                .AddJsonFile(
+                      "appsettings.json", true, true)
+                .Build();
+            }
+
+        }
     }
 
 

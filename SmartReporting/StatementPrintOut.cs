@@ -37,6 +37,7 @@ namespace SmartReporting
                 this.document = new Document();
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Statement of Account");
                 this._statement = statement;
+               // this.document.DefaultPageSetup.Orientation = Orientation.Landscape;
                 this.culture = new CultureInfo("en-US");
                 style = ReportingUtilities.DefineStyles(this.document);
                 AddressAndHeader();
@@ -536,8 +537,8 @@ namespace SmartReporting
                     Column column = this.table.AddColumn("3cm");
                     column.Format.Alignment = ParagraphAlignment.Left;
 
-                    column = this.table.AddColumn("2cm");
-                    column.Format.Alignment = ParagraphAlignment.Center;
+                    //column = this.table.AddColumn("2cm");
+                    //column.Format.Alignment = ParagraphAlignment.Center;
 
                     column = this.table.AddColumn("2cm");
                     column.Format.Alignment = ParagraphAlignment.Right;
@@ -551,7 +552,7 @@ namespace SmartReporting
                     column = this.table.AddColumn("6cm");
                     column.Format.Alignment = ParagraphAlignment.Right;
 
-                    column = this.table.AddColumn("3cm");
+                    column = this.table.AddColumn("2cm");
                     column.Format.Alignment = ParagraphAlignment.Right;
 
                     // Create the header of the table
@@ -566,11 +567,11 @@ namespace SmartReporting
                     row.Cells[countCellColumn].Format.Alignment =  ParagraphAlignment.Left;
                     row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
                     countCellColumn++;
-                    row.Cells[countCellColumn].AddParagraph("Payment Date");
-                    row.Cells[countCellColumn].Format.Font.Bold = true;
-                    row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
-                    row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
-                    countCellColumn++;
+                    //row.Cells[countCellColumn].AddParagraph("Payment Date");
+                    //row.Cells[countCellColumn].Format.Font.Bold = true;
+                    //row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
+                    //row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                    //countCellColumn++;
 
                     row.Cells[countCellColumn].AddParagraph("Trans Code");
                     row.Cells[countCellColumn].Format.Font.Bold = true;
@@ -614,11 +615,11 @@ namespace SmartReporting
                         row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("TransactionDate").ToString("yyyy-MM-dd HH:mm:ss"));
                         countCellValue++;
 
-                        row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
-                        row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
-                        row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
-                        row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
-                        countCellValue++;
+                        //row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                        //row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                        //row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
+                        //row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
+                        //countCellValue++;
 
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;

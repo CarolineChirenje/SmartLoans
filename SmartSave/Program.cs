@@ -15,7 +15,7 @@ namespace SmartSave
     public class Program
     {
 
-
+        static int   _timeOut = 30;
         public static void Main(string[] args)
         {
 
@@ -25,6 +25,7 @@ namespace SmartSave
           .AddEnvironmentVariables()
            .Build();
             bool _useUrlForSite = config.GetValue<bool>("UseUrlForSite");
+             _timeOut = config.GetValue<int>("TimeOut");
             if (_useUrlForSite)
             {
                 string _url = config.GetValue<string>("UserUrl");
@@ -32,7 +33,7 @@ namespace SmartSave
                     _url = "http://*:1989";
 
                 var host = new WebHostBuilder()
-                    .UseKestrel()
+                  .UseKestrel(o => { o.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(_timeOut); })
                     .UseUrls(_url)
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .UseStartup<Startup>()
@@ -50,7 +51,9 @@ namespace SmartSave
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                    .UseKestrel(o => { o.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(_timeOut); })
+                    .UseStartup<Startup>();
                 });
 
 
