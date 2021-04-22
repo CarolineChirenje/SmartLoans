@@ -339,11 +339,10 @@ namespace SmartReporting
                 DataTable Transactions = null;
                 if (Results != null && Results.Rows.Count > 0)
                 {
-                    if (!UtilityService.ShowReversalsOnStatement)
-                        Transactions = RemoveReversals(Results);
-                    else
+                    if (this._statement.PrintReversalsOnStatement)
                         Transactions = Results;
-
+                    else
+                        Transactions = RemoveReversals(Results);
                     // Create the item table
                     this.table = section.AddTable();
                     this.table.Style = "Table";
@@ -535,10 +534,11 @@ namespace SmartReporting
                 Paragraph paragraph = null;
                 if (Results != null && Results.Rows.Count > 0)
                 {
-                   if (!UtilityService.ShowReversalsOnStatement)
-                        Transactions = RemoveReversals(Results);
-                    else
+                    if (this._statement.PrintReversalsOnStatement)
                         Transactions = Results;
+                    else
+                        Transactions = RemoveReversals(Results);
+
                     // Create the item table
                     this.table = section.AddTable();
                     this.table.Style = "Table";

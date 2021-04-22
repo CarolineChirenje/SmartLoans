@@ -44,7 +44,7 @@ namespace SmartDomain
         public DateTime PasswordExpiryDate { get; set; }
         public bool IsActive { get; set; }
 
-        
+        public byte[] ProfileImage { get; set; }
         public virtual List<UserRole> UserRoles { get; set; }
 
         [NotMapped]

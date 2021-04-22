@@ -50,142 +50,176 @@
 
 </head>
 @*<body class="hold-transition skin-blue sidebar-mini">*@
-    <body class="hold-transition skin-green sidebar-mini">
-        <div class="wrapper">
-            <!-- Main Header -->
-            <header class="main-header">
-                <!-- Logo -->
-                <a asp-controller="Home" asp-action="Dashboard" class="logo">
-                    <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini"><b>@UtilityService.ApplicationNamePrefix</b></span>
-                    <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"><b>@UtilityService.ApplicationName </b></span>
+<body class="hold-transition skin-green sidebar-mini">
+    <div class="wrapper">
+        <!-- Main Header -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a asp-controller="Home" asp-action="Dashboard" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>@UtilityService.ApplicationNamePrefix</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>@UtilityService.ApplicationName </b></span>
+            </a>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
                 </a>
-                <!-- Header Navbar -->
-                <nav class="navbar navbar-static-top" role="navigation">
-                    <!-- Sidebar toggle button-->
-                    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                        <span class="sr-only">Toggle navigation</span>
-                    </a>
-                    <!-- Navbar Right Menu -->
-                    <div class="navbar-custom-menu">
-                        <ul class="nav navbar-nav">
-                            <!-- User Account Menu -->
-                            <li class="dropdown user user-menu">
-                                <!-- Menu Toggle Button -->
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <!-- The user image in the navbar-->
-                                    <img src="~/dist/img/profileIcon.png" class="user-image" alt="User Image">
-                                    <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                    <span class="hidden-xs">@UtilityService.UserFullName</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <!-- The user image in the menu -->
-                                    <li class="user-header">
-                                        <img src="~/dist/img/profileIcon.png" class="img-circle" alt="User Image">
-                                        <p>
-                                            @UtilityService.UserFullName
-                                            <small>@UtilityService.UserRole</small>
-                                        </p>
-                                    </li>
-                                    <!-- Menu Body -->
-                                    <li class="user-body">
-                                        <div class="row">
-                                            @*<div class="col-xs-4 text-center">
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                @{
+                                    if (UtilityService.UserProfileImage != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(UtilityService.UserProfileImage);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                        <img src="@imgSrc" class="user-image" alt="@UtilityService.UserFullName" style="width:50px;height:50px;   />
+                                        }
+                                        else
+                                        {
+                                        <img src="~/dist/img/profileIcon.png" class="user-image" alt="@UtilityService.UserFullName">
+                                    }
+                                }
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">@UtilityService.UserFullName</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    @{
+                                        if (UtilityService.UserProfileImage != null)
+                                        {
+                                            var base64 = Convert.ToBase64String(UtilityService.UserProfileImage);
+                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                            <img src="@imgSrc" class="img-circle" alt="@UtilityService.UserFullName" style="width:50px;height:50px;   />
+                                            }
+                                            else
+                                            {
+                                            <img src="~/dist/img/profileIcon.png" class="img-circle" alt="@UtilityService.UserFullName">
+                                        }
+                                    }
+
+                                    <p>
+                                        @UtilityService.UserFullName
+                                        <small>@UtilityService.UserRole</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <div class="row">
+                                        @*<div class="col-xs-4 text-center">
                                                 <a asp-controller="User" asp-action="ViewUser" asp-route-username="@UtilityService.CurrentUserName">Account</a>
                                             </div>*@
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- Menu Footer-->
-                                    <li class="user-footer">
-                                        <div class="pull-left">
-                                            <a asp-controller="User" asp-action="ViewUser" asp-route-username="@UtilityService.CurrentUserName" class="btn btn-default btn-flat">Profile</a>
-                                        </div>
-                                        <div class="pull-right">
-                                            <a asp-controller="Login" asp-action="Logout" class="btn btn-default btn-flat">Sign out</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                                    </div>
+                                    <!-- /.row -->
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a asp-controller="User" asp-action="ViewUser" asp-route-username="@UtilityService.CurrentUserName" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a asp-controller="Login" asp-action="Logout" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar skin-green">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar skin-green">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        @{
+                            if (UtilityService.UserProfileImage != null)
+                            {
+                                var base64 = Convert.ToBase64String(UtilityService.UserProfileImage);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                <img src="@imgSrc" class="img-circle" alt="@UtilityService.UserFullName" style="width:50px;height:50px;" />
+                            }
+                            else
+                            {
+                                <img src="~/dist/img/profileIcon.png" class="img-circle" alt="@UtilityService.UserFullName">
+                            }
+                        }
                     </div>
-                </nav>
-            </header>
-            <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar skin-green" >
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar skin-green">
-                    <!-- Sidebar user panel (optional) -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="~/dist/img/profileIcon.png" class="img-circle" alt="User Image">
-                        </div>
-                        <div class="pull-left info">
-                            <p>@UtilityService.CurrentUserName</p>
-                            <!-- Status -->
-                            <a asp-controller="User" asp-action="ViewUser" asp-route-username="@UtilityService.CurrentUserName"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
+                    <div class="pull-left info">
+                        <p>@UtilityService.CurrentUserName</p>
+                        <!-- Status -->
+                        <a asp-controller="User" asp-action="ViewUser" asp-route-username="@UtilityService.CurrentUserName"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
-                    <!-- search form (Optional) -->
-                    <form asp-controller="Client" asp-action="Clients" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="accountNum" class="form-control" placeholder="Search Employee ...">
-                            <span class="input-group-btn">
-                                <button type="submit" name="btnSearch" id="search-btn" class="btn btn-flat">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                    <!-- /.search form -->
-                    <!-- Sidebar Menu -->
-                    @await Component.InvokeAsync("MenuList");
+                </div>
+                <!-- search form (Optional) -->
+                <form asp-controller="Client" asp-action="Clients" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="accountNum" class="form-control" placeholder="Search Employee ...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="btnSearch" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <!-- Sidebar Menu -->
+                @await Component.InvokeAsync("MenuList");
 
-                    @*@Html.Partial("_MainMenu")*@
-                    <!-- /.sidebar-menu -->
-                </section>
-                <!-- /.sidebar -->
-            </aside>
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                @RenderBody()
-                <!-- /.content -->
-            </div>
-            <!-- /.content-wrapper -->
-            <!-- Main Footer -->
-            <footer class="main-footer">
-                <!-- Default to the left -->
-                <strong>Copyright &copy; @DateTime.Now.Year <a href="#">Caroline Chirenje Version @UtilityService.ApplicationVersion : @UtilityService.SiteEnvironment.ToString()</a>.</strong> All rights reserved.
-            </footer>
+                @*@Html.Partial("_MainMenu")*@
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            @RenderBody()
+            <!-- /.content -->
         </div>
-        <!-- ./wrapper -->
-        <!-- REQUIRED JS SCRIPTS -->
-        <!-- jQuery 3 -->
-        <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap 3.3.7 -->
-        <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- AdminLTE App -->
-        <script src="~/dist/js/adminlte.min.js"></script>
-        <script src="~/Custom/vendors/datatables/dataTables.bootstrap.js"></script>
-        <!-- DataTables JavaScript -->
-        <script src="@Url.Content("~/bower_components/raphael/raphael-min.js")"></script>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- Default to the left -->
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="#">Caroline Chirenje Version @UtilityService.ApplicationVersion : @UtilityService.SiteEnvironment.ToString()</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 3 -->
+    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <script src="~/Custom/vendors/datatables/dataTables.bootstrap.js"></script>
+    <!-- DataTables JavaScript -->
+    <script src="@Url.Content("~/bower_components/raphael/raphael-min.js")"></script>
 
-        <!-- DataTables JavaScript -->
-        <script src="@Url.Content("~/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
-        <script src="@Url.Content("~/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")"></script>
-        <!-- Custom Theme JavaScript -->
-        <script src="@Url.Content("~/Scripts/sb-admin-2.js")"></script>
+    <!-- DataTables JavaScript -->
+    <script src="@Url.Content("~/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="@Url.Content("~/Scripts/sb-admin-2.js")"></script>
 
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').DataTable({
-                    responsive: true
-                });
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').DataTable({
+                responsive: true
             });
-        </script>
-        @RenderSection("scripts", required: false)
-    </body>
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
 </html>

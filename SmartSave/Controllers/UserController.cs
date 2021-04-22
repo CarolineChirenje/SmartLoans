@@ -12,6 +12,7 @@ using SmartDomain;
 using SmartHelper;
 using Microsoft.AspNetCore.Http;
 using SmartDataAccess;
+using System.IO;
 
 namespace SmartSave.Controllers
 {
@@ -54,20 +55,36 @@ namespace SmartSave.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddUser(User user)
+        public async Task<IActionResult> AddUser(User user, IFormFile ProfileImage)
         {
             PopulateDropDownLists();
             if (UtilityService.StringParameterHasValue(String.Concat(user.FirstName, ' ', user.LastName)))
             {
 
-             if (_service.UserExists(user.EmailAddress))
-             {
+                if (_service.UserExists(user.EmailAddress))
+                {
                     TempData[MessageDisplayType.Error.ToString()] = $"A User Account with the same email address {user.EmailAddress} already exists";
                     return View(user);
                 }
                 user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
+                // To convert the  uploaded Photo as Byte Array before save to DB    
+                if (ProfileImage != null)
+                {
+                    if (ProfileImage.Length > 0)
+                    {
+                        //Getting FileName
+                        var fileName = Path.GetFileName(ProfileImage.FileName);
+                        //Getting file Extension
+                        var fileExtension = Path.GetExtension(fileName);
 
-                int result=await  _service.Save(user);
+                        using (var target = new MemoryStream())
+                        {
+                            ProfileImage.CopyTo(target);
+                            user.ProfileImage = target.ToArray();
+                        }
+                    }
+                }
+                int result = await _service.Save(user);
                 if (result == 0)
                 {
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -78,32 +95,44 @@ namespace SmartSave.Controllers
                     EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.New_User_Account_Created).Result;
                     Email email = new Email();
                     email.To = user.EmailAddress;
-            
+
                     if (UtilityService.IsNotNull(emailTemplate))
                     {
                         email.Body = emailTemplate.Body + _service.GetCredential(result);
                         email.Subject = emailTemplate.Subject;
                     }
-                    else{
+                    else
+                    {
 
-                        
+
                         email.AttachmentFromMemory = null;
-                        string _emailBody = @"Dear  "+ user.UserFullName + ",<br/><br/> Your user account has been created successfully  account on " + UtilityService.ApplicationName + ".<br/><br/>" +
+                        string _emailBody = @"Dear  " + user.UserFullName + ",<br/><br/> Your user account has been created successfully  account on " + UtilityService.ApplicationName + ".<br/><br/>" +
                                    "We recommend that you keep your account details secure and not share it with anyone.If you feel your credentials have  been compromised, " +
                                 @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + " customer service  at  " + UtilityService.CustomerServiceNumber + ". Your login password is <b>" + _service.GetCredential(result) + "</b>.<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
                         email.Body = UtilityService.HtmlDecode(_emailBody);
                         email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
                     }
                     _mailservice.SendMail(email);
-                  
-                    return RedirectToAction("ViewUser", new { id=result });
+
+                    return RedirectToAction("ViewUser", new { id = result });
                 }
 
-           
+
             }
             return View(user);
         }
+        public ActionResult RetrieveImage(int id)
+        {
+            User user = _service.FindUser(id).Result;
+            if (UtilityService.IsNull(user))
+                return null;
+            byte[] ProfileImage = user.ProfileImage;
+            if (ProfileImage != null)
+                return File(ProfileImage, "image/png");
+            else
+                return null;
 
+        }
 
         // GET:
         public async Task<IActionResult> ViewUser(int id = 0, string username = null)
@@ -111,7 +140,7 @@ namespace SmartSave.Controllers
             if (id == 0 && username == null)
                 return RedirectToAction(nameof(Users));
             ViewBag.DepartmentList = GetDepartments();
-           
+
             HttpContext.Session.SetString("UserID", id.ToString());
             PopulateDropDownLists();
             return View(await _service.FindUser(id, username));
@@ -119,21 +148,37 @@ namespace SmartSave.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ViewUser(User user)
+        public async Task<IActionResult> ViewUser(User user, IFormFile ProfileImage)
         {
             PopulateDropDownLists();
             if (ModelState.IsValid)
             {
                 User update = await _service.FindUser(user.UserID);
                 if (UtilityService.IsNotNull(update))
-                {
+                { // To convert the  uploaded Photo as Byte Array before save to DB    
+                    if (ProfileImage != null)
+                    {
+                        if (ProfileImage.Length > 0)
+                        {
+                            //Getting FileName
+                            var fileName = Path.GetFileName(ProfileImage.FileName);
+                            //Getting file Extension
+                            var fileExtension = Path.GetExtension(fileName);
+
+                            using (var target = new MemoryStream())
+                            {
+                                ProfileImage.CopyTo(target);
+                                user.ProfileImage = target.ToArray();
+                            }
+                        }
+                    }
                     if (await (_service.Update(user)) == 0)
                     {
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                         return View(user);
                     }
                 }
-                return RedirectToAction("ViewUser", new { id=user.UserID });
+                return RedirectToAction("ViewUser", new { id = user.UserID });
             }
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ViewUser", new { id = user.UserID });
@@ -152,7 +197,7 @@ namespace SmartSave.Controllers
         }
 
         // UserRoles
-               [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> AddUserRoles(string[] selectedRoles, UserRole user)
         {
 
@@ -161,7 +206,7 @@ namespace SmartSave.Controllers
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
 
-            return RedirectToAction("ViewUser", new { id=user.UserID });
+            return RedirectToAction("ViewUser", new { id = user.UserID });
 
         }
 
@@ -189,7 +234,7 @@ namespace SmartSave.Controllers
         public void PopulateDropDownLists()
         {
             int userID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
-            var allRoles = _service.GetAllRoles().OrderBy(r=>r.Name);
+            var allRoles = _service.GetAllRoles().OrderBy(r => r.Name);
             var userRoles = new HashSet<int>(_service.GetUserRoles(userID)?.Select(p => p.RoleID));
             var viewModel = new List<CheckBoxListItem>();
             foreach (var role in allRoles)

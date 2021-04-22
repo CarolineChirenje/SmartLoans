@@ -66,6 +66,7 @@ namespace SmartLogic
             User updateUser = await FindUser(user.UserID);
             string oldIDNumber = updateUser.IDNumber;
             string oldEmailAddress = updateUser.EmailAddress;
+            updateUser.ProfileImage = user.ProfileImage;
             updateUser.FirstName = user.FirstName;
             updateUser.LastName = user.LastName;
             updateUser.IsActive = user.IsActive;
@@ -80,7 +81,7 @@ namespace SmartLogic
             if (result > 0)
             {  // also need to update id number and email address on client account 
                 Client client = _context.Clients.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
-                if (UtilityService.IsNotNull(user))
+                if (UtilityService.IsNotNull(user) && UtilityService.IsNotNull(client))
                 {
                     client.EmailAddress = user.EmailAddress;
                     client.IDNumber = user.IDNumber;
@@ -88,9 +89,7 @@ namespace SmartLogic
                     client.LastChangedDate = DateTime.Now;
                     _context.Update(client);
                     result = await _context.SaveChangesAsync();
-
                 }
-
             }
             return result;
         }

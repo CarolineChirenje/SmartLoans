@@ -592,7 +592,6 @@ AED = 1
         Auto_Email_Receipts,
         Auto_Email_Statements,
         Auto_Email_Invoices,
-        Show_Reversals_On_Statements,
         Client_Notes_Default_Due_Date_Interval,
         Report_Body_Font_Name,
         Report_Body_Font_Size,

@@ -62,6 +62,7 @@ namespace SmartSave.Controllers
 
                     UtilityService.CurrentUserName = user.UserName;
                     UtilityService.UserFullName = user.UserFullName;
+                    UtilityService.UserProfileImage = user.ProfileImage;
                     UtilityService.CurrentUserTypeID = user.UserTypeID;
                     if (DateTime.Now > user.PasswordExpiryDate)
                         return RedirectToAction("PasswordReset", new { id = user.UserID });

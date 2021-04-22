@@ -15,7 +15,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" action="AddUser">
+        <form class="form-horizontal" method="post" action="AddUser" enctype="multipart/form-data">
             <div class="box-body">
 
                 @if (TempData["Error"] != null)
@@ -65,6 +65,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Profile Photo</label>
+                    <input type="file" name="ProfileImage" id="ProfileImage" accept=".jpg,.jpeg,.png" onchange="validateImageType()" />
+
+                </div>
+                <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">User Type</label>
                     <div class="col-sm-10">
                         <select asp-for="UserTypeID" class="form-control" asp-items="ViewBag.UserTypeList">
@@ -90,9 +95,26 @@
                 {
                     <button type="submit" class="btn btn-info pull-right">Add</button>
                 }
-                </div>
+            </div>
             <!-- /.box-footer -->
         </form>
     </div>
     <!-- /.box -->
 </section>
+<script>
+    $(document).ready(function () {
+
+
+    });
+
+    function validateImageType() {
+        var fileName = document.getElementById("ProfileImage").value;
+              var idxDot = fileName.lastIndexOf(".") + 1;
+        var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+        if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+            //TO DO
+        } else {
+            alert("Only jpg/jpeg and png files are allowed!");
+        }
+    }
+</script>

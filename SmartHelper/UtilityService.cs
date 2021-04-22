@@ -620,31 +620,14 @@ namespace SmartHelper
 
             }
         }
-        public static bool ShowReversalsOnStatement
-        {
-            get
-            {
-                string show = GetData.GetSettingValue((int)AppSetting.Show_Reversals_On_Statements)?.Value;
-                bool result = false;
-                try
-                {
-                    result = bool.Parse(show);
-                }
-                catch (Exception)
-                {
-
-
-                }
-                return result;
-
-            }
-        }
+       
         
         /// <summary>
         /// Static value protected by access routine.
         /// </summary>
         static string _currentUserName;
         static string _currentFullName;
+        static byte[] _userProfileImage;
         static int _ClientID;
         /// <summary>
         /// Access routine for global variable.
@@ -689,6 +672,19 @@ namespace SmartHelper
         }
 
 
+        public static byte[] UserProfileImage
+        {
+            get
+            {
+                return _userProfileImage;
+            }
+            set
+            {
+                _userProfileImage = value;
+            }
+
+        }
+
 
 
         //public static AuditEntry Log(AuditActionEnum action, string description)
@@ -707,6 +703,8 @@ namespace SmartHelper
         {
             UtilityService.UserFullName = string.Empty;
             UtilityService.CurrentUserName = string.Empty;
+            UtilityService.UserProfileImage = null;
+           
         }
 
 

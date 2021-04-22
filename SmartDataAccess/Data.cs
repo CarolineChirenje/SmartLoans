@@ -693,19 +693,6 @@ namespace SmartDataAccess
 
                 },
 
-                 new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Show_Reversals_On_Statements,
-                    Name = AppSetting.Show_Reversals_On_Statements.ToString().Replace("_", " "),
-                    Value="true",
-                    Description="Shows Reversal Entries on Statements",
-                    CustomVariableTypeID=(int)VariableType.Boolean,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
                   new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Client_Notes_Default_Due_Date_Interval,

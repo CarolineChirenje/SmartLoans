@@ -15,7 +15,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" action="/User/ViewUser">
+        <form class="form-horizontal" method="post" action="/User/ViewUser" enctype="multipart/form-data">
 
             @if (TempData["Error"] != null)
             {<div class="container">
@@ -63,6 +63,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Profile Image</label>
+                    <div class="col-sm-2">
+                        <img  name="ProfileImage" src="/User/RetrieveImage/@Model.UserID" alt="@Model.UserFullName" style="width:150px;height:150px;" />
+                        <input type="file" name="ProfileImage" id="ProfileImage" accept=".jpg,.jpeg,.png" onchange="validateImageType()" />
+                    </div>
+                </div>
+                <div class="form-group">
                     <label asp-for="UserTypeID" class="col-sm-2 control-label">User Type</label>
 
                     <div class="col-sm-10">
@@ -98,8 +105,8 @@
                     <div class="col-sm-10">
                         @if (UtilityService.HasPermission(Permissions.View_Role))
                         {
-                        <a data-toggle="modal" data-target="#AddUserRoles">@Model.UserRoles?.Count()</a>
-                                                }
+                            <a data-toggle="modal" data-target="#AddUserRoles">@Model.UserRoles?.Count()</a>
+                        }
                         else
                         {
                             <a>@Model.UserRoles?.Count()</a>
@@ -285,3 +292,16 @@
         </div>
         <!-- /.box -->
     </section>
+<script type="text/javascript">
+    function validateImageType() {
+        var fileName = document.getElementById("ProfileImage").value;
+               var idxDot = fileName.lastIndexOf(".") + 1;
+        var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+        if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+            //TO DO
+        } else {
+            alert("Only jpg/jpeg and png files are allowed!");
+        }
+    }
+</script>
+
