@@ -546,7 +546,100 @@ namespace SmartHelper
 
 
         }
+        public static string ReportBodyFontName
+        {
+            get
+            {
+                return GetData.GetSettingValue((int)AppSetting.Report_Body_Font_Name)?.Value;
 
+            }
+        }
+        public static int ReportBodyFontSize
+        {
+            get
+            {
+                string _size = GetData.GetSettingValue((int)AppSetting.Report_Body_Font_Size)?.Value;
+                int size = 0;
+                try
+                {
+                    size = Int32.Parse(_size);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                return size;
+
+            }
+        }
+
+        public static int ClientNotesDefaultDueDateInterval
+        {
+            get
+            {
+                string _size = GetData.GetSettingValue((int)AppSetting.Client_Notes_Default_Due_Date_Interval)?.Value;
+                int size = 0;
+                try
+                {
+                    size = Int32.Parse(_size);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                return size;
+
+            }
+        }
+        public static string ReportFooterFontName
+        {
+            get
+            {
+                return GetData.GetSettingValue((int)AppSetting.Report_Footer_Font_Name)?.Value;
+
+            }
+        }
+        public static int ReportFooterFontSize
+        {
+            get
+            {
+                string _size = GetData.GetSettingValue((int)AppSetting.Report_Footer_Font_Size)?.Value;
+                int size = 0;
+                try
+                {
+                    size = Int32.Parse(_size);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                return size;
+
+            }
+        }
+        public static bool ShowReversalsOnStatement
+        {
+            get
+            {
+                string show = GetData.GetSettingValue((int)AppSetting.Show_Reversals_On_Statements)?.Value;
+                bool result = false;
+                try
+                {
+                    result = bool.Parse(show);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                return result;
+
+            }
+        }
+        
         /// <summary>
         /// Static value protected by access routine.
         /// </summary>

@@ -19,7 +19,7 @@ using MigraDocCore.DocumentObjectModel;
 
 namespace SmartSave.Controllers
 {
-    public class TransactionsController : Controller
+    public class TransactionsController : BaseController<TransactionsController>
     {
         private readonly ITransactionService _service;
         private readonly ISettingService _settingService;

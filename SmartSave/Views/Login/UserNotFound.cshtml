@@ -1,0 +1,20 @@
+﻿@{
+    TempData["Title"] = "User Details Not Found";
+}
+<div id="layoutError_content">
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="text-center mt-4">
+                        <h1 class="display-1 text-danger text-bold">Oops</h1>
+                        <p class="lead">User credentials could not be found</p>
+                        <a class="btn btn-danger" asp-controller="Login" asp-action="Login">
+                           Please Login
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

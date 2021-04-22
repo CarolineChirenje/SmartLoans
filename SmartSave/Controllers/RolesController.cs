@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SmartSave.Controllers
 {
-    public class RolesController : Controller
+    public class RolesController : BaseController<RolesController>
     {
         private readonly IRoleService _service;
         public RolesController(IRoleService service) => _service = service;

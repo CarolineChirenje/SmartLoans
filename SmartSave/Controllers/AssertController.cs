@@ -13,7 +13,7 @@ using SmartSave.Models;
 
 namespace SmartSave.Controllers
 {
-    public class AssertController : Controller
+    public class AssertController : BaseController<AssertController>
     {
         private readonly IProductService _service;
         public AssertController(IProductService service)

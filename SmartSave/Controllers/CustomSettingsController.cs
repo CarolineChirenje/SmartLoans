@@ -12,7 +12,7 @@ using CustomSetting = SmartDomain.CustomSetting;
 
 namespace SmartSave.Controllers
 {
-    public class CustomSettingsController : Controller
+    public class CustomSettingsController : BaseController<CustomSettingsController>
     {
         private readonly ICustomSettingsService _service;
         private readonly ISettingService _settingService;

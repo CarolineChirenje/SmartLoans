@@ -9,7 +9,7 @@ using SmartDomain;
 
 namespace SmartSave.Controllers
 {
-    public class DepartmentController : Controller
+    public class DepartmentController : BaseController<DepartmentController>
     {
         private readonly IDepartmentService _service;
         public DepartmentController(IDepartmentService service) => _service = service;

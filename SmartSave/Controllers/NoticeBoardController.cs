@@ -10,7 +10,7 @@ using SmartHelper;
 
 namespace SmartSave.Controllers
 {
-    public class NoticeBoardController : Controller
+    public class NoticeBoardController : BaseController<NoticeBoardController>
     {
         private readonly INoticeBoardService _service;
         private readonly ISettingService _settingService;

@@ -36,7 +36,7 @@ namespace SmartReporting
                 this.document = new Document();
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Statement of Account");
                 this._statement = statement;
-               // this.document.DefaultPageSetup.Orientation = Orientation.Landscape;
+                // this.document.DefaultPageSetup.Orientation = Orientation.Landscape;
                 this.culture = new CultureInfo("en-US");
                 style = ReportingUtilities.DefineStyles(this.document);
                 AddressAndHeader();
@@ -308,13 +308,26 @@ namespace SmartReporting
             {
 
 
-                string _selectClause = @";WITH CTE_Trans AS (
-                                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Entity
+                //string _selectClause = @";WITH CTE_Trans AS (
+                //                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Entity
+                //                        FROM Transactions t
+                //                        INNER JOIN Products p ON p.ProductID=t.ProductID
+                //                        INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
+                //                        UNION ALL
+                //                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,c.Title AS Entity
+                //                        FROM Transactions t
+                //                        INNER JOIN Courses c ON c.CourseID=t.CourseID
+                //                        INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
+                //                        )
+                //                        SELECT * FROM CTE_Trans t ";
+
+                string _selectClause = @"WITH CTE_Trans AS (
+                                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Entity,t.TransactionID,t.ParentPaymentID
                                         FROM Transactions t
                                         INNER JOIN Products p ON p.ProductID=t.ProductID
                                         INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
                                         UNION ALL
-                                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,c.Title AS Entity
+                                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,c.Title AS Entity,t.TransactionID,t.ParentPaymentID
                                         FROM Transactions t
                                         INNER JOIN Courses c ON c.CourseID=t.CourseID
                                         INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
@@ -322,10 +335,15 @@ namespace SmartReporting
                                         SELECT * FROM CTE_Trans t ";
                 string sqlQuery = _selectClause + $"WHERE t.ClientID={_statement.ClientID}  AND t.TransactionDate>'{_statement.StartDate.ToString("yyyy-MM-dd")}' AND t.TransactionDate < '{ _statement.EndDate.ToString("yyyy-MM-dd")}'";
                 Paragraph paragraph = null;
-                DataTable Transactions = GetData.GetDataTable(sqlQuery);
-
-                if (Transactions != null && Transactions.Rows.Count > 0)
+                DataTable Results = GetData.GetDataTable(sqlQuery);
+                DataTable Transactions = null;
+                if (Results != null && Results.Rows.Count > 0)
                 {
+                    if (!UtilityService.ShowReversalsOnStatement)
+                        Transactions = RemoveReversals(Results);
+                    else
+                        Transactions = Results;
+
                     // Create the item table
                     this.table = section.AddTable();
                     this.table.Style = "Table";
@@ -482,7 +500,7 @@ namespace SmartReporting
                 else
                     paragraph = this.addressFrame.AddParagraph();
                 // Add the notes paragraph
-              //  paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
+                //  paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
             }
             catch (Exception e)
             {
@@ -498,19 +516,29 @@ namespace SmartReporting
             {
 
 
-                string _selectClause = @"SELECT t.PaymentDate,t.TransactionDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Product
+                //string _selectClause = @"SELECT t.PaymentDate,t.TransactionDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Product
+                //                            FROM Transactions t
+                //                            INNER JOIN Products p ON p.ProductID=t.ProductID
+                //                            INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
+
+
+                string _selectClause = @"SELECT t.PaymentDate,t.TransactionDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Product,t.TransactionID,t.ParentPaymentID
                                             FROM Transactions t
                                             INNER JOIN Products p ON p.ProductID=t.ProductID
                                             INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
-
                 string sqlQuery = _selectClause + $"WHERE t.ClientID={_statement.ClientID}  AND t.TransactionDate>'{_statement.StartDate.ToString("yyyy-MM-dd")}' AND t.TransactionDate < '{ _statement.EndDate.ToString("yyyy-MM-dd")}'";
 
                 if (_statement.ProductID > 0)
                     sqlQuery = sqlQuery + $" AND t.ProductID={_statement.ProductID}";
-                DataTable Transactions = GetData.GetDataTable(sqlQuery);
+                DataTable Results = GetData.GetDataTable(sqlQuery);
+                DataTable Transactions = null;
                 Paragraph paragraph = null;
-                if (Transactions != null && Transactions.Rows.Count > 0)
+                if (Results != null && Results.Rows.Count > 0)
                 {
+                   if (!UtilityService.ShowReversalsOnStatement)
+                        Transactions = RemoveReversals(Results);
+                    else
+                        Transactions = Results;
                     // Create the item table
                     this.table = section.AddTable();
                     this.table.Style = "Table";
@@ -563,7 +591,7 @@ namespace SmartReporting
                     int countCellColumn = 0;
                     row.Cells[countCellColumn].AddParagraph("Transaction Date");
                     row.Cells[countCellColumn].Format.Font.Bold = true;
-                    row.Cells[countCellColumn].Format.Alignment =  ParagraphAlignment.Left;
+                    row.Cells[countCellColumn].Format.Alignment = ParagraphAlignment.Left;
                     row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
                     countCellColumn++;
                     //row.Cells[countCellColumn].AddParagraph("Payment Date");
@@ -673,13 +701,54 @@ namespace SmartReporting
                 else
                     paragraph = this.addressFrame.AddParagraph();
                 // Add the notes paragraph
-               // paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
+                // paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
             }
             catch (Exception e)
             {
 
                 // ErrorLog.Log(e, ErrorSource.Reporting);
             }
+        }
+
+        private DataTable RemoveReversals(DataTable Results)
+        {
+            DataTable Transactions = null;
+
+            try
+            {
+                //Get Contra Reversals
+                var reversalList = Results.Rows.OfType<DataRow>()
+                 .Select(dr => dr.Field<int>("ParentPaymentID")).ToList().Where(pp => pp != 0).ToList();
+                if (reversalList != null && reversalList.Count() > 0)
+                {
+                    //Get Transactions that do not Contra id with parent paymentList
+                    var transactions = (from transRow in Results.AsEnumerable()
+                                        where !reversalList.Contains(transRow.Field<int>("TransactionID"))
+                                        select transRow).CopyToDataTable();
+                    if (transactions != null)
+                    {
+                        //From transactions get transactions with parent payment=0;
+                        var transactionsWithNoReversals = (from filterTrans in transactions.AsEnumerable()
+                                                           where filterTrans.Field<int>("ParentPaymentID") == 0
+                                                           select filterTrans).CopyToDataTable();
+
+                        if (transactionsWithNoReversals != null)
+                            Transactions = transactionsWithNoReversals;
+                        else
+                            Transactions = Results;
+                    }
+                }
+                else
+                    Transactions = Results;
+
+            }
+            catch (Exception ex)
+            {
+                Transactions = Results;
+                //  throw;
+            }
+            return Transactions;
+
         }
     }
 }

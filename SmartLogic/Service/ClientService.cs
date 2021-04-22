@@ -166,6 +166,7 @@ namespace SmartLogic
                 updateClient.Salary = Client.Salary;
                 updateClient.Occupation = Client.Occupation;
                 updateClient.ClientAccountTypeID = Client.ClientAccountTypeID;
+                updateClient.CompanyID = Client.CompanyID;
                 _context.Update(updateClient);
             }
             int result = await _context.SaveChangesAsync();
@@ -296,6 +297,10 @@ namespace SmartLogic
                 ThenInclude(document => document.DocumentType).
                 ThenInclude(docFormat => docFormat.DocumentFormat).
                 Include(sa => sa.ClientMedicalDetails).
+                 Include(at => at.ClientAccountType).
+                Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
+                Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+                Include(c => c.Title).
                 Include(at => at.ClientAccountType).
                 Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).ToListAsync();
         }
@@ -388,7 +393,7 @@ namespace SmartLogic
             cn.Comment = ClientNote.Comment;
             cn.DateClosed = ClientNote.DateClosed;
             if (!UtilityService.IsNotNull(cn.DueDate))
-                cn.DueDate = DateTime.Now.AddDays(5);
+                cn.DueDate = DateTime.Now.AddDays(UtilityService.IsNull(UtilityService.ClientNotesDefaultDueDateInterval)? 5 : UtilityService.ClientNotesDefaultDueDateInterval);
             if (!UtilityService.IsNotNull(cn.DateClosed))
                 cn.DateClosed = DateTime.MinValue;
             cn.VisibleToAdminOnly = ClientNote.VisibleToAdminOnly;

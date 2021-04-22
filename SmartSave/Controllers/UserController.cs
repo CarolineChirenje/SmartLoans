@@ -15,7 +15,7 @@ using SmartDataAccess;
 
 namespace SmartSave.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController<UserController>
     {
         IUserService _service;
         IRoleService _roleservice;

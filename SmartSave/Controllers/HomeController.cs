@@ -8,6 +8,7 @@ namespace SmartSave.Controllers
     {
 
         private readonly IDashboardService _service;
+      
         public HomeController(IDashboardService service)
         {
             _service = service;
@@ -39,5 +40,7 @@ namespace SmartSave.Controllers
         {
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+     
+        
     }
 }

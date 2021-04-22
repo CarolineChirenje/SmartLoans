@@ -17,10 +17,11 @@ using MigraDocCore.Rendering;
 using MigraDocCore.DocumentObjectModel;
 using System.Text;
 using PdfSharpCore.Pdf.Security;
+using Microsoft.Extensions.Logging;
 
 namespace SmartSave.Controllers
 {
-    public class ClientController : Controller
+    public class ClientController : BaseController<ClientController>
     {
         readonly IUserService _userService;
         readonly IClientService _service;
@@ -52,16 +53,27 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Clients(string accountNum = null, bool newClientsOnly = false)
         {
-            if (UtilityService.UserType == (int)TypeOfUser.Employee)
-                return RedirectToAction("Dashboard", "Home");
+            try
+            {
+                if (UtilityService.UserType == (int)TypeOfUser.Employee)
+                    return RedirectToAction("Dashboard", "Home");
 
-            List<Client> Clients = await _service.Clients();
-            if (String.IsNullOrEmpty(accountNum))
-                return View(Clients);
-            else if (newClientsOnly)
-                return View(await _service.NewClients());
-            else
-                return View(Clients.Where(m => m.AccountNumber.ToString().Contains(accountNum.Trim())));
+                List<Client> Clients = await _service.Clients();
+                if (String.IsNullOrEmpty(accountNum))
+                    return View(Clients);
+                else if (newClientsOnly)
+                    return View(await _service.NewClients());
+                else
+                    return View(Clients.Where(m => m.AccountNumber.ToString().Contains(accountNum.Trim())));
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+         
+
         }
         public IActionResult MyAccount()
         {

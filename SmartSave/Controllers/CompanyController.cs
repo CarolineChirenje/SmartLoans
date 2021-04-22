@@ -13,7 +13,7 @@ using SmartLogic;
 
 namespace SmartSave.Controllers
 {
-    public class CompanyController : Controller
+    public class CompanyController : BaseController<CompanyController>
     {
 
         private readonly ICompanyService _service;

@@ -13,7 +13,7 @@ using SmartHelper;
 
 namespace SmartSave.Controllers
 {
-    public class MenusController : Controller
+    public class MenusController : BaseController<MenusController>
     {
         private readonly IMenuService _service;
         public MenusController(IMenuService service) => _service = service;

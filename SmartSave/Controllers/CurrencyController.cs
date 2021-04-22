@@ -10,7 +10,7 @@ using SmartLogic.IService;
 
 namespace SmartSave.Controllers
 {
-    public class CurrencyController : Controller
+    public class CurrencyController : BaseController<CurrencyController>
     {
         private readonly ICurrencyService _service;
         public CurrencyController(ICurrencyService service) => _service = service;

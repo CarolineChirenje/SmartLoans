@@ -108,12 +108,12 @@ namespace SmartDataAccess
 
                 },
 
-                                 new CustomVariableType()
+               new CustomVariableType()
                 {
                     CustomVariableTypeID = (int)VariableType.Percentage,
                     Name =VariableType.Percentage.ToString().Replace("_", " "),
                     IsActive = true,
-                                       LastChangedDate = DateTime.Now,
+                    LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
@@ -679,13 +679,93 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                      new SmartDomain.CustomSetting()
+               new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Auto_Email_Statements,
                     Name = AppSetting.Auto_Email_Statements.ToString().Replace("_", " "),
                     Value="true",
                     Description="Automatically Emails Generated Statements",
                     CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Show_Reversals_On_Statements,
+                    Name = AppSetting.Show_Reversals_On_Statements.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Shows Reversal Entries on Statements",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                  new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Client_Notes_Default_Due_Date_Interval,
+                    Name = AppSetting.Client_Notes_Default_Due_Date_Interval.ToString().Replace("_", " "),
+                    Value="5",
+                    Description="Default Due date for note if not set by person who created it",
+                    CustomVariableTypeID=(int)VariableType.Integer,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+              
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Report_Body_Font_Name,
+                    Name = AppSetting.Report_Body_Font_Name.ToString().Replace("_", " "),
+                    Value="Arial",
+                    Description="Sets the Font Name for PDF Reports Body Section",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                  new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Report_Body_Font_Size,
+                    Name = AppSetting.Report_Body_Font_Size.ToString().Replace("_", " "),
+                    Value="9",
+                    Description="Sets the Font Size for PDF Reports Body Section",
+                    CustomVariableTypeID=(int)VariableType.Integer,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Report_Footer_Font_Name,
+                    Name = AppSetting.Report_Footer_Font_Name.ToString().Replace("_", " "),
+                    Value="Arial",
+                    Description="Sets the Font Name for PDF Reports Footer Section",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    CustomSettingTypeID=(int)SettingType.All,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                  new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Report_Footer_Font_Size,
+                    Name = AppSetting.Report_Footer_Font_Size.ToString().Replace("_", " "),
+                    Value="8",
+                    Description="Sets the Font Size for PDF Reports Footer Section",
+                    CustomVariableTypeID=(int)VariableType.Integer,
                     CustomSettingTypeID=(int)SettingType.All,
                     IsActive = true,
                     LastChangedDate = DateTime.Now,

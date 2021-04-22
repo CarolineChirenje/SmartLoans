@@ -16,7 +16,7 @@ using SmartSave.Models;
 
 namespace SmartSave.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController<ProductController>
     {
         private readonly IProductService _service;
         private readonly ISettingService _settingService;

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SmartSave.Controllers
 {
-    public class BankAccountsController : Controller
+    public class BankAccountsController : BaseController<BankAccountsController>
     {
         private readonly IBankAccountservice _service;
         readonly ISettingService _settingService;

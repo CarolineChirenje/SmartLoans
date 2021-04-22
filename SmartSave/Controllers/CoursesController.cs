@@ -16,7 +16,7 @@ using MigraDocCore.Rendering;
 using MigraDocCore.DocumentObjectModel;
 namespace SmartSave.Controllers
 {
-    public class CoursesController : Controller
+    public class CoursesController : BaseController<CoursesController>
     {
         private readonly ICourseService _service;
         private readonly ISettingService _settingService;

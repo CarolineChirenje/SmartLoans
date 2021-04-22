@@ -69,7 +69,9 @@ namespace SmartReporting
                 paragraph.AddLineBreak();
                 paragraph.AddText(reportFooter2);
             }
-            paragraph.Format.Font.Size = 8;
+            paragraph.Format.Font.Name = UtilityService.IsNull(UtilityService.ReportFooterFontName) ? (UtilityService.IsNull(UtilityService.ReportBodyFontName) ? "Arial" : UtilityService.ReportBodyFontName ): UtilityService.ReportFooterFontName;
+            paragraph.Format.Font.Size = UtilityService.ReportFooterFontSize == 0 ? 8 : UtilityService.ReportFooterFontSize;
+          
             return paragraph;
         }
       
@@ -90,7 +92,8 @@ namespace SmartReporting
                 // Because all styles are derived from Normal, the next line changes the 
                 // font of the whole document. Or, more exactly, it changes the font of
                 // all styles and paragraphs that do not redefine the font.
-                style.Font.Name = "Calibri";
+                style.Font.Name = UtilityService.IsNull(UtilityService.ReportBodyFontName) ? "Arial" : UtilityService.ReportBodyFontName;
+                style.Font.Size = UtilityService.ReportBodyFontSize == 0 ? 8 : UtilityService.ReportBodyFontSize;
 
                 style = document.Styles[StyleNames.Header];
                 style.ParagraphFormat.AddTabStop("16cm", TabAlignment.Right);
@@ -100,8 +103,8 @@ namespace SmartReporting
 
                 // Create a new style called Table based on style Normal
                 style = document.Styles.AddStyle("Table", "Normal");
-                style.Font.Name = "Calibri";
-                style.Font.Size = 9;
+                style.Font.Name = UtilityService.IsNull(UtilityService.ReportBodyFontName) ? "Arial" : UtilityService.ReportBodyFontName;
+                style.Font.Size = UtilityService.ReportBodyFontSize==0? 8:UtilityService.ReportBodyFontSize;
 
                 // Create a new style called Reference based on style Normal
                 style = document.Styles.AddStyle("Reference", "Normal");
@@ -115,7 +118,7 @@ namespace SmartReporting
                 style.ParagraphFormat.SpaceBefore = "5mm";
                 style.ParagraphFormat.SpaceAfter = "5mm";
                 style.ParagraphFormat.TabStops.AddTabStop("10cm", TabAlignment.Left);
-                style.Font.Size = 8;
+                style.Font.Size = UtilityService.ReportBodyFontSize == 0 ? 8 : UtilityService.ReportBodyFontSize;
 
 
                 // Create a new style called Reference based on style Normal
@@ -123,7 +126,7 @@ namespace SmartReporting
                 style.ParagraphFormat.SpaceBefore = "5mm";
                 style.ParagraphFormat.SpaceAfter = "5mm";
                 style.ParagraphFormat.TabStops.AddTabStop("2.5cm", TabAlignment.Left);
-                style.Font.Size = 8;
+                style.Font.Size = UtilityService.ReportBodyFontSize == 0 ? 8 : UtilityService.ReportBodyFontSize;
 
 
             }

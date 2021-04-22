@@ -10,7 +10,7 @@ using SmartLogic.IService;
 
 namespace SmartSave.Controllers
 {
-    public class CountryController : Controller
+    public class CountryController : BaseController<CountryController>
     {
         private readonly ICountryService _service;
         public CountryController(ICountryService service) => _service = service;

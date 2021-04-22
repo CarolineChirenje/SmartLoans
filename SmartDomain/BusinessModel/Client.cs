@@ -30,9 +30,10 @@ namespace SmartDomain
         [Column(TypeName = "decimal(18,2)")]
         [DefaultValue("0.00")]
         public decimal Salary { get; set; }
-
         public int ClientAccountTypeID { get; set; }
         public virtual ClientAccountType ClientAccountType { get; set; }
+        public int? CompanyID { get; set; }
+        public virtual Company Company { get; set; }
 
         public virtual JointApplicant JointApplicant { get; set; }
         public virtual List<ClientContact> ClientContacts { get; set; }

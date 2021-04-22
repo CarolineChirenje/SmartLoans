@@ -119,6 +119,24 @@ namespace SmartHelper
             return showDeveloperExceptions;
 
         }
+
+        public static int GetSessionTimeOut()
+        {
+            _configuration = LoadAppConfigurations;
+            int sessionTimeOut = 60;
+            try
+            {
+                sessionTimeOut = Int32.Parse(_configuration.GetSection("SessionTimeOut").Value);
+            }
+            catch
+            {
+
+
+            }
+
+            return sessionTimeOut;
+
+        }
         public static IConfiguration LoadAppConfigurations
         {
             get

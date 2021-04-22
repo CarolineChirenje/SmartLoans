@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SmartSave.Controllers
 {
-    public class TransactionTypeController : Controller
+    public class TransactionTypeController : BaseController<TransactionTypeController>
     {
         private readonly ITransactionTypeService _service;
         public TransactionTypeController(ITransactionTypeService service) => _service = service;

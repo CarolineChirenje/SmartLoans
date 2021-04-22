@@ -134,10 +134,11 @@ namespace SmartLogic
                 newPaymentFile.Amount = (AmountInclVat * -1);
                 newPaymentFile.VAT = (VATAmount * -1);
                 newPaymentFile.AmountExclVAT = (AmountExclVat * -1);
-                newPaymentFile.Narration = $"(R)-{PaymentsFile.TransRef}";
+                newPaymentFile.Narration = $"(R) - {PaymentsFile.TransRef}";
                 _context.Add(newPaymentFile);
-
-                updateOldPayment(transactionID, oldPaymentStatus, newPaymentFile.TransRef);
+                await _context.SaveChangesAsync();
+                int ReversalPaymentID = newPaymentFile.TransactionID;
+                updateOldPayment(transactionID, oldPaymentStatus, newPaymentFile.TransRef, ReversalPaymentID);
 
                 if (PaymentsFile.ClientFeeID.HasValue)
                 {
@@ -156,23 +157,24 @@ namespace SmartLogic
             catch (Exception ex)
             {
 
-                throw;
+                //throw;
             }
             return await _context.SaveChangesAsync();
         }
 
 
-        private void updateOldPayment(int transactionID, int oldPaymentStatus, string newTransRef)
+        private void updateOldPayment(int transactionID, int oldPaymentStatus, string newTransRef,int reversalPaymentID)
         {
             try
             {
                 //update status of old payment
                 Transaction oldPaymentsFile = _context.Transactions.Find(transactionID);
                 string old_Narration = oldPaymentsFile.Narration;
-                string append_Narration = $"(R)-{newTransRef}.";
+                string append_Narration = $"(R) - {newTransRef}.";
                 oldPaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
                 oldPaymentsFile.LastChangedDate = DateTime.Now;
                 oldPaymentsFile.PaymentStatusID = oldPaymentStatus;
+                oldPaymentsFile.ReversalPaymentID = reversalPaymentID;
                 oldPaymentsFile.Narration = String.IsNullOrEmpty(old_Narration) ? append_Narration : $"{old_Narration} : {append_Narration}";
                 _context.Update(oldPaymentsFile);
             }

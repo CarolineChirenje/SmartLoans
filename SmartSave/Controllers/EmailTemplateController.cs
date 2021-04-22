@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SmartSave.Controllers
 {
-    public class EmailTemplateController : Controller
+    public class EmailTemplateController : BaseController<EmailTemplateController>
     {
         private readonly IEmailTemplateService _service;
         private readonly ISettingService _settingservice;

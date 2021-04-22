@@ -16,7 +16,9 @@ namespace SmartDomain
         public virtual Product Product { get; set; }
         public bool IsActive { get; set; }
         public DateTime DateRegistered { get { return DateTime.Now; } }
+        [Column(TypeName = "decimal(18,4)")]
         public decimal? DeductionPercentage { get; set; }
+        [Column(TypeName = "decimal(18,4)")]
         public decimal? IncreamentPercentage { get; set; }
         [NotMapped]
         public string DeductionAmount { get; set; }

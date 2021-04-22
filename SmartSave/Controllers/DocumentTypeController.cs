@@ -11,7 +11,7 @@ using SmartLogic;
 
 namespace SmartSave.Controllers
 {
-    public class DocumentTypeController : Controller
+    public class DocumentTypeController : BaseController<DocumentTypeController>
     {
         private readonly IDocumentTypeService _service;
         private readonly ISettingService _settingService;

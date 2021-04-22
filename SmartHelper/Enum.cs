@@ -591,7 +591,13 @@ AED = 1
         Generate_Receipt_On_Payment_Upload,
         Auto_Email_Receipts,
         Auto_Email_Statements,
-        Auto_Email_Invoices
+        Auto_Email_Invoices,
+        Show_Reversals_On_Statements,
+        Client_Notes_Default_Due_Date_Interval,
+        Report_Body_Font_Name,
+        Report_Body_Font_Size,
+        Report_Footer_Font_Name,
+        Report_Footer_Font_Size,
 
     }
 
@@ -795,7 +801,8 @@ AED = 1
         View_Course_Intake,
         View_Course_Intake_Register,
         Generate_Attendance_Register,
-        View_Invoice_Details
+        View_Invoice_Details,
+        Print_Statement_With_No_Reversals
     }
 
 

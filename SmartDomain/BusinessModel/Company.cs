@@ -25,7 +25,7 @@ namespace SmartDomain
         public bool IsActive { get; set; }
         public byte[] CompanyLogo { get; set; }
         public virtual List<Product> CompanyProducts { get; set; }
-
+        public virtual List<Client> Clients { get; set; }
 
     }
 }

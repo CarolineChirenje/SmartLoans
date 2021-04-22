@@ -10,7 +10,7 @@ using SmartLogic.IService;
 
 namespace SmartSave.Controllers
 {
-    public class FeatureFlagController : Controller
+    public class FeatureFlagController : BaseController<FeatureFlagController>
     {
         private readonly IFeatureFlagService _service;
         public FeatureFlagController(IFeatureFlagService service) => _service = service;

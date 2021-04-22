@@ -44,7 +44,7 @@ namespace SmartDomain
         public DateTime PaymentDate { get; set; }
         public DateTime TransactionDate { get; set; }
         public int? ParentPaymentID { get; set; }
-
+        public int? ReversalPaymentID { get; set; }
         public string Reason { get; set; }
         [NotMapped]
         public string Entity { get { return ProductID.HasValue ? $"Product - {Product.Name} " : (CourseID.HasValue ? $"Course - {Course.Title}" : "" ); } }
