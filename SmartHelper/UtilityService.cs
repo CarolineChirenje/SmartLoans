@@ -667,11 +667,7 @@ namespace SmartHelper
             string queryRef = $"Q{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MMM").ToUpper()}{RandomAlphanumeric()}";
             return queryRef;
         }
-        public static string GenerateTransactionRef(string ClientRef)
-        {
-            string queryRef = $"T{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MM").ToUpper()}{ DateTime.Now.ToString("dd").ToUpper()}{GenerateRandomNumbers(2)}";
-            return queryRef.ToUpper();
-        }
+      
 
         public static string GetUserType(int userTypeID) => Enum.GetName(typeof(TypeOfUser), userTypeID);
         public static int GenerateRandomNumbers(int numberSize = 4)

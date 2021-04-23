@@ -91,9 +91,9 @@ namespace SmartLogic
                 }
                 var client = _context.Clients.Find(PaymentsFile.ClientID);
                 if (UtilityService.IsNotNull(client))
-                    PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(client.AccountNumber.ToString());
+                    PaymentsFile.TransRef = NewTransactionRef;
                 else
-                    PaymentsFile.TransRef = UtilityService.GenerateTransactionRef("");
+                    PaymentsFile.TransRef = NewTransactionRef;
 
                 PaymentsFile.TransactionTypeID = (int)transaction;
                 PaymentsFile.PaymentStatusID = (int)PaymentState.Paid;
@@ -109,7 +109,48 @@ namespace SmartLogic
                 throw;
             }
         }
+        #region TransactionRef
+        
+        public string NewTransactionRef
+        {
+            get
+            {
+                return GenerateTransactionRef();
+            }
+        }
+        private bool TransRefExists(string transRef)
+        {
+            try
+            {
+                return _context.Transactions.Any(t => t.TransRef.Equals(transRef));
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
+        string GenerateTransactionRef()
+        {
+            try
+            {
+                string queryRef = $"T{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MM").ToUpper()}{ DateTime.Now.ToString("dd").ToUpper()}{UtilityService.GenerateRandomNumbers(2)}";
+                 queryRef.ToUpper();
+                if (TransRefExists(queryRef))
+                    return GenerateTransactionRef();
+
+                else
+                    return queryRef;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        #endregion TransactionRef
+       
         public async Task<int> ReversePayment(Transaction PaymentsFile, TransactionTypeList transaction)
         {// create a duplicate negative payment with  new transactions
             int transactionID = PaymentsFile.TransactionID;
@@ -128,7 +169,7 @@ namespace SmartLogic
                 AmountInclVat = PaymentsFile.Amount;
                 Transaction newPaymentFile = new Transaction
                 {
-                    TransRef = UtilityService.GenerateTransactionRef(PaymentsFile.Client.AccountNumber),
+                    TransRef = NewTransactionRef,
                     ClientID = PaymentsFile.ClientID,
                     PaymentDate = DateTime.Now,
                     TransactionDate = DateTime.Now,
