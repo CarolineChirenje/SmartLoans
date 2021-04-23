@@ -5,6 +5,7 @@ using MigraDocCore.DocumentObjectModel.Shapes;
 using PdfSharpCore.Utils;
 using SixLabors.ImageSharp.PixelFormats;
 using SmartHelper;
+using SmartLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -40,20 +41,28 @@ namespace SmartReporting
                 image.Top = ShapePosition.Center;
                 image.Left = ShapePosition.Center;
                 image.WrapFormat.Style = WrapStyle.Through;
-                
-            }
-            catch (Exception)
+                     }
+            catch (Exception ex)
             {
-
-                //  throw;
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
             return image;
         }
         public static Section SetMargins(Section section)
         {
-            section.PageSetup.TopMargin = Unit.FromCentimeter(3);
-            section.PageSetup.BottomMargin = Unit.FromCentimeter(3);
-            return section;
+            try
+            {
+
+                section.PageSetup.TopMargin = Unit.FromCentimeter(3);
+                section.PageSetup.BottomMargin = Unit.FromCentimeter(3);
+                return section;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
+            }
         }
         public static Paragraph PrintFooter(Section section)
         {
@@ -77,10 +86,17 @@ namespace SmartReporting
       
         public static Document DocumentMetaData(Document document, string DocumentTitle)
         {
-            document.Info.Title = DocumentTitle;
+            try
+            {                                 document.Info.Title = DocumentTitle;
             document.Info.Subject = UtilityService.ApplicationName;
             document.Info.Author = "Caroline Chirenje";
             return document;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
+            }
         }
         public static Style DefineStyles(Document document)
         {
@@ -112,7 +128,6 @@ namespace SmartReporting
                 style.ParagraphFormat.SpaceAfter = "5mm";
                 style.ParagraphFormat.TabStops.AddTabStop("10cm", TabAlignment.Left);
 
-
                 // Create a new style called Reference based on style Normal
                 style = document.Styles.AddStyle("Address", "Normal");
                 style.ParagraphFormat.SpaceBefore = "5mm";
@@ -120,23 +135,18 @@ namespace SmartReporting
                 style.ParagraphFormat.TabStops.AddTabStop("10cm", TabAlignment.Left);
                 style.Font.Size = UtilityService.ReportBodyFontSize == 0 ? 8 : UtilityService.ReportBodyFontSize;
 
-
                 // Create a new style called Reference based on style Normal
                 style = document.Styles.AddStyle("LoanDetails", "Normal");
                 style.ParagraphFormat.SpaceBefore = "5mm";
                 style.ParagraphFormat.SpaceAfter = "5mm";
                 style.ParagraphFormat.TabStops.AddTabStop("2.5cm", TabAlignment.Left);
                 style.Font.Size = UtilityService.ReportBodyFontSize == 0 ? 8 : UtilityService.ReportBodyFontSize;
-
-
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //  ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
-
-
             return style;
         }
 

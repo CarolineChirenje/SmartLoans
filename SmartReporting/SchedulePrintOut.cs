@@ -4,6 +4,7 @@ using MigraDocCore.DocumentObjectModel.Shapes;
 using MigraDocCore.DocumentObjectModel.Tables;
 using SmartDomain;
 using SmartHelper;
+using SmartLog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,9 +27,7 @@ namespace SmartReporting
         Style style;
               Company _Company;
         ClientDeduction _clientDeduction;
-      
-
-        public Document Print(Company Company, ClientDeduction clientDeduction)
+             public Document Print(Company Company, ClientDeduction clientDeduction)
         {
             try
             {
@@ -44,13 +43,11 @@ namespace SmartReporting
                 AddressAndHeader();
                 ProductDetails();
                 ScheduleDetails();
-
-
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //  ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
             return this.document;
         }
@@ -64,9 +61,7 @@ namespace SmartReporting
                 Image image = ReportingUtilities.PrintHeaderLogo(section);
                 // Create footer
                 Paragraph paragraph = ReportingUtilities.PrintFooter(section);
-
                 // Create the text frame for the address
-
                 this.addressFrame = section.AddTextFrame();
                 this.addressFrame.Height = "3.0cm";
                 this.addressFrame.Width = "7.0cm";
@@ -75,10 +70,7 @@ namespace SmartReporting
                 this.addressFrame.Top = "5.0cm";
                 this.addressFrame.RelativeVertical = RelativeVertical.Page;
 
-
-
                 string title = "SALARY SCHEDULE";
-
                 // Add the print date field
                 paragraph = section.AddParagraph();
                 paragraph.Format.SpaceBefore = "0.5cm";
@@ -86,7 +78,6 @@ namespace SmartReporting
                 paragraph.AddFormattedText($"{title}", TextFormat.Bold);
                 paragraph.Format.Alignment = ParagraphAlignment.Center;
                 paragraph = section.AddParagraph();
-
 
                 // Create the item table
                 this.table = section.AddTable();
@@ -99,8 +90,7 @@ namespace SmartReporting
                 // Before you can add a row, you must define the columns
                 Column column = this.table.AddColumn("10cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
-
-                paragraph = this.addressFrame.AddParagraph();
+               paragraph = this.addressFrame.AddParagraph();
 
                 if (UtilityService.IsNull(_Company))
                 {
@@ -196,11 +186,10 @@ namespace SmartReporting
                     paragraph = section.AddParagraph();
                 }
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw e;
-                //   ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
 
@@ -231,12 +220,7 @@ namespace SmartReporting
                 column = this.table.AddColumn("5cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
 
-
                 Paragraph paragraph = this.addressFrame.AddParagraph();
-
-
-
-
                 // Each item fills two rows
                 Row tblrow = this.table.AddRow();
 
@@ -265,7 +249,6 @@ namespace SmartReporting
                 tblrow.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow.Cells[3].AddParagraph(column2Value);
 
-
                 Row tblrow1 = this.table.AddRow();
                 tblrow1.Borders.Visible = false;
                 tblrow1.TopPadding = 1.5;
@@ -290,24 +273,18 @@ namespace SmartReporting
                 tblrow1.Cells[3].Format.Alignment = ParagraphAlignment.Left;
                 tblrow1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow1.Cells[3].AddParagraph(DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
-
-
-                paragraph = section.AddParagraph();
+               paragraph = section.AddParagraph();
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //  ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
         void ScheduleDetails()
         {
-
             try
-            {
-              
-                // Create the item table
+            {                              // Create the item table
                 this.table = section.AddTable();
                 this.table.Style = "Table";
                 this.table.Borders.Color = TableBorder;
@@ -316,18 +293,14 @@ namespace SmartReporting
                     this.table.Borders.Width = 0.25;
                     this.table.Borders.Left.Width = 0.25;
                     this.table.Borders.Right.Width = 0.25;
-
                 }
-
                 else
                 {
-
                     this.table.Borders.Width = 0;
                     this.table.Borders.Left.Width = 0;
                     this.table.Borders.Right.Width = 0;
                     this.table.Rows.LeftIndent = 0;
                 }
-
                 // Before you can add a row, you must define the columns
                 Column column = this.table.AddColumn("2.5cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
@@ -340,9 +313,8 @@ namespace SmartReporting
                 
                     column = this.table.AddColumn("3.5cm");
                     column.Format.Alignment = ParagraphAlignment.Left;
-                
-
-                column = this.table.AddColumn("2.5cm");
+            
+               column = this.table.AddColumn("2.5cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
                 int countCellColumn = 0;
 
@@ -376,9 +348,7 @@ namespace SmartReporting
                     row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
                     row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
                     countCellColumn++;
-                
-
-                row.Cells[countCellColumn].AddParagraph("Amount Due");
+                             row.Cells[countCellColumn].AddParagraph("Amount Due");
                 row.Cells[countCellColumn].Format.Font.Bold = true;
                 row.Cells[countCellColumn].Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
@@ -426,7 +396,6 @@ namespace SmartReporting
                     row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
                     row1.Cells[countCellValue].AddParagraph(String.Format(culture, "{0:C}", transaction.DeductedAmount));
 
-
                     finalCountCellValue = countCellValue;
                     if (UtilityService.StatementShowTableBoarders)
                         this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue + 1 , 1, Edge.Box, BorderStyle.Single, 0.75);
@@ -435,7 +404,6 @@ namespace SmartReporting
                 // Add an invisible row as a space line to the table
                 Row row2 = this.table.AddRow();
                 row2.Borders.Visible = false;
-
                 decimal TotalPaid = _clientDeduction.ClientDeductionDetails.AsEnumerable().Sum(transaction => transaction.DeductedAmount);
                 // Add the total due row
                 row2 = this.table.AddRow();
@@ -449,12 +417,11 @@ namespace SmartReporting
                 // Set the borders of the specified cell range
                 if (UtilityService.StatementShowTableBoarders)
                     this.table.SetEdge(finalCountCellValue, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
-
-           }
-            catch (Exception e)
+            }
+            catch (Exception ex)
             {
-
-                // ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
     }

@@ -9,6 +9,7 @@ using SmartDomain;
 using System.Globalization;
 using Microsoft.VisualBasic;
 using Microsoft.EntityFrameworkCore.Internal;
+using SmartLog;
 
 namespace SmartLogic
 {
@@ -31,65 +32,82 @@ namespace SmartLogic
         }
         TransactionState GetTransactionState(int TransactionTypeID)
         {
-            var transactionType = _context.TransactionType.Find(TransactionTypeID);
-            TransactionState transactionState = (TransactionState)transactionType.TransactionStatusID;
-            return transactionState;
+            try
+            {
+
+                var transactionType = _context.TransactionType.Find(TransactionTypeID);
+                TransactionState transactionState = (TransactionState)transactionType.TransactionStatusID;
+                return transactionState;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> CreatePayment(Transaction PaymentsFile, TransactionTypeList transaction)
         {
-            TransactionState transactionState = GetTransactionState(PaymentsFile.TransactionTypeID);
-            decimal VATAmount = 0m;
-            decimal AmountExclVat = 0m;
-            decimal AmountInclVat = 0m;
-            PaymentsFile.Year = DateTime.Now.Year;
-            PaymentsFile.Month = DateTime.Now.Month;
-            PaymentsFile.TransactionDate = DateTime.Now;
-
-            string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage).Value;
-            decimal _vatPercentage = 0;
             try
             {
-                _vatPercentage = decimal.Parse(_percentage, CultureInfo.InvariantCulture); ;
+                TransactionState transactionState = GetTransactionState(PaymentsFile.TransactionTypeID);
+                decimal VATAmount = 0m;
+                decimal AmountExclVat = 0m;
+                decimal AmountInclVat = 0m;
+                PaymentsFile.Year = DateTime.Now.Year;
+                PaymentsFile.Month = DateTime.Now.Month;
+                PaymentsFile.TransactionDate = DateTime.Now;
+
+                string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage).Value;
+                decimal _vatPercentage = 0;
+                try
+                {
+                    _vatPercentage = decimal.Parse(_percentage, CultureInfo.InvariantCulture); ;
+                }
+                catch (Exception)
+                {
+
+                    _vatPercentage = 0.15M;
+                }
+                if (UtilityService.PaymentsMustBeVatInclusive)
+                { // total paid will include VAT
+                    VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
+                    AmountExclVat = PaymentsFile.TotalPaid - PaymentsFile.VAT;
+                    AmountInclVat = PaymentsFile.TotalPaid;
+                    PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
+                    PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
+                    PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1);
+
+                }
+                else
+                {
+
+                    // total paid is VAT exclusive so we need to calculate total with VAT
+                    VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
+                    AmountInclVat = PaymentsFile.VAT + PaymentsFile.TotalPaid;
+                    AmountExclVat = PaymentsFile.TotalPaid;
+                    PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
+                    PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
+                    PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1); ;
+                }
+                var client = _context.Clients.Find(PaymentsFile.ClientID);
+                if (UtilityService.IsNotNull(client))
+                    PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(client.AccountNumber.ToString());
+                else
+                    PaymentsFile.TransRef = UtilityService.GenerateTransactionRef("");
+
+                PaymentsFile.TransactionTypeID = (int)transaction;
+                PaymentsFile.PaymentStatusID = (int)PaymentState.Paid;
+                PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
+                PaymentsFile.LastChangedDate = DateTime.Now;
+                _context.Add(PaymentsFile);
+                await _context.SaveChangesAsync();
+                return PaymentsFile.TransactionID;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                _vatPercentage = 0.15M;
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
             }
-            if (UtilityService.PaymentsMustBeVatInclusive)
-            { // total paid will include VAT
-                VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
-                AmountExclVat = PaymentsFile.TotalPaid - PaymentsFile.VAT;
-                AmountInclVat = PaymentsFile.TotalPaid;
-                PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
-                PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
-                PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1);
-
-            }
-            else
-            {
-
-                // total paid is VAT exclusive so we need to calculate total with VAT
-                VATAmount = PaymentsFile.TotalPaid * _vatPercentage;
-                AmountInclVat = PaymentsFile.VAT + PaymentsFile.TotalPaid;
-                AmountExclVat = PaymentsFile.TotalPaid;
-                PaymentsFile.VAT = (TransactionState.Positive == transactionState) ? VATAmount : (VATAmount * -1);
-                PaymentsFile.AmountExclVAT = (TransactionState.Positive == transactionState) ? AmountExclVat : (AmountExclVat * -1);
-                PaymentsFile.Amount = (TransactionState.Positive == transactionState) ? AmountInclVat : (AmountInclVat * -1); ;
-            }
-            var client = _context.Clients.Find(PaymentsFile.ClientID);
-            if (UtilityService.IsNotNull(client))
-                PaymentsFile.TransRef = UtilityService.GenerateTransactionRef(client.AccountNumber.ToString());
-            else
-                PaymentsFile.TransRef = UtilityService.GenerateTransactionRef("");
-
-            PaymentsFile.TransactionTypeID = (int)transaction;
-            PaymentsFile.PaymentStatusID = (int)PaymentState.Paid;
-            PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
-            PaymentsFile.LastChangedDate = DateTime.Now;
-            _context.Add(PaymentsFile);
-            await _context.SaveChangesAsync();
-            return PaymentsFile.TransactionID;
         }
 
         public async Task<int> ReversePayment(Transaction PaymentsFile, TransactionTypeList transaction)
@@ -157,13 +175,13 @@ namespace SmartLogic
             catch (Exception ex)
             {
 
-                //throw;
+                CustomLog.Log(LogSource.Logic_Base, ex);
             }
             return await _context.SaveChangesAsync();
         }
 
 
-        private void updateOldPayment(int transactionID, int oldPaymentStatus, string newTransRef,int reversalPaymentID)
+        private void updateOldPayment(int transactionID, int oldPaymentStatus, string newTransRef, int reversalPaymentID)
         {
             try
             {
@@ -180,7 +198,7 @@ namespace SmartLogic
             }
             catch (Exception ex)
             {
-
+                CustomLog.Log(LogSource.Logic_Base, ex);
                 throw;
             }
 
@@ -189,61 +207,96 @@ namespace SmartLogic
 
         public async Task<List<Transaction>> ClientTransactions(int ClientID)
         {
-            return await _context.Transactions.Where(p => p.ClientID == ClientID)
-             .Include(p => p.Client)
-             .Include(p => p.Product)
-             .Include(p => p.Course)
-             .Include(p => p.PaymentStatus)
-              .Include(p => p.TransactionType)
-               .ThenInclude(p => p.TransactionStatus)
-              .Include(p => p.BankAccount)
-             .OrderByDescending(t => t.TransactionDate)
-             .AsNoTracking()
-             .ToListAsync();
+            try
+            {
+
+                return await _context.Transactions.Where(p => p.ClientID == ClientID)
+                 .Include(p => p.Client)
+                 .Include(p => p.Product)
+                 .Include(p => p.Course)
+                 .Include(p => p.PaymentStatus)
+                  .Include(p => p.TransactionType)
+                   .ThenInclude(p => p.TransactionStatus)
+                  .Include(p => p.BankAccount)
+                 .OrderByDescending(t => t.TransactionDate)
+                 .AsNoTracking()
+                 .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<List<Transaction>> Transactions()
         {
-            return await _context.Transactions
-              .Include(p => p.Client)
-             .Include(p => p.Product)
-             .Include(p => p.Course)
-              .Include(p => p.PaymentStatus)
-              .Include(p => p.TransactionType)
-              .ThenInclude(p => p.TransactionStatus)
-               .Include(p => p.BankAccount)
-             .AsNoTracking()
-             .ToListAsync();
+            try
+            {
+
+                return await _context.Transactions
+                  .Include(p => p.Client)
+                 .Include(p => p.Product)
+                 .Include(p => p.Course)
+                  .Include(p => p.PaymentStatus)
+                  .Include(p => p.TransactionType)
+                  .ThenInclude(p => p.TransactionStatus)
+                   .Include(p => p.BankAccount)
+                 .AsNoTracking()
+                 .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<long> NewPayments()
         {
-            return await _context.Transactions
-            .Include(p => p.Client)
-             .Include(p => p.Client)
-             .Include(p => p.Product)
-             .Include(p => p.Course)
-             .Include(p => p.PaymentStatus)
-             .Include(p => p.TransactionType)
-             .ThenInclude(p => p.TransactionStatus)
-             .Include(p => p.BankAccount)
-            .Where(p => p.TransactionDate.Date == DateTime.Now.Date)
-            .AsNoTracking()
-            .LongCountAsync();
+            try
+            {
+                return await _context.Transactions
+.Include(p => p.Client)
+ .Include(p => p.Client)
+ .Include(p => p.Product)
+ .Include(p => p.Course)
+ .Include(p => p.PaymentStatus)
+ .Include(p => p.TransactionType)
+ .ThenInclude(p => p.TransactionStatus)
+ .Include(p => p.BankAccount)
+.Where(p => p.TransactionDate.Date == DateTime.Now.Date)
+.AsNoTracking()
+.LongCountAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<Transaction> PaymentFile(int TransactionID, string TranRef)
         {
-            if (!String.IsNullOrEmpty(TranRef))
-                TransactionID = _context.Transactions
-                            .FirstOrDefault(p => p.TransRef.ToUpper() == TranRef.Trim().ToUpper())?.TransactionID ?? 0;
-            return await _context.Transactions
-             .Include(p => p.Client)
-             .Include(p => p.Product)
-             .Include(p => p.Course)
-             .Include(p => p.PaymentStatus)
-             .Include(p => p.TransactionType)
-             .ThenInclude(p => p.TransactionStatus)
-             .Include(p => p.BankAccount)
-            .Where(t => t.TransactionID == TransactionID).FirstOrDefaultAsync();
+            try
+            {
+
+                if (!String.IsNullOrEmpty(TranRef))
+                    TransactionID = _context.Transactions
+                                .FirstOrDefault(p => p.TransRef.ToUpper() == TranRef.Trim().ToUpper())?.TransactionID ?? 0;
+                return await _context.Transactions
+                 .Include(p => p.Client)
+                 .Include(p => p.Product)
+                 .Include(p => p.Course)
+                 .Include(p => p.PaymentStatus)
+                 .Include(p => p.TransactionType)
+                 .ThenInclude(p => p.TransactionStatus)
+                 .Include(p => p.BankAccount)
+                .Where(t => t.TransactionID == TransactionID).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public bool DeductionExists(DateTime CutOffDate)
@@ -291,7 +344,7 @@ namespace SmartLogic
                     foreach (var item in clientProduct)
                     {
                         //1.
-                        decimal _percentageDeduction =item.DeductionPercentage.HasValue? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
+                        decimal _percentageDeduction = item.DeductionPercentage.HasValue ? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
                         decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
                         decimal _currentSalary = item.Client.Salary;
                         decimal? _previousSalary = null;
@@ -328,7 +381,7 @@ namespace SmartLogic
                             AdditionalDeductionPercentage = _percentageIncrement,
                             LastChangedBy = UtilityService.CurrentUserName,
                             LastChangedDate = DateTime.Now,
-                            InvoiceNumber=$"{item.Client.AccountNumber}-INV-{deduction.ClientDeductionID}"
+                            InvoiceNumber = $"{item.Client.AccountNumber}-INV-{deduction.ClientDeductionID}"
 
                         };
 
@@ -344,57 +397,85 @@ namespace SmartLogic
             }
             catch (Exception ex)
             {
-
+                CustomLog.Log(LogSource.Logic_Base, ex);
                 throw ex;
             }
         }
 
         public async Task<List<ClientDeductionDetails>> GetClientDeductions(List<int> ClientProductIDs, DateTime InvoiceDate)
         {
-            return await _context.ClientDeductionDetails
-            .Include(c => c.ClientDeduction)
-              .Include(p => p.Client)
-                .Include(p => p.Product)
-               .Where(t => t.ClientDeduction.InvoiceDate == InvoiceDate && ClientProductIDs.Contains(t.ClientProductID)).ToListAsync();
+            try
+            {
+                return await _context.ClientDeductionDetails
+                .Include(c => c.ClientDeduction)
+                  .Include(p => p.Client)
+                    .Include(p => p.Product)
+                   .Where(t => t.ClientDeduction.InvoiceDate == InvoiceDate && ClientProductIDs.Contains(t.ClientProductID)).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public List<ClientDeduction> GetSchedule(DateTime DateFrom, DateTime DateTo)
         {
-
-            var deductions = _context.ClientDeductions
-            .Include(c=>c.ClientDeductionDetails)
-             .Where(cd => cd.InvoiceDate >= DateFrom && cd.InvoiceDate <= DateTo).ToList();
-            return deductions;
+            try
+            {
+                var deductions = _context.ClientDeductions
+                .Include(c => c.ClientDeductionDetails)
+                 .Where(cd => cd.InvoiceDate >= DateFrom && cd.InvoiceDate <= DateTo).ToList();
+                return deductions;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public List<ClientDeductionDetails> GetSchedule(int clientDeductionID)
         {
+            try
+            {
+                var deductions = _context.ClientDeductionDetails
+                .Include(c => c.ClientDeduction)
+                .Include(c => c.Client).Include(p => p.Product)
+                 .Where(cd => cd.ClientDeductionID == clientDeductionID).ToList();
+                return deductions;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
 
-            var deductions = _context.ClientDeductionDetails
-            .Include(c => c.ClientDeduction)
-            .Include(c => c.Client).Include(p => p.Product)
-             .Where(cd => cd.ClientDeductionID==clientDeductionID).ToList();
-            return deductions;
-          
         }
 
-       public ClientDeduction GetClientDeductionSchedule(int clientDeductionID)
-       {
+        public ClientDeduction GetClientDeductionSchedule(int clientDeductionID)
+        {
+            try
+            {
 
-            var deductions = _context.ClientDeductions
-              .Include(c => c.ClientDeductionDetails)
-              .ThenInclude(c=>c.Client)
-              .ThenInclude(c=>c.Title)
-               .Include(c => c.ClientDeductionDetails)
-               .ThenInclude(c => c.Client)
-              .ThenInclude(c=>c.JointApplicant)
-              .ThenInclude(c=>c.Title)
-               .Include(c => c.ClientDeductionDetails)
-               .ThenInclude(c=>c.Product)
-
-
-               .Where(cd => cd.ClientDeductionID==clientDeductionID).FirstOrDefault();
-            return deductions;
+                var deductions = _context.ClientDeductions
+                  .Include(c => c.ClientDeductionDetails)
+                  .ThenInclude(c => c.Client)
+                  .ThenInclude(c => c.Title)
+                   .Include(c => c.ClientDeductionDetails)
+                   .ThenInclude(c => c.Client)
+                  .ThenInclude(c => c.JointApplicant)
+                  .ThenInclude(c => c.Title)
+                   .Include(c => c.ClientDeductionDetails)
+                   .ThenInclude(c => c.Product)
+                   .Where(cd => cd.ClientDeductionID == clientDeductionID).FirstOrDefault();
+                return deductions;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SmartDomain;
 using SmartDataAccess;
 using SmartHelper;
+using SmartLog;
 
 namespace SmartLogic
 {
@@ -18,7 +19,10 @@ namespace SmartLogic
         public FeatureFlagService(DatabaseContext context) => _context = context;
         public async Task<int> ActionFeatureFlag(int id, DatabaseAction action)
         {
-            FeatureFlag FeatureFlag = await FindFeatureFlag(id);
+            try
+            {
+
+                        FeatureFlag FeatureFlag = await FindFeatureFlag(id);
 
             if (DatabaseAction.Remove == action)
                 _context.FeatureFlags.Remove(FeatureFlag);
@@ -31,57 +35,117 @@ namespace SmartLogic
             }
 
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<List<FeatureFlag>> FeatureFlag()
         {
-            return await _context.FeatureFlags
+            try
+            {
+
+                        return await _context.FeatureFlags
                         .AsNoTracking()
             .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> Delete(int id)
         {
-            var course = await _context.FeatureFlags.FindAsync(id);
+            try
+            {
+
+                        var course = await _context.FeatureFlags.FindAsync(id);
             _context.FeatureFlags.Remove(course);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<FeatureFlag> FindFeatureFlag(int id)
         {
-            return await _context.FeatureFlags.Where(r => r.FeatureFlagID == id)
+            try
+            {
+
+                       return await _context.FeatureFlags.Where(r => r.FeatureFlagID == id)
  .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
         public bool FeatureIsSwitchedOn(int id)
         {
-            FeatureFlag featureFlag =  FindFeatureFlag(id).Result;
+            try
+            {
+
+                       FeatureFlag featureFlag =  FindFeatureFlag(id).Result;
             if (UtilityService.IsNotNull(featureFlag))
                 return featureFlag.IsActive;
             else
                 return false;
 
 
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Save(FeatureFlag FeatureFlag)
         {
-            FeatureFlag.LastChangedBy = UtilityService.CurrentUserName;
+            try
+            {
+
+                        FeatureFlag.LastChangedBy = UtilityService.CurrentUserName;
             FeatureFlag.LastChangedDate = DateTime.Now;
             _context.Add(FeatureFlag);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
       
         public async Task<int> Update(FeatureFlag FeatureFlag)
         {
-            FeatureFlag update = await FindFeatureFlag(FeatureFlag.FeatureFlagID);
+            try
+            {
+
+                        FeatureFlag update = await FindFeatureFlag(FeatureFlag.FeatureFlagID);
             update.Name = FeatureFlag.Name;
             update.IsActive = FeatureFlag.IsActive;
                         update.LastChangedBy = UtilityService.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
     }
 }

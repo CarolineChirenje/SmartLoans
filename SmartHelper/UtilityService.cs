@@ -16,9 +16,6 @@ namespace SmartHelper
 {
     public class UtilityService
     {
-
-
-
         public static string GetPanelColor(int count)
 
         {
@@ -40,9 +37,7 @@ namespace SmartHelper
             return "panel panel-info";
         }
 
-
         public static bool HasPermission(Permissions permission) => GetData.IsPermitted((int)permission);
-
 
         public static string ApplicationName
         {
@@ -60,7 +55,6 @@ namespace SmartHelper
 
             }
         }
-
         public static string Report_Footer_1
         {
             get
@@ -69,7 +63,6 @@ namespace SmartHelper
 
             }
         }
-
         public static string Report_Footer_2
         {
             get
@@ -78,7 +71,6 @@ namespace SmartHelper
 
             }
         }
-
         public static bool PaymentsMustBeVatInclusive
         {
             get
@@ -89,7 +81,6 @@ namespace SmartHelper
 
             }
         }
-
         public static bool ApplicationIsVATCompliant
         {
             get
@@ -173,7 +164,6 @@ namespace SmartHelper
                 return (SiteEnvironment)_siteEnv;
             }
         }
-
         public static bool StatementPasswordProtect
         {
             get
@@ -185,7 +175,6 @@ namespace SmartHelper
             }
         }
 
-
         public static string StatementPasswordForAdmin
         {
             get
@@ -196,8 +185,6 @@ namespace SmartHelper
 
             }
         }
-
-
         public static bool StatementShowTableBoarders
         {
             get
@@ -253,8 +240,6 @@ namespace SmartHelper
 
             }
         }
-
-
         public static int PasswordValidityPeriod
         {
             get
@@ -328,18 +313,14 @@ namespace SmartHelper
             }
         }
 
-
         public static string MaskAccountNumber(string accountNumber)
-
         {
-
             int accLength = accountNumber.Trim().Length;
             if (accLength > 0 && accLength < 4)
                 return accountNumber;
             else
             {
-
-                string lastFourDigits = accountNumber.Substring((accountNumber.Length - 4), 4);
+               string lastFourDigits = accountNumber.Substring((accountNumber.Length - 4), 4);
                 int remaining_digits = accLength - 4;
                 StringBuilder sb = new StringBuilder("X", remaining_digits);
                 for (int i = 1; i < remaining_digits; i++)
@@ -395,10 +376,7 @@ namespace SmartHelper
 
             }
         }
-
-
-
-        public static byte[] CompanyLogo
+       public static byte[] CompanyLogo
         {
             get
             {
@@ -407,9 +385,6 @@ namespace SmartHelper
 
             }
         }
-
-
-
         public static string UserRole
         {
             get
@@ -424,7 +399,6 @@ namespace SmartHelper
 
             }
         }
-
         public static int UserRoleID
         {
             get
@@ -443,9 +417,7 @@ namespace SmartHelper
                 {
 
                 }
-
                 return roleID;
-
             }
         }
         public static int PinCodeLength
@@ -465,7 +437,6 @@ namespace SmartHelper
 
                 }
                 return pincodeLengthID;
-
             }
         }
         public static int PinCodeValidityPeriod
@@ -488,8 +459,7 @@ namespace SmartHelper
         }
         public static bool FeatureFlagOn(int id)
         {
-
-            string sqlCustomSetting = $"SELECT TOP 1 IsActive  FROM FeatureFlags WHERE FeatureFlagID={id};";
+                    string sqlCustomSetting = $"SELECT TOP 1 IsActive  FROM FeatureFlags WHERE FeatureFlagID={id};";
             string _result = GetData.GetStringValue(sqlCustomSetting);
             if (String.IsNullOrEmpty(_result))
                 return false;
@@ -514,10 +484,7 @@ namespace SmartHelper
                 {
 
                 }
-
-
-                return userType;
-
+               return userType;
             }
         }
         public static List<int> GetRoleMenus
@@ -529,9 +496,6 @@ namespace SmartHelper
                 List<int> results = (from row in _result.AsEnumerable() select Convert.ToInt32(row["MenuID"])).ToList();
                 return results;
             }
-
-
-
         }
         public static List<int> GetRoleMenusGroups
         {
@@ -542,9 +506,6 @@ namespace SmartHelper
                 List<int> results = (from row in _result.AsEnumerable() select Convert.ToInt32(row["MenuGroupID"])).ToList();
                 return results;
             }
-
-
-
         }
         public static string ReportBodyFontName
         {
@@ -573,7 +534,6 @@ namespace SmartHelper
 
             }
         }
-
         public static int ClientNotesDefaultDueDateInterval
         {
             get
@@ -644,10 +604,7 @@ namespace SmartHelper
             }
         }
 
-
         public static int CurrentUserTypeID;
-
-
         public static int ClientID
         {
             get
@@ -670,8 +627,6 @@ namespace SmartHelper
                 _currentFullName = value;
             }
         }
-
-
         public static byte[] UserProfileImage
         {
             get
@@ -684,54 +639,27 @@ namespace SmartHelper
             }
 
         }
-
-
-
-        //public static AuditEntry Log(AuditActionEnum action, string description)
-        //{
-
-        //    AuditEntry entry = new AuditEntry
-        //    {
-        //        AddedBy = UtilityService.CurrentUserName,
-        //        DateAdded = DateTime.Now,
-        //        AuditActionID = (int)action,
-        //        Description = description
-        //    };
-        //    return entry;
-        //}
         public static void ClearUserNames()
         {
             UtilityService.UserFullName = string.Empty;
             UtilityService.CurrentUserName = string.Empty;
             UtilityService.UserProfileImage = null;
-           
-        }
-
-
+          }
         public static decimal GetDecimalAmount(string Amount)
         {
-
             decimal _amount = 0;
             var cul = CultureInfo.GetCultureInfo("EN-us");
             Amount = Amount.Replace(",", ".");
             decimal.TryParse(Amount, NumberStyles.AllowDecimalPoint, cul, out _amount);
             return _amount;
         }
-        // GET:
+   
         public static string HtmlDecode(string htmlValue) => WebUtility.HtmlDecode(htmlValue);
-
         public static string HtmlEncode(string stringValue) => WebUtility.HtmlEncode(stringValue);
-
-
         public static bool ListIsNotEmpty(List<Object> value) => (value != null) && (value.Count > 0);
-
         public static bool IsNotNull(Object value) => value != null;
-
         public static bool IsNull(Object value) => value == null;
-
         public static bool StringParameterHasValue(string value) => !String.IsNullOrEmpty(value);
-
-
         public static string GenerateUserName(string firstName, string LastName) => $"{firstName.Substring(0, 1).ToUpper()}{LastName}{GenerateRandomNumbers(2)}";
         ///Generate QueryRef
         internal static string GenerateQueryRef()
@@ -745,11 +673,7 @@ namespace SmartHelper
             return queryRef.ToUpper();
         }
 
-        public static string GetUserType(int userTypeID)
-        {
-            return Enum.GetName(typeof(TypeOfUser), userTypeID);
-        }
-
+        public static string GetUserType(int userTypeID) => Enum.GetName(typeof(TypeOfUser), userTypeID);
         public static int GenerateRandomNumbers(int numberSize = 4)
         {
             int _min = 1000;
@@ -811,95 +735,11 @@ namespace SmartHelper
         }
         public static string GetMessageToDisplay(string ResourceKey) => SmartHelper.ResourceManager.GetString(ResourceKey);
         public static string ShowYesOrNo(bool status) => status ? "Yes" : "No";
-
         public static string ShowActiveAction(bool status) => status ? "De-Activate" : "Re-Activate";
-
         public static string ShowOpenCloseAction(bool status) => status ? "Open" : "Closed";
-
         public static string ShowGender(int gender) => Enum.GetName(typeof(GenderOrientation), gender);
 
-
-
+            }
     }
 
-    [Serializable]
-    public class CustomException : Exception
-    {
-        public CustomException(string message)
-        {
-
-        }
-        //   public static CustomException HandleDbEntityValidationException(DbEntityValidationException dbu)
-        //     {
-        //         StringBuilder messageBuilder = new StringBuilder();
-        //         foreach (var error
-        //in dbu.EntityValidationErrors)
-        //         {
-        //             foreach (var validationError
-        //                 in error.ValidationErrors)
-        //             {
-        //                 messageBuilder.AppendLine($"{error.Entry.Entity.GetType().Name}." +
-        //                     $"{validationError.PropertyName} - { validationError.ErrorMessage}"
-        //                    );
-        //             }
-        //         }
-        //         string message = messageBuilder.ToString();
-        //         LogException(dbu, dbu.GetType().Name, message, ErrorSource.Database);
-        //         return new CustomException(message);
-        //     }
-        public static CustomException ChimbadzoExceptions(string message) => new CustomException(message);
-        //public static CustomException HandleDbUpdateException(DbUpdateException dbu)
-        //{
-        //    var messageBuilder = new StringBuilder("A DbUpdateException was caught while saving changes. ");
-        //    try
-        //    {
-        //        foreach (var result in dbu.Entries)
-        //        {
-        //            messageBuilder.AppendFormat("Type: {0} was part of the problem. ", result.Entity.GetType().Name);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        messageBuilder.Append("Error parsing DbUpdateException: " + e.ToString());
-        //    }
-        //    string message = messageBuilder.ToString();
-        //    LogException(dbu, dbu.GetType().Name, message, ErrorSource.Database);
-        //    return new CustomException(message);
-        //}
-        //public static CustomException HandleGenericException(Exception exception, ErrorSource errorType, string url = "Unknown")
-        //{
-        //    LogException(exception, exception.GetType().Name, null, errorType, url);
-        //    return new CustomException(exception.Message);
-        //}
-
-
-        private static void LogException(Exception ex, string ExceptionType, string customMessage, ErrorSource errorType, string url = "Uknown")
-        {
-            //try
-            //{
-            //    ChimbadzoEntities db = new ChimbadzoEntities();
-            //    SYS_ERRORLOG logError = new SYS_ERRORLOG();
-            //    logError.ExceptionMessage = ex.Message;
-            //    logError.CustomMessage = customMessage;
-            //    logError.ExceptionType = ExceptionType;
-            //    logError.StackTrace = ex.StackTrace;
-            //    logError.DateCreated = DateTime.Now;
-            //    logError.PageURL = url;
-            //    logError.Type = (int)errorType;
-            //    logError.UserCreated = UtilityService.CurrentUserName;
-            //    db.SYS_ERRORLOG.Add(logError);
-            //    db.SaveChanges();
-            //}
-            //catch (DbEntityValidationException exception)
-            //{
-            //    throw CustomException.HandleDbEntityValidationException(exception);
-            //}
-        }
-    }
-
-
-
-
-
-}
 

@@ -1631,6 +1631,19 @@
           "bin/placeholder/SmartHelper.dll": {}
         }
       },
+      "SmartLog/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.0",
+        "dependencies": {
+          "SmartHelper": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SmartLog.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartLog.dll": {}
+        }
+      },
       "SmartReporting/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.0",
@@ -1639,6 +1652,7 @@
           "MigraDocCore.Rendering": "0.1.1",
           "PdfSharpCore": "1.2.16",
           "SmartDomain": "1.0.0",
+          "SmartLog": "1.0.0",
           "System.Data.DataSetExtensions": "4.5.0"
         },
         "compile": {
@@ -5880,6 +5894,11 @@
       "path": "../SmartHelper/SmartHelper.csproj",
       "msbuildProject": "../SmartHelper/SmartHelper.csproj"
     },
+    "SmartLog/1.0.0": {
+      "type": "project",
+      "path": "../SmartErrorLog/SmartLog.csproj",
+      "msbuildProject": "../SmartErrorLog/SmartLog.csproj"
+    },
     "SmartReporting/1.0.0": {
       "type": "project",
       "path": "../SmartReporting/SmartReporting.csproj",
@@ -5890,6 +5909,7 @@
     ".NETCoreApp,Version=v3.0": [
       "SmartDataAccess >= 1.0.0",
       "SmartDomain >= 1.0.0",
+      "SmartLog >= 1.0.0",
       "SmartReporting >= 1.0.0"
     ]
   },
@@ -5928,6 +5948,9 @@
             },
             "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj": {
               "projectPath": "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj"
+            },
+            "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj": {
+              "projectPath": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj"
             },
             "D:\\Dev Projects\\SmartSave\\SmartReporting\\SmartReporting.csproj": {
               "projectPath": "D:\\Dev Projects\\SmartSave\\SmartReporting\\SmartReporting.csproj"

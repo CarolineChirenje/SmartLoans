@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using SmartDataAccess;
 using SmartDomain;
 using SmartHelper;
+using SmartLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,267 +24,453 @@ namespace SmartLogic
         public async Task<Product> FindProduct(int id = 0) => await GetProduct(id);
         public async Task<Product> GetProduct(int ProductID = 0)
         {
-            Product product = await _context.Products
-               .Where(r => r.ProductID == ProductID)
-                .Include(c => c.Company)
-               .Include(m => m.Clients)
-               .Include(p => p.ProductFees)
-               .ThenInclude(p => p.Frequency)
-               .Include(p => p.ProductAsserts)
-               .ThenInclude(p => p.Assert)
-               .ThenInclude(p => p.AssertCategories)
-               .AsNoTracking().FirstOrDefaultAsync();
+            try
+            {
 
-            return product;
+                Product product = await _context.Products
+                   .Where(r => r.ProductID == ProductID)
+                    .Include(c => c.Company)
+                   .Include(m => m.Clients)
+                   .Include(p => p.ProductFees)
+                   .ThenInclude(p => p.Frequency)
+                   .Include(p => p.ProductAsserts)
+                   .ThenInclude(p => p.Assert)
+                   .ThenInclude(p => p.AssertCategories)
+                   .AsNoTracking().FirstOrDefaultAsync();
+
+                return product;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public int ClientsOnProduct(int ProductID)
         {
-            int result = _context.ClientProducts
-                 .Where(r => r.ProductID == ProductID).ToList().Count();
-
-
-            return result;
+            try
+            {
+                int result = _context.ClientProducts
+                     .Where(r => r.ProductID == ProductID).ToList().Count();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<Product> GetProduct(string name)
         {
-            return await _context.Products.Where(r => r.Name.ToUpper() == name.Trim().ToUpper())
-                           .Include(c => c.Company)
-               .Include(m => m.Clients)
-               .Include(p => p.ProductFees)
-               .ThenInclude(p => p.Frequency)
-               .Include(p => p.ProductAsserts)
-               .ThenInclude(p => p.Assert)
-               .ThenInclude(p => p.AssertCategories)
-
-                           .AsNoTracking().FirstOrDefaultAsync();
+            try
+            {
+                return await _context.Products.Where(r => r.Name.ToUpper() == name.Trim().ToUpper())
+                               .Include(c => c.Company)
+                   .Include(m => m.Clients)
+                   .Include(p => p.ProductFees)
+                   .ThenInclude(p => p.Frequency)
+                   .Include(p => p.ProductAsserts)
+                   .ThenInclude(p => p.Assert)
+                   .ThenInclude(p => p.AssertCategories)
+                               .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<List<Product>> Products()
         {
-            return await _context.Products
+            try
+            {
 
-                        .Include(c => c.Company)
-               .Include(m => m.Clients)
-               .Include(p => p.ProductFees)
-               .ThenInclude(p => p.Frequency)
-               .Include(p => p.ProductAsserts)
-               .ThenInclude(p => p.Assert)
-               .ThenInclude(p => p.AssertCategories)
-               .Include(p=>p.Country)
-                .AsNoTracking()
-            .ToListAsync();
+                return await _context.Products
+
+                            .Include(c => c.Company)
+                   .Include(m => m.Clients)
+                   .Include(p => p.ProductFees)
+                   .ThenInclude(p => p.Frequency)
+                   .Include(p => p.ProductAsserts)
+                   .ThenInclude(p => p.Assert)
+                   .ThenInclude(p => p.AssertCategories)
+                   .Include(p => p.Country)
+                    .AsNoTracking()
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
         public List<Product> GetProduct()
         {
-            return _context.Products
-           .Include(c => c.Company)
-               .Include(m => m.Clients)
-               .Include(p => p.ProductFees)
-               .ThenInclude(p => p.Frequency)
-               .Include(p => p.ProductAsserts)
-               .ThenInclude(p => p.Assert)
-               .ThenInclude(p => p.AssertCategories)
-            .AsNoTracking()
-            .ToList();
+            try
+            {
+
+                return _context.Products
+               .Include(c => c.Company)
+                   .Include(m => m.Clients)
+                   .Include(p => p.ProductFees)
+                   .ThenInclude(p => p.Frequency)
+                   .Include(p => p.ProductAsserts)
+                   .ThenInclude(p => p.Assert)
+                   .ThenInclude(p => p.AssertCategories)
+                .AsNoTracking()
+                .ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
         public async Task<int> Update(Product update)
         {
-            Product product = _context.Products.Find(update.ProductID);
-            Product old_Product = product;
-            product.IsActive = update.IsActive;
-            product.CountryID = update.CountryID;
-            product.CompanyID = update.CompanyID;
-            product.Name = update.Name;
-            product.IncreamentPercentage = update.IncreamentPercentage;
-            product.DeductionPercentage = update.DeductionPercentage;
-            product.ProductCode = update.ProductCode;
-            product.LastChangedBy = UtilityService.CurrentUserName;
-            product.LastChangedDate = DateTime.Now;
-            _context.Update(product);
+            try
+            {
 
-            // save history
-            ProductHistory productHistory = new ProductHistory();
-            productHistory.ProductID = old_Product.ProductID;
-            productHistory.IncreamentPercentage = old_Product.IncreamentPercentage;
-            productHistory.DeductionPercentage = old_Product.DeductionPercentage;
-            productHistory.LastChangedBy = old_Product.LastChangedBy;
-            productHistory.LastChangedDate = old_Product.LastChangedDate;
-            _context.Add(productHistory);
+                Product product = _context.Products.Find(update.ProductID);
+                Product old_Product = product;
+                product.IsActive = update.IsActive;
+                product.CountryID = update.CountryID;
+                product.CompanyID = update.CompanyID;
+                product.Name = update.Name;
+                product.IncreamentPercentage = update.IncreamentPercentage;
+                product.DeductionPercentage = update.DeductionPercentage;
+                product.ProductCode = update.ProductCode;
+                product.LastChangedBy = UtilityService.CurrentUserName;
+                product.LastChangedDate = DateTime.Now;
+                _context.Update(product);
 
-            return await _context.SaveChangesAsync();
+                // save history
+                ProductHistory productHistory = new ProductHistory();
+                productHistory.ProductID = old_Product.ProductID;
+                productHistory.IncreamentPercentage = old_Product.IncreamentPercentage;
+                productHistory.DeductionPercentage = old_Product.DeductionPercentage;
+                productHistory.LastChangedBy = old_Product.LastChangedBy;
+                productHistory.LastChangedDate = old_Product.LastChangedDate;
+                _context.Add(productHistory);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
 
         }
         public async Task<int> Save(Product Product)
         {
-            Product.LastChangedBy = UtilityService.CurrentUserName;
-            Product.LastChangedDate = DateTime.Now;
-            _context.Add(Product);
-          await  _context.SaveChangesAsync();
-            return  Product.ProductID;
+            try
+            {
+
+                Product.LastChangedBy = UtilityService.CurrentUserName;
+                Product.LastChangedDate = DateTime.Now;
+                _context.Add(Product);
+                await _context.SaveChangesAsync();
+                return Product.ProductID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Delete(int id)
         {
-            var Product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(Product);
-            return (await _context.SaveChangesAsync());
+            try
+            {
+                var Product = await _context.Products.FindAsync(id);
+                _context.Products.Remove(Product);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> ActionProduct(int ProductID, DatabaseAction action)
         {
-            Product Product = await GetProduct(ProductID);
-
-            if (DatabaseAction.Remove == action)
-                _context.Products.Remove(Product);
-            else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+            try
             {
-                Product.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                Product.LastChangedBy = UtilityService.CurrentUserName;
-                Product.LastChangedDate = DateTime.Now;
-                _context.Update(Product);
-            }
 
-            return (await _context.SaveChangesAsync());
+                Product Product = await GetProduct(ProductID);
+                if (DatabaseAction.Remove == action)
+                    _context.Products.Remove(Product);
+                else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+                {
+                    Product.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    Product.LastChangedBy = UtilityService.CurrentUserName;
+                    Product.LastChangedDate = DateTime.Now;
+                    _context.Update(Product);
+                }
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
         public List<Company> Companies()
         {
-            return _context.Companies.Where(c => c.IsActive)
-           .AsNoTracking()
-             .ToList();
+            try
+            {
+
+                return _context.Companies.Where(c => c.IsActive)
+               .AsNoTracking()
+                 .ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
         public async Task<Assert> FindAssert(int assertID)
         {
-            return await _context.Asserts.Where(a =>a.AssertID==assertID)
-            .Include(a=>a.AssertCategories)
-            .AsNoTracking().FirstOrDefaultAsync();
+            try
+            {
+                return await _context.Asserts.Where(a => a.AssertID == assertID)
+                .Include(a => a.AssertCategories)
+                .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Save(Assert Assert)
         {
-
-            Assert.LastChangedBy = UtilityService.CurrentUserName;
-            Assert.LastChangedDate = DateTime.Now;
-            _context.Add(Assert);
-            await _context.SaveChangesAsync();
-            return Assert.AssertID;
+            try
+            {
+                Assert.LastChangedBy = UtilityService.CurrentUserName;
+                Assert.LastChangedDate = DateTime.Now;
+                _context.Add(Assert);
+                await _context.SaveChangesAsync();
+                return Assert.AssertID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<bool> IsDuplicate(Assert Assert)
         {
-
-
-            Assert assert = await _context.Asserts.Where(b => b.Name.Equals(Assert.Name)).FirstOrDefaultAsync();
-            return UtilityService.IsNotNull(assert);
+            try
+            {
+                Assert assert = await _context.Asserts.Where(b => b.Name.Equals(Assert.Name)).FirstOrDefaultAsync();
+                return UtilityService.IsNotNull(assert);
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Update(Assert Assert)
         {
-            Assert assert = _context.Asserts.Find(Assert.AssertID);
-            assert.IsActive = Assert.IsActive;
-            assert.Name = Assert.Name;
-            assert.Description = Assert.Description;
-            assert.LastChangedBy = UtilityService.CurrentUserName;
-            assert.LastChangedDate = DateTime.Now;
-            _context.Update(assert);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                Assert assert = _context.Asserts.Find(Assert.AssertID);
+                assert.IsActive = Assert.IsActive;
+                assert.Name = Assert.Name;
+                assert.Description = Assert.Description;
+                assert.LastChangedBy = UtilityService.CurrentUserName;
+                assert.LastChangedDate = DateTime.Now;
+                _context.Update(assert);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> ActionAssert(int assertID, DatabaseAction action)
         {
-
-            Assert Assert = await FindAssert(assertID);
-
-            if (DatabaseAction.Remove == action)
-                _context.Asserts.Remove(Assert);
-            else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+            try
             {
-                Assert.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                Assert.LastChangedBy = UtilityService.CurrentUserName;
-                Assert.LastChangedDate = DateTime.Now;
-                _context.Update(Assert);
+                Assert Assert = await FindAssert(assertID);
+                if (DatabaseAction.Remove == action)
+                    _context.Asserts.Remove(Assert);
+                else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+                {
+                    Assert.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    Assert.LastChangedBy = UtilityService.CurrentUserName;
+                    Assert.LastChangedDate = DateTime.Now;
+                    _context.Update(Assert);
+                }
+                return await _context.SaveChangesAsync();
             }
-
-            return await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
-        public List<ProductAssert> GetProductAsserts(int productid) => _context.ProductAsserts.Where(p => p.ProductID == productid).ToList();
-        public List<AssertCategory> GetAssertCategories(int assertid) => _context.AssertCategories
-                  .Where(c => c.AssertID == assertid).ToList();
+        public List<ProductAssert> GetProductAsserts(int productid)
+        {
+            try
+            {
+                return _context.ProductAsserts.Where(p => p.ProductID == productid).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<AssertCategory> GetAssertCategories(int assertid)
+        {
+            try
+            {
+                return _context.AssertCategories
+    .Where(c => c.AssertID == assertid).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
         public async Task<AssertCategory> FindAssertCategory(int id)
         {
-            return await _context.AssertCategories.
-                Include(c => c.Assert).
-              Where(r => r.AssertCategoryID == id)
-                 .AsNoTracking().FirstOrDefaultAsync();
+            try
+            {
+                return await _context.AssertCategories.
+                    Include(c => c.Assert).
+                  Where(r => r.AssertCategoryID == id)
+                     .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Save(AssertCategory AssertCategory)
         {
-            AssertCategory.LastChangedBy = UtilityService.CurrentUserName;
-            AssertCategory.LastChangedDate = DateTime.Now;
-            _context.Add(AssertCategory);
-            return (await _context.SaveChangesAsync());
+            try
+            {
+                AssertCategory.LastChangedBy = UtilityService.CurrentUserName;
+                AssertCategory.LastChangedDate = DateTime.Now;
+                _context.Add(AssertCategory);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Update(AssertCategory AssertCategory)
         {
-            AssertCategory assertCategory = _context.AssertCategories.Find(AssertCategory.AssertCategoryID);
-            assertCategory.IsActive = AssertCategory.IsActive;
-            assertCategory.Name = AssertCategory.Name;
-            assertCategory.LastChangedBy = UtilityService.CurrentUserName;
-            assertCategory.LastChangedDate = DateTime.Now;
-            _context.Update(assertCategory);
-            return (await _context.SaveChangesAsync());
-
-        }
-        public async Task<int> ActionAssertCategory(int id, DatabaseAction action)
-
-        {
-            AssertCategory assertCategory = await FindAssertCategory(id);
-
-            if (DatabaseAction.Remove == action)
-                _context.AssertCategories.Remove(assertCategory);
-            else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+            try
             {
-                assertCategory.IsActive = DatabaseAction.Deactivate == action ? false : true;
+
+                AssertCategory assertCategory = _context.AssertCategories.Find(AssertCategory.AssertCategoryID);
+                assertCategory.IsActive = AssertCategory.IsActive;
+                assertCategory.Name = AssertCategory.Name;
                 assertCategory.LastChangedBy = UtilityService.CurrentUserName;
                 assertCategory.LastChangedDate = DateTime.Now;
                 _context.Update(assertCategory);
+                return (await _context.SaveChangesAsync());
             }
-
-            return (await _context.SaveChangesAsync());
-
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> ActionAssertCategory(int id, DatabaseAction action)
+        {
+            try
+            {
+                AssertCategory assertCategory = await FindAssertCategory(id);
+                if (DatabaseAction.Remove == action)
+                    _context.AssertCategories.Remove(assertCategory);
+                else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+                {
+                    assertCategory.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    assertCategory.LastChangedBy = UtilityService.CurrentUserName;
+                    assertCategory.LastChangedDate = DateTime.Now;
+                    _context.Update(assertCategory);
+                }
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<bool> IsDuplicate(AssertCategory assertCategory)
         {
+            try
+            {
+                AssertCategory _assertCategory = await _context.AssertCategories.Where(b => b.Name.Equals(assertCategory.Name)).FirstOrDefaultAsync();
+                return UtilityService.IsNotNull(_assertCategory);
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
 
-
-            AssertCategory _assertCategory = await _context.AssertCategories.Where(b => b.Name.Equals(assertCategory.Name)).FirstOrDefaultAsync();
-            return UtilityService.IsNotNull(_assertCategory);
         }
 
         public List<ProductAssert> ProductAsserts(int ProductId)
         {
-            return _context.ProductAsserts
-            .Where(p => p.ProductID == ProductId).ToList();
+            try
+            {
+                return _context.ProductAsserts
+          .Where(p => p.ProductID == ProductId).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public Task<List<Assert>> Asserts()
         {
-            return _context.Asserts
-            .Include(a=>a.AssertCategories)
-            .ToListAsync();
+            try
+            {
+                return _context.Asserts
+                .Include(a => a.AssertCategories)
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
-
-
         // Product Assert
-
         public async Task<int> UpdateProductAsserts(int productID, string[] selectedAsserts)
         {
             int result = 0;
@@ -323,6 +510,7 @@ namespace SmartLogic
             }
             catch (Exception ex)
             {
+                CustomLog.Log(LogSource.Logic_Base, ex);
                 return 0;
             }
             return result;
@@ -332,7 +520,6 @@ namespace SmartLogic
         {
             try
             {
-
                 foreach (int assertid in asserts)
                 {
                     ProductAssert productAssert = new ProductAssert
@@ -343,69 +530,110 @@ namespace SmartLogic
                         LastChangedDate = DateTime.Now
                     };
                     _context.Add(productAssert);
-
                 }
                 return await _context.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                CustomLog.Log(LogSource.Logic_Base, ex);
                 return 0;
             }
         }
         public async Task<int> RemoveAssertFromProduct(int productid, List<int> asserts)
         {
-            List<ProductAssert> productAsserts = await _context.ProductAsserts.Where(p => p.ProductID == productid).ToListAsync();
-            var assertsToBeRemoved = productAsserts
-                    .Where(x => asserts.Any(y => y == x.AssertID));
-            _context.ProductAsserts.RemoveRange(assertsToBeRemoved);
-            return (await _context.SaveChangesAsync());
+            try
+            {
+                List<ProductAssert> productAsserts = await _context.ProductAsserts.Where(p => p.ProductID == productid).ToListAsync();
+                var assertsToBeRemoved = productAsserts
+                        .Where(x => asserts.Any(y => y == x.AssertID));
+                _context.ProductAsserts.RemoveRange(assertsToBeRemoved);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         IEnumerable<int> ProductAssertList(int productID)
         {
-
-            return from c in _context.ProductAsserts
-                   where c.ProductID == productID
-                   select c.AssertID;
+            try
+            {
+                return from c in _context.ProductAsserts
+                       where c.ProductID == productID
+                       select c.AssertID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         //Product 
         public async Task<ProductFee> FindProductFee(int id)
         {
-            return await _context.ProductFees.
-                 Include(p => p.Product).
-                Where(p => p.ProductFeeID == id).FirstOrDefaultAsync();
+            try
+            {
+                return await _context.ProductFees.
+                     Include(p => p.Product).
+                    Where(p => p.ProductFeeID == id).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Save(ProductFee ProductFee)
         {
-            ProductFee.LastChangedBy = UtilityService.CurrentUserName;
-            ProductFee.LastChangedDate = DateTime.Now;
-            _context.Add(ProductFee);
-            return (await _context.SaveChangesAsync());
+            try
+            {
+
+                ProductFee.LastChangedBy = UtilityService.CurrentUserName;
+                ProductFee.LastChangedDate = DateTime.Now;
+                _context.Add(ProductFee);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
 
         }
         public async Task<int> Update(ProductFee ProductFee)
         {
-            ProductFee update = _context.ProductFees.
-            Where(t => t.ProductFeeID == ProductFee.ProductFeeID).FirstOrDefault();
-
-            update.Name = ProductFee.Name;
-            update.FrequencyID = ProductFee.FrequencyID;
-            update.IsActive = ProductFee.IsActive;
-            update.Amount = ProductFee.Amount;
-            update.Description = ProductFee.Description;
-            update.LastChangedBy = UtilityService.CurrentUserName;
-            update.LastChangedDate = DateTime.Now;
-            _context.Entry(update).State = EntityState.Modified;
-
-            AddProductHistory(ProductFee);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                ProductFee update = _context.ProductFees.
+                Where(t => t.ProductFeeID == ProductFee.ProductFeeID).FirstOrDefault();
+                update.Name = ProductFee.Name;
+                update.FrequencyID = ProductFee.FrequencyID;
+                update.IsActive = ProductFee.IsActive;
+                update.Amount = ProductFee.Amount;
+                update.Description = ProductFee.Description;
+                update.LastChangedBy = UtilityService.CurrentUserName;
+                update.LastChangedDate = DateTime.Now;
+                _context.Entry(update).State = EntityState.Modified;
+                AddProductHistory(ProductFee);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
         void AddProductHistory(ProductFee productFee)
+        {
+            try
+            {
 
-        {  //Fee History
+        //Fee History
             ProductFeeHistory feeHistory = new ProductFeeHistory();
             feeHistory.Amount = productFee.Amount;
             feeHistory.Description = productFee.Description;
@@ -417,12 +645,20 @@ namespace SmartLogic
             feeHistory.LastChangedBy = productFee.LastChangedBy;
             feeHistory.LastChangedDate = productFee.LastChangedDate;
             _context.Add(feeHistory);
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
 
         }
         public async Task<int> ActionProductFee(int id, DatabaseAction action)
         {
+            try
+            {
 
-            ProductFee productFee = await FindProductFee(id);
+                        ProductFee productFee = await FindProductFee(id);
             AddProductHistory(productFee);
             if (DatabaseAction.Remove == action)
             {
@@ -438,6 +674,12 @@ namespace SmartLogic
             }
 
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
     }

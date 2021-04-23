@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartDataAccess;
 using SmartDomain;
 using SmartHelper;
+using SmartLog;
 using CustomSetting = SmartDomain.CustomSetting;
 
 namespace SmartLogic
@@ -15,153 +16,491 @@ namespace SmartLogic
     {
         private readonly DatabaseContext _context;
         private readonly ICustomSettingsService _settingService = new CustomSettingsService();
-        public SettingService(DatabaseContext context) => _context = context;
-        public List<ContactType> GetContactTypes() => _context.ContactTypes.Where(x => x.IsActive).ToList();
-        public List<RelationshipType> GetRelationshipTypes() => _context.RelationshipTypes.Where(x => x.IsActive).ToList();
-        public List<BankAccountType> GetBankAccountTypes() => _context.BankAccountTypes.Where(x => x.IsActive).ToList();
-        public List<Currency> GetCurrencies() => _context.Currencies.Where(x => x.IsActive).ToList();
-        public List<DocumentFormat> GetDocumentFormats() => _context.DocumentFormats.Where(x => x.IsActive).ToList();
-        public List<Frequency> GetFrequencyList() => _context.Frequencies.Where(x => x.IsActive).ToList();
-        public List<StatementList> GetStatementList() => _context.StatementLists.ToList();
+        public SettingService(DatabaseContext context)
+        {
+            _context = context;
+        }
+
+        public List<ContactType> GetContactTypes()
+        {
+            try
+            {
+
+                return _context.ContactTypes.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<RelationshipType> GetRelationshipTypes()
+        {
+            try
+            {
+
+                return _context.RelationshipTypes.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<BankAccountType> GetBankAccountTypes()
+        {
+            try
+            {
+
+                return _context.BankAccountTypes.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<Currency> GetCurrencies()
+        {
+            try
+            {
+
+                return _context.Currencies.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<DocumentFormat> GetDocumentFormats()
+        {
+            try
+            {
+
+                return _context.DocumentFormats.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<Frequency> GetFrequencyList()
+        {
+            try
+            {
+
+                return _context.Frequencies.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<StatementList> GetStatementList()
+        {
+            try
+            {
+
+                return _context.StatementLists.ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
         public Product FindProduct(int id)
         {
-            return _context.Products.Find(id);
+            try
+            {
 
+                return _context.Products.Find(id);
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public Company FindDefaultCompany()
         {
+            try
+            {
 
-            return _context.Companies.Where(c => c.IsDefault).FirstOrDefault();
+
+                return _context.Companies.Where(c => c.IsDefault).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public DocumentType FindDocumentTypes(int DocumentTypeID)
         {
-            return _context.DocumentTypes.
-                                    Include(df => df.DocumentFormat).
-                      Where(r => r.DocumentTypeID == DocumentTypeID).FirstOrDefault();
+            try
+            {
 
+                return _context.DocumentTypes.
+                             Include(df => df.DocumentFormat).
+               Where(r => r.DocumentTypeID == DocumentTypeID).FirstOrDefault();
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
-        public List<TransactionType> GetActiveTransactionTypeList() => _context.TransactionType.Where(T => T.IsActive && T.TransactionTypeID != (int)TransactionTypeList.Reversal).ToList();
-        public List<CustomSettingType> GetCustomSettingsTypes() => _context.CustomSettingTypes.Where(x => x.IsActive).ToList();
+        public List<TransactionType> GetActiveTransactionTypeList()
+        {
+            try
+            {
 
-        public List<CustomVariableType> GetCustomVariableTypes() => _context.SystemVariableTypes.Where(x => x.IsActive).ToList();
+                return _context.TransactionType.Where(T => T.IsActive && T.TransactionTypeID != (int)TransactionTypeList.Reversal).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
-        public List<PriorityRank> GetPriorityRanks() => _context.PriorityRanks.Where(x => x.IsActive).ToList();
+        public List<CustomSettingType> GetCustomSettingsTypes()
+        {
+            try
+            {
 
+                return _context.CustomSettingTypes.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<CustomVariableType> GetCustomVariableTypes()
+        {
+            try
+            {
+
+
+                return _context.SystemVariableTypes.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<PriorityRank> GetPriorityRanks()
+        {
+            try
+            {
+
+                return _context.PriorityRanks.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
         public List<Product> GetActiveProductList()
 
         {
-            return _context.Products.Where(p => p.IsActive)
-             .AsNoTracking()
-            .ToList();
+            try
+            {
+
+                return _context.Products.Where(p => p.IsActive)
+      .AsNoTracking()
+     .ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public List<Course> GetActiveCourseList()
 
         {
-            return _context.Courses.Where(p => p.IsActive)
-             .AsNoTracking()
-            .ToList();
+            try
+            {
+
+                return _context.Courses.Where(p => p.IsActive)
+      .AsNoTracking()
+     .ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
-        public List<Gender> GenderList() => _context.Genders.Where(x => x.IsActive).ToList();
+        public List<Gender> GenderList()
+        {
+            try
+            {
 
-        public List<Course> GetCourseList() => _context.Courses.Where(x => x.IsActive).ToList();
+                return _context.Genders.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
-        public List<Country> GetCountryList() => _context.Countries.Where(x => x.IsActive).ToList();
+        public List<Course> GetCourseList()
+        {
+            try
+            {
 
-        public List<DocumentType> GetDocumentTypes() => _context.DocumentTypes.Where(x => x.IsActive).ToList();
+
+                return _context.Courses.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<Country> GetCountryList()
+        {
+            try
+            {
+
+                return _context.Countries.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<DocumentType> GetDocumentTypes()
+        {
+            try
+            {
+
+                return _context.DocumentTypes.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
         public List<WeekDay> GetWeekDays()
         {
-            return _context.WeekDays
-                       .AsNoTracking()
-          .ToList();
+            try
+            {
+
+                return _context.WeekDays
+               .AsNoTracking()
+  .ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public List<User> GetInstructors() => _context.Users
         .Include(ur => ur.UserRoles).Where(x => x.IsActive).ToList();
 
         public Custom DocumentFormatMatch(string documentFormat, int DocumentTypeID)
         {
-            DocumentType documentType = FindDocumentTypes(DocumentTypeID);
-            int documentFormatID = documentType.DocumentFormatID;
-            bool isMatch = false;
-            var enumDisplayStatus = (DocumentFormatList)documentFormatID;
-            string documentFormatValue = enumDisplayStatus.ToString();
-            if (documentFormat.ToLower().Contains(documentFormatValue.ToLower()))
-                isMatch = true;
+            try
+            {
+                DocumentType documentType = FindDocumentTypes(DocumentTypeID);
+                int documentFormatID = documentType.DocumentFormatID;
+                bool isMatch = false;
+                var enumDisplayStatus = (DocumentFormatList)documentFormatID;
+                string documentFormatValue = enumDisplayStatus.ToString();
+                if (documentFormat.ToLower().Contains(documentFormatValue.ToLower()))
+                    isMatch = true;
 
 
-            Custom custom = new Custom { Bool_Value = isMatch, String_Value = documentFormatValue };
+                Custom custom = new Custom { Bool_Value = isMatch, String_Value = documentFormatValue };
 
-            return custom;
+                return custom;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public List<CourseOutline> GetCourseOutlines(int courseID)
         {
-            return _context.CourseOutlines
-           .Where(c => c.CourseID == courseID).ToList();
+            try
+            {
 
+                return _context.CourseOutlines
+   .Where(c => c.CourseID == courseID).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public List<CourseOutline> GetUserAttendedSessions(int clientid, int courseid)
         {
+            try
+            {
 
-            var clientCourse = _context.ClientCourses.Where(c => c.ClientID == clientid && c.CourseID == courseid).FirstOrDefault();
-            int _ClientCourseID = 0;
-            if (UtilityService.IsNotNull(clientCourse))
-                _ClientCourseID = clientCourse.ClientCourseID;
+                var clientCourse = _context.ClientCourses.Where(c => c.ClientID == clientid && c.CourseID == courseid).FirstOrDefault();
+                int _ClientCourseID = 0;
+                if (UtilityService.IsNotNull(clientCourse))
+                    _ClientCourseID = clientCourse.ClientCourseID;
 
-            IEnumerable<int> courseOutlines = from c in _context.ClientTranscripts
-                                              where c.ClientCourseID == _ClientCourseID
-                                              select c.CourseOutlineID;
-            return _context.CourseOutlines
-           .Where(c => courseOutlines.Contains(c.CourseOutlineID)).ToList();
+                IEnumerable<int> courseOutlines = from c in _context.ClientTranscripts
+                                                  where c.ClientCourseID == _ClientCourseID
+                                                  select c.CourseOutlineID;
+                return _context.CourseOutlines
+               .Where(c => courseOutlines.Contains(c.CourseOutlineID)).ToList();
 
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public List<Assert> GetAssertsLinkedToProduct(int productID)
         {
-            IEnumerable<int> asserts = from a in _context.ProductAsserts
-                                       where a.ProductID == productID
-                                       select a.AssertID;
+            try
+            {
 
-            return _context.Asserts.Where(a => asserts.Contains(a.AssertID) && a.IsActive).ToList();
+                IEnumerable<int> asserts = from a in _context.ProductAsserts
+                                           where a.ProductID == productID
+                                           select a.AssertID;
 
+                return _context.Asserts.Where(a => asserts.Contains(a.AssertID) && a.IsActive).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
         public List<AssertCategory> GetAssertCategory(int assertID)
         {
-            var categories = _context.AssertCategories.Where(a => a.AssertID == assertID && a.IsActive).AsNoTracking().ToList();
-            return categories;
+            try
+            {
+
+                var categories = _context.AssertCategories.Where(a => a.AssertID == assertID && a.IsActive).AsNoTracking().ToList();
+                return categories;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
-        public List<Assert> GetAssertsList() => _context.Asserts.ToList();
+        public List<Assert> GetAssertsList()
+        {
+            try
+            {
+                return _context.Asserts.ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
         public List<AssertCategory> GetAssertCategoryList()
         {
-            var categories = _context.AssertCategories.AsNoTracking().ToList();
-            return categories;
+            try
+            {
+
+                var categories = _context.AssertCategories.AsNoTracking().ToList();
+                return categories;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public List<Titles> GetTitles()
         {
-            var titles = _context.Titles.Where(t => t.IsActive).AsNoTracking().ToList();
-            return titles;
+            try
+            {
+
+
+                var titles = _context.Titles.Where(t => t.IsActive).AsNoTracking().ToList();
+                return titles;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public List<ClientAccountType> GetClientAccountTypes()
         {
-            var accountTypes = _context.ClientAccountTypes.Where(cat=>cat.IsActive).AsNoTracking().ToList();
-            return accountTypes;
+            try
+            {
+
+                var accountTypes = _context.ClientAccountTypes.Where(cat => cat.IsActive).AsNoTracking().ToList();
+                return accountTypes;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
-        public List<CourseIntake> GetCourseIntakes(bool activeOnly= false)
+        public List<CourseIntake> GetCourseIntakes(bool activeOnly = false)
         {
-            var courseIntakes = _context.CourseIntakes.AsNoTracking().ToList();
-            if (activeOnly)
-                courseIntakes = courseIntakes.Where(ci => ci.IsActive).ToList();
-            return courseIntakes;
+            try
+            {
+
+                var courseIntakes = _context.CourseIntakes.AsNoTracking().ToList();
+                if (activeOnly)
+                    courseIntakes = courseIntakes.Where(ci => ci.IsActive).ToList();
+                return courseIntakes;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
     }
 }

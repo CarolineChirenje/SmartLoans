@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmartDomain\SmartDomain.csproj" />
+    <ProjectReference Include="..\SmartErrorLog\SmartLog.csproj" />
   </ItemGroup>
 
   <ItemGroup>

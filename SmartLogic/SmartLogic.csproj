@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SmartDataAccess\SmartDataAccess.csproj" />
     <ProjectReference Include="..\SmartDomain\SmartDomain.csproj" />
+    <ProjectReference Include="..\SmartErrorLog\SmartLog.csproj" />
     <ProjectReference Include="..\SmartReporting\SmartReporting.csproj" />
   </ItemGroup>
 

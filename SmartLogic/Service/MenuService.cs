@@ -2,6 +2,7 @@
 using SmartDataAccess;
 using SmartDomain;
 using SmartHelper;
+using SmartLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,31 +25,70 @@ namespace SmartLogic
         // Parent Menu
         public async Task<MenuGroup> FindMenuGroup(int ParentMenuID)
         {
-            return await _context.MenuGroups.Where(x => x.MenuGroupID == ParentMenuID).
+            try
+            {
+
+                        return await _context.MenuGroups.Where(x => x.MenuGroupID == ParentMenuID).
                 Include(x => x.Menus).OrderBy(m => m.OrderNo).AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<List<MenuGroup>> DisplayMenuGroups()
         {
-            return await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
+            try
+            {
+
+                       return await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<List<MenuGroup>> MenuGroups() => await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
 
         public List<MenuGroup> GetMenuGroups()
         {
-            return _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToList();
+            try
+            {
+
+                        return _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> Save(MenuGroup ParentMenu)
         {
-            ParentMenu.LastChangedBy = UtilityService.CurrentUserName;
+            try
+            {
+
+                       ParentMenu.LastChangedBy = UtilityService.CurrentUserName;
             ParentMenu.LastChangedDate = DateTime.Now;
             _context.Add(ParentMenu);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Update(MenuGroup ParentMenu)
         {
-            MenuGroup update = await FindMenuGroup(ParentMenu.MenuGroupID);
+            try
+            {
+
+                        MenuGroup update = await FindMenuGroup(ParentMenu.MenuGroupID);
             if (ParentMenu.IsActiveMenu)
                 // reset others and  activate only this
                 await ResetActiveMenuGroup(ParentMenu.MenuGroupID);
@@ -63,27 +103,54 @@ namespace SmartLogic
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
         public async Task<int> ResetActiveMenuGroup(int menugroupID)
         {
-            var menugroups = _context.MenuGroups.Where(mng => mng.MenuGroupID != menugroupID).ToList();
+            try
+            {
+
+                        var menugroups = _context.MenuGroups.Where(mng => mng.MenuGroupID != menugroupID).ToList();
             menugroups.ForEach(a => a.IsActiveMenu = false);
             return await _context.SaveChangesAsync();
 
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> DeleteMenuGroup(int id)
         {
-            var parentMenu = await _context.MenuGroups.FindAsync(id);
+            try
+            {
+
+                        var parentMenu = await _context.MenuGroups.FindAsync(id);
             _context.MenuGroups.Remove(parentMenu);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
         public async Task<int> ActionMenuGroup(int id, DatabaseAction action)
         {
-            MenuGroup ParentMenu = await FindMenuGroup(id);
+            try
+            {
+
+                        MenuGroup ParentMenu = await FindMenuGroup(id);
             switch (action)
             {
                 case DatabaseAction.Remove:
@@ -100,36 +167,81 @@ namespace SmartLogic
                     break;
             }
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         //Menus
 
         public async Task<Menu> FindMenu(int menuID)
         {
-            return await _context.Menus.Where(rp => rp.MenuID == menuID)
+            try
+            {
+
+                        return await _context.Menus.Where(rp => rp.MenuID == menuID)
          .FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<List<Menu>> Menus()
         {
-            return await _context.Menus.OrderBy(m => m.OrderNo).ToListAsync();
+            try
+            {
+
+                        return await _context.Menus.OrderBy(m => m.OrderNo).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public List<Menu> GetMenus()
         {
-            return _context.Menus.OrderBy(m => m.OrderNo).ToList();
+            try
+            {
+
+                       return _context.Menus.OrderBy(m => m.OrderNo).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> Save(Menu menu)
         {
-            menu.LastChangedBy = UtilityService.CurrentUserName;
+            try
+            {
+
+                        menu.LastChangedBy = UtilityService.CurrentUserName;
             menu.LastChangedDate = DateTime.Now;
             _context.Add(menu);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> Update(Menu menu)
         {
-            Menu update = await FindMenu(menu.MenuID);
+            try
+            {
+
+                        Menu update = await FindMenu(menu.MenuID);
             update.ControllerName = menu.ControllerName;
             update.ActionName = menu.ActionName;
             update.DisplayName = menu.DisplayName;
@@ -140,22 +252,49 @@ namespace SmartLogic
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> DeleteMenu(int id)
         {
-            var Menu = await _context.Menus.FindAsync(id);
+            try
+            {
+
+                        var Menu = await _context.Menus.FindAsync(id);
             _context.Menus.Remove(Menu);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<List<Menu>> GetMenusFromParent(int menuGroupID)
         {
-            return await _context.Menus.Where(m => m.MenuGroupID == menuGroupID).OrderBy(m => m.OrderNo).ToListAsync();
+            try
+            {
+
+                    return await _context.Menus.Where(m => m.MenuGroupID == menuGroupID).OrderBy(m => m.OrderNo).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> ActionMenu(int menuID, DatabaseAction action)
         {
-            Menu Menu = await FindMenu(menuID);
+            try
+            {
+
+                        Menu Menu = await FindMenu(menuID);
             switch (action)
             {
                 case DatabaseAction.Remove:
@@ -173,6 +312,12 @@ namespace SmartLogic
             }
 
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 

@@ -3,7 +3,9 @@ D:\Dev Projects\SmartSave\SmartReporting\bin\Debug\netcoreapp3.0\SmartReporting.
 D:\Dev Projects\SmartSave\SmartReporting\bin\Debug\netcoreapp3.0\SmartReporting.pdb
 D:\Dev Projects\SmartSave\SmartReporting\bin\Debug\netcoreapp3.0\SmartDomain.dll
 D:\Dev Projects\SmartSave\SmartReporting\bin\Debug\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartReporting\bin\Debug\netcoreapp3.0\SmartLog.dll
 D:\Dev Projects\SmartSave\SmartReporting\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+D:\Dev Projects\SmartSave\SmartReporting\bin\Debug\netcoreapp3.0\SmartLog.pdb
 D:\Dev Projects\SmartSave\SmartReporting\bin\Debug\netcoreapp3.0\SmartHelper.pdb
 D:\Dev Projects\SmartSave\SmartReporting\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
 D:\Dev Projects\SmartSave\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.csprojAssemblyReference.cache

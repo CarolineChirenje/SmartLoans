@@ -3,6 +3,7 @@ using MigraDocCore.DocumentObjectModel.Shapes;
 using MigraDocCore.DocumentObjectModel.Tables;
 using SmartDomain;
 using SmartHelper;
+using SmartLog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,12 +22,9 @@ namespace SmartReporting
         Color HeaderColor = Colors.LightGray;
         TextFrame addressFrame;
         Transaction _paymentFile;
-
         CultureInfo culture;
         Section section;
         Style style;
-
-
         public Document Print(Transaction paymentsFile)
         {
             try
@@ -40,13 +38,11 @@ namespace SmartReporting
                                 style = ReportingUtilities.DefineStyles(this.document);
                 AddressAndHeader();
                 TransactionDetails();
-
-
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //  ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
             return this.document;
         }
@@ -72,10 +68,7 @@ namespace SmartReporting
                 this.addressFrame.Top = "5.0cm";
                 this.addressFrame.RelativeVertical = RelativeVertical.Page;
 
-
-
                 string title = "PROOF OF PAYMENT";
-
                 // Add the print date field
                 paragraph = section.AddParagraph();
                 paragraph.Format.SpaceBefore = "0.5cm";
@@ -83,7 +76,6 @@ namespace SmartReporting
                 paragraph.AddFormattedText($"{title} - {_paymentFile.Client.AccountNumber}", TextFormat.Bold);
                 paragraph.Format.Alignment = ParagraphAlignment.Center;
                 paragraph = section.AddParagraph();
-
 
                 // Create the item table
                 this.table = section.AddTable();
@@ -96,10 +88,7 @@ namespace SmartReporting
                 // Before you can add a row, you must define the columns
                 Column column = this.table.AddColumn("10cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
-
                 paragraph = this.addressFrame.AddParagraph();
-
-
 
                 // Each item fills two rows
                 Row tblrow = this.table.AddRow();
@@ -119,8 +108,7 @@ namespace SmartReporting
                     tblrow1.Cells[0].Borders.Visible = false;
                     tblrow1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                     tblrow1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                    tblrow1.Cells[0].AddParagraph(_paymentFile.Client.AddressLine1);
-
+                   tblrow1.Cells[0].AddParagraph(_paymentFile.Client.AddressLine1);
                 }
                 if (!String.IsNullOrEmpty(_paymentFile.Client.AddressLine2))
                 {
@@ -183,11 +171,10 @@ namespace SmartReporting
 
                 paragraph = section.AddParagraph();
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //   ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
         void TransactionDetails()
@@ -213,8 +200,6 @@ namespace SmartReporting
 
                 column = this.table.AddColumn("8cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
-
-
 
                 column = this.table.AddColumn("3cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
@@ -250,8 +235,6 @@ namespace SmartReporting
 
                 Paragraph paragraph = this.addressFrame.AddParagraph();
 
-
-
                 // Each item fills two rows
                 Row row1 = this.table.AddRow();
 
@@ -278,7 +261,6 @@ namespace SmartReporting
 
                 if (UtilityService.StatementShowTableBoarders)
                     this.table.SetEdge(0, this.table.Rows.Count - 1, 4, 1, Edge.Box, BorderStyle.Single, 0.75);
-
 
                 // Add an invisible row as a space line to the table
                 Row row2 = this.table.AddRow();
@@ -314,12 +296,11 @@ namespace SmartReporting
                 // Set the borders of the specified cell range
                 if (UtilityService.StatementShowTableBoarders)
                     this.table.SetEdge(3, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
-
-           }
-            catch (Exception e)
+            }
+            catch (Exception ex)
             {
-
-                // ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
 

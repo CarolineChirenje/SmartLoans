@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SmartDomain;
 using SmartHelper;
 using SmartDataAccess;
+using SmartLog;
 
 namespace SmartLogic
 {
@@ -18,128 +19,179 @@ namespace SmartLogic
         public CompanyService(DatabaseContext context) => _context = context;
         public async Task<int> ActionCompany(int id, DatabaseAction action)
         {
-            Company Company = await FindCompany(id);
-
-            if (DatabaseAction.Remove == action)
+            try
             {
-                if (Company.IsDefault)
+                Company Company = await FindCompany(id);
+
+                if (DatabaseAction.Remove == action)
                 {
-                    var companies = _context.Companies.Where(c => c.CompanyID != id);
-                    var newDefaultCompany = companies.FirstOrDefault();
-                    newDefaultCompany.IsDefault = true;
-                    _context.SaveChanges();
+                    if (Company.IsDefault)
+                    {
+                        var companies = _context.Companies.Where(c => c.CompanyID != id);
+                        var newDefaultCompany = companies.FirstOrDefault();
+                        newDefaultCompany.IsDefault = true;
+                        _context.SaveChanges();
+
+                    }
+                    _context.Companies.Remove(Company);
 
                 }
-                _context.Companies.Remove(Company);
+                else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+                {
+                    Company.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    Company.LastChangedBy = UtilityService.CurrentUserName;
+                    Company.LastChangedDate = DateTime.Now;
+                    _context.Update(Company);
+                }
 
+                return (await _context.SaveChangesAsync());
             }
-            else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+            catch (Exception ex)
             {
-                Company.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                Company.LastChangedBy = UtilityService.CurrentUserName;
-                Company.LastChangedDate = DateTime.Now;
-                _context.Update(Company);
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
             }
-
-            return (await _context.SaveChangesAsync());
         }
 
         public async Task<List<Company>> Companies()
         {
-            return await _context.Companies
-                        .AsNoTracking()
-            .ToListAsync();
+            try
+            {
+
+                return await _context.Companies
+                            .AsNoTracking()
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<bool> IsDuplicate(Company _company)
         {
-            Company company = await _context.Companies.Where(b => b.Name.Equals(_company.Name)).FirstOrDefaultAsync();
-            return UtilityService.IsNotNull(company);
+            try
+            {
+
+                Company company = await _context.Companies.Where(b => b.Name.Equals(_company.Name)).FirstOrDefaultAsync();
+                return UtilityService.IsNotNull(company);
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<Company> FindCompany(int id)
         {
-            return await _context.Companies.Where(r => r.CompanyID == id)
-               .AsNoTracking().FirstOrDefaultAsync();
+            try
+            {
+
+                return await _context.Companies.Where(r => r.CompanyID == id)
+                 .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> Save(Company Company)
         {
-
-            Company company = _context.Companies.Where(r => r.IsDefault)
-               .AsNoTracking().FirstOrDefault();
-            if (UtilityService.IsNull(company))
-                Company.IsDefault = true;
-
-            else
+            try
             {
-                if (Company.IsDefault)
+                Company company = _context.Companies.Where(r => r.IsDefault)
+         .AsNoTracking().FirstOrDefault();
+                if (UtilityService.IsNull(company))
+                    Company.IsDefault = true;
+
+                else
                 {
-                    try
+                    if (Company.IsDefault)
                     {
-                        // if this has been set as the main guarator then all the gurantors already in the DB  should have that column set to false
-                        var companies = _context.Companies.Where(s => s.IsDefault).ToList();
-                        companies.ForEach(a => a.IsDefault = false);
-                        _context.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
+                        try
+                        {
+                            // if this has been set as the main guarator then all the gurantors already in the DB  should have that column set to false
+                            var companies = _context.Companies.Where(s => s.IsDefault).ToList();
+                            companies.ForEach(a => a.IsDefault = false);
+                            _context.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
 
-                        //throw;
-                    }
+                            //throw;
+                        }
 
+                    }
                 }
+                Company.LastChangedBy = UtilityService.CurrentUserName;
+                Company.LastChangedDate = DateTime.Now;
+                _context.Add(Company);
+                return (await _context.SaveChangesAsync());
             }
-            Company.LastChangedBy = UtilityService.CurrentUserName;
-            Company.LastChangedDate = DateTime.Now;
-            _context.Add(Company);
-            return (await _context.SaveChangesAsync());
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Update(Company Company)
         {
-            Company company = _context.Companies.Find(Company.CompanyID);
-            List<Company> Companies = _context.Companies.ToList();
-            if (Companies == null || Companies.Count() == 0)
-                company.IsDefault = true;
-
-            else
+            try
             {
-                if (Company.IsDefault)
-                {
-                    try
-                    {
 
-                        var defaultCompany = _context.Companies.Where(s => s.IsDefault && s.CompanyID != Company.CompanyID).FirstOrDefault();
-                        if (UtilityService.IsNotNull(defaultCompany))
+                Company company = _context.Companies.Find(Company.CompanyID);
+                List<Company> Companies = _context.Companies.ToList();
+                if (Companies == null || Companies.Count() == 0)
+                    company.IsDefault = true;
+
+                else
+                {
+                    if (Company.IsDefault)
+                    {
+                        try
                         {
 
-                            defaultCompany.IsDefault = false;
-                            _context.Update(defaultCompany);
+                            var defaultCompany = _context.Companies.Where(s => s.IsDefault && s.CompanyID != Company.CompanyID).FirstOrDefault();
+                            if (UtilityService.IsNotNull(defaultCompany))
+                            {
+
+                                defaultCompany.IsDefault = false;
+                                _context.Update(defaultCompany);
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
+                        catch (Exception ex)
+                        {
 
-                        //throw;
-                    }
+                            //throw;
+                        }
 
+                    }
                 }
+                company.CompanyLogo = Company.CompanyLogo;
+                company.Code = Company.Code;
+                company.IsActive = Company.IsActive;
+                company.Name = Company.Name;
+                company.AddressLine1 = Company.AddressLine1;
+                company.AddressLine2 = Company.AddressLine2;
+                company.City = Company.City;
+                company.Phone = Company.Phone;
+                company.Mobile = Company.Mobile;
+                company.Website = Company.Website;
+                company.CountryID = Company.CountryID;
+                company.Fax = Company.Fax;
+                company.LastChangedBy = UtilityService.CurrentUserName;
+                company.LastChangedDate = DateTime.Now;
+                _context.Update(company);
+                return (await _context.SaveChangesAsync());
             }
-            company.CompanyLogo = Company.CompanyLogo;
-            company.Code = Company.Code;
-            company.IsActive = Company.IsActive;
-            company.Name = Company.Name;
-            company.AddressLine1 = Company.AddressLine1;
-            company.AddressLine2 = Company.AddressLine2;
-            company.City = Company.City;
-            company.Phone = Company.Phone;
-            company.Mobile = Company.Mobile;
-            company.Website = Company.Website;
-            company.CountryID = Company.CountryID;
-            company.Fax = Company.Fax;
-            company.LastChangedBy = UtilityService.CurrentUserName;
-            company.LastChangedDate = DateTime.Now;
-            _context.Update(company);
-            return (await _context.SaveChangesAsync());
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 

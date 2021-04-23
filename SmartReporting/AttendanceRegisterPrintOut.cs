@@ -3,6 +3,7 @@ using MigraDocCore.DocumentObjectModel.Shapes;
 using MigraDocCore.DocumentObjectModel.Tables;
 using SmartDomain;
 using SmartHelper;
+using SmartLog;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,9 +28,8 @@ namespace SmartReporting
 
         public Document Print(AttendanceRegister register)
         {
-            try
+           try
             {
-
                 // Create a new MigraDoc document
                 this.document = new Document();
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Attendance Register");
@@ -40,10 +40,10 @@ namespace SmartReporting
                 RegisterDetails();
                 AttendanceList();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //  ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
             return this.document;
         }
@@ -54,14 +54,12 @@ namespace SmartReporting
             {
                 // Each MigraDoc document needs at least one section.
                 section = this.document.AddSection();
-              
-                    Image image = ReportingUtilities.PrintHeaderLogo(section);
-                            
+                Image image = ReportingUtilities.PrintHeaderLogo(section);
+
                 // Create footer
                 Paragraph paragraph = ReportingUtilities.PrintFooter(section);
 
                 // Create the text frame for the address
-
                 this.addressFrame = section.AddTextFrame();
                 this.addressFrame.Height = "3.0cm";
                 this.addressFrame.Width = "7.0cm";
@@ -69,8 +67,6 @@ namespace SmartReporting
                 this.addressFrame.RelativeHorizontal = RelativeHorizontal.Margin;
                 this.addressFrame.Top = "5.0cm";
                 this.addressFrame.RelativeVertical = RelativeVertical.Page;
-
-
 
                 string title = $"ATTENDANCE REGISTER";
 
@@ -124,11 +120,10 @@ namespace SmartReporting
 
                 paragraph = section.AddParagraph();
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //   ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
 
@@ -184,24 +179,19 @@ namespace SmartReporting
                 tblrow.Cells[3].Format.Alignment = ParagraphAlignment.Left;
                 tblrow.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow.Cells[3].AddParagraph(_register.AttendanceDate);
-                              
 
-                paragraph = section.AddParagraph();
+               paragraph = section.AddParagraph();
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //  ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
         void AttendanceList()
         {
-
             try
             {
-
-
                 List<AttendanceRegisterDetail> details = _register.AttendanceRegisterDetails.ToList();
                 Paragraph paragraph = null;
                 if (details != null && details.Count > 0)
@@ -216,7 +206,7 @@ namespace SmartReporting
                         this.table.Borders.Left.Width = 0.25;
                         this.table.Borders.Right.Width = 0.25;
                     }
-                   else
+                    else
                     {
                         this.table.Borders.Width = 0;
                         this.table.Borders.Left.Width = 0;
@@ -230,7 +220,7 @@ namespace SmartReporting
                     column = this.table.AddColumn("5cm");
                     column.Format.Alignment = ParagraphAlignment.Center;
 
-                                       // Create the header of the table
+                    // Create the header of the table
                     Row row = table.AddRow();
                     row.HeadingFormat = true;
                     row.Format.Alignment = ParagraphAlignment.Center;
@@ -248,7 +238,7 @@ namespace SmartReporting
                     row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
                     countCellColumn++;
 
-                   
+
                     if (UtilityService.StatementShowTableBoarders)
                         this.table.SetEdge(0, 0, countCellColumn, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
@@ -270,10 +260,10 @@ namespace SmartReporting
 
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
-                        row1.Cells[countCellValue].Format.Alignment =  ParagraphAlignment.Center;
+                        row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Center;
                         row1.Cells[countCellValue].AddParagraph(detail.AttendanceStatus);
-                    
-                          finalCountCellValue = countCellValue;
+
+                        finalCountCellValue = countCellValue;
                         if (UtilityService.StatementShowTableBoarders)
                             this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue + 1, 1, Edge.Box, BorderStyle.Single, 0.75);
                     }
@@ -303,7 +293,7 @@ namespace SmartReporting
                     if (UtilityService.StatementShowTableBoarders)
                         this.table.SetEdge(finalCountCellValue, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
                     paragraph = this.addressFrame.AddParagraph();
-                   
+
                     //paragraph = section.AddParagraph();
                     //paragraph = this.addressFrame.AddParagraph();
                     //paragraph.AddText("");
@@ -313,12 +303,11 @@ namespace SmartReporting
                 }
                 else
                     paragraph = this.addressFrame.AddParagraph();
-            
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                // ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
 

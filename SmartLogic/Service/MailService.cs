@@ -1,5 +1,6 @@
 ﻿using SmartDomain;
 using SmartHelper;
+using SmartLog;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -28,6 +29,9 @@ namespace SmartLogic
             //create the MailMessage object
             System.Net.Mail.MailMessage mMailMessage = new System.Net.Mail.MailMessage();
 
+            try
+            {
+           
             //set the sender address of the mail message
             mMailMessage.From = new MailAddress(CREDENTIALUSERNAME, MAILDISPLAYNAME);
             if (UtilityService.SiteEnvironment == SiteEnvironment.Production)
@@ -48,9 +52,7 @@ namespace SmartLogic
                     foreach (var address in email.BCC.Split(','))
                         mMailMessage.Bcc.Add(new MailAddress(address));
                 }
-
             }
-
             else
             {
                 string mailAddress = UtilityService.TestEmailAddress;
@@ -62,8 +64,6 @@ namespace SmartLogic
             mMailMessage.IsBodyHtml = true;
             //set the body of the mail message
             mMailMessage.Body = UtilityService.HtmlDecode(email.Body);
-
-
 
             //set the priority
             mMailMessage.Priority = MailPriority.Normal;
@@ -77,12 +77,9 @@ namespace SmartLogic
                     if (UtilityService.IsNotNull(filepath))
                     {
                         mMailMessage.Attachments.Add(new System.Net.Mail.Attachment(filepath.Name));
-
                     }
                 }
             }
-
-
             if (UtilityService.IsNotNull(email.AttachmentFromMemory))
             {
                 foreach (var attachment in email.AttachmentFromMemory)
@@ -93,13 +90,15 @@ namespace SmartLogic
                         //save the data to a memory stream
                         //create the attachment from a stream. Be sure to name the data with a file and 
                         //media type that is respective of the data
-                        mMailMessage.Attachments.Add(new System.Net.Mail.Attachment(attachment.MemoryStream, $"{attachment.Name}.{attachment.FileExtension}", "text/plain"));
-
+                       mMailMessage.Attachments.Add(new System.Net.Mail.Attachment(attachment.MemoryStream, $"{attachment.Name}.{attachment.FileExtension}", "text/plain"));
                     }
-                }
+               }
             }
-
-
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Mail, ex);
+            }
             try
             {
                 SmtpClient mSmtpClient = new SmtpClient();
@@ -121,8 +120,7 @@ namespace SmartLogic
             }
             catch (Exception ex)
             {
-
-                // ErrorLog.Log(ex, ErrorSource.Email);
+                CustomLog.Log(LogSource.Mail, ex);
                 success = false;
             }
 

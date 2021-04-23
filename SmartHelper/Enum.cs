@@ -852,13 +852,16 @@ AED = 1
         Bi_Annualy = 6,
         Annualy = 7,
     }
-    public enum ErrorSource
+    public enum LogSource
     {
-        Web = 1,
-        Database = 2,
-        Web_Portal = 3,
-        Task_Scheduler = 4,
-        Email_Scheduler = 5
+        Interface = 1,
+        Data_Access = 2,
+        Logic_Base = 3,
+        Reporting = 4,
+        Helper = 5,
+        Mail,
+        Error_Log,
+        Uknown
     }
     public enum AttachmentType
     {

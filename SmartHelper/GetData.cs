@@ -137,6 +137,29 @@ namespace SmartHelper
             return sessionTimeOut;
 
         }
+
+        public static SmartLog SmartLogData()
+        {
+            _configuration = LoadAppConfigurations;
+            SmartLog log = new SmartLog();
+            try
+            {
+                log.EnableSmartLog = Convert.ToBoolean(_configuration["SmartLog:EnableSmartLog"].ToString());
+                log.LogToFile = Convert.ToBoolean(_configuration["SmartLog:LogToFile"].ToString());
+                log.LogToDatabase= Convert.ToBoolean(_configuration["SmartLog:LogToDatabase"].ToString());
+                log.LogToRabbitMQ = Convert.ToBoolean(_configuration["SmartLog:LogToRabbitMQ"].ToString());
+                log.LogDirectory = _configuration["SmartLog:LogDirectory"].ToString();
+               
+            }
+            catch
+            {
+
+
+            }
+
+            return log;
+
+        }
         public static IConfiguration LoadAppConfigurations
         {
             get
@@ -161,6 +184,16 @@ namespace SmartHelper
         public int CustomVariableTypeID { get; set; }
         public int CustomSettingTypeID { get; set; }
 
+    }
+
+    public class SmartLog
+    {
+        public bool EnableSmartLog { get; set; }
+        public bool LogToFile { get; set; }
+        public bool LogToDatabase { get; set; }
+        public bool LogToRabbitMQ { get; set; }
+        public string LogDirectory { get; set; }
+        
     }
 
 }

@@ -32,6 +32,7 @@
           "SmartDataAccess": "1.0.0",
           "SmartDomain": "1.0.0",
           "SmartHelper": "1.0.0",
+          "SmartLog": "1.0.0",
           "SmartLogic": "1.0.0",
           "SmartReporting": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "3.0.0.0",
@@ -2560,10 +2561,22 @@
           "SmartHelper.dll": {}
         }
       },
+      "SmartLog/1.0.0": {
+        "dependencies": {
+          "SmartHelper": "1.0.0"
+        },
+        "runtime": {
+          "SmartLog.dll": {}
+        },
+        "compile": {
+          "SmartLog.dll": {}
+        }
+      },
       "SmartLogic/1.0.0": {
         "dependencies": {
           "SmartDataAccess": "1.0.0",
           "SmartDomain": "1.0.0",
+          "SmartLog": "1.0.0",
           "SmartReporting": "1.0.0"
         },
         "runtime": {
@@ -2579,6 +2592,7 @@
           "MigraDocCore.Rendering": "0.1.1",
           "PdfSharpCore": "1.2.16",
           "SmartDomain": "1.0.0",
+          "SmartLog": "1.0.0",
           "System.Data.DataSetExtensions": "4.5.0"
         },
         "runtime": {
@@ -5525,6 +5539,11 @@
       "sha512": ""
     },
     "SmartHelper/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SmartLog/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

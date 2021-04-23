@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SmartDomain;
 using SmartDataAccess;
 using SmartHelper;
+using SmartLog;
 
 namespace SmartLogic
 {
@@ -18,6 +19,8 @@ namespace SmartLogic
         public CountryService(DatabaseContext context) => _context = context;
         public async Task<int> ActionCountry(int id, DatabaseAction action)
         {
+            try
+            {
             Country Country = await FindCountry(id);
 
             if (DatabaseAction.Remove == action)
@@ -31,39 +34,82 @@ namespace SmartLogic
             }
 
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<List<Country>> Country()
         {
+            try
+            {
             return await _context.Countries
                         .AsNoTracking()
             .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> Delete(int id)
         {
-            var course = await _context.Countries.FindAsync(id);
+            try
+            {
+
+                       var course = await _context.Countries.FindAsync(id);
             _context.Countries.Remove(course);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<Country> FindCountry(int id)
         {
+            try
+            {
             return await _context.Countries.Where(r => r.CountryID == id)
  .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> Save(Country Country)
         {
+            try
+            {
+
             Country.LastChangedBy = UtilityService.CurrentUserName;
             Country.LastChangedDate = DateTime.Now;
             _context.Add(Country);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
       
         public async Task<int> Update(Country Country)
         {
+            try
+            {
+
             Country update = await FindCountry(Country.CountryID);
             update.Name = Country.Name;
             update.IsActive = Country.IsActive;
@@ -71,6 +117,12 @@ namespace SmartLogic
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
     }
 }

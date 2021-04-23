@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SmartDataAccess;
 using SmartDomain;
 using SmartHelper;
+using SmartLog;
 
 namespace SmartLogic
 {
@@ -20,9 +21,24 @@ namespace SmartLogic
         public UserService()
         {
         }
-        public List<UserType> GetUserTypes() => _context.UserTypes.Where(t => t.IsActive).ToList();
+        public List<UserType> GetUserTypes()
+        {
+            try
+            {
+            return _context.UserTypes.Where(t => t.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
         public async Task<User> FindUser(int id = 0, string username = null)
         {
+            try
+            {
+
             if (!String.IsNullOrEmpty(username))
                 id = _context.Users.FirstOrDefault(u => u.UserName.ToUpper() == username.Trim().ToUpper())?.UserID ?? 0;
             return await _context.Users.Include(p => p.UserRoles)
@@ -30,9 +46,18 @@ namespace SmartLogic
                          .ThenInclude(r => r.RolePermissions)
                          .Include(ut => ut.UserType).
                 Where(r => r.UserID == id).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public List<Role> GetUserRoles(int id = 0, string username = null)
         {
+            try
+            {
+
             if (!UtilityService.IsNotNull(_context))
             {
                 return null;
@@ -53,16 +78,33 @@ namespace SmartLogic
             .Include(usr => usr.UserRoles)
             .Where(r => roles.Contains(r.RoleID.ToString()))
             .ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<List<User>> Users()
         {
-            return await _context.Users.
+            try
+            {
+           return await _context.Users.
                 Include(usr => usr.UserRoles).
                 Include(ut => ut.UserType).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Update(User user)
         {
+            try
+            {
+
             User updateUser = await FindUser(user.UserID);
             string oldIDNumber = updateUser.IDNumber;
             string oldEmailAddress = updateUser.EmailAddress;
@@ -92,17 +134,32 @@ namespace SmartLogic
                 }
             }
             return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public bool UserExists(string emailAddress)
         {
+            try
+            {
+
             var user = _context.Users.Where(u => u.EmailAddress.Equals(emailAddress)).FirstOrDefault();
             return UtilityService.IsNotNull(user);
-
-
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Save(User user, bool generateUserName)
         {
+            try
+            {
 
             user.Password = Encryption.Encrypt(UtilityService.GeneratePassword);
             user.LastChangedBy = String.IsNullOrEmpty(UtilityService.CurrentUserName) ? "System" : UtilityService.CurrentUserName;
@@ -126,23 +183,46 @@ namespace SmartLogic
                 int _result = await Save(userRole);
             }
             return userid;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Save(UserRole user)
         {
+            try
+            {
             user.LastChangedBy = UtilityService.CurrentUserName;
             user.LastChangedDate = DateTime.Now;
             _context.Add(user);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public string GetCredential(int id)
         {
-
+            try
+            {
             string _password = _context.Users.Find(id)?.Password;
             return Encryption.Decrypt(_password);
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public async Task<int> SaveUserRoles(int UserID, List<string> RoleID)
         {
+            try
+            {
             foreach (var role in RoleID)
             {
                 int.TryParse(role, out int roleID);
@@ -159,19 +239,44 @@ namespace SmartLogic
 
             await _context.SaveChangesAsync();
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> Delete(int id)
         {
+            try
+            {
             var usr = await _context.Users.FindAsync(id);
             _context.Users.Remove(usr);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<UserRole> GetUserRole(int id, int userid)
         {
+            try
+            {
             return await _context.UserRoles.Where(usr => usr.RoleID == id && usr.UserID == userid).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> ActionUserRole(int id, int userid, DatabaseAction action)
         {
+            try
+            {
+
             UserRole userRole = await GetUserRole(id, userid);
 
             if (DatabaseAction.Remove == action)
@@ -183,23 +288,44 @@ namespace SmartLogic
                 userRole.LastChangedDate = DateTime.Now;
                 _context.Update(userRole);
             }
-
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         public bool HasPermission(Permissions permission)
         {
+            try
+            {
             List<Role> roles = GetUserRoles(username: UtilityService.CurrentUserName);
-
             return roles.Any(x => x.RolePermissions.Any(p => p.PermissionID == (int)permission));
-
-
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         private static Lazy<UserService> instance = new Lazy<UserService>(() => new UserService());
 
         public static UserService Instance => instance.Value;
 
-        public List<Role> GetAllRoles() => _context.Roles.ToList();
+        public List<Role> GetAllRoles()
+        {
+            try
+            {
+            return _context.Roles.ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
         public async Task<int> UpdateRoles(int userID, string[] selectedRoles)
         {
@@ -244,6 +370,7 @@ namespace SmartLogic
             }
             catch (Exception ex)
             {
+                CustomLog.Log(LogSource.Logic_Base, ex);
                 return 0;
             }
             return result;
@@ -268,21 +395,27 @@ namespace SmartLogic
                 }
                 return await _context.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                CustomLog.Log(LogSource.Logic_Base, ex);
                 return 0;
             }
         }
         public async Task<int> RemoveRoleFromUser(int userID, List<int> roles)
         {
+            try
+            {
             List<UserRole> userRoles = await _context.UserRoles.Where(r => r.UserID == userID).ToListAsync();
             var rolesToBeRemoved = userRoles
                     .Where(x => roles.Any(y => y == x.RoleID));
             _context.UserRoles.RemoveRange(rolesToBeRemoved);
             return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
-
-
-
-    }
+}
 }

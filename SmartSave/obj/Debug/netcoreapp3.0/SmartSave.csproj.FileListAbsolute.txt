@@ -7931,10 +7931,12 @@ D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\runtimes\win\lib\net
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartDataAccess.dll
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartDomain.dll
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartLog.dll
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartLogic.dll
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartReporting.dll
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartDataAccess.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartLog.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartLogic.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.pdb
 D:\Dev Projects\SmartSave\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.dll.config

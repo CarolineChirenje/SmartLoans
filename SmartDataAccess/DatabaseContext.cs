@@ -43,12 +43,9 @@ namespace SmartDataAccess
             modelBuilder.Entity<Currency>().HasData(
              Data.GetCurrencies());
 
-
             //// product Frequencies
             modelBuilder.Entity<Frequency>().HasData(
                 Data.GetFrequencies());
-
-
             //   user types
             modelBuilder.Entity<UserType>().HasData(
              Data.GetUserTypes());
@@ -58,7 +55,7 @@ namespace SmartDataAccess
 
             //   relationship types
             modelBuilder.Entity<RelationshipType>().HasData(
-              Data.GetRelationshipTypes());
+             Data.GetRelationshipTypes());
 
             //default company
             //modelBuilder.Entity<Company>().HasData(
@@ -75,16 +72,12 @@ namespace SmartDataAccess
             //gender
             modelBuilder.Entity<Gender>().HasData(
                      Data.GetGenders());
-
             // country
             modelBuilder.Entity<Country>().HasData(
                     Data.GetCountries());
-
-
             //   priority
             modelBuilder.Entity<PriorityRank>().HasData(
               Data.GetPriorityRanks());
-
 
             //users
             modelBuilder.Entity<User>().HasData(
@@ -95,13 +88,11 @@ namespace SmartDataAccess
                   Data.GetFeatureFlags());
 
             // document format and document types
-
             modelBuilder.Entity<DocumentFormat>().HasData(
                   Data.GetDocumentFormats());
 
             modelBuilder.Entity<DocumentType>().HasData(
                   Data.GetDocumentTypes());
-
             //roles
             modelBuilder.Entity<UserRole>().HasData(Data.GetUserRoles());
 

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartDataAccess;
 using SmartDomain;
 using SmartHelper;
+using SmartLog;
 
 namespace SmartLogic
 {
@@ -23,10 +24,19 @@ namespace SmartLogic
 
         public async Task<User> Login(string username, string password)
         {
-            string encryptedPassword = Encryption.Encrypt(password);
+            try
+            {
+
+                        string encryptedPassword = Encryption.Encrypt(password);
             return await _context.Users.FirstOrDefaultAsync(u => u.EmailAddress == username &&
              u.Password == encryptedPassword);
 
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         #region PinCode
@@ -42,19 +52,36 @@ namespace SmartLogic
 
         private bool PinCodeExists(string pincode)
         {
-            return _context.UserAuthenticationCodes.Any(p => p.PinCode.Equals(pincode));
+            try
+            {
+
+                        return _context.UserAuthenticationCodes.Any(p => p.PinCode.Equals(pincode));
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
         string GeneratePinCode()
         {
-            
-            string pincode = Encryption.Encrypt(UtilityService.GenerateRandomNumbers(UtilityService.PinCodeLength).ToString());
+            try
+            {
+
+                        string pincode = Encryption.Encrypt(UtilityService.GenerateRandomNumbers(UtilityService.PinCodeLength).ToString());
             
             if (PinCodeExists(pincode))
                 return GeneratePinCode();
 
             else
                 return pincode;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
 
 
@@ -62,6 +89,10 @@ namespace SmartLogic
         #endregion PinCode
         public async Task<string> ResetPassword(string emailaddress, string idnumber, bool isAccountCreation)
         {
+            try
+            {
+
+           
             Client client=new Client();
             User user = new User();
             if (isAccountCreation) {
@@ -89,25 +120,51 @@ namespace SmartLogic
              await _context.SaveChangesAsync();
 
             return encryptedPinCode;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<bool> UserAccountExists(string emailaddress, string idnumber)
         {
+            try
+            {
 
-            var user = _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefault();
+                        var user = _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefault();
             return UtilityService.IsNotNull(user);
             }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
         public async Task<UserAuthenticationCode> ConfirmCode(string code, bool isAccountCreation)
         {
-            string encryptedPinCode = Encryption.Encrypt(code);
+            try
+            {
+
+                       string encryptedPinCode = Encryption.Encrypt(code);
             UserAuthenticationCode pinReset = await _context.UserAuthenticationCodes
                         .FirstOrDefaultAsync(u => u.PinCode.Equals(encryptedPinCode) && u.IsAccountCreation==isAccountCreation);
            
             return pinReset;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         public async Task<int> PasswordChange(int userid, string password)
         {
-            string encryptedPassword = Encryption.Encrypt(password);
+            try
+            {
+
+                        string encryptedPassword = Encryption.Encrypt(password);
             User user = await _context.Users
                         .FirstOrDefaultAsync(u => u.UserID==userid);
 
@@ -122,6 +179,12 @@ namespace SmartLogic
             _context.Update(user);
 
             return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
       
     }

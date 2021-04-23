@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SmartHelper
-{
-  
+{  
      public static class Encryption
     {
         private static readonly string key = UtilityService.GetMessageToDisplay("ENCYPTKEY");

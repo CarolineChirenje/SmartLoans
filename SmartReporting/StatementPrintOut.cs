@@ -3,6 +3,7 @@ using MigraDocCore.DocumentObjectModel.Shapes;
 using MigraDocCore.DocumentObjectModel.Tables;
 using SmartDomain;
 using SmartHelper;
+using SmartLog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +15,7 @@ namespace SmartReporting
 {
     public class StatementPrintOut
     {
-        Document document;
+       Document document;
         Table table;
         Color TableColor = Colors.LightGray;
         Color TableBorder = Colors.Black;
@@ -22,16 +23,13 @@ namespace SmartReporting
         Color HeaderColor = Colors.LightGray;
         TextFrame addressFrame;
         Statement _statement;
-
         CultureInfo culture;
         Section section;
         Style style;
-
         public Document Print(Statement statement)
         {
             try
             {
-
                 // Create a new MigraDoc document
                 this.document = new Document();
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Statement of Account");
@@ -42,13 +40,11 @@ namespace SmartReporting
                 AddressAndHeader();
                 AccountDetails();
                 TransactionDetails();
-
-
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //  ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
             return this.document;
         }
@@ -63,9 +59,7 @@ namespace SmartReporting
                 Image image = ReportingUtilities.PrintHeaderLogo(section);
                 // Create footer
                 Paragraph paragraph = ReportingUtilities.PrintFooter(section);
-
                 // Create the text frame for the address
-
                 this.addressFrame = section.AddTextFrame();
                 this.addressFrame.Height = "3.0cm";
                 this.addressFrame.Width = "7.0cm";
@@ -74,18 +68,14 @@ namespace SmartReporting
                 this.addressFrame.Top = "5.0cm";
                 this.addressFrame.RelativeVertical = RelativeVertical.Page;
 
-
-
                 string title = "STATEMENT OF ACCOUNT";
-
-                // Add the print date field
+                                // Add the print date field
                 paragraph = section.AddParagraph();
                 paragraph.Format.SpaceBefore = "0.5cm";
                 paragraph.Style = StyleNames.Heading1;
                 paragraph.AddFormattedText($"{title}", TextFormat.Bold);
                 paragraph.Format.Alignment = ParagraphAlignment.Center;
                 paragraph = section.AddParagraph();
-
 
                 // Create the item table
                 this.table = section.AddTable();
@@ -94,16 +84,12 @@ namespace SmartReporting
                 this.table.Borders.Left.Width = 0;
                 this.table.Borders.Right.Width = 0;
                 this.table.Rows.LeftIndent = 0;
-
-                // Before you can add a row, you must define the columns
+                                // Before you can add a row, you must define the columns
                 Column column = this.table.AddColumn("10cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
-
                 paragraph = this.addressFrame.AddParagraph();
 
-
-
-                // Each item fills two rows
+                                // Each item fills two rows
                 Row tblrow = this.table.AddRow();
                 tblrow.TopPadding = 1.5;
                 tblrow.Cells[0].Borders.Visible = false;
@@ -121,7 +107,6 @@ namespace SmartReporting
                     tblrow1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                     tblrow1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                     tblrow1.Cells[0].AddParagraph(_statement.Client.AddressLine1);
-
                 }
                 if (!String.IsNullOrEmpty(_statement.Client.AddressLine2))
                 {
@@ -184,11 +169,10 @@ namespace SmartReporting
 
                 paragraph = section.AddParagraph();
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //   ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
 
@@ -217,12 +201,7 @@ namespace SmartReporting
                 column = this.table.AddColumn("5cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
 
-
                 Paragraph paragraph = this.addressFrame.AddParagraph();
-
-
-
-
                 // Each item fills two rows
                 Row tblrow = this.table.AddRow();
 
@@ -273,15 +252,12 @@ namespace SmartReporting
                 tblrow1.Cells[3].Format.Alignment = ParagraphAlignment.Left;
                 tblrow1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow1.Cells[3].AddParagraph(DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
-
-
                 paragraph = section.AddParagraph();
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                //  ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
         void TransactionDetails()
@@ -303,23 +279,8 @@ namespace SmartReporting
         }
         void TransactionList()
         {
-
-            try
+                    try
             {
-
-
-                //string _selectClause = @";WITH CTE_Trans AS (
-                //                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Entity
-                //                        FROM Transactions t
-                //                        INNER JOIN Products p ON p.ProductID=t.ProductID
-                //                        INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
-                //                        UNION ALL
-                //                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,c.Title AS Entity
-                //                        FROM Transactions t
-                //                        INNER JOIN Courses c ON c.CourseID=t.CourseID
-                //                        INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
-                //                        )
-                //                        SELECT * FROM CTE_Trans t ";
 
                 string _selectClause = @"WITH CTE_Trans AS (
                                         SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Entity,t.TransactionID,t.ParentPaymentID
@@ -501,26 +462,17 @@ namespace SmartReporting
                 // Add the notes paragraph
                 //  paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                // ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
 
         void ProductBasedStatement()
         {
-
-            try
+                    try
             {
-
-
-                //string _selectClause = @"SELECT t.PaymentDate,t.TransactionDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Product
-                //                            FROM Transactions t
-                //                            INNER JOIN Products p ON p.ProductID=t.ProductID
-                //                            INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
-
-
                 string _selectClause = @"SELECT t.PaymentDate,t.TransactionDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Product,t.TransactionID,t.ParentPaymentID
                                             FROM Transactions t
                                             INNER JOIN Products p ON p.ProductID=t.ProductID
@@ -548,18 +500,15 @@ namespace SmartReporting
                         this.table.Borders.Width = 0.25;
                         this.table.Borders.Left.Width = 0.25;
                         this.table.Borders.Right.Width = 0.25;
-
                     }
 
                     else
                     {
-
                         this.table.Borders.Width = 0;
                         this.table.Borders.Left.Width = 0;
                         this.table.Borders.Right.Width = 0;
                         this.table.Rows.LeftIndent = 0;
                     }
-
                     // Before you can add a row, you must define the columns
                     Column column = this.table.AddColumn("3cm");
                     column.Format.Alignment = ParagraphAlignment.Left;
@@ -662,8 +611,6 @@ namespace SmartReporting
                             row1.Cells[countCellValue].AddParagraph(transaction.Field<string>("Product"));
                             countCellValue++;
                         }
-
-
                         string _transactionDescription = transaction.Field<string>("Counter");
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Left;
@@ -703,17 +650,16 @@ namespace SmartReporting
                 // Add the notes paragraph
                 // paragraph = ReportingUtilities.PrintFootNotes(this.document.LastSection.AddParagraph());
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                // ErrorLog.Log(e, ErrorSource.Reporting);
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
         }
 
         private DataTable RemoveReversals(DataTable Results)
         {
             DataTable Transactions = null;
-
             try
             {
                 //Get Contra Reversals
@@ -740,12 +686,11 @@ namespace SmartReporting
                 }
                 else
                     Transactions = Results;
-
             }
             catch (Exception ex)
             {
-                Transactions = Results;
-                //  throw;
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
             }
             return Transactions;
 
