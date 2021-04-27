@@ -43,6 +43,26 @@
                         <div class="text-warning">@TempData["Warning"].ToString()</div>
                     </div>
                 }
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Affiliation</label>
+
+                    <div class="col-sm-10">
+                        <select id="ClientGroupID" asp-for="ClientGroupID" class="form-control" asp-items="ViewBag.AffiliationList" onchange="GetCompanyList(this.value)">
+                        </select>
+                        <span id="AffiliationListNotFound" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+                    <div class="col-sm-10">
+
+                        <select id="CompanyList" name="CompanyID" class="form-control">
+                        </select>
+                        <span id="CompanyListNotFound" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+
                 @{ var jointAccountValue = (int)Client_AccountType.Joint; }
                 <input type="hidden" id="JointAccountEnumValue" value="@jointAccountValue" />
                 <div class="form-group">
@@ -336,8 +356,10 @@
 
 
     $(document).ready(function () {
-               document.getElementById('DateOfBirth').value = new Date().toISOString().substring(0, 10);
-         });
+        document.getElementById('DateOfBirth').value = new Date().toISOString().substring(0, 10);
+        // And now fire change event when the DOM is ready
+        $('#ClientGroupID').trigger('change');
+    });
     $(function () {
         $('#Salary').blur(function () {
             var tempVal = $('#Salary').val();
@@ -360,4 +382,43 @@
             $("#CoApplicantInfo").hide();
         }
     }
+
+    function GetCompanyList(affiliationID) {
+        var procemessage = "<option value='0'> Please wait whilst we retrieve Registered Companies...</option>";
+        $("#CompanyList").html(procemessage).show();
+        var url = "/Client/GetCompanyList/";
+        // alert(affiliationID);
+        $.ajax({
+            url: url,
+            data: { affiliationID: affiliationID },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "";
+                if (data == null || data.length == 0) {
+                    if (affiliationID === 2) {
+                        $("#AffiliationListNotFound").text("")
+                    }
+                    else {
+                        $("#AffiliationListNotFound").text("No registered Companies Found")
+                    }
+                    $(":submit").attr("disabled", true);
+                }
+                else {
+                    $("#AffiliationListNotFound").text("");
+                    $(":submit").removeAttr("disabled");
+
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
+                    }
+                }
+                $("#CompanyList").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
 </script>

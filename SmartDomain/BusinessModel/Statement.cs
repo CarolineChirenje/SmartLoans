@@ -5,17 +5,28 @@ using System.Text;
 
 namespace SmartDomain
 {
-    public class Statement
+    public class StatementBase
     {
         [Key]
         public int StatementID { get; set; }
         public int ClientID { get; set; }
         public virtual Client Client { get; set; }
+       
+    }
+
+    public class Statement:StatementBase
+    {
+        
         public int ProductID { get; set; }
         public virtual Product Product { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool EmailStatement { get; set; }
         public bool PrintReversalsOnStatement { get; set; }
+    }
+
+    public class OutstandingStatement:Statement
+    {
+       
     }
 }

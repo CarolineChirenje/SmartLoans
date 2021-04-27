@@ -854,7 +854,7 @@ AED = 1
     }
     public enum LogSource
     {
-        Interface = 1,
+        GUI = 1,
         Data_Access = 2,
         Logic_Base = 3,
         Reporting = 4,
@@ -921,6 +921,13 @@ AED = 1
         Active = 1,
         Deleted = 2,
         History
+    }
+
+    public enum Affiliation
+    {
+        Company = 1,
+        Individual = 2,
+       
     }
 }
 

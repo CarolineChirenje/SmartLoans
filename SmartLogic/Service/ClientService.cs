@@ -118,6 +118,9 @@ namespace SmartLogic
                                  Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
                                  Include(c => c.Title).
                                  Include(at => at.ClientAccountType).
+                                  Include(at => at.ClientGroup).
+                                  Include(at => at.Company).
+                                  AsNoTracking().
                                  Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
                     return await ClientResults;
 
@@ -210,6 +213,7 @@ namespace SmartLogic
                     updateClient.Occupation = Client.Occupation;
                     updateClient.ClientAccountTypeID = Client.ClientAccountTypeID;
                     updateClient.CompanyID = Client.CompanyID;
+                    updateClient.ClientGroupID = Client.ClientGroupID;
                     _context.Update(updateClient);
                 }
                 result = await _context.SaveChangesAsync();
@@ -351,6 +355,9 @@ namespace SmartLogic
                 Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
                 Include(c => c.Title).
                 Include(at => at.ClientAccountType).
+                Include(at => at.ClientGroup).
+                Include(at => at.Company).
+                AsNoTracking().
                 OrderByDescending(c => c.RegistrationDate)
                 .ToListAsync();
             }
@@ -398,6 +405,7 @@ namespace SmartLogic
                     Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
                     Include(c => c.Title).
                     Include(at => at.ClientAccountType).
+                     Include(at => at.ClientGroup).
                     Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).ToListAsync();
             }
             catch (Exception ex)
@@ -458,8 +466,6 @@ namespace SmartLogic
         }
         #endregion Client Account No
 
-
-
         public async Task<int> ActionClient(int id, DatabaseAction action)
         {
             try
@@ -485,6 +491,25 @@ namespace SmartLogic
             }
         }
 
+        public async Task<Company> GetClientCompany(int clientID)
+        {
+            try
+            {
+
+                var client = await _context.Clients.
+                 Include(c => c.Company).
+                Where(c => c.ClientID == clientID).FirstOrDefaultAsync();
+                if (UtilityService.IsNull(client))
+                    return null;
+                var company = client.Company;
+                return company;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
         //Notes
         public async Task<ClientNote> FindNote(int id)
@@ -993,6 +1018,7 @@ namespace SmartLogic
                 ClientProduct.IncreamentPercentage = clientProduct.IncreamentPercentage;
                 ClientProduct.DeductionPercentage = clientProduct.DeductionPercentage;
                 ClientProduct.IsActive = clientProduct.IsActive;
+                ClientProduct.DoNotDeduct = clientProduct.DoNotDeduct;
                 ClientProduct.LastChangedBy = UtilityService.CurrentUserName;
                 ClientProduct.LastChangedDate = DateTime.Now;
                 _context.Update(ClientProduct);
@@ -1355,6 +1381,32 @@ namespace SmartLogic
             }
         }
 
+        public List<ClientFee> ClientFees(int clientID)
+        {
+            try
+            {
+
+                return _context.ClientFees.
+                 Include(c => c.Client).ThenInclude(c => c.Title).
+                 Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+                 Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
+                 Include(c => c.ProductFee).
+                  ThenInclude(c => c.Frequency).
+                  Include(c => c.ProductFee).
+                 ThenInclude(c => c.Product).
+                 Include(c => c.CourseFee).
+                 ThenInclude(c => c.Course).
+                 AsNoTracking().
+                Where(t => t.ClientID == clientID).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        // ClientFees
 
 
         public async Task<int> PayFee(ClientFee clientFee)

@@ -147,6 +147,28 @@ namespace SmartLogic
                 throw;
             }
         }
+        public List<Company> GetCompanies(bool activeOnly = false)
+        {
+            try
+            {
+
+                var companies= _context.Companies.ToList();
+                if (companies == null)
+                    return null;
+                if (activeOnly)
+                    companies = companies.Where(c => c.IsActive).ToList();
+                else
+                    return companies;
+                return companies;
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        
         public DocumentType FindDocumentTypes(int DocumentTypeID)
         {
             try
@@ -191,6 +213,21 @@ namespace SmartLogic
                 throw;
             }
         }
+        public List<ClientGroup> GetAffiliations()
+        {
+            try
+            {
+
+                return _context.ClientGroups.ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        
 
         public List<CustomVariableType> GetCustomVariableTypes()
         {

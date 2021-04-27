@@ -35,6 +35,9 @@ namespace SmartDomain
         public int? CompanyID { get; set; }
         public virtual Company Company { get; set; }
 
+        public int ClientGroupID { get; set; }
+        public virtual ClientGroup ClientGroup { get; set; }
+
         public virtual JointApplicant JointApplicant { get; set; }
         public virtual List<ClientContact> ClientContacts { get; set; }
         public virtual List<ClientDocument> ClientDocuments { get; set; }

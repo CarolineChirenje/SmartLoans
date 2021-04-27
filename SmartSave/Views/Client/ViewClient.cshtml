@@ -43,6 +43,25 @@
                         <div class="text-warning">@TempData["Warning"].ToString()</div>
                     </div>
                 }
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Affiliation</label>
+
+                    <div class="col-sm-10">
+                        <select id="ClientGroupID" asp-for="ClientGroupID" class="form-control" asp-items="ViewBag.AffiliationList" onchange="GetCompanyList(this.value)">
+                        </select>
+                        <span id="AffiliationListNotFound" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+                    <div class="col-sm-10">
+
+                        <select asp-for="CompanyID" id="CompanyList" name="CompanyID" class="form-control">
+                        </select>
+                        <span id="CompanyListNotFound" class="text-danger text-bold"></span>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <label asp-for="ClientAccountTypeID" class="col-sm-2 control-label">Account Type</label>
@@ -931,23 +950,25 @@
                                             </div>
 
                                         </div>
-
-                                        <div class="form-group">
-                                            <label for="inputEmail3" class="col-sm-2 control-label">Show Reversals</label>
-                                            <div class="checkbox">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" data-val="true" id="PrintReversalsOnStatement"
-                                                           name="PrintReversalsOnStatement" value="true">
-                                                </label>
+                                        @if (UtilityService.HasPermission(Permissions.Print_Statement_With_No_Reversals))
+                                        {
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-2 control-label">Print Reversals</label>
+                                                <div class="checkbox">
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" data-val="true" id="PrintReversalsOnStatement"
+                                                               name="PrintReversalsOnStatement" value="true">
+                                                    </label>
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
                                         <input type="hidden" name="ClientID" value="@Model.ClientID" />
                                         <div class="box-footer">
                                             @if (UtilityService.HasPermission(Permissions.Generate_Client_Statement))
                                             {
                                                 <button type="submit" class="btn  btn-small btn-success" name="GenerateStatement" value="GenerateStatement">Generate Statement</button>
-                                            }  <button type="submit" class="btn  btn-small btn-info" name="EmailStatement" value="EmailStatement" disabled="@UtilityService.FeatureFlagOn((int)FeatureFlagList.Enable_Document_Emailing_Functionality)">Email Statement</button>
-
+                                              <button type="submit" class="btn  btn-small btn-info" name="EmailStatement" value="EmailStatement" disabled="@UtilityService.FeatureFlagOn((int)FeatureFlagList.Enable_Document_Emailing_Functionality)">Email Statement</button>
+                                            }
                                         </div>
                                     </form>
                                 </div>
@@ -1012,132 +1033,139 @@
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
-                                    <div class="dataTable_wrapper">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                            <thead>
-                                                <tr>
+                                    <form method="get" asp-controller="Client" asp-action="GenerateOutStandingStatement">
+                                        <div class="dataTable_wrapper">
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                <thead>
+                                                    <tr>
 
-                                                    <th>Entity</th>
-                                                    <th>Fee Name</th>
-                                                    <th>Amount</th>
-                                                    <th>Payment Terms</th>
-                                                    <th>Due Date</th>
-                                                    <th>Action</th>
+                                                        <th>Entity</th>
+                                                        <th>Fee Name</th>
+                                                        <th>Amount</th>
+                                                        <th>Payment Terms</th>
+                                                        <th>Due Date</th>
+                                                        <th>Action</th>
 
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (Model.ClientFees != null)
-                                                {
-                                                    var outstandingProductPayments = Model.ClientFees.Where(p => p.ProductFeeID.HasValue);
-
-                                                    var outstandingCoursePayments = Model.ClientFees.Where(c => c.CourseFeeID.HasValue);
-
-                                                    if (outstandingProductPayments != null)
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.ClientFees != null)
                                                     {
-                                                        var cutoffDate = DateTime.Now.AddMonths(1);
-                                                        var clientFees = outstandingProductPayments.Where(c => !c.IsPaid && c.DueDate.Date < cutoffDate.Date).OrderByDescending(x => x.DueDate);
-                                                        @foreach (var item in clientFees)
+                                                        var outstandingProductPayments = Model.ClientFees.Where(p => p.ProductFeeID.HasValue).Distinct().ToList();
+
+                                                        var outstandingCoursePayments = Model.ClientFees.Where(c => c.CourseFeeID.HasValue).Distinct();
+
+                                                        if (outstandingProductPayments != null)
                                                         {
-                                                            <tr>
-                                                                @{
+                                                            var cutoffDate = DateTime.Now.AddMonths(1);
+                                                            var clientFees = outstandingProductPayments.Where(c => !c.IsPaid && c.DueDate.Date < cutoffDate.Date).OrderByDescending(x => x.DueDate);
+                                                            @foreach (var item in clientFees)
+                                                            {
+                                                                <tr>
+                                                                    @{
 
-                                                                    string duedate = UtilityService.ShowDate(item.DueDate);
-                                                                    string entity = "Product - " + item.ProductFee.Product.Name;
-                                                                }
+                                                                        string duedate = UtilityService.ShowDate(item.DueDate);
+                                                                        string entity = "Product - " + item.ProductFee.Product.Name;
+                                                                    }
 
-                                                                @if (UtilityService.HasPermission(Permissions.View_Product))
-                                                                {
-                                                                    <td><a target="_blank" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductFee.ProductID">@entity</a></td>
+                                                                    @if (UtilityService.HasPermission(Permissions.View_Product))
+                                                                    {
+                                                                        <td><a target="_blank" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductFee.ProductID">@entity</a></td>
 
-                                                                }
-                                                                else
-                                                                {
-                                                                    <td>@entity</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@entity</td>
 
-                                                                }
-                                                                @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
-                                                                {
-                                                                    <td><a target="_blank" asp-controller="Product" asp-action="ViewProductFee" asp-route-id="@item.ProductFee.ProductFeeID">@item.ProductFee.Name</a></td>
+                                                                    }
+                                                                    @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
+                                                                    {
+                                                                        <td><a target="_blank" asp-controller="Product" asp-action="ViewProductFee" asp-route-id="@item.ProductFee.ProductFeeID">@item.ProductFee.Name</a></td>
 
-                                                                }
-                                                                else
-                                                                {
-                                                                    <td>@Html.DisplayFor(modelItem => item.ProductFee.Name)</td>
-                                                                }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@Html.DisplayFor(modelItem => item.ProductFee.Name)</td>
+                                                                    }
 
 
-                                                                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                                                                <td>@Html.DisplayFor(modelItem => item.ProductFee.Frequency.Name)</td>
-                                                                <td>
-                                                                    @duedate
-                                                                </td>
-                                                                @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
-                                                                {
+                                                                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                                                                    <td>@Html.DisplayFor(modelItem => item.ProductFee.Frequency.Name)</td>
+                                                                    <td>
+                                                                        @duedate
+                                                                    </td>
+                                                                    @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
+                                                                    {
 
-                                                                    <td><a asp-controller="Client" asp-action="ClientFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
-                                                                }
-                                                            </tr>
+                                                                        <td><a asp-controller="Client" asp-action="ClientFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
+                                                                    }
+                                                                </tr>
+                                                            }
+
                                                         }
 
-                                                    }
-
-                                                    @if (outstandingCoursePayments != null)
-                                                    {
-                                                        var cutoffDate = DateTime.Now.AddMonths(1);
-                                                        var clientFees = outstandingCoursePayments.Where(c => !c.IsPaid && c.DueDate.Date < cutoffDate.Date).OrderByDescending(x => x.DueDate);
-                                                        @foreach (var item in clientFees)
+                                                        @if (outstandingCoursePayments != null)
                                                         {
-                                                            <tr>
-                                                                @{
+                                                            var cutoffDate = DateTime.Now.AddMonths(1);
+                                                            var clientFees = outstandingCoursePayments.Where(c => !c.IsPaid && c.DueDate.Date < cutoffDate.Date).OrderByDescending(x => x.DueDate);
+                                                            @foreach (var item in clientFees)
+                                                            {
+                                                                <tr>
+                                                                    @{
 
-                                                                    string duedate = UtilityService.ShowDate(item.DueDate);
-                                                                    string courseentity = "Course - " + item.CourseFee.Course.Title;
+                                                                        string duedate = UtilityService.ShowDate(item.DueDate);
+                                                                        string courseentity = "Course - " + item.CourseFee.Course.Title;
 
-                                                                }
+                                                                    }
 
-                                                                @if (UtilityService.HasPermission(Permissions.View_Course))
-                                                                {
-                                                                    <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseFee.CourseID">@courseentity</a></td>
+                                                                    @if (UtilityService.HasPermission(Permissions.View_Course))
+                                                                    {
+                                                                        <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseFee.CourseID">@courseentity</a></td>
 
-                                                                }
-                                                                else
-                                                                {
-                                                                    <td>@courseentity</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@courseentity</td>
 
-                                                                }
-                                                                @if (UtilityService.HasPermission(Permissions.View_Course_Fee))
-                                                                {
-                                                                    <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseFee" asp-route-id="@item.CourseFee.CourseFeeID">@item.CourseFee.Name</a></td>
+                                                                    }
+                                                                    @if (UtilityService.HasPermission(Permissions.View_Course_Fee))
+                                                                    {
+                                                                        <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseFee" asp-route-id="@item.CourseFee.CourseFeeID">@item.CourseFee.Name</a></td>
 
-                                                                }
-                                                                else
-                                                                {
-                                                                    <td>@Html.DisplayFor(modelItem => item.CourseFee.Name)</td>
-                                                                }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@Html.DisplayFor(modelItem => item.CourseFee.Name)</td>
+                                                                    }
 
 
-                                                                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                                                                <td>@Html.DisplayFor(modelItem => item.CourseFee.Frequency.Name)</td>
-                                                                <td>
-                                                                    @duedate
-                                                                </td>
-                                                                @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
-                                                                {
+                                                                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                                                                    <td>@Html.DisplayFor(modelItem => item.CourseFee.Frequency.Name)</td>
+                                                                    <td>
+                                                                        @duedate
+                                                                    </td>
+                                                                    @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
+                                                                    {
 
-                                                                    <td><a asp-controller="Client" asp-action="ClientCourseFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
-                                                                }
-                                                            </tr>
+                                                                        <td><a asp-controller="Client" asp-action="ClientCourseFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
+                                                                    }
+                                                                </tr>
+                                                            }
+
                                                         }
-
                                                     }
-                                                }
-                                        </table>
-                                    </div>
-                                    <div class="box-footer">
-
-                                    </div>
+                                            </table>
+                                        </div>
+                                        <div class="box-footer">
+                                            @if (UtilityService.HasPermission(Permissions.Generate_Client_Statement))
+                                            {
+                                                <button type="submit" class="btn  btn-small btn-success" name="GenerateOutStandingStatement" value="GenerateOutStandingStatement">Generate Statement</button>
+                                                <button type="submit" class="btn  btn-small btn-info" name="EmailOutStandingStatement" value="EmailOutStandingStatement" disabled="@UtilityService.FeatureFlagOn((int)FeatureFlagList.Enable_Document_Emailing_Functionality)">Email Statement</button>
+                                            }
+                                        </div>
+                                        <input type="hidden" name="ClientID" value="@Model.ClientID" />
+                                    </form>
                                 </div>
                             </div>
 
@@ -1380,18 +1408,6 @@
 
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Deduction</label>
-                        <input type="text" class="form-control" asp-for="DeductionAmount" id="DeductionPercentage">
-                        <span id="DeductionPercentageError" class="text-danger text-bold"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Deduction After Salary Increment</label>
-                        <input type="text" class="form-control" asp-for="IncreamentAmount" id="IncreamentPercentage">
-                        <span id="IncreamentPercentageError" class="text-danger text-bold"></span>
-                    </div>
-
-                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
                         <div class="checkbox">
                             <label class="checkbox-inline">
@@ -1400,6 +1416,33 @@
                             </label>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Do Not Deduct</label>
+                        <div class="checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" data-val="true" id="DoNotDeduct"
+                                       name="DoNotDeduct" value="true">
+                            </label>
+                            <span class="text-danger text-normal"><i>Will override all deductions set at individual or Product Level if selected </i></span>
+                       </div>
+                    </div>
+
+                    <section><br/>
+                        <h5 class="box-title text-danger text-normal"><i>Specific Individual Deductions (if any)</i></h5>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Deduction</label>
+                            <input type="text" class="form-control" asp-for="DeductionAmount" id="DeductionPercentage">
+                            <span id="DeductionPercentageError" class="text-danger text-bold"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3">Deduction After Salary Increment</label>
+                            <input type="text" class="form-control" asp-for="IncreamentAmount" id="IncreamentPercentage">
+                            <span id="IncreamentPercentageError" class="text-danger text-bold"></span>
+                        </div>
+
+                        <span class="text-danger text-normal"><i>Deductions defined at Product level will apply if do not deduct is not selected and individual deductions not specified not specified</i></span>
+                    </section>
                     <input type="hidden" name="ClientID" value="@Model.ClientID" />
                     <input type="hidden" name="JointAccountEnumValue" value="@Model.JointAccountEnumValue" />
                 </div>
@@ -1715,6 +1758,7 @@
         document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
         document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
         showCoApplicantForm();
+        $('#ClientGroupID').trigger('change');
 
     });
     $(function () {
@@ -1774,6 +1818,42 @@
             $("#CoApplicantInfo").hide();
         }
     }
+    function GetCompanyList(affiliationID) {
+        var procemessage = "<option value='0'> Please wait whilst we retrieve Registered Companies...</option>";
+        $("#CompanyList").html(procemessage).show();
+        var url = "/Client/GetCompanyList/";
+        // alert(affiliationID);
+        $.ajax({
+            url: url,
+            data: { affiliationID: affiliationID },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "";
+                if (data == null || data.length == 0) {
+                    if (affiliationID === 2) {
+                        $("#AffiliationListNotFound").text("")
+                    }
+                    else {
+                        $("#AffiliationListNotFound").text("No registered Companies Found")
+                    }
+                    $(":submit").attr("disabled", true);
+                }
+                else {
+                    $("#AffiliationListNotFound").text("");
+                    $(":submit").removeAttr("disabled");
 
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
+                    }
+                }
+                $("#CompanyList").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
 </script>
 

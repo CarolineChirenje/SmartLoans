@@ -138,6 +138,10 @@ namespace SmartDataAccess
             modelBuilder.Entity<RecordStatus>().HasData(
            Data.GetRecordStatuses());
 
+            modelBuilder.Entity<ClientGroup>().HasData(
+         Data.GetClientGroups());
+
+
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -164,7 +168,7 @@ namespace SmartDataAccess
         public DbSet<ClientDeductionDetails> ClientDeductionDetails { get; set; }
         public DbSet<ClientOccupationHistory> ClientOccupationHistory { get; set; }
         public DbSet<ClientAccountType> ClientAccountTypes { get; set; }
-
+        public DbSet<ClientGroup> ClientGroups { get; set; }
         public DbSet<UserAuthenticationCode> UserAuthenticationCodes { get; set; }
         public DbSet<ClientMedicalDetail> ClientMedicalDetails { get; set; }
         public DbSet<NoticeBoard> NoticeBoard { get; set; }

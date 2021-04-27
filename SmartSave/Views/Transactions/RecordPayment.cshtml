@@ -204,8 +204,8 @@
 
    
     function GetProduct(_clientID) {
-        var procemessage = "<option value='0'> Please wait whilst we retrieve Products registered to Individual...</option>";
-        $("#ProductList").html(procemessage).show();
+        var processmessage = "<option value='0'> Please wait whilst we retrieve Products registered to Individual...</option>";
+        $("#ProductList").html(processmessage).show();
         var url = "/Transactions/GetProductByClientID/";
        // alert(_clientID);
         $.ajax({

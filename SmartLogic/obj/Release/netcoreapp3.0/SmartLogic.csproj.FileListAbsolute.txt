@@ -17,3 +17,5 @@ D:\Dev Projects\SmartSave\SmartLogic\obj\Release\netcoreapp3.0\SmartLogic.dll
 D:\Dev Projects\SmartSave\SmartLogic\obj\Release\netcoreapp3.0\SmartLogic.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartReporting.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartReporting.pdb
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartLog.dll
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartLog.pdb

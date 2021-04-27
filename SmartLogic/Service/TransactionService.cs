@@ -384,49 +384,50 @@ namespace SmartLogic
                 {
                     foreach (var item in clientProduct)
                     {
-                        //1.
-                        decimal _percentageDeduction = item.DeductionPercentage.HasValue ? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
-                        decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
-                        decimal _currentSalary = item.Client.Salary;
-                        decimal? _previousSalary = null;
-                        decimal _totalDeductionPercentage = 0M;
-                        decimal _totalDeduction = 0M;
-                        var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
-                        if (UtilityService.IsNotNull(_lastSalary))
-                            _previousSalary = _lastSalary.Salary;
 
-                        if (_previousSalary.HasValue)
+                        if (!item.DoNotDeduct) //only deduct if do not deduct is set to false
                         {
-                            if (_currentSalary > _previousSalary.Value)
-                                _totalDeductionPercentage = _percentageDeduction + _percentageIncrement;
+                            //1.
+                            decimal _percentageDeduction = item.DeductionPercentage.HasValue ? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
+                            decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
+                            decimal _currentSalary = item.Client.Salary;
+                            decimal? _previousSalary = null;
+                            decimal _totalDeductionPercentage = 0M;
+                            decimal _totalDeduction = 0M;
+                            var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
+                            if (UtilityService.IsNotNull(_lastSalary))
+                                _previousSalary = _lastSalary.Salary;
+
+                            if (_previousSalary.HasValue)
+                            {
+                                if (_currentSalary > _previousSalary.Value)
+                                    _totalDeductionPercentage = _percentageDeduction + _percentageIncrement;
+                                else
+                                    _totalDeductionPercentage = _percentageDeduction;
+                            }
                             else
                                 _totalDeductionPercentage = _percentageDeduction;
+
+                            _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
+                            ClientDeductionDetails deductionDetails = new ClientDeductionDetails
+                            {
+                                ClientID = item.ClientID,
+                                ClientProductID = item.ClientProductID,
+                                Salary = _currentSalary,
+                                ProductID = item.ProductID,
+                                ClientDeductionID = deduction.ClientDeductionID,
+                                DeductedAmount = _totalDeduction,
+                                TotalDeductionPercentage = _totalDeductionPercentage,
+                                DeductionPercentage = _percentageDeduction,
+                                AdditionalDeductionPercentage = _percentageIncrement,
+                                LastChangedBy = UtilityService.CurrentUserName,
+                                LastChangedDate = DateTime.Now,
+                                InvoiceNumber = $"{item.Client.AccountNumber}-INV-{deduction.ClientDeductionID}"
+
+                            };
+
+                            _context.Add(deductionDetails);
                         }
-                        else
-                            _totalDeductionPercentage = _percentageDeduction;
-
-                        _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
-
-
-
-                        ClientDeductionDetails deductionDetails = new ClientDeductionDetails
-                        {
-                            ClientID = item.ClientID,
-                            ClientProductID = item.ClientProductID,
-                            Salary = _currentSalary,
-                            ProductID = item.ProductID,
-                            ClientDeductionID = deduction.ClientDeductionID,
-                            DeductedAmount = _totalDeduction,
-                            TotalDeductionPercentage = _totalDeductionPercentage,
-                            DeductionPercentage = _percentageDeduction,
-                            AdditionalDeductionPercentage = _percentageIncrement,
-                            LastChangedBy = UtilityService.CurrentUserName,
-                            LastChangedDate = DateTime.Now,
-                            InvoiceNumber = $"{item.Client.AccountNumber}-INV-{deduction.ClientDeductionID}"
-
-                        };
-
-                        _context.Add(deductionDetails);
                     }
                     if (clientProduct.Count() > 0)
                         await _context.SaveChangesAsync();

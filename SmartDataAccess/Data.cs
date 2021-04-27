@@ -1564,7 +1564,27 @@ namespace SmartDataAccess
             return statusList.ToArray();
 
         }
+        public static ClientGroup[] GetClientGroups()
+        {
 
+            List<ClientGroup>  clientGroups = new List<ClientGroup>();
+            var p = from Affiliation s in Enum.GetValues(typeof(Affiliation))
+                    select new { ID = s, Name = s.ToString() };
+
+            foreach (var x in p)
+            {
+                clientGroups.Add(new ClientGroup()
+                {
+                    ClientGroupID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                                     LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+
+            }
+            return clientGroups.ToArray();
+        }
     }
 
 }

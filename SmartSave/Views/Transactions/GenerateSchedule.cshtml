@@ -13,7 +13,7 @@
         <li class="active">@TempData["Title"]</li>
     </ol>
 </section>
- <!-- Main content -->
+<!-- Main content -->
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
@@ -35,7 +35,7 @@
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                                 <tr>
-
+                                    <th>Affiliation</th>
                                     <th>Name</th>
                                     <th>Invoice Number</th>
                                     <th>Occupation</th>
@@ -48,44 +48,41 @@
                             <tbody class="odd gradeX">
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    @{
-                                        string duedate = UtilityService.ShowDate(item.ClientDeduction.DueDate);
-                                                                        }
-                                    @if (UtilityService.HasPermission(Permissions.View_User))
-                                    {
-                                        <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@item.Client.ClientFullName</a></td>
-                                    }
-                                    else
-                                    {
-                                        <td>@item.Client.ClientFullName</td>
-                                    }
-                                    <td>@item.InvoiceNumber</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Client.Occupation)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Client.Salary)</td>
-                                    @if (UtilityService.HasPermission(Permissions.View_Product))
-                                    {
-                                        <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Product.Name</a></td>
-                                    }
-                                    else
-                                    {
-                                        <td>@item.Product.Name</td>
-                                    }
-
-
-                                    <td>@Html.DisplayFor(modelItem => item.DeductedAmount)</td>
-                                    <td>@duedate</td>
-
-
-                                </tr>
+                                    <tr>
+                                        @{
+                                            string duedate = UtilityService.ShowDate(item.ClientDeduction.DueDate);
+                                            string affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
+                                        }
+                                        <td>@affiliation</td>
+                                        @if (UtilityService.HasPermission(Permissions.View_User))
+                                        {
+                                            <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@item.Client.ClientFullName</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.Client.ClientFullName</td>
+                                        }
+                                        <td>@item.InvoiceNumber</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Client.Occupation)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Client.Salary)</td>
+                                        @if (UtilityService.HasPermission(Permissions.View_Product))
+                                        {
+                                            <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Product.Name</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.Product.Name</td>
+                                        }
+                                        <td>@Html.DisplayFor(modelItem => item.DeductedAmount)</td>
+                                        <td>@duedate</td>
+                                    </tr>
                                 }
                         </table>
                     </div>
                 </div>
                 <div class="box-footer">
-                 
-                        <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="PrintSchedule" asp-route-id="0">Print Schedule</a><br />
-                   
+
+                    <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="PrintSchedule" asp-route-id="0">Print Schedule</a><br />
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
 
                 </div>

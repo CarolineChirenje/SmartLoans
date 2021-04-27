@@ -73,8 +73,10 @@ namespace SmartLogic
         Task<int> ActionCourse(int id);
 
 
+        List<ClientFee> ClientFees(int clientID);
         Task<ClientFee> FindClientFee(int id);
         Task<int> PayFee(ClientFee clientFee);
+        Task<Company> GetClientCompany(int clientID);
         
         Task<int> UpdateSessions(int clientCourseID, string[] selectedSessions);
 

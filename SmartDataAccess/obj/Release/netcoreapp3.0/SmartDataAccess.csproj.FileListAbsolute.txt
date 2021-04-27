@@ -13,3 +13,6 @@ D:\Dev Projects\SmartSave\SmartDataAccess\obj\Release\netcoreapp3.0\SmartDataAcc
 D:\Dev Projects\SmartSave\SmartDataAccess\obj\Release\netcoreapp3.0\SmartDataAccess.csproj.CopyComplete
 D:\Dev Projects\SmartSave\SmartDataAccess\obj\Release\netcoreapp3.0\SmartDataAccess.dll
 D:\Dev Projects\SmartSave\SmartDataAccess\obj\Release\netcoreapp3.0\SmartDataAccess.pdb
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Release\netcoreapp3.0\SmartDataAccess.runtimeconfig.json
+D:\Dev Projects\SmartSave\SmartDataAccess\bin\Release\netcoreapp3.0\SmartDataAccess.runtimeconfig.dev.json
+D:\Dev Projects\SmartSave\SmartDataAccess\obj\Release\netcoreapp3.0\SmartDataAccess.genruntimeconfig.cache

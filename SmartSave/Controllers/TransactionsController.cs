@@ -146,7 +146,7 @@ namespace SmartSave.Controllers
             if (UtilityService.IsNotNull(transaction))
             {
 
-                TransactionPrintOut printOut = new TransactionPrintOut();
+                ProofOfPayment printOut = new ProofOfPayment();
 
                 using (MemoryStream stream = new MemoryStream())
                 {
@@ -293,7 +293,7 @@ namespace SmartSave.Controllers
             }
             Company company = _settingService.FindDefaultCompany();
             ClientDeduction clientDeduction = _service.GetClientDeductionSchedule(id);
-            SchedulePrintOut printOut = new SchedulePrintOut();
+            InvoiceSchedule printOut = new InvoiceSchedule();
 
             using (MemoryStream stream = new MemoryStream())
             {

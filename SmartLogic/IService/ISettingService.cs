@@ -19,6 +19,7 @@ namespace SmartLogic
         List<Course> GetActiveCourseList();
         Product FindProduct(int productid);
         Company FindDefaultCompany();
+        List<Company> GetCompanies(bool activeOnly=false);
         List<StatementList> GetStatementList();
         List<WeekDay> GetWeekDays();
         List<Course> GetCourseList();
@@ -44,7 +45,8 @@ namespace SmartLogic
         List<Titles> GetTitles();
         List<ClientAccountType> GetClientAccountTypes();
         List<CourseIntake> GetCourseIntakes(bool activeOnly=false);
-
+        List<ClientGroup> GetAffiliations();
+        
     }
 
 

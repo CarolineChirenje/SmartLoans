@@ -97,7 +97,7 @@ namespace SmartSave.Controllers
             if (UtilityService.IsNotNull(bankAccount))
             {
                 if (await (_service.Delete(id)) > 0)
-                    return RedirectToAction(nameof(BankAccount));
+                    return RedirectToAction(nameof(BankAccounts));
                 else
                 {
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

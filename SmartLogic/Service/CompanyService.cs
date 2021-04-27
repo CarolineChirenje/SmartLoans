@@ -157,8 +157,7 @@ namespace SmartLogic
                             var defaultCompany = _context.Companies.Where(s => s.IsDefault && s.CompanyID != Company.CompanyID).FirstOrDefault();
                             if (UtilityService.IsNotNull(defaultCompany))
                             {
-
-                                defaultCompany.IsDefault = false;
+                               defaultCompany.IsDefault = false;
                                 _context.Update(defaultCompany);
                             }
                         }

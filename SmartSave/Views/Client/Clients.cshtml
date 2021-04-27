@@ -49,12 +49,12 @@
                             <thead>
                                 <tr>
                                     <th>Account Type</th>
-                                    <th>Employee Number</th>
+                                    <th>Ref Number</th>
                                     <th>Full Name</th>
                                     <th>Date of Birth</th>
                                     <th>Gender</th>
                                     <th>Email</th>
-                                    <th>Registration Date</th>
+                                    <th>Affiliation</th>
                                     <th>Is Active</th>
                                 </tr>
                             </thead>
@@ -65,10 +65,11 @@
                                         @{
                                             string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
                                             string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                            string dateRegistered = UtilityService.ShowDateTime(item.RegistrationDate);
+                                            // string dateRegistered = UtilityService.ShowDateTime(item.RegistrationDate);
                                             string dob = $"{UtilityService.ShowDate(item.DateOfBirth)}  ({UtilityService.CalculateAge(item.DateOfBirth)})";
                                             string ClientStatus = UtilityService.ShowActiveAction(@item.IsActive);
                                             string gender = UtilityService.ShowGender(@item.GenderID);
+                                            string affiliation = item.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.CompanyID != null ? item.Company.Name : ""); 
 
                                         }
                                         <td>@Html.DisplayFor(modelItem => item.ClientAccountType.Name)</td>
@@ -85,7 +86,7 @@
                                         <td>@dob</td>
                                         <td>@gender</td>
                                         <td>@Html.DisplayFor(modelItem => item.EmailAddress)</td>
-                                        <td>@dateRegistered</td>
+                                        <td>@affiliation</td>
                                         <td>@activeStatus</td>
 
                                     </tr>

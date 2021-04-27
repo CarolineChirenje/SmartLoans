@@ -1,0 +1,13 @@
+D:\Dev Projects\SmartSave\SmartErrorLog\bin\Release\netcoreapp3.0\SmartLog.deps.json
+D:\Dev Projects\SmartSave\SmartErrorLog\bin\Release\netcoreapp3.0\SmartLog.dll
+D:\Dev Projects\SmartSave\SmartErrorLog\bin\Release\netcoreapp3.0\SmartLog.pdb
+D:\Dev Projects\SmartSave\SmartErrorLog\bin\Release\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartErrorLog\bin\Release\netcoreapp3.0\SmartHelper.pdb
+D:\Dev Projects\SmartSave\SmartErrorLog\bin\Release\netcoreapp3.0\SmartHelper.dll.config
+D:\Dev Projects\SmartSave\SmartErrorLog\obj\Release\netcoreapp3.0\SmartLog.csprojAssemblyReference.cache
+D:\Dev Projects\SmartSave\SmartErrorLog\obj\Release\netcoreapp3.0\SmartLog.AssemblyInfoInputs.cache
+D:\Dev Projects\SmartSave\SmartErrorLog\obj\Release\netcoreapp3.0\SmartLog.AssemblyInfo.cs
+D:\Dev Projects\SmartSave\SmartErrorLog\obj\Release\netcoreapp3.0\SmartLog.csproj.CoreCompileInputs.cache
+D:\Dev Projects\SmartSave\SmartErrorLog\obj\Release\netcoreapp3.0\SmartLog.csproj.CopyComplete
+D:\Dev Projects\SmartSave\SmartErrorLog\obj\Release\netcoreapp3.0\SmartLog.dll
+D:\Dev Projects\SmartSave\SmartErrorLog\obj\Release\netcoreapp3.0\SmartLog.pdb

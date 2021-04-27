@@ -18,6 +18,7 @@ using MigraDocCore.DocumentObjectModel;
 using System.Text;
 using PdfSharpCore.Pdf.Security;
 using Microsoft.Extensions.Logging;
+using SmartLog;
 
 namespace SmartSave.Controllers
 {
@@ -72,7 +73,7 @@ namespace SmartSave.Controllers
                 Logger.Log(LogLevel.Debug, ex.ToString());
                 return RedirectToAction("Error", "Home");
             }
-         
+
 
         }
         public IActionResult MyAccount()
@@ -322,7 +323,7 @@ namespace SmartSave.Controllers
                     //Convert Image to byte and save to database
                     {
                         int requiredSize = UtilityService.MaximumFileSize;
-                        int MegaBytes = requiredSize* 1024 * 1024;
+                        int MegaBytes = requiredSize * 1024 * 1024;
                         var fileSize = FileBytes.Length;
                         if (fileSize > MegaBytes)
                         {
@@ -403,7 +404,7 @@ namespace SmartSave.Controllers
             statement.Client = _service.FindClient(statement.ClientID).Result;
             statement.Product = _settingService.FindProduct(statement.ProductID);
             string filename = statement.Client.AccountNumber;
-            StatementPrintOut printOut = new StatementPrintOut();
+            TransactionalStatement printOut = new TransactionalStatement();
             if (!string.IsNullOrEmpty(GenerateStatement))
             {
 
@@ -414,14 +415,6 @@ namespace SmartSave.Controllers
                     pdfRenderer.Document = document;
                     pdfRenderer.RenderDocument();
                     pdfRenderer.PdfDocument.Save(stream, false);
-                    //if (UtilityService.SaveStatementsToFolder)
-                    //{
-
-                    //    string _filename = UtilityService.AppendFileTimeStamp(filename + ".pdf");
-                    //    string filePath = $"{CreateSubFolder()}\\{_filename}";
-                    //    // Save the document...
-                    //    pdfRenderer.PdfDocument.Save(filePath);
-                    //}
                     return File(stream.ToArray(), "application/pdf", filename + ".pdf");
                 }
 
@@ -449,64 +442,165 @@ namespace SmartSave.Controllers
                     email.Body = emailTemplate.Body;
                     email.Subject = emailTemplate.Subject;
                 }
-                 if(_mailService.SendMail(email))
-                TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {statement.Client.EmailAddress}";
-               else
+                if (_mailService.SendMail(email))
+                    TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {statement.Client.EmailAddress}";
+                else
+                    TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {statement.Client.EmailAddress}";
+                return RedirectToAction("ViewClient", new { id = statement.ClientID });
+            }
+        }
+
+        [HttpGet]
+      
+        public ActionResult GenerateOutStandingStatement(OutstandingStatement statement, string GenerateOutStandingStatement)
+        {
+            if (statement.ClientID == 0)
+                return RedirectToAction(nameof(Clients));
+                     
+            statement.Client = _service.FindClient(statement.ClientID).Result;
+            string filename = statement.Client.AccountNumber;
+            OutstandingPayments printOut = new OutstandingPayments();
+            if (!string.IsNullOrEmpty(GenerateOutStandingStatement))
+            {
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    Document document = printOut.Print(statement); 
+                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                    pdfRenderer.Document = document;
+                    pdfRenderer.RenderDocument();
+                    pdfRenderer.PdfDocument.Save(stream, false);
+                    return File(stream.ToArray(), "application/pdf", filename + ".pdf");
+                }
+
+            }
+            else
+            {
+
+                EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.Client_Statement).Result;
+                byte[] pdfFile = GeneratePDFOutstandingPaymentsStatement(statement);
+                List<AttachmentFromMemory> attachments = new List<AttachmentFromMemory>();
+                AttachmentFromMemory attachment = new AttachmentFromMemory
+                {
+                    FileExtension = "pdf",
+                    MemoryStream = new MemoryStream(pdfFile),
+                    Name = UtilityService.MaskAccountNumber(filename)
+                };
+
+                attachments.Add(attachment);
+
+                Email email = new Email();
+                email.To = statement.Client.EmailAddress;
+                email.AttachmentFromMemory = attachments;
+                if (UtilityService.IsNotNull(emailTemplate))
+                {
+                    email.Body = emailTemplate.Body;
+                    email.Subject = emailTemplate.Subject;
+                }
+                if (_mailService.SendMail(email))
+                    TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {statement.Client.EmailAddress}";
+                else
                     TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {statement.Client.EmailAddress}";
                 return RedirectToAction("ViewClient", new { id = statement.ClientID });
             }
         }
 
 
-        //private string CreateSubFolder()
-
-        //{
-        //    string subFolder = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString();
-        //    string filePath = $"{UtilityService.StatementsSavePath}\\{subFolder}";
-        //    System.IO.Directory.CreateDirectory(filePath);
-        //    return filePath;
-        //}
-
-
         private byte[] GeneratePDFStatement(Statement statement)
         {
             byte[] pdffile = null;
-            StatementPrintOut printOut = new StatementPrintOut();
+            TransactionalStatement printOut = new TransactionalStatement();
 
             using (MemoryStream stream = new MemoryStream())
             {
-                Document document = printOut.Print(statement); ;
-                // Create a renderer for the MigraDoc document.
-                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                // Associate the MigraDoc document with a renderer
-                pdfRenderer.Document = document;
-
-                // Layout and render document to PDF
-                pdfRenderer.RenderDocument();
-                if (UtilityService.StatementPasswordProtect)
+                try
                 {
-                    PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
+                    Document document = printOut.Print(statement);
+                    // Create a renderer for the MigraDoc document.
+                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                    // Associate the MigraDoc document with a renderer
+                    pdfRenderer.Document = document;
 
-                    securitySettings.UserPassword = statement.Client.IDNumber.Trim();
-                    securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
+                    // Layout and render document to PDF
+                    pdfRenderer.RenderDocument();
+                    if (UtilityService.StatementPasswordProtect)
+                    {
+                        PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
 
-                    // Restrict some rights.
-                    securitySettings.PermitAccessibilityExtractContent = false;
-                    securitySettings.PermitAnnotations = false;
-                    securitySettings.PermitAssembleDocument = false;
-                    securitySettings.PermitExtractContent = false;
-                    securitySettings.PermitFormsFill = true;
-                    securitySettings.PermitFullQualityPrint = false;
-                    securitySettings.PermitModifyDocument = true;
-                    securitySettings.PermitPrint = false;
+                        securitySettings.UserPassword = statement.Client.IDNumber.Trim();
+                        securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
+
+                        // Restrict some rights.
+                        securitySettings.PermitAccessibilityExtractContent = false;
+                        securitySettings.PermitAnnotations = false;
+                        securitySettings.PermitAssembleDocument = false;
+                        securitySettings.PermitExtractContent = false;
+                        securitySettings.PermitFormsFill = true;
+                        securitySettings.PermitFullQualityPrint = false;
+                        securitySettings.PermitModifyDocument = true;
+                        securitySettings.PermitPrint = false;
+                    }
+
+                    pdfRenderer.PdfDocument.Save(stream, false);
+                    pdffile = stream.ToArray();
                 }
+                catch (Exception ex)
+                {
 
-                pdfRenderer.PdfDocument.Save(stream, false);
-                pdffile = stream.ToArray();
+                    CustomLog.Log(LogSource.GUI, ex);
+                }
+               
             }
             return pdffile;
         }
+        private byte[] GeneratePDFOutstandingPaymentsStatement(OutstandingStatement statement)
+        {
+            byte[] pdffile = null;
+            OutstandingPayments printOut = new OutstandingPayments();
 
+            using (MemoryStream stream = new MemoryStream())
+            {
+                try
+                {
+                    Document document = printOut.Print(statement);
+                    // Create a renderer for the MigraDoc document.
+                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                    // Associate the MigraDoc document with a renderer
+                    pdfRenderer.Document = document;
+
+                    // Layout and render document to PDF
+                    pdfRenderer.RenderDocument();
+                    if (UtilityService.StatementPasswordProtect)
+                    {
+                        PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
+
+                        securitySettings.UserPassword = statement.Client.IDNumber.Trim();
+                        securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
+
+                        // Restrict some rights.
+                        securitySettings.PermitAccessibilityExtractContent = false;
+                        securitySettings.PermitAnnotations = false;
+                        securitySettings.PermitAssembleDocument = false;
+                        securitySettings.PermitExtractContent = false;
+                        securitySettings.PermitFormsFill = true;
+                        securitySettings.PermitFullQualityPrint = false;
+                        securitySettings.PermitModifyDocument = true;
+                        securitySettings.PermitPrint = false;
+                    }
+
+                    pdfRenderer.PdfDocument.Save(stream, false);
+                    pdffile = stream.ToArray();
+                }
+                catch (Exception ex)
+                {
+
+                    CustomLog.Log(LogSource.GUI, ex);
+                }
+
+            }
+        
+            return pdffile;
+        }
 
 
         /// <summary>
@@ -640,7 +734,7 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewClient", new { id = Clientid });
         }
 
- 
+
         //Dependent Details
         [HttpPost]
         public async Task<IActionResult> AddClientDependent(ClientDependent ClientDependent)
@@ -711,17 +805,18 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> AddClientProduct(ClientProduct ClientProduct)
         {
             if (ModelState.IsValid)
-            { if (!String.IsNullOrEmpty(ClientProduct.DeductionAmount))
+            {
+                if (!String.IsNullOrEmpty(ClientProduct.DeductionAmount))
                 {
                     decimal _deductionAmount = UtilityService.GetDecimalAmount(ClientProduct.DeductionAmount);
-                    if(_deductionAmount>0)
-                    ClientProduct.DeductionPercentage = _deductionAmount;
+                    if (_deductionAmount > 0)
+                        ClientProduct.DeductionPercentage = _deductionAmount;
                 }
                 if (!String.IsNullOrEmpty(ClientProduct.IncreamentAmount))
                 {
                     decimal _increamentAmount = UtilityService.GetDecimalAmount(ClientProduct.IncreamentAmount);
-                    if(_increamentAmount>0)
-                    ClientProduct.IncreamentPercentage = _increamentAmount;
+                    if (_increamentAmount > 0)
+                        ClientProduct.IncreamentPercentage = _increamentAmount;
                 }
                 if (await (_service.Save(ClientProduct)) == 0)
                 {
@@ -748,15 +843,15 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             if (ModelState.IsValid)
             {
-                
+
                 ClientProduct update = await _service.FindProduct(clientProduct.ClientProductID);
                 if (UtilityService.IsNotNull(update))
                 {
                     if (!String.IsNullOrEmpty(clientProduct.DeductionAmount))
                     {
                         decimal _deductionAmount = UtilityService.GetDecimalAmount(clientProduct.DeductionAmount);
-                        if(_deductionAmount>0)
-                        clientProduct.DeductionPercentage = _deductionAmount;
+                        if (_deductionAmount > 0)
+                            clientProduct.DeductionPercentage = _deductionAmount;
                     }
                     if (!String.IsNullOrEmpty(clientProduct.IncreamentAmount))
                     {
@@ -862,7 +957,7 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
         }
 
-       
+
 
 
         [HttpPost]
@@ -908,6 +1003,60 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewClient", new { id = Clientid });
         }
 
+        [HttpPost]
+        public ActionResult GetCompanyList(int affiliationID)
+        {
+
+            SelectList companyList = null;
+            if (affiliationID != 0)
+            {
+                if (affiliationID == (int)Affiliation.Company)
+                {
+                    companyList = GetCompanyList();
+                }
+            }
+            return Json(companyList);
+
+        }
+        private SelectList GetCompanyList()
+        {
+            SelectList companyList = null;
+            int clientID = 0;
+            try
+            {
+                clientID = Convert.ToInt32(HttpContext.Session.GetString("ClientID"));
+            }
+            catch (Exception)
+            {
+                clientID = 0;
+            }
+            Company defaultCompany = null;
+            if (clientID > 0)
+            {
+                defaultCompany = _service.GetClientCompany(clientID).Result;
+                if (UtilityService.IsNull(defaultCompany))
+                    defaultCompany = _settingService.FindDefaultCompany();
+            }
+            else
+                defaultCompany = _settingService.FindDefaultCompany();
+            List<Company> companies = _settingService.GetCompanies(true);
+            if (companies != null)
+            {
+
+
+                companies.Select(t => new
+                {
+                    t.CompanyID,
+                    t.Name,
+                }).OrderBy(t => t.Name);
+
+                if (UtilityService.IsNull(defaultCompany))
+                    companyList = new SelectList(companies, "CompanyID", "Name");
+                else
+                    companyList = new SelectList(companies, "CompanyID", "Name", defaultCompany.CompanyID);
+            }
+            return companyList;
+        }
         private void GetDropDownLists()
         {
             var documentTypes = _documentTypeService.DocumentTypes().Result;
@@ -934,7 +1083,8 @@ namespace SmartSave.Controllers
             }
             ViewBag.ContactTypes = new SelectList(contactTypes, "ContactTypeID", "Name");
 
-            var relationTypes = _settingService.GetRelationshipTypes(); if (relationTypes != null)
+            var relationTypes = _settingService.GetRelationshipTypes();
+            if (relationTypes != null)
             {
                 relationTypes.Select(t => new
                 {
@@ -1085,7 +1235,7 @@ namespace SmartSave.Controllers
             var assertList = _settingService.GetAssertsList().Select(t => new
             {
                 t.AssertID,
-              t.Name,
+                t.Name,
             }).OrderBy(t => t.Name);
 
             ViewBag.AssertList = new SelectList(assertList, "AssertID", "Name");
@@ -1094,7 +1244,7 @@ namespace SmartSave.Controllers
             var assertCategoryList = _settingService.GetAssertCategoryList().Select(t => new
             {
                 t.AssertCategoryID,
-                 t.Name,
+                t.Name,
             }).OrderBy(t => t.Name);
 
             ViewBag.AssertCategoryList = new SelectList(assertCategoryList, "AssertCategoryID", "Name");
@@ -1111,10 +1261,10 @@ namespace SmartSave.Controllers
             var statementList = _settingService.GetStatementList().Select(t => new
             {
                 t.StatementID,
-                 t.Name,
+                t.Name,
             }).OrderBy(t => t.Name);
 
-            ViewBag.ClientStatement= new SelectList(statementList, "StatementID", "Name", (int)Statements.Product_Based_Statement);
+            ViewBag.ClientStatement = new SelectList(statementList, "StatementID", "Name", (int)Statements.Product_Based_Statement);
 
             var titleList = _settingService.GetTitles().Select(t => new
             {
@@ -1137,6 +1287,18 @@ namespace SmartSave.Controllers
                 t.Name,
             }).OrderBy(t => t.Name);
             ViewBag.CourseIntakeList = new SelectList(intakeList, "CourseIntakeID", "Name");
+
+
+            var affliationList = _settingService.GetAffiliations().Select(t => new
+            {
+                ID = t.ClientGroupID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+            ViewBag.AffiliationList = new SelectList(affliationList, "ID", "Name", (int)Affiliation.Individual);
+
+
+            ViewBag.CompanyList = GetCompanyList();
+
 
         }
     }
