@@ -442,21 +442,28 @@ namespace SmartSave.Controllers
                     email.Body = emailTemplate.Body;
                     email.Subject = emailTemplate.Subject;
                 }
+                string emailAddress = statement.Client.EmailAddress;
                 if (_mailService.SendMail(email))
-                    TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {statement.Client.EmailAddress}";
+                {
+                   
+                    if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                        emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
+                    TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
+
+                }
                 else
-                    TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {statement.Client.EmailAddress}";
+                    TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
                 return RedirectToAction("ViewClient", new { id = statement.ClientID });
             }
         }
 
         [HttpGet]
-      
+
         public ActionResult GenerateOutStandingStatement(OutstandingStatement statement, string GenerateOutStandingStatement)
         {
             if (statement.ClientID == 0)
                 return RedirectToAction(nameof(Clients));
-                     
+
             statement.Client = _service.FindClient(statement.ClientID).Result;
             string filename = statement.Client.AccountNumber;
             OutstandingPayments printOut = new OutstandingPayments();
@@ -465,7 +472,7 @@ namespace SmartSave.Controllers
 
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    Document document = printOut.Print(statement); 
+                    Document document = printOut.Print(statement);
                     PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
                     pdfRenderer.Document = document;
                     pdfRenderer.RenderDocument();
@@ -497,10 +504,17 @@ namespace SmartSave.Controllers
                     email.Body = emailTemplate.Body;
                     email.Subject = emailTemplate.Subject;
                 }
+                string emailAddress = statement.Client.EmailAddress;
                 if (_mailService.SendMail(email))
-                    TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {statement.Client.EmailAddress}";
+                {
+
+                    if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                        emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
+                    TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
+
+                }
                 else
-                    TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {statement.Client.EmailAddress}";
+                    TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
                 return RedirectToAction("ViewClient", new { id = statement.ClientID });
             }
         }
@@ -549,7 +563,7 @@ namespace SmartSave.Controllers
 
                     CustomLog.Log(LogSource.GUI, ex);
                 }
-               
+
             }
             return pdffile;
         }
@@ -598,7 +612,7 @@ namespace SmartSave.Controllers
                 }
 
             }
-        
+
             return pdffile;
         }
 
