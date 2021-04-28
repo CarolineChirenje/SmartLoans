@@ -343,6 +343,16 @@ namespace SmartLogic
             return UtilityService.IsNotNull(clientDeduction);
 
         }
+        public InvoiceState GetInvoiceStatus(int ClientDeductionID)
+        {
+            var clientDeduction = _context.ClientDeductions
+                    .FirstOrDefault(cd => cd.ClientDeductionID== ClientDeductionID);
+            InvoiceState invoiceState = InvoiceState.Unknown;
+            if (UtilityService.IsNotNull(clientDeduction))
+             invoiceState = (InvoiceState)clientDeduction.InvoiceStatusID;
+
+            return invoiceState;
+        }
 
         public async Task<int> RemoveInvoiceEntries(List<int> ClientDeductionDetails)
         {
@@ -361,28 +371,49 @@ namespace SmartLogic
             _context.Remove(deduction);
             return await _context.SaveChangesAsync();
         }
-        public async Task<int> CalculateDeductions(List<int> ClientProductIDs, DateTime InvoiceDate, DateTime DueDate)
-        {
-            try
+
+        public async Task<int> CreateInvoice(DateTime InvoiceDate, DateTime DueDate, int ? ProductID)
+        {            try
             {
                 int result = 0;
-                var clientProduct = _context.ClientProducts.
-                    Include(c => c.Product).
-                       Include(c => c.Client).
-                       ThenInclude(c => c.ClientOccupationHistory).
-                       Where(t => ClientProductIDs.Contains(t.ClientProductID)).ToList();
-
                 ClientDeduction deduction = new ClientDeduction
                 {
                     InvoiceDate = InvoiceDate,
                     DueDate = DueDate,
                     LastChangedBy = UtilityService.CurrentUserName,
                     LastChangedDate = DateTime.Now,
-                    InvoiceStatusID = (int)InvoiceState.Created
+                    InvoiceStatusID = (int)InvoiceState.Created,
+                   
                 };
+                if(ProductID.HasValue)
+                {
+                    if (ProductID.Value > 0)
+                        deduction.ProductID = ProductID.Value;
+                }
                 _context.Add(deduction);
                 result = await _context.SaveChangesAsync();
-                if (result > 0)
+                return deduction.ClientDeductionID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
+        public async Task<int> CalculateDeductions(List<int> ClientProductIDs, int ClientDeductionID)
+        {
+            try
+            {
+                int result = 0;
+
+                var clientProduct = _context.ClientProducts.
+                    Include(c => c.Product).
+                       Include(c => c.Client).
+                       ThenInclude(c => c.ClientOccupationHistory).
+                       Where(t => ClientProductIDs.Contains(t.ClientProductID)).ToList();
+
+                if (UtilityService.IsNull(clientProduct) && clientProduct.Count() > 0)
                 {
                     foreach (var item in clientProduct)
                     {
@@ -416,23 +447,46 @@ namespace SmartLogic
                                 ClientProductID = item.ClientProductID,
                                 Salary = _currentSalary,
                                 ProductID = item.ProductID,
-                                ClientDeductionID = deduction.ClientDeductionID,
+                                ClientDeductionID = ClientDeductionID,
                                 DeductedAmount = _totalDeduction,
                                 TotalDeductionPercentage = _totalDeductionPercentage,
                                 DeductionPercentage = _percentageDeduction,
                                 AdditionalDeductionPercentage = _percentageIncrement,
                                 LastChangedBy = UtilityService.CurrentUserName,
                                 LastChangedDate = DateTime.Now,
-                                InvoiceNumber = $"{item.Client.AccountNumber}-INV-{deduction.ClientDeductionID}"
+                                InvoiceNumber = $"{item.Client.AccountNumber}-INV-{ClientDeductionID}"
 
                             };
                             _context.Add(deductionDetails);
                         }
                     }
                     if (clientProduct.Count() > 0)
-                        await _context.SaveChangesAsync();
+                        result = await _context.SaveChangesAsync();
+
+                    if (result > 0)
+                    {
+                        try
+                        {
+                            ClientDeduction update = _context.ClientDeductions.
+                            Where(t => t.ClientDeductionID == ClientDeductionID).FirstOrDefault();
+                            if (UtilityService.IsNull(update))
+                            {
+                                update.InvoiceStatusID = (int)InvoiceState.Processed;
+                                update.LastChangedBy = UtilityService.CurrentUserName;
+                                update.LastChangedDate = DateTime.Now;
+                                _context.Entry(update).State = EntityState.Modified;
+                                return await _context.SaveChangesAsync();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            CustomLog.Log(LogSource.Logic_Base, ex);
+                            throw;
+                        }
+
+                    }
                 }
-                result = deduction.ClientDeductionID;
+                result = ClientDeductionID;
                 return result;
             }
             catch (Exception ex)
@@ -478,7 +532,7 @@ namespace SmartLogic
             }
         }
 
-        public List<ClientDeductionDetails> GetSchedule(int clientDeductionID)
+        public InvoiceDetails GetSchedule(int clientDeductionID)
         {
             try
             {
@@ -490,7 +544,11 @@ namespace SmartLogic
                   .ThenInclude(p => p.Company)
                     .Include(p => p.Product)
                  .Where(cd => cd.ClientDeductionID == clientDeductionID).ToList();
-                return deductions;
+
+                InvoiceDetails invoice = new InvoiceDetails();
+                invoice.DeductionDetails = deductions;
+                invoice.State = GetInvoiceStatus(clientDeductionID);
+                return invoice;
             }
             catch (Exception ex)
             {

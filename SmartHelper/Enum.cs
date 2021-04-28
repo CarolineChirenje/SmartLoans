@@ -808,7 +808,8 @@ namespace SmartHelper
     {
         Created = 1,
         Processed = 2,
-        Finalised
+        Finalised,
+        Unknown
 
     }
 

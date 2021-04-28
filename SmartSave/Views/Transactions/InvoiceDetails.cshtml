@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SmartDomain.ClientDeductionDetails>
+﻿@model SmartDomain.InvoiceDetails
 @using SmartHelper;
 @{
     TempData["Title"] = "Deductions";
@@ -20,9 +20,9 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">
-                        @if (TempData["InvoiceNumber"] != null)
+                        @if (Model != null)
                         {
-                            @TempData["InvoiceNumber"].ToString();
+                            Model.InvoiceTitle.ToString();
                         }
                     </h3>
                 </div>
@@ -38,11 +38,15 @@
                             </div>
                         }
 
+
                         <div class="dataTable_wrapper">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>Select To Delete</th>
+                                        @if (Model.State != InvoiceState.Finalised)
+                                        {
+                                            <th>Select To Delete</th>
+}
                                         <th>Affiliation</th>
                                         <th>Name</th>
                                         <th>Occupation</th>
@@ -55,7 +59,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="odd gradeX">
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.DeductionDetails)
                                     {
                                         <tr>
                                             @{
@@ -65,8 +69,11 @@
                                                     affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
                                                 }
                                             }
+                                            @if (Model.State != InvoiceState.Finalised)
+                                            {
+                                                <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientDeductionDetailID" value="@item.ClientDeductionDetailID" /></td>
 
-                                            <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientDeductionDetailID" value="@item.ClientDeductionDetailID" /></td>
+                                            }
                                             <td>@affiliation</td>
                                             @if (UtilityService.HasPermission(Permissions.View_User))
                                             {

@@ -10,7 +10,6 @@
     <!-- Horizontal Form -->
     <div class="box box-info">
         <div class="box-header with-border">
-
             <h3 class="box-title">@Model.ClientDeductionID</h3>
         </div>
         <!-- /.box-header -->
@@ -43,27 +42,35 @@
                     <input type="text" class="form-control" disabled="disabled" value="@Model.ClientDeductionID">
                 </div>
             </div>
+            <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Invoice Date</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" disabled="disabled" value="@UtilityService.ShowDate(Model.InvoiceDate)">
-
                 </div>
             </div>
+            <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Due Date</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" disabled="disabled" value="@UtilityService.ShowDate(Model.DueDate)">
-
                 </div>
             </div>
+            <br />
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Invoice Status</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" disabled="disabled" value="@Model.Status">
+                </div>
+            </div>
+            <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Total Invoice Amount</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" disabled="disabled" value="@Model.ClientDeductionDetails?.Sum(cd=>cd.DeductedAmount)"/>
+                    <input type="text" class="form-control" disabled="disabled" value="@Model.ClientDeductionDetails?.Sum(cd=>cd.DeductedAmount)" />
                 </div>
             </div>
-
+            <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Total Invoice Entries</label>
                 <div class="col-sm-10">
@@ -78,13 +85,14 @@
 
                 </div>
             </div>
+            <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
                 <div class="col-sm-10">
                     <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
                 </div>
             </div>
-
+            <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
                 <div class="col-sm-10">
@@ -99,6 +107,10 @@
             @if (UtilityService.HasPermission(Permissions.Delete_Invoice))
             {
                 <a class="btn btn-danger" asp-controller="Transactions" asp-action="DeleteInvoice" asp-route-id="@Model.ClientDeductionID">Delete Invoice</a>
+            }
+            @if (UtilityService.HasPermission(Permissions.Generate_Invoices) && (InvoiceState)Model.InvoiceStatusID==InvoiceState.Created)
+            {
+                <a class="btn btn-success" asp-controller="Transactions" asp-action="ProcessInvoice" asp-route-id="@Model.ClientDeductionID">Process Invoice</a>
             }
             <a class="btn btn-primary" asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@Model.ClientDeductionID">Invoice Details</a>
             <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>

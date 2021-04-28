@@ -1327,17 +1327,14 @@ namespace SmartLogic
         {
             try
             {
-
-                IEnumerable<int> ClientIDs;
+                            IEnumerable<int> ClientIDs;
                 if (ProductID == 0)
                 {
                     ClientIDs = from c in _context.ClientProducts
                                 select c.ClientID;
-
-                }
+               }
                 else
-                {
-
+               {
                     ClientIDs = from c in _context.ClientProducts
                                 where c.ProductID == ProductID
                                 select c.ClientID;

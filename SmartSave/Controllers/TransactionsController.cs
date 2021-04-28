@@ -242,28 +242,45 @@ namespace SmartSave.Controllers
         }
 
         [HttpGet]
-        public ActionResult Schedule()
+        public ActionResult BulkInvoices()
         {
             GetDropDownLists();
             return View();
         }
 
         [HttpGet]
-        public ActionResult SalarySchedule(ScheduleModel model)
+        public ActionResult CreateInvoice(ScheduleModel model)
         {
             if (ModelState.IsValid)
             {
                 HttpContext.Session.SetString("InvoiceDate", model.InvoiceDate.ToString());
                 HttpContext.Session.SetString("DueDate", model.DueDate.ToString());
                 HttpContext.Session.SetString("ProductID", model.ProductID.ToString());
-                var clients = _ClientService.GetClientsOnProduct(model.ProductID, model.InvoiceDate);
-                return View(clients);
+                if (_service.DeductionExists(model.DueDate, model.InvoiceDate))
+                {
+                    TempData["Error"] = $"Invoices with due date {UtilityService.ShowDate(model.DueDate)} and invoice date {UtilityService.ShowDate(model.InvoiceDate)} have already been generated, you can either deleted the invoices and start over or generate invoices with different parameters.";
+                    return RedirectToAction(nameof(BulkInvoices));
+                }
+                //1.Create Invoice and Assign Status Created
+                int result = _service.CreateInvoice(model.InvoiceDate, model.DueDate, model.ProductID).Result;
+                if (result > 0)
+                    return RedirectToAction("ViewInvoice", new {id = result });
+
             }
-            return RedirectToAction(nameof(Schedule));
+            return RedirectToAction(nameof(BulkInvoices));
+        }
+        [HttpGet]
+        public ActionResult ProcessInvoice(int id)
+        {
+            var invoice = _service.GetClientDeductionSchedule(id);
+            if (UtilityService.IsNull(invoice))
+                return RedirectToAction(nameof(BulkInvoices));
+            var clients = _ClientService.GetClientsOnProduct(invoice.ProductID ?? 0, invoice.InvoiceDate);
+            return View(clients);
         }
 
         [HttpGet]
-        public IActionResult ScheduleReport()
+        public IActionResult Invoices()
         {
             GetDropDownLists();
             return View();
@@ -283,7 +300,7 @@ namespace SmartSave.Controllers
         {
             HttpContext.Session.SetString("ClientDeductionID", id.ToString());
             var deductions = _service.GetSchedule(id);
-            TempData["InvoiceNumber"] = $"Deduction Schedule Invoice Number - {id.ToString()}";
+            deductions.InvoiceTitle = $"Deduction Schedule Invoice Number - {id.ToString()}";
             return View(deductions);
         }
         [HttpPost]
@@ -315,11 +332,13 @@ namespace SmartSave.Controllers
                         return RedirectToAction("InvoiceDetails", new { clientDeductionID });
                 }
             }
-            return RedirectToAction(nameof(ScheduleReport));
+            return RedirectToAction(nameof(Invoices));
         }
         public ActionResult ViewInvoice(int id)
         {
             ClientDeduction deduction = _service.GetClientDeductionSchedule(id);
+            if(UtilityService.IsNull(deduction))
+                return RedirectToAction(nameof(Invoices));
             return View(deduction);
         }
 
@@ -333,7 +352,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("ViewInvoice", new { id });
             }
             int result = _service.RemoveInvoice(id).Result;
-            return RedirectToAction(nameof(ScheduleReport));
+            return RedirectToAction(nameof(Invoices));
         }
 
         [HttpPost]
@@ -355,22 +374,17 @@ namespace SmartSave.Controllers
             catch (Exception ex)
             {
             }
-            if (_service.DeductionExists(DueDate, InvoiceDate))
-            {
-                TempData["Error"] = $"Invoices with due date {UtilityService.ShowDate(DueDate)} and invoice date {UtilityService.ShowDate(InvoiceDate)} have already been generated, you can either deleted the invoices and start over or generate invoices with different parameters.";
-                return RedirectToAction(nameof(Schedule));
-            }
+           
 
             var clientProductIDs = formCollection["ClientProductID"];
             List<int> clientProductID = new List<int>();
             foreach (string id in clientProductIDs)
             {
                 clientProductID.Add(int.Parse(id));
-
             }
             if (clientProductID.Count() > 0)
             {
-                int deductionID = _service.CalculateDeductions(clientProductID, InvoiceDate, DueDate).Result;
+                int deductionID = _service.CalculateDeductions(clientProductID, 0).Result;
                 if (deductionID > 0)
                 {
                     HttpContext.Session.SetString("ClientDeductionID", deductionID.ToString());
@@ -378,7 +392,7 @@ namespace SmartSave.Controllers
                     return View(deductions);
                 }
             }
-            return RedirectToAction(nameof(Schedule));
+            return RedirectToAction(nameof(BulkInvoices));
         }
 
         [HttpGet]

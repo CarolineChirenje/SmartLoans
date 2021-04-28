@@ -9,7 +9,6 @@ namespace SmartDomain
     public class ClientDeductionDetails : ChangeAudit
     {
         [Key]
-
         public int ClientDeductionDetailID { get; set; }
         public int ClientDeductionID { get; set; }
         public ClientDeduction ClientDeduction { get; set; }

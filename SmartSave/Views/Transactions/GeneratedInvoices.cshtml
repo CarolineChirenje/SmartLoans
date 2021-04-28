@@ -22,64 +22,68 @@
                     <h3 class="box-title">Deduction Schedules</h3>
                 </div>
                 <!-- /.box-header -->
-             
-                    <div class="box-body">
-                        @if (TempData["Error"] != null)
-                        {<div class="container">
-                                <strong class="">@TempData["Error"].ToString()</strong>
-                                <div class="panel panel-danger">
-                                    <div class="panel-body">@Html.ValidationSummary()</div>
-                                </div>
+
+                <div class="box-body">
+                    @if (TempData["Error"] != null)
+                    {<div class="container">
+                            <strong class="">@TempData["Error"].ToString()</strong>
+                            <div class="panel panel-danger">
+                                <div class="panel-body">@Html.ValidationSummary()</div>
                             </div>
-                        }
-
-                        <div class="dataTable_wrapper">
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                <thead>
-                                    <tr>
-                                                                 
-                                        <th>Invoice Number</th>
-                                        <th>Invoice Date</th>
-                                        <th>Due Date</th>
-                                        <th>Total Amount Due</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody class="odd gradeX">
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            @{
-                                                string duedate = UtilityService.ShowDate(item.DueDate);
-                                                string invoicedate = UtilityService.ShowDate(item.InvoiceDate);
-                                            }
-                                            @if (UtilityService.HasPermission(Permissions.View_Invoice))
-                                            {
-                                                <td><a  target="_blank" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@item.ClientDeductionID">@item.ClientDeductionID</a></td>
-                                            }
-                                            else
-                                            {
-                                                <td>@item.ClientDeductionID</td>
-                                            }
-                                            
-                                            <td>@invoicedate</td>
-                                            <td>@duedate</td>
-
-                                            <td>@Html.DisplayFor(modelItem => item.TotalDeductedAmount)</td>
-
-
-
-                                        </tr>
-                                    }
-                            </table>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                           <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                                     </div>
+                    }
 
-                    <!-- /.box-body -->
-                
+                    <div class="dataTable_wrapper">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+
+                                    <th>Invoice Number</th>
+                                    <th>Status</th>
+                                    <th>Invoice Date</th>
+                                    <th>Due Date</th>
+                                    <th>Total Amount Due</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="odd gradeX">
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    @{
+                                        string duedate = UtilityService.ShowDate(item.DueDate);
+                                        string invoicedate = UtilityService.ShowDate(item.InvoiceDate);
+                                    }
+                                    @if (UtilityService.HasPermission(Permissions.View_Invoice))
+                                    {
+                                        <td><a target="_blank" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@item.ClientDeductionID">@item.ClientDeductionID</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.ClientDeductionID</td>
+                                    }
+                                    <td>@item.Status</td>
+                                    <td>@invoicedate</td>
+                                    <td>@duedate</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.TotalDeductedAmount)</td>
+
+
+
+                                </tr>
+                                }
+                        </table>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    @if (UtilityService.HasPermission(Permissions.Generate_Invoices))
+                    {<a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="BulkInvoices">Create Invoice</a><br />
+                    }
+                </div>
+
+                <!-- /.box-body -->
+
             </div>
             <!-- /.box -->
         </div>
