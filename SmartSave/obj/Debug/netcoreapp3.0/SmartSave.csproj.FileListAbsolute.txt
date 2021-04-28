@@ -8045,6 +8045,7 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Transact
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Transactions\Schedule.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Transactions\ScheduleReport.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Transactions\Transactions.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Transactions\ViewInvoice.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Transactions\ViewTransaction.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\TransactionType\TransactionType.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\TransactionType\ViewTransactionType.cshtml.g.cs

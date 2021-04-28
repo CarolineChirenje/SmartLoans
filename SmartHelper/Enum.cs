@@ -116,7 +116,7 @@ namespace SmartHelper
 
     {
 
-AED = 1
+        AED = 1
 , AFN
 , ALL
 , AMD
@@ -588,10 +588,6 @@ AED = 1
         Account_Number_Auto_Generate,
         Application_Is_VAT_Compliant,
         Date_Time_Format,
-        Generate_Receipt_On_Payment_Upload,
-        Auto_Email_Receipts,
-        Auto_Email_Statements,
-        Auto_Email_Invoices,
         Client_Notes_Default_Due_Date_Interval,
         Report_Body_Font_Name,
         Report_Body_Font_Size,
@@ -705,6 +701,9 @@ AED = 1
         Remove_Invoice_Entries,
         View_Client_Deductions,
         Override_Payment,
+        View_Invoice,
+        Delete_Invoice,
+        
 
 
         // Menus
@@ -801,9 +800,17 @@ AED = 1
         View_Course_Intake_Register,
         Generate_Attendance_Register,
         View_Invoice_Details,
-        Print_Statement_With_No_Reversals
+        Print_Statement_With_No_Reversals,
+        Auto_Generate_Receipt,
+        Email_Receipt_To_Client
     }
+    public enum InvoiceState
+    {
+        Created = 1,
+        Processed = 2,
+        Finalised
 
+    }
 
     public enum SiteEnvironment
     {
@@ -896,7 +903,7 @@ AED = 1
     {
         Product_Based_Statement = 1,
         Transaction_List = 2,
-      
+
     }
 
     public enum Title
@@ -927,7 +934,7 @@ AED = 1
     {
         Company = 1,
         Individual = 2,
-       
+
     }
 }
 

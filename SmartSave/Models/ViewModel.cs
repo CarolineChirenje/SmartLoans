@@ -118,7 +118,8 @@ namespace SmartSave.Models
         public bool IsFromClient { get; set; }
         public int AssertID { get; set; }
         public int AssertCategoryID { get; set; }
-
+        public bool AutoGenerateReceipt { get; set; }
+        public bool AutoEmailReceipt { get; set; }
     }
     public class ScheduleModel
     {

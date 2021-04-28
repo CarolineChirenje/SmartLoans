@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using MigraDocCore.Rendering;
 using MigraDocCore.DocumentObjectModel;
+using PdfSharpCore.Pdf.Security;
+using SmartLog;
 
 namespace SmartSave.Controllers
 {
@@ -25,12 +27,17 @@ namespace SmartSave.Controllers
         private readonly ISettingService _settingService;
         private readonly IClientService _ClientService;
         private readonly IBankAccountservice _bankService;
-        public TransactionsController(ITransactionService service, IClientService ClientService, ISettingService settingService, IBankAccountservice bankService)
+        private readonly IEmailTemplateService _emailTemplateService;
+        readonly IMailService _mailService;
+        private Receipt receipt = null;
+        public TransactionsController(ITransactionService service, IClientService ClientService, ISettingService settingService, IBankAccountservice bankService, IEmailTemplateService emailTemplateService, IMailService mailService)
         {
             _service = service;
             _ClientService = ClientService;
             _settingService = settingService;
             _bankService = bankService;
+            _emailTemplateService = emailTemplateService;
+            _mailService = mailService;
         }
 
         public async Task<IActionResult> Transactions()
@@ -49,12 +56,9 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> RecordPayment(PaymentViewModel paymentsFile)
         {
-
             if (ModelState.IsValid)
             {
-
-                Client Client = await _ClientService.FindClient(paymentsFile.ClientID);
-                if (!UtilityService.IsNotNull(Client))
+                if (!_ClientService.ClientExists(paymentsFile.ClientID).Result)
                     return RedirectToAction(nameof(Transactions));
                 Decimal Amount = UtilityService.GetDecimalAmount(paymentsFile.Amount);
 
@@ -63,8 +67,7 @@ namespace SmartSave.Controllers
                     Year = paymentsFile.Year,
                     Month = paymentsFile.Month,
                     Amount = Amount,
-                    ClientID = Client.ClientID,
-                    Client = Client,
+                    ClientID = paymentsFile.ClientID,
                     ProductID = paymentsFile.ProductID,
                     PaymentDate = paymentsFile.PaymentDate,
                     Narration = paymentsFile.Narration,
@@ -80,13 +83,60 @@ namespace SmartSave.Controllers
                 };
                 int result = await (_service.CreatePayment(addPaymentsFile, (TransactionTypeList)paymentsFile.TransactionTypeID));
                 if (result == 0)
-                                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                                else
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                else
                 {
-                    if (UtilityService.GenerateReceipt)
-                       return RedirectToAction("PrintTransaction", new { id = result });
+                    if (paymentsFile.AutoGenerateReceipt)
+                    {
+                        if (paymentsFile.AutoEmailReceipt)
+                        {
+                            Client statement = await _ClientService.FindClientSuperFast(paymentsFile.ClientID);
+                            if (UtilityService.IsNull(statement))
+                            {
+                                receipt = PrintReceipt(result);
+                            }
+                            else
+                            {
+                                receipt = PrintReceipt(result, true, statement.IDNumber);
+                                if (UtilityService.IsNotNull(receipt))
+                                {
+                                    EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.Client_Statement).Result;
+                                    List<AttachmentFromMemory> attachments = new List<AttachmentFromMemory>();
+                                    AttachmentFromMemory attachment = new AttachmentFromMemory
+                                    {
+                                        FileExtension = "pdf",
+                                        MemoryStream = new MemoryStream(receipt.Document),
+                                        Name = UtilityService.MaskAccountNumber(statement.AccountNumber)
+                                    };
+
+                                    attachments.Add(attachment);
+                                    Email email = new Email();
+                                    email.To = statement.EmailAddress;
+                                    email.AttachmentFromMemory = attachments;
+                                    if (UtilityService.IsNotNull(emailTemplate))
+                                    {
+                                        email.Body = emailTemplate.Body;
+                                        email.Subject = emailTemplate.Subject;
+                                    }
+                                    string emailAddress = statement.EmailAddress;
+                                    if (_mailService.SendMail(email))
+                                    {
+                                        if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                                            emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
+                                        TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
+                                    }
+                                    else
+                                        TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
+                                }
+                            }
+                        }
+                        else
+                            receipt = PrintReceipt(result);
+                        return RedirectToAction("PrintTransaction", new { id = result });
+                    }
+
                 }
-           }
+            }
             int clientID = 0;
             try
             {
@@ -100,9 +150,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("ViewClient", "Client", new { id = clientID });
             else
                 return RedirectToAction(nameof(Transactions));
-
         }
-
 
         public IActionResult AddTransaction(int ClientID)
         {
@@ -118,7 +166,6 @@ namespace SmartSave.Controllers
             Transaction transaction = await _service.PaymentFile(id, transref);
             return View(transaction);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> ActionTransaction(int id, int transactionTypeID)
@@ -137,31 +184,62 @@ namespace SmartSave.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> PrintTransaction(int id)
+        public ActionResult PrintTransaction(int id)
         {
             if (id == 0)
                 return RedirectToAction(nameof(Transactions));
-
-            Transaction transaction = await _service.PaymentFile(id);
-            if (UtilityService.IsNotNull(transaction))
+            if (receipt == null)
             {
-
-                ProofOfPayment printOut = new ProofOfPayment();
-
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    Document document = printOut.Print(transaction);
-                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                    pdfRenderer.Document = document;
-                    pdfRenderer.RenderDocument();
-                    pdfRenderer.PdfDocument.Save(stream, false);
-                    return File(stream.ToArray(), "application/pdf", transaction.TransRef + ".pdf");
-                }
+                receipt = PrintReceipt(id);
+                if (UtilityService.IsNull(receipt))
+                    return RedirectToAction(nameof(Transactions));
+                else
+                    return File(receipt.Document, "application/pdf", receipt.TransRef + ".pdf");
             }
-            return RedirectToAction(nameof(Transactions));
-
+            else
+                return File(receipt.Document, "application/pdf", receipt.TransRef + ".pdf");
         }
 
+        private Receipt PrintReceipt(int id, bool passwordProtect = false, string clientIDNumber = null)
+        {
+            Transaction transaction = _service.PaymentFile(id).Result;
+            if (UtilityService.IsNotNull(transaction))
+            {
+                ProofOfPayment printOut = new ProofOfPayment();
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    try
+                    {
+                        Document document = printOut.Print(transaction);
+                        PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                        pdfRenderer.Document = document;
+                        pdfRenderer.RenderDocument();
+                        if (UtilityService.StatementPasswordProtect && passwordProtect)
+                        {
+                            PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
+                            securitySettings.UserPassword = clientIDNumber;
+                            securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
+                            // Restrict some rights.
+                            securitySettings.PermitAccessibilityExtractContent = false;
+                            securitySettings.PermitAnnotations = false;
+                            securitySettings.PermitAssembleDocument = false;
+                            securitySettings.PermitExtractContent = false;
+                            securitySettings.PermitFormsFill = true;
+                            securitySettings.PermitFullQualityPrint = false;
+                            securitySettings.PermitModifyDocument = true;
+                            securitySettings.PermitPrint = false;
+                        }
+                        pdfRenderer.PdfDocument.Save(stream, false);
+                        return new Receipt() { Document = stream.ToArray(), TransRef = transaction.TransRef };
+                    }
+                    catch (Exception ex)
+                    {
+                        CustomLog.Log(LogSource.GUI, ex);
+                    }
+                }
+            }
+            return null;
+        }
 
         [HttpGet]
         public ActionResult Schedule()
@@ -169,7 +247,6 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             return View();
         }
-
 
         [HttpGet]
         public ActionResult SalarySchedule(ScheduleModel model)
@@ -185,7 +262,6 @@ namespace SmartSave.Controllers
             return RedirectToAction(nameof(Schedule));
         }
 
-
         [HttpGet]
         public IActionResult ScheduleReport()
         {
@@ -198,42 +274,93 @@ namespace SmartSave.Controllers
         {
             HttpContext.Session.SetString("DateFrom", model.DateFrom.ToString());
             HttpContext.Session.SetString("DateTo", model.DateTo.ToString());
-           // HttpContext.Session.SetString("ProductID", model.ProductID.ToString());
             var deductions = _service.GetSchedule(model.DateFrom, model.DateTo);
             return View(deductions);
 
         }
         [HttpGet]
-        public IActionResult InvoiceDetails( int id)
+        public IActionResult InvoiceDetails(int id)
         {
             HttpContext.Session.SetString("ClientDeductionID", id.ToString());
             var deductions = _service.GetSchedule(id);
-
+            TempData["InvoiceNumber"] = $"Deduction Schedule Invoice Number - {id.ToString()}";
             return View(deductions);
         }
         [HttpPost]
         public ActionResult DeleteInvoiceEntries(IFormCollection formCollection)
         {
-            var clientDeductionIDs = formCollection["ClientDeductionID"];
-            List<int> clientDeductionID = new List<int>();
+            var clientDeductionIDs = formCollection["ClientDeductionDetailID"];
+            List<int> clientDeductionsDetails = new List<int>();
+            int clientDeductionID = 0;
             foreach (string id in clientDeductionIDs)
             {
-                clientDeductionID.Add(int.Parse(id));
+                clientDeductionsDetails.Add(int.Parse(id));
 
             }
-            if (clientDeductionID.Count() > 0)
+            if (clientDeductionsDetails.Count() > 0)
             {
-                int result = _service.RemoveDeductions(clientDeductionID).Result;
+                int result = _service.RemoveInvoiceEntries(clientDeductionsDetails).Result;
                 if (result > 0)
                 {
+                    try
+                    {
+                        clientDeductionID = Convert.ToInt32(HttpContext.Session.GetString("ClientDeductionID"));
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                    TempData[MessageDisplayType.Success.ToString()] = $"{clientDeductionsDetails.Count()} removed successfully";
 
+                    if (clientDeductionID > 0)
+                        return RedirectToAction("InvoiceDetails", new { clientDeductionID });
                 }
             }
             return RedirectToAction(nameof(ScheduleReport));
         }
+        public ActionResult ViewInvoice(int id)
+        {
+            ClientDeduction deduction = _service.GetClientDeductionSchedule(id);
+            return View(deduction);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteInvoice(int id)
+        {
+            bool invoiceHasEntries = _service.InvoiceHasEntries(id);
+            if (invoiceHasEntries)
+            {
+                TempData[MessageDisplayType.Error.ToString()] = $"Failed to delete invoice {id} there are entries linked to it.";
+                return RedirectToAction("ViewInvoice", new { id });
+            }
+            int result = _service.RemoveInvoice(id).Result;
+            return RedirectToAction(nameof(ScheduleReport));
+        }
+
         [HttpPost]
         public ActionResult GenerateSchedule(IFormCollection formCollection)
         {
+            DateTime InvoiceDate = DateTime.MinValue;
+            DateTime DueDate = DateTime.MinValue;
+            try
+            {
+                InvoiceDate = Convert.ToDateTime(HttpContext.Session.GetString("InvoiceDate"));
+            }
+            catch (Exception ex)
+            {
+            }
+            try
+            {
+                DueDate = Convert.ToDateTime(HttpContext.Session.GetString("DueDate"));
+            }
+            catch (Exception ex)
+            {
+            }
+            if (_service.DeductionExists(DueDate, InvoiceDate))
+            {
+                TempData["Error"] = $"Invoices with due date {UtilityService.ShowDate(DueDate)} and invoice date {UtilityService.ShowDate(InvoiceDate)} have already been generated, you can either deleted the invoices and start over or generate invoices with different parameters.";
+                return RedirectToAction(nameof(Schedule));
+            }
+
             var clientProductIDs = formCollection["ClientProductID"];
             List<int> clientProductID = new List<int>();
             foreach (string id in clientProductIDs)
@@ -243,45 +370,21 @@ namespace SmartSave.Controllers
             }
             if (clientProductID.Count() > 0)
             {
-                DateTime InvoiceDate = DateTime.MinValue;
-                DateTime DueDate = DateTime.MinValue;
-                try
-                {
-                    InvoiceDate = Convert.ToDateTime(HttpContext.Session.GetString("InvoiceDate"));
-                }
-                catch (Exception ex)
-                {
-                }
-
-                try
-                {
-                    DueDate = Convert.ToDateTime(HttpContext.Session.GetString("DueDate"));
-                }
-                catch (Exception ex)
-                {
-                }
-                if (_service.DeductionExists(InvoiceDate))
-                {
-                    TempData["Error"] = $"Invoices with a due date {UtilityService.ShowDate(InvoiceDate)} have already been generated, you can either deleted the invoices and start over or generate invoices for another date.";
-                    return RedirectToAction(nameof(Schedule));
-                }
-
-                int  deductionID = _service.CalculateDeductions(clientProductID, InvoiceDate, DueDate).Result;
+                int deductionID = _service.CalculateDeductions(clientProductID, InvoiceDate, DueDate).Result;
                 if (deductionID > 0)
                 {
                     HttpContext.Session.SetString("ClientDeductionID", deductionID.ToString());
                     var deductions = _service.GetClientDeductions(clientProductID, InvoiceDate).Result;
-                                      return View(deductions);
+                    return View(deductions);
                 }
             }
-
             return RedirectToAction(nameof(Schedule));
         }
 
         [HttpGet]
-        public ActionResult PrintSchedule( int id)
+        public ActionResult PrintSchedule(int id)
         {
-            if(id==0)
+            if (id == 0)
             {
                 try
                 {
@@ -294,10 +397,9 @@ namespace SmartSave.Controllers
             Company company = _settingService.FindDefaultCompany();
             ClientDeduction clientDeduction = _service.GetClientDeductionSchedule(id);
             InvoiceSchedule printOut = new InvoiceSchedule();
-
             using (MemoryStream stream = new MemoryStream())
             {
-                Document document = printOut.Print(company,clientDeduction);
+                Document document = printOut.Print(company, clientDeduction);
                 PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
                 pdfRenderer.Document = document;
                 pdfRenderer.RenderDocument();
@@ -306,11 +408,8 @@ namespace SmartSave.Controllers
             }
         }
 
-     
-
         private void GetDropDownLists()
         {
-
             var paymentLists = _settingService.GetActiveProductList().Select(t => new
             {
                 t.ProductID,
@@ -327,13 +426,11 @@ namespace SmartSave.Controllers
             {
                 clientID = 0;
             }
-
             var ClientList = _ClientService.Clients().Result.Select(t => new
             {
                 t.ClientID,
                 Name = $" {t.ClientFullName} - {t.AccountNumber}",
             }).OrderBy(t => t.Name);
-
             ViewBag.ClientList = new SelectList(ClientList, "ClientID", "Name", clientID);
 
             var bankList = _bankService.Banks().Result.Select(t => new
@@ -352,8 +449,6 @@ namespace SmartSave.Controllers
 
             ViewBag.TransactionTypeList = new SelectList(transactionTypeList, "TransactionTypeID", "Name", (int)TransactionTypeList.Payment);
 
-
-
             var productList = _settingService.GetActiveProductList().Select(t => new
             {
                 t.ProductID,
@@ -367,28 +462,20 @@ namespace SmartSave.Controllers
                 t.AssertID,
                 t.Name,
             }).OrderBy(t => t.Name);
-
             ViewBag.AssertList = new SelectList(assertList, "AssertID", "Name");
-
 
             var assertCategoryList = _settingService.GetAssertCategoryList().Select(t => new
             {
                 t.AssertCategoryID,
                 t.Name,
             }).OrderBy(t => t.Name);
-
             ViewBag.AssertCategoryList = new SelectList(assertCategoryList, "AssertCategoryID", "Name");
-
-
         }
-
-
 
         //Action result for ajax call
         [HttpPost]
         public ActionResult GetProductByClientID(int clientID)
         {
-
             SelectList clientProducts = null;
             if (clientID != 0)
             {
@@ -399,58 +486,43 @@ namespace SmartSave.Controllers
                     t.ProductID,
                     t.Name,
                 }).OrderBy(t => t.Name);
-
                 clientProducts = new SelectList(clientproductList, "ProductID", "Name");
 
             }
             return Json(clientProducts);
-
         }
-
-
-
         [HttpPost]
         public ActionResult GetAssertByProductID(int productID)
         {
-
             SelectList assertLists = null;
             if (productID != 0)
             {
                 List<Assert> assertList = _settingService.GetAssertsLinkedToProduct(productID);
-
                 assertList.Select(t => new
                 {
                     t.AssertID,
                     t.Name,
                 });
-
                 assertLists = new SelectList(assertList, "AssertID", "Name");
-
             }
             return Json(assertLists);
-
         }
 
         [HttpPost]
         public ActionResult GetCategoryByAssertID(int assertID)
         {
-
             SelectList categoryList = null;
             if (assertID != 0)
             {
                 List<AssertCategory> assertCategories = _settingService.GetAssertCategory(assertID);
-
                 assertCategories.Select(t => new
                 {
                     t.AssertCategoryID,
                     Name = t.Name,
                 }).OrderBy(t => t.Name);
-
                 categoryList = new SelectList(assertCategories, "AssertCategoryID", "Name");
-
             }
             return Json(categoryList);
-
         }
     }
 }

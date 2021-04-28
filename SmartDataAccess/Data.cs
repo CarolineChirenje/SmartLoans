@@ -640,59 +640,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Generate_Receipt_On_Payment_Upload,
-                    Name = AppSetting.Generate_Receipt_On_Payment_Upload.ToString().Replace("_", " "),
-                    Value="true",
-                    Description="Generates Receipt on Payment Upload",
-                    CustomVariableTypeID=(int)VariableType.Boolean,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                 new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Auto_Email_Invoices,
-                    Name = AppSetting.Auto_Email_Invoices.ToString().Replace("_", " "),
-                    Value="true",
-                    Description="Automatically Emails Generated Invoices",
-                    CustomVariableTypeID=(int)VariableType.Boolean,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                   new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Auto_Email_Receipts,
-                    Name = AppSetting.Auto_Email_Receipts.ToString().Replace("_", " "),
-                    Value="true",
-                    Description="Automatically Emails Generated Receipts",
-                    CustomVariableTypeID=(int)VariableType.Boolean,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-               new SmartDomain.CustomSetting()
-                {
-                    CustomSettingID = (int)AppSetting.Auto_Email_Statements,
-                    Name = AppSetting.Auto_Email_Statements.ToString().Replace("_", " "),
-                    Value="true",
-                    Description="Automatically Emails Generated Statements",
-                    CustomVariableTypeID=(int)VariableType.Boolean,
-                    CustomSettingTypeID=(int)SettingType.All,
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-
+            
                   new SmartDomain.CustomSetting()
                 {
                     CustomSettingID = (int)AppSetting.Client_Notes_Default_Due_Date_Interval,
@@ -1584,6 +1532,28 @@ namespace SmartDataAccess
 
             }
             return clientGroups.ToArray();
+        }
+
+        public static InvoiceStatus[] GetInvoiceStatuses()
+        {
+
+            List<InvoiceStatus> invoices = new List<InvoiceStatus>();
+            var p = from InvoiceState s in Enum.GetValues(typeof(InvoiceState))
+                    select new { ID = s, Name = s.ToString() };
+
+            foreach (var x in p)
+            {
+                invoices.Add(new InvoiceStatus()
+                {
+                    InvoiceStatusID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+
+            }
+            return invoices.ToArray();
         }
     }
 

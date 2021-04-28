@@ -53,9 +53,9 @@
                                                 string duedate = UtilityService.ShowDate(item.DueDate);
                                                 string invoicedate = UtilityService.ShowDate(item.InvoiceDate);
                                             }
-                                            @if (UtilityService.HasPermission(Permissions.View_Invoice_Details))
+                                            @if (UtilityService.HasPermission(Permissions.View_Invoice))
                                             {
-                                                <td><a  target="_blank" asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@item.ClientDeductionID">@item.ClientDeductionID</a></td>
+                                                <td><a  target="_blank" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@item.ClientDeductionID">@item.ClientDeductionID</a></td>
                                             }
                                             else
                                             {

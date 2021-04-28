@@ -71,10 +71,10 @@
             <div class="box-footer">
                 @if (UtilityService.HasPermission(Permissions.Generate_Invoices))
                 {
-                    <button type="submit" class="btn btn-success pull-right">Generate</button>
+                    <button type="submit" class="btn btn-success pull-right">Run</button>
 
                 }
-                <a class="btn btn-default" asp-controller="Transactions" asp-action="Transactions">Cancel</a>
+                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
 
             </div>
             <!-- /.box-footer -->

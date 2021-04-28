@@ -51,7 +51,12 @@
                                     <tr>
                                         @{
                                             string duedate = UtilityService.ShowDate(item.ClientDeduction.DueDate);
-                                            string affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
+                                            string affiliation = String.Empty;
+
+                                            if (UtilityService.IsNotNull(item.Client.ClientGroup))
+                                            {
+                                                affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
+                                            }
                                         }
                                         <td>@affiliation</td>
                                         @if (UtilityService.HasPermission(Permissions.View_User))

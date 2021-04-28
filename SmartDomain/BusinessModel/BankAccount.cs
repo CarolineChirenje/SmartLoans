@@ -22,17 +22,10 @@ namespace SmartDomain
         public string AccountName { get; set; }
 
         public string AccountNumber { get; set; }
-
        
         public int CurrencyID { get; set; }
         public virtual Currency CurrencyType { get; set; }
-
         public bool IsActive { get; set; }
-
-        
-
-
-
 
     }
 }

@@ -265,25 +265,26 @@ namespace SmartReporting
                 // Add an invisible row as a space line to the table
                 Row row2 = this.table.AddRow();
                 row2.Borders.Visible = false;
+                if (UtilityService.ApplicationIsVATCompliant)
+                {
+                    // Add Outstanding
+                    row2 = this.table.AddRow();
+                    row2.Cells[0].Borders.Visible = false;
+                    row2.Cells[0].Format.Font.Bold = true;
+                    row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
+                    row2.Cells[0].MergeRight = 2;
+                    row2.Cells[0].AddParagraph("Amount Excl VAT");
+                    row2.Cells[3].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.AmountExclVAT));
 
-                // Add Outstanding
-                row2 = this.table.AddRow();
-                row2.Cells[0].Borders.Visible = false;
-                row2.Cells[0].Format.Font.Bold = true;
-                row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-                row2.Cells[0].MergeRight = 2;
-                row2.Cells[0].AddParagraph("Amount Excl VAT");
-                row2.Cells[3].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.AmountExclVAT));
-
-                // Add Paid
-                row2 = this.table.AddRow();
-                row2.Cells[0].Borders.Visible = false;
-                row2.Cells[0].Format.Font.Bold = true;
-                row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-                row2.Cells[0].MergeRight = 2;
-                row2.Cells[0].AddParagraph("VAT");
-                row2.Cells[3].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.VAT));
-
+                    // Add Paid
+                    row2 = this.table.AddRow();
+                    row2.Cells[0].Borders.Visible = false;
+                    row2.Cells[0].Format.Font.Bold = true;
+                    row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
+                    row2.Cells[0].MergeRight = 2;
+                    row2.Cells[0].AddParagraph("VAT");
+                    row2.Cells[3].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.VAT));
+                }
                 // Add the total due row
                 row2 = this.table.AddRow();
                 row2.Cells[0].Borders.Visible = false;

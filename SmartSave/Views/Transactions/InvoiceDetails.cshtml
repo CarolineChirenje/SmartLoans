@@ -19,10 +19,15 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Deduction Schedule</h3>
+                    <h3 class="box-title">
+                        @if (TempData["InvoiceNumber"] != null)
+                        {
+                            @TempData["InvoiceNumber"].ToString();
+                        }
+                    </h3>
                 </div>
                 <!-- /.box-header -->
-                <form class="form-horizontal" method="post" action="DeleteInvoiceEntries">
+                <form class="form-horizontal" method="post" action="/Transactions/DeleteInvoiceEntries">
                     <div class="box-body">
                         @if (TempData["Error"] != null)
                         {<div class="container">
@@ -38,6 +43,7 @@
                                 <thead>
                                     <tr>
                                         <th>Select To Delete</th>
+                                        <th>Affiliation</th>
                                         <th>Name</th>
                                         <th>Occupation</th>
                                         <th>Salary</th>
@@ -52,8 +58,16 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
+                                            @{
+                                                string affiliation = String.Empty;
+                                                if (UtilityService.IsNotNull(item.Client.ClientGroup))
+                                                {
+                                                    affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
+                                                }
+                                            }
 
                                             <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientDeductionDetailID" value="@item.ClientDeductionDetailID" /></td>
+                                            <td>@affiliation</td>
                                             @if (UtilityService.HasPermission(Permissions.View_User))
                                             {
                                                 <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@item.Client.ClientFullName</a></td>
@@ -87,7 +101,6 @@
                     <div class="box-footer">
 
                         <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="PrintSchedule" asp-route-id="0">Print Schedule</a><br />
-
                         <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
                         @if (UtilityService.HasPermission(Permissions.Remove_Invoice_Entries))
                         {<button type="submit" class="btn btn-danger">Remove Multiple Invoice Entries</button>

@@ -140,8 +140,10 @@ namespace SmartDataAccess
 
             modelBuilder.Entity<ClientGroup>().HasData(
          Data.GetClientGroups());
+            modelBuilder.Entity<InvoiceStatus>().HasData(
+          Data.GetInvoiceStatuses());
 
-
+          
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -179,7 +181,7 @@ namespace SmartDataAccess
         public DbSet<ProductAssert> ProductAsserts { get; set; }
         public DbSet<AssertCategory> AssertCategories { get; set; }
         public DbSet<Assert> Asserts { get; set; }
-
+        public DbSet<InvoiceStatus> InvoiceStatuses { get; set; }
 
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseOutline> CourseOutlines { get; set; }

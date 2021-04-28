@@ -23,7 +23,8 @@ namespace SmartLogic
         Task<List<string>> ClientAccountNumbers(string account);
         Task<Client> ClientDetails(string emailAddress, string idnumber);
         Task<List<AttendanceRegisterDetail>> AttendanceRegisters(int clientID);
-
+        Task<bool> ClientExists(int Clientid = 0);
+        Task<Client> FindClientSuperFast(int Clientid = 0, string accountNumber = null);
 
         //Notes
         Task<ClientNote> FindNote(int id);

@@ -7,15 +7,12 @@ using System.Threading.Tasks;
 
 namespace SmartDomain
 {
-  public  class ErrorLog
+    public class ErrorLog
     {
         [Key]
         public int ErrorLogID { get; set; }
-
-        public int SourceID { get; set; }
-        public string StackTrace { get; set; }
-        public string Message { get; set; }
-        public string LoggedBy { get; set; }
+        public int LogTypeID { get; set; }
+        public string Error { get; set; }
         public DateTime DateGenerated { get; set; }
 
     }

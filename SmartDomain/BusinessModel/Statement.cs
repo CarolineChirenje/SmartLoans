@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Text;
 
 namespace SmartDomain
@@ -28,5 +29,13 @@ namespace SmartDomain
     public class OutstandingStatement:Statement
     {
        
+    }
+
+    public class Receipt 
+    {
+
+        public string TransRef { get; set; }
+        public byte[] Document { get; set; }
+      
     }
 }
