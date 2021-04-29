@@ -10,6 +10,7 @@ using SmartHelper;
 using SmartDomain;
 using System;
 using Microsoft.AspNetCore.Http;
+using System.Threading;
 
 namespace SmartSave.Controllers
 {
@@ -21,8 +22,8 @@ namespace SmartSave.Controllers
         private readonly IMailService _mailService;
         private readonly IClientService _clientService;
         private readonly IUserService _userService;
-      
-        public LoginController(DatabaseContext context, ILoginService service, IMailService mailService, 
+
+        public LoginController(DatabaseContext context, ILoginService service, IMailService mailService,
         IClientService clientService, IUserService userService)
         {
             _context = context;
@@ -30,7 +31,7 @@ namespace SmartSave.Controllers
             _mailService = mailService;
             _clientService = clientService;
             _userService = userService;
-           
+
         }
         public IActionResult UserNotFound()
         {
@@ -77,7 +78,7 @@ namespace SmartSave.Controllers
                                 return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
                             }
                             else
-                            return RedirectToLocal(returnUrl);
+                                return RedirectToLocal(returnUrl);
                         }
                         else
                             return RedirectToLocal(returnUrl);
@@ -119,7 +120,7 @@ namespace SmartSave.Controllers
                 return View(model);
             }
 
-            string pincode = await _service.ResetPassword(model.EmailAddress,null,false);
+            string pincode = await _service.ResetPassword(model.EmailAddress, null, false);
             if (UtilityService.IsNotNull(pincode))
             {
 
@@ -203,8 +204,8 @@ namespace SmartSave.Controllers
                 int result = await _service.PasswordChange(userID, model.Password);
                 if (result > 0)
                 {
-                    TempData[MessageDisplayType.Success.ToString()] = "Password Reset Complete";
-                    return View(model);
+                    TempData[MessageDisplayType.Success.ToString()] = "Password Reset Completed Successfully";
+                    return RedirectToAction("Login");
                 }
                 else
                 {
@@ -244,7 +245,7 @@ namespace SmartSave.Controllers
                     TempData[MessageDisplayType.Error.ToString()] = $"An account registered  with the following Email Address {client.EmailAddress} and ID Number {client.IDNumber} already exists please try to do a password reset if you have forgotten your details or contact our Customer Service Support on {UtilityService.CustomerServiceNumber}   for further help";
                     return View(model);
                 }
-                string pincode = await _service.ResetPassword(model.EmailAddress,  model.IDNumber,true);
+                string pincode = await _service.ResetPassword(model.EmailAddress, model.IDNumber, true);
                 if (UtilityService.IsNotNull(pincode))
                 {
                     Email email = new Email();
@@ -351,7 +352,7 @@ namespace SmartSave.Controllers
             }
             else
             {
-                              
+
                 Email email = new Email();
                 email.To = client.EmailAddress;
                 email.AttachmentFromMemory = null;
@@ -373,7 +374,7 @@ namespace SmartSave.Controllers
 
             }
         }
-       
+
 
     }
 }
