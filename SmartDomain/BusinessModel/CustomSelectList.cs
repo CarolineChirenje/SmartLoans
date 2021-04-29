@@ -13,11 +13,12 @@ namespace SmartDomain
     public string Name { get; set; }
 }
 
-    public class InvoiceDetails
+    public class InvoiceDetail
     {
         [Key]
-        public List<ClientDeductionDetails> DeductionDetails { get; set; }
+        public List<InvoiceDetails> InvoiceDetails { get; set; }
         public InvoiceState State { get; set; }
         public string InvoiceTitle { get; set; }
+        public int InvoiceID { get; set; }
     }
 }

@@ -52,21 +52,14 @@ namespace SmartSave.Controllers
             _emailTemplateService = emailTemplateService;
         }
 
-        public async Task<IActionResult> Clients(string accountNum = null, bool newClientsOnly = false)
+        public async Task<IActionResult> Clients(string accountNum = null, bool newClientsOnly = false, int productID = 0)
         {
             try
             {
                 if (UtilityService.UserType == (int)TypeOfUser.Employee)
                     return RedirectToAction("Dashboard", "Home");
-
-                List<Client> Clients = await _service.Clients();
-                if (String.IsNullOrEmpty(accountNum))
-                    return View(Clients);
-                else if (newClientsOnly)
-                    return View(await _service.NewClients());
-                else
-                    return View(Clients.Where(m => m.AccountNumber.ToString().Contains(accountNum.Trim())));
-
+                List<Client> Clients = await _service.Clients(accountNum, newClientsOnly, productID);
+                return View(Clients);
             }
             catch (Exception ex)
             {
@@ -83,7 +76,7 @@ namespace SmartSave.Controllers
                 User user = _userService.FindUser(0, UtilityService.CurrentUserName).Result;
                 if (UtilityService.IsNotNull(user))
                 {
-                    Client client = _service.ClientDetails(user.EmailAddress, user.IDNumber).Result;
+                    Client client = _service.GetClient(user.EmailAddress, user.IDNumber).Result;
                     if (UtilityService.IsNotNull(client))
                     {
                         return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
@@ -445,7 +438,7 @@ namespace SmartSave.Controllers
                 string emailAddress = statement.Client.EmailAddress;
                 if (_mailService.SendMail(email))
                 {
-                   
+
                     if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
                         emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";

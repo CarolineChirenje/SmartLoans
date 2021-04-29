@@ -25,10 +25,10 @@ namespace SmartReporting.NET
         Section section;
         Style style;
               Company _Company;
-        ClientDeduction _clientDeduction;
+        Invoice _invoice;
       
 
-        public Document Print(Company Company, ClientDeduction clientDeduction)
+        public Document Print(Company Company, Invoice invoice)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace SmartReporting.NET
                 // Create a new MigraDoc document
                 this.document = new Document();
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Salary Schedule");
-                this._clientDeduction = clientDeduction;
+                this._invoice = invoice;
                 this._Company = Company;
               
                 this.culture = new CultureInfo("en-US");
@@ -250,7 +250,7 @@ namespace SmartReporting.NET
                 tblrow.Cells[1].Borders.Visible = false;
                 tblrow.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                tblrow.Cells[1].AddParagraph(_clientDeduction.ClientDeductionID.ToString());
+                tblrow.Cells[1].AddParagraph(_invoice.InvoiceID.ToString());
 
                 string column2Name = "Due Date";
                 tblrow.Cells[2].Borders.Visible = false;
@@ -259,7 +259,7 @@ namespace SmartReporting.NET
                 tblrow.Cells[2].Format.Font.Bold = true;
                 tblrow.Cells[2].AddParagraph(column2Name);
 
-                string column2Value = UtilityService.ShowDate(_clientDeduction.InvoiceDate);
+                string column2Value = UtilityService.ShowDate(_invoice.InvoiceDate);
                 tblrow.Cells[3].Borders.Visible = false;
                 tblrow.Cells[3].Format.Alignment = ParagraphAlignment.Left;
                 tblrow.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
@@ -389,7 +389,7 @@ namespace SmartReporting.NET
                 Paragraph paragraph = this.addressFrame.AddParagraph();
 
                 int finalCountCellValue = 0;
-                foreach (var transaction in _clientDeduction.ClientDeductionDetails)
+                foreach (var transaction in _invoice.InvoiceDetails)
                 {
                     int countCellValue = 0;
 
@@ -436,7 +436,7 @@ namespace SmartReporting.NET
                 Row row2 = this.table.AddRow();
                 row2.Borders.Visible = false;
 
-                decimal TotalPaid = _clientDeduction.ClientDeductionDetails.AsEnumerable().Sum(transaction => transaction.DeductedAmount);
+                decimal TotalPaid = _invoice.InvoiceDetails.AsEnumerable().Sum(transaction => transaction.DeductedAmount);
                 // Add the total due row
                 row2 = this.table.AddRow();
                 row2.Cells[0].Borders.Visible = false;

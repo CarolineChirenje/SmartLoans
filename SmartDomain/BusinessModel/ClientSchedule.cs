@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SmartDomain
 {
-    public class ClientSchedule
+    public class InvoiceEntries
     {
         [Key]
         public int ClientID { get; set; }
@@ -23,10 +23,14 @@ namespace SmartDomain
         public decimal Salary { get; set; }
         public string ClientFullName { get; set; }
         public DateTime InvoiceDate { get; set; }
-              public bool IsSelected{ get; set; }
-
-
-
+        public bool IsSelected { get; set; }
     }
+    public class InvoicePackage
+    {
+        public List<InvoiceEntries> Entries { get; set; }
+        public Invoice InvoiceDetail { get; set; }
+    }
+
+
 
 }

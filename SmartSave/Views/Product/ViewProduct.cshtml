@@ -93,7 +93,7 @@
                     <div class="col-sm-10">
                         @if (UtilityService.HasPermission(Permissions.View_User))
                         {
-                            <a asp-controller="Product" asp-action="ClientsLinkedToProduct" asp-route-id="@Model.ProductID">@Model.ClientCount</a>
+                            <a target="_blank" asp-controller="Client" asp-action="Clients" asp-route-productID="@Model.ProductID">@Model.ClientCount</a>
                         }
                         else
                         {

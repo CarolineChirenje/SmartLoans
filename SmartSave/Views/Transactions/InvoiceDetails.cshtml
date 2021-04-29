@@ -1,7 +1,7 @@
-﻿@model SmartDomain.InvoiceDetails
+﻿@model SmartDomain.InvoiceDetail
 @using SmartHelper;
 @{
-    TempData["Title"] = "Deductions";
+    TempData["Title"] = "Entries";
 }
 
 <section class="content-header">
@@ -46,20 +46,19 @@
                                         @if (Model.State != InvoiceState.Finalised)
                                         {
                                             <th>Select To Delete</th>
-}
+                                        }
                                         <th>Affiliation</th>
                                         <th>Name</th>
                                         <th>Occupation</th>
                                         <th>Salary</th>
                                         <th>Product</th>
-                                        <th>Invoice Number</th>
-                                        <th>Sub Invoice Number</th>
+                                                                                <th>Sub Invoice Number</th>
                                         <th>Amount Due</th>
 
                                     </tr>
                                 </thead>
                                 <tbody class="odd gradeX">
-                                    @foreach (var item in Model.DeductionDetails)
+                                    @foreach (var item in Model.InvoiceDetails)
                                     {
                                         <tr>
                                             @{
@@ -71,7 +70,7 @@
                                             }
                                             @if (Model.State != InvoiceState.Finalised)
                                             {
-                                                <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientDeductionDetailID" value="@item.ClientDeductionDetailID" /></td>
+                                                <td align="center"><input type="checkbox" id="checkBoxAll" name="InvoiceDetailID" value="@item.InvoiceDetailID" /></td>
 
                                             }
                                             <td>@affiliation</td>
@@ -93,8 +92,7 @@
                                             {
                                                 <td>@item.Product.Name</td>
                                             }
-                                            <td>@item.ClientDeductionID</td>
-                                            <td>@item.InvoiceNumber</td>
+                                                                                       <td>@item.InvoiceNumber</td>
 
                                             <td>@Html.DisplayFor(modelItem => item.DeductedAmount)</td>
 
@@ -107,12 +105,12 @@
                     </div>
                     <div class="box-footer">
 
-                        <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="PrintSchedule" asp-route-id="0">Print Schedule</a><br />
-                        <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        @if (UtilityService.HasPermission(Permissions.Remove_Invoice_Entries))
+                        <a class="btn btn-warning" asp-controller="Transactions" asp-action="PrintSchedule" asp-route-id="@Model.InvoiceID">Print</a>&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-default pull-right" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                        @if (UtilityService.HasPermission(Permissions.Remove_Invoice_Entries) && (Model.State!=InvoiceState.Finalised))
                         {<button type="submit" class="btn btn-danger">Remove Multiple Invoice Entries</button>
                         }
-
+                        &nbsp; &nbsp; &nbsp;
                     </div>
 
                     <!-- /.box-body -->

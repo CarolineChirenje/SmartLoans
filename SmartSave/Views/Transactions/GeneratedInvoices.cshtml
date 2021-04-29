@@ -1,7 +1,7 @@
-﻿@model IEnumerable<SmartDomain.ClientDeduction>
+﻿@model IEnumerable<SmartDomain.Invoice>
 @using SmartHelper;
 @{
-    TempData["Title"] = "Deductions";
+    TempData["Title"] = "Generated Invoices";
 }
 
 <section class="content-header">
@@ -19,7 +19,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Deduction Schedules</h3>
+                    <h3 class="box-title">Invoices</h3>
                 </div>
                 <!-- /.box-header -->
 
@@ -37,13 +37,11 @@
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                                 <tr>
-
                                     <th>Invoice Number</th>
                                     <th>Status</th>
                                     <th>Invoice Date</th>
                                     <th>Due Date</th>
                                     <th>Total Amount Due</th>
-
                                 </tr>
                             </thead>
                             <tbody class="odd gradeX">
@@ -56,29 +54,25 @@
                                     }
                                     @if (UtilityService.HasPermission(Permissions.View_Invoice))
                                     {
-                                        <td><a target="_blank" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@item.ClientDeductionID">@item.ClientDeductionID</a></td>
+                                        <td><a target="_blank" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@item.InvoiceID">@item.InvoiceID</a></td>
                                     }
                                     else
                                     {
-                                        <td>@item.ClientDeductionID</td>
+                                        <td>@item.InvoiceID</td>
                                     }
                                     <td>@item.Status</td>
                                     <td>@invoicedate</td>
                                     <td>@duedate</td>
-
                                     <td>@Html.DisplayFor(modelItem => item.TotalDeductedAmount)</td>
-
-
-
                                 </tr>
                                 }
                         </table>
                     </div>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    <a class="btn btn-default" asp-controller="Transactions" asp-action="GeneratedInvoices">Cancel</a>
                     @if (UtilityService.HasPermission(Permissions.Generate_Invoices))
-                    {<a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="BulkInvoices">Create Invoice</a><br />
+                    {<a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="GenerateInvoice">Create Invoice</a>
                     }
                 </div>
 

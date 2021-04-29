@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SmartDomain.ClientSchedule>
+﻿@model SmartDomain.InvoicePackage;
 @using SmartHelper;
 @{
     TempData["Title"] = "Employees on Schedule";
@@ -19,9 +19,16 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Manage Schedule List</h3>
+                    @{ var invoiceDetails = "Invoice Details";
+                        if (UtilityService.IsNotNull(Model))
+                        {
+                            invoiceDetails = Model.InvoiceDetail.InvoiceHeading; //$"Invoice No {Model.InvoiceDetail.InvoiceID} Due - {UtilityService.ShowDate(Model.InvoiceDetail.DueDate)}  Status - {Model.InvoiceDetail.Status}";
+                        }
+
+                    }
+                    <h3 class="box-title">@invoiceDetails</h3>
                 </div>
-                <form class="form-horizontal" method="post" action="Transactions/GenerateSchedule">
+                <form class="form-horizontal" method="post" action="~/Transactions/ProcessEntries">
 
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -42,14 +49,12 @@
                                         <th>Product</th>
                                         <th>Occupation</th>
                                         <th>Salary</th>
-                                        <th>Invoice Date</th>
-
-
+                                       
                                     </tr>
                                 </thead>
                                 <tbody class="odd gradeX">
 
-                                    @{ var clientList = Model.ToList(); }
+                                    @{ var clientList = Model.Entries.ToList(); }
                                     @for (int i = 0; i < clientList.Count(); i++)
                                     {
 
@@ -59,7 +64,7 @@
                                                 string invoiceDate = UtilityService.ShowDate(clientList[i].InvoiceDate);
 
                                             }
-                                            <td align="center"><input type="checkbox"  id="checkBoxAll" name="ClientProductID" value="@clientList[i].ClientProductID" /></td>
+                                            <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientProductID" value="@clientList[i].ClientProductID" /></td>
                                             @if (UtilityService.HasPermission(Permissions.View_Client))
                                             {
                                                 <td><a target="_blank" asp-controller="Client" asp-action="ViewClient" asp-route-id="@clientList[i].ClientID">@clientList[i].ClientFullName</a></td>
@@ -71,20 +76,18 @@
                                             <td>@clientList[i].ProductName</td>
                                             <td>@clientList[i].Occupation</td>
                                             <td>@clientList[i].Salary</td>
-
-                                            <td>@invoiceDate</td>
-                                          
                                         </tr>
-                                       
+
                                     }
                             </table>
                         </div>
                     </div>
+                    <input type="hidden" name="InvoiceID" value="@Model.InvoiceDetail.InvoiceID" />
                     <div class="box-footer">
                         @if (UtilityService.HasPermission(Permissions.Generate_Invoices))
-                        {<button type="submit" class="btn btn-success pull-right">Generate Schedule</button><br />
+                        {<button type="submit" class="btn btn-success pull-right">Generate Entries</button><br />
                         }
-                        <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                        <a class="btn btn-default" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@Model.InvoiceDetail.InvoiceID">Cancel</a>
 
                     </div>
                     <!-- /.box-body -->
@@ -98,15 +101,15 @@
 </section>
 <script type="text/javascript">
 
-        $(document).ready(function () {
-         //   $('#dataTables-example').DataTable();
-            $('#checkBoxAll').click(function () {
-                if ($(this).is(":checked")) {
-                    $(".chkCheckBoxId").prop("checked", true)
-                }
-                else {
-                    $(".chkCheckBoxId").prop("checked", false)
-                }
-            });
+    $(document).ready(function () {
+        //   $('#dataTables-example').DataTable();
+        $('#checkBoxAll').click(function () {
+            if ($(this).is(":checked")) {
+                $(".chkCheckBoxId").prop("checked", true)
+            }
+            else {
+                $(".chkCheckBoxId").prop("checked", false)
+            }
         });
+    });
 </script> 

@@ -1,8 +1,8 @@
-﻿@model SmartDomain.ClientDeduction
+﻿@model SmartDomain.Invoice;
 @using SmartHelper;
 <section class="content-header">
     <h1>
-        @Model.ClientDeductionID
+        Invoice Details
     </h1>
 </section>
 <!-- Main content -->
@@ -10,15 +10,15 @@
     <!-- Horizontal Form -->
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@Model.ClientDeductionID</h3>
+            <h3 class="box-title">@Model.InvoiceHeading</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
         @if (TempData["Error"] != null)
         {<div class="container">
-                <div class="text-danger">@TempData["Error"].ToString()</div>
-            </div>
-            <br />
+            <div class="text-danger">@TempData["Error"].ToString()</div>
+        </div>
+        <br />
         }
         <div class="container">
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -26,98 +26,109 @@
 
         @if (TempData["Success"] != null)
         {<div class="container">
-                <div class="text-success">@TempData["Success"].ToString()</div>
-            </div>
+            <div class="text-success">@TempData["Success"].ToString()</div>
+        </div>
         }
         @if (TempData["Warning"] != null)
         {<div class="container">
-                <div class="text-warning">@TempData["Warning"].ToString()</div>
-            </div>
+            <div class="text-warning">@TempData["Warning"].ToString()</div>
+        </div>
         }
         <div class="box-body">
 
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Invoice Number</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" disabled="disabled" value="@Model.ClientDeductionID">
+                    <input type="text" class="form-control" disabled="disabled" value="@Model.InvoiceID">
                 </div>
             </div>
-            <br />
+            <br /> <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Invoice Date</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" disabled="disabled" value="@UtilityService.ShowDate(Model.InvoiceDate)">
                 </div>
             </div>
-            <br />
+            <br /> <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Due Date</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" disabled="disabled" value="@UtilityService.ShowDate(Model.DueDate)">
                 </div>
             </div>
-            <br />
+            <br /> <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Invoice Status</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" disabled="disabled" value="@Model.Status">
                 </div>
             </div>
-            <br />
+            <br /> <br />
+
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Total Invoice Amount</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" disabled="disabled" value="@Model.ClientDeductionDetails?.Sum(cd=>cd.DeductedAmount)" />
+                    <input type="text" class="form-control" disabled="disabled" value="@Model.InvoiceDetails?.Sum(cd=>cd.DeductedAmount)" />
                 </div>
             </div>
-            <br />
+            <br /> <br />
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Total Invoice Entries</label>
                 <div class="col-sm-10">
                     @if (UtilityService.HasPermission(Permissions.View_Invoice_Details))
                     {
-                        <a asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@Model.ClientDeductionID">@Model.ClientDeductionDetails?.Count()</a>
+                    <a asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@Model.InvoiceID">@Model.InvoiceDetails?.Count()</a>
                     }
                     else
                     {
-                        <label for="inputEmail3" class="form-control">@Model.ClientDeductionDetails?.Count()</label>
+                    <label for="inputEmail3" class="form-control">@Model.InvoiceDetails?.Count()</label>
                     }
 
                 </div>
             </div>
-            <br />
+            <br /> <br />
+
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
                 <div class="col-sm-10">
                     <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
                 </div>
             </div>
-            <br />
+            <br /> <br />
+
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
                 <div class="col-sm-10">
                     <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
                 </div>
             </div>
-            <input type="hidden" name="ClientDeductionID" value="@Model.ClientDeductionID" />
+            <br /> <br />
+            <input type="hidden" name="ClientDeductionID" value="@Model.InvoiceID" />
+
+
+            <!-- /.box-body -->
+            <div class="box-footer">
+                @if (UtilityService.HasPermission(Permissions.Delete_Invoice))
+            {
+                <a class="btn btn-danger" asp-controller="Transactions" asp-action="DeleteInvoice" asp-route-id="@Model.InvoiceID">Delete Invoice</a>
+            } &nbsp;&nbsp;&nbsp;
+                @if (UtilityService.HasPermission(Permissions.Process_Invoice) && (InvoiceState)Model.InvoiceStatusID==InvoiceState.Created)
+            {
+                <a class="btn btn-success" asp-controller="Transactions" asp-action="ProcessInvoice" asp-route-id="@Model.InvoiceID">Process Invoice</a>
+            }&nbsp;&nbsp;&nbsp;
+                @if (UtilityService.HasPermission(Permissions.Finalise_Invoice) && (InvoiceState)Model.InvoiceStatusID==InvoiceState.Processed)
+            {
+                <a class="btn btn-success" asp-controller="Transactions" asp-action="FinaliseInvoice" asp-route-id="@Model.InvoiceID">Finalise Invoice</a>
+            }&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-primary" asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@Model.InvoiceID">Invoice Details</a>
+                <a class="btn btn-default pull-right" asp-controller="Transactions" asp-action="Invoices">Cancel</a>&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-warning" asp-controller="Transactions" asp-action="PrintSchedule" asp-route-id="@Model.InvoiceID">Print</a>&nbsp; &nbsp; &nbsp;
+
+            </div>
+            <!-- /.box-footer -->
 
         </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            @if (UtilityService.HasPermission(Permissions.Delete_Invoice))
-            {
-                <a class="btn btn-danger" asp-controller="Transactions" asp-action="DeleteInvoice" asp-route-id="@Model.ClientDeductionID">Delete Invoice</a>
-            }
-            @if (UtilityService.HasPermission(Permissions.Generate_Invoices) && (InvoiceState)Model.InvoiceStatusID==InvoiceState.Created)
-            {
-                <a class="btn btn-success" asp-controller="Transactions" asp-action="ProcessInvoice" asp-route-id="@Model.ClientDeductionID">Process Invoice</a>
-            }
-            <a class="btn btn-primary" asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@Model.ClientDeductionID">Invoice Details</a>
-            <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+        <!-- /.box -->
         </div>
-        <!-- /.box-footer -->
-
-    </div>
-    <!-- /.box -->
 </section>
 

@@ -15,16 +15,18 @@ namespace SmartLogic
         Task<List<Transaction>> ClientTransactions(int ClientID);
         Task<List<Transaction>> Transactions();
         Task<long> NewPayments();
-        Task<int> RemoveInvoice(int invoiceID);
-        Task<int> CalculateDeductions(List<int> ClientProductIDs, int ClientDeductionID);
-        Task<int> RemoveInvoiceEntries(List<int> clientDeductionsDetails);
+        int RemoveInvoice(int invoiceID);
+        int FinaliseInvoice(int invoiceID);
+                 int ProcessInvoice(List<int> ClientProductIDs, int InvoiceID);
+        Task<int> RemoveInvoiceEntries(List<int> invoiceDetailsID);
         Task<int> CreateInvoice(DateTime InvoiceDate, DateTime DueDate, int? productID);
         bool InvoiceHasEntries(int invoiceID);
-        List<ClientDeduction> GetSchedule(DateTime DateFrom, DateTime DateTo);
-     InvoiceDetails GetSchedule(int clientDeductionID);
-        ClientDeduction GetClientDeductionSchedule(int clientDeductionID);
-        bool DeductionExists(DateTime dueDate, DateTime invoiceDate);
-        Task<List<ClientDeductionDetails>> GetClientDeductions(List<int> ClientProductIDs, DateTime InvoiceDate);
+        List<Invoice> GetInvoices(DateTime DateFrom, DateTime DateTo);
+        InvoiceDetail GetInvoiceDetail(int invoiceID);
+        Invoice GetInvoice(int invoiceID);
+        bool InvoiceEntriesIsDuplicate(int invoiceID);
+        bool InvoiceIsDuplicate(DateTime dueDate, DateTime invoiceDate, int? productID = null);
+        Task<List<InvoiceDetails>> GetInvoiceDetails(List<int> ClientProductIDs, DateTime InvoiceDate);
     }
 
 }

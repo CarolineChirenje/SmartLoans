@@ -166,8 +166,8 @@ namespace SmartDataAccess
         public DbSet<ClientDependent> ClientDependents { get; set; }
         public DbSet<ClientProduct> ClientProducts { get; set; }
         public DbSet<ClientFee> ClientFees { get; set; }
-        public DbSet<ClientDeduction> ClientDeductions { get; set; }
-        public DbSet<ClientDeductionDetails> ClientDeductionDetails { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceDetails> InvoiceDetails { get; set; }
         public DbSet<ClientOccupationHistory> ClientOccupationHistory { get; set; }
         public DbSet<ClientAccountType> ClientAccountTypes { get; set; }
         public DbSet<ClientGroup> ClientGroups { get; set; }

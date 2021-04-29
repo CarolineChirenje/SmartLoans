@@ -61,7 +61,7 @@ namespace SmartLogic
 
         }
 
-        public async Task<Client> ClientDetails(string emailAddress, string idnumber)
+        public async Task<Client> GetClient(string emailAddress, string idnumber)
         {
             Client result = null;
             try
@@ -155,9 +155,9 @@ namespace SmartLogic
                                 Include(c => c.ClientCourses).
                                 ThenInclude(c => c.Course).
                                 ThenInclude(c => c.CourseIntakes).
-                                Include(c => c.ClientDeductionDetails).
-                                ThenInclude(c => c.ClientDeduction).
-                                 Include(c => c.ClientDeductionDetails).
+                                Include(c => c.InvoiceDetails).
+                                ThenInclude(c => c.Invoice).
+                                 Include(c => c.InvoiceDetails).
                                  ThenInclude(c => c.Product).
                                  Include(c => c.ClientOccupationHistory).
                                  Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
@@ -383,12 +383,15 @@ namespace SmartLogic
             }
 
         }
-        public async Task<List<Client>> Clients()
+        public async Task<List<Client>> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0)
         {
             try
             {
-                CustomLog.Log(LogSource.Helper, new Exception("Getting Clients"));
-                return await _context.Clients.
+                List<int> ClientIDs = new List<int>();
+                if (productID > 0)
+                   ClientIDs = ClientProductIDs(productID);
+
+                var clients = await _context.Clients.
                 Include(c => c.ClientContacts).
                 Include(p => p.ClientPayments).
                 Include(n => n.ClientNotes).
@@ -405,8 +408,19 @@ namespace SmartLogic
                 Include(at => at.ClientGroup).
                 Include(at => at.Company).
                 AsNoTracking().
-                OrderByDescending(c => c.RegistrationDate)
-                .ToListAsync();
+                ToListAsync();
+                if (clients == null || clients.Count == 0)
+                    return null;
+                if (!String.IsNullOrEmpty(accountNumber))
+                    clients = clients.Where(m => m.AccountNumber.Contains(accountNumber.Trim())).ToList();
+               
+                if (newClientsOnly)
+                    clients = clients.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).ToList();
+                if (productID > 0 && (ClientIDs!=null && ClientIDs.Count()>0))
+                    clients = clients.Where(c => ClientIDs.Contains(c.ClientID)).ToList();
+
+                return clients;
+
             }
             catch (Exception ex)
             {
@@ -415,7 +429,21 @@ namespace SmartLogic
                 throw;
             }
         }
+        private List<int> ClientProductIDs(int productID)
+        {
+            try
+            {
+                var clients = _context.ClientProducts.
+    Where(p => p.ProductID == productID).Select(c => c.ClientID).ToList();
+                return clients;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
 
+                throw;
+            }
+        }
 
         public async Task<List<string>> ClientAccountNumbers(string account)
         {
@@ -430,34 +458,6 @@ namespace SmartLogic
             {
                 CustomLog.Log(LogSource.Logic_Base, ex);
 
-                throw;
-            }
-        }
-        public async Task<List<Client>> NewClients()
-        {
-            try
-            {
-                return await _context.Clients.
-                    Include(c => c.ClientContacts).
-                    Include(p => p.ClientPayments).
-                    ThenInclude(p => p.TransactionType).
-                    Include(n => n.ClientNotes).
-                    ThenInclude(ut => ut.UserType).
-                    Include(d => d.ClientDocuments).
-                    ThenInclude(document => document.DocumentType).
-                    ThenInclude(docFormat => docFormat.DocumentFormat).
-                    Include(sa => sa.ClientMedicalDetails).
-                     Include(at => at.ClientAccountType).
-                    Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
-                    Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
-                    Include(c => c.Title).
-                    Include(at => at.ClientAccountType).
-                     Include(at => at.ClientGroup).
-                    Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
                 throw;
             }
         }
@@ -717,7 +717,7 @@ namespace SmartLogic
         {
             try
             {
-               ClientContact ClientContact = await FindContact(id);
+                ClientContact ClientContact = await FindContact(id);
                 if (DatabaseAction.Remove == action)
                     _context.ClientContacts.Remove(ClientContact);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
@@ -757,7 +757,7 @@ namespace SmartLogic
         {
             try
             {
-               ClientDocument.UploadedBy = ClientDocument.LastChangedBy = UtilityService.CurrentUserName;
+                ClientDocument.UploadedBy = ClientDocument.LastChangedBy = UtilityService.CurrentUserName;
                 ClientDocument.DateUploaded = ClientDocument.LastChangedDate = DateTime.Now;
                 _context.Add(ClientDocument);
                 return (await _context.SaveChangesAsync());
@@ -843,7 +843,7 @@ namespace SmartLogic
         {
             try
             {
-              ClientMedicalDetail medicalDetail = _context.ClientMedicalDetails.Find(MedicalDetail.ClientMedicalID);
+                ClientMedicalDetail medicalDetail = _context.ClientMedicalDetails.Find(MedicalDetail.ClientMedicalID);
                 medicalDetail.MedicalAid = MedicalDetail.MedicalAid;
                 medicalDetail.MedicalAidNo = MedicalDetail.MedicalAidNo;
                 medicalDetail.Allergies = MedicalDetail.Allergies;
@@ -868,7 +868,7 @@ namespace SmartLogic
         {
             try
             {
-             ClientMedicalDetail ClientMedicalDetail = await FindMedicalDetail(id);
+                ClientMedicalDetail ClientMedicalDetail = await FindMedicalDetail(id);
                 if (DatabaseAction.Remove == action)
                     _context.ClientMedicalDetails.Remove(ClientMedicalDetail);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
@@ -890,11 +890,11 @@ namespace SmartLogic
         {
             try
             {
-               return await _context.ClientDependents.
-                Include(c => c.Client).ThenInclude(c => c.Title).
-                 Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
-                 Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
-                 Where(t => t.ClientDependentID == id).FirstOrDefaultAsync();
+                return await _context.ClientDependents.
+                 Include(c => c.Client).ThenInclude(c => c.Title).
+                  Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+                  Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
+                  Where(t => t.ClientDependentID == id).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -907,7 +907,7 @@ namespace SmartLogic
         {
             try
             {
-               ClientDependent.RegistrationDate = DateTime.Now;
+                ClientDependent.RegistrationDate = DateTime.Now;
                 ClientDependent.LastChangedBy = UtilityService.CurrentUserName;
                 ClientDependent.LastChangedDate = DateTime.Now;
                 _context.Add(ClientDependent);
@@ -1045,7 +1045,8 @@ namespace SmartLogic
         public async Task<int> Update(ClientProduct clientProduct)
         {
             try
-            {                ClientProduct ClientProduct = _context.ClientProducts.Find(clientProduct.ClientProductID);
+            {
+                ClientProduct ClientProduct = _context.ClientProducts.Find(clientProduct.ClientProductID);
                 ClientProduct.IncreamentPercentage = clientProduct.IncreamentPercentage;
                 ClientProduct.DeductionPercentage = clientProduct.DeductionPercentage;
                 ClientProduct.IsActive = clientProduct.IsActive;
@@ -1099,8 +1100,9 @@ namespace SmartLogic
         public List<Product> GetClientRegisteredProducts(int id)
         {
             try
-            {                var productids = _context.ClientProducts.
-                          Where(t => t.ClientID == id).Select(p => p.ProductID);
+            {
+                var productids = _context.ClientProducts.
+             Where(t => t.ClientID == id).Select(p => p.ProductID);
                 return _context.Products.
                 Where(t => productids.Contains(t.ProductID)).ToList();
             }
@@ -1116,15 +1118,15 @@ namespace SmartLogic
         {
             try
             {
-               return await _context.ClientCourses.
-                Include(c => c.Client).ThenInclude(c => c.Title).
-                 Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
-                 Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
-                 Include(c => c.Course).
-                 ThenInclude(c => c.CourseOutlines).
-                 Include(c => c.Course).
-                 ThenInclude(c => c.CourseIntakes).
-                Where(t => t.ClientCourseID == id).FirstOrDefaultAsync();
+                return await _context.ClientCourses.
+                 Include(c => c.Client).ThenInclude(c => c.Title).
+                  Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+                  Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
+                  Include(c => c.Course).
+                  ThenInclude(c => c.CourseOutlines).
+                  Include(c => c.Course).
+                  ThenInclude(c => c.CourseIntakes).
+                 Where(t => t.ClientCourseID == id).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -1323,18 +1325,27 @@ namespace SmartLogic
             }
         }
 
-        public List<ClientSchedule> GetClientsOnProduct(int ProductID, System.DateTime InvoiceDate)
+        public InvoicePackage GetPotentialInvoiceEntries(int InvoiceID, int ProductID, DateTime InvoiceDate)
         {
             try
             {
-                            IEnumerable<int> ClientIDs;
+
+                var invoice = _context.Invoices.Find(InvoiceID);
+                if (UtilityService.IsNull(invoice))
+                    return null;
+
+                InvoicePackage invoicePackage = new InvoicePackage();
+                invoicePackage.InvoiceDetail = invoice;
+                List<InvoiceEntries> invoiceEntries = new List<InvoiceEntries>();
+
+                IEnumerable<int> ClientIDs;
                 if (ProductID == 0)
                 {
                     ClientIDs = from c in _context.ClientProducts
                                 select c.ClientID;
-               }
+                }
                 else
-               {
+                {
                     ClientIDs = from c in _context.ClientProducts
                                 where c.ProductID == ProductID
                                 select c.ClientID;
@@ -1344,10 +1355,9 @@ namespace SmartLogic
                    Include(c => c.Client).
                                  Where(t => ClientIDs.Contains(t.ClientID)).ToList();
 
-                List<ClientSchedule> schedules = new List<ClientSchedule>();
                 foreach (var item in clientProducts)
                 {
-                    schedules.Add(new ClientSchedule
+                    invoiceEntries.Add(new InvoiceEntries
                     {
                         ClientProductID = item.ClientProductID,
                         ClientID = item.ClientID,
@@ -1360,8 +1370,8 @@ namespace SmartLogic
 
                     });
                 }
-
-                return schedules;
+                invoicePackage.Entries = invoiceEntries;
+                return invoicePackage;
             }
             catch (Exception ex)
             {

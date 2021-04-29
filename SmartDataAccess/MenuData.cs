@@ -40,8 +40,8 @@ namespace SmartDataAccess
                 },
                    new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Product_And_Services,
-                    DisplayName = MenuGroups.Product_And_Services.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Core_Services,
+                    DisplayName = MenuGroups.Core_Services.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-money"),
@@ -101,7 +101,19 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                
+                 new MenuGroup()
+                {
+                    MenuGroupID = (int)MenuGroups.Invoicing,
+                    DisplayName = MenuGroups.Invoicing.ToString().Replace("_", " "),
+                    IsActive = true,
+                    IsActiveMenu = false,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-bullseye"),
+                    OrderNo = 4,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+
             };
 
             return parentMenus.ToArray();
@@ -143,7 +155,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 3,
-                    MenuGroupID = (int)MenuGroups.Product_And_Services,
+                    MenuGroupID = (int)MenuGroups.Core_Services,
                     DisplayName = "Transactions",
                     ControllerName = "Transactions",
                     ActionName = "Transactions",
@@ -157,10 +169,10 @@ namespace SmartDataAccess
                    new Menu()
                 {
                     MenuID = 4,
-                    MenuGroupID = (int)MenuGroups.Product_And_Services,
-                    DisplayName = "Generate Bulk Invoice",
+                    MenuGroupID = (int)MenuGroups.Invoicing,
+                    DisplayName = "Invoices",
                     ControllerName = "Transactions",
-                    ActionName = "BulkInvoices",
+                    ActionName = "Invoices",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-gear"),
                     OrderNo = 4,
@@ -168,25 +180,11 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                 new Menu()
-                {
-                    MenuID = 5,
-                    MenuGroupID = (int)MenuGroups.Product_And_Services,
-                    DisplayName = "Generated Invoices",
-                    ControllerName = "Transactions",
-                    ActionName = "Invoices",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-file"),
-                    OrderNo =5,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-
+              
                 new Menu()
                 {
                     MenuID = 6,
-                    MenuGroupID = (int)MenuGroups.Product_And_Services,
+                    MenuGroupID = (int)MenuGroups.Core_Services,
                     DisplayName = "Products",
                     ControllerName = "Product",
                     ActionName = "Product",

@@ -443,9 +443,9 @@
 
                             @if (UtilityService.HasPermission(Permissions.View_Client_Deductions))
                             {
-                                if (Model.ClientDeductionDetails != null)
+                                if (Model.InvoiceDetails != null)
                                 {
-                                    if (Model.ClientDeductionDetails.Count() > 0)
+                                    if (Model.InvoiceDetails.Count() > 0)
                                     {
                                         <li>
                                             <a href="#ClientDeductions" data-toggle="tab">Deduction Schedules</a>
@@ -1194,14 +1194,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="odd gradeX">
-                                                @if (Model.ClientDeductionDetails != null)
+                                                @if (Model.InvoiceDetails != null)
                                                 {
-                                                    @foreach (var item in Model.ClientDeductionDetails)
+                                                    @foreach (var item in Model.InvoiceDetails)
                                                     {
                                                         <tr>
                                                             @{
-                                                                string duedate = UtilityService.ShowDate(item.ClientDeduction.DueDate);
-                                                                string invoicedate = UtilityService.ShowDate(item.ClientDeduction.InvoiceDate);
+                                                                string duedate = UtilityService.ShowDate(item.Invoice.DueDate);
+                                                                string invoicedate = UtilityService.ShowDate(item.Invoice.InvoiceDate);
                                                             }
 
                                                             <td>@Html.DisplayFor(modelItem => item.Client.Occupation)</td>

@@ -8,9 +8,10 @@ namespace SmartHelper
 
         DashBoard = 1,
         Employees,
-        Product_And_Services,
+        Core_Services,
         Reporting,
         Custom_Settings,
+        Invoicing,
         //
         Menu = 9998,
         Developer_Menu = 999,
@@ -703,7 +704,8 @@ namespace SmartHelper
         Override_Payment,
         View_Invoice,
         Delete_Invoice,
-        
+        Finalise_Invoice,
+        Process_Invoice,
 
 
         // Menus

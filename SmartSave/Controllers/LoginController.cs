@@ -72,7 +72,7 @@ namespace SmartSave.Controllers
                     {
                         if (user.UserTypeID == (int)TypeOfUser.Employee)
                         {
-                            Client client = await _clientService.ClientDetails(user.EmailAddress, user.IDNumber);
+                            Client client = await _clientService.GetClient(user.EmailAddress, user.IDNumber);
                             if (UtilityService.IsNotNull(client))
                             {
                                 return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
@@ -130,8 +130,8 @@ namespace SmartSave.Controllers
                 string _emailBody = @"We have sent you this email in response to your request to reset your password on " + UtilityService.ApplicationName + ".<br/><br/>" +
                               "To reset your password for <a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + "</a>, please follow the link below:<a href = " + UtilityService.SiteURLPasswordReset + ">Password Reset Link </a>." +
                               "CONFIRMATION CODE <b>" + Encryption.Decrypt(pincode) + "</b><br/><br/>" +
-                               "We recommend that you keep your password secure and not share it with anyone.If you feel your password has been compromised, you can change it by going to your " +
-                               "<a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + " </a> logging in and going to your profile and clicking the  <b>'Change Email Address or Password'</b> link.<br/><br/>" +
+                               "We recommend that you keep your password secure and not share it with anyone.If you feel your password has been compromised, you can change it by  logging in to  " +
+                               "<a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + " </a>  ,going to your profile and clicking the  <b>'Change Email Address or Password'</b> link.<br/><br/>" +
                                @"If you need help, or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/><b>" + UtilityService.ApplicationName + " Customer Service</b>.";
                 email.Body = UtilityService.HtmlDecode(_emailBody);
                 email.Subject = $"Password Reset -{UtilityService.ApplicationName}";
@@ -234,7 +234,7 @@ namespace SmartSave.Controllers
                 return View(model);
             }
 
-            Client client = await _clientService.ClientDetails(model.EmailAddress, model.IDNumber);
+            Client client = await _clientService.GetClient(model.EmailAddress, model.IDNumber);
             if (UtilityService.IsNotNull(client))
             {
 
@@ -252,7 +252,7 @@ namespace SmartSave.Controllers
                     email.To = model.EmailAddress;
                     email.AttachmentFromMemory = null;
                     string _emailBody = @"We have sent you this email in response to your request to create an account on " + UtilityService.ApplicationName + ".<br/><br/>" +
-                                  "To continue  with this process on <a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + "</a>, please follow the link below:<a href = " + UtilityService.SiteURLAccountCreation + ">Account Creation  Link </a>." +
+                                  "To continue  with this process on <a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + "</a> , please follow the link below : <a href = " + UtilityService.SiteURLAccountCreation + ">Account Creation  Link </a> ." +
                                     "CONFIRMATION CODE <b>" + Encryption.Decrypt(pincode) + "</b><br/><br/>" +
                                    "We recommend that you keep your account details secure and not share it with anyone.If you feel your credentials have  been compromised, " +
                                     @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";

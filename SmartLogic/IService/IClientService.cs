@@ -18,10 +18,9 @@ namespace SmartLogic
         Task<int> Save(Client Client);
         Task<int> Update(Client Client);
         Task<Client> FindClient(int Clientid = 0, string accountNumber = null);
-        Task<List<Client>> Clients();
-        Task<List<Client>> NewClients();
+        Task<List<Client>> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0);
         Task<List<string>> ClientAccountNumbers(string account);
-        Task<Client> ClientDetails(string emailAddress, string idnumber);
+        Task<Client> GetClient(string emailAddress, string idnumber);
         Task<List<AttendanceRegisterDetail>> AttendanceRegisters(int clientID);
         Task<bool> ClientExists(int Clientid = 0);
         Task<Client> FindClientSuperFast(int Clientid = 0, string accountNumber = null);
@@ -46,14 +45,14 @@ namespace SmartLogic
         Task<int> Update(ClientDocument document);
         Task<int> ActionDocument(int id, DatabaseAction action);
 
-       
+
         //Medical Details
         Task<ClientMedicalDetail> FindMedicalDetail(int id);
         Task<int> Save(ClientMedicalDetail ClientMedicalDetail);
         Task<int> Update(ClientMedicalDetail ClientMedicalDetail);
         Task<int> ActionMedicalDetail(int id, DatabaseAction action);
 
-     //Dependent
+        //Dependent
         Task<ClientDependent> FindDependent(int id);
         Task<int> Save(ClientDependent ClientDependent);
         Task<int> Update(ClientDependent ClientDependent);
@@ -66,8 +65,8 @@ namespace SmartLogic
         Task<int> ActionProduct(int id, DatabaseAction action);
         List<ClientProduct> GetClientProducts(int id);
         List<Product> GetClientRegisteredProducts(int id);
-        List<ClientSchedule> GetClientsOnProduct(int ProductID, DateTime CutOffDate);
-             //Course
+        InvoicePackage GetPotentialInvoiceEntries(int InvoiceID, int ProductID, DateTime InvoiceDate);
+        //Course
         Task<ClientCourse> FindCourse(int id);
         Task<int> Save(ClientCourse ClientCourse);
         Task<int> Update(ClientCourse ClientCourse);
@@ -78,7 +77,7 @@ namespace SmartLogic
         Task<ClientFee> FindClientFee(int id);
         Task<int> PayFee(ClientFee clientFee);
         Task<Company> GetClientCompany(int clientID);
-        
+
         Task<int> UpdateSessions(int clientCourseID, string[] selectedSessions);
 
     }
