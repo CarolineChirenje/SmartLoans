@@ -393,7 +393,20 @@ namespace SmartDataAccess
                 },
 
               // put new menu here
-               
+               new Menu()
+                {
+                    MenuID =9997,
+                    MenuGroupID = (int)MenuGroups.Developer_Menu,
+                    DisplayName = "Maintanance",
+                    ControllerName = "Maintanance",
+                    ActionName = "Maintanance",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa  fa-wrench"),
+                    OrderNo =9997,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
                  new Menu()
                 {
                     MenuID = 9998,
@@ -408,8 +421,8 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-
-                 new Menu()
+               
+                  new Menu()
                 {
                     MenuID =9999,
                     MenuGroupID = (int)MenuGroups.Developer_Menu,

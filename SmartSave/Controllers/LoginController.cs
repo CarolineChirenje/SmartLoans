@@ -39,7 +39,14 @@ namespace SmartSave.Controllers
         }
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login() => View();
+        public ActionResult Login()
+        {
+            var maintanance = GetData.MaintananceMode();
+            if(UtilityService.IsNotNull(maintanance))
+                return RedirectToAction("MaintananceMode", "Maintanance");
+            return View();
+        }
+
         public ActionResult Logout()
         {
             UtilityService.ClearUserNames();
@@ -65,6 +72,7 @@ namespace SmartSave.Controllers
                     UtilityService.UserFullName = user.UserFullName;
                     UtilityService.UserProfileImage = user.ProfileImage;
                     UtilityService.CurrentUserTypeID = user.UserTypeID;
+                    UtilityService.CanOverrideMaintananceMode = user.CanOverrideMaintananceMode;
                     if (DateTime.Now > user.PasswordExpiryDate)
                         return RedirectToAction("PasswordReset", new { id = user.UserID });
 

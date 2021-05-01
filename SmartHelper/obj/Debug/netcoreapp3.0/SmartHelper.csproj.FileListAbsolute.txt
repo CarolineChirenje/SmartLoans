@@ -9,3 +9,4 @@ D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.Assemb
 D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.csproj.CoreCompileInputs.cache
 D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.dll
 D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.pdb
+D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.csprojAssemblyReference.cache

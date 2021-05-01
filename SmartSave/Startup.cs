@@ -55,6 +55,7 @@ namespace SmartSave
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IMaintananceService, MaintananceService>();
 
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IEmailTemplateService, EmailTemplateService>();
@@ -108,7 +109,8 @@ namespace SmartSave
                     name: "default",
                     template: "{controller=Login}/{action=Login}/{id?}");
             });
-            loggerFactory.AddFile("Logs/SmartWealth-{Date}.txt");
-        }
+            loggerFactory.AddFile("SmartWealth-{Date}.txt");
+           
+               }
     }
 }

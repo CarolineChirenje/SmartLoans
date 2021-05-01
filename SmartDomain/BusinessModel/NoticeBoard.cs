@@ -10,7 +10,6 @@ namespace SmartDomain
     {
         [Key]
         public int NoticeID { get; set; }
-
         [Required]
         public string Title { get; set; }
         public string Details { get; set; }

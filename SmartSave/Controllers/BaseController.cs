@@ -12,23 +12,35 @@ using SmartHelper;
 namespace SmartSave.Controllers
 {
     // Custom Base controller.
-    public abstract class BaseController<T> : Controller where T:BaseController<T>
+    public abstract class BaseController<T> : Controller where T : BaseController<T>
     {
-       private  ILogger<T> _logger;
+        private ILogger<T> _logger;
 
 
         protected ILogger<T> Logger => _logger ?? (_logger = HttpContext?.RequestServices.GetService<ILogger<T>>());
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            
-            if (UtilityService.IsNull(UtilityService.CurrentUserName))
+            var maintananceMode = GetData.MaintananceMode();
+            if (UtilityService.IsNotNull(maintananceMode) && !UtilityService.CanOverrideMaintananceMode)
             {
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary {
+                                { "Controller", "Maintanance" },
+                                { "Action", "MaintananceMode" }
+                                });
+
+            }
+            else
+            {
+                if (UtilityService.IsNull(UtilityService.CurrentUserName))
+                {
+                    filterContext.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary {
                                 { "Controller", "Login" },
                                 { "Action", "UserNotFound" }
-                                });
+                                    });
+                }
             }
         }
     }

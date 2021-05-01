@@ -579,6 +579,7 @@ namespace SmartHelper
         static string _currentUserName;
         static string _currentFullName;
         static byte[] _userProfileImage;
+        static bool _canOverrideMaintananceMode;
         static int _ClientID;
         /// <summary>
         /// Access routine for global variable.
@@ -630,11 +631,25 @@ namespace SmartHelper
             }
 
         }
+
+        public static bool CanOverrideMaintananceMode
+        {
+            get
+            {
+                return _canOverrideMaintananceMode;
+            }
+            set
+            {
+                _canOverrideMaintananceMode = value;
+            }
+
+        }
         public static void ClearUserNames()
         {
             UtilityService.UserFullName = string.Empty;
             UtilityService.CurrentUserName = string.Empty;
             UtilityService.UserProfileImage = null;
+            UtilityService.CanOverrideMaintananceMode = false;
           }
         public static decimal GetDecimalAmount(string Amount)
         {

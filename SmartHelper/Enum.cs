@@ -804,7 +804,8 @@ namespace SmartHelper
         View_Invoice_Details,
         Print_Statement_With_No_Reversals,
         Auto_Generate_Receipt,
-        Email_Receipt_To_Client
+        Email_Receipt_To_Client,
+        Add_Maintanance_Notification,
     }
     public enum InvoiceState
     {

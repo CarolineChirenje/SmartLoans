@@ -1118,7 +1118,8 @@ namespace SmartDataAccess
                             LastName = "Chirenje",
                             IDNumber="8904161200188",
                             LastChangedBy = "SuperUser",
-                            PasswordExpiryDate=DateTime.MinValue
+                            PasswordExpiryDate=DateTime.MinValue,
+                            CanOverrideMaintananceMode=true
                         },
                          new User()
                          {
@@ -1133,7 +1134,7 @@ namespace SmartDataAccess
                              LastName = "Jarani",
                              IDNumber="0000000000000",
                              LastChangedBy = "SuperUser",
-                              PasswordExpiryDate=DateTime.MinValue
+                             PasswordExpiryDate=DateTime.MinValue
                          }
                          ,
                          new User()

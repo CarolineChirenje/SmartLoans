@@ -1,0 +1,26 @@
+﻿@model SmartDomain.Maintanance
+@using SmartHelper;
+
+@{
+    Layout = "_LayoutNoMenu";
+}
+
+<div !style="text-align:center">
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="text-center">
+                        <h1 class="text-danger text-bold text-green">Planned Maintanance In Progress</h1>
+                        <center>
+                            <p>
+                                @UtilityService.ApplicationName is currently undergoing maintanance from <br /><b>@Model.Period</b>.<br /> We are constantly working hard to make a better product for you.Please be patient,the system will be back up shortly.
+                                For any enquiry, please email <b>@UtilityService.CustomerServiceEmail</b> , or call <br />@UtilityService.ApplicationName customer service  at <b>@UtilityService.CustomerServiceNumber</b> .<br /><br /> Regards,<br /><b>@UtilityService.ApplicationName Team</b>.
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

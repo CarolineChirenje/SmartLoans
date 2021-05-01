@@ -8037,10 +8037,6 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Assert
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ClientFeePayment.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Product\ViewProductFee.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\GeneratedInvoices.cshtml.g.cs
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\GenerateSchedule.cshtml.g.cs
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\SalarySchedule.cshtml.g.cs
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\Schedule.cshtml.g.cs
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\ScheduleReport.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\ClientCourseFeePayment.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Courses\ViewCourseFee.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Courses\ViewCourseIntake.cshtml.g.cs
@@ -8062,3 +8058,8 @@ D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\Serilog.Sinks.Roll
 D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\SmartLog.dll
 D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\SmartLog.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Login\UserNotFound.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\GenerateInvoice.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\Invoices.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\ProcessEntries.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\ProcessInvoice.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Transactions\ViewInvoice.cshtml.g.cs

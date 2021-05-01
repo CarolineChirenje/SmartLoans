@@ -14,10 +14,21 @@ namespace SmartHelper
 {
     public static class GetData
     {
-      static  IConfiguration _configuration;
+        static IConfiguration _configuration;
         public static string SSDBConnection => SSDBConnectionValue();
 
         public static bool ShowDeveloperException => ShowDeveloperExceptions();
+
+
+        public static Maintain MaintananceMode()
+        {
+            string currentDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            string maintananceQuery = $"SELECT TOP 1 * FROM Maintanances WHERE StartDate<='{currentDate}' AND EndDate>='{currentDate}';";
+            using (IDbConnection db = new SqlConnection(SSDBConnection))
+            {
+                return db.Query<Maintain>(maintananceQuery).SingleOrDefault();
+            }
+        }
 
         public static CustomSetting GetSettingValue(int CustomSettingID)
         {
@@ -104,7 +115,7 @@ namespace SmartHelper
         }
         public static bool ShowDeveloperExceptions()
         {
-          _configuration= LoadAppConfigurations;
+            _configuration = LoadAppConfigurations;
             bool showDeveloperExceptions = false;
             try
             {
@@ -138,6 +149,8 @@ namespace SmartHelper
 
         }
 
+
+
         public static SmartLog SmartLogData()
         {
             _configuration = LoadAppConfigurations;
@@ -146,10 +159,10 @@ namespace SmartHelper
             {
                 log.EnableSmartLog = Convert.ToBoolean(_configuration["SmartLog:EnableSmartLog"].ToString());
                 log.LogToFile = Convert.ToBoolean(_configuration["SmartLog:LogToFile"].ToString());
-                log.LogToDatabase= Convert.ToBoolean(_configuration["SmartLog:LogToDatabase"].ToString());
+                log.LogToDatabase = Convert.ToBoolean(_configuration["SmartLog:LogToDatabase"].ToString());
                 log.LogToRabbitMQ = Convert.ToBoolean(_configuration["SmartLog:LogToRabbitMQ"].ToString());
                 log.LogDirectory = _configuration["SmartLog:LogDirectory"].ToString();
-               
+
             }
             catch
             {
@@ -185,7 +198,16 @@ namespace SmartHelper
         public int CustomSettingTypeID { get; set; }
 
     }
+    public class Maintain
+    {
 
+        public int MaintananceID { get; set; }
+        public string Reason { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public bool HasExpired { get; set; }
+
+    }
     public class SmartLog
     {
         public bool EnableSmartLog { get; set; }
@@ -193,7 +215,7 @@ namespace SmartHelper
         public bool LogToDatabase { get; set; }
         public bool LogToRabbitMQ { get; set; }
         public string LogDirectory { get; set; }
-        
+
     }
 
 }
