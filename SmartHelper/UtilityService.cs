@@ -47,6 +47,31 @@ namespace SmartHelper
 
             }
         }
+
+        public static string WhatappSendMessageLink
+        {
+            get
+            {
+                return $"https://api.whatsapp.com/send/?phone={WhatappNumber}&text={WhatappSupportMessage}&app_absent=0";
+
+            }
+        }
+        public static string WhatappNumber
+        {
+            get
+            {
+                return UtilityService.CustomerServiceNumber.Replace("'+", "").Replace(" ", "").Trim();
+
+            }
+        }
+        public static string WhatappSupportMessage
+        {
+            get
+            {
+                return $"Hi, {UtilityService.ApplicationName} Team,I am having technical issues on {UtilityService.ApplicationName} may you please assist? Thank you!";
+
+            }
+        }
         public static string ApplicationNamePrefix
         {
             get

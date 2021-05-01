@@ -121,8 +121,15 @@ namespace SmartLogic
 
             int result = await _context.SaveChangesAsync();
             if (result > 0)
-            {  // also need to update id number and email address on client account 
-                Client client = _context.Clients.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
+
+                {
+                    UtilityService.CurrentUserName = user.UserName;
+                    UtilityService.UserFullName = user.UserFullName;
+                    UtilityService.UserProfileImage = user.ProfileImage;
+                    UtilityService.CurrentUserTypeID = user.UserTypeID;
+                    UtilityService.CanOverrideMaintananceMode = user.CanOverrideMaintananceMode;
+                    // also need to update id number and email address on client account 
+                    Client client = _context.Clients.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
                 if (UtilityService.IsNotNull(user) && UtilityService.IsNotNull(client))
                 {
                     client.EmailAddress = user.EmailAddress;
@@ -132,6 +139,7 @@ namespace SmartLogic
                     _context.Update(client);
                     result = await _context.SaveChangesAsync();
                 }
+
             }
             return result;
             }
