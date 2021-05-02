@@ -22,6 +22,7 @@ namespace SmartSave.Controllers
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var maintananceMode = GetData.MaintananceMode();
+            var licenceMode = GetData.LicenceMode();
             if (UtilityService.IsNotNull(maintananceMode) && !UtilityService.CanOverrideMaintananceMode)
             {
                 filterContext.Result = new RedirectToRouteResult(
@@ -30,6 +31,14 @@ namespace SmartSave.Controllers
                                 { "Action", "MaintananceMode" }
                                 });
 
+            }
+            else if (UtilityService.IsNotNull(licenceMode) && !UtilityService.CanOverrideMaintananceMode)
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary {
+                                { "Controller", "Licence" },
+                                { "Action", "LicenceMode" }
+                                    });
             }
             else
             {

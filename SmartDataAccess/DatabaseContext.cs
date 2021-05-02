@@ -210,6 +210,7 @@ namespace SmartDataAccess
         public DbSet<CustomSettingType> CustomSettingTypes { get; set; }
         public DbSet<CustomSetting> CustomSettings { get; set; }
         public DbSet<Maintanance> Maintanances { get; set; }
+        public DbSet<Licence> Licences { get; set; }
         
         public DbSet<ErrorLog> ErrorLogging { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }

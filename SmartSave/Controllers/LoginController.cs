@@ -44,6 +44,10 @@ namespace SmartSave.Controllers
             var maintanance = GetData.MaintananceMode();
             if(UtilityService.IsNotNull(maintanance))
                 return RedirectToAction("MaintananceMode", "Maintanance");
+
+            var licence = GetData.LicenceMode();
+               if (UtilityService.IsNotNull(licence))
+                return RedirectToAction("LicenceMode", "Licence");
             return View();
         }
 

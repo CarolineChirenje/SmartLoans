@@ -432,6 +432,57 @@ namespace SmartSave.Controllers
             }
         }
 
+
+        [HttpPost]
+        public ActionResult CustomisedSchedule(IFormCollection formCollection)
+        {
+
+            int invoiceID = 0;
+            Invoice invoice = null;
+            var invoiceDetailIDs = formCollection["InvoiceDetailID"];
+            var InvoiceID = formCollection["InvoiceID"];
+            try
+            {
+                invoiceID = Int32.Parse(InvoiceID);
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.GUI, ex);
+            }
+            if (invoiceID > 0)
+            {
+                invoice = _service.GetInvoice(invoiceID);
+                if (UtilityService.IsNull(invoice))
+                    return RedirectToAction(nameof(GenerateInvoice));
+                HttpContext.Session.SetString("InvoiceID", invoiceID.ToString());
+            }
+            List<InvoiceDetails> details = invoice.InvoiceDetails;
+            if (details != null && details.Count > 0)
+            {
+                invoice.InvoiceDetails = null;
+                List<int> invoiceDetailID = new List<int>();
+                foreach (string id in invoiceDetailIDs)
+                    invoiceDetailID.Add(int.Parse(id));
+                if (invoiceDetailID.Count() > 0)
+                {
+                    List<InvoiceDetails> result = details
+                    .Where(d => invoiceDetailIDs.ToString().Contains(d.InvoiceDetailID.ToString()))
+                    .ToList();
+                    invoice.InvoiceDetails = result;
+                }
+            }
+            Company company = _settingService.FindDefaultCompany();
+            InvoiceSchedule printOut = new InvoiceSchedule();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                Document document = printOut.Print(company, invoice);
+                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                pdfRenderer.Document = document;
+                pdfRenderer.RenderDocument();
+                pdfRenderer.PdfDocument.Save(stream, false);
+                return File(stream.ToArray(), "application/pdf", $"SalarySchedule.pdf");
+            }
+        }
         private void GetDropDownLists()
         {
             var paymentLists = _settingService.GetActiveProductList().Select(t => new

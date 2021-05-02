@@ -16,9 +16,9 @@
         <!-- form start -->
         @if (TempData["Error"] != null)
         {<div class="container">
-            <div class="text-danger">@TempData["Error"].ToString()</div>
-        </div>
-        <br />
+                <div class="text-danger">@TempData["Error"].ToString()</div>
+            </div>
+            <br />
         }
         <div class="container">
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -26,13 +26,13 @@
 
         @if (TempData["Success"] != null)
         {<div class="container">
-            <div class="text-success">@TempData["Success"].ToString()</div>
-        </div>
+                <div class="text-success">@TempData["Success"].ToString()</div>
+            </div>
         }
         @if (TempData["Warning"] != null)
         {<div class="container">
-            <div class="text-warning">@TempData["Warning"].ToString()</div>
-        </div>
+                <div class="text-warning">@TempData["Warning"].ToString()</div>
+            </div>
         }
         <div class="box-body">
 
@@ -77,11 +77,11 @@
                 <div class="col-sm-10">
                     @if (UtilityService.HasPermission(Permissions.View_Invoice_Details))
                     {
-                    <a asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@Model.InvoiceID">@Model.InvoiceDetails?.Count()</a>
+                        <a asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@Model.InvoiceID">@Model.InvoiceDetails?.Count()</a>
                     }
                     else
                     {
-                    <label for="inputEmail3" class="form-control">@Model.InvoiceDetails?.Count()</label>
+                        <label for="inputEmail3" class="form-control">@Model.InvoiceDetails?.Count()</label>
                     }
 
                 </div>
@@ -103,23 +103,23 @@
                 </div>
             </div>
             <br /> <br />
-            <input type="hidden" name="ClientDeductionID" value="@Model.InvoiceID" />
+            <input type="hidden" name="InvoiceID" value="@Model.InvoiceID" />
 
 
             <!-- /.box-body -->
             <div class="box-footer">
                 @if (UtilityService.HasPermission(Permissions.Delete_Invoice))
-            {
-                <a class="btn btn-danger" asp-controller="Transactions" asp-action="DeleteInvoice" asp-route-id="@Model.InvoiceID">Delete Invoice</a>
-            } &nbsp;&nbsp;&nbsp;
-                @if (UtilityService.HasPermission(Permissions.Process_Invoice) && (InvoiceState)Model.InvoiceStatusID==InvoiceState.Created)
-            {
-                <a class="btn btn-success" asp-controller="Transactions" asp-action="ProcessInvoice" asp-route-id="@Model.InvoiceID">Process Invoice</a>
-            }&nbsp;&nbsp;&nbsp;
-                @if (UtilityService.HasPermission(Permissions.Finalise_Invoice) && (InvoiceState)Model.InvoiceStatusID==InvoiceState.Processed)
-            {
-                <a class="btn btn-success" asp-controller="Transactions" asp-action="FinaliseInvoice" asp-route-id="@Model.InvoiceID">Finalise Invoice</a>
-            }&nbsp;&nbsp;&nbsp;
+                {
+                    <a class="btn btn-danger" asp-controller="Transactions" asp-action="DeleteInvoice" asp-route-id="@Model.InvoiceID">Delete Invoice</a>
+                } &nbsp;&nbsp;&nbsp;
+                @if (UtilityService.HasPermission(Permissions.Process_Invoice) && (InvoiceState)Model.InvoiceStatusID == InvoiceState.Created)
+                {
+                    <a class="btn btn-success" asp-controller="Transactions" asp-action="ProcessInvoice" asp-route-id="@Model.InvoiceID">Process Invoice</a>
+                }&nbsp;&nbsp;&nbsp;
+                @if (UtilityService.HasPermission(Permissions.Finalise_Invoice) && (InvoiceState)Model.InvoiceStatusID == InvoiceState.Processed)
+                {
+                    <a class="btn btn-success" asp-controller="Transactions" asp-action="FinaliseInvoice" asp-route-id="@Model.InvoiceID">Finalise Invoice</a>
+                }&nbsp;&nbsp;&nbsp;
                 <a class="btn btn-primary" asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@Model.InvoiceID">Invoice Details</a>
                 <a class="btn btn-default pull-right" asp-controller="Transactions" asp-action="Invoices">Cancel</a>&nbsp;&nbsp;&nbsp;
                 <a class="btn btn-warning" asp-controller="Transactions" asp-action="PrintSchedule" asp-route-id="@Model.InvoiceID">Print</a>&nbsp; &nbsp; &nbsp;
@@ -128,7 +128,104 @@
             <!-- /.box-footer -->
 
         </div>
-        <!-- /.box -->
-        </div>
+        @if (Model.InvoiceStatusID != (int)InvoiceState.Created)
+        {
+            <!-- /.box -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Invoice Details
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" id="myTab">
+                                <li>
+                                    <a href="#InvoiceDetails" data-toggle="tab">Invoice Details</a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <form method="post" action="~/Transactions/CustomisedSchedule">
+                                    <input type="hidden" name="InvoiceID" value="@Model.InvoiceID" />
+                                    <div class="tab-pane fade in active" id="InvoiceDetails">
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                Invoice Details
+                                            </div>
+                                        </div>
+                                        <!-- /.panel-heading -->
+                                        <div class="panel-body">
+                                            <div class="panel-body">
+                                                <div class="dataTable_wrapper">
+                                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Select To Print</th>
+                                                                <th>Affiliation</th>
+                                                                <th>Name</th>
+                                                                <th>Occupation</th>
+                                                                <th>Salary</th>
+                                                                <th>Product</th>
+                                                                <th>Sub Invoice Number</th>
+                                                                <th>Amount Due</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="odd gradeX">
+                                                            @foreach (var item in Model.InvoiceDetails)
+                                                            {
+                                                                <tr>
+                                                                    @{
+                                                                        string affiliation = String.Empty;
+                                                                        if (UtilityService.IsNotNull(item.Client.ClientGroup))
+                                                                        {
+                                                                            affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
+                                                                        }
+                                                                    }
+                                                                    <td align="center"><input type="checkbox" id="checkBoxAll" name="InvoiceDetailID" value="@item.InvoiceDetailID" /></td>
+                                                                    <td>@affiliation</td>
+                                                                    @if (UtilityService.HasPermission(Permissions.View_User))
+                                                                    {
+                                                                        <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@item.Client.ClientFullName</a></td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@item.Client.ClientFullName</td>
+                                                                    }
+                                                                    <td>@Html.DisplayFor(modelItem => item.Client.Occupation)</td>
+                                                                    <td>@Html.DisplayFor(modelItem => item.Client.Salary)</td>
+                                                                    @if (UtilityService.HasPermission(Permissions.View_Product))
+                                                                    {
+                                                                        <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Product.Name</a></td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@item.Product.Name</td>
+                                                                    }
+                                                                    <td>@item.InvoiceNumber</td>
+                                                                    <td>@Html.DisplayFor(modelItem => item.DeductedAmount)</td>
+                                                                </tr>
+                                                            }
+                                                    </table>
+                                                </div>
+                                                <div class="box-footer">
+                                                    <button type="submit" class="btn  btn-small btn-success">Print Selected Entries</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </section>
 

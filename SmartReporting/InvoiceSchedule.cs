@@ -42,6 +42,7 @@ namespace SmartReporting
                 style = ReportingUtilities.DefineStyles(this.document);
                 AddressAndHeader();
                 ProductDetails();
+                if(_invoice.InvoiceDetails !=null && _invoice.InvoiceDetails.Count>0)
                 ScheduleDetails();
             }
             catch (Exception ex)

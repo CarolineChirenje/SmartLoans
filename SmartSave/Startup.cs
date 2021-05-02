@@ -74,7 +74,7 @@ namespace SmartSave
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IFeatureFlagService, FeatureFlagService>();
-
+            services.AddScoped<ILicenceService, LicenceService>();
             // Add MVC services to the services container.
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache

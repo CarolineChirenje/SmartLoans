@@ -393,6 +393,20 @@ namespace SmartDataAccess
                 },
 
               // put new menu here
+                new Menu()
+                {
+                    MenuID =9996,
+                    MenuGroupID = (int)MenuGroups.Developer_Menu,
+                    DisplayName = "Licence",
+                    ControllerName = "Licence",
+                    ActionName = "Licence",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa  fa-key"),
+                    OrderNo =9996,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
                new Menu()
                 {
                     MenuID =9997,

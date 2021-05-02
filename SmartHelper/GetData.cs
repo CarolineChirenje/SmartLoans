@@ -29,7 +29,15 @@ namespace SmartHelper
                 return db.Query<Maintain>(maintananceQuery).SingleOrDefault();
             }
         }
-
+        public static Licensing LicenceMode()
+        {
+            string currentDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            string licenceQuery = $"SELECT TOP 1 * FROM Licences WHERE StartDate<='{currentDate}' AND EndDate<='{currentDate}';";
+            using (IDbConnection db = new SqlConnection(SSDBConnection))
+            {
+                return db.Query<Licensing>(licenceQuery).SingleOrDefault();
+            }
+        }
         public static CustomSetting GetSettingValue(int CustomSettingID)
         {
             string sqlCustomSetting = $"SELECT TOP 1 * FROM CustomSettings WHERE CustomSettingID={CustomSettingID};";
@@ -208,6 +216,17 @@ namespace SmartHelper
         public bool HasExpired { get; set; }
 
     }
+    public class Licensing
+    {
+
+        public int LicenceID { get; set; }
+        public string Reason { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public bool HasExpired { get; set; }
+
+    }
+    
     public class SmartLog
     {
         public bool EnableSmartLog { get; set; }

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace SmartLogic
 {
-  public  interface IMaintananceService
+  public  interface ILicenceService
     {
         Task<int> Delete(int id);
-        Task<int> Save(Maintanance Maintanance);
-        Task<int> Update(Maintanance Maintanance);
-        Task<int> ActionMaintanance(int id, DatabaseAction action);
-        Task<Maintanance> FindMaintanance(int id);
-        Task<List<Maintanance>> Maintanance();
-        Maintanance FindActiveMaintanance();
+        Task<int> Save(Licence Licence);
+        Task<int> Update(Licence Licence);
+        Task<int> ActionLicence(int id, DatabaseAction action);
+        Task<Licence> FindLicence(int id);
+        Task<List<Licence>> Licence();
+        Licence FindActiveLicence();
     }
 }

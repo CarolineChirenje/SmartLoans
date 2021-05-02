@@ -38,17 +38,18 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        @{ string hasExpired = UtilityService.ShowYesOrNo(item.HasExpired);
-                                            string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                        }
+                                <tr>
+                                    @{ string hasExpired = UtilityService.ShowYesOrNo(item.HasExpired);
+                                        string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                    }
 
-                                        <td>@Html.DisplayFor(modelItem => item.Reason)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Period)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-                                        <td>@dateCreated</td>
-                                        <td><a asp-controller="Maintanance" asp-action="ViewMaintanance" asp-route-id="@item.MaintananceID">View</a></td>
-                                    </tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Reason)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Period)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                    <td>@dateCreated</td>
+                                    <td>@Html.DisplayFor(modelItem => item.HasExpired)</td>
+                                    <td><a asp-controller="Maintanance" asp-action="ViewMaintanance" asp-route-id="@item.MaintananceID">View</a></td>
+                                </tr>
                                 }
                         </table>
                     </div>
