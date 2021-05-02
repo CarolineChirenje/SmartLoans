@@ -8068,3 +8068,7 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Mainta
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Maintanance\MaintananceMode.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Maintanance\ViewMaintanance.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Shared\_LayoutNoMenu.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Licence\AddLicence.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Licence\Licence.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Licence\LicenceMode.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Licence\ViewLicence.cshtml.g.cs
