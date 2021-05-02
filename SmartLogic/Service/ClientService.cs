@@ -1366,9 +1366,10 @@ namespace SmartLogic
                         Salary = item.Client.Salary,
                         ProductID = item.ProductID,
                         ProductName = item.Product.Name,
-                        InvoiceDate = InvoiceDate
+                        InvoiceDate = InvoiceDate,
+                        DeductionToBeApplied = item.DoNotDeduct ? "Do Not Deduct" : (!item.DoNotDeduct && item.DeductionPercentage.HasValue ? "Deduct At Individual Level" : "Deduct At Product Level")
 
-                    });
+                    }); 
                 }
                 invoicePackage.Entries = invoiceEntries;
                 return invoicePackage;
@@ -1379,6 +1380,7 @@ namespace SmartLogic
                 throw;
             }
         }
+  
         // ClientFees
         public async Task<ClientFee> FindClientFee(int id)
         {

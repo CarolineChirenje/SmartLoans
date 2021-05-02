@@ -22,12 +22,12 @@ namespace SmartReporting
         Color WhiteColor = Colors.White;
         Color HeaderColor = Colors.LightGray;
         TextFrame addressFrame;
-               CultureInfo culture;
+        CultureInfo culture;
         Section section;
         Style style;
-              Company _Company;
+        Company _Company;
         Invoice _invoice;
-             public Document Print(Company Company, Invoice clientDeduction)
+        public Document Print(Company Company, Invoice clientDeduction)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace SmartReporting
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Salary Schedule");
                 this._invoice = clientDeduction;
                 this._Company = Company;
-              
+
                 this.culture = new CultureInfo("en-US");
                 style = ReportingUtilities.DefineStyles(this.document);
                 AddressAndHeader();
@@ -90,7 +90,7 @@ namespace SmartReporting
                 // Before you can add a row, you must define the columns
                 Column column = this.table.AddColumn("10cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
-               paragraph = this.addressFrame.AddParagraph();
+                paragraph = this.addressFrame.AddParagraph();
 
                 if (UtilityService.IsNull(_Company))
                 {
@@ -273,7 +273,7 @@ namespace SmartReporting
                 tblrow1.Cells[3].Format.Alignment = ParagraphAlignment.Left;
                 tblrow1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow1.Cells[3].AddParagraph(DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
-               paragraph = section.AddParagraph();
+                paragraph = section.AddParagraph();
             }
             catch (Exception ex)
             {
@@ -310,11 +310,11 @@ namespace SmartReporting
 
                 column = this.table.AddColumn("4cm");
                 column.Format.Alignment = ParagraphAlignment.Left;
-                
-                    column = this.table.AddColumn("3.5cm");
-                    column.Format.Alignment = ParagraphAlignment.Left;
-            
-               column = this.table.AddColumn("2.5cm");
+
+                column = this.table.AddColumn("3.5cm");
+                column.Format.Alignment = ParagraphAlignment.Left;
+
+                column = this.table.AddColumn("2.5cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
                 int countCellColumn = 0;
 
@@ -343,18 +343,18 @@ namespace SmartReporting
 
                 countCellColumn++;
 
-                    row.Cells[countCellColumn].AddParagraph("Product");
-                    row.Cells[countCellColumn].Format.Font.Bold = true;
-                    row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
-                    row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
-                    countCellColumn++;
-                             row.Cells[countCellColumn].AddParagraph("Amount Due");
+                row.Cells[countCellColumn].AddParagraph("Product");
+                row.Cells[countCellColumn].Format.Font.Bold = true;
+                row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
+                row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
+                countCellColumn++;
+                row.Cells[countCellColumn].AddParagraph("Amount Due");
                 row.Cells[countCellColumn].Format.Font.Bold = true;
                 row.Cells[countCellColumn].Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
 
                 if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(0, 0, countCellColumn + 1 , 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
+                    this.table.SetEdge(0, 0, countCellColumn + 1, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
                 Paragraph paragraph = this.addressFrame.AddParagraph();
 
@@ -384,13 +384,13 @@ namespace SmartReporting
                     row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
                     row1.Cells[countCellValue].AddParagraph(transaction.Client.Occupation);
                     countCellValue++;
-                   
-                        row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
-                        row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
-                        row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
-                        row1.Cells[countCellValue].AddParagraph(transaction.Product.Name);
-                        countCellValue++;
-                  
+
+                    row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                    row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
+                    row1.Cells[countCellValue].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Left : ParagraphAlignment.Center;
+                    row1.Cells[countCellValue].AddParagraph(transaction.Product.Name);
+                    countCellValue++;
+
                     row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                     row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Right;
                     row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
@@ -398,7 +398,7 @@ namespace SmartReporting
 
                     finalCountCellValue = countCellValue;
                     if (UtilityService.StatementShowTableBoarders)
-                        this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue + 1 , 1, Edge.Box, BorderStyle.Single, 0.75);
+                        this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue + 1, 1, Edge.Box, BorderStyle.Single, 0.75);
                 }
 
                 // Add an invisible row as a space line to the table
@@ -410,7 +410,7 @@ namespace SmartReporting
                 row2.Cells[0].Borders.Visible = false;
                 row2.Cells[0].Format.Font.Bold = true;
                 row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-                row2.Cells[0].MergeRight = finalCountCellValue-1;
+                row2.Cells[0].MergeRight = finalCountCellValue - 1;
                 row2.Cells[0].AddParagraph("Total Amount");
                 row2.Cells[finalCountCellValue].AddParagraph(String.Format(culture, "{0:C}", TotalPaid));
 

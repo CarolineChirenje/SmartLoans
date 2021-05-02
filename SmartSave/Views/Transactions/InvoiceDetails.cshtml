@@ -106,7 +106,7 @@
                     <div class="box-footer">
 
                         <a class="btn btn-warning" asp-controller="Transactions" asp-action="PrintSchedule" asp-route-id="@Model.InvoiceID">Print</a>&nbsp;&nbsp;&nbsp;
-                        <a class="btn btn-default pull-right" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                        <a class="btn btn-default pull-right" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@Model.InvoiceID">Cancel</a>
                         @if (UtilityService.HasPermission(Permissions.Remove_Invoice_Entries) && (Model.State!=InvoiceState.Finalised))
                         {<button type="submit" class="btn btn-danger">Remove Multiple Invoice Entries</button>
                         }
