@@ -660,10 +660,15 @@
                                                                 string status = UtilityService.ShowYesOrNo(item.IsDeRegistered);
                                                                 int sessions = item.Course.CourseOutlines == null ? 0 : item.Course.CourseOutlines.Count();
                                                                 string dateCompleted = item.DateCompleted.HasValue ? UtilityService.ShowDateTime(item.DateCompleted) : "Not Complete";
-                                                            }
+                                                                var duration = item.Course.CourseIntakes.Where(c => c.CourseIntakeID == item.CourseIntakeID).FirstOrDefault();
+                                                                string intake = String.Empty;
+                                                                if (UtilityService.IsNotNull(duration))
+                                                                    intake = duration.Duration;
+
+                                                                }
 
                                                             <td><a asp-controller="Client" asp-action="ViewClientCourse" asp-route-id="@item.ClientCourseID">@item.Course.Title</a></td>
-                                                            <td>@item.CourseIntake?.Duration</td>
+                                                            <td>@intake</td>
                                                             <td>@dateRegistered</td>
                                                             <td>@sessions</td>
                                                             <td>@dateCompleted</td>
@@ -1262,7 +1267,6 @@
                                                         <tr>
                                                             <td>@Html.DisplayFor(modelItem => item.AttendanceRegister.CourseIntake.Course.Title)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.AttendanceRegister.CourseIntake.Duration)</td>
-
                                                             <td>@item.AttendanceRegister.AttendanceDate</td>
                                                             <td>@item.AttendanceRegister.AttendanceRegisterDetails.FirstOrDefault()?.AttendanceStatus</td>
                                                         </tr>
@@ -1485,8 +1489,7 @@
                 </div>
                 <div class="modal-footer">
                     @if (UtilityService.HasPermission(Permissions.Add_Client_Course))
-                    {
-                        <button type="submit" class="btn btn-primary">Register</button>}
+                    { <button type="submit" class="btn btn-primary">Register</button>}
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                 </div>

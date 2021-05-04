@@ -42,16 +42,6 @@
                 </div>
                 }
 
-                @*<div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
-                        <div class="col-sm-10">
-                            <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductList">
-                                <option value="">All</option>
-                            </select>
-                        </div>
-                    </div>*@
-
-
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Invoice  Date From:</label>
                     <div class="col-sm-10">
@@ -71,7 +61,7 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 @if (UtilityService.HasPermission(Permissions.Generate_Invoices))
-                { <button type="submit" class="btn btn-success">View</button>
+                { <button type="submit" class="btn btn-success">View Generated Invoice</button>
                 }&nbsp;&nbsp;
                 @if (UtilityService.HasPermission(Permissions.Generate_Invoices))
                 {<a target="_blank" class="btn btn-primary" asp-controller="Transactions" asp-action="GenerateInvoice">Generate Invoice</a>

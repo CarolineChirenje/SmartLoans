@@ -400,6 +400,8 @@ namespace SmartSave.Controllers
             {
                 invoiceID = _service.ProcessInvoice(clientProductID, invoiceID);
                 var invoiceDetails = _service.GetInvoiceDetails(clientProductID, invoice.InvoiceDate).Result;
+                TempData["Title"] = $"Invoice Entries for Invoice Number - {invoiceID.ToString()}";
+
                 return View(invoiceDetails);
             }
             return RedirectToAction(nameof(GenerateInvoice));

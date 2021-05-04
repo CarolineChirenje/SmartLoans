@@ -179,7 +179,7 @@
                                                                 <tr>
                                                                     @{
                                                                         string affiliation = String.Empty;
-                                                                        if (UtilityService.IsNotNull(item.Client.ClientGroup))
+                                                                        if (UtilityService.IsNotNull(item.Client.ClientGroupID))
                                                                         {
                                                                             affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
                                                                         }

@@ -50,7 +50,6 @@
                                         <th>Occupation</th>
                                         <th>Salary</th>
                                         <th>Instruction</th>
-
                                     </tr>
                                 </thead>
                                 <tbody class="odd gradeX">
@@ -58,27 +57,25 @@
                                     @{ var clientList = Model.Entries.ToList(); }
                                     @for (int i = 0; i < clientList.Count(); i++)
                                     {
+                                        <tr>
+                                            @{
+                                                string invoiceDate = UtilityService.ShowDate(clientList[i].InvoiceDate);
 
-
-                                    <tr>
-                                        @{
-                                            string invoiceDate = UtilityService.ShowDate(clientList[i].InvoiceDate);
-
-                                        }
-                                        <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientProductID" value="@clientList[i].ClientProductID" /></td>
-                                        @if (UtilityService.HasPermission(Permissions.View_Client))
-                                        {
-                                            <td><a target="_blank" asp-controller="Client" asp-action="ViewClient" asp-route-id="@clientList[i].ClientID">@clientList[i].ClientFullName</a></td>
-                                        }
-                                        else
-                                        {
-                                            <td>@clientList[i].ClientFullName</td>
-                                        }
-                                        <td>@clientList[i].ProductName</td>
-                                        <td>@clientList[i].Occupation</td>
-                                        <td>@clientList[i].Salary</td>
-                                        <td>@clientList[i].DeductionToBeApplied</td>
-                                    </tr>
+                                            }
+                                            <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientProductID" value="@clientList[i].ClientProductID" /></td>
+                                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                                            {
+                                                <td><a target="_blank" asp-controller="Client" asp-action="ViewClient" asp-route-id="@clientList[i].ClientID">@clientList[i].ClientFullName</a></td>
+                                            }
+                                            else
+                                            {
+                                                <td>@clientList[i].ClientFullName</td>
+                                            }
+                                            <td>@clientList[i].ProductName</td>
+                                            <td>@clientList[i].Occupation</td>
+                                            <td>@clientList[i].Salary</td>
+                                            <td>@clientList[i].DeductionToBeApplied</td>
+                                        </tr>
 
                                     }
                             </table>
