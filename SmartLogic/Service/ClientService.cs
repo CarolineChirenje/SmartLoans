@@ -197,16 +197,20 @@ namespace SmartLogic
                 Client.LastChangedDate = DateTime.Now;
                 Client.RegistrationDate = DateTime.Now;
                 Client.IsActive = true;
-                _context.Add(Client);
-                await _context.SaveChangesAsync();
+                
                 if (Client.ClientAccountTypeID == (int)Client_AccountType.Joint)
                 {
                     if (UtilityService.IsNotNull(Client.JointApplicant))
                     {
-                        Client.JointApplicant.ClientID = Client.ClientID;
-                        await Save(Client.JointApplicant);
+                        Client.JointApplicant.RecordStatusID = (int)RecordState.Active;
+                        Client.JointApplicant.LastChangedBy = UtilityService.CurrentUserName;
+                        Client.JointApplicant.LastChangedDate = DateTime.Now;
+                        //Client.JointApplicant.ClientID = Client.ClientID;
+                        //await Save(Client.JointApplicant);
                     }
                 }
+                _context.Add(Client);
+                await _context.SaveChangesAsync();
                 return Client.ClientID;
             }
             catch (Exception ex)
@@ -301,11 +305,17 @@ namespace SmartLogic
         {
             try
             {
-                applicant.RecordStatusID = (int)RecordState.Active;
+                JointApplicant updateApplicant = await _context.JointApplicants.FindAsync(applicant.JointApplicantID);
+                if (UtilityService.IsNull(updateApplicant))
+                    updateApplicant = await _context.JointApplicants.Where(ja => ja.ClientID == applicant.ClientID).FirstOrDefaultAsync();
+
+                if (UtilityService.IsNotNull(updateApplicant))
+                                  return await Update(updateApplicant);
+                
+                                  applicant.RecordStatusID = (int)RecordState.Active;
                 applicant.LastChangedBy = UtilityService.CurrentUserName;
                 applicant.LastChangedDate = DateTime.Now;
-                applicant.RecordStatusID = (int)RecordState.Active;
-                _context.Add(applicant);
+                                _context.Add(applicant);
                 await _context.SaveChangesAsync();
 
                 return applicant.JointApplicantID;

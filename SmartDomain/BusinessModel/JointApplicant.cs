@@ -23,7 +23,7 @@ namespace SmartDomain
         public virtual RelationshipType RelationshipType { get; set; }
         public int ApplicantTitleID { get; set; }
         public virtual Titles Title { get; set; }
-        public int RecordStatusID { get; set; }
+        public int RecordStatusID { get; set; } = 1;
         public virtual RecordStatus RecordStatus { get; set; }
 
     }
