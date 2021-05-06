@@ -60,7 +60,7 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
                     <div class="col-sm-10">
 
-                        <select asp-for="@Model.Client.CompanyID"  asp-items="ViewBag.CompanyList" name="CompanyID" class="form-control">
+                        <select asp-for="@Model.Client.CompanyID" asp-items="ViewBag.CompanyList" name="CompanyID" class="form-control">
                         </select>
                         <span id="CompanyListNotFound" class="text-danger text-bold"></span>
                     </div>
@@ -388,7 +388,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                         Information
+                        Information
                     </div>
                     <!-- /.panel-heading -->
                     <form method="post" asp-controller="Client" asp-action="ViewClientNote">
@@ -415,49 +415,49 @@
                                     </div>
                                 </div>
                             }
-                                @{
+                            @{
 
-                                    string closedDate = UtilityService.ShowDateTime(Model.DateClosed);
-                                    string dateUploaded = UtilityService.ShowDateTime(Model.DateUploaded);
+                                string closedDate = UtilityService.ShowDateTime(Model.DateClosed);
+                                string dateUploaded = UtilityService.ShowDateTime(Model.DateUploaded);
 
-                                }
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Initiator</label>
-                                    <label for="inputEmail3" class="form-control label-default">@Model.UserType.Name</label>
-                                </div>
+                            }
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Initiator</label>
+                                <label for="inputEmail3" class="form-control label-default">@Model.UserType.Name</label>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Date Uploaded:</label>
-                                    <label for="inputEmail3" class="form-control label-default">@dateUploaded</label>
-                                </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Date Uploaded:</label>
+                                <label for="inputEmail3" class="form-control label-default">@dateUploaded</label>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Date Closed:</label>
-                                    <label for="inputEmail3" class="form-control label-default">@closedDate</label>
-                                </div>
-
-
-
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
-
-                                    <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
-
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
-
-                                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
-
-                                </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Date Closed:</label>
+                                <label for="inputEmail3" class="form-control label-default">@closedDate</label>
+                            </div>
 
 
 
-                                <input type="hidden" name="ClientNoteID" value="@Model.ClientNoteID" />
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
 
                             </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+
+                                <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+
+                            </div>
+
+
+
+                            <input type="hidden" name="ClientNoteID" value="@Model.ClientNoteID" />
+
+                        </div>
                         <div class="modal-footer">
                             @if (UtilityService.HasPermission(Permissions.Update_Client_Note))
                             {
@@ -472,7 +472,7 @@
                             {
                                 <a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Notes</a>
                             } <a class="btn btn-default" asp-controller="Client" asp-action="Clients">Cancel</a>
-                            </div>
+                        </div>
 
                     </form>
                 </div>
@@ -508,18 +508,15 @@
             success: function (data) {
                 var markup = "";
                 if (data == null || data.length == 0) {
-                    if (affiliationID === 2) {
+                   if (affiliationID == 2) {
                         $("#AffiliationListNotFound").text("")
                     }
                     else {
                         $("#AffiliationListNotFound").text("No registered Companies Found")
                     }
-                    $(":submit").attr("disabled", true);
                 }
                 else {
                     $("#AffiliationListNotFound").text("");
-                    $(":submit").removeAttr("disabled");
-
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
                     }

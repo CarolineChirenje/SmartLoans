@@ -503,7 +503,7 @@ namespace SmartSave.Controllers
             {
                 clientID = 0;
             }
-            var ClientList = _ClientService.Clients().Result.Select(t => new
+            var ClientList = _ClientService.Clients().Select(t => new
             {
                 t.ClientID,
                 Name = $" {t.ClientFullName} - {t.AccountNumber}",

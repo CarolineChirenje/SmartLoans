@@ -4,11 +4,13 @@ D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartLogic.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartDataAccess.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartDomain.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartInterfaces.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartLog.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartReporting.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartDataAccess.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartDomain.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartLog.pdb
+D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartInterfaces.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartReporting.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartHelper.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Debug\netcoreapp3.0\SmartHelper.dll.config

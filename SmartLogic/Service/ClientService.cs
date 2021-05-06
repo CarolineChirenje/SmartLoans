@@ -7,6 +7,7 @@ using SmartDomain;
 using SmartHelper;
 using SmartDataAccess;
 using SmartLog;
+using SmartInterfaces;
 
 namespace SmartLogic
 {
@@ -197,7 +198,7 @@ namespace SmartLogic
                 Client.LastChangedDate = DateTime.Now;
                 Client.RegistrationDate = DateTime.Now;
                 Client.IsActive = true;
-                
+
                 if (Client.ClientAccountTypeID == (int)Client_AccountType.Joint)
                 {
                     if (UtilityService.IsNotNull(Client.JointApplicant))
@@ -310,12 +311,12 @@ namespace SmartLogic
                     updateApplicant = await _context.JointApplicants.Where(ja => ja.ClientID == applicant.ClientID).FirstOrDefaultAsync();
 
                 if (UtilityService.IsNotNull(updateApplicant))
-                                  return await Update(updateApplicant);
-                
-                                  applicant.RecordStatusID = (int)RecordState.Active;
+                    return await Update(updateApplicant);
+
+                applicant.RecordStatusID = (int)RecordState.Active;
                 applicant.LastChangedBy = UtilityService.CurrentUserName;
                 applicant.LastChangedDate = DateTime.Now;
-                                _context.Add(applicant);
+                _context.Add(applicant);
                 await _context.SaveChangesAsync();
 
                 return applicant.JointApplicantID;
@@ -393,43 +394,56 @@ namespace SmartLogic
             }
 
         }
-        public async Task<List<Client>> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0)
+        public List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0)
         {
             try
             {
                 List<int> ClientIDs = new List<int>();
                 if (productID > 0)
-                   ClientIDs = ClientProductIDs(productID);
-
-                var clients = await _context.Clients.
-                Include(c => c.ClientContacts).
-                Include(p => p.ClientPayments).
-                Include(n => n.ClientNotes).
-                ThenInclude(ut => ut.UserType).
-                Include(d => d.ClientDocuments).
-                ThenInclude(document => document.DocumentType).
-                ThenInclude(docFormat => docFormat.DocumentFormat).
-                Include(sa => sa.ClientMedicalDetails).
-                Include(at => at.ClientAccountType).
-                Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
-                Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
-                Include(c => c.Title).
-                Include(at => at.ClientAccountType).
-                Include(at => at.ClientGroup).
-                Include(at => at.Company).
-                AsNoTracking().
-                ToListAsync();
-                if (clients == null || clients.Count == 0)
+                    ClientIDs = ClientProductIDs(productID);
+                var clients = (from c in _context.Clients
+                               join t in _context.Titles on c.TitleID equals t.TitleID
+                               join cg in _context.ClientGroups on c.ClientGroupID equals cg.ClientGroupID
+                               join cat in _context.ClientAccountTypes on c.ClientAccountTypeID equals cat.ID
+                               select c).ToList();
+                if (clients == null)
                     return null;
                 if (!String.IsNullOrEmpty(accountNumber))
                     clients = clients.Where(m => m.AccountNumber.Contains(accountNumber.Trim())).ToList();
-               
+
                 if (newClientsOnly)
                     clients = clients.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).ToList();
-                if (productID > 0 && (ClientIDs!=null && ClientIDs.Count()>0))
+                if (productID > 0 && (ClientIDs != null && ClientIDs.Count() > 0))
                     clients = clients.Where(c => ClientIDs.Contains(c.ClientID)).ToList();
+                List<ClientList> list = new List<ClientList>();
+                foreach (var client in clients)
+                {
+                    var record = new ClientList
+                    {
+                        ClientID = client.ClientID,
+                        TitleID = client.TitleID,
+                        Status = UtilityService.ShowActiveStatus(client.IsActive),
+                        AccountType = _context.ClientGroups.Find(client.ClientGroupID)?.Name,
+                        Initials = client.Initials,
+                        LastName = client.LastName,
+                        AccountNumber = client.AccountNumber,
+                        IsJointAccount = ((Client_AccountType)client.ClientAccountTypeID == Client_AccountType.Joint),
+                        Affiliation = ((Affiliation)client.ClientGroupID == Affiliation.Individual ? Affiliation.Individual.ToString() : (_context.Companies.Find(client.CompanyID)?.Name))
+                     };
 
-                return clients;
+                    if (record.IsJointAccount)
+                    {
+                        var jointApplicant = _context.JointApplicants.Where(c => c.ClientID == client.ClientID).FirstOrDefault();
+                        if (UtilityService.IsNotNull(jointApplicant))
+                        {
+                            record.ApplicantTitleID = jointApplicant.ApplicantTitleID;
+                            record.JointApplicantInitials = jointApplicant.Initials;
+                            record.JointApplicantLastName = jointApplicant.LastName;
+                        }
+                    }
+                    list.Add(record);
+                }
+                return list.ToList();
 
             }
             catch (Exception ex)
@@ -1379,7 +1393,7 @@ namespace SmartLogic
                         InvoiceDate = InvoiceDate,
                         DeductionToBeApplied = item.DoNotDeduct ? "Do Not Deduct" : (!item.DoNotDeduct && item.DeductionPercentage.HasValue ? "Deduct At Individual Level" : "Deduct At Product Level")
 
-                    }); 
+                    });
                 }
                 invoicePackage.Entries = invoiceEntries;
                 return invoicePackage;
@@ -1390,7 +1404,7 @@ namespace SmartLogic
                 throw;
             }
         }
-  
+
         // ClientFees
         public async Task<ClientFee> FindClientFee(int id)
         {

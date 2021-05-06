@@ -2979,6 +2979,20 @@
           "bin/placeholder/SmartHelper.dll": {}
         }
       },
+      "SmartInterfaces/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.0",
+        "dependencies": {
+          "SmartDomain": "1.0.0",
+          "SmartHelper": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SmartInterfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartInterfaces.dll": {}
+        }
+      },
       "SmartLog/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.0",
@@ -2998,6 +3012,7 @@
         "dependencies": {
           "SmartDataAccess": "1.0.0",
           "SmartDomain": "1.0.0",
+          "SmartInterfaces": "1.0.0",
           "SmartLog": "1.0.0",
           "SmartReporting": "1.0.0"
         },
@@ -9580,6 +9595,11 @@
       "path": "../SmartHelper/SmartHelper.csproj",
       "msbuildProject": "../SmartHelper/SmartHelper.csproj"
     },
+    "SmartInterfaces/1.0.0": {
+      "type": "project",
+      "path": "../SmartInterfaces/SmartInterfaces.csproj",
+      "msbuildProject": "../SmartInterfaces/SmartInterfaces.csproj"
+    },
     "SmartLog/1.0.0": {
       "type": "project",
       "path": "../SmartErrorLog/SmartLog.csproj",
@@ -9606,6 +9626,7 @@
       "SmartDataAccess >= 1.0.0",
       "SmartDomain >= 1.0.0",
       "SmartHelper >= 1.0.0",
+      "SmartInterfaces >= 1.0.0",
       "SmartLog >= 1.0.0",
       "SmartLogic >= 1.0.0",
       "SmartReporting >= 1.0.0"
@@ -9652,6 +9673,9 @@
             },
             "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj": {
               "projectPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj"
+            },
+            "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj": {
+              "projectPath": "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj"
             },
             "D:\\Dev Projects\\SmartSave\\SmartLogic\\SmartLogic.csproj": {
               "projectPath": "D:\\Dev Projects\\SmartSave\\SmartLogic\\SmartLogic.csproj"

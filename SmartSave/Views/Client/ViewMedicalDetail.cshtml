@@ -58,7 +58,7 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
                     <div class="col-sm-10">
 
-                        <select asp-for="@Model.Client.CompanyID"  asp-items="ViewBag.CompanyList" name="CompanyID" class="form-control">
+                        <select asp-for="@Model.Client.CompanyID" asp-items="ViewBag.CompanyList" name="CompanyID" class="form-control">
                         </select>
                         <span id="CompanyListNotFound" class="text-danger text-bold"></span>
                     </div>
@@ -456,7 +456,7 @@
                             } @if (UtilityService.HasPermission(Permissions.View_Client))
                             {<a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Details</a>
                             }<a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                            </div>
+                        </div>
 
                     </form>
                 </div>
@@ -492,18 +492,15 @@
             success: function (data) {
                 var markup = "";
                 if (data == null || data.length == 0) {
-                    if (affiliationID === 2) {
+                   if (affiliationID == 2) {
                         $("#AffiliationListNotFound").text("")
                     }
                     else {
                         $("#AffiliationListNotFound").text("No registered Companies Found")
                     }
-                    $(":submit").attr("disabled", true);
                 }
                 else {
                     $("#AffiliationListNotFound").text("");
-                    $(":submit").removeAttr("disabled");
-
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
                     }

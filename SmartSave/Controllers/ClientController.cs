@@ -19,6 +19,7 @@ using System.Text;
 using PdfSharpCore.Pdf.Security;
 using Microsoft.Extensions.Logging;
 using SmartLog;
+using SmartInterfaces;
 
 namespace SmartSave.Controllers
 {
@@ -58,7 +59,7 @@ namespace SmartSave.Controllers
             {
                 if (UtilityService.UserType == (int)TypeOfUser.Employee)
                     return RedirectToAction("Dashboard", "Home");
-                List<Client> Clients = await _service.Clients(accountNum, newClientsOnly, productID);
+                List<ClientList> Clients =  _service.Clients(accountNum, newClientsOnly, productID);
                 return View(Clients);
             }
             catch (Exception ex)

@@ -105,6 +105,7 @@
     <ProjectReference Include="..\SmartDataAccess\SmartDataAccess.csproj" />
     <ProjectReference Include="..\SmartDomain\SmartDomain.csproj" />
     <ProjectReference Include="..\SmartErrorLog\SmartLog.csproj" />
+    <ProjectReference Include="..\SmartInterfaces\SmartInterfaces.csproj" />
     <ProjectReference Include="..\SmartLogic\SmartLogic.csproj" />
     <ProjectReference Include="..\SmartHelper\SmartHelper.csproj" />
     <ProjectReference Include="..\SmartLogic\SmartLogic.csproj" />

@@ -24,12 +24,10 @@
 </head>
 <body class="hold-transition login-page">
     <section class="content-header">
-
         @if (TempData["Error"] != null)
         {<div class="container">
-                <div class="text-danger">@TempData["Error"].ToString()</div>
+                <div class="text-danger" style="text-align:center">@TempData["Error"].ToString()</div>
             </div>
-            <br />
         }
         <div class="container">
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -37,14 +35,15 @@
 
         @if (TempData["Success"] != null)
         {<div class="container">
-                <div class="text-success">@TempData["Success"].ToString()</div>
+                <div class="text-success" style="text-align:center">@TempData["Success"].ToString()</div>
             </div>
         }
         @if (TempData["Warning"] != null)
         {<div class="container">
-                <div class="text-warning">@TempData["Warning"].ToString()</div>
+                <div class="text-warning" style="text-align:center">@TempData["Warning"].ToString()</div>
             </div>
         }
+
     </section>
     <div class="login-logo">
         <a href="#">@UtilityService.ApplicationName</a>
@@ -71,10 +70,10 @@
                                         <input class="form-control" placeholder="Password" name="Password" type="password">
 
                                     </div>
-                                    
+
                                     <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
                                     <br />
-                                   
+
                                     <div class="form-group">
                                         <p>
                                             <a asp-controller="Login" asp-action="ForgotPassword">Forgot Password?</a>
@@ -82,9 +81,9 @@
                                         <p>
                                             <a asp-controller="Login" asp-action="RegisterAccount">Register New Client Account</a>
                                         </p>
-                                        <p  class="text-light-blue">
-                                           Contact Support:<a href="@UtilityService.WhatappSendMessageLink" style="text-decoration: none;" target="_blank"><img src="~/dist/img/Whatsapp.png" class="user-image" alt="Link to Send Message on Whatsapp" width="20" height="20" /></a>
-                                         </p>
+                                        <p class="text-light-blue">
+                                            Contact Support:<a href="@UtilityService.WhatappSendMessageLink" style="text-decoration: none;" target="_blank"><img src="~/dist/img/Whatsapp.png" class="user-image" alt="Link to Send Message on Whatsapp" width="20" height="20" /></a>
+                                        </p>
                                     </div>
                                 </fieldset>
                             </div>

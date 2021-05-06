@@ -1,5 +1,6 @@
 ﻿using SmartDomain;
 using SmartHelper;
+using SmartInterfaces;
 using SmartLogic;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace SmartLogic
         Task<int> Save(Client Client);
         Task<int> Update(Client Client);
         Task<Client> FindClient(int Clientid = 0, string accountNumber = null);
-        Task<List<Client>> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0);
+        List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0);
         Task<List<string>> ClientAccountNumbers(string account);
         Task<Client> GetClient(string emailAddress, string idnumber);
         Task<List<AttendanceRegisterDetail>> AttendanceRegisters(int clientID);

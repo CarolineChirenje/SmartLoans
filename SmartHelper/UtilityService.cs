@@ -763,6 +763,7 @@ namespace SmartHelper
         public static string GetMessageToDisplay(string ResourceKey) => SmartHelper.ResourceManager.GetString(ResourceKey);
         public static string ShowYesOrNo(bool status) => status ? "Yes" : "No";
         public static string ShowActiveAction(bool status) => status ? "De-Activate" : "Re-Activate";
+        public static string ShowActiveStatus(bool status) => status ? "Active" : "Not Active";
         public static string ShowOpenCloseAction(bool status) => status ? "Open" : "Closed";
         public static string ShowGender(int gender) => Enum.GetName(typeof(GenderOrientation), gender);
 

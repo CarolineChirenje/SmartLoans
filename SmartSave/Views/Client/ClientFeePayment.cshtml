@@ -483,19 +483,16 @@
             success: function (data) {
                 var markup = "";
                 if (data == null || data.length == 0) {
-                    if (affiliationID === 2) {
+                   if (affiliationID == 2) {
                         $("#AffiliationListNotFound").text("")
                     }
                     else {
                         $("#AffiliationListNotFound").text("No registered Companies Found")
                     }
-                    $(":submit").attr("disabled", true);
-                }
+                                  }
                 else {
                     $("#AffiliationListNotFound").text("");
-                    $(":submit").removeAttr("disabled");
-
-                    for (var x = 0; x < data.length; x++) {
+                                      for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
                     }
                 }
