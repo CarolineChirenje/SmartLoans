@@ -22,7 +22,7 @@ namespace SmartLogic
             int result = 0;
             try
             {
-                Client Client = await FindClient(id);
+                Client Client = _context.Clients.Find(id);
 
                 if (DatabaseAction.Remove == action)
                     _context.Clients.Remove(Client);
@@ -62,21 +62,31 @@ namespace SmartLogic
 
         }
 
-        public async Task<Client> GetClient(string emailAddress, string idnumber)
+        public async Task<ClientPeek> GetClient(string emailAddress = null, string idnumber = null, int? clientID = null)
         {
-            Client result = null;
             try
             {
-                result = await _context.Clients.Where(c => c.EmailAddress.Equals(emailAddress) && c.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
+                Client result;
+                if (clientID.HasValue)
+                    result = _context.Clients.Find(clientID.Value);
+                else
+                    result = await _context.Clients.Where(c => c.EmailAddress.Equals(emailAddress) && c.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
+
+                if (UtilityService.IsNotNull(result))
+                {
+                    ClientPeek peek = PeekClient(result);
+                    return peek;
+                }
+                else
+                    return null;
             }
             catch (Exception ex)
             {
                 CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
             }
-            return result;
 
         }
-
         public async Task<bool> ClientExists(int clientID)
         {
             try
@@ -90,129 +100,134 @@ namespace SmartLogic
             }
         }
 
-        public async Task<Client> FindClientSuperFast(int Clientid = 0, string accountNumber = null)
+        public async Task<ClientForm> FindClient(int Clientid = 0, string accountNumber = null)
         {
             Client Client = new Client();
             try
             {
                 if (String.IsNullOrEmpty(accountNumber?.Trim()))
-                    Client = _context.Clients.Find(Clientid);
+                    Client = await _context.Clients.FindAsync(Clientid);
                 else
-                    Client = _context.Clients.Where(r => r.AccountNumber.Equals(accountNumber.Trim())).FirstOrDefault();
+                    Client = await _context.Clients.Where(r => r.AccountNumber.Equals(accountNumber.Trim())).FirstOrDefaultAsync();
                 if (UtilityService.IsNotNull(Client))
                 {
-                    Task<Client> ClientResults = _context.Clients.AsNoTracking().
-
-                                 Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
-                                 Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
-                                 Include(c => c.Title).
-                                  AsNoTracking().
-                                 Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
-                    return await ClientResults;
-
+                    Client result = await _context.Clients.AsNoTracking().
+                                Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
+                                Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+                                Include(c => c.Title).
+                                Include(at => at.ClientAccountType).
+                                 Include(at => at.ClientGroup).
+                                 Include(at => at.Company).
+                                 AsNoTracking().
+                                Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
+                    ClientForm clientForm = GetClient(result);
+                    return clientForm;
                 }
-
-                return Client;
+                else
+                    return null;
             }
             catch (Exception ex)
             {
                 CustomLog.Log(LogSource.Logic_Base, ex);
+                throw ex;
             }
-            return Client;
-
-
 
         }
-        public async Task<Client> FindClient(int Clientid = 0, string accountNumber = null)
+        public JointApplicantForm GetJointApplicant(JointApplicant result)
         {
-            Client Client = new Client();
             try
             {
-                if (String.IsNullOrEmpty(accountNumber?.Trim()))
-                    Client = _context.Clients.Find(Clientid);
-                else
-                    Client = _context.Clients.Where(r => r.AccountNumber.Equals(accountNumber.Trim())).FirstOrDefault();
-                if (UtilityService.IsNotNull(Client))
+                if (UtilityService.IsNull(result))
+                    return null;
+                JointApplicantForm jointApplicant = new JointApplicantForm
                 {
-                    Task<Client> ClientResults = _context.Clients.AsNoTracking().
-                                Include(c => c.ClientContacts).
-                                Include(payments => payments.ClientPayments).ThenInclude(trans => trans.TransactionType).
-                                Include(payments => payments.ClientPayments).ThenInclude(trans => trans.Product).
-                                Include(payments => payments.ClientPayments).ThenInclude(trans => trans.PaymentStatus).
-                                Include(n => n.ClientNotes).
-                                ThenInclude(ut => ut.UserType).
-                                Include(d => d.ClientDocuments).
-                                ThenInclude(document => document.DocumentType).
-                                ThenInclude(docFormat => docFormat.DocumentFormat).
-                                Include(sm => sm.ClientMedicalDetails).
-                                Include(p => p.ClientProducts).ThenInclude(p => p.Product).
-                                Include(p => p.ClientFees).ThenInclude(p => p.ProductFee).ThenInclude(p => p.Product).
-                                Include(p => p.ClientFees).ThenInclude(p => p.ProductFee).ThenInclude(p => p.Frequency).
-                                Include(p => p.ClientFees).ThenInclude(p => p.CourseFee).ThenInclude(p => p.Frequency).
-                                Include(d => d.ClientDependents).
-                                Include(c => c.ClientCourses).
-                                ThenInclude(c => c.Course).
-                                ThenInclude(c => c.CourseOutlines).
-                                Include(c => c.ClientCourses).
-                                ThenInclude(c => c.Course).
-                                ThenInclude(c => c.CourseIntakes).
-                                Include(c => c.InvoiceDetails).
-                                ThenInclude(c => c.Invoice).
-                                 Include(c => c.InvoiceDetails).
-                                 ThenInclude(c => c.Product).
-                                 Include(c => c.ClientOccupationHistory).
-                                 Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
-                                 Include(c => c.JointApplicant).ThenInclude(ct => ct.Title).
-                                 Include(c => c.Title).
-                                 Include(at => at.ClientAccountType).
-                                  Include(at => at.ClientGroup).
-                                  Include(at => at.Company).
-                                  AsNoTracking().
-                                 Where(r => r.ClientID == Client.ClientID).FirstOrDefaultAsync();
-                    return await ClientResults;
+                    JointApplicantID = result.JointApplicantID,
+                    ApplicantTitleID = result.ApplicantTitleID,
+                    ApplicantGenderID = result.ApplicantGenderID,
+                    RelationshipTypeID = result.RelationshipTypeID,
+                    DateOfBirth = result.DateOfBirth,
+                    Initials = result.Initials,
+                    FirstName = result.FirstName,
+                    LastName = result.LastName,
+                    IDNumber = result.IDNumber,
+                    EmailAddress = result.EmailAddress,
+                    MobileNumber = result.MobileNumber,
+                    AddressLine1 = result.AddressLine1,
+                    AddressLine2 = result.AddressLine2,
+                    City = result.City,
+                    CountryID = result.CountryID,
 
-                }
-
-                return Client;
+                };
+                return jointApplicant;
             }
             catch (Exception ex)
             {
                 CustomLog.Log(LogSource.Logic_Base, ex);
+                throw ex;
             }
-            return Client;
-
-
 
         }
-
-        public async Task<int> Save(Client Client)
+        public async Task<int> Save(ClientForm clientForm)
         {
             try
             {
-
+                Client client = new Client();
+                client.IDNumber = clientForm.IDNumber;
+                client.Initials = clientForm.Initials;
+                client.FirstName = clientForm.FirstName;
+                client.LastName = clientForm.LastName;
+                client.GenderID = clientForm.GenderID;
+                client.TitleID = clientForm.TitleID;
+                client.ClientAccountTypeID = clientForm.ClientAccountTypeID;
+                client.ClientGroupID = clientForm.ClientGroupID;
+                client.CompanyID = clientForm.CompanyID;
+                client.EmailAddress = clientForm.EmailAddress;
+                client.DateOfBirth = clientForm.DateOfBirth;
+                client.CountryID = clientForm.CountryID;
+                client.City = clientForm.City;
+                client.MobileNumber = clientForm.MobileNumber;
+                client.Occupation = clientForm.Occupation;
+                client.DepartmentID = clientForm.DepartmentID;
+                client.AddressLine1 = clientForm.AddressLine1;
+                client.AddressLine2 = clientForm.AddressLine2;
                 if (UtilityService.AutoGenerateAccountNumber)
-                    Client.AccountNumber = NewClientAccountNumber;
+                    client.AccountNumber = NewClientAccountNumber;
+                else
+                    client.AccountNumber = clientForm.AccountNumber;
 
-                Client.UserName = UtilityService.GenerateUserName(Client.FirstName, Client.LastName);
-                Client.LastChangedBy = UtilityService.CurrentUserName;
-                Client.LastChangedDate = DateTime.Now;
-                Client.RegistrationDate = DateTime.Now;
-                Client.IsActive = true;
+                client.UserName = UtilityService.GenerateUserName(clientForm.FirstName, clientForm.LastName);
+                client.LastChangedBy = UtilityService.CurrentUserName;
+                client.LastChangedDate = DateTime.Now;
+                client.RegistrationDate = DateTime.Now;
+                client.IsActive = clientForm.IsActive;
 
-                if (Client.ClientAccountTypeID == (int)Client_AccountType.Joint)
+                if (clientForm.ClientAccountTypeID == (int)Client_AccountType.Joint)
                 {
-                    if (UtilityService.IsNotNull(Client.JointApplicant))
+                    if (UtilityService.IsNotNull(clientForm.JointApplicant))
                     {
-                        Client.JointApplicant.RecordStatusID = (int)RecordState.Active;
-                        Client.JointApplicant.LastChangedBy = UtilityService.CurrentUserName;
-                        Client.JointApplicant.LastChangedDate = DateTime.Now;
-                        //Client.JointApplicant.ClientID = Client.ClientID;
-                        //await Save(Client.JointApplicant);
+                        client.JointApplicant.IDNumber = clientForm.JointApplicant.IDNumber;
+                        client.JointApplicant.Initials = clientForm.JointApplicant.Initials;
+                        client.JointApplicant.FirstName = clientForm.JointApplicant.FirstName;
+                        client.JointApplicant.LastName = clientForm.JointApplicant.LastName;
+                        client.JointApplicant.ApplicantTitleID = clientForm.JointApplicant.ApplicantTitleID;
+                        client.JointApplicant.ApplicantGenderID = clientForm.JointApplicant.ApplicantGenderID;
+                        client.JointApplicant.RelationshipTypeID = clientForm.JointApplicant.RelationshipTypeID;
+                        client.JointApplicant.EmailAddress = clientForm.JointApplicant.EmailAddress;
+                        client.JointApplicant.DateOfBirth = clientForm.JointApplicant.DateOfBirth;
+                        client.JointApplicant.CountryID = clientForm.JointApplicant.CountryID;
+                        client.JointApplicant.City = clientForm.JointApplicant.City;
+                        client.JointApplicant.MobileNumber = clientForm.JointApplicant.MobileNumber;
+                        client.JointApplicant.AddressLine1 = clientForm.JointApplicant.AddressLine1;
+                        client.JointApplicant.AddressLine2 = clientForm.JointApplicant.AddressLine2;
+                        client.JointApplicant.RecordStatusID = (int)RecordState.Active;
+                        client.JointApplicant.LastChangedBy = UtilityService.CurrentUserName;
+                        client.JointApplicant.LastChangedDate = DateTime.Now;
+
                     }
                 }
-                _context.Add(Client);
+                _context.Add(client);
                 await _context.SaveChangesAsync();
-                return Client.ClientID;
+                return client.ClientID;
             }
             catch (Exception ex)
             {
@@ -221,16 +236,16 @@ namespace SmartLogic
             }
 
         }
-        public async Task<int> Update(Client Client)
+        public async Task<int> Update(ClientForm clientForm)
         {
             int result = 0;
             try
             {
-                Client updateClient = await _context.Clients.FindAsync(Client.ClientID);
+                Client updateClient = await _context.Clients.FindAsync(clientForm.ClientID);
                 string oldIDNumber = updateClient.IDNumber;
                 string oldEmailAddress = updateClient.EmailAddress;
                 Decimal oldSalary = updateClient.Salary;
-                if (oldSalary != Client.Salary)
+                if (oldSalary != clientForm.Salary)
                 {
 
                     ClientOccupationHistory clientOccupationHistory = new ClientOccupationHistory();
@@ -243,28 +258,28 @@ namespace SmartLogic
                 }
                 if (UtilityService.IsNotNull(updateClient))
                 {
-                    updateClient.FirstName = Client.FirstName;
-                    updateClient.TitleID = Client.TitleID;
-                    updateClient.Initials = Client.Initials;
-                    updateClient.LastName = Client.LastName;
-                    updateClient.IsActive = Client.IsActive;
-                    updateClient.EmailAddress = Client.EmailAddress;
-                    updateClient.IDNumber = Client.IDNumber;
-                    updateClient.AddressLine1 = Client.AddressLine1;
-                    updateClient.AddressLine2 = Client.AddressLine2;
-                    updateClient.City = Client.City;
-                    updateClient.CountryID = Client.CountryID;
-                    updateClient.MobileNumber = Client.MobileNumber;
-                    updateClient.DateOfBirth = Client.DateOfBirth;
-                    updateClient.DepartmentID = Client.DepartmentID;
-                    updateClient.GenderID = Client.GenderID;
+                    updateClient.FirstName = clientForm.FirstName;
+                    updateClient.TitleID = clientForm.TitleID;
+                    updateClient.Initials = clientForm.Initials;
+                    updateClient.LastName = clientForm.LastName;
+                    updateClient.IsActive = clientForm.IsActive;
+                    updateClient.EmailAddress = clientForm.EmailAddress;
+                    updateClient.IDNumber = clientForm.IDNumber;
+                    updateClient.AddressLine1 = clientForm.AddressLine1;
+                    updateClient.AddressLine2 = clientForm.AddressLine2;
+                    updateClient.City = clientForm.City;
+                    updateClient.CountryID = clientForm.CountryID;
+                    updateClient.MobileNumber = clientForm.MobileNumber;
+                    updateClient.DateOfBirth = clientForm.DateOfBirth;
+                    updateClient.DepartmentID = clientForm.DepartmentID;
+                    updateClient.GenderID = clientForm.GenderID;
                     updateClient.LastChangedBy = UtilityService.CurrentUserName;
                     updateClient.LastChangedDate = DateTime.Now;
-                    updateClient.Salary = Client.Salary;
-                    updateClient.Occupation = Client.Occupation;
-                    updateClient.ClientAccountTypeID = Client.ClientAccountTypeID;
-                    updateClient.CompanyID = Client.CompanyID;
-                    updateClient.ClientGroupID = Client.ClientGroupID;
+                    updateClient.Salary = clientForm.Salary;
+                    updateClient.Occupation = clientForm.Occupation;
+                    updateClient.ClientAccountTypeID = clientForm.ClientAccountTypeID;
+                    updateClient.CompanyID = clientForm.CompanyID;
+                    updateClient.ClientGroupID = clientForm.ClientGroupID;
                     _context.Update(updateClient);
                 }
                 result = await _context.SaveChangesAsync();
@@ -273,8 +288,8 @@ namespace SmartLogic
                     User user = _context.Users.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
                     if (UtilityService.IsNotNull(user))
                     {
-                        user.EmailAddress = Client.EmailAddress;
-                        user.IDNumber = Client.IDNumber;
+                        user.EmailAddress = clientForm.EmailAddress;
+                        user.IDNumber = clientForm.IDNumber;
                         user.LastChangedBy = UtilityService.CurrentUserName;
                         user.LastChangedDate = DateTime.Now;
                         _context.Update(user);
@@ -282,12 +297,12 @@ namespace SmartLogic
 
                     }
 
-                    if (Client.ClientAccountTypeID == (int)Client_AccountType.Joint)
+                    if (clientForm.ClientAccountTypeID == (int)Client_AccountType.Joint)
                     {
-                        if (UtilityService.IsNotNull(Client.JointApplicant))
+                        if (UtilityService.IsNotNull(clientForm.JointApplicant))
                         {
-                            Client.JointApplicant.ClientID = Client.ClientID;
-                            await Update(Client.JointApplicant);
+                            clientForm.JointApplicant.ClientID = clientForm.ClientID;
+                            await Update(clientForm.JointApplicant);
                         }
                     }
 
@@ -301,25 +316,24 @@ namespace SmartLogic
             }
             return result;
         }
-
-        public async Task<int> Save(JointApplicant applicant)
+        public async Task<int> Save(JointApplicantForm applicantForm)
         {
             try
             {
-                JointApplicant updateApplicant = await _context.JointApplicants.FindAsync(applicant.JointApplicantID);
-                if (UtilityService.IsNull(updateApplicant))
-                    updateApplicant = await _context.JointApplicants.Where(ja => ja.ClientID == applicant.ClientID).FirstOrDefaultAsync();
+                JointApplicant updateApplicant = await _context.JointApplicants.FindAsync(applicantForm.JointApplicantID);
+                if (UtilityService.IsNotNull(updateApplicant))
+                    updateApplicant = await _context.JointApplicants.Where(ja => ja.ClientID == applicantForm.ClientID).FirstOrDefaultAsync();
 
                 if (UtilityService.IsNotNull(updateApplicant))
-                    return await Update(updateApplicant);
+                    return await Update(applicantForm);
 
-                applicant.RecordStatusID = (int)RecordState.Active;
-                applicant.LastChangedBy = UtilityService.CurrentUserName;
-                applicant.LastChangedDate = DateTime.Now;
-                _context.Add(applicant);
+                applicantForm.RecordStatusID = (int)RecordState.Active;
+                applicantForm.LastChangedBy = UtilityService.CurrentUserName;
+                applicantForm.LastChangedDate = DateTime.Now;
+                _context.Add(applicantForm);
                 await _context.SaveChangesAsync();
 
-                return applicant.JointApplicantID;
+                return applicantForm.JointApplicantID;
             }
             catch (Exception ex)
             {
@@ -328,37 +342,36 @@ namespace SmartLogic
             }
 
         }
-
-        public async Task<int> Update(JointApplicant applicant)
+        public async Task<int> Update(JointApplicantForm applicant)
         {
             int result = 0;
             try
             {
-                JointApplicant updateApplicant = await _context.JointApplicants.FindAsync(applicant.JointApplicantID);
-                if (UtilityService.IsNull(updateApplicant))
-                    updateApplicant = await _context.JointApplicants.Where(ja => ja.ClientID == applicant.ClientID).FirstOrDefaultAsync();
+                JointApplicant jointApplicant = await _context.JointApplicants.FindAsync(applicant.JointApplicantID);
+                if (UtilityService.IsNull(jointApplicant))
+                    jointApplicant = await _context.JointApplicants.Where(ja => ja.ClientID == applicant.ClientID).FirstOrDefaultAsync();
 
-                if (UtilityService.IsNotNull(updateApplicant))
+                if (UtilityService.IsNotNull(jointApplicant))
                 {
-                    updateApplicant.ApplicantTitleID = applicant.ApplicantTitleID;
+                    jointApplicant.ApplicantTitleID = applicant.ApplicantTitleID;
 
-                    updateApplicant.FirstName = applicant.FirstName;
-                    updateApplicant.LastName = applicant.LastName;
-                    updateApplicant.Initials = applicant.Initials;
-                    updateApplicant.EmailAddress = applicant.EmailAddress;
-                    updateApplicant.IDNumber = applicant.IDNumber;
-                    updateApplicant.AddressLine1 = applicant.AddressLine1;
-                    updateApplicant.AddressLine2 = applicant.AddressLine2;
-                    updateApplicant.City = applicant.City;
-                    updateApplicant.CountryID = applicant.CountryID;
-                    updateApplicant.RelationshipTypeID = applicant.RelationshipTypeID;
-                    updateApplicant.MobileNumber = applicant.MobileNumber;
-                    updateApplicant.DateOfBirth = applicant.DateOfBirth;
-                    updateApplicant.ApplicantGenderID = applicant.ApplicantGenderID;
-                    updateApplicant.LastChangedBy = UtilityService.CurrentUserName;
-                    updateApplicant.LastChangedDate = DateTime.Now;
-                    updateApplicant.RelationshipTypeID = applicant.RelationshipTypeID;
-                    _context.Update(updateApplicant);
+                    jointApplicant.FirstName = applicant.FirstName;
+                    jointApplicant.LastName = applicant.LastName;
+                    jointApplicant.Initials = applicant.Initials;
+                    jointApplicant.EmailAddress = applicant.EmailAddress;
+                    jointApplicant.IDNumber = applicant.IDNumber;
+                    jointApplicant.AddressLine1 = applicant.AddressLine1;
+                    jointApplicant.AddressLine2 = applicant.AddressLine2;
+                    jointApplicant.City = applicant.City;
+                    jointApplicant.CountryID = applicant.CountryID;
+                    jointApplicant.RelationshipTypeID = applicant.RelationshipTypeID;
+                    jointApplicant.MobileNumber = applicant.MobileNumber;
+                    jointApplicant.DateOfBirth = applicant.DateOfBirth;
+                    jointApplicant.ApplicantGenderID = applicant.ApplicantGenderID;
+                    jointApplicant.LastChangedBy = UtilityService.CurrentUserName;
+                    jointApplicant.LastChangedDate = DateTime.Now;
+                    jointApplicant.RelationshipTypeID = applicant.RelationshipTypeID;
+                    _context.Update(jointApplicant);
                     result = await _context.SaveChangesAsync();
                     return result;
                 }
@@ -374,17 +387,41 @@ namespace SmartLogic
             }
 
         }
-        public async Task<List<AttendanceRegisterDetail>> AttendanceRegisters(int clientID)
+
+        public Register AttendanceRegisters(int clientID)
         {
             try
             {
-                return await _context.AttendanceRegisterDetails.
+                var registers=  _context.AttendanceRegisterDetails.
                    Include(c => c.AttendanceRegister).
                      ThenInclude(c => c.CourseIntake).
                        ThenInclude(c => c.Course).
                    Include(c => c.Client).
                    Where(c => c.ClientID == clientID).
-                   OrderByDescending(c => c.AttendanceRegister.AttendanceDate).ToListAsync();
+                   OrderByDescending(c => c.AttendanceRegister.AttendanceDate).ToList();
+
+                if (UtilityService.IsNull(registers))
+                    return null;
+                Register register = new Register();
+                register.ClientID = clientID;
+                register.ClientForm = FindClient(clientID).Result;
+                List<RegisterList> result = new List<RegisterList>();
+
+                foreach (var registerDetail in registers)
+                {
+                    result.Add(new RegisterList
+                    {
+                        AttendanceRegisterDetailID = registerDetail.AttendanceRegisterDetailID,
+                        ClientID = registerDetail.ClientID,
+                        AttendanceDate   =registerDetail.AttendanceRegister.AttendanceDate,
+                        Intake = registerDetail.AttendanceRegister.CourseIntake.Duration,
+                        Status = registerDetail.AttendanceStatus,
+                        Course=registerDetail.AttendanceRegister.CourseOutline.Course.Title
+
+                    });
+                }
+                register.RegisterList = result;
+                return register;
             }
             catch (Exception ex)
             {
@@ -429,7 +466,7 @@ namespace SmartLogic
                         AccountNumber = client.AccountNumber,
                         IsJointAccount = ((Client_AccountType)client.ClientAccountTypeID == Client_AccountType.Joint),
                         Affiliation = ((Affiliation)client.ClientGroupID == Affiliation.Individual ? Affiliation.Individual.ToString() : (_context.Companies.Find(client.CompanyID)?.Name))
-                     };
+                    };
 
                     if (record.IsJointAccount)
                     {
@@ -458,7 +495,7 @@ namespace SmartLogic
             try
             {
                 var clients = _context.ClientProducts.
-    Where(p => p.ProductID == productID).Select(c => c.ClientID).ToList();
+        Where(p => p.ProductID == productID).Select(c => c.ClientID).ToList();
                 return clients;
             }
             catch (Exception ex)
@@ -468,7 +505,6 @@ namespace SmartLogic
                 throw;
             }
         }
-
         public async Task<List<string>> ClientAccountNumbers(string account)
         {
             try
@@ -541,8 +577,7 @@ namespace SmartLogic
         {
             try
             {
-                Client Client = await FindClient(id);
-
+                Client Client = _context.Clients.Find(id);
                 if (DatabaseAction.Remove == action)
                     _context.Clients.Remove(Client);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
@@ -552,7 +587,6 @@ namespace SmartLogic
                     Client.LastChangedDate = DateTime.Now;
                     _context.Update(Client);
                 }
-
                 return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
@@ -583,16 +617,57 @@ namespace SmartLogic
         }
 
         //Notes
+        public Comments ClientNotes(int clientID)
+        {
+            try
+            {
+                var clientNotes = _context.ClientNotes.
+                                Include(ut => ut.UserType).
+                     Where(c => c.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(clientNotes))
+                    return null;
+                Comments comments = new Comments();
+                comments.ClientID = clientID;
+                comments.ClientForm = FindClient(clientID).Result;
+                List<CommentsList> result = new List<CommentsList>();
+
+                foreach (var clientNote in clientNotes)
+                {
+                    result.Add(new CommentsList
+                    {
+                        ClientNoteID = clientNote.ClientNoteID,
+                        ClientID = clientNote.ClientID,
+                        Comment = clientNote.Comment,
+                        DateClosed = UtilityService.ShowDateTime(clientNote.DateClosed),
+                        DateUploaded = UtilityService.ShowDateTime(clientNote.DateUploaded),
+                        DueDate = UtilityService.ShowDateTime(clientNote.DueDate),
+                        UploadedBy = clientNote.UploadedBy,
+                        VisibleToAdminOnly = clientNote.VisibleToAdminOnly,
+                        LastChangedDate = UtilityService.ShowDateTime(clientNote.LastChangedDate),
+                        LastChangedBy = clientNote.LastChangedBy,
+                        UserTypeName = clientNote.UserType?.Name
+
+                    });
+                }
+                comments.CommentsList = result;
+                return comments;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<ClientNote> FindNote(int id)
         {
             try
             {
                 return await _context.ClientNotes.
-                 Include(ut => ut.UserType).
-                 Include(c => c.Client).ThenInclude(c => c.Title).
-                 Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
-                 Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
-                Where(t => t.ClientNoteID == id).FirstOrDefaultAsync();
+            Include(ut => ut.UserType).
+            Include(c => c.Client).ThenInclude(c => c.Title).
+            Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+            Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
+           Where(t => t.ClientNoteID == id).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -604,8 +679,6 @@ namespace SmartLogic
         {
             try
             {
-
-
                 if (!UtilityService.IsNotNull(ClientNote.DueDate))
                     ClientNote.DueDate = DateTime.Now.AddDays(5);
                 if (!UtilityService.IsNotNull(ClientNote.DateClosed))
@@ -625,24 +698,25 @@ namespace SmartLogic
             }
 
         }
-        public async Task<int> Update(ClientNote ClientNote)
+        public async Task<int> Update(ClientNote note)
         {
             try
             {
-
-
-                ClientNote cn = _context.ClientNotes.Find(ClientNote.ClientNoteID);
-                cn.Comment = ClientNote.Comment;
-                cn.DateClosed = ClientNote.DateClosed;
-                if (!UtilityService.IsNotNull(cn.DueDate))
-                    cn.DueDate = DateTime.Now.AddDays(UtilityService.IsNull(UtilityService.ClientNotesDefaultDueDateInterval) ? 5 : UtilityService.ClientNotesDefaultDueDateInterval);
-                if (!UtilityService.IsNotNull(cn.DateClosed))
-                    cn.DateClosed = DateTime.MinValue;
-                cn.VisibleToAdminOnly = ClientNote.VisibleToAdminOnly;
-                cn.UserTypeID = UtilityService.CurrentUserTypeID;
-                cn.LastChangedBy = UtilityService.CurrentUserName;
-                cn.LastChangedDate = DateTime.Now;
-                _context.Update(cn);
+                ClientNote clientNote = _context.ClientNotes.Find(note.ClientNoteID);
+                clientNote.Comment = note.Comment;
+                clientNote.DateClosed = note.DateClosed;
+                if (UtilityService.IsNull(note.DueDate))
+                    clientNote.DueDate = DateTime.Now.AddDays(UtilityService.IsNull(UtilityService.ClientNotesDefaultDueDateInterval) ? 5 : UtilityService.ClientNotesDefaultDueDateInterval);
+                else
+                    clientNote.DueDate = note.DueDate;
+                if (UtilityService.IsNull(note.DateClosed))
+                    clientNote.DateClosed = DateTime.MinValue;
+                else
+                    clientNote.DateClosed = note.DateClosed;
+                clientNote.UserTypeID = UtilityService.CurrentUserTypeID;
+                clientNote.LastChangedBy = UtilityService.CurrentUserName;
+                clientNote.LastChangedDate = DateTime.Now;
+                _context.Update(clientNote);
                 return await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -651,16 +725,13 @@ namespace SmartLogic
                 throw;
             }
         }
-
         public async Task<int> ActionNote(int id, DatabaseAction action)
         {
             try
             {
                 ClientNote ClientNote = await FindNote(id);
-
                 if (DatabaseAction.Remove == action)
                     _context.ClientNotes.Remove(ClientNote);
-
                 if (DatabaseAction.Close == action)
                 {
                     ClientNote.DateClosed = DateTime.Now;
@@ -678,18 +749,52 @@ namespace SmartLogic
         }
 
         //Contact
+        public Contacts ClientContacts(int clientID)
+        {
+            try
+            {
+                var clientContacts = _context.ClientContacts.
+                                Include(ct => ct.RelationshipType).
+                 Include(ct => ct.ContactType).
+                 Where(c => c.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(clientContacts))
+                    return null;
+                Contacts contacts = new Contacts();
+                contacts.ClientID = clientID;
+                contacts.ClientForm = FindClient(clientID).Result;
+                List<ContactList> result = new List<ContactList>();
+
+                foreach (var clientContact in clientContacts)
+                {
+                    result.Add(new ContactList
+                    {
+                        ClientID = clientID,
+                        ClientContactID = clientContact.ClientContactID,
+                        Relationship = clientContact.RelationshipType?.Name,
+                        ContactType = clientContact.ContactType.Name,
+                        ContactPerson = clientContact.ContactPerson,
+                        Information = clientContact.Contact
+
+                    });
+                }
+                contacts.ContactLists = result;
+                return contacts;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<ClientContact> FindContact(int id)
         {
             try
             {
-
-                return await _context.ClientContacts.
-                 Include(c => c.Client).ThenInclude(c => c.Title).
-                 Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
-                 Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
-                 Include(ct => ct.RelationshipType).
-                 Include(ct => ct.ContactType).
-                 Where(t => t.ClientContactID == id).FirstOrDefaultAsync();
+                var clientContact = await _context.ClientContacts.
+                FindAsync(id);
+                if (UtilityService.IsNull(clientContact))
+                    return null;
+                return clientContact;
             }
             catch (Exception ex)
             {
@@ -736,19 +841,18 @@ namespace SmartLogic
                 throw;
             }
         }
-
         public async Task<int> ActionContact(int id, DatabaseAction action)
         {
             try
             {
-                ClientContact ClientContact = await FindContact(id);
+                ClientContact contact = await FindContact(id);
                 if (DatabaseAction.Remove == action)
-                    _context.ClientContacts.Remove(ClientContact);
+                    _context.ClientContacts.Remove(contact);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    ClientContact.LastChangedBy = UtilityService.CurrentUserName;
-                    ClientContact.LastChangedDate = DateTime.Now;
-                    _context.Update(ClientContact);
+                    contact.LastChangedBy = UtilityService.CurrentUserName;
+                    contact.LastChangedDate = DateTime.Now;
+                    _context.Update(contact);
                 }
                 return (await _context.SaveChangesAsync());
             }
@@ -909,7 +1013,41 @@ namespace SmartLogic
                 throw;
             }
         }
+        public Dependents ClientDependents(int clientID)
+        {
+            try
+            {
+                var clientDependents = _context.ClientDependents.
+                                                     Where(c => c.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(clientDependents))
+                    return null;
+                Dependents dependents = new Dependents();
+                dependents.ClientID = clientID;
+                dependents.ClientForm = FindClient(clientID).Result;
+                List<DependentsList> result = new List<DependentsList>();
 
+                foreach (var clientDependent in clientDependents)
+                {
+                    result.Add(new DependentsList
+                    {
+                        ClientDependentID = clientDependent.ClientDependentID,
+                        ClientID = clientDependent.ClientID,
+                        FullName = clientDependent.FullName,
+                        Age = clientDependent.Age.ToString(),
+                        IDNumber = clientDependent.IDNumber,
+                        Gender = ((GenderOrientation)clientDependent.GenderID).ToString(),
+                        Occupation = clientDependent.Occupation
+                    });
+                }
+                dependents.DependentsList = result;
+                return dependents;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<ClientDependent> FindDependent(int id)
         {
             try
@@ -1121,7 +1259,7 @@ namespace SmartLogic
             }
         }
 
-        public List<Product> GetClientRegisteredProducts(int id)
+        public List<SmartDomain.Product> GetClientRegisteredProducts(int id)
         {
             try
             {
@@ -1453,8 +1591,6 @@ namespace SmartLogic
         }
 
         // ClientFees
-
-
         public async Task<int> PayFee(ClientFee clientFee)
         {
             try
@@ -1516,5 +1652,80 @@ namespace SmartLogic
                 throw;
             }
         }
+
+
+        #region Helpers
+        ClientForm GetClient(Client result)
+        {
+            try
+            {
+                ClientForm clientForm = new ClientForm
+                {
+                    ClientID = result.ClientID,
+                    TitleID = result.TitleID,
+                    GenderID = result.GenderID,
+                    AccountNumber = result.AccountNumber,
+                    DateOfBirth = result.DateOfBirth,
+                    Initials = result.Initials,
+                    FirstName = result.FirstName,
+                    LastName = result.LastName,
+                    IDNumber = result.IDNumber,
+                    EmailAddress = result.EmailAddress,
+                    MobileNumber = result.MobileNumber,
+                    AddressLine1 = result.AddressLine1,
+                    AddressLine2 = result.AddressLine2,
+                    City = result.City,
+                    CountryID = result.CountryID,
+                    Occupation = result.Occupation,
+                    Salary = result.Salary,
+                    ClientAccountTypeID = result.ClientAccountTypeID,
+                    ClientGroupID = result.ClientGroupID,
+                    CompanyID = result.CompanyID,
+                    DepartmentID = result.DepartmentID,
+                    IsActive = result.IsActive,
+                    RegistrationDate = result.RegistrationDate,
+                    UserName = result.UserName,
+                    LastChangedBy = result.LastChangedBy,
+                    LastChangedDate = result.LastChangedDate,
+                    IsJointAccount = result.ClientAccountTypeID == (int)Client_AccountType.Joint
+                };
+
+                if (clientForm.IsJointAccount)
+                    clientForm.JointApplicant = GetJointApplicant(result.JointApplicant);
+                return clientForm;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
+        ClientPeek PeekClient(Client result)
+        {
+            try
+            {
+                ClientPeek clientPeek = new ClientPeek
+                {
+                    ClientID = result.ClientID,
+                    DateOfBirth = result.DateOfBirth,
+                    Initials = result.Initials,
+                    FirstName = result.FirstName,
+                    LastName = result.LastName,
+                    IDNumber = result.IDNumber,
+                    EmailAddress = result.EmailAddress,
+                    UserName = result.UserName,
+                    AccountNumber = result.AccountNumber
+                };
+                return clientPeek;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        #endregion Helpers
     }
 }

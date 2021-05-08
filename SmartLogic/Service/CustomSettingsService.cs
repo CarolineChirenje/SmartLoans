@@ -15,20 +15,15 @@ namespace SmartLogic
     public class CustomSettingsService : ICustomSettingsService
     {
         private DatabaseContext _context;
-
-        public CustomSettingsService(DatabaseContext context) => _context = context;
-
+                public CustomSettingsService(DatabaseContext context) => _context = context;
         public CustomSettingsService()
-        {
-            if (_context == null)
+        {            if (_context == null)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlServer(GetData.SSDBConnection);
                 _context = new DatabaseContext(optionsBuilder.Options);
             }
-
         }
-
         public async Task<CustomSetting> FindCustomSetting(int id)
         {
             try
@@ -44,15 +39,12 @@ namespace SmartLogic
             }
         }
         CustomSetting GetCustomSetting(string name)
-        {
-            try
+        {            try
             {
-
                 return _context.CustomSettings.
                     Include(x => x.CustomVariableType).
-                    Include(x => x.CustomSettingType).
-                    Where(r => r.Name.ToUpper() == name.Trim().ToUpper()).
-                  AsNoTracking().FirstOrDefault();
+                        Where(r => r.Name.ToUpper() == name.Trim().ToUpper()).
+                 AsNoTracking().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -60,33 +52,12 @@ namespace SmartLogic
                 throw;
             }
         }
-
-
-        public async Task<List<CustomSetting>> CustomSettings()
-        {
-            try
-            {
-
-                return await _context.CustomSettings.
-      Include(x => x.CustomVariableType).
-        Include(x => x.CustomSettingType)
-                        .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-
-
         public List<CustomSetting> GetCustomSettings()
         {
             try
             {
                 return _context.CustomSettings.
-Include(x => x.CustomVariableType).
-Include(x => x.CustomSettingType)
+Include(x => x.CustomVariableType)
 .ToList();
             }
             catch (Exception ex)
@@ -95,30 +66,36 @@ Include(x => x.CustomSettingType)
                 throw;
             }
         }
-
-
-        public async Task<int> Update(CustomSetting CustomSetting)
+        public async Task<List<CustomSetting>> CustomSettings()
         {
             try
             {
-
-                CustomSetting update = _context.CustomSettings.Where(r => r.CustomSettingID == CustomSetting.CustomSettingID)
+                return await _context.CustomSettings.
+                Include(x => x.CustomVariableType)
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+              public async Task<int> Update(CustomSetting CustomSetting)
+        {
+            try
+            {                CustomSetting update = _context.CustomSettings.Where(r => r.CustomSettingID == CustomSetting.CustomSettingID)
                                .FirstOrDefault();
-
                 if (UtilityService.IsNotNull(update)) // I'm using a extension method
                 {
                     update.Value = CustomSetting.Value;
                     update.LastChangedBy = UtilityService.CurrentUserName;
                     update.LastChangedDate = DateTime.Now;
                     // check if local is not null 
-
                     // detach
                     _context.Entry(update).State = EntityState.Detached;
                 }
                 // set Modified flag in your entry
                 _context.Entry(update).State = EntityState.Modified;
-
-
                 //  _context.Update(update);
                 return await _context.SaveChangesAsync();
             }
@@ -131,9 +108,7 @@ Include(x => x.CustomSettingType)
         public async Task<int> Save(CustomSetting CustomSetting)
         {
             try
-            {
-
-                CustomSetting.IsActive = true;
+            {                CustomSetting.IsActive = true;
                 CustomSetting.LastChangedBy = UtilityService.CurrentUserName;
                 CustomSetting.LastChangedDate = DateTime.Now;
                 _context.Add(CustomSetting);
@@ -146,11 +121,8 @@ Include(x => x.CustomSettingType)
             }
         }
         public async Task<int> Delete(int id)
-        {
-            try
-            {
-
-                var CustomSetting = await _context.CustomSettings.FindAsync(id);
+        {            try
+            {                var CustomSetting = await _context.CustomSettings.FindAsync(id);
                 _context.CustomSettings.Remove(CustomSetting);
                 return (await _context.SaveChangesAsync());
             }
@@ -160,12 +132,10 @@ Include(x => x.CustomSettingType)
                 throw;
             }
         }
-
         public async Task<int> ActionCustomSetting(int id, DatabaseAction action)
         {
             try
-            {
-                CustomSetting CustomSetting = await FindCustomSetting(id);
+            {                CustomSetting CustomSetting = await FindCustomSetting(id);
                 if (DatabaseAction.Remove == action)
                     _context.CustomSettings.Remove(CustomSetting);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
@@ -184,8 +154,6 @@ Include(x => x.CustomSettingType)
                 throw;
             }
         }
-
-
         public CustomSelectList GetCustomSetting(AppSetting applicationSetting)
         {
             try
@@ -196,7 +164,6 @@ Include(x => x.CustomSettingType)
                 {
                     ID = customSetting.CustomSettingID,
                     Name = customSetting.Value
-
                 };
             }
             catch (Exception ex)
@@ -204,16 +171,12 @@ Include(x => x.CustomSettingType)
                 CustomLog.Log(LogSource.Logic_Base, ex);
                 throw;
             }
-
         }
-
         public string GetSettingValue(AppSetting applicationSetting)
         {
             try
             {
-
                 CustomSelectList customSetting = GetCustomSetting(applicationSetting);
-
                 if (UtilityService.IsNotNull(customSetting))
                     return customSetting.Name;
                 else
@@ -228,13 +191,10 @@ Include(x => x.CustomSettingType)
         public string GetCustomSettingValue(AppSetting applicationSetting, string value = null, bool isGet = true)
         {
             try
-            {
-
-                CustomSelectList customSetting;
+            {                            CustomSelectList customSetting;
                 if (isGet)
                 {
                     customSetting = GetCustomSetting(applicationSetting);
-
                 }
                 else
                 {
@@ -243,7 +203,6 @@ Include(x => x.CustomSettingType)
                         ID = (int)applicationSetting,
                         Name = value
                     };
-
                 }
 
                 if (String.IsNullOrEmpty(customSetting.Name))
@@ -288,7 +247,6 @@ Include(x => x.CustomSettingType)
 
                 //    return Convert.ToDecimal(customSetting.Name) / 100M;
                 //}
-
                 //else
                 //{
                 //    return "";

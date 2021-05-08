@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmartSave
 {
+    
     [ViewComponent(Name = "MenuList")]
     public class MenuListViewComponent : ViewComponent
     {
@@ -16,6 +17,16 @@ namespace SmartSave
         public async Task<IViewComponentResult> InvokeAsync()
         {
             return View("MainMenu",await _service.DisplayMenuGroups());
+        }
+    }
+    [ViewComponent(Name = "ClientMenuList")]
+    public class ClientMenuListViewComponent : ViewComponent
+    {
+        private readonly IMenuService _service;
+        public ClientMenuListViewComponent(IMenuService service) => _service = service;
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View("ClientMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Client));
         }
     }
 }

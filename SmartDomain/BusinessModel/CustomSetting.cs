@@ -15,13 +15,7 @@ namespace SmartDomain
         public string Description { get; set; }
         public int CustomVariableTypeID { get; set; }
         public virtual CustomVariableType CustomVariableType { get; set; }
-
-        public int CustomSettingTypeID { get; set; }
-        public virtual CustomSettingType CustomSettingType { get; set; }
-        public bool IsActive { get; set; }
-
-
+       public bool IsActive { get; set; }
     }
-
     
 }

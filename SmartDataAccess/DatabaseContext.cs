@@ -11,7 +11,7 @@ namespace SmartDataAccess
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //  optionsBuilder.();
+          
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,15 +56,7 @@ namespace SmartDataAccess
             //   relationship types
             modelBuilder.Entity<RelationshipType>().HasData(
              Data.GetRelationshipTypes());
-
-            //default company
-            //modelBuilder.Entity<Company>().HasData(
-            //  Data.GetDefaultCompany());
-
-            //  custom  setting types
-            modelBuilder.Entity<CustomSettingType>().HasData(
-                Data.GetCustomSettingTypes());
-
+                    
             //   custom variable types
             modelBuilder.Entity<CustomVariableType>().HasData(
            Data.GetCustomVariableTypes());
@@ -143,7 +135,14 @@ namespace SmartDataAccess
             modelBuilder.Entity<InvoiceStatus>().HasData(
           Data.GetInvoiceStatuses());
 
-          
+            modelBuilder.Entity<Layout>().HasData(
+            LayoutData.GetLayouts());
+
+            modelBuilder.Entity<LayoutMenu>().HasData(
+           LayoutData.GetLayoutMenus());
+
+            modelBuilder.Entity<SupportList>().HasData(
+            Data.GetSupportLists());
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -190,7 +189,7 @@ namespace SmartDataAccess
         public DbSet<CourseIntake> CourseIntakes { get; set; }
         public DbSet<AttendanceRegisterDetail> AttendanceRegisterDetails { get; set; }
         public DbSet<AttendanceRegister> AttendanceRegisters { get; set; }
-       
+
         public DbSet<Department> Department { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<PriorityRank> PriorityRanks { get; set; }
@@ -206,12 +205,12 @@ namespace SmartDataAccess
         public DbSet<RoleMenu> RoleMenus { get; set; }
         public DbSet<Titles> Titles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<CustomVariableType> SystemVariableTypes { get; set; }
-        public DbSet<CustomSettingType> CustomSettingTypes { get; set; }
-        public DbSet<CustomSetting> CustomSettings { get; set; }
+        public DbSet<CustomVariableType> VariableTypes { get; set; }
+               public DbSet<CustomSetting> CustomSettings { get; set; }
         public DbSet<Maintanance> Maintanances { get; set; }
         public DbSet<Licence> Licences { get; set; }
-        
+        public DbSet<SupportList> SupportLists { get; set; }
+        public DbSet<TechnicalSupport> TechnicalSupports { get; set; }
         public DbSet<ErrorLog> ErrorLogging { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<DocumentFormat> DocumentFormats { get; set; }
@@ -225,6 +224,8 @@ namespace SmartDataAccess
         public DbSet<Menu> Menus { get; set; }
         public DbSet<MenuGroup> MenuGroups { get; set; }
 
+        public DbSet<Layout> Layouts { get; set; }
+        public DbSet<LayoutMenu> LayoutMenus { get; set; }
 
         // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
         // Script-Migration -From 20180904195021_InitialCreate

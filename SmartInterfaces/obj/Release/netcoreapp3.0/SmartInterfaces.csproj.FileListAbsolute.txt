@@ -1,0 +1,15 @@
+D:\Dev Projects\SmartSave\SmartInterfaces\bin\Release\netcoreapp3.0\SmartInterfaces.deps.json
+D:\Dev Projects\SmartSave\SmartInterfaces\bin\Release\netcoreapp3.0\SmartInterfaces.dll
+D:\Dev Projects\SmartSave\SmartInterfaces\bin\Release\netcoreapp3.0\SmartInterfaces.pdb
+D:\Dev Projects\SmartSave\SmartInterfaces\bin\Release\netcoreapp3.0\SmartDomain.dll
+D:\Dev Projects\SmartSave\SmartInterfaces\bin\Release\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartInterfaces\bin\Release\netcoreapp3.0\SmartDomain.pdb
+D:\Dev Projects\SmartSave\SmartInterfaces\bin\Release\netcoreapp3.0\SmartHelper.pdb
+D:\Dev Projects\SmartSave\SmartInterfaces\bin\Release\netcoreapp3.0\SmartHelper.dll.config
+D:\Dev Projects\SmartSave\SmartInterfaces\obj\Release\netcoreapp3.0\SmartInterfaces.csprojAssemblyReference.cache
+D:\Dev Projects\SmartSave\SmartInterfaces\obj\Release\netcoreapp3.0\SmartInterfaces.AssemblyInfoInputs.cache
+D:\Dev Projects\SmartSave\SmartInterfaces\obj\Release\netcoreapp3.0\SmartInterfaces.AssemblyInfo.cs
+D:\Dev Projects\SmartSave\SmartInterfaces\obj\Release\netcoreapp3.0\SmartInterfaces.csproj.CoreCompileInputs.cache
+D:\Dev Projects\SmartSave\SmartInterfaces\obj\Release\netcoreapp3.0\SmartInterfaces.csproj.CopyComplete
+D:\Dev Projects\SmartSave\SmartInterfaces\obj\Release\netcoreapp3.0\SmartInterfaces.dll
+D:\Dev Projects\SmartSave\SmartInterfaces\obj\Release\netcoreapp3.0\SmartInterfaces.pdb

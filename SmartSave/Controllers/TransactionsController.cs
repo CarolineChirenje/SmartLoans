@@ -18,6 +18,7 @@ using MigraDocCore.Rendering;
 using MigraDocCore.DocumentObjectModel;
 using PdfSharpCore.Pdf.Security;
 using SmartLog;
+using SmartInterfaces;
 
 namespace SmartSave.Controllers
 {
@@ -90,7 +91,7 @@ namespace SmartSave.Controllers
                     {
                         if (paymentsFile.AutoEmailReceipt)
                         {
-                            Client statement = await _ClientService.FindClientSuperFast(paymentsFile.ClientID);
+                            ClientPeek statement = await _ClientService.GetClient(clientID:paymentsFile.ClientID);
                             if (UtilityService.IsNull(statement))
                             {
                                 receipt = PrintReceipt(result);
@@ -556,7 +557,7 @@ namespace SmartSave.Controllers
             SelectList clientProducts = null;
             if (clientID != 0)
             {
-                List<Product> clientproductList = _ClientService.GetClientRegisteredProducts(clientID);
+                List<SmartDomain.Product> clientproductList = _ClientService.GetClientRegisteredProducts(clientID);
 
                 clientproductList.Select(t => new
                 {

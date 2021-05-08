@@ -1193,6 +1193,7 @@
           "MigraDocCore.Rendering": "0.1.1",
           "PdfSharpCore": "1.2.16",
           "SmartDomain": "1.0.0",
+          "SmartInterfaces": "1.0.0",
           "SmartLog": "1.0.0",
           "System.Data.DataSetExtensions": "4.5.0"
         },

@@ -12,6 +12,7 @@
           "MigraDocCore.Rendering": "0.1.1",
           "PdfSharpCore": "1.2.16",
           "SmartDomain": "1.0.0",
+          "SmartInterfaces": "1.0.0",
           "SmartLog": "1.0.0",
           "System.Data.DataSetExtensions": "4.5.0"
         },
@@ -440,6 +441,15 @@
           "SmartHelper.dll": {}
         }
       },
+      "SmartInterfaces/1.0.0": {
+        "dependencies": {
+          "SmartDomain": "1.0.0",
+          "SmartHelper": "1.0.0"
+        },
+        "runtime": {
+          "SmartInterfaces.dll": {}
+        }
+      },
       "SmartLog/1.0.0": {
         "dependencies": {
           "SmartHelper": "1.0.0"
@@ -791,6 +801,11 @@
       "sha512": ""
     },
     "SmartHelper/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SmartInterfaces/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

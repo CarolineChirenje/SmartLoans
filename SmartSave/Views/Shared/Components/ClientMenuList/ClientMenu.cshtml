@@ -1,0 +1,30 @@
+@using SmartSave;
+@using SmartHelper;
+@using Microsoft.AspNetCore.Http
+@{var client = TempData["Client"]; }
+<ul class="sidebar-menu" data-widget="tree">
+    <li class="header">@UtilityService.ApplicationName</li>
+    <li><i class="fa fa-umbrella"></i><a asp-controller="Home" asp-action="Dashboard">Dashboard</a></li>
+    @{
+        int clientID = 0;
+        try
+        {
+            clientID= Convert.ToInt32(Context.Session.GetString("ClientID"));
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    @foreach (var menu in Model)
+    {
+        <li>
+            <i class="@UtilityService.HtmlEncode(menu.CSSClass)" aria-hidden="true"></i>
+            <a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName" asp-route-id="@clientID">@menu.DisplayName</a>
+        </li>
+    }
+
+</ul>
+
+

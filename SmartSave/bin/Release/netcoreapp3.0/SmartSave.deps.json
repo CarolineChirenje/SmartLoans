@@ -32,6 +32,7 @@
           "SmartDataAccess": "1.0.0",
           "SmartDomain": "1.0.0",
           "SmartHelper": "1.0.0",
+          "SmartInterfaces": "1.0.0",
           "SmartLog": "1.0.0",
           "SmartLogic": "1.0.0",
           "SmartReporting": "1.0.0",
@@ -2561,6 +2562,18 @@
           "SmartHelper.dll": {}
         }
       },
+      "SmartInterfaces/1.0.0": {
+        "dependencies": {
+          "SmartDomain": "1.0.0",
+          "SmartHelper": "1.0.0"
+        },
+        "runtime": {
+          "SmartInterfaces.dll": {}
+        },
+        "compile": {
+          "SmartInterfaces.dll": {}
+        }
+      },
       "SmartLog/1.0.0": {
         "dependencies": {
           "SmartHelper": "1.0.0"
@@ -2576,6 +2589,7 @@
         "dependencies": {
           "SmartDataAccess": "1.0.0",
           "SmartDomain": "1.0.0",
+          "SmartInterfaces": "1.0.0",
           "SmartLog": "1.0.0",
           "SmartReporting": "1.0.0"
         },
@@ -5539,6 +5553,11 @@
       "sha512": ""
     },
     "SmartHelper/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SmartInterfaces/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

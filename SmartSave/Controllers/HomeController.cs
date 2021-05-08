@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartSave.Models;
 using SmartLogic;
+using SmartHelper;
 
 namespace SmartSave.Controllers
-{
+{   [OverrideMenuComponentFilter]
     public class HomeController : Controller
     {
 
         private readonly IDashboardService _service;
-      
-        public HomeController(IDashboardService service)
-        {
-            _service = service;
-        }
+
+        public HomeController(IDashboardService service) => _service = service;
 
         public IActionResult Dashboard()
         {

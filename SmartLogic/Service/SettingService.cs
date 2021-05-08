@@ -199,26 +199,12 @@ namespace SmartLogic
                 throw;
             }
         }
-
-        public List<CustomSettingType> GetCustomSettingsTypes()
-        {
-            try
-            {
-
-                return _context.CustomSettingTypes.Where(x => x.IsActive).ToList();
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
+            
         public List<ClientGroup> GetAffiliations()
         {
             try
             {
-
-                return _context.ClientGroups.ToList();
+                            return _context.ClientGroups.ToList();
             }
             catch (Exception ex)
             {
@@ -233,9 +219,7 @@ namespace SmartLogic
         {
             try
             {
-
-
-                return _context.SystemVariableTypes.Where(x => x.IsActive).ToList();
+                            return _context.VariableTypes.Where(x => x.IsActive).ToList();
             }
             catch (Exception ex)
             {

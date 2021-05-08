@@ -31,5 +31,9 @@ namespace SmartLogic
         Task<int> DeleteMenu(int id);
         Task<int> ActionMenu(int menuID, DatabaseAction action);
 
+        #region LayOuts
+        Task<List<LayoutMenu>> DisplayLayouts(LayoutComponent layoutGroup);
+        #endregion LayOuts
+
     }
 }

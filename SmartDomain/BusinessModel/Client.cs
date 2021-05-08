@@ -55,8 +55,9 @@ namespace SmartDomain
         public bool IsJointAccount { get { return ClientAccountTypeID == (int)Client_AccountType.Joint; } }
         [NotMapped]
         public int StatementID { get; set; }
-        [NotMapped]
-        public virtual Statement Statement { get; set; }
+        //TODO: Sort Out
+       // [NotMapped]
+      //  public virtual Statement Statement { get; set; }
 
         [NotMapped]
         [DisplayName("Document Type")]

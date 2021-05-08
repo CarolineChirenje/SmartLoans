@@ -41,9 +41,7 @@ namespace SmartLogic
         public async Task<List<MenuGroup>> DisplayMenuGroups()
         {
             try
-            {
-
-                       return await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
+            {                       return await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -321,6 +319,21 @@ namespace SmartLogic
         }
 
 
+
+        #region LayOuts
+        public async Task<List<LayoutMenu>> DisplayLayouts(LayoutComponent layoutGroup)
+        {
+            try
+            {
+                return await _context.LayoutMenus.Where(m=>m.LayoutID==(int)layoutGroup).OrderBy(m => m.OrderNo).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        #endregion LayOuts
     }
 
 }

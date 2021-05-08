@@ -8072,3 +8072,5 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Licenc
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Licence\Licence.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Licence\LicenceMode.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Licence\ViewLicence.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\SmartInterfaces.dll
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\SmartInterfaces.pdb

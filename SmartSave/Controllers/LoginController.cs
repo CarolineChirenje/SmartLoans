@@ -11,10 +11,12 @@ using SmartDomain;
 using System;
 using Microsoft.AspNetCore.Http;
 using System.Threading;
+using SmartInterfaces;
 
 namespace SmartSave.Controllers
 {
     [AllowAnonymous]
+    [OverrideMenuComponentFilter]
     public class LoginController : Controller
     {
         private readonly DatabaseContext _context;
@@ -42,11 +44,11 @@ namespace SmartSave.Controllers
         public ActionResult Login()
         {
             var maintanance = GetData.MaintananceMode();
-            if(UtilityService.IsNotNull(maintanance))
+            if (UtilityService.IsNotNull(maintanance))
                 return RedirectToAction("MaintananceMode", "Maintanance");
 
             var licence = GetData.LicenceMode();
-               if (UtilityService.IsNotNull(licence))
+            if (UtilityService.IsNotNull(licence))
                 return RedirectToAction("LicenceMode", "Licence");
             return View();
         }
@@ -71,20 +73,19 @@ namespace SmartSave.Controllers
             {
                 if (user.IsActive)
                 {
-
                     UtilityService.CurrentUserName = user.UserName;
                     UtilityService.UserFullName = user.UserFullName;
                     UtilityService.UserProfileImage = user.ProfileImage;
                     UtilityService.CurrentUserTypeID = user.UserTypeID;
                     UtilityService.CanOverrideMaintananceMode = user.CanOverrideMaintananceMode;
-                    if (DateTime.Now > user.PasswordExpiryDate)
+                                     if (DateTime.Now > user.PasswordExpiryDate)
                         return RedirectToAction("PasswordReset", new { id = user.UserID });
 
                     else
                     {
                         if (user.UserTypeID == (int)TypeOfUser.Employee)
                         {
-                            Client client = await _clientService.GetClient(user.EmailAddress, user.IDNumber);
+                            ClientPeek client = await _clientService.GetClient(user.EmailAddress, user.IDNumber);
                             if (UtilityService.IsNotNull(client))
                             {
                                 return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
@@ -246,7 +247,7 @@ namespace SmartSave.Controllers
                 return View(model);
             }
 
-            Client client = await _clientService.GetClient(model.EmailAddress, model.IDNumber);
+            ClientPeek client = await _clientService.GetClient(model.EmailAddress, model.IDNumber);
             if (UtilityService.IsNotNull(client))
             {
 
@@ -335,7 +336,7 @@ namespace SmartSave.Controllers
         public ActionResult FinaliseAccount(int id)
         {
             HttpContext.Session.SetString("UserIDKey", id.ToString());
-            Client client = _clientService.FindClient(id).Result;
+            ClientForm client = _clientService.FindClient(id).Result;
             return View(client);
         }
 
@@ -345,8 +346,8 @@ namespace SmartSave.Controllers
 
 
             int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
-
-            Client client = _clientService.FindClient(userID).Result;
+            // TODO : Optimise Bring Short Object
+            ClientForm client = _clientService.FindClient(userID).Result;
 
             User user = new User();
             user.EmailAddress = client.EmailAddress;

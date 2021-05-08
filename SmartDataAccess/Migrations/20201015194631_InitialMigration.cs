@@ -2357,7 +2357,7 @@ namespace SmartDataAccess.Migrations
                     { 9, "Roles", "fa fa-asterisk", "Roles", "Roles & Permissions", true, "SuperUser", new DateTime(2020, 10, 15, 21, 46, 30, 598, DateTimeKind.Local).AddTicks(401), 5, 9 },
                     { 8, "Users", "fa fa-users", "User", "User Management", true, "SuperUser", new DateTime(2020, 10, 15, 21, 46, 30, 598, DateTimeKind.Local).AddTicks(397), 5, 8 },
                     { 7, "CustomSettings", "fa fa-spinner", "CustomSettings", "Application Settings", true, "SuperUser", new DateTime(2020, 10, 15, 21, 46, 30, 598, DateTimeKind.Local).AddTicks(393), 5, 7 },
-                    { 6, "Product", "fa fa-product-hunt", "Product", "Products", true, "SuperUser", new DateTime(2020, 10, 15, 21, 46, 30, 598, DateTimeKind.Local).AddTicks(389), 3, 6 },
+                    { 6, "Product", "fa fa-star", "Product", "Products", true, "SuperUser", new DateTime(2020, 10, 15, 21, 46, 30, 598, DateTimeKind.Local).AddTicks(389), 3, 6 },
                     { 5, "ScheduleReport", "fa fa-file", "Transactions", "Generated Invoices", true, "SuperUser", new DateTime(2020, 10, 15, 21, 46, 30, 598, DateTimeKind.Local).AddTicks(381), 3, 5 },
                     { 4, "Schedule", "fa fa-gear", "Transactions", "Generate Bulk Invoice", true, "SuperUser", new DateTime(2020, 10, 15, 21, 46, 30, 598, DateTimeKind.Local).AddTicks(377), 3, 4 },
                     { 3, "Transactions", "fa fa-money", "Transactions", "Transactions", true, "SuperUser", new DateTime(2020, 10, 15, 21, 46, 30, 598, DateTimeKind.Local).AddTicks(374), 3, 2 },
