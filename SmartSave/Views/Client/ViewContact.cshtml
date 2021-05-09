@@ -67,7 +67,7 @@
                             {<a class="btn btn-danger" asp-controller="Client" asp-action="ActionContact" asp-route-contactid="@Model.ClientContactID" asp-route-Clientid="@Model.ClientID">Delete</a>
                             }  @if (UtilityService.HasPermission(Permissions.View_Client))
                             {<a class="btn btn-info" asp-controller="Client" asp-action="Contacts" asp-route-id="@Model.ClientID">View More Contacts</a>
-                            }<a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                            }<a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">Cancel</a>
                         </div>
 
 

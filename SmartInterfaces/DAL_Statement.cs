@@ -12,8 +12,9 @@ namespace SmartInterfaces
         [Key]
         public int StatementID { get; set; }
         public int ClientID { get; set; }
-        public virtual ClientForm Client { get; set; }
-       
+        public virtual ClientForm ClientForm { get; set; }
+        public  List<ProdList> ProductList { get; set; }
+
     }
 
     public class Statement:StatementBase
@@ -25,7 +26,15 @@ namespace SmartInterfaces
         public DateTime EndDate { get; set; }
         public bool EmailStatement { get; set; }
         public bool PrintReversalsOnStatement { get; set; }
+
     }
+
+    public class ProdList
+    {
+        public int ProductID { get; set; }
+        public string Name { get; set; }
+    }
+
 
     public class OutstandingStatement:Statement
     {

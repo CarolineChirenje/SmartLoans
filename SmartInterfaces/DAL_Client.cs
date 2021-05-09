@@ -276,6 +276,7 @@ namespace SmartInterfaces
         public string ProductName { get; set; }
         public string LastChangedDate { get; set; }
         public string LastChangedBy { get; set; }
+        public string DeductionToBeApplied { get; set; }
 
     }
     public class Transactions

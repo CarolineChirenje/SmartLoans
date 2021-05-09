@@ -139,7 +139,7 @@ namespace SmartSave.Controllers
             try
             {
                 GetDropDownLists();
-                SalaryHistory  history = _service.SalaryHistory(id);
+                SalaryHistory history = _service.SalaryHistory(id);
                 if (UtilityService.IsNull(history))
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
@@ -358,6 +358,12 @@ namespace SmartSave.Controllers
         {
             if (ModelState.IsValid)
             {
+                bool documentUploaded = await _service.DocumentUploaded(ClientDocument.ClientID, ClientDocument.DocumentTypeID);
+                if (documentUploaded)
+                {
+                    TempData["Error"] = "A  document of the same type has already been uploaded in the system.Please delete the existing document before trying to  re-upload"; 
+                    return RedirectToAction("Documents", new { id = ClientDocument.ClientID });
+                }
 
                 Custom documentInformation = _settingService.DocumentFormatMatch(FileBytes.ContentType, ClientDocument.DocumentTypeID);
                 if (!documentInformation.Bool_Value)
@@ -439,17 +445,41 @@ namespace SmartSave.Controllers
             ClientDocument document = await _service.FindDocument(id);
             return File(document.FileBytes, document.FileType, document.FileName);
         }
+        public ActionResult Statements(int id)
+        {
+            try
+            {
+                
+                Statement statement = _service.ClientStatements(id);
+                if (UtilityService.IsNull(statement))
+                                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                var statementList = _settingService.GetStatementList().Select(t => new
+                {
+                    t.StatementID,
+                    t.Name,
+                }).OrderBy(t => t.Name);
 
+                ViewBag.ClientStatement = new SelectList(statementList, "StatementID", "Name", (int)SmartHelper.Statements.Product_Based_Statement);
+                ViewBag.RegisteredProducts = new SelectList(statement.ProductList, "ProductID", "Name");
+               
+                return View(statement);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
 
         [HttpGet]
         public ActionResult GenerateStatement(Statement statement, string GenerateStatement, string EmailStatement)
         {
             if (statement.ClientID == 0)
                 return RedirectToAction(nameof(Clients));
-            statement.Client = _service.FindClient(statement.ClientID).Result;
+            statement.ClientForm = _service.FindClient(statement.ClientID).Result;
             //TODO:Sort Out
             //  statement.Product = _settingService.FindProduct(statement.ProductID);
-            string filename = statement.Client.AccountNumber;
+            string filename = statement.ClientForm.AccountNumber;
             TransactionalStatement printOut = new TransactionalStatement();
             if (!string.IsNullOrEmpty(GenerateStatement))
             {
@@ -481,14 +511,14 @@ namespace SmartSave.Controllers
                 attachments.Add(attachment);
 
                 Email email = new Email();
-                email.To = statement.Client.EmailAddress;
+                email.To = statement.ClientForm.EmailAddress;
                 email.AttachmentFromMemory = attachments;
                 if (UtilityService.IsNotNull(emailTemplate))
                 {
                     email.Body = emailTemplate.Body;
                     email.Subject = emailTemplate.Subject;
                 }
-                string emailAddress = statement.Client.EmailAddress;
+                string emailAddress = statement.ClientForm.EmailAddress;
                 if (_mailService.SendMail(email))
                 {
 
@@ -508,8 +538,8 @@ namespace SmartSave.Controllers
             if (statement.ClientID == 0)
                 return RedirectToAction(nameof(Clients));
 
-            statement.Client = _service.FindClient(statement.ClientID).Result;
-            string filename = statement.Client.AccountNumber;
+            statement.ClientForm = _service.FindClient(statement.ClientID).Result;
+            string filename = statement.ClientForm.AccountNumber;
             OutstandingPayments printOut = new OutstandingPayments();
             if (!string.IsNullOrEmpty(GenerateOutStandingStatement))
             {
@@ -539,14 +569,14 @@ namespace SmartSave.Controllers
                 attachments.Add(attachment);
 
                 Email email = new Email();
-                email.To = statement.Client.EmailAddress;
+                email.To = statement.ClientForm.EmailAddress;
                 email.AttachmentFromMemory = attachments;
                 if (UtilityService.IsNotNull(emailTemplate))
                 {
                     email.Body = emailTemplate.Body;
                     email.Subject = emailTemplate.Subject;
                 }
-                string emailAddress = statement.Client.EmailAddress;
+                string emailAddress = statement.ClientForm.EmailAddress;
                 if (_mailService.SendMail(email))
                 {
 
@@ -581,7 +611,7 @@ namespace SmartSave.Controllers
                     {
                         PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
 
-                        securitySettings.UserPassword = statement.Client.IDNumber.Trim();
+                        securitySettings.UserPassword = statement.ClientForm.IDNumber.Trim();
                         securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
 
                         // Restrict some rights.
@@ -628,7 +658,7 @@ namespace SmartSave.Controllers
                     {
                         PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
 
-                        securitySettings.UserPassword = statement.Client.IDNumber.Trim();
+                        securitySettings.UserPassword = statement.ClientForm.IDNumber.Trim();
                         securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
 
                         // Restrict some rights.
@@ -930,7 +960,7 @@ namespace SmartSave.Controllers
             TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("Dependents", new { id = ClientDependent.ClientID });
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> ActionDependent(int Dependentid, int Clientid)
         {
             if (await (_service.ActionDependent(Dependentid, DatabaseAction.Remove)) == 0)
@@ -1070,9 +1100,15 @@ namespace SmartSave.Controllers
         {
             if (ModelState.IsValid)
             {
+                bool activeEnrolment = await _service.HasActiveEnrollement(ClientCourse.ClientID, ClientCourse.CourseID);
+                if (activeEnrolment)
+                {
+                    TempData["Error"] = "A  similar course enrolment is currently active.To register for the same course please make sure that the existing  enrollment has been deregistered or marked as complete"; ;
+                    return RedirectToAction("Courses", new { id = ClientCourse.ClientID });
+                }
                 if (await (_service.Save(ClientCourse)) == 0)
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-           }
+            }
             return RedirectToAction("Courses", new { id = ClientCourse.ClientID });
         }
 
@@ -1447,14 +1483,7 @@ namespace SmartSave.Controllers
 
             ViewBag.CountryList = new SelectList(country, "CountryID", "Name");
 
-            var statementList = _settingService.GetStatementList().Select(t => new
-            {
-                t.StatementID,
-                t.Name,
-            }).OrderBy(t => t.Name);
-
-            ViewBag.ClientStatement = new SelectList(statementList, "StatementID", "Name", (int)Statements.Product_Based_Statement);
-
+         
             var titleList = _settingService.GetTitles().Select(t => new
             {
                 t.TitleID,

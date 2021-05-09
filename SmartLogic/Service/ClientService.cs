@@ -791,7 +791,9 @@ namespace SmartLogic
             try
             {
                 var clientContact = await _context.ClientContacts.
-                FindAsync(id);
+            Include(c => c.Client).ThenInclude(c => c.Title).
+        Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
+        Where(t => t.ClientContactID == id).FirstOrDefaultAsync();
                 if (UtilityService.IsNull(clientContact))
                     return null;
                 return clientContact;
@@ -969,6 +971,25 @@ namespace SmartLogic
                 throw;
             }
         }
+
+        public async Task<bool> DocumentUploaded(int clientID, int documentTypeID)
+        {
+            try
+            {
+
+
+                ClientDocument clientDocument = await _context.ClientDocuments.Where(c => c.ClientID == clientID && c.DocumentTypeID == documentTypeID).FirstOrDefaultAsync();
+                bool result = UtilityService.IsNotNull(clientDocument);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
         public SalaryHistory SalaryHistory(int clientID)
         {
             try
@@ -1002,6 +1023,7 @@ namespace SmartLogic
                 throw;
             }
         }
+      
         //MedicalDetail
         public Medical MedicalFiles(int clientID)
         {
@@ -1372,7 +1394,8 @@ namespace SmartLogic
                         DateRegistered = product.DateRegistered,
                         RegistrationDate = UtilityService.ShowDateTime(product.DateRegistered),
                         LastChangedBy = product.LastChangedBy,
-                        LastChangedDate = UtilityService.ShowDateTime(product.LastChangedDate)
+                        LastChangedDate = UtilityService.ShowDateTime(product.LastChangedDate),
+                        DeductionToBeApplied = product.DeductionToBeApplied
                     });
                 }
                 packages.ProductList = result;
@@ -1408,10 +1431,8 @@ namespace SmartLogic
             {
                 var transactions = _context.ClientCourses.
                 Include(c => c.Course).
-                ThenInclude(c => c.CourseIntakes).
-                Include(c => c.Course).
-                ThenInclude(c => c.CourseOutlines).
-                Where(c => c.ClientID == clientID).ToList();
+                 ThenInclude(c => c.CourseOutlines).
+                              Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
                 CoachingProgrammes course = new CoachingProgrammes();
@@ -1435,7 +1456,7 @@ namespace SmartLogic
                         RegistrationDate = UtilityService.ShowDateTime(transaction.DateRegistered),
                         DateRegistered = transaction.DateRegistered,
 
-                    }); ;
+                    });
                 }
                 course.CourseList = result;
                 return course;
@@ -1545,6 +1566,26 @@ namespace SmartLogic
                 throw;
             }
         }
+
+
+        public async Task<bool> HasActiveEnrollement(int clientID, int courseID)
+        {
+            try
+            {
+
+                //1.Same course is still not completed or not deregistered
+                ClientCourse course = await _context.ClientCourses.Where(c => c.ClientID == clientID && c.CourseID == courseID && !c.DateCompleted.HasValue && !c.IsDeRegistered).FirstOrDefaultAsync();
+                bool result = UtilityService.IsNotNull(course);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
 
         public async Task<int> ActionCourse(int id)
         {
@@ -1829,7 +1870,9 @@ namespace SmartLogic
             {
                 var transactions = _context.Transactions.
                 Include(t => t.PaymentStatus).
-                Where(c => c.ClientID == clientID).ToList();
+                Include(t => t.Product).
+                Include(t => t.Course).
+                 Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
                 Transactions trans = new Transactions();
@@ -1873,6 +1916,7 @@ namespace SmartLogic
                                 Include(p => p.ProductFee).ThenInclude(p => p.Frequency).
                                 Include(p => p.CourseFee).ThenInclude(p => p.Course).
                                 Include(p => p.CourseFee).ThenInclude(p => p.Frequency).
+
                 Where(c => c.ClientID == clientID && !c.DatePaid.HasValue && c.DueDate.Date < cutoffDate.Date).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
@@ -1974,6 +2018,40 @@ namespace SmartLogic
                 throw;
             }
         }
+        public Statement ClientStatements(int clientID)
+        {
+            try
+            {
+                var transactions = _context.ClientProducts.
+                Include(c => c.Product).
+                               Where(c => c.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(transactions))
+                    return null;
+                Statement statement = new Statement();
+                statement.ClientID = clientID;
+                statement.ClientForm = FindClient(clientID).Result;
+                List<ProdList> result = new List<ProdList>();
+
+                foreach (var transaction in transactions)
+                {
+                    result.Add(new ProdList
+                    {
+
+                        ProductID = transaction.ProductID,
+                        Name = transaction.Product.Name,
+
+                    });
+                }
+                statement.ProductList = result;
+                return statement;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
         #region Helpers
         ClientForm GetClient(Client result)
         {

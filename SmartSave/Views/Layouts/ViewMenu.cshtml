@@ -1,0 +1,109 @@
+﻿@model SmartDomain.LayoutMenu;
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+      Layout  Menus
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+            <h3 class="box-title">@Model.DisplayName</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="/Layouts/ViewMenu">
+            @if (TempData["Error"] != null)
+            {<div class="container">
+                    <strong class="">@TempData["Error"].ToString()</strong>
+                    <div class="panel panel-danger">
+                        <div class="panel-body">@Html.ValidationSummary()</div>
+                    </div>
+                </div>
+            }
+        <div class="box-body">
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Display Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="DisplayName" value="@Model.DisplayName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">BaseController</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ControllerName" value="@Model.ControllerName">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Action</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ActionName" value="@Model.ActionName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Order No</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="OrderNo" value="@Model.OrderNo">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Style</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="CSSClass" value="@Model.CSSClass">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                <div class="col-sm-10 checkbox">
+                    <div class="form-group">
+
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="IsActive" />
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Icon</label>
+                <div class="col-sm-10">
+                    <i class="@Model.CSSClass" style="font-size:36px"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
+                <div class="col-sm-10">
+                    <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                <div class="col-sm-10">
+                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                </div>
+            </div>
+            <input type="hidden" name="LayoutMenuID" value="@Model.LayoutMenuID" />
+        </div>
+            <!-- /.box-body -->
+              <div class="box-footer">
+                  <a class="btn btn-default" asp-controller="Layouts" asp-action="Layouts">Cancel</a>
+                  @if (UtilityService.HasPermission(Permissions.Update_Menu))
+                  {
+                      <button type="submit" class="btn btn-info pull-right">Update</button>
+                  }
+                  </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+</section>

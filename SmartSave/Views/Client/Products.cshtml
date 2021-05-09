@@ -32,6 +32,7 @@
                                     <th>Name</th>
                                     <th>Date Registered</th>
                                     <th>Status</th>
+                                    <th>Instruction</th>
                                     <th>Last Changed By</th>
                                     <th>Last Changed Date</th>
 
@@ -55,6 +56,7 @@
                                     }
                                     <td>@Html.DisplayFor(modelItem => item.RegistrationDate)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DeductionToBeApplied)</td>
                                     <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
                                     <td>@Html.DisplayFor(modelItem => item.LastChangedDate)</td>
                                 </tr>

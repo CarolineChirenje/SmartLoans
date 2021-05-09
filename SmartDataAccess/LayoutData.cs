@@ -45,7 +45,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "Products",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fas fa-star"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-bomb"),
                     OrderNo = 1,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -73,7 +73,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "PendingTransactions",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fas fa-battery-empty"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-cart-plus"),
                     OrderNo = 3,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -157,7 +157,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "Contacts",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fas fa-address-book"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-address-book"),
                     OrderNo = 9,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -199,7 +199,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "Deductions",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fas fa-copy"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-gavel"),
                     OrderNo = 12,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"

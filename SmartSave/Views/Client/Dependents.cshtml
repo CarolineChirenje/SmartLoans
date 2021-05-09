@@ -17,45 +17,46 @@
     <partial name="_ClientView" model="@Model.ClientForm" />
     <div class="row">
         <div class="col-lg-12">
-            <div class="tab-pane fade" id="Dependents">
+            <div class="tab-pane fade in" id="Dependents">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Dependents
+                     Dependents
                     </div>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div class="dataTable_wrapper">
-                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                                <tr>
-                                    <th>Full Name</th>
-                                    <th>IDNumber</th>
-                                    <th>Occupation</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.DependentsList != null)
-                                {
-                                    foreach (var item in Model.DependentsList)
+                    <form>
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <th>IDNumber</th>
+                                        <th>Occupation</th>
+                                        <th>Gender</th>
+                                        <th>Age</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.DependentsList != null)
                                     {
+                                        foreach (var item in Model.DependentsList)
+                                        {
 
-                                        <tr>
-                                            <td><a asp-controller="Client" asp-action="ViewClientDependent" asp-route-id="@item.ClientDependentID" asp-route-Clientid="@Model.ClientID">@item.FullName</a> </td>
-                                            <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Gender)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Age)</td>
-                                        </tr>
+                                            <tr>
+                                                <td><a asp-controller="Client" asp-action="ViewClientDependent" asp-route-id="@item.ClientDependentID" asp-route-Clientid="@Model.ClientID">@item.FullName</a> </td>
+                                                <td>@Html.DisplayFor(modelItem => item.IDNumber)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                                            </tr>
+                                        }
                                     }
-                                }
-                                </tbody>
-                        </table>
-                    </div>
+                            </table>
+                        </div>
+                    </form>
                 </div>
-
+                <input type="hidden" name="ClientID" value="@Model.ClientID" />
                 <div class="box-footer">
                     @if (UtilityService.HasPermission(Permissions.Add_Client_Dependent))
                     {
@@ -64,11 +65,9 @@
                     <a class="btn btn-default" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientForm.ClientID">Cancel</a>
                 </div>
             </div>
-
         </div>
     </div>
-
-</section>
+  </section>
 <div class="modal fade" id="DependentForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -226,7 +226,7 @@ namespace SmartReporting
                 tblrow.Cells[3].Borders.Visible = false;
                 tblrow.Cells[3].Format.Alignment = ParagraphAlignment.Left;
                 tblrow.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
-                tblrow.Cells[3].AddParagraph(_statement.Client.AccountNumber);
+                tblrow.Cells[3].AddParagraph(_statement.ClientForm.AccountNumber);
 
                 Row tblrow1 = this.table.AddRow();
                 tblrow1.Borders.Visible = false;

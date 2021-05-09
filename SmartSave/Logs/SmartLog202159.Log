@@ -103,3 +103,9 @@
    at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
    at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
    at SmartLogic.ClientService.PendingTransactions(Int32 clientID, DateTime cutoffDate) in D:\Dev Projects\SmartSave\SmartLogic\Service\ClientService.cs:line 1870
+2021-05-09 20:54:44:26 :Logic Base : System.NullReferenceException: Object reference not set to an instance of an object.
+   at SmartDomain.Transaction.get_Entity() in D:\Dev Projects\SmartSave\SmartDomain\BusinessModel\Transaction.cs:line 50
+   at SmartLogic.ClientService.PaidTransactions(Int32 clientID) in D:\Dev Projects\SmartSave\SmartLogic\Service\ClientService.cs:line 1842
+2021-05-09 21:00:07:78 :Logic Base : System.NullReferenceException: Object reference not set to an instance of an object.
+   at SmartDomain.Transaction.get_Entity() in D:\Dev Projects\SmartSave\SmartDomain\BusinessModel\Transaction.cs:line 50
+   at SmartLogic.ClientService.PaidTransactions(Int32 clientID) in D:\Dev Projects\SmartSave\SmartLogic\Service\ClientService.cs:line 1842

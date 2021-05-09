@@ -187,7 +187,7 @@ namespace SmartDataAccess
                     ControllerName = "Product",
                     ActionName = "Product",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-star"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-bomb"),
                     OrderNo =6,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -386,6 +386,21 @@ namespace SmartDataAccess
                 },
 
               // put new menu here
+              
+                  new Menu()
+                {
+                    MenuID =9994,
+                    MenuGroupID = (int)MenuGroups.Developer_Menu,
+                    DisplayName = "Support",
+                    ControllerName = "Support",
+                    ActionName = "Support",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-anchor"),
+                    OrderNo =9994,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
                 new Menu()
                 {
                     MenuID = 9995,
@@ -421,7 +436,7 @@ namespace SmartDataAccess
                     ControllerName = "Maintanance",
                     ActionName = "Maintanance",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa  fa-wrench"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-wrench"),
                     OrderNo =9997,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"

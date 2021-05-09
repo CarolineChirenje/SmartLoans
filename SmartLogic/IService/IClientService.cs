@@ -47,7 +47,7 @@ namespace SmartLogic
         Task<int> Save(ClientDocument document);
         Task<int> Update(ClientDocument document);
         Task<int> ActionDocument(int id, DatabaseAction action);
-
+        Task<bool> DocumentUploaded(int clientID, int documentTypeID);
 
         //Medical Details
         Medical MedicalFiles(int clientID);
@@ -76,6 +76,7 @@ namespace SmartLogic
         CoachingProgrammes Courses(int clientID);
         Task<ClientCourse> FindCourse(int id);
         Task<int> Save(ClientCourse ClientCourse);
+        Task<bool> HasActiveEnrollement(int clientID, int courseID);
         Task<int> Update(ClientCourse ClientCourse);
         Task<int> ActionCourse(int id);
 
@@ -90,6 +91,8 @@ namespace SmartLogic
         Task<int> UpdateSessions(int clientCourseID, string[] selectedSessions);
 
         SalaryHistory SalaryHistory(int clientID);
+
+        Statement ClientStatements(int clientID);
 
     }
 }
