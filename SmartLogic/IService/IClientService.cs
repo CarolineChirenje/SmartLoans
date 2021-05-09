@@ -42,6 +42,7 @@ namespace SmartLogic
 
 
         //Document
+        Docs ClientDocuments(int clientID);
         Task<ClientDocument> FindDocument(int id);
         Task<int> Save(ClientDocument document);
         Task<int> Update(ClientDocument document);
@@ -49,6 +50,7 @@ namespace SmartLogic
 
 
         //Medical Details
+        Medical MedicalFiles(int clientID);
         Task<ClientMedicalDetail> FindMedicalDetail(int id);
         Task<int> Save(ClientMedicalDetail ClientMedicalDetail);
         Task<int> Update(ClientMedicalDetail ClientMedicalDetail);
@@ -67,22 +69,27 @@ namespace SmartLogic
         Task<int> Save(ClientProduct ClientProduct);
         Task<int> Update(ClientProduct ClientProduct);
         Task<int> ActionProduct(int id, DatabaseAction action);
-        List<ClientProduct> GetClientProducts(int id);
-        List<SmartDomain.Product> GetClientRegisteredProducts(int id);
+       ClientPackages GetClientProducts(int clientID);
+        List<Product> GetClientRegisteredProducts(int id);
         InvoicePackage GetPotentialInvoiceEntries(int InvoiceID, int ProductID, DateTime InvoiceDate);
         //Course
+        CoachingProgrammes Courses(int clientID);
         Task<ClientCourse> FindCourse(int id);
         Task<int> Save(ClientCourse ClientCourse);
         Task<int> Update(ClientCourse ClientCourse);
         Task<int> ActionCourse(int id);
 
-
+        Transactions PaidTransactions(int clientID);
+        PendingTransactions PendingTransactions(int clientID, DateTime cutoffDate);
+        Deductions GetClientDeductions(int clientID);
         List<ClientFee> ClientFees(int clientID);
         Task<ClientFee> FindClientFee(int id);
         Task<int> PayFee(ClientFee clientFee);
         Task<Company> GetClientCompany(int clientID);
 
         Task<int> UpdateSessions(int clientCourseID, string[] selectedSessions);
+
+        SalaryHistory SalaryHistory(int clientID);
 
     }
 }

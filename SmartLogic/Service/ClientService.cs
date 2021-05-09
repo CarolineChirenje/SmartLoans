@@ -392,7 +392,7 @@ namespace SmartLogic
         {
             try
             {
-                var registers=  _context.AttendanceRegisterDetails.
+                var registers = _context.AttendanceRegisterDetails.
                    Include(c => c.AttendanceRegister).
                      ThenInclude(c => c.CourseIntake).
                        ThenInclude(c => c.Course).
@@ -413,10 +413,10 @@ namespace SmartLogic
                     {
                         AttendanceRegisterDetailID = registerDetail.AttendanceRegisterDetailID,
                         ClientID = registerDetail.ClientID,
-                        AttendanceDate   =registerDetail.AttendanceRegister.AttendanceDate,
+                        AttendanceDate = registerDetail.AttendanceRegister.AttendanceDate,
                         Intake = registerDetail.AttendanceRegister.CourseIntake.Duration,
                         Status = registerDetail.AttendanceStatus,
-                        Course=registerDetail.AttendanceRegister.CourseOutline.Course.Title
+                        Course = registerDetail.AttendanceRegister.CourseOutline.Course.Title
 
                     });
                 }
@@ -863,6 +863,43 @@ namespace SmartLogic
             }
         }
         //Document
+        public Docs ClientDocuments(int clientID)
+        {
+            try
+            {
+                var clientDocs = _context.ClientDocuments.
+                Include(cd => cd.DocumentType).
+                Where(c => c.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(clientDocs))
+                    return null;
+                Docs docs = new Docs();
+                docs.ClientID = clientID;
+                docs.ClientForm = FindClient(clientID).Result;
+                List<DocumentList> result = new List<DocumentList>();
+
+                foreach (var document in clientDocs)
+                {
+                    result.Add(new DocumentList
+                    {
+                        ClientDocumentID = document.ClientDocumentID,
+                        ClientID = document.ClientID,
+                        DocumentTitle = document.DocumentType.Name,
+                        DateUploaded = UtilityService.ShowDateTime(document.DateUploaded),
+                        FileName = document.FileName,
+                        FileBytes = document.FileBytes,
+                        UploadedBy = document.UploadedBy,
+                        FileFullName = document.FileFullName
+                    });
+                }
+                docs.DocumentList = result;
+                return docs;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<ClientDocument> FindDocument(int id)
         {
             try
@@ -932,8 +969,75 @@ namespace SmartLogic
                 throw;
             }
         }
+        public SalaryHistory SalaryHistory(int clientID)
+        {
+            try
+            {
+                var transactions = _context.ClientOccupationHistory.
+                               Where(c => c.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(transactions))
+                    return null;
+                SalaryHistory history = new SalaryHistory();
+                history.ClientID = clientID;
+                history.ClientForm = FindClient(clientID).Result;
+                List<SalaryHistoryList> result = new List<SalaryHistoryList>();
 
+                foreach (var transaction in transactions)
+                {
+                    result.Add(new SalaryHistoryList
+                    {
+
+                        Occupation = transaction.Occupation,
+                        Salary = transaction.Salary,
+                        LastChangedDate = UtilityService.ShowDateTime(transaction.LastChangedDate),
+                        LastChangedBy = transaction.LastChangedBy,
+                    });
+                }
+                history.SalaryHistoryList = result;
+                return history;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         //MedicalDetail
+        public Medical MedicalFiles(int clientID)
+        {
+            try
+            {
+                var medicalDetails = _context.ClientMedicalDetails.
+                               Where(c => c.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(medicalDetails))
+                    return null;
+                Medical medical = new Medical();
+                medical.ClientID = clientID;
+                medical.ClientForm = FindClient(clientID).Result;
+                List<MedicalList> result = new List<MedicalList>();
+
+                foreach (var medicalDetail in medicalDetails)
+                {
+                    result.Add(new MedicalList
+                    {
+                        ClientMedicalID = medicalDetail.ClientMedicalID,
+                        ClientID = medicalDetail.ClientID,
+                        Telephone = medicalDetail.Telephone,
+                        MedicalAid = medicalDetail.MedicalAid,
+                        MedicalAidNo = medicalDetail.MedicalAidNo,
+                        Hospital = medicalDetail.Hospital,
+                        Doctor = medicalDetail.Doctor
+                    });
+                }
+                medical.MedicalList = result;
+                return medical;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<ClientMedicalDetail> FindMedicalDetail(int id)
         {
             try
@@ -1242,15 +1346,37 @@ namespace SmartLogic
             }
         }
 
-        public List<ClientProduct> GetClientProducts(int id)
+
+        public ClientPackages GetClientProducts(int clientID)
         {
             try
             {
+                var products = _context.ClientProducts.
+                              Include(p => p.Product).
+                Where(t => t.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(products))
+                    return null;
+                ClientPackages packages = new ClientPackages();
+                packages.ClientID = clientID;
+                packages.ClientForm = FindClient(clientID).Result;
+                List<ProductList> result = new List<ProductList>();
 
-                return _context.ClientProducts.
-                Include(s => s.Client).
-                Include(p => p.Product).
-                Where(t => t.ClientID == id && t.IsActive).ToList();
+                foreach (var product in products)
+                {
+                    result.Add(new ProductList
+                    {
+                        ClientProductID = product.ClientProductID,
+                        ClientID = product.ClientID,
+                        Status = UtilityService.ShowActiveStatus(product.IsActive),
+                        ProductName = product.Product.Name,
+                        DateRegistered = product.DateRegistered,
+                        RegistrationDate = UtilityService.ShowDateTime(product.DateRegistered),
+                        LastChangedBy = product.LastChangedBy,
+                        LastChangedDate = UtilityService.ShowDateTime(product.LastChangedDate)
+                    });
+                }
+                packages.ProductList = result;
+                return packages;
             }
             catch (Exception ex)
             {
@@ -1259,7 +1385,7 @@ namespace SmartLogic
             }
         }
 
-        public List<SmartDomain.Product> GetClientRegisteredProducts(int id)
+        public List<Product> GetClientRegisteredProducts(int id)
         {
             try
             {
@@ -1276,6 +1402,50 @@ namespace SmartLogic
         }
 
         //Client Course
+        public CoachingProgrammes Courses(int clientID)
+        {
+            try
+            {
+                var transactions = _context.ClientCourses.
+                Include(c => c.Course).
+                ThenInclude(c => c.CourseIntakes).
+                Include(c => c.Course).
+                ThenInclude(c => c.CourseOutlines).
+                Where(c => c.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(transactions))
+                    return null;
+                CoachingProgrammes course = new CoachingProgrammes();
+                course.ClientID = clientID;
+                course.ClientForm = FindClient(clientID).Result;
+                List<CourseList> result = new List<CourseList>();
+
+                foreach (var transaction in transactions)
+                {
+                    result.Add(new CourseList
+                    {
+                        CourseID = transaction.CourseID,
+                        ClientID = transaction.ClientID,
+                        ClientCourseID = transaction.ClientCourseID,
+                        CourseIntakeID = transaction.CourseIntakeID,
+                        DateCompleted = transaction.DateCompleted.HasValue ? UtilityService.ShowDateTime(transaction.DateCompleted.Value) : "Not Complete",
+                        Intake = transaction.CourseIntake?.Duration,
+                        Sessions = transaction.Course.CourseOutlines == null ? 0 : transaction.Course.CourseOutlines.Count(),
+                        Status = UtilityService.ShowYesOrNo(transaction.IsDeRegistered),
+                        CourseName = transaction.Course.Title,
+                        RegistrationDate = UtilityService.ShowDateTime(transaction.DateRegistered),
+                        DateRegistered = transaction.DateRegistered,
+
+                    }); ;
+                }
+                course.CourseList = result;
+                return course;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<ClientCourse> FindCourse(int id)
         {
             try
@@ -1653,7 +1823,157 @@ namespace SmartLogic
             }
         }
 
+        public Transactions PaidTransactions(int clientID)
+        {
+            try
+            {
+                var transactions = _context.Transactions.
+                Include(t => t.PaymentStatus).
+                Where(c => c.ClientID == clientID).ToList();
+                if (UtilityService.IsNull(transactions))
+                    return null;
+                Transactions trans = new Transactions();
+                trans.ClientID = clientID;
+                trans.ClientForm = FindClient(clientID).Result;
+                List<TransactionList> result = new List<TransactionList>();
 
+                foreach (var transaction in transactions)
+                {
+                    result.Add(new TransactionList
+                    {
+                        TransactionID = transaction.TransactionID,
+                        ClientID = transaction.ClientID,
+                        Amount = transaction.TotalPaid,
+                        TransactionDatePaid = UtilityService.ShowDateTime(transaction.TransactionDate),
+                        PaymentDate = UtilityService.ShowDateTime(transaction.PaymentDate),
+                        PaymentStatus = transaction.PaymentStatus.Name,
+                        TransactionDate = transaction.TransactionDate,
+                        TransRef = transaction.TransRef,
+                        TransType = transaction.TransactionType.Name,
+                        Entity = transaction.Entity
+                    });
+                }
+                trans.TransactionList = result;
+                return trans;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public PendingTransactions PendingTransactions(int clientID, DateTime cutoffDate)
+        {
+            try
+            {
+                var transactions = _context.ClientFees.
+                                //  Include(p => p.ClientProducts).ThenInclude(p => p.Product).
+                                Include(p => p.ProductFee).ThenInclude(p => p.Product).
+                                Include(p => p.ProductFee).ThenInclude(p => p.Frequency).
+                                Include(p => p.CourseFee).ThenInclude(p => p.Course).
+                                Include(p => p.CourseFee).ThenInclude(p => p.Frequency).
+                Where(c => c.ClientID == clientID && !c.DatePaid.HasValue && c.DueDate.Date < cutoffDate.Date).ToList();
+                if (UtilityService.IsNull(transactions))
+                    return null;
+                PendingTransactions trans = new PendingTransactions();
+                trans.ClientID = clientID;
+                trans.ClientForm = FindClient(clientID).Result;
+                trans.CutOffDate = UtilityService.ShowDateTime(cutoffDate);
+
+                var outstandingCoursePayments = transactions.Where(c => c.CourseFeeID.HasValue).Distinct().ToList();
+                var outstandingProductPayments = transactions.Where(p => p.ProductFeeID.HasValue).Distinct().ToList();
+                List<PendingTransactionList> courseFees = new List<PendingTransactionList>();
+                foreach (var coursePayments in outstandingCoursePayments)
+                {
+                    courseFees.Add(new PendingTransactionList
+                    {
+
+                        ClientID = coursePayments.ClientID,
+                        ClientFeeID = coursePayments.ClientFeeID,
+                        Amount = coursePayments.Amount,
+                        DueDate = UtilityService.ShowDateTime(coursePayments.DueDate),
+                        ClientCourseID = coursePayments.ClientCourseID.Value,
+                        CourseFeeID = coursePayments.CourseFeeID.Value,
+                        CourseID = coursePayments.CourseID,
+                        FeeName = coursePayments.CourseFee.Name,
+                        PaymentTerms = coursePayments.CourseFee.Frequency.Name,
+                        Entity = "Course - " + coursePayments.CourseFee.Course.Title
+                    });
+                }
+                trans.CoursePayments = courseFees;
+
+                List<PendingTransactionList> productFees = new List<PendingTransactionList>();
+                foreach (var fee in outstandingProductPayments)
+                {
+                    productFees.Add(new PendingTransactionList
+                    {
+
+                        ClientID = fee.ClientID,
+                        ClientFeeID = fee.ClientFeeID,
+                        Amount = fee.Amount,
+                        DueDate = UtilityService.ShowDateTime(fee.DueDate),
+                        ClientProductID = fee.ClientProductID.Value,
+                        ProductFeeID = fee.ProductFeeID.Value,
+                        ProductID = fee.ProductID,
+                        FeeName = fee.ProductFee.Name,
+                        PaymentTerms = fee.ProductFee.Frequency.Name,
+                        Entity = "Product - " + fee.ProductFee.Product.Name
+                    });
+                }
+                trans.ProductPayments = productFees;
+                return trans;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+
+        public Deductions GetClientDeductions(int clientID)
+        {
+            try
+            {
+                int invoiceStatusID = (int)InvoiceState.Finalised;
+                var transactions = _context.InvoiceDetails.
+                Include(i => i.Invoice).
+                Include(c => c.Client).
+                Where(c => c.ClientID == clientID && c.Invoice.InvoiceStatusID == invoiceStatusID).ToList();
+                if (UtilityService.IsNull(transactions))
+                    return null;
+                Deductions trans = new Deductions();
+                trans.ClientID = clientID;
+                trans.ClientForm = FindClient(clientID).Result;
+                List<InvoiceList> result = new List<InvoiceList>();
+
+                foreach (var transaction in transactions)
+                {
+                    result.Add(new InvoiceList
+                    {
+                        InvoiceDetailID = transaction.InvoiceDetailID,
+                        InvoiceID = transaction.InvoiceID,
+                        ClientID = transaction.ClientID,
+                        Amount = transaction.DeductedAmount,
+                        DueDate = UtilityService.ShowDate(transaction.Invoice.DueDate),
+                        InvoiceDate = UtilityService.ShowDate(transaction.Invoice.InvoiceDate),
+                        ProductName = transaction.Product.Name,
+                        ProductID = transaction.ProductID,
+                        Occupation = transaction.Client.Occupation,
+                        InvoiceNumber = transaction.InvoiceNumber,
+                        Salary = transaction.Salary
+                    });
+                }
+                trans.Invoice = result;
+                return trans;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         #region Helpers
         ClientForm GetClient(Client result)
         {

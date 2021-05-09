@@ -126,8 +126,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(Clients));
             ClientForm client = await _service.FindClient(id);
             if (UtilityService.IsNotNull(client))
-            {//TODO SortOut
-             // Client.AttendanceRegister = await _service.AttendanceRegisters(id);
+            {
                 HttpContext.Session.SetString("ClientID", client.ClientID.ToString());
                 GetDropDownLists();
                 return View(client);
@@ -135,7 +134,23 @@ namespace SmartSave.Controllers
             else
                 return RedirectToAction(nameof(Clients));
         }
+        public ActionResult SalaryHistory(int id)
+        {
+            try
+            {
+                GetDropDownLists();
+                SalaryHistory  history = _service.SalaryHistory(id);
+                if (UtilityService.IsNull(history))
+                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
+                return View(history);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> ViewClient(ClientForm client)
         {
@@ -321,18 +336,34 @@ namespace SmartSave.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
+        [HttpGet]
+        public ActionResult Documents(int id)
+        {
+            try
+            {
+                GetDropDownLists();
+                Docs document = _service.ClientDocuments(id);
+                if (UtilityService.IsNull(document))
+                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return View(document);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> AddClientDocument(ClientDocument ClientDocument, IFormFile FileBytes)
         {
             if (ModelState.IsValid)
             {
-                //TODO : Check document Type and that which was provided and see if it matches otherwise advise
+
                 Custom documentInformation = _settingService.DocumentFormatMatch(FileBytes.ContentType, ClientDocument.DocumentTypeID);
                 if (!documentInformation.Bool_Value)
                 {
                     TempData["Error"] = $"Document Type MisMatch {documentInformation.String_Value} required";
-                    return RedirectToAction("ViewClient", new { id = ClientDocument.ClientID });
+                    return RedirectToAction("Documents", new { id = ClientDocument.ClientID });
                 }
                 if (FileBytes != null)
                 {
@@ -346,7 +377,7 @@ namespace SmartSave.Controllers
                         {
 
                             TempData["Error"] = $"Document Size should not be more than {requiredSize} MB";
-                            return RedirectToAction("ViewClient", new
+                            return RedirectToAction("Documents", new
                             {
                                 id = ClientDocument.ClientID
                             });
@@ -367,13 +398,13 @@ namespace SmartSave.Controllers
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             }
-            return RedirectToAction("ViewClient", new { id = ClientDocument.ClientID });
+            return RedirectToAction("Documents", new { id = ClientDocument.ClientID });
         }
         public async Task<IActionResult> ViewClientDocument(int id = 0)
         {
             GetDropDownLists();
             if (id == 0)
-                return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return RedirectToAction("Documents", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
             return View(await _service.FindDocument(id));
         }
@@ -387,19 +418,20 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(update)) == 0)
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewClient", new { id = ClientDocument.ClientID });
                 }
-                return RedirectToAction("ViewClient", new { id = ClientDocument.ClientID });
+                return RedirectToAction("ViewClient", new { id = ClientDocument.ClientDocumentID });
             }
             TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction("ViewClient", new { id = ClientDocument.ClientID });
+            return RedirectToAction("ViewClientDocument", new { id = ClientDocument.ClientDocumentID });
         }
         public async Task<IActionResult> ActionDocument(int id)
         {
             if (await (_service.ActionDocument(id, DatabaseAction.Remove)) == 0)
+            {
                 TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
-            return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return RedirectToAction("ViewClientDocument", new { id });
+            }
+            return RedirectToAction("Documents", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
         }
         [HttpGet]
         public async Task<FileResult> DownloadDocument(int id)
@@ -407,6 +439,8 @@ namespace SmartSave.Controllers
             ClientDocument document = await _service.FindDocument(id);
             return File(document.FileBytes, document.FileType, document.FileName);
         }
+
+
         [HttpGet]
         public ActionResult GenerateStatement(Statement statement, string GenerateStatement, string EmailStatement)
         {
@@ -491,7 +525,8 @@ namespace SmartSave.Controllers
                 }
             }
             else
-            {                EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.Client_Statement).Result;
+            {
+                EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.Client_Statement).Result;
                 byte[] pdfFile = GeneratePDFOutstandingPaymentsStatement(statement);
                 List<AttachmentFromMemory> attachments = new List<AttachmentFromMemory>();
                 AttachmentFromMemory attachment = new AttachmentFromMemory
@@ -629,6 +664,58 @@ namespace SmartSave.Controllers
         /// <returns></returns>
         /// 
 
+        [HttpGet]
+        public ActionResult PaidTransactions(int id)
+        {
+            try
+            {
+                GetDropDownLists();
+                Transactions transactions = _service.PaidTransactions(id);
+                if (UtilityService.IsNull(transactions))
+                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return View(transactions);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        [HttpGet]
+        public ActionResult PendingTransactions(int id)
+        {
+            try
+            {
+                GetDropDownLists();
+                PendingTransactions transactions = _service.PendingTransactions(id, DateTime.Now.AddDays(30));
+                if (UtilityService.IsNull(transactions))
+                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return View(transactions);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        [HttpGet]
+        public ActionResult Deductions(int id)
+        {
+            try
+            {
+                GetDropDownLists();
+                Deductions transactions = _service.GetClientDeductions(id);
+                if (UtilityService.IsNull(transactions))
+                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return View(transactions);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddTransaction(Transaction payment)
         {
@@ -654,7 +741,7 @@ namespace SmartSave.Controllers
         {
             GetDropDownLists();
             if (id == 0)
-                return RedirectToAction(nameof(Clients));
+                return RedirectToAction("PaidTransactions", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
             Transaction transaction = await _paymentService.PaymentFile(id, null);
             return View(transaction);
         }
@@ -706,6 +793,24 @@ namespace SmartSave.Controllers
 
 
         //MedicalDetail
+        [HttpGet]
+        public ActionResult MedicalFiles(int id)
+        {
+            try
+            {
+                GetDropDownLists();
+                Medical medical = _service.MedicalFiles(id);
+                if (UtilityService.IsNull(medical))
+                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return View(medical);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddClientMedicalDetail(ClientMedicalDetail ClientMedicalDetail)
         {
@@ -715,16 +820,20 @@ namespace SmartSave.Controllers
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
             }
-            return RedirectToAction("ViewClient", new { id = ClientMedicalDetail.ClientID });
+            return RedirectToAction("MedicalFiles", new { id = ClientMedicalDetail.ClientID });
         }
 
 
         public async Task<IActionResult> ViewMedicalDetail(int id = 0)
         {
             if (id == 0)
-                return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return RedirectToAction("MedicalFiles", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
             GetDropDownLists();
-            return View(await _service.FindMedicalDetail(id));
+            var medicalDetails = await _service.FindMedicalDetail(id);
+            if (UtilityService.IsNotNull(medicalDetails))
+                return View(medicalDetails);
+            else
+                return RedirectToAction("MedicalFiles", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
         }
 
         [HttpPost]
@@ -738,20 +847,22 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(ClientMedicalDetail)) == 0)
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewMedicalDetail", new { id = ClientMedicalDetail.ClientMedicalID });
+
                 }
                 return RedirectToAction("ViewMedicalDetail", new { id = ClientMedicalDetail.ClientMedicalID });
             }
             TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction("ViewClient", new { id = ClientMedicalDetail.ClientID });
+            return RedirectToAction("MedicalFiles", new { id = ClientMedicalDetail.ClientID });
         }
 
         public async Task<IActionResult> ActionMedicalDetail(int medicaldetailID, int Clientid)
         {
             if (await (_service.ActionMedicalDetail(medicaldetailID, DatabaseAction.Remove)) == 0)
+            {
                 TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
-            return RedirectToAction("ViewClient", new { id = Clientid });
+                return RedirectToAction("ViewMedicalDetail", new { id = medicaldetailID });
+            }
+            return RedirectToAction("MedicalFiles", new { id = Clientid });
         }
 
 
@@ -835,7 +946,23 @@ namespace SmartSave.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         /// 
+        public ActionResult Products(int id)
+        {
+            try
+            {
+                GetDropDownLists();
+                ClientPackages packages = _service.GetClientProducts(id);
+                if (UtilityService.IsNull(packages))
+                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
+                return View(packages);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> AddClientProduct(ClientProduct ClientProduct)
         {
@@ -860,13 +987,13 @@ namespace SmartSave.Controllers
                 }
 
             }
-            return RedirectToAction("ViewClient", new { id = ClientProduct.ClientID });
+            return RedirectToAction("Products", new { id = ClientProduct.ClientID });
         }
 
         public async Task<IActionResult> ViewClientProduct(int id)
         {
             if (id == 0)
-                return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return RedirectToAction("Products", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
             GetDropDownLists();
             return View(await _service.FindProduct(id));
         }
@@ -897,7 +1024,6 @@ namespace SmartSave.Controllers
                     if (await (_service.Update(clientProduct)) == 0)
                     {
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                        return RedirectToAction("ViewClient", new { id = clientProduct.ClientID });
                     }
                 }
                 return RedirectToAction("ViewClientProduct", new { id = clientProduct.ClientProductID });
@@ -908,9 +1034,11 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ActionClientProduct(int productid, int Clientid)
         {
             if (await (_service.ActionProduct(productid, DatabaseAction.Remove)) == 0)
+            {
                 TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
-            return RedirectToAction("ViewClient", new { id = Clientid });
+                return RedirectToAction("ViewClientProduct", new { id = productid });
+            }
+            return RedirectToAction("Products", new { id = Clientid });
         }
 
 
@@ -920,27 +1048,38 @@ namespace SmartSave.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         /// 
+        public ActionResult Courses(int id)
+        {
+            try
+            {
+                GetDropDownLists();
+                CoachingProgrammes courses = _service.Courses(id);
+                if (UtilityService.IsNull(courses))
+                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
+                return View(courses);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> AddClientCourse(ClientCourse ClientCourse)
         {
             if (ModelState.IsValid)
             {
-
                 if (await (_service.Save(ClientCourse)) == 0)
-                {
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewClient", new { id = ClientCourse.ClientID });
-                }
-
-            }
-            return RedirectToAction("ViewClient", new { id = ClientCourse.ClientID });
+           }
+            return RedirectToAction("Courses", new { id = ClientCourse.ClientID });
         }
 
         public async Task<IActionResult> ViewClientCourse(int id)
         {
             if (id == 0)
-                return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
+                return RedirectToAction("Courses", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
             ClientCourse clientCourse = await _service.FindCourse(id);
             if (UtilityService.IsNotNull(clientCourse))
             {
@@ -1003,8 +1142,6 @@ namespace SmartSave.Controllers
             {
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
-
-
             return RedirectToAction("ViewClientCourse", new { id = clientCourse.ClientCourseID });
 
         }
@@ -1022,7 +1159,7 @@ namespace SmartSave.Controllers
                     if (await (_service.Update(clientCourse)) == 0)
                     {
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                        return RedirectToAction("ViewClient", new { id = clientCourse.ClientID });
+
                     }
                 }
                 return RedirectToAction("ViewClientCourse", new { id = clientCourse.ClientCourseID });
@@ -1069,7 +1206,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-        
+
         private SelectList GetCompanyList()
         {
             SelectList companyList = null;
@@ -1164,34 +1301,34 @@ namespace SmartSave.Controllers
             {
                 dependentGenderID = 0;
             }
-            //TODO :Sort Out
-            //List<Product> clientproductList = null;
-            //if (clientID != 0)
-            //{
-            //    clientproductList = _service.GetClientRegisteredProducts(clientID);
 
-            //    clientproductList.Select(t => new
-            //    {
-            //        t.ProductID,
-            //        t.Name,
-            //    }).OrderBy(t => t.Name);
+            List<Product> clientproductList = null;
+            if (clientID != 0)
+            {
+                clientproductList = _service.GetClientRegisteredProducts(clientID);
 
-            //    ViewBag.RegisteredProducts = new SelectList(clientproductList, "ProductID", "Name");
+                clientproductList.Select(t => new
+                {
+                    t.ProductID,
+                    t.Name,
+                }).OrderBy(t => t.Name);
 
-            //}
+                ViewBag.RegisteredProducts = new SelectList(clientproductList, "ProductID", "Name");
 
-            //else
-            //{
-            //    var productList = _settingService.GetActiveProductList(); if (productList != null)
-            //    {
-            //        productList.Select(t => new
-            //        {
-            //            t.ProductID,
-            //            t.Name,
-            //        }).OrderBy(t => t.Name);
-            //    }
-            //    ViewBag.ProductList = new SelectList(productList, "ProductID", "Name");
-            //}
+            }
+
+            else
+            {
+                var productList = _settingService.GetActiveProductList(); if (productList != null)
+                {
+                    productList.Select(t => new
+                    {
+                        t.ProductID,
+                        t.Name,
+                    }).OrderBy(t => t.Name);
+                }
+                ViewBag.ProductList = new SelectList(productList, "ProductID", "Name");
+            }
             var allproductList = _settingService.GetActiveProductList();
             allproductList.Select(t => new
             {
@@ -1201,18 +1338,18 @@ namespace SmartSave.Controllers
 
             ViewBag.AllProductList = new SelectList(allproductList, "ProductID", "Name");
 
-            //TODO : Sort Out
 
-            //var availableProduct = clientproductList != null ? allproductList.Except(clientproductList) : allproductList;
-            //if (availableProduct != null)
-            //{
-            //    availableProduct.Select(t => new
-            //    {
-            //        t.ProductID,
-            //        t.Name,
-            //    }).OrderBy(t => t.Name);
-            //}
-            //ViewBag.ProductsAvailable = new SelectList(availableProduct, "ProductID", "Name");
+
+            var availableProduct = clientproductList != null ? allproductList.Except(clientproductList) : allproductList;
+            if (availableProduct != null)
+            {
+                availableProduct.Select(t => new
+                {
+                    t.ProductID,
+                    t.Name,
+                }).OrderBy(t => t.Name);
+            }
+            ViewBag.ProductsAvailable = new SelectList(availableProduct, "ProductID", "Name");
 
 
             var genderList = _settingService.GenderList(); if (genderList != null)

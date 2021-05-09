@@ -467,16 +467,20 @@ namespace SmartLogic
                 if (UtilityService.IsNotNull(clientProduct) && clientProduct.Count() > 0)
                 {
                     foreach (var item in clientProduct)
-                    {
+                    {//1.
+                        decimal _percentageDeduction = item.DeductionPercentage.HasValue ? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
+                        decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
+                        decimal _currentSalary = item.Client.Salary;
+                        decimal? _previousSalary = null;
+                        decimal _totalDeductionPercentage = 0M;
+                        decimal _totalDeduction = 0M;
+                        DeductionApplied deductionApplied = DeductionApplied.Product;
                         if (!item.DoNotDeduct) //only deduct if do not deduct is set to false
                         {
-                            //1.
-                            decimal _percentageDeduction = item.DeductionPercentage.HasValue ? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
-                            decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
-                            decimal _currentSalary = item.Client.Salary;
-                            decimal? _previousSalary = null;
-                            decimal _totalDeductionPercentage = 0M;
-                            decimal _totalDeduction = 0M;
+                            if (item.DeductionPercentage.HasValue || item.IncreamentPercentage.HasValue)
+                                deductionApplied = DeductionApplied.Individual;
+                            else
+                                deductionApplied = DeductionApplied.Product;
                             var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
                             if (UtilityService.IsNotNull(_lastSalary))
                                 _previousSalary = _lastSalary.Salary;
@@ -491,25 +495,32 @@ namespace SmartLogic
                             else
                                 _totalDeductionPercentage = _percentageDeduction;
                             _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
-                            InvoiceDetails deductionDetails = new InvoiceDetails
-                            {
-                                ClientID = item.ClientID,
-                                ClientProductID = item.ClientProductID,
-                                Salary = _currentSalary,
-                                ProductID = item.ProductID,
-                                InvoiceID = InvoiceID,
-                                DeductedAmount = _totalDeduction,
-                                TotalDeductionPercentage = _totalDeductionPercentage,
-                                DeductionPercentage = _percentageDeduction,
-                                AdditionalDeductionPercentage = _percentageIncrement,
-                                LastChangedBy = UtilityService.CurrentUserName,
-                                LastChangedDate = DateTime.Now,
-                                InvoiceNumber = $"{item.Client.AccountNumber}-INV-{InvoiceID}"
-
-                            };
-                            _context.Add(deductionDetails);
                         }
+                        else
+                        {
+                            deductionApplied = DeductionApplied.Do_Not_Deduct;
+                            _totalDeduction = 0M;
+                        }
+                        InvoiceDetails deductionDetails = new InvoiceDetails
+                        {
+                            ClientID = item.ClientID,
+                            ClientProductID = item.ClientProductID,
+                            Salary = _currentSalary,
+                            ProductID = item.ProductID,
+                            InvoiceID = InvoiceID,
+                            DeductedAmount = _totalDeduction,
+                            TotalDeductionPercentage = _totalDeductionPercentage,
+                            DeductionPercentage = _percentageDeduction,
+                            AdditionalDeductionPercentage = _percentageIncrement,
+                            LastChangedBy = UtilityService.CurrentUserName,
+                            LastChangedDate = DateTime.Now,
+                            InvoiceNumber = $"{item.Client.AccountNumber}-INV-{InvoiceID}",
+                            DeductionTypeID = (int)deductionApplied
+
+                        };
+                        _context.Add(deductionDetails);
                     }
+
                     if (clientProduct.Count() > 0)
                         result = _context.SaveChanges();
                     if (result > 0)
@@ -554,6 +565,7 @@ namespace SmartLogic
                   .Include(p => p.Client)
                   .ThenInclude(p => p.Company)
                     .Include(p => p.Product)
+                     .Include(p => p.DeductionType)
                    .Where(t => t.Invoice.InvoiceDate == InvoiceDate && ClientProductIDs.Contains(t.ClientProductID)).ToListAsync();
             }
             catch (Exception ex)
@@ -588,6 +600,7 @@ namespace SmartLogic
                   .Include(p => p.Client)
                   .ThenInclude(p => p.Company)
                     .Include(p => p.Product)
+                      .Include(p => p.DeductionType)
                  .Where(cd => cd.InvoiceID == invoiceID).ToList();
 
                 InvoiceDetail invoice = new InvoiceDetail();
@@ -617,6 +630,11 @@ namespace SmartLogic
                   .ThenInclude(c => c.Title)
                    .Include(c => c.InvoiceDetails)
                    .ThenInclude(c => c.Product)
+                    .Include(c => c.InvoiceDetails)
+                   .ThenInclude(c => c.DeductionType)
+                     .Include(c => c.InvoiceDetails)
+                   .ThenInclude(c => c.Client)
+                   .ThenInclude(c=>c.Company)
                    .Where(cd => cd.InvoiceID == invoiceID).FirstOrDefault();
                 return deductions;
             }

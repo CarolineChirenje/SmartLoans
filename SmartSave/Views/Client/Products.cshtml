@@ -1,0 +1,147 @@
+﻿@model SmartInterfaces.ClientPackages;
+@using SmartHelper;
+@using System.Collections.Generic;
+@{
+    TempData["Title"] = "Client Details";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @Model.ClientForm.ClientRef
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <partial name="_ClientView" model="@Model.ClientForm" />
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="tab-pane fade in active" id="Products">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Products
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="dataTable_wrapper">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date Registered</th>
+                                    <th>Status</th>
+                                    <th>Last Changed By</th>
+                                    <th>Last Changed Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ProductList != null)
+                                {
+                                    var activeProducts = Model.ProductList.OrderByDescending(x => x.DateRegistered);
+                                    @foreach (var item in activeProducts)
+                                    {
+                                <tr>
+
+                                    @if (UtilityService.HasPermission(Permissions.Add_Client_Product))
+                                    {
+                                        <td><a asp-controller="Client" asp-action="ViewClientProduct" asp-route-id="@item.ClientProductID">@item.ProductName</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.ProductName</td>
+                                    }
+                                    <td>@Html.DisplayFor(modelItem => item.RegistrationDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LastChangedDate)</td>
+                                </tr>
+                                    }
+                                }
+
+                        </table>
+                    </div>
+                    <div class="box-footer">
+                        @if (UtilityService.HasPermission(Permissions.Add_Client_Product))
+                        {
+                            <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#ProductsForm">Add Product</a>}
+                        <a class="btn btn-default" asp-controller="Client" asp-action="Products" asp-route-id="@Model.ClientForm.ClientID">Cancel</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="ProductsForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientForm.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientProduct">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
+                        <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductsAvailable">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                        <div class="checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" data-val="true" id="IsActive"
+                                       name="IsActive" value="true">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Do Not Deduct</label>
+                        <div class="checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" data-val="true" id="DoNotDeduct"
+                                       name="DoNotDeduct" value="true">
+                            </label>
+                            <span class="text-danger text-normal"><i>Will override all deductions set at individual or Product Level if selected </i></span>
+                        </div>
+                    </div>
+
+                    <section>
+                        <br />
+                        <h5 class="box-title text-danger text-normal"><i>Specific Individual Deductions (if any)</i></h5>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Deduction</label>
+                            <input type="text" class="form-control" asp-for="DeductionAmount" id="DeductionPercentage">
+                            <span id="DeductionPercentageError" class="text-danger text-bold"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3">Deduction After Salary Increment</label>
+                            <input type="text" class="form-control" asp-for="IncreamentAmount" id="IncreamentPercentage">
+                            <span id="IncreamentPercentageError" class="text-danger text-bold"></span>
+                        </div>
+
+                        <span class="text-danger text-normal"><i>Deductions defined at Product level will apply if do not deduct is not selected and individual deductions not specified not specified</i></span>
+                    </section>
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+                 
+                </div>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Add_Client_Product))
+                    {
+                        <button type="submit" class="btn btn-primary">Save Product</button>}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

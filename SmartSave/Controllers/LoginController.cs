@@ -343,12 +343,8 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> FinaliseAccount()
         {
-
-
             int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
-            // TODO : Optimise Bring Short Object
-            ClientForm client = _clientService.FindClient(userID).Result;
-
+                      ClientPeek client = _clientService.GetClient(clientID:userID).Result;
             User user = new User();
             user.EmailAddress = client.EmailAddress;
             user.FirstName = client.FirstName;

@@ -14,10 +14,14 @@ namespace SmartDomain
         public Invoice Invoice { get; set; }
         public int ClientID { get; set; }
         public virtual Client Client { get; set; }
+
         public int ClientProductID { get; set; }
         public int ProductID { get; set; }
         public string InvoiceNumber { get; set; }
         public virtual Product Product { get; set; }
+        public int? DeductionTypeID { get; set; }
+        public virtual DeductionType DeductionType { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal DeductedAmount { get; set; }
         [Column(TypeName = "decimal(18,2)")]

@@ -1283,6 +1283,24 @@ namespace SmartDataAccess
             }
             return lists.ToArray();
         }
+        public static DeductionType[] GetDeductionTypes()
+        {
+            List<DeductionType> lists = new List<DeductionType>();
+            var p = from DeductionApplied s in Enum.GetValues(typeof(DeductionApplied))
+                    select new { ID = s, Name = s.ToString() };
+            foreach (var x in p)
+            {
+                lists.Add(new DeductionType()
+                {
+                    DeductionTypeID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                });
+            }
+            return lists.ToArray();
+        }
+        
     }
 
 }

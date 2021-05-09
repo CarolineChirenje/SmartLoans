@@ -170,7 +170,7 @@ namespace SmartInterfaces
         public string LastChangedDate { get; set; }
         public string LastChangedBy { get; set; }
         public string UserTypeName { get; set; }
-        
+
     }
 
     public class Dependents
@@ -190,14 +190,14 @@ namespace SmartInterfaces
         public string Occupation { get; set; }
         public string Gender { get; set; }
         public string Age { get; set; }
-      
+
     }
 
 
     public class Register
     {
         public int ClientID { get; set; }
-               public ClientForm ClientForm { get; set; }
+        public ClientForm ClientForm { get; set; }
         public List<RegisterList> RegisterList { get; set; }
     }
 
@@ -209,6 +209,187 @@ namespace SmartInterfaces
         public string Intake { get; set; }
         public string AttendanceDate { get; set; }
         public string Status { get; set; }
-     
+
+    }
+
+    public class Medical
+    {
+        public int ClientID { get; set; }
+        public ClientForm ClientForm { get; set; }
+        public List<MedicalList> MedicalList { get; set; }
+    }
+
+    public class MedicalList
+    {
+        public int ClientID { get; set; }
+        public int ClientMedicalID { get; set; }
+        public string Telephone { get; set; }
+        public string MedicalAid { get; set; }
+        public string MedicalAidNo { get; set; }
+        public string Hospital { get; set; }
+        public string Doctor { get; set; }
+
+    }
+
+    public class Docs
+    {
+        public int ClientID { get; set; }
+        public int DocumentTypeID { get; set; }
+        public ClientForm ClientForm { get; set; }
+        public List<DocumentList> DocumentList { get; set; }
+    }
+
+    public class DocumentList
+    {
+        public int ClientID { get; set; }
+        public int ClientDocumentID { get; set; }
+        public string DocumentTitle { get; set; }
+        public string DateUploaded { get; set; }
+        public string UploadedBy { get; set; }
+        public byte[] FileBytes { get; set; }
+        public string FileType { get; set; }
+        public string FileName { get; set; }
+
+        public string FileFullName { get; set; }
+
+    }
+
+    public class ClientPackages
+    {
+        public int ClientID { get; set; }
+        public int ProductID { get; set; }
+        [NotMapped]
+        public string DeductionAmount { get; set; }
+        [NotMapped]
+        public string IncreamentAmount { get; set; }
+        public ClientForm ClientForm { get; set; }
+        public List<ProductList> ProductList { get; set; }
+    }
+
+    public class ProductList
+    {
+        public int ClientID { get; set; }
+        public int ClientProductID { get; set; }
+        public string Status { get; set; }
+        public string RegistrationDate { get; set; }
+        public DateTime DateRegistered { get; set; }
+        public string ProductName { get; set; }
+        public string LastChangedDate { get; set; }
+        public string LastChangedBy { get; set; }
+
+    }
+    public class Transactions
+    {
+        public int ClientID { get; set; }
+        public int TransactionID { get; set; }
+        public ClientForm ClientForm { get; set; }
+        public List<TransactionList> TransactionList { get; set; }
+    }
+
+    public class TransactionList
+    {
+        public int ClientID { get; set; }
+        public int TransactionID { get; set; }
+        public string TransRef { get; set; }
+        public string TransType { get; set; }
+        public string Entity { get; set; }
+
+        public decimal Amount { get; set; }
+        public DateTime TransactionDate { get; set; }
+        public string PaymentStatus { get; set; }
+        public string PaymentDate { get; set; }
+        public string TransactionDatePaid { get; set; }
+    }
+
+    public class PendingTransactions
+    {
+        public int ClientID { get; set; }
+
+        public string CutOffDate { get; set; }
+        public ClientForm ClientForm { get; set; }
+        public List<PendingTransactionList> ProductPayments { get; set; }
+        public List<PendingTransactionList> CoursePayments { get; set; }
+    }
+
+    public class PendingTransactionList
+    {
+        public int ClientID { get; set; }
+        public int ClientFeeID { get; set; }
+        public int ProductID { get; set; }
+        public int ClientProductID { get; set; }
+        public int ProductFeeID { get; set; }
+        public int CourseID { get; set; }
+        public int ClientCourseID { get; set; }
+        public int CourseFeeID { get; set; }
+        public string FeeName { get; set; }
+        public string Entity { get; set; }
+        public decimal Amount { get; set; }
+        public string PaymentTerms { get; set; }
+        public string DueDate { get; set; }
+
+
+    }
+    public class Deductions
+    {
+        public int ClientID { get; set; }
+        public ClientForm ClientForm { get; set; }
+        public List<InvoiceList> Invoice { get; set; }
+
+    }
+
+    public class InvoiceList
+    {
+        public int ClientID { get; set; }
+        public int InvoiceID { get; set; }
+        public int InvoiceDetailID { get; set; }
+        public string Occupation { get; set; }
+        public string InvoiceNumber { get; set; }
+        public decimal Amount { get; set; }
+        public decimal Salary { get; set; }
+        public int ProductID { get; set; }
+        public string ProductName { get; set; }
+        public string DueDate { get; set; }
+        public string InvoiceDate { get; set; }
+
+    }
+    public class CoachingProgrammes
+    {
+        public int ClientID { get; set; }
+        public int CourseID { get; set; }
+        public int CourseIntakeID { get; set; }
+        public ClientForm ClientForm { get; set; }
+        public List<CourseList> CourseList { get; set; }
+
+    }
+
+    public class CourseList
+    {
+
+        public int ClientCourseID { get; set; }
+        public int ClientID { get; set; }
+        public int CourseID { get; set; }
+        public int? CourseIntakeID { get; set; }
+        public string Intake { get; set; }
+        public string CourseName { get; set; }
+        public int Sessions { get; set; }
+        public DateTime DateRegistered { get; set; }
+        public string RegistrationDate { get; set; }
+        public string DateCompleted { get; set; }
+        public string Status { get; set; }
+    }
+
+    public class SalaryHistory
+    {
+        public int ClientID { get; set; }
+        public ClientForm ClientForm { get; set; }
+        public List<SalaryHistoryList> SalaryHistoryList { get; set; }
+    }
+
+    public class SalaryHistoryList
+    {
+        public string Occupation { get; set; }
+        public decimal Salary { get; set; }
+        public string LastChangedDate { get; set; }
+        public string LastChangedBy { get; set; }
     }
 }

@@ -143,6 +143,9 @@ namespace SmartDataAccess
 
             modelBuilder.Entity<SupportList>().HasData(
             Data.GetSupportLists());
+
+            modelBuilder.Entity<DeductionType>().HasData(
+          Data.GetDeductionTypes());
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -181,7 +184,7 @@ namespace SmartDataAccess
         public DbSet<AssertCategory> AssertCategories { get; set; }
         public DbSet<Assert> Asserts { get; set; }
         public DbSet<InvoiceStatus> InvoiceStatuses { get; set; }
-
+        public DbSet<DeductionType> DeductionTypes { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseOutline> CourseOutlines { get; set; }
         public DbSet<CourseFee> CourseFees { get; set; }

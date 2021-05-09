@@ -4,12 +4,17 @@
 @{var client = TempData["Client"]; }
 <ul class="sidebar-menu" data-widget="tree">
     <li class="header">@UtilityService.ApplicationName</li>
-    <li><i class="fa fa-umbrella"></i><a asp-controller="Home" asp-action="Dashboard">Dashboard</a></li>
+    <li class="nav-item">
+    <a asp-controller="Home" asp-action="Dashboard">
+        <i class="fa fa-umbrella nav-icon" aria-hidden="true"></i>
+        Dashboard</a>
+    </li>
+  
     @{
         int clientID = 0;
         try
         {
-            clientID= Convert.ToInt32(Context.Session.GetString("ClientID"));
+            clientID = Convert.ToInt32(Context.Session.GetString("ClientID"));
         }
         catch (Exception)
         {
@@ -19,9 +24,11 @@
     }
     @foreach (var menu in Model)
     {
-        <li>
-            <i class="@UtilityService.HtmlEncode(menu.CSSClass)" aria-hidden="true"></i>
-            <a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName" asp-route-id="@clientID">@menu.DisplayName</a>
+        <li class="nav-item">
+            <a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName" asp-route-id="@clientID">
+                <i class="@UtilityService.HtmlEncode(menu.CSSClass) nav-icon" aria-hidden="true"></i>
+                @menu.DisplayName
+            </a>
         </li>
     }
 

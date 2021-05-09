@@ -880,6 +880,12 @@ namespace SmartHelper
         MobileNumber,
         Website
     }
+    public enum DeductionApplied
+    {
+        Product = 1,
+        Individual,
+        Do_Not_Deduct,
+         }
     public enum GenderOrientation
     {
         Female = 1,

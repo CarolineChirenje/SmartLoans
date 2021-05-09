@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmartDomain
 {
-   public class DocumentType : ChangeAudit
+    public class DocumentType : ChangeAudit
     {
         [Key]
         public int DocumentTypeID { get; set; }
@@ -17,7 +17,7 @@ namespace SmartDomain
         public int DocumentFormatID { get; set; }
         public virtual DocumentFormat DocumentFormat { get; set; }
         public bool IsActive { get; set; }
-
-       
     }
+
+   
 }

@@ -181,7 +181,7 @@
                                                                         string affiliation = String.Empty;
                                                                         if (UtilityService.IsNotNull(item.Client.ClientGroupID))
                                                                         {
-                                                                            affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
+                                                                            affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company?.Name : "");
                                                                         }
                                                                     }
                                                                     <td align="center"><input type="checkbox" id="checkBoxAll" name="InvoiceDetailID" value="@item.InvoiceDetailID" /></td>

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace SmartInterfaces
 {
-    public class Product
-    {
-        public int ProductID { get; set; }
-    }
+    //public class Product
+    //{
+    //    public int ProductID { get; set; }
+    //}
 }

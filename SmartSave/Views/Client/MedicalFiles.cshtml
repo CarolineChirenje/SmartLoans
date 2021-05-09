@@ -1,0 +1,138 @@
+﻿@model SmartInterfaces.Medical;
+@using SmartHelper;
+@using System.Collections.Generic;
+@{
+    TempData["Title"] = "Client Details";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @Model.ClientForm.ClientRef
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+                         <partial name="_ClientView" model="@Model.ClientForm" />
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="tab-pane fade in" id="MedicalDetails">
+                      <div class="panel panel-default">
+                          <div class="panel-heading">
+                              Medical Files
+                          </div>
+                      </div>
+                      <!-- /.panel-heading -->
+                      <div class="panel-body">
+                          <div class="dataTable_wrapper">
+                              <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                  <thead>
+                                      <tr>
+                                          <th>Preffered Doctor</th>
+                                          <th>Doctor Phone Number</th>
+                                          <th>Medical Aid</th>
+                                          <th>Medical Number</th>
+                                          <th>Preffered Hospital</th>
+
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      @if (Model.MedicalList != null)
+                                      {
+
+                                          foreach (var item in Model.MedicalList)
+                                          {
+                                              <tr>
+                                                  <td><a asp-controller="Client" asp-action="ViewMedicalDetail" asp-route-id="@item.ClientMedicalID">@item.Doctor</a></td>
+                                                  <td>@Html.DisplayFor(modelItem => item.Telephone)</td>
+                                                  <td>@Html.DisplayFor(modelItem => item.MedicalAid)</td>
+                                                  <td>@Html.DisplayFor(modelItem => item.MedicalAidNo)</td>
+                                                  <td>@Html.DisplayFor(modelItem => item.Hospital)</td>
+                                              </tr>
+                                          }
+                                      }
+                              </table>
+                          </div>
+                      </div>
+
+                      <div class="box-footer">
+                          @if (UtilityService.HasPermission(Permissions.Add_Client_Medical_Details))
+                          {
+                              <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#ClientMedicalForm">Create Medical Record</a>
+                          }
+                          <a class="btn btn-default" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientForm.ClientID">Cancel</a>
+
+                      </div>
+                  </div>
+              </div>
+        </div>
+
+    <!-- /.box -->
+</section>
+<div class="modal fade" id="ClientMedicalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ClientForm.ClientRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Client" asp-action="AddClientMedicalDetail">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Allergies <i>(If Any)</i>:</label>
+                        <textarea class="form-control" name="Allergies"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Prescribed Medication  <i>(If Any)</i>:</label>
+                        <textarea class="form-control" name="PrescribedMedication"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Preffered Hospital:</label>
+                        <input type="text" class="form-control" name="Hospital">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Preffered Doctor:</label>
+                        <input type="text" class="form-control" name="Doctor">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Doctor Phone Number:</label>
+                        <input type="tel" class="form-control" name="Telephone">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Medical Aid Name:</label>
+                        <input type="text" class="form-control" name="MedicalAid">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Medical Aid Number:</label>
+                        <input type="tel" class="form-control" name="MedicalAidNo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Other Information  <i>(If Any)</i>:</label>
+                        <textarea class="form-control" name="Other"></textarea>
+                    </div>
+
+                    <input type="hidden" name="ClientID" value="@Model.ClientID" />
+
+                </div>
+                <div class="modal-footer">
+                    @if (UtilityService.HasPermission(Permissions.Add_Client_Medical_Details))
+                    {
+                        <button type="submit" class="btn btn-primary">Save</button>}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

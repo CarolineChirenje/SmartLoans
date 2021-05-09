@@ -196,7 +196,7 @@
                 }
 
                 <a class="btn btn-primary" asp-controller="Transactions" asp-action="PrintTransaction" asp-route-id="@Model.TransactionID">Generate PDF</a>
-                <a class="btn btn-default" asp-controller="Client" asp-action="ViewClient" asp-routeid="@Model.ClientID">Cancel</a>
+                <a class="btn btn-default" asp-controller="Client" asp-action="PaidTransactions" asp-routeid="@Model.ClientID">Cancel</a>
             </div>
             <!-- /.box-footer -->
         </form>

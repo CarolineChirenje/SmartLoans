@@ -45,7 +45,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "Products",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-star"),
+                    CSSClass = UtilityService.HtmlDecode("fas fa-star"),
                     OrderNo = 1,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -73,7 +73,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "PendingTransactions",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-battery-empty"),
+                    CSSClass = UtilityService.HtmlDecode("fas fa-battery-empty"),
                     OrderNo = 3,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -157,7 +157,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "Contacts",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-address-book"),
+                    CSSClass = UtilityService.HtmlDecode("fas fa-address-book"),
                     OrderNo = 9,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -187,6 +187,20 @@ namespace SmartDataAccess
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-pencil fa-fw"),
                     OrderNo = 11,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                    new LayoutMenu()
+                {
+                    LayoutMenuID =12,
+                    LayoutID = (int)LayoutComponent.Client,
+                    DisplayName = "Finalised Deductions",
+                    ControllerName = "Client",
+                    ActionName = "Deductions",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fas fa-copy"),
+                    OrderNo = 12,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
