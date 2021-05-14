@@ -30,6 +30,10 @@ namespace SmartSave.Controllers
         // GET: Product
         public async Task<IActionResult> Product()
         {
+            Permissions permission = Permissions.View_Product;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Products());
         }
 

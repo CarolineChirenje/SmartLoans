@@ -43,6 +43,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Transactions()
         {
+            Permissions permission = Permissions.View_Payment;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             List<Transaction> transactions = await _service.Transactions();
             List<Transaction> _transactions = transactions.OrderByDescending(t => t.TransactionDate).ToList();
             return View(_transactions);
@@ -245,6 +249,10 @@ namespace SmartSave.Controllers
         [HttpGet]
         public ActionResult GenerateInvoice()
         {
+            Permissions permission = Permissions.View_Invoice;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             GetDropDownLists();
             return View();
         }

@@ -18,6 +18,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Licence()
         {
+            Permissions permission = Permissions.View_Licences;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Licence());
         }
         public IActionResult AddLicence()

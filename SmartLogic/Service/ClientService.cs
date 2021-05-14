@@ -1725,18 +1725,19 @@ namespace SmartLogic
                 }
                 var clientProducts = _context.ClientProducts.
                 Include(c => c.Product).
-                   Include(c => c.Client).
-                                 Where(t => ClientIDs.Contains(t.ClientID)).ToList();
+                Where(t => ClientIDs.Contains(t.ClientID)).ToList();
 
                 foreach (var item in clientProducts)
                 {
+
+                    ClientForm client =  FindClient(item.ClientID).Result;
                     invoiceEntries.Add(new InvoiceEntries
                     {
                         ClientProductID = item.ClientProductID,
                         ClientID = item.ClientID,
-                        ClientFullName = item.Client.ClientFullName,
-                        Occupation = item.Client.Occupation,
-                        Salary = item.Client.Salary,
+                        ClientFullName = client.ClientFullName,
+                        Occupation = client.Occupation,
+                        Salary = client.Salary,
                         ProductID = item.ProductID,
                         ProductName = item.Product.Name,
                         InvoiceDate = InvoiceDate,
@@ -2029,7 +2030,7 @@ namespace SmartLogic
                     return null;
                 Statement statement = new Statement();
                 statement.ClientID = clientID;
-                statement.ClientForm = FindClient(clientID).Result;
+                statement.Client = FindClient(clientID).Result;
                 List<ProdList> result = new List<ProdList>();
 
                 foreach (var transaction in transactions)
@@ -2074,6 +2075,7 @@ namespace SmartLogic
                     AddressLine2 = result.AddressLine2,
                     City = result.City,
                     CountryID = result.CountryID,
+                    Country= result.CountryID.HasValue?GetCountryName(result.CountryID.Value):null,
                     Occupation = result.Occupation,
                     Salary = result.Salary,
                     ClientAccountTypeID = result.ClientAccountTypeID,
@@ -2098,6 +2100,20 @@ namespace SmartLogic
                 throw;
             }
 
+        }
+
+        private string GetCountryName(int countryID)
+        {
+            try
+            {
+                var country = _context.Countries.Find(countryID);
+                return country?.Name;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
         }
         ClientPeek PeekClient(Client result)
         {

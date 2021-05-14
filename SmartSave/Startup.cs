@@ -75,6 +75,8 @@ namespace SmartSave
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IFeatureFlagService, FeatureFlagService>();
             services.AddScoped<ILicenceService, LicenceService>();
+            services.AddScoped<ISupportService, SupportService>();
+            
             // Add MVC services to the services container.
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
@@ -109,6 +111,7 @@ namespace SmartSave
                     name: "default",
                     template: "{controller=Login}/{action=Login}/{id?}");
             });
+           if(GetData.EnableLogger())
             loggerFactory.AddFile("SmartWealth-{Date}.txt");
            
                }

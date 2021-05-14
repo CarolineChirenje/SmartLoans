@@ -20,6 +20,10 @@ namespace SmartSave.Controllers
         // Parent Menu
         public async Task<IActionResult> Layouts()
         {
+            Permissions permission = Permissions.View_Layouts;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Layouts());
         }
 

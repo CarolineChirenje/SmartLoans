@@ -9,12 +9,10 @@ using System.Text;
 namespace SmartDomain
 {
 [   Table("TechnicalSupport")]
-    public class TechnicalSupport
+    public class TechnicalSupport : ChangeAudit
     {
         [Key]
         public int TechnicalSupportID { get; set; }
-        public int SupportListID { get; set; }
-        public virtual SupportList SupportList { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
     }

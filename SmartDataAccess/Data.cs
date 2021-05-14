@@ -563,7 +563,7 @@ namespace SmartDataAccess
 
         }
 
-      
+
         public static RelationshipType[] GetRelationshipTypes()
         {
             List<RelationshipType> RelationshipTypes = new List<RelationshipType>
@@ -1266,23 +1266,7 @@ namespace SmartDataAccess
             }
             return invoices.ToArray();
         }
-        public static SupportList[] GetSupportLists()
-        {
-            List<SupportList> lists = new List<SupportList>();
-            var p = from Support s in Enum.GetValues(typeof(Support))
-                    select new { ID = s, Name = s.ToString() };
-            foreach (var x in p)
-            {
-                lists.Add(new SupportList()
-                {
-                    SupportListID = (int)x.ID,
-                    Name = x.Name.Replace("_", " "),
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-                });
-            }
-            return lists.ToArray();
-        }
+       
         public static DeductionType[] GetDeductionTypes()
         {
             List<DeductionType> lists = new List<DeductionType>();
@@ -1300,7 +1284,27 @@ namespace SmartDataAccess
             }
             return lists.ToArray();
         }
-        
+
+        public static TechnicalSupport[] GetSupportInformation()
+        {
+            List<TechnicalSupport> lists = new List<TechnicalSupport>();
+            var p = from Support s in Enum.GetValues(typeof(Support))
+                    select new { ID = s, Name = s.ToString() };
+            foreach (var x in p)
+            {
+                lists.Add(new TechnicalSupport()
+                {
+                    TechnicalSupportID = (int)x.ID,
+                    Name=x.Name.ToString().Replace("_"," "),
+                    Value = String.Empty,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+            }
+            return lists.ToArray();
+        }
+
     }
 
 }

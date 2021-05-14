@@ -12,13 +12,12 @@
     </h1>
 </section>
 <section class="content container-fluid">
-    <partial name="_ClientView" model="@Model.ClientForm" />
-    <div class="row">
+        <div class="row">
         <div class="col-lg-12">
             <div class="tab-pane fade in" id="Transactions">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Payments Files
+                        @Model.ClientForm.ClientRef - Payments Files
                     </div>
                 </div>
                 <!-- /.panel-heading -->

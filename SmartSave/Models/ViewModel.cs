@@ -60,11 +60,7 @@ namespace SmartSave.Models
         public string EmailAddress { get; set; }
         [Required]
         [Display(Name = "Identity Number")]
-
         public string IDNumber { get; set; }
-
-
-
     }
 
     public class CheckBoxModel
@@ -92,9 +88,9 @@ namespace SmartSave.Models
         public int NewClientsCount { get; set; }
         public int ProductPayments { get; set; }
         public int CoursePrograms { get; set; }
-                public int Notices { get; set; }
+        public int Notices { get; set; }
 
-       
+
 
     }
     public class PaymentViewModel
@@ -132,6 +128,9 @@ namespace SmartSave.Models
         public DateTime DateFrom { get; set; }
 
     }
+    public class Access
+    {
+        public string Name { get; set; }
+    }
 
-   
 }

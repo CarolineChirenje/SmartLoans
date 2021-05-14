@@ -29,6 +29,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Courses(bool newCoursesOnly = false)
         {
+            Permissions permission = Permissions.View_Course;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             if (newCoursesOnly)
                 return View(await _service.NewCourses());
 

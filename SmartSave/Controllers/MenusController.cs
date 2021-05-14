@@ -20,6 +20,10 @@ namespace SmartSave.Controllers
         // Parent Menu
         public async Task<IActionResult> MainMenu()
         {
+            Permissions permission = Permissions.View_Menu;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.MenuGroups());
         }
 

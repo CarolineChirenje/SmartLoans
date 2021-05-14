@@ -38,7 +38,7 @@ namespace SmartSave.Controllers
         {
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-     
-        
+
+        public IActionResult UnAuthorizedAccess(string name) => View(new Access { Name = name });
     }
 }

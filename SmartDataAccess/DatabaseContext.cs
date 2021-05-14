@@ -141,11 +141,12 @@ namespace SmartDataAccess
             modelBuilder.Entity<LayoutMenu>().HasData(
            LayoutData.GetLayoutMenus());
 
-            modelBuilder.Entity<SupportList>().HasData(
-            Data.GetSupportLists());
-
+          
             modelBuilder.Entity<DeductionType>().HasData(
           Data.GetDeductionTypes());
+            modelBuilder.Entity<TechnicalSupport>().HasData(
+           Data.GetSupportInformation());
+            
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -212,8 +213,7 @@ namespace SmartDataAccess
                public DbSet<CustomSetting> CustomSettings { get; set; }
         public DbSet<Maintanance> Maintanances { get; set; }
         public DbSet<Licence> Licences { get; set; }
-        public DbSet<SupportList> SupportLists { get; set; }
-        public DbSet<TechnicalSupport> TechnicalSupports { get; set; }
+               public DbSet<TechnicalSupport> TechnicalSupports { get; set; }
         public DbSet<ErrorLog> ErrorLogging { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<DocumentFormat> DocumentFormats { get; set; }

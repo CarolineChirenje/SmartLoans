@@ -16,6 +16,10 @@ namespace SmartSave.Controllers
         // GET: Department
         public async Task<IActionResult> Department()
         {
+            Permissions permission = Permissions.View_Department;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Departments());
         }
 

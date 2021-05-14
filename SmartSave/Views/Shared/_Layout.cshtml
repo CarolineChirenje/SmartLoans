@@ -82,7 +82,7 @@
                                     {
                                         var base64 = Convert.ToBase64String(UtilityService.UserProfileImage);
                                         var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                        <img src="@imgSrc" class="user-image" alt="@UtilityService.UserFullName" style="width:50px;height:50px;    />
+                                        <img src="@imgSrc" class="user-image" alt="@UtilityService.UserFullName" style="width:50px;height:50px;     />
                                         }
                                         else
                                         {
@@ -100,7 +100,7 @@
                                         {
                                             var base64 = Convert.ToBase64String(UtilityService.UserProfileImage);
                                             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                            <img src="@imgSrc" class="img-circle" alt="@UtilityService.UserFullName" style="width:50px;height:50px;    />
+                                            <img src="@imgSrc" class="img-circle" alt="@UtilityService.UserFullName" style="width:50px;height:50px;     />
                                             }
                                             else
                                             {
@@ -118,7 +118,7 @@
                                     <div class="row">
                                         <center><text class="text-success">Version : <b>@UtilityService.ApplicationVersion </b> Environment : <b>@UtilityService.SiteEnvironment.ToString()</b></text></center>
                                     </div>
-                                 </li>
+                                </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
@@ -184,9 +184,10 @@
         <!-- /.content-wrapper -->
         <!-- Main Footer -->
         <footer class="main-footer">
-            <center>
-                <strong>Powered By <a href="#">elroitec</a> &copy; @DateTime.Now.Year  Contact :<a href="@UtilityService.WhatappSendMessageLink" style="text-decoration: none;" target="_blank"><img src="~/dist/img/Whatsapp.png" class="user-image" alt="Link to Send Message on Whatsapp" width="20" height="20" /></a></strong>
-            </center>
+            @*<center>
+            <strong>Powered By <a target="_blank" href="@UtilityService.GetValue(Support.Company_Registration_Link)">@UtilityService.GetValue(Support.CompanyName)</a> &copy; @DateTime.Now.Year  Contact :<a href="@UtilityService.WhatappSendMessageLink" style="text-decoration: none;" target="_blank"><img src="~/dist/img/Whatsapp.png" class="user-image" alt="Link to Send Message on Whatsapp" width="20" height="20" /></a></strong>
+        </center>*@
+            <partial name="_Footer"/>
         </footer>
     </div>
     <!-- ./wrapper -->

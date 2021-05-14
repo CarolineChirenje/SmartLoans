@@ -808,6 +808,13 @@ namespace SmartHelper
         Auto_Generate_Receipt,
         Email_Receipt_To_Client,
         Add_Maintanance_Notification,
+        View_Country,
+        View_Currency,
+        View_Feature_Flag,
+        View_Layouts,
+        View_Licences,
+        View_Maintanances,
+        View_Technical_Support_Settings
     }
     public enum InvoiceState
     {   Created = 1,
@@ -876,9 +883,12 @@ namespace SmartHelper
     public enum Support
     {
         CompanyName = 1,
-        CompanyRegistrationLink,
-        MobileNumber,
-        Website
+        Company_Registration_Link,
+        Mobile_Number,
+        Website,
+        Whatsapp_Support_Message,
+        Database_Server_IP,
+
     }
     public enum DeductionApplied
     {

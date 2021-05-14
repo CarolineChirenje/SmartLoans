@@ -13,14 +13,12 @@
 </section>
 <!-- Main content -->
 <section class="content container-fluid">
-    <!-- Horizontal Form -->
-    <partial name="_ClientView" model="@Model.ClientForm" />
     <div class="row">
         <div class="col-lg-12">
             <div class="tab-pane fade in" id="Deductions">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                     Finalised  Salary Deductions
+                        @Model.ClientForm.ClientRef - Finalised  Salary Deductions
                     </div>
                 </div>
                 <!-- /.panel-heading -->
@@ -41,23 +39,29 @@
                             </thead>
                             <tbody>
                                 @if (Model.Invoice != null)
+                                {
+
+                                    foreach (var item in Model.Invoice)
                                     {
-
-                                        foreach (var item in Model.Invoice)
-                                        {
                                 <tr>
-
                                     <td>@Html.DisplayFor(modelItem => item.Occupation)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Salary)</td>
                                     @if (UtilityService.HasPermission(Permissions.View_Product))
-                                                            {
-                                    <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.ProductName</a></td>
-                                                            }
-                                                            else
-                                                            {
-                                    <td>@item.ProductName</td>
-                                                            }
+                                    {
+                                        <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.ProductName</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.ProductName</td>
+                                    }
+                                    @if (UtilityService.HasPermission(Permissions.View_Invoice))
+                                    {
+                                        <td><a target="_blank" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@item.InvoiceID">@item.InvoiceNumber</a></td>
+                                    }
+                                    else
+                                    { 
                                     <td>@item.InvoiceNumber</td>
+                                    }
                                     <td>@item.InvoiceDate</td>
                                     <td>@item.DueDate</td>
 
@@ -65,15 +69,15 @@
 
 
                                 </tr>
-                                        }
                                     }
+                                }
                             </tbody>
                         </table>
                     </div>
                 </div>
 
                 <div class="box-footer">
-                                       <a class="btn btn-default" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientForm.ClientID">Cancel</a>
+                    <a class="btn btn-default" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientForm.ClientID">Cancel</a>
 
                 </div>
             </div>

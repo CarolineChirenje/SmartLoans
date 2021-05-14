@@ -48,6 +48,8 @@ namespace SmartInterfaces
         public string City { get; set; }
         [ForeignKey("CountryID")]
         public int? CountryID { get; set; }
+        [NotMapped]
+        public string Country { get; set; }
     }
 
 
@@ -92,6 +94,8 @@ namespace SmartInterfaces
         [NotMapped]
         public bool ShowClientButtons { get; set; } = false;
     }
+
+  
     public class ClientPeek
     {
         public int ClientID { get; set; }

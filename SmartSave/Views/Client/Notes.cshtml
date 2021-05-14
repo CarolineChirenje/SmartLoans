@@ -13,14 +13,12 @@
 </section>
 <!-- Main content -->
 <section class="content container-fluid">
-    <!-- Horizontal Form -->
-    <partial name="_ClientView" model="@Model.ClientForm" />
-    <div class="row">
+      <div class="row">
         <div class="col-lg-12">
             <div class="tab-pane fade in" id="Notes">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Notes
+                        @Model.ClientForm.ClientRef - Notes
                     </div>
                 </div>
                 <!-- /.panel-heading -->

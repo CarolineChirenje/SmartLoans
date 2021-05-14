@@ -39,6 +39,8 @@ namespace SmartHelper
 
         public static bool HasPermission(Permissions permission) => GetData.IsPermitted((int)permission);
 
+        public static string GetValue(Support support) => GetData.GetSupportValue((int)support);
+
         public static string ApplicationName
         {
             get
