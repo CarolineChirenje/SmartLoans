@@ -20,6 +20,9 @@ using PdfSharpCore.Pdf.Security;
 using Microsoft.Extensions.Logging;
 using SmartLog;
 using SmartInterfaces;
+using PdfSharpCore.Drawing;
+using PdfSharpCore.Pdf.IO;
+using PdfSharpCore.Pdf;
 
 namespace SmartSave.Controllers
 {
@@ -270,7 +273,7 @@ namespace SmartSave.Controllers
         /// 
         public ActionResult Notes(int id)
         {
-            
+
             try
             {
                 Permissions permission = Permissions.View_Client_Note;
@@ -526,10 +529,12 @@ namespace SmartSave.Controllers
             {
             }
             try
+
             {
                 startDate = DateTime.Parse(formCollection["StartDate"]);
                 endDate = DateTime.Parse(formCollection["EndDate"]);
                 printReversalsOnStatement = Boolean.Parse(formCollection["PrintReversalsOnStatement"]);
+                emailStatement = Boolean.Parse(formCollection["EmailStatement"]);
             }
             catch (Exception)
             {
@@ -553,22 +558,13 @@ namespace SmartSave.Controllers
 
             string filename = statement.Client.AccountNumber;
             TransactionalStatement printOut = new TransactionalStatement();
+            byte[] pdfFile = GeneratePDFStatement(statement, emailStatement);
             if (!emailStatement)
-            {
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    Document document = printOut.Print(statement); ;
-                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                    pdfRenderer.Document = document;
-                    pdfRenderer.RenderDocument();
-                    pdfRenderer.PdfDocument.Save(stream, false);
-                    return File(stream.ToArray(), "application/pdf", filename + ".pdf");
-                }
-            }
+                return File(pdfFile, "application/pdf", filename + ".pdf");
+
             else
             {
                 EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.Client_Statement).Result;
-                byte[] pdfFile = GeneratePDFStatement(statement);
                 List<AttachmentFromMemory> attachments = new List<AttachmentFromMemory>();
                 AttachmentFromMemory attachment = new AttachmentFromMemory
                 {
@@ -629,24 +625,13 @@ namespace SmartSave.Controllers
             statement.ClientID = ClientID;
             statement.Client = _service.FindClient(statement.ClientID).Result;
             string filename = statement.Client.AccountNumber;
-            OutstandingPayments printOut = new OutstandingPayments();
+            byte[] pdfFile = GeneratePDFOutstandingPaymentsStatement(statement, emailStatement);
             if (!emailStatement)
-            {
+                return File(pdfFile, "application/pdf", filename + ".pdf");
 
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    Document document = printOut.Print(statement);
-                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                    pdfRenderer.Document = document;
-                    pdfRenderer.RenderDocument();
-                    pdfRenderer.PdfDocument.Save(stream, false);
-                    return File(stream.ToArray(), "application/pdf", filename + ".pdf");
-                }
-            }
             else
             {
                 EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.Client_Statement).Result;
-                byte[] pdfFile = GeneratePDFOutstandingPaymentsStatement(statement);
                 List<AttachmentFromMemory> attachments = new List<AttachmentFromMemory>();
                 AttachmentFromMemory attachment = new AttachmentFromMemory
                 {
@@ -677,7 +662,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("PendingTransactions", new { id = statement.ClientID });
             }
         }
-        private byte[] GeneratePDFStatement(Statement statement)
+        private byte[] GeneratePDFStatement(Statement statement, bool isEmail)
         {
             byte[] pdffile = null;
             TransactionalStatement printOut = new TransactionalStatement();
@@ -691,29 +676,11 @@ namespace SmartSave.Controllers
                     PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
                     // Associate the MigraDoc document with a renderer
                     pdfRenderer.Document = document;
-
                     // Layout and render document to PDF
                     pdfRenderer.RenderDocument();
-                    if (UtilityService.StatementPasswordProtect)
-                    {
-                        PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
-
-                        securitySettings.UserPassword = statement.Client.IDNumber.Trim();
-                        securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
-
-                        // Restrict some rights.
-                        securitySettings.PermitAccessibilityExtractContent = false;
-                        securitySettings.PermitAnnotations = false;
-                        securitySettings.PermitAssembleDocument = false;
-                        securitySettings.PermitExtractContent = false;
-                        securitySettings.PermitFormsFill = true;
-                        securitySettings.PermitFullQualityPrint = false;
-                        securitySettings.PermitModifyDocument = true;
-                        securitySettings.PermitPrint = false;
-                    }
-
                     pdfRenderer.PdfDocument.Save(stream, false);
-                    pdffile = stream.ToArray();
+                    byte[] finalDocument = ProcessPDF(stream.ToArray(), statement.Client.IDNumber.Trim(), isEmail);
+                    pdffile = finalDocument;
                 }
                 catch (Exception ex)
                 {
@@ -724,7 +691,7 @@ namespace SmartSave.Controllers
             }
             return pdffile;
         }
-        private byte[] GeneratePDFOutstandingPaymentsStatement(OutstandingStatement statement)
+        private byte[] GeneratePDFOutstandingPaymentsStatement(OutstandingStatement statement, bool isEmail)
         {
             byte[] pdffile = null;
             OutstandingPayments printOut = new OutstandingPayments();
@@ -741,26 +708,10 @@ namespace SmartSave.Controllers
 
                     // Layout and render document to PDF
                     pdfRenderer.RenderDocument();
-                    if (UtilityService.StatementPasswordProtect)
-                    {
-                        PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
-
-                        securitySettings.UserPassword = statement.Client.IDNumber.Trim();
-                        securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
-
-                        // Restrict some rights.
-                        securitySettings.PermitAccessibilityExtractContent = false;
-                        securitySettings.PermitAnnotations = false;
-                        securitySettings.PermitAssembleDocument = false;
-                        securitySettings.PermitExtractContent = false;
-                        securitySettings.PermitFormsFill = true;
-                        securitySettings.PermitFullQualityPrint = false;
-                        securitySettings.PermitModifyDocument = true;
-                        securitySettings.PermitPrint = false;
-                    }
-
                     pdfRenderer.PdfDocument.Save(stream, false);
-                    pdffile = stream.ToArray();
+                    byte[] finalDocument = ProcessPDF(stream.ToArray(), statement.Client.IDNumber.Trim(), isEmail);
+                    pdffile = finalDocument;
+
                 }
                 catch (Exception ex)
                 {
@@ -773,6 +724,84 @@ namespace SmartSave.Controllers
             return pdffile;
         }
 
+        private byte[] ProcessPDF(byte[] documentGenerated, string IDNumber, bool isEmail)
+        {
+            MemoryStream stream = new MemoryStream(0);
+            stream.Write(documentGenerated, 0, documentGenerated.Length);
+            var document = PdfReader.Open(stream, UtilityService.StatementPasswordForAdmin.Trim(), PdfDocumentOpenMode.Modify);
+
+            if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+            {
+                const int emSize = 100;
+                string watermark = $"{UtilityService.SiteEnvironment.ToString()}";
+                // Create the font for drawing the watermark.
+                var font = new XFont("Times New Roman", emSize, XFontStyle.BoldItalic);
+                //this makes _mem resizeable 
+
+                // var document = PdfReader.Open(stream, PdfDocumentOpenMode.Modify);
+                // Set version to PDF 1.4 (Acrobat 5) because we use transparency.
+                if (document.Version < 14)
+                    document.Version = 14;
+
+                for (var idx = 0; idx < document.Pages.Count; idx++)
+                {
+                    var page = document.Pages[idx];
+
+                    // Variation 1: Draw a watermark as a text string.
+                                       // Get an XGraphics object for drawing beneath the existing content.
+                    var gfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Prepend);
+
+                    // Get the size (in points) of the text.
+                    var size = gfx.MeasureString(watermark, font);
+
+                    // Define a rotation transformation at the center of the page.
+                    gfx.TranslateTransform(page.Width / 2, page.Height / 2);
+                    gfx.RotateTransform(-Math.Atan(page.Height / page.Width) * 180 / Math.PI);
+                    gfx.TranslateTransform(-page.Width / 2, -page.Height / 2);
+
+                    // Create a string format.
+                    var format = new XStringFormat();
+                    format.Alignment = XStringAlignment.Near;
+                    format.LineAlignment = XLineAlignment.Near;
+
+                    // Create a dimmed red brush.
+                    XBrush brush = new XSolidBrush(XColor.FromArgb(128, 255, 0, 0));
+
+                    // Draw the string.
+                    gfx.DrawString(watermark, font, brush,
+                        new XPoint((page.Width - size.Width) / 2, (page.Height - size.Height) / 2),
+                        format);
+
+                }
+            }
+
+            if (UtilityService.StatementPasswordProtect && isEmail)
+            {
+                PdfSecuritySettings securitySettings = document.SecuritySettings;
+
+                // Setting one of the passwords automatically sets the security level to 
+                // PdfDocumentSecurityLevel.Encrypted128Bit.
+                securitySettings.UserPassword = IDNumber;
+                securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
+
+                // Don't use 40 bit encryption unless needed for compatibility
+                //securitySettings.DocumentSecurityLevel = PdfDocumentSecurityLevel.Encrypted40Bit;
+
+                // Restrict some rights.
+                securitySettings.PermitAccessibilityExtractContent = false;
+                securitySettings.PermitAnnotations = false;
+                securitySettings.PermitAssembleDocument = false;
+                securitySettings.PermitExtractContent = false;
+                securitySettings.PermitFormsFill = true;
+                securitySettings.PermitFullQualityPrint = false;
+                securitySettings.PermitModifyDocument = true;
+                securitySettings.PermitPrint = false;
+
+            }
+            document.Save(stream, false);
+            var _document = stream.ToArray();
+            return _document;
+        }
 
         /// <summary>
         /// Client Payment
@@ -1347,7 +1376,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-     
+
         private SelectList GetCompanyList()
         {
             SelectList companyList = null;
