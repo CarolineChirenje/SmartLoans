@@ -47,6 +47,7 @@ namespace SmartLogic
         {
             try
             {
+                int result = 0;
                 TransactionState transactionState = GetTransactionState(PaymentsFile.TransactionTypeID);
                 decimal VATAmount = 0m;
                 decimal AmountExclVat = 0m;
@@ -94,7 +95,20 @@ namespace SmartLogic
                 PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
                 PaymentsFile.LastChangedDate = DateTime.Now;
                 _context.Add(PaymentsFile);
-                await _context.SaveChangesAsync();
+               result= await _context.SaveChangesAsync();
+                if (PaymentsFile.ClientFeeID.HasValue)
+                {
+                    ClientFee clientFee = _context.ClientFees.Find(PaymentsFile.ClientFeeID);
+                    if (UtilityService.IsNotNull(clientFee))
+                    {
+                        clientFee.DatePaid = DateTime.Now;
+                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                        clientFee.LastChangedDate = DateTime.Now;
+                        _context.Update(clientFee);
+                        result = await _context.SaveChangesAsync();
+
+                    }
+                }
                 if (PaymentsFile.InvoiceDetailID.HasValue)
                 {
                     try

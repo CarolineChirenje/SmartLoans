@@ -122,13 +122,13 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewClient", new { id = _result });
         }
 
-        public async Task<IActionResult> ViewClient(int id = 0, string accountnNum = null)
+        public async Task<IActionResult> ViewClient(int id = 0, string accountNum = null)
         {
             var _tempData = TempData["Error"];
 
             HttpContext.Session.SetString("ClientID", id.ToString());
 
-            if (id == 0 && accountnNum == null)
+            if (id == 0 && accountNum == null)
                 return RedirectToAction(nameof(Clients));
             ClientForm client = await _service.FindClient(id);
             if (UtilityService.IsNotNull(client))
