@@ -923,6 +923,8 @@ namespace SmartHelper
     {
         Product_Based_Statement = 1,
         Transaction_List = 2,
+        Outstanding_Payments=3,
+        Deductions
 
     }
 

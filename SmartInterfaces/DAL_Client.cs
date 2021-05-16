@@ -355,7 +355,8 @@ namespace SmartInterfaces
         public string ProductName { get; set; }
         public string DueDate { get; set; }
         public string InvoiceDate { get; set; }
-
+        public string Status { get; set; }
+     
     }
     public class CoachingProgrammes
     {

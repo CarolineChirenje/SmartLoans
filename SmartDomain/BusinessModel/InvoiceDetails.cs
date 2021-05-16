@@ -21,7 +21,8 @@ namespace SmartDomain
         public virtual Product Product { get; set; }
         public int? DeductionTypeID { get; set; }
         public virtual DeductionType DeductionType { get; set; }
-
+        public int PaymentStatusID { get; set; }
+        public virtual PaymentStatus PaymentStatus { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal DeductedAmount { get; set; }
         [Column(TypeName = "decimal(18,2)")]
@@ -33,8 +34,7 @@ namespace SmartDomain
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalDeductionPercentage { get; set; }
         public DateTime? DatePaid { get; set; }
-        [NotMapped]
-        public bool IsPaid { get { return DatePaid.HasValue; } }
+    
 
     }
 }

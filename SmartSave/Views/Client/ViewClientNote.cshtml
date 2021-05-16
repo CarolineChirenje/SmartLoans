@@ -15,6 +15,7 @@
 </section>
 <!-- Main content -->
 <section class="content container-fluid">
+    <partial name="_MessageDisplay" />
     <form method="post" asp-controller="Client" asp-action="ViewClientNote">
 
         <div class="row">
@@ -68,7 +69,7 @@
                             <label for="inputEmail3" class="form-control label-default">@closedDate</label>
                         </div>
 
-                       <div class="form-group">
+                        <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
 
                             <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
@@ -106,7 +107,7 @@
             </div>
         </div>
     </form>
-  
+
     <!-- /.box -->
 </section>
 

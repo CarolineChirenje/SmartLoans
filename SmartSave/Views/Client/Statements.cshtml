@@ -29,7 +29,7 @@
                         <form method="post" asp-controller="Client" asp-action="GenerateStatement">
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Statement Type:</label>
-                                <select asp-for="StatementID" class="form-control" asp-items="ViewBag.ClientStatement" onchange="showProduct(this.value)">
+                                <select id="ddlStatements" asp-for="StatementID" class="form-control" asp-items="ViewBag.ClientStatement" onchange="showProduct(this.value)">
                                 </select>
 
                             </div>
@@ -56,7 +56,7 @@
                             </div>
                             @if (UtilityService.HasPermission(Permissions.Print_Statement_With_No_Reversals))
                             {
-                                <div class="form-group">
+                                <div class="form-group" id="PrintReversalSection">
                                     <label for="inputEmail3" class="col-sm-2 control-label">Print Reversals</label>
                                     <div class="checkbox">
                                         <label class="checkbox-inline">
@@ -108,15 +108,22 @@
         previousDate.setDate(previousDate.getDate() - 90);
                document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
         document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
-       
+
+        showProduct($('#ddlStatements').val());
     });
     function showProduct(_statementID) {
 
-        if (_statementID != 1) {
-            $("#ddlProduct").hide();
+        if (_statementID == 1) {
+            $("#ddlProduct").show();
         }
         else {
-            $("#ddlProduct").show();
+            $("#ddlProduct").hide();
+        }
+        if (_statementID == 2) {
+            $("#PrintReversalSection").show();
+        }
+        else {
+            $("#PrintReversalSection").hide();
         }
     }
     </script>

@@ -73,7 +73,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "PendingTransactions",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-cart-plus"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-credit-card"),
                     OrderNo = 3,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -157,7 +157,7 @@ namespace SmartDataAccess
                     ControllerName = "Client",
                     ActionName = "Contacts",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-address-book"),
+                    CSSClass = UtilityService.HtmlDecode("glyphicon glyphicon-envelope"),
                     OrderNo = 9,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"

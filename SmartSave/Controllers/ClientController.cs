@@ -557,7 +557,7 @@ namespace SmartSave.Controllers
             statement.Product = _settingService.FindProduct(statement.ProductID);
 
             string filename = statement.Client.AccountNumber;
-            TransactionalStatement printOut = new TransactionalStatement();
+            ClientStatement printOut = new ClientStatement();
             byte[] pdfFile = GeneratePDFStatement(statement, emailStatement);
             if (!emailStatement)
                 return File(pdfFile, "application/pdf", filename + ".pdf");
@@ -665,7 +665,7 @@ namespace SmartSave.Controllers
         private byte[] GeneratePDFStatement(Statement statement, bool isEmail)
         {
             byte[] pdffile = null;
-            TransactionalStatement printOut = new TransactionalStatement();
+            ClientStatement printOut = new ClientStatement();
 
             using (MemoryStream stream = new MemoryStream())
             {

@@ -1985,6 +1985,7 @@ namespace SmartLogic
                 var transactions = _context.InvoiceDetails.
                 Include(i => i.Invoice).
                 Include(c => c.Client).
+                 Include(p => p.PaymentStatus).
                 Where(c => c.ClientID == clientID && c.Invoice.InvoiceStatusID == invoiceStatusID).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
@@ -2007,7 +2008,9 @@ namespace SmartLogic
                         ProductID = transaction.ProductID,
                         Occupation = transaction.Client.Occupation,
                         InvoiceNumber = transaction.InvoiceNumber,
-                        Salary = transaction.Salary
+                        Salary = transaction.Salary,
+                        Status=transaction.PaymentStatus.Name
+
                     });
                 }
                 trans.Invoice = result;

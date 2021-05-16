@@ -1,0 +1,11 @@
+2021-05-16 17:15:03:16 :Reporting : System.NullReferenceException: Object reference not set to an instance of an object.
+   at SmartReporting.TransactionalStatement.Deductions() in D:\Dev Projects\SmartSave\SmartReporting\TransactionalStatement.cs:line 781
+2021-05-16 17:15:08:43 :Reporting : System.NullReferenceException: Object reference not set to an instance of an object.
+   at SmartReporting.TransactionalStatement.Deductions() in D:\Dev Projects\SmartSave\SmartReporting\TransactionalStatement.cs:line 781
+   at SmartReporting.TransactionalStatement.TransactionDetails() in D:\Dev Projects\SmartSave\SmartReporting\TransactionalStatement.cs:line 272
+   at SmartReporting.TransactionalStatement.Print(Statement statement) in D:\Dev Projects\SmartSave\SmartReporting\TransactionalStatement.cs:line 40
+2021-05-16 17:15:25:46 :GUI : System.NullReferenceException: Object reference not set to an instance of an object.
+   at SmartReporting.TransactionalStatement.Deductions() in D:\Dev Projects\SmartSave\SmartReporting\TransactionalStatement.cs:line 781
+   at SmartReporting.TransactionalStatement.TransactionDetails() in D:\Dev Projects\SmartSave\SmartReporting\TransactionalStatement.cs:line 272
+   at SmartReporting.TransactionalStatement.Print(Statement statement) in D:\Dev Projects\SmartSave\SmartReporting\TransactionalStatement.cs:line 40
+   at SmartSave.Controllers.ClientController.GeneratePDFStatement(Statement statement, Boolean isEmail) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 674

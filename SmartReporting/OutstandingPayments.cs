@@ -35,9 +35,9 @@ namespace SmartReporting
                 this.document = new Document();
                 this.document = ReportingUtilities.DocumentMetaData(this.document, "Statement of Account");
                 this._statement = statement;
-                              this.culture = new CultureInfo("en-US");
+                this.culture = new CultureInfo("en-US");
                 style = ReportingUtilities.DefineStyles(this.document);
-                               AddressAndHeader();
+                AddressAndHeader();
                 PrintOutStandingPayments();
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace SmartReporting
             }
             return this.document;
         }
-     
+
         void AddressAndHeader()
         {
             try
@@ -130,16 +130,16 @@ namespace SmartReporting
                 }
                 if (UtilityService.IsNotNull(_statement.Client.Country))
                 {
-                    
-                        Row tblrow4 = this.table.AddRow();
-                        tblrow4.Borders.Visible = false;
-                        tblrow4.TopPadding = 1.5;
-                        tblrow4.Cells[0].Borders.Visible = false;
-                        tblrow4.Cells[0].Format.Font.Bold = false;
-                        tblrow4.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                        tblrow4.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                        tblrow4.Cells[0].AddParagraph(_statement.Client.Country);
-                   
+
+                    Row tblrow4 = this.table.AddRow();
+                    tblrow4.Borders.Visible = false;
+                    tblrow4.TopPadding = 1.5;
+                    tblrow4.Cells[0].Borders.Visible = false;
+                    tblrow4.Cells[0].Format.Font.Bold = false;
+                    tblrow4.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow4.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow4.Cells[0].AddParagraph(_statement.Client.Country);
+
                 }
                 if (!String.IsNullOrEmpty(_statement.Client.MobileNumber))
                 {
@@ -174,48 +174,14 @@ namespace SmartReporting
             }
         }
 
-
-        void PrintOutStandingPayments()
+        public void PrintOutStandingPayments()
         {
             try
             {
                 var cutoffDate = DateTime.Now.AddMonths(1);
-                string sqlQuery =
-$@"SELECT 
-c.ClientID,
-cf.ClientFeeID,
-CONCAT('Product ',' - ',p.Name) AS Entity,
-pf.Name AS Fee,
-f.Name AS PaymentTerms,
-cf.DueDate,
-cf.Amount
-FROM 
-Clients c 
-INNER JOIN [dbo].[ClientFees] cf ON c.ClientID= cf.ClientID
-INNER JOIN ClientProducts cp ON cf.ClientProductID=cp.ClientProductID
-INNER JOIN  Products p ON cp.ProductID=p.ProductID
-INNER JOIN ProductFees pf ON cf.ProductFeeID=pf.ProductFeeID
-INNER JOIN Frequencies f ON pf.FrequencyID=f.FrequencyID
-WHERE DatePaid IS NULL AND c.ClientID={_statement.ClientID} AND DueDate<'{cutoffDate.Date}'  
-
-UNION ALL
-SELECT 
-c.ClientID,
-cf.ClientFeeID,
-CONCAT('Course ',' - ',cs.Title) AS Entity,
-csf.Name AS Fee,
-f.Name AS PaymentTerms,
-cf.DueDate,
-cf.Amount
-FROM 
-Clients c 
-INNER JOIN [dbo].[ClientFees] cf ON c.ClientID= cf.ClientID
-INNER JOIN ClientCourses cc ON cf.ClientCourseID=cc.ClientCourseID
-INNER JOIN  Courses cs ON cs.CourseID=cc.CourseID
-INNER JOIN CourseFees csf ON cf.CourseFeeID=csf.CourseFeeID
-INNER JOIN Frequencies f ON csf.FrequencyID=f.FrequencyID
-WHERE DatePaid IS NULL AND c.ClientID={_statement.ClientID} AND DueDate<'{cutoffDate.Date}'";
-                DataTable Transactions = GetData.GetDataTable(sqlQuery);
+                _statement.StartDate = DateTime.MinValue;
+                _statement.EndDate = cutoffDate;
+                DataTable Transactions = Reports.OutstandingPayments(_statement);
                 Paragraph paragraph = null;
                 if (Transactions != null && Transactions.Rows.Count > 0)
                 {
@@ -347,34 +313,35 @@ WHERE DatePaid IS NULL AND c.ClientID={_statement.ClientID} AND DueDate<'{cutoff
 
 
                     if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue + 1, 1, Edge.Box, BorderStyle.Single, 0.75);
+                        this.table.SetEdge(0, this.table.Rows.Count - 1, finalCountCellValue + 1, 1, Edge.Box, BorderStyle.Single, 0.75);
 
-                // Add an invisible row as a space line to the table
-                Row row2 = this.table.AddRow();
-                row2.Borders.Visible = false;
-                   decimal totalDue = Transactions.AsEnumerable().Sum(transaction => transaction.Field<decimal>("Amount"));
-                // Add the total due row
-                row2 = this.table.AddRow();
-                row2.Cells[0].Borders.Visible = false;
-                row2.Cells[0].Format.Font.Bold = true;
-                row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-                row2.Cells[0].MergeRight = finalCountCellValue - 1;
-                row2.Cells[0].AddParagraph("Total Due");
-                row2.Cells[finalCountCellValue].AddParagraph(String.Format(culture, "{0:C}", totalDue));
+                    // Add an invisible row as a space line to the table
+                    Row row2 = this.table.AddRow();
+                    row2.Borders.Visible = false;
+                    decimal totalDue = Transactions.AsEnumerable().Sum(transaction => transaction.Field<decimal>("Amount"));
+                    // Add the total due row
+                    row2 = this.table.AddRow();
+                    row2.Cells[0].Borders.Visible = false;
+                    row2.Cells[0].Format.Font.Bold = true;
+                    row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
+                    row2.Cells[0].MergeRight = finalCountCellValue - 1;
+                    row2.Cells[0].AddParagraph("Total Due");
+                    row2.Cells[finalCountCellValue].AddParagraph(String.Format(culture, "{0:C}", totalDue));
 
-                // Set the borders of the specified cell range
-                if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(finalCountCellValue, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
-            }
+                    // Set the borders of the specified cell range
+                    if (UtilityService.StatementShowTableBoarders)
+                        this.table.SetEdge(finalCountCellValue, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
+                }
                 else
-                paragraph = this.addressFrame.AddParagraph();
-        }
+                    paragraph = this.addressFrame.AddParagraph();
+            }
             catch (Exception ex)
             {
                 CustomLog.Log(LogSource.Reporting, ex);
                 throw;
             }
-}
+        }
+
 
 
     }
