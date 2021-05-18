@@ -12,6 +12,7 @@ using System;
 using Microsoft.AspNetCore.Http;
 using System.Threading;
 using SmartInterfaces;
+using SmartMail;
 
 namespace SmartSave.Controllers
 {

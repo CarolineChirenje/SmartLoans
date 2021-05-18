@@ -19,6 +19,7 @@ using MigraDocCore.DocumentObjectModel;
 using PdfSharpCore.Pdf.Security;
 using SmartLog;
 using SmartInterfaces;
+using SmartMail;
 
 namespace SmartSave.Controllers
 {

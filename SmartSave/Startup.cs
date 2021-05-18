@@ -10,6 +10,7 @@ using SmartDataAccess;
 using SmartHelper;
 using SmartLogic;
 using SmartLogic.IService;
+using SmartMail;
 using System;
 
 namespace SmartSave

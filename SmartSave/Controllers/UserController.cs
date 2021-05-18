@@ -13,6 +13,7 @@ using SmartHelper;
 using Microsoft.AspNetCore.Http;
 using SmartDataAccess;
 using System.IO;
+using SmartMail;
 
 namespace SmartSave.Controllers
 {

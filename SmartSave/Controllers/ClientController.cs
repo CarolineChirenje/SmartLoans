@@ -23,6 +23,7 @@ using SmartInterfaces;
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf.IO;
 using PdfSharpCore.Pdf;
+using SmartMail;
 
 namespace SmartSave.Controllers
 {
