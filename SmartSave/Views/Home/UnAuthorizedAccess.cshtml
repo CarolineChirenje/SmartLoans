@@ -1,0 +1,27 @@
+﻿@model Access
+@using SmartHelper;
+@{
+    TempData["Title"] = "UnAuthorized Access";
+}
+<div id="layoutError_content">
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="text-center mt-4">
+                        <h1 class="display-1 text-danger text-bold">Oops</h1>
+                        <center>
+                            <p class="lead ">
+                                You do have permission to access this page.<br />
+                                The permission required is <text class="text-bold text-red">@Model.Name</text>.
+                            </p>
+                            <a class="btn btn-danger" asp-controller="Home" asp-action="Dashboard">
+                                Return to Dashboard
+                            </a>
+                            </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

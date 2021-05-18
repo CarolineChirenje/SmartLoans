@@ -131,7 +131,6 @@ namespace SmartLogic
         {
             try
             {
-
                         var user = _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefault();
             return UtilityService.IsNotNull(user);
             }

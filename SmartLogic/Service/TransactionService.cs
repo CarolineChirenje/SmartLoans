@@ -47,6 +47,7 @@ namespace SmartLogic
         {
             try
             {
+                int result = 0;
                 TransactionState transactionState = GetTransactionState(PaymentsFile.TransactionTypeID);
                 decimal VATAmount = 0m;
                 decimal AmountExclVat = 0m;
@@ -94,7 +95,32 @@ namespace SmartLogic
                 PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
                 PaymentsFile.LastChangedDate = DateTime.Now;
                 _context.Add(PaymentsFile);
-                await _context.SaveChangesAsync();
+               result= await _context.SaveChangesAsync();
+                if (PaymentsFile.ClientFeeID.HasValue)
+                {
+                    ClientFee clientFee = _context.ClientFees.Find(PaymentsFile.ClientFeeID);
+                    if (UtilityService.IsNotNull(clientFee))
+                    {
+                        clientFee.DatePaid = DateTime.Now;
+                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                        clientFee.LastChangedDate = DateTime.Now;
+                        _context.Update(clientFee);
+                        result = await _context.SaveChangesAsync();
+
+                    }
+                }
+                if (PaymentsFile.InvoiceDetailID.HasValue)
+                {
+                    try
+                    {
+                        UpdateInvoiceDetail(PaymentsFile.InvoiceDetailID.Value, (int)PaymentState.Paid, DateTime.Now);
+                    }
+                    catch (Exception ex)
+                    {
+                        CustomLog.Log(LogSource.Logic_Base, ex);
+                    }
+
+                }
                 return PaymentsFile.TransactionID;
             }
             catch (Exception ex)
@@ -147,7 +173,7 @@ namespace SmartLogic
         {// create a duplicate negative payment with  new transactions
             int transactionID = PaymentsFile.TransactionID;
             int oldPaymentStatus = (int)PaymentState.Reversed;
-
+            int result = 0;
             try
             {
 
@@ -187,7 +213,7 @@ namespace SmartLogic
                 newPaymentFile.AmountExclVAT = (AmountExclVat * -1);
                 newPaymentFile.Narration = $"(R) - {PaymentsFile.TransRef}";
                 _context.Add(newPaymentFile);
-                await _context.SaveChangesAsync();
+              result=  await _context.SaveChangesAsync();
                 int ReversalPaymentID = newPaymentFile.TransactionID;
                 updateOldPayment(transactionID, oldPaymentStatus, newPaymentFile.TransRef, ReversalPaymentID);
 
@@ -200,17 +226,30 @@ namespace SmartLogic
                         clientFee.LastChangedBy = UtilityService.CurrentUserName;
                         clientFee.LastChangedDate = DateTime.Now;
                         _context.Update(clientFee);
+                      result= await _context.SaveChangesAsync();
 
                     }
                 }
+                if (PaymentsFile.InvoiceDetailID.HasValue)
+                {
+                    try
+                    {
+                        UpdateInvoiceDetail(PaymentsFile.InvoiceDetailID.Value, (int)PaymentState.Reversed, null);
+                    }
+                    catch (Exception ex)
+                    {
+                        CustomLog.Log(LogSource.Logic_Base, ex);
+                    }
 
+                }
+                return result;
             }
             catch (Exception ex)
             {
 
                 CustomLog.Log(LogSource.Logic_Base, ex);
             }
-            return await _context.SaveChangesAsync();
+            return result;
         }
         private void updateOldPayment(int transactionID, int oldPaymentStatus, string newTransRef, int reversalPaymentID)
         {
@@ -226,6 +265,7 @@ namespace SmartLogic
                 oldPaymentsFile.ReversalPaymentID = reversalPaymentID;
                 oldPaymentsFile.Narration = String.IsNullOrEmpty(old_Narration) ? append_Narration : $"{old_Narration} : {append_Narration}";
                 _context.Update(oldPaymentsFile);
+                _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -308,13 +348,19 @@ namespace SmartLogic
                     TransactionID = _context.Transactions
                                 .FirstOrDefault(p => p.TransRef.ToUpper() == TranRef.Trim().ToUpper())?.TransactionID ?? 0;
                 return await _context.Transactions
-                 .Include(p => p.Client)
+
                  .Include(p => p.Product)
                  .Include(p => p.Course)
                  .Include(p => p.PaymentStatus)
                  .Include(p => p.TransactionType)
                  .ThenInclude(p => p.TransactionStatus)
                  .Include(p => p.BankAccount)
+                 .Include(p => p.Client).
+                  ThenInclude(c => c.JointApplicant).ThenInclude(r => r.RecordStatus)
+                 .Include(p => p.Client).
+                ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title)
+               .Include(p => p.Client).
+                ThenInclude(c => c.Title)
                 .Where(t => t.TransactionID == TransactionID).FirstOrDefaultAsync();
             }
             catch (Exception ex)
@@ -467,16 +513,20 @@ namespace SmartLogic
                 if (UtilityService.IsNotNull(clientProduct) && clientProduct.Count() > 0)
                 {
                     foreach (var item in clientProduct)
-                    {
+                    {//1.
+                        decimal _percentageDeduction = item.DeductionPercentage.HasValue ? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
+                        decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
+                        decimal _currentSalary = item.Client.Salary;
+                        decimal? _previousSalary = null;
+                        decimal _totalDeductionPercentage = 0M;
+                        decimal _totalDeduction = 0M;
+                        DeductionApplied deductionApplied = DeductionApplied.Product;
                         if (!item.DoNotDeduct) //only deduct if do not deduct is set to false
                         {
-                            //1.
-                            decimal _percentageDeduction = item.DeductionPercentage.HasValue ? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
-                            decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
-                            decimal _currentSalary = item.Client.Salary;
-                            decimal? _previousSalary = null;
-                            decimal _totalDeductionPercentage = 0M;
-                            decimal _totalDeduction = 0M;
+                            if (item.DeductionPercentage.HasValue || item.IncreamentPercentage.HasValue)
+                                deductionApplied = DeductionApplied.Individual;
+                            else
+                                deductionApplied = DeductionApplied.Product;
                             var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
                             if (UtilityService.IsNotNull(_lastSalary))
                                 _previousSalary = _lastSalary.Salary;
@@ -491,25 +541,33 @@ namespace SmartLogic
                             else
                                 _totalDeductionPercentage = _percentageDeduction;
                             _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
-                            InvoiceDetails deductionDetails = new InvoiceDetails
-                            {
-                                ClientID = item.ClientID,
-                                ClientProductID = item.ClientProductID,
-                                Salary = _currentSalary,
-                                ProductID = item.ProductID,
-                                InvoiceID = InvoiceID,
-                                DeductedAmount = _totalDeduction,
-                                TotalDeductionPercentage = _totalDeductionPercentage,
-                                DeductionPercentage = _percentageDeduction,
-                                AdditionalDeductionPercentage = _percentageIncrement,
-                                LastChangedBy = UtilityService.CurrentUserName,
-                                LastChangedDate = DateTime.Now,
-                                InvoiceNumber = $"{item.Client.AccountNumber}-INV-{InvoiceID}"
-
-                            };
-                            _context.Add(deductionDetails);
                         }
+                        else
+                        {
+                            deductionApplied = DeductionApplied.Do_Not_Deduct;
+                            _totalDeduction = 0M;
+                        }
+                        InvoiceDetails deductionDetails = new InvoiceDetails
+                        {
+                            ClientID = item.ClientID,
+                            ClientProductID = item.ClientProductID,
+                            Salary = _currentSalary,
+                            ProductID = item.ProductID,
+                            InvoiceID = InvoiceID,
+                            DeductedAmount = _totalDeduction,
+                            TotalDeductionPercentage = _totalDeductionPercentage,
+                            DeductionPercentage = _percentageDeduction,
+                            AdditionalDeductionPercentage = _percentageIncrement,
+                            LastChangedBy = UtilityService.CurrentUserName,
+                            LastChangedDate = DateTime.Now,
+                            InvoiceNumber = $"{item.Client.AccountNumber}-INV-{InvoiceID}",
+                            DeductionTypeID = (int)deductionApplied,
+                            PaymentStatusID = (int)PaymentState.Pending
+
+                        };
+                        _context.Add(deductionDetails);
                     }
+
                     if (clientProduct.Count() > 0)
                         result = _context.SaveChanges();
                     if (result > 0)
@@ -554,6 +612,8 @@ namespace SmartLogic
                   .Include(p => p.Client)
                   .ThenInclude(p => p.Company)
                     .Include(p => p.Product)
+                     .Include(p => p.DeductionType)
+                     .Include(p => p.PaymentStatus)
                    .Where(t => t.Invoice.InvoiceDate == InvoiceDate && ClientProductIDs.Contains(t.ClientProductID)).ToListAsync();
             }
             catch (Exception ex)
@@ -588,6 +648,8 @@ namespace SmartLogic
                   .Include(p => p.Client)
                   .ThenInclude(p => p.Company)
                     .Include(p => p.Product)
+                      .Include(p => p.DeductionType)
+                      .Include(p => p.PaymentStatus)
                  .Where(cd => cd.InvoiceID == invoiceID).ToList();
 
                 InvoiceDetail invoice = new InvoiceDetail();
@@ -617,8 +679,38 @@ namespace SmartLogic
                   .ThenInclude(c => c.Title)
                    .Include(c => c.InvoiceDetails)
                    .ThenInclude(c => c.Product)
+                    .Include(c => c.InvoiceDetails)
+                   .ThenInclude(c => c.DeductionType)
+                     .Include(c => c.InvoiceDetails)
+                   .ThenInclude(c => c.Client)
+                   .ThenInclude(c => c.Company)
                    .Where(cd => cd.InvoiceID == invoiceID).FirstOrDefault();
                 return deductions;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public int UpdateInvoiceDetail(int invoiceDetailID, int paymentStatusID, DateTime? DatePaid = null)
+        {
+            try
+            {
+                int result = 0;
+                InvoiceDetails invoiceDetails = _context.InvoiceDetails.
+                Where(t => t.InvoiceDetailID == invoiceDetailID).FirstOrDefault();
+                if (UtilityService.IsNotNull(invoiceDetails))
+                {
+                    invoiceDetails.PaymentStatusID = paymentStatusID;
+                    invoiceDetails.DatePaid = DatePaid;
+                    invoiceDetails.LastChangedBy = UtilityService.CurrentUserName;
+                    invoiceDetails.LastChangedDate = DateTime.Now;
+                    _context.Entry(invoiceDetails).State = EntityState.Modified;
+                    result = _context.SaveChanges();
+                }
+                return result;
             }
             catch (Exception ex)
             {

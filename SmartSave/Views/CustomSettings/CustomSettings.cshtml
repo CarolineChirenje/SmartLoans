@@ -44,7 +44,6 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Setting Coverage</th>
                                     <th>Variable Type</th>
                                     <th>Value</th>
                                     <th>Is Active</th>
@@ -71,7 +70,6 @@
 
                                             <td>@Html.DisplayFor(modelItem => item.Name)</td>
                                         }
-                                         <td>@Html.DisplayFor(modelItem => item.CustomSettingType.Name)</td>
                                         <td>@Html.DisplayFor(modelItem => item.CustomVariableType.Name)</td>
                                         <td>@value</td>
                                         <td>@activeStatus</td>
@@ -79,14 +77,14 @@
                                         <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
 
                                     </tr>
-                                 
+
                                 }
-</table>
+                        </table>
                     </div>
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                                    </div>
+                </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->

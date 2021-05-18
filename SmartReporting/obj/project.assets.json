@@ -632,6 +632,20 @@
           "bin/placeholder/SmartHelper.dll": {}
         }
       },
+      "SmartInterfaces/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.0",
+        "dependencies": {
+          "SmartDomain": "1.0.0",
+          "SmartHelper": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SmartInterfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartInterfaces.dll": {}
+        }
+      },
       "SmartLog/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.0",
@@ -2414,6 +2428,11 @@
       "path": "../SmartHelper/SmartHelper.csproj",
       "msbuildProject": "../SmartHelper/SmartHelper.csproj"
     },
+    "SmartInterfaces/1.0.0": {
+      "type": "project",
+      "path": "../SmartInterfaces/SmartInterfaces.csproj",
+      "msbuildProject": "../SmartInterfaces/SmartInterfaces.csproj"
+    },
     "SmartLog/1.0.0": {
       "type": "project",
       "path": "../SmartErrorLog/SmartLog.csproj",
@@ -2426,6 +2445,7 @@
       "MigraDocCore.Rendering >= 0.1.1",
       "PdfSharpCore >= 1.2.16",
       "SmartDomain >= 1.0.0",
+      "SmartInterfaces >= 1.0.0",
       "SmartLog >= 1.0.0",
       "System.Data.DataSetExtensions >= 4.5.0"
     ]
@@ -2465,6 +2485,9 @@
             },
             "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj": {
               "projectPath": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj"
+            },
+            "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj": {
+              "projectPath": "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj"
             }
           }
         }
@@ -2524,7 +2547,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -5665,7 +5665,7 @@ namespace SmartDataAccess.Migrations
                         {
                             MenuID = 6,
                             ActionName = "Product",
-                            CSSClass = "fa fa-product-hunt",
+                            CSSClass = "fa fa-star",
                             ControllerName = "Product",
                             DisplayName = "Products",
                             IsActive = true,

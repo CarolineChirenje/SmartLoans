@@ -39,6 +39,8 @@ namespace SmartHelper
 
         public static bool HasPermission(Permissions permission) => GetData.IsPermitted((int)permission);
 
+        public static string GetValue(Support support) => GetData.GetSupportValue((int)support);
+
         public static string ApplicationName
         {
             get
@@ -180,6 +182,7 @@ namespace SmartHelper
                 return (SiteEnvironment)_siteEnv;
             }
         }
+        
         public static bool StatementPasswordProtect
         {
             get
@@ -606,6 +609,8 @@ namespace SmartHelper
         static byte[] _userProfileImage;
         static bool _canOverrideMaintananceMode;
         static int _ClientID;
+        public static int CurrentUserTypeID;
+        static Menu_Component _component;
         /// <summary>
         /// Access routine for global variable.
         /// </summary>
@@ -621,7 +626,7 @@ namespace SmartHelper
             }
         }
 
-        public static int CurrentUserTypeID;
+        
         public static int ClientID
         {
             get
@@ -669,12 +674,24 @@ namespace SmartHelper
             }
 
         }
+        public static Menu_Component MenuComponent
+        {
+            get
+            {
+                return _component;
+            }
+            set
+            {
+                _component = value;
+            }
+        }
         public static void ClearUserNames()
         {
             UtilityService.UserFullName = string.Empty;
             UtilityService.CurrentUserName = string.Empty;
             UtilityService.UserProfileImage = null;
             UtilityService.CanOverrideMaintananceMode = false;
+            UtilityService.MenuComponent = Menu_Component.MenuList;
           }
         public static decimal GetDecimalAmount(string Amount)
         {

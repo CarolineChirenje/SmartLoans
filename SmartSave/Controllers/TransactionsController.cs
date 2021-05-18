@@ -18,6 +18,8 @@ using MigraDocCore.Rendering;
 using MigraDocCore.DocumentObjectModel;
 using PdfSharpCore.Pdf.Security;
 using SmartLog;
+using SmartInterfaces;
+using SmartMail;
 
 namespace SmartSave.Controllers
 {
@@ -42,6 +44,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Transactions()
         {
+            Permissions permission = Permissions.View_Payment;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             List<Transaction> transactions = await _service.Transactions();
             List<Transaction> _transactions = transactions.OrderByDescending(t => t.TransactionDate).ToList();
             return View(_transactions);
@@ -90,7 +96,7 @@ namespace SmartSave.Controllers
                     {
                         if (paymentsFile.AutoEmailReceipt)
                         {
-                            Client statement = await _ClientService.FindClientSuperFast(paymentsFile.ClientID);
+                            ClientPeek statement = await _ClientService.GetClient(clientID:paymentsFile.ClientID);
                             if (UtilityService.IsNull(statement))
                             {
                                 receipt = PrintReceipt(result);
@@ -244,6 +250,10 @@ namespace SmartSave.Controllers
         [HttpGet]
         public ActionResult GenerateInvoice()
         {
+            Permissions permission = Permissions.View_Invoice;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             GetDropDownLists();
             return View();
         }
@@ -556,7 +566,7 @@ namespace SmartSave.Controllers
             SelectList clientProducts = null;
             if (clientID != 0)
             {
-                List<Product> clientproductList = _ClientService.GetClientRegisteredProducts(clientID);
+                List<SmartDomain.Product> clientproductList = _ClientService.GetClientRegisteredProducts(clientID);
 
                 clientproductList.Select(t => new
                 {

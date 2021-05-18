@@ -13,6 +13,7 @@ using SmartHelper;
 using Microsoft.AspNetCore.Http;
 using SmartDataAccess;
 using System.IO;
+using SmartMail;
 
 namespace SmartSave.Controllers
 {
@@ -36,6 +37,10 @@ namespace SmartSave.Controllers
         // GET: User
         public async Task<IActionResult> Users()
         {
+            Permissions permission = Permissions.View_User;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Users());
         }
         public async Task<IActionResult> UserRoles(int id)

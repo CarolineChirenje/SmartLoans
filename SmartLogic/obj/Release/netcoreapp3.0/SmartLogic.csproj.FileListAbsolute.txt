@@ -19,3 +19,5 @@ D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartReporting.dl
 D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartReporting.pdb
 D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartLog.dll
 D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartLog.pdb
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartInterfaces.dll
+D:\Dev Projects\SmartSave\SmartLogic\bin\Release\netcoreapp3.0\SmartInterfaces.pdb

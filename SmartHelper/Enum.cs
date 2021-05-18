@@ -5,7 +5,6 @@ namespace SmartHelper
 {
     public enum MenuGroups
     {
-
         DashBoard = 1,
         Employees,
         Core_Services,
@@ -15,6 +14,16 @@ namespace SmartHelper
         //
         Menu = 9998,
         Developer_Menu = 999,
+    }
+    public enum LayoutComponent
+    {
+        Client = 1,
+        Products
+    }
+    public enum Menu_Component
+    {//Name must the same with ComponentList
+        MenuList = 1,
+        ClientMenuList,
     }
     public enum DaysOfTheWeek
     {
@@ -55,13 +64,6 @@ namespace SmartHelper
         Error
     }
 
-    public enum SettingType
-    {
-        BackEnd = 1,
-        Portal = 2,
-        All = 3,
-        Email = 4
-    }
     public enum VariableType
     {
         Boolean = 1,
@@ -806,22 +808,25 @@ namespace SmartHelper
         Auto_Generate_Receipt,
         Email_Receipt_To_Client,
         Add_Maintanance_Notification,
+        View_Country,
+        View_Currency,
+        View_Feature_Flag,
+        View_Layouts,
+        View_Licences,
+        View_Maintanances,
+        View_Technical_Support_Settings
     }
     public enum InvoiceState
-    {
-        Created = 1,
+    {   Created = 1,
         Processed = 2,
         Finalised,
         Unknown
-
     }
-
     public enum SiteEnvironment
     {
         Test = 1,
         Production = 2,
         Development
-
     }
     public enum QueryType
     {
@@ -829,7 +834,6 @@ namespace SmartHelper
         Technical = 2,
         Other = 3,
     }
-
     public enum ContactTypeValues
     {
         Residential_Address = 1,
@@ -872,14 +876,26 @@ namespace SmartHelper
         Helper = 5,
         Mail,
         Error_Log,
-        Uknown
+        Uknown,
+        Base_Controller
+
     }
-    public enum AttachmentType
+    public enum Support
     {
-        ProfilePicture = 1,
-        Logo = 2,
-        Document = 3
+        CompanyName = 1,
+        Company_Registration_Link,
+        Mobile_Number,
+        Website,
+        Whatsapp_Support_Message,
+        Database_Server_IP,
+
     }
+    public enum DeductionApplied
+    {
+        Product = 1,
+        Individual,
+        Do_Not_Deduct,
+         }
     public enum GenderOrientation
     {
         Female = 1,
@@ -907,6 +923,8 @@ namespace SmartHelper
     {
         Product_Based_Statement = 1,
         Transaction_List = 2,
+        Outstanding_Payments=3,
+        Deductions
 
     }
 
@@ -925,8 +943,6 @@ namespace SmartHelper
         Individual = 1,
         Joint = 2,
     }
-
-
     public enum RecordState
     {
         Active = 1,
@@ -938,7 +954,6 @@ namespace SmartHelper
     {
         Company = 1,
         Individual = 2,
-
     }
 }
 

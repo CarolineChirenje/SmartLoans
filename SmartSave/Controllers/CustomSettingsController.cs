@@ -74,16 +74,7 @@ namespace SmartSave.Controllers
         }
 
         private void GetDropDownLists()
-        {
-            var customSettingsType = _settingService.GetCustomSettingsTypes().Select(t => new
-            {
-                t.CustomSettingTypeID,
-                t.Name,
-            });
-
-            ViewBag.CustomSettingsTypeList = new SelectList(customSettingsType, "CustomSettingTypeID", "Name");
-
-
+        {          
             var customVariables = _settingService.GetCustomVariableTypes().Select(t => new
             {
                 t.CustomVariableTypeID,

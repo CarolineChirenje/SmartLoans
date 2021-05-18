@@ -18,6 +18,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Maintanance()
         {
+            Permissions permission = Permissions.View_Maintanances;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Maintanance());
         }
         public IActionResult AddMaintanance()

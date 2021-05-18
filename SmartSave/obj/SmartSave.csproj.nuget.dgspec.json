@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -163,7 +163,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -236,7 +236,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -319,7 +319,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -395,7 +395,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -480,7 +480,89 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Dev Projects\\SmartSave\\SmartMail\\SmartMail.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Dev Projects\\SmartSave\\SmartMail\\SmartMail.csproj",
+        "projectName": "SmartMail",
+        "projectPath": "D:\\Dev Projects\\SmartSave\\SmartMail\\SmartMail.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Dev Projects\\SmartSave\\SmartMail\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj": {
+                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj"
+              },
+              "D:\\Dev Projects\\SmartSave\\SmartLogic\\SmartLogic.csproj": {
+                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartLogic\\SmartLogic.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[2.12.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -515,6 +597,9 @@
               },
               "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj": {
                 "projectPath": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj"
+              },
+              "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj": {
+                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj"
               }
             }
           }
@@ -574,7 +659,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -622,6 +707,9 @@
               "D:\\Dev Projects\\SmartSave\\SmartLogic\\SmartLogic.csproj": {
                 "projectPath": "D:\\Dev Projects\\SmartSave\\SmartLogic\\SmartLogic.csproj"
               },
+              "D:\\Dev Projects\\SmartSave\\SmartMail\\SmartMail.csproj": {
+                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartMail\\SmartMail.csproj"
+              },
               "D:\\Dev Projects\\SmartSave\\SmartReporting\\SmartReporting.csproj": {
                 "projectPath": "D:\\Dev Projects\\SmartSave\\SmartReporting\\SmartReporting.csproj"
               }
@@ -651,9 +739,17 @@
               "target": "Package",
               "version": "[3.1.8, )"
             },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.10.9, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[2.2.3, )"
+              "version": "[3.0.0, )"
             },
             "Serilog.Extensions.Logging.File": {
               "target": "Package",
@@ -696,7 +792,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
         }
       }
     }

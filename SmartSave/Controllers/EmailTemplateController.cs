@@ -23,6 +23,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> EmailTemplate()
         {
+            Permissions permission = Permissions.View_Email_Template;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.EmailTemplates());
         }
 

@@ -1,0 +1,42 @@
+2021-05-14 14:07:54:99 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at System.Boolean.Parse(String value)
+   at SmartSave.Controllers.ClientController.OustandingStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 551
+2021-05-14 16:28:53:20 :GUI : System.FormatException: Input string was not in a correct format.
+   at System.Number.ThrowOverflowOrFormatException(ParsingStatus status, TypeCode type)
+   at System.Number.ParseInt32(ReadOnlySpan`1 value, NumberStyles styles, NumberFormatInfo info)
+   at System.Int32.Parse(String s)
+   at SmartSave.Controllers.ClientController.GenerateStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 494
+2021-05-14 16:43:56:43 :GUI : System.FormatException: Input string was not in a correct format.
+   at System.Number.ThrowOverflowOrFormatException(ParsingStatus status, TypeCode type)
+   at System.Number.ParseInt32(ReadOnlySpan`1 value, NumberStyles styles, NumberFormatInfo info)
+   at System.Int32.Parse(String s)
+   at SmartSave.Controllers.ClientController.GenerateStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 496
+2021-05-14 16:45:56:50 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at System.Boolean.Parse(String value)
+   at SmartSave.Controllers.ClientController.GenerateStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 514
+2021-05-14 16:46:40:69 :GUI : System.FormatException: Input string was not in a correct format.
+   at System.Number.ThrowOverflowOrFormatException(ParsingStatus status, TypeCode type)
+   at System.Number.ParseInt32(ReadOnlySpan`1 value, NumberStyles styles, NumberFormatInfo info)
+   at System.Int32.Parse(String s)
+   at SmartSave.Controllers.ClientController.GenerateStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 496
+2021-05-14 16:46:40:73 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at System.Boolean.Parse(String value)
+   at SmartSave.Controllers.ClientController.GenerateStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 514
+2021-05-14 22:28:44:26 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at System.Boolean.Parse(String value)
+   at SmartSave.Controllers.ClientController.OustandingStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 622
+2021-05-14 22:30:35:15 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at System.Boolean.Parse(String value)
+   at SmartSave.Controllers.ClientController.OustandingStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 622
+2021-05-14 22:34:29:97 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at System.Boolean.Parse(String value)
+   at SmartSave.Controllers.ClientController.OustandingStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 622
+2021-05-14 22:46:21:38 :GUI : PdfSharpCore.Pdf.IO.PdfReaderException: A password is required to open the PDF document.
+   at PdfSharpCore.Pdf.IO.PdfReader.Open(Stream stream, String password, PdfDocumentOpenMode openmode, PdfPasswordProvider passwordProvider, PdfReadAccuracy accuracy)
+   at PdfSharpCore.Pdf.IO.PdfReader.Open(Stream stream, String password, PdfDocumentOpenMode openmode, PdfReadAccuracy accuracy)
+   at PdfSharpCore.Pdf.IO.PdfReader.Open(Stream stream, PdfDocumentOpenMode openmode)
+   at SmartSave.Controllers.ClientController.Watermark(Byte[] report) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 795
+   at SmartSave.Controllers.ClientController.GeneratePDFOutstandingPaymentsStatement(OutstandingStatement statement) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 768
+2021-05-14 22:46:54:53 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'value')
+   at System.Boolean.Parse(String value)
+   at SmartSave.Controllers.ClientController.OustandingStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 623

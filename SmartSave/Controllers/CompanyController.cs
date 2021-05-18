@@ -28,6 +28,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Companies()
         {
+            Permissions permission = Permissions.View_Company;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Companies());
         }
 

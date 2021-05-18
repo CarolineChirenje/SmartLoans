@@ -26,5 +26,8 @@ namespace SmartDomain
         public string DeductionAmount { get; set; }
         [NotMapped]
         public string IncreamentAmount { get; set; }
+        [NotMapped]
+        public string DeductionToBeApplied { get { return DoNotDeduct ? "Do Not Deduct" : (!DoNotDeduct && DeductionPercentage.HasValue ? "Deduct At Individual Level" : "Deduct At Product Level"); } }
+
     }
 }

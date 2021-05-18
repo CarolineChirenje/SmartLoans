@@ -41,9 +41,7 @@ namespace SmartLogic
         public async Task<List<MenuGroup>> DisplayMenuGroups()
         {
             try
-            {
-
-                       return await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
+            {                       return await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -321,6 +319,212 @@ namespace SmartLogic
         }
 
 
+
+        #region LayOuts
+        public async Task<List<Layout>> Layouts() => await _context.Layouts.Include(x => x.Menus).ToListAsync();
+
+        public async Task<List<LayoutMenu>> DisplayLayouts(LayoutComponent layoutGroup)
+        {
+            try
+            {
+                return await _context.LayoutMenus.Where(m=>m.LayoutID==(int)layoutGroup).OrderBy(m => m.OrderNo).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Save(Layout layout)
+        {
+            try
+            {
+
+                layout.LastChangedBy = UtilityService.CurrentUserName;
+                layout.LastChangedDate = DateTime.Now;
+                _context.Add(layout);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<List<LayoutMenu>> LayoutMenus(int layoutID)
+        {
+            try
+            {
+
+                return await _context.LayoutMenus.Where(lm => lm.LayoutID == layoutID).OrderBy(m => m.OrderNo).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<Layout> FindLayoutGroup(int ParentMenuID)
+        {
+            try
+            {
+
+                return await _context.Layouts.Where(x => x.LayoutID == ParentMenuID).
+        Include(x => x.Menus).AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<LayoutMenu> FindLayoutMenu(int menuID)
+        {
+            try
+            {
+
+                return await _context.LayoutMenus.Where(rp => rp.LayoutMenuID == menuID)
+ .FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<List<LayoutMenu>> LayoutMenus()
+        {
+            try
+            {
+
+                return await _context.LayoutMenus.OrderBy(m => m.OrderNo).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<LayoutMenu> GetLayoutMenus()
+        {
+            try
+            {
+
+                return _context.LayoutMenus.OrderBy(m => m.OrderNo).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<int> Save(LayoutMenu menu)
+        {
+            try
+            {
+
+                menu.LastChangedBy = UtilityService.CurrentUserName;
+                menu.LastChangedDate = DateTime.Now;
+                _context.Add(menu);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<int> Update(LayoutMenu menu)
+        {
+            try
+            {
+
+                LayoutMenu update = await FindLayoutMenu(menu.LayoutMenuID);
+                update.ControllerName = menu.ControllerName;
+                update.ActionName = menu.ActionName;
+                update.DisplayName = menu.DisplayName;
+                update.CSSClass = UtilityService.HtmlDecode(menu.CSSClass);
+                update.OrderNo = menu.OrderNo;
+                update.IsActive = menu.IsActive;
+                update.LastChangedBy = UtilityService.CurrentUserName;
+                update.LastChangedDate = DateTime.Now;
+                _context.Update(update);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<int> DeleteLayoutMenu(int id)
+        {
+            try
+            {
+
+                var Menu = await _context.LayoutMenus.FindAsync(id);
+                _context.LayoutMenus.Remove(Menu);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> ActionLayoutMenu(int menuID, DatabaseAction action)
+        {
+            try
+            {
+
+                LayoutMenu Menu = await FindLayoutMenu(menuID);
+                switch (action)
+                {
+                    case DatabaseAction.Remove:
+                        _context.LayoutMenus.Remove(Menu);
+                        break;
+                    case DatabaseAction.Deactivate:
+                    case DatabaseAction.Reactivate:
+                        Menu.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                        Menu.LastChangedBy = UtilityService.CurrentUserName;
+                        Menu.LastChangedDate = DateTime.Now;
+                        _context.Update(Menu);
+                        break;
+                    default:
+                        break;
+                }
+
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<Layout> GetLayoutGroups()
+        {
+            try
+            {
+
+                return _context.Layouts.Include(x => x.Menus).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+
+        #endregion LayOuts
     }
 
 }

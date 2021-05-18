@@ -20,6 +20,10 @@ namespace SmartSave.Controllers
         // GET: User
         public async Task<IActionResult> Roles()
         {
+            Permissions permission = Permissions.View_Role;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Roles());
         }
         

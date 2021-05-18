@@ -5,6 +5,7 @@
     <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
     <NoWin32Manifest>true</NoWin32Manifest>
     <UserSecretsId>9330986b-5e12-4bd0-bdf6-36fbf1a35c18</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
    <ItemGroup>
@@ -87,7 +88,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
   </ItemGroup>
 
@@ -96,6 +99,10 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="appsettings.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Home\UnAuthorizedAccess.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
@@ -109,6 +116,7 @@
     <ProjectReference Include="..\SmartLogic\SmartLogic.csproj" />
     <ProjectReference Include="..\SmartHelper\SmartHelper.csproj" />
     <ProjectReference Include="..\SmartLogic\SmartLogic.csproj" />
+    <ProjectReference Include="..\SmartMail\SmartMail.csproj" />
     <ProjectReference Include="..\SmartReporting\SmartReporting.csproj" />
   </ItemGroup>
 

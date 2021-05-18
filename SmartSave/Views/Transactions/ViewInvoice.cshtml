@@ -171,6 +171,7 @@
                                                                 <th>Product</th>
                                                                 <th>Sub Invoice Number</th>
                                                                 <th>Amount Due</th>
+                                                                <th>Status</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody class="odd gradeX">
@@ -181,7 +182,7 @@
                                                                         string affiliation = String.Empty;
                                                                         if (UtilityService.IsNotNull(item.Client.ClientGroupID))
                                                                         {
-                                                                            affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
+                                                                            affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company?.Name : "");
                                                                         }
                                                                     }
                                                                     <td align="center"><input type="checkbox" id="checkBoxAll" name="InvoiceDetailID" value="@item.InvoiceDetailID" /></td>
@@ -206,6 +207,7 @@
                                                                     }
                                                                     <td>@item.InvoiceNumber</td>
                                                                     <td>@Html.DisplayFor(modelItem => item.DeductedAmount)</td>
+                                                                <td>@item.PaymentStatus?.Name</td>
                                                                 </tr>
                                                             }
                                                     </table>

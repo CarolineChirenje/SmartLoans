@@ -23,6 +23,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> DocumentTypes()
         {
+            Permissions permission = Permissions.View_Document_Type;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.DocumentTypes());
         }
 

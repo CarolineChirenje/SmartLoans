@@ -1,0 +1,4 @@
+D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csprojAssemblyReference.cache
+D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfoInputs.cache
+D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfo.cs
+D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CoreCompileInputs.cache

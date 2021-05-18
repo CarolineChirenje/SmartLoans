@@ -1666,6 +1666,7 @@
           "MigraDocCore.Rendering": "0.1.1",
           "PdfSharpCore": "1.2.16",
           "SmartDomain": "1.0.0",
+          "SmartInterfaces": "1.0.0",
           "SmartLog": "1.0.0",
           "System.Data.DataSetExtensions": "4.5.0"
         },
@@ -6018,7 +6019,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
       }
     }
   }

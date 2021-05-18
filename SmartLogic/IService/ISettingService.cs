@@ -10,8 +10,7 @@ namespace SmartLogic
        
         List<ContactType> GetContactTypes();
         List<RelationshipType> GetRelationshipTypes();
-        List<CustomSettingType> GetCustomSettingsTypes();
-        List<CustomVariableType> GetCustomVariableTypes();
+                List<CustomVariableType> GetCustomVariableTypes();
         List<PriorityRank> GetPriorityRanks();
         List<Gender> GenderList();
         List<Product> GetActiveProductList();

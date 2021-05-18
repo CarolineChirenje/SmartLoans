@@ -20,7 +20,15 @@ namespace SmartSave.Controllers
             _settingService = settingService;
         }
 
-        public async Task<IActionResult> NoticeBoard() => View(await _service.Notices());
+        public async Task<IActionResult> NoticeBoard()
+        {
+            Permissions permission = Permissions.View_Notice;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
+            return View(await _service.Notices());
+        }
+
         public async Task<IActionResult> ActiveNotices()
         {
            List<NoticeBoard> ActiveNotices = await _service.ActiveNotices();

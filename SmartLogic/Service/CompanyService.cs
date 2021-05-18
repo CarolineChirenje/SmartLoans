@@ -120,10 +120,8 @@ namespace SmartLogic
                         }
                         catch (Exception ex)
                         {
-
-                            //throw;
+                                                    CustomLog.Log(LogSource.Logic_Base, ex);
                         }
-
                     }
                 }
                 Company.LastChangedBy = UtilityService.CurrentUserName;

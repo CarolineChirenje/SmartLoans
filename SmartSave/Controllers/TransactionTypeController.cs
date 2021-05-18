@@ -18,6 +18,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> TransactionType()
         {
+            Permissions permission = Permissions.View_Transaction_Type;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.TransactionType());
         }
 

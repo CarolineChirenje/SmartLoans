@@ -23,6 +23,9 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> BankAccounts()
         {
+            Permissions permission = Permissions.View_Bank_Account;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Banks());
         }

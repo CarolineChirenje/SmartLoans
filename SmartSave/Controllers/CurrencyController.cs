@@ -17,6 +17,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Currency()
         {
+            Permissions permission = Permissions.View_Currency;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Currency());
         }
 

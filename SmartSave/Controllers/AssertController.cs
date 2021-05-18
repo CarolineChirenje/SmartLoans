@@ -24,6 +24,10 @@ namespace SmartSave.Controllers
 
         public async Task<IActionResult> Assert()
         {
+            Permissions permission = Permissions.View_Assert;
+            if (!UtilityService.HasPermission(permission))
+                return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
             return View(await _service.Asserts());
         }
 

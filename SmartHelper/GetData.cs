@@ -96,7 +96,18 @@ namespace SmartHelper
             return (permissionCount == 0) ? false : true;
 
         }
+        public static string GetSupportValue(int supportListID)
+        {
+            string value;
+            string sqlCustomSetting = $"SELECT TOP 1 t.Value FROM TechnicalSupport t WHERE t.TechnicalSupportID={supportListID};";
+            using (IDbConnection db = new SqlConnection(SSDBConnection))
+            {
+                value = db.Query<string>(sqlCustomSetting).SingleOrDefault();
+            }
 
+            return value;
+
+        }
         public static byte[] CompanyLogo()
         {
             byte[] logo;
@@ -138,7 +149,7 @@ namespace SmartHelper
             return showDeveloperExceptions;
 
         }
-
+        
         public static int GetSessionTimeOut()
         {
             _configuration = LoadAppConfigurations;
@@ -149,15 +160,23 @@ namespace SmartHelper
             }
             catch
             {
-
-
             }
-
-            return sessionTimeOut;
-
+           return sessionTimeOut;
         }
 
-
+        public static bool EnableLogger()
+        {
+            _configuration = LoadAppConfigurations;
+            bool enableLogger = false;
+            try
+            {
+                enableLogger = Boolean.Parse(_configuration.GetSection("EnableLogger").Value);
+            }
+            catch
+            {
+            }
+            return enableLogger;
+        }
 
         public static SmartLog SmartLogData()
         {
@@ -226,7 +245,7 @@ namespace SmartHelper
         public bool HasExpired { get; set; }
 
     }
-    
+
     public class SmartLog
     {
         public bool EnableSmartLog { get; set; }

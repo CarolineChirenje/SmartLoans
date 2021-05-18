@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SmartDomain\SmartDomain.csproj" />
     <ProjectReference Include="..\SmartErrorLog\SmartLog.csproj" />
+    <ProjectReference Include="..\SmartInterfaces\SmartInterfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>
