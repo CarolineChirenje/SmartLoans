@@ -125,7 +125,8 @@ namespace SmartSave.Controllers
                                         email.Subject = emailTemplate.Subject;
                                     }
                                     string emailAddress = statement.EmailAddress;
-                                    if (_mailService.SendMail(email))
+                                    bool emailSuccessResult = await _mailService.SendMail(email);
+                                    if (emailSuccessResult)
                                     {
                                         if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
                                             emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";

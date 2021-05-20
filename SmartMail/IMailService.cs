@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SmartMail
 {
     public interface IMailService
     {
-        bool SendMail(Email email, bool sendAsync = false);
+         Task<bool> SendMail(Email email);
     }
 }

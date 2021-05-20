@@ -9864,3 +9864,9 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Shared
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Support\Support.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Support\ViewSupport.cshtml.g.cs
 D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\Razor\Views\Client\_MessageDisplay.cshtml.g.cs
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\MailKit.dll
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\MimeKit.dll
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\NETCore.MailKit.dll
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\BouncyCastle.Crypto.dll
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\SmartMail.dll
+D:\Dev Projects\SmartSave\SmartSave\bin\Release\netcoreapp3.0\SmartMail.pdb

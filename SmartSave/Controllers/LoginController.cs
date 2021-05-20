@@ -149,9 +149,8 @@ namespace SmartSave.Controllers
                                @"If you need help, or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/><b>" + UtilityService.ApplicationName + " Customer Service</b>.";
                 email.Body = UtilityService.HtmlDecode(_emailBody);
                 email.Subject = $"Password Reset -{UtilityService.ApplicationName}";
-
-
-                if (_mailService.SendMail(email, false))
+                bool emailSuccessResult = await _mailService.SendMail(email);
+                if (emailSuccessResult)
                 {
                     TempData[MessageDisplayType.Success.ToString()] = $"We have sent an email {model.EmailAddress} with the password reset details.";
                     return View(model);
@@ -272,9 +271,8 @@ namespace SmartSave.Controllers
                                     @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
                     email.Body = UtilityService.HtmlDecode(_emailBody);
                     email.Subject = $"Account Creation - {UtilityService.ApplicationName}";
-
-
-                    if (_mailService.SendMail(email, false))
+                    bool emailSuccessResult = await _mailService.SendMail(email);
+                    if (emailSuccessResult)
                     {
                         TempData[MessageDisplayType.Success.ToString()] = $"We have sent an email to {model.EmailAddress} with further  details regarding account creation.";
                         return View(model);
@@ -371,7 +369,8 @@ namespace SmartSave.Controllers
                                 @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ". Your login password is <b>" + _userService.GetCredential(result) + "</b>.<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
                 email.Body = UtilityService.HtmlDecode(_emailBody);
                 email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
-                if (_mailService.SendMail(email, false))
+                bool emailSuccessResult = await _mailService.SendMail(email);
+                if (emailSuccessResult)
                 {
                     TempData[MessageDisplayType.Success.ToString()] = $"Account creation complete.We have sent an email to {client.EmailAddress} with your login credentials.";
                     return View(client);

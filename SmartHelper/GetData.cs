@@ -123,13 +123,21 @@ namespace SmartHelper
         }
         public static string SSDBConnectionValue()
         {
+          
+              string  _environment = Environment();
+            string connectionStringName = $"SSDBConnection{_environment}";
+            string configValue = _configuration.GetConnectionString(connectionStringName);
+            return string.IsNullOrEmpty(configValue) ? "Data Source=172.105.28.87;Initial Catalog=SmartSave;User Id=sa;Password=Ch1gumbu6299##" : configValue;
+
+        }
+
+        public static string   Environment()
+        {
             _configuration = LoadAppConfigurations;
             string _environment = _configuration.GetSection("SiteEnvironment").Value;
             if (String.IsNullOrEmpty(_environment))
                 _environment = SiteEnvironment.Test.ToString();
-            string connectionStringName = $"SSDBConnection{_environment}";
-            string configValue = _configuration.GetConnectionString(connectionStringName);
-            return string.IsNullOrEmpty(configValue) ? "Data Source=172.105.28.87;Initial Catalog=SmartSave;User Id=sa;Password=Ch1gumbu6299##" : configValue;
+            return _environment;
 
         }
         public static bool ShowDeveloperExceptions()

@@ -494,7 +494,7 @@ namespace SmartSave.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerateStatement(IFormCollection formCollection)
+        public async Task<ActionResult> GenerateStatementAsync(IFormCollection formCollection)
         {
             var _clientID = formCollection["ClientID"];
             bool emailStatement = false;
@@ -530,11 +530,29 @@ namespace SmartSave.Controllers
             {
             }
             try
-
+            {
+                printReversalsOnStatement = Boolean.Parse(formCollection["PrintReversalsOnStatement"]);
+            }
+            catch (Exception)
+            {
+            }
+            try
             {
                 startDate = DateTime.Parse(formCollection["StartDate"]);
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
                 endDate = DateTime.Parse(formCollection["EndDate"]);
-                printReversalsOnStatement = Boolean.Parse(formCollection["PrintReversalsOnStatement"]);
+            }
+            catch (Exception)
+            {
+            }
+            try
+
+            {                             
                 emailStatement = Boolean.Parse(formCollection["EmailStatement"]);
             }
             catch (Exception)
@@ -584,7 +602,8 @@ namespace SmartSave.Controllers
                     email.Subject = emailTemplate.Subject;
                 }
                 string emailAddress = statement.Client.EmailAddress;
-                if (_mailService.SendMail(email))
+                bool emailSuccessResult = await _mailService.SendMail(email);
+                if (emailSuccessResult)
                 {
 
                     if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
@@ -592,13 +611,17 @@ namespace SmartSave.Controllers
                     TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
                 }
                 else
+                {
+                    if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                        emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
+                }
                 return RedirectToAction("Statements", new { id = statement.ClientID });
             }
         }
 
         [HttpPost]
-        public ActionResult OustandingStatement(IFormCollection formCollection)
+        public async Task<ActionResult> OustandingStatementAsync(IFormCollection formCollection)
         {
             var _clientID = formCollection["ClientID"];
             bool emailStatement = false;
@@ -652,14 +675,20 @@ namespace SmartSave.Controllers
                     email.Subject = emailTemplate.Subject;
                 }
                 string emailAddress = statement.Client.EmailAddress;
-                if (_mailService.SendMail(email))
+                bool emailSuccessResult = await _mailService.SendMail(email);
+                if (emailSuccessResult)
                 {
                     if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
                         emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
                 }
                 else
+                {
+                    if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                        emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
+                
+                }
                 return RedirectToAction("PendingTransactions", new { id = statement.ClientID });
             }
         }

@@ -1,0 +1,12 @@
+D:\Dev Projects\SmartSave\SmartHelper\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
+D:\Dev Projects\SmartSave\SmartHelper\bin\Debug\netcoreapp3.0\SmartHelper.deps.json
+D:\Dev Projects\SmartSave\SmartHelper\bin\Debug\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartHelper\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.csprojAssemblyReference.cache
+D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.SmartHelper.resources
+D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.csproj.GenerateResource.cache
+D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.AssemblyInfoInputs.cache
+D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.AssemblyInfo.cs
+D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.csproj.CoreCompileInputs.cache
+D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.dll
+D:\Dev Projects\SmartSave\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.pdb

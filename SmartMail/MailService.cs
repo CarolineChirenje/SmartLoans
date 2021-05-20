@@ -1,12 +1,13 @@
-﻿using SmartDomain;
+﻿using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
+using SmartDomain;
 using SmartHelper;
 using SmartLog;
 using SmartLogic;
 using System;
 using System.Text.RegularExpressions;
-using MailKit.Net.Smtp;
-using MimeKit;
-using MailKit.Security;
+using System.Threading.Tasks;
 
 namespace SmartMail
 { //http://www.binaryintellect.net/articles/e30d07c6-6f57-43e7-a2ce-6d2d67ebf403.aspx
@@ -51,7 +52,7 @@ namespace SmartMail
                 return (false);
         }
 
-        public bool SendMail(Email email, bool sendAsync)
+        public async Task<bool> SendMail(Email email)
         {
             bool success = true;
             //create the MailMessage object
@@ -122,24 +123,7 @@ namespace SmartMail
                 mMailMessage.Body = builder.ToMessageBody();
 
                 // send email
-                using var smtp = new SmtpClient();
-                smtp.Timeout = 1000000000;
-                //send the mail message
-                if (sendAsync)
-                {
-                    smtp.ConnectAsync(SMTP, SMTPPORT, SecureSocketOptions.StartTls);
-                    smtp.AuthenticateAsync(CREDENTIALUSERNAME, CREDENTIALPASSWORD);
-                    smtp.SendAsync(mMailMessage);
-                    smtp.DisconnectAsync(true);
-                }
-                else
-                {
-                    smtp.Connect(SMTP, SMTPPORT, SecureSocketOptions.StartTls);
-                    smtp.Authenticate(CREDENTIALUSERNAME, CREDENTIALPASSWORD);
-                    smtp.Send(mMailMessage);
-                    smtp.Disconnect(true);
-
-                }
+                                await SendEmailAsync(mMailMessage);
                 return success;
             }
             catch (Exception ex)
@@ -151,5 +135,37 @@ namespace SmartMail
 
         }
 
+
+            private async Task SendEmailAsync(MimeMessage mMailMessage)
+            {
+                try
+                {
+
+                    using (var client = new SmtpClient())
+                    {
+                        client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                        if (GetData.Environment().ToLower().Equals("development"))
+                        {
+                     // https://github.com/jstedfast/MailKit/blob/master/FAQ.md#SslHandshakeException
+                        await client.ConnectAsync(SMTP, SMTPPORT, SecureSocketOptions.StartTlsWhenAvailable);
+                        }
+                        else
+                        {
+                            await client.ConnectAsync(SMTP);
+                        }
+
+                        await client.AuthenticateAsync(CREDENTIALUSERNAME, CREDENTIALPASSWORD);
+                        await client.SendAsync(mMailMessage);
+                        await client.DisconnectAsync(true);
+                    }
+                }
+                catch (Exception ex)
+                {
+                CustomLog.Log(LogSource.Mail, ex);
+                throw new InvalidOperationException(ex.Message);
+                }
+            }
+
+        }
     }
-}
