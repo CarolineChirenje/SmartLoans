@@ -200,7 +200,9 @@ namespace SmartLogic
                     PaymentStatusID = (int)PaymentState.Reversed,
                     BankAccountID = PaymentsFile.BankAccountID,
                     AssertCategoryID = PaymentsFile.AssertCategoryID,
-                    AssertID = PaymentsFile.AssertID
+                    AssertID = PaymentsFile.AssertID,
+                    Price=PaymentsFile.Price,
+                    Units=PaymentsFile.Units
                 };
                 if (PaymentsFile.ProductID.HasValue)
                     newPaymentFile.ProductID = PaymentsFile.ProductID;

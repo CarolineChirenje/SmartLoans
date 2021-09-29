@@ -104,6 +104,9 @@ namespace SmartSave.Models
         public int TransactionType { get; set; }
         public int PaymentStatusID { get; set; }
         public string Amount { get; set; }
+        public string Price { get; set; }
+
+        public string Units { get; set; }
         public string Narration { get; set; }
         public DateTime PaymentDate { get; set; }
         public int ParentPaymentID { get; set; }

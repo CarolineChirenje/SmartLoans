@@ -33,6 +33,11 @@ namespace SmartDomain
         public virtual PaymentStatus PaymentStatus { get; set; }
         public int? ClientFeeID { get; set; }
         [Column(TypeName = "decimal(18,2)")]
+        public decimal Units { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Price { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal AmountExclVAT { get; set; }

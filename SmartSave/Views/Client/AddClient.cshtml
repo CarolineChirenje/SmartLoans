@@ -20,7 +20,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" action="AddClient">
+        <form class="form-horizontal" method="post" action="AddClient" novalidate>
             <div class="box-body">
 
                 @if (TempData["Error"] != null)
@@ -342,7 +342,7 @@
             <div class="box-footer">
                 @if (UtilityService.HasPermission(Permissions.Add_Client))
                 {
-                    <button type="submit" class="btn btn-info pull-right">Save</button>
+                    <button type="submit" class="btn btn-success pull-right">Save</button>
                 }
                 <a class="btn btn-default" asp-controller="Client" asp-action="Clients">Cancel</a>
 

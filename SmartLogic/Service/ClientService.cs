@@ -205,6 +205,7 @@ namespace SmartLogic
                 {
                     if (UtilityService.IsNotNull(clientForm.JointApplicant))
                     {
+                        client.JointApplicant = new JointApplicant();
                         client.JointApplicant.IDNumber = clientForm.JointApplicant.IDNumber;
                         client.JointApplicant.Initials = clientForm.JointApplicant.Initials;
                         client.JointApplicant.FirstName = clientForm.JointApplicant.FirstName;

@@ -66,13 +66,17 @@ namespace SmartSave.Controllers
             {
                 if (!_ClientService.ClientExists(paymentsFile.ClientID).Result)
                     return RedirectToAction(nameof(Transactions));
-                Decimal Amount = UtilityService.GetDecimalAmount(paymentsFile.Amount);
-
+                
+                Decimal Price = UtilityService.GetDecimalAmount(paymentsFile.Price);
+                Decimal Units = UtilityService.GetDecimalAmount(paymentsFile.Units);
+                Decimal Amount = Math.Round((Price * Units),2);
                 Transaction addPaymentsFile = new Transaction()
                 {
                     Year = paymentsFile.Year,
                     Month = paymentsFile.Month,
                     Amount = Amount,
+                    Price=Price,
+                    Units=Units,
                     ClientID = paymentsFile.ClientID,
                     ProductID = paymentsFile.ProductID,
                     PaymentDate = paymentsFile.PaymentDate,
@@ -183,7 +187,7 @@ namespace SmartSave.Controllers
                 if (await (_service.ReversePayment(paymentsFile, (TransactionTypeList)transactionTypeID)) == 0)
                 {
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewTransaction", new { paymentsFile.TransactionID });
+                    return RedirectToAction("ViewTransaction", new { id=paymentsFile.TransactionID });
                 }
             }
 

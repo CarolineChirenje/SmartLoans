@@ -170,6 +170,16 @@ namespace SmartReporting
                 }
 
                 paragraph = section.AddParagraph();
+                   Row tblrow7 = this.table.AddRow();
+                    tblrow7.Borders.Visible = false;
+                    tblrow7.TopPadding = 1.5;
+                    tblrow7.Cells[0].Borders.Visible = false;
+                    tblrow7.Cells[0].Format.Font.Bold = true;
+                    tblrow7.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                    tblrow7.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                    tblrow7.Cells[0].AddParagraph($"{UtilityService.ShowDate(_paymentFile.TransactionDate)}");
+
+                paragraph = section.AddParagraph();
             }
             catch (Exception ex)
             {
@@ -192,14 +202,18 @@ namespace SmartReporting
                 this.table.Rows.LeftIndent = 0;
 
                 // Before you can add a row, you must define the columns
-                Column column = this.table.AddColumn("3cm");
-                column.Format.Alignment = ParagraphAlignment.Center;
+                Column column = this.table.AddColumn("6cm");
+                column.Format.Alignment = ParagraphAlignment.Left;
 
                 column = this.table.AddColumn("3cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
 
-                column = this.table.AddColumn("8cm");
+                column = this.table.AddColumn("3cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
+
+                column = this.table.AddColumn("3cm");
+                column.Format.Alignment = ParagraphAlignment.Right;
+
 
                 column = this.table.AddColumn("3cm");
                 column.Format.Alignment = ParagraphAlignment.Right;
@@ -211,27 +225,34 @@ namespace SmartReporting
                 row.Format.Font.Bold = true;
                 row.Shading.Color = HeaderColor;
 
-                row.Cells[0].AddParagraph("Date");
+                row.Cells[0].AddParagraph("Description");
                 row.Cells[0].Format.Font.Bold = UtilityService.StatementShowTableBoarders;
                 row.Cells[0].Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
 
+               
                 row.Cells[1].AddParagraph("Reference");
                 row.Cells[1].Format.Font.Bold = UtilityService.StatementShowTableBoarders;
                 row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
 
-                row.Cells[2].AddParagraph("Description");
+                row.Cells[2].AddParagraph("Units");
                 row.Cells[2].Format.Font.Bold = UtilityService.StatementShowTableBoarders;
                 row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
 
-                row.Cells[3].AddParagraph("Amount");
+                row.Cells[3].AddParagraph("Price");
                 row.Cells[3].Format.Font.Bold = UtilityService.StatementShowTableBoarders;
                 row.Cells[3].Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
+
+
+                row.Cells[4].AddParagraph("Amount");
+                row.Cells[4].Format.Font.Bold = UtilityService.StatementShowTableBoarders;
+                row.Cells[4].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[4].VerticalAlignment = VerticalAlignment.Bottom;
                 if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(0, 0, 4, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
+                    this.table.SetEdge(0, 0, 5, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
                 Paragraph paragraph = this.addressFrame.AddParagraph();
 
@@ -242,25 +263,31 @@ namespace SmartReporting
                 row1.Cells[0].Borders.Visible = UtilityService.StatementShowTableBoarders;
                 row1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                 row1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                row1.Cells[0].AddParagraph(_paymentFile.PaymentDate.ToString("yyyy-MM-dd"));
-
+                row1.Cells[0].AddParagraph(ReportingUtilities.ToTitleCase(_paymentFile.Entity));
+               
                 row1.Cells[1].Borders.Visible = UtilityService.StatementShowTableBoarders;
                 row1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
                 row1.Cells[1].Format.Alignment = ParagraphAlignment.Center;
                 row1.Cells[1].AddParagraph(_paymentFile.TransRef);
 
                 row1.Cells[2].Borders.Visible = UtilityService.StatementShowTableBoarders;
-                row1.Cells[2].Format.Alignment = ParagraphAlignment.Left;
+                row1.Cells[2].Format.Alignment = ParagraphAlignment.Right;
                 row1.Cells[2].VerticalAlignment = VerticalAlignment.Bottom;
-                row1.Cells[2].AddParagraph(ReportingUtilities.ToTitleCase(_paymentFile.Entity));
+                row1.Cells[2].AddParagraph(_paymentFile.Units.ToString());
 
                 row1.Cells[3].Borders.Visible = UtilityService.StatementShowTableBoarders;
                 row1.Cells[3].Format.Alignment = ParagraphAlignment.Right;
                 row1.Cells[3].VerticalAlignment = VerticalAlignment.Bottom;
-                row1.Cells[3].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.Amount));
+                row1.Cells[3].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.Price));
+
+                row1.Cells[4].Borders.Visible = UtilityService.StatementShowTableBoarders;
+                row1.Cells[4].Format.Alignment = ParagraphAlignment.Right;
+                row1.Cells[4].VerticalAlignment = VerticalAlignment.Bottom;
+                row1.Cells[4].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.Amount));
+
 
                 if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(0, this.table.Rows.Count - 1, 4, 1, Edge.Box, BorderStyle.Single, 0.75);
+                    this.table.SetEdge(0, this.table.Rows.Count - 1, 5, 1, Edge.Box, BorderStyle.Single, 0.75);
 
                 // Add an invisible row as a space line to the table
                 Row row2 = this.table.AddRow();
@@ -272,31 +299,31 @@ namespace SmartReporting
                     row2.Cells[0].Borders.Visible = false;
                     row2.Cells[0].Format.Font.Bold = true;
                     row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-                    row2.Cells[0].MergeRight = 2;
+                    row2.Cells[0].MergeRight = 3;
                     row2.Cells[0].AddParagraph("Amount Excl VAT");
-                    row2.Cells[3].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.AmountExclVAT));
+                    row2.Cells[4].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.AmountExclVAT));
 
                     // Add Paid
                     row2 = this.table.AddRow();
                     row2.Cells[0].Borders.Visible = false;
                     row2.Cells[0].Format.Font.Bold = true;
                     row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-                    row2.Cells[0].MergeRight = 2;
+                    row2.Cells[0].MergeRight = 3;
                     row2.Cells[0].AddParagraph("VAT");
-                    row2.Cells[3].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.VAT));
+                    row2.Cells[4].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.VAT));
                 }
                 // Add the total due row
                 row2 = this.table.AddRow();
                 row2.Cells[0].Borders.Visible = false;
                 row2.Cells[0].Format.Font.Bold = true;
                 row2.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-                row2.Cells[0].MergeRight = 2;
+                row2.Cells[0].MergeRight = 3;
                 row2.Cells[0].AddParagraph("Total Amount");
-                row2.Cells[3].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.TotalPaid));
+                row2.Cells[4].AddParagraph(String.Format(culture, "{0:C}", _paymentFile.TotalPaid));
 
                 // Set the borders of the specified cell range
                 if (UtilityService.StatementShowTableBoarders)
-                    this.table.SetEdge(3, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
+                    this.table.SetEdge(4, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
             }
             catch (Exception ex)
             {
