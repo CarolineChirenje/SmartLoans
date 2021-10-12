@@ -981,17 +981,26 @@ namespace SmartReporting
                     var transactions = (from transRow in Results.AsEnumerable()
                                         where !reversalList.Contains(transRow.Field<int>("TransactionID"))
                                         select transRow).CopyToDataTable();
-                    if (transactions != null)
+                    if (transactions != null && transactions.Rows.Count > 0)
                     {
-                        //From transactions get transactions with parent payment=0;
-                        var transactionsWithNoReversals = (from filterTrans in transactions.AsEnumerable()
-                                                           where filterTrans.Field<int>("ParentPaymentID") == 0
-                                                           select filterTrans).CopyToDataTable();
+                        try
+                        { //From transactions get transactions with parent payment=0;
+                            var transactionsWithNoReversals = (from filterTrans in transactions.AsEnumerable()
+                                                               where filterTrans.Field<int>("ParentPaymentID") == 0
+                                                               select filterTrans)?.CopyToDataTable();
 
-                        if (transactionsWithNoReversals != null)
-                            Transactions = transactionsWithNoReversals;
-                        else
+                            if (transactionsWithNoReversals != null)
+                                Transactions = transactionsWithNoReversals;
+                            else
+                                Transactions = Results;
+
+                        }
+                        catch (Exception ex)
+                        {
+                            CustomLog.Log(LogSource.Reporting, ex);
                             Transactions = Results;
+                        }
+                       
                     }
                 }
                 else

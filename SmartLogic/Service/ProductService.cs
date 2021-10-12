@@ -145,6 +145,7 @@ namespace SmartLogic
                 product.Name = update.Name;
                 product.IncreamentPercentage = update.IncreamentPercentage;
                 product.DeductionPercentage = update.DeductionPercentage;
+                product.TransactionalFee = update.TransactionalFee;
                 product.ProductCode = update.ProductCode;
                 product.LastChangedBy = UtilityService.CurrentUserName;
                 product.LastChangedDate = DateTime.Now;
@@ -155,6 +156,7 @@ namespace SmartLogic
                 productHistory.ProductID = old_Product.ProductID;
                 productHistory.IncreamentPercentage = old_Product.IncreamentPercentage;
                 productHistory.DeductionPercentage = old_Product.DeductionPercentage;
+                productHistory.TransactionalLevy = old_Product.TransactionalFee;
                 productHistory.LastChangedBy = old_Product.LastChangedBy;
                 productHistory.LastChangedDate = old_Product.LastChangedDate;
                 _context.Add(productHistory);
@@ -171,7 +173,6 @@ namespace SmartLogic
         {
             try
             {
-
                 Product.LastChangedBy = UtilityService.CurrentUserName;
                 Product.LastChangedDate = DateTime.Now;
                 _context.Add(Product);

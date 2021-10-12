@@ -47,10 +47,12 @@ namespace SmartSave.Controllers
         {
             Decimal _increasePercentage = UtilityService.GetDecimalAmount(Product.increasePercentage);
             Decimal _deductPercentage = UtilityService.GetDecimalAmount(Product.deductPercentage);
+            Decimal _transactionalLevy = UtilityService.GetDecimalAmount(Product.transactionalLevy);
             if (ModelState.IsValid)
             {
                 Product.IncreamentPercentage = _increasePercentage;
                 Product.DeductionPercentage = _deductPercentage;
+                Product.TransactionalFee=_transactionalLevy;
                 int _result = await _service.Save(Product);
                 if (_result == 0)
                 {
@@ -84,10 +86,13 @@ namespace SmartSave.Controllers
         {
             Decimal _increasePercentage = UtilityService.GetDecimalAmount(Product.increasePercentage);
             Decimal _deductPercentage = UtilityService.GetDecimalAmount(Product.deductPercentage);
+            Decimal _transactionalLevy = UtilityService.GetDecimalAmount(Product.transactionalLevy);
             if (ModelState.IsValid)
             {
                 Product.IncreamentPercentage = _increasePercentage;
                 Product.DeductionPercentage = _deductPercentage;
+                if (_transactionalLevy > 0M)
+                    Product.TransactionalFee = _transactionalLevy;
                 Product update = await (_service.GetProduct(Product.ProductID));
                 if (UtilityService.IsNotNull(update))
                 {

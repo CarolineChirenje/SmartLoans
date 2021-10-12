@@ -412,7 +412,33 @@ namespace SmartLogic
                 throw;
             }
         }
+       public decimal GetTransactionFee(int productID)
+        {
+            try
+            {
+                decimal result = 0M;
+                var fee = _context.Products.Where(p => p.ProductID == productID).FirstOrDefault()?.TransactionalFee;
+                                
+                try
+                {
+                  if(fee.HasValue)
+                    result = Convert.ToDecimal(fee.Value);
+                }
+                catch 
+                {
 
+                }
+               
+                return result;
+
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public List<Assert> GetAssertsLinkedToProduct(int productID)
         {
             try

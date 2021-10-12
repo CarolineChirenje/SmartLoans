@@ -18,7 +18,8 @@ namespace SmartDomain
         public decimal DeductionPercentage { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal IncreamentPercentage { get; set; }
-               
-        
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal TransactionalLevy { get; set; }
     }
 }

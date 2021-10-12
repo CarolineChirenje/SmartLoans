@@ -45,7 +45,13 @@ namespace SmartDomain
         public decimal VAT { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalPaid { get { return Amount; } }
-        public DateTime PaymentDate { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal TransactionFee { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal TransactionRate { get; set; }
+
+                public DateTime PaymentDate { get; set; }
         public DateTime TransactionDate { get; set; }
         public int? ParentPaymentID { get; set; }
         public int? ReversalPaymentID { get; set; }

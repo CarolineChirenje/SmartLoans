@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using SmartDomain;
 
 namespace SmartSave.Models
 {
@@ -93,7 +94,14 @@ namespace SmartSave.Models
 
 
     }
-    public class PaymentViewModel
+
+    public class ProductAssert
+    {
+        public SelectList Asserts { get; set; }
+        public decimal Fee { get; set; }
+        
+    }
+        public class PaymentViewModel
     {
         public int TransactionID { get; set; }
         public string TransRef { get; set; }
@@ -105,7 +113,7 @@ namespace SmartSave.Models
         public int PaymentStatusID { get; set; }
         public string Amount { get; set; }
         public string Price { get; set; }
-
+        public string TransactionalLevy { get; set; }
         public string Units { get; set; }
         public string Narration { get; set; }
         public DateTime PaymentDate { get; set; }

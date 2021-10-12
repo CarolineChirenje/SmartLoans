@@ -95,7 +95,7 @@ namespace SmartLogic
                 PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
                 PaymentsFile.LastChangedDate = DateTime.Now;
                 _context.Add(PaymentsFile);
-               result= await _context.SaveChangesAsync();
+                result = await _context.SaveChangesAsync();
                 if (PaymentsFile.ClientFeeID.HasValue)
                 {
                     ClientFee clientFee = _context.ClientFees.Find(PaymentsFile.ClientFeeID);
@@ -201,21 +201,22 @@ namespace SmartLogic
                     BankAccountID = PaymentsFile.BankAccountID,
                     AssertCategoryID = PaymentsFile.AssertCategoryID,
                     AssertID = PaymentsFile.AssertID,
-                    Price=PaymentsFile.Price,
-                    Units=PaymentsFile.Units
+                    Price = PaymentsFile.Price,
+                    Units = PaymentsFile.Units,
+                    TransactionRate = PaymentsFile.TransactionRate
                 };
                 if (PaymentsFile.ProductID.HasValue)
                     newPaymentFile.ProductID = PaymentsFile.ProductID;
 
                 if (PaymentsFile.CourseID.HasValue)
                     newPaymentFile.CourseID = PaymentsFile.CourseID;
-
+                newPaymentFile.TransactionFee = (PaymentsFile.TransactionFee * -1);
                 newPaymentFile.Amount = (AmountInclVat * -1);
                 newPaymentFile.VAT = (VATAmount * -1);
                 newPaymentFile.AmountExclVAT = (AmountExclVat * -1);
                 newPaymentFile.Narration = $"(R) - {PaymentsFile.TransRef}";
                 _context.Add(newPaymentFile);
-              result=  await _context.SaveChangesAsync();
+                result = await _context.SaveChangesAsync();
                 int ReversalPaymentID = newPaymentFile.TransactionID;
                 updateOldPayment(transactionID, oldPaymentStatus, newPaymentFile.TransRef, ReversalPaymentID);
 
@@ -228,7 +229,7 @@ namespace SmartLogic
                         clientFee.LastChangedBy = UtilityService.CurrentUserName;
                         clientFee.LastChangedDate = DateTime.Now;
                         _context.Update(clientFee);
-                      result= await _context.SaveChangesAsync();
+                        result = await _context.SaveChangesAsync();
 
                     }
                 }
@@ -352,7 +353,7 @@ namespace SmartLogic
                 return await _context.Transactions
 
                  .Include(p => p.Product)
-                 .Include(p => p.Course)
+                                 .Include(p => p.Course)
                  .Include(p => p.PaymentStatus)
                  .Include(p => p.TransactionType)
                  .ThenInclude(p => p.TransactionStatus)

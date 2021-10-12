@@ -66,17 +66,30 @@ namespace SmartSave.Controllers
             {
                 if (!_ClientService.ClientExists(paymentsFile.ClientID).Result)
                     return RedirectToAction(nameof(Transactions));
-                
+
                 Decimal Price = UtilityService.GetDecimalAmount(paymentsFile.Price);
                 Decimal Units = UtilityService.GetDecimalAmount(paymentsFile.Units);
-                Decimal Amount = Math.Round((Price * Units),2);
+                Decimal TransFee = UtilityService.GetDecimalAmount(paymentsFile.TransactionalLevy);
+                Decimal Fee = 0M;
+                Decimal Amount = 0M;
+                if (!String.IsNullOrEmpty(paymentsFile.Amount))
+                    UtilityService.GetDecimalAmount(paymentsFile.Amount);
+                else
+                {
+                    Decimal TotalPrice = Math.Round((Price * Units), 2);
+                    Fee = (TotalPrice * TransFee) / 100M;
+                    Amount = Math.Round((TotalPrice + Fee), 2);
+                }
+
                 Transaction addPaymentsFile = new Transaction()
                 {
                     Year = paymentsFile.Year,
                     Month = paymentsFile.Month,
                     Amount = Amount,
-                    Price=Price,
-                    Units=Units,
+                    Price = Price,
+                    Units = Units,
+                    TransactionFee = Fee,
+                    TransactionRate=TransFee,
                     ClientID = paymentsFile.ClientID,
                     ProductID = paymentsFile.ProductID,
                     PaymentDate = paymentsFile.PaymentDate,
@@ -100,7 +113,7 @@ namespace SmartSave.Controllers
                     {
                         if (paymentsFile.AutoEmailReceipt)
                         {
-                            ClientPeek statement = await _ClientService.GetClient(clientID:paymentsFile.ClientID);
+                            ClientPeek statement = await _ClientService.GetClient(clientID: paymentsFile.ClientID);
                             if (UtilityService.IsNull(statement))
                             {
                                 receipt = PrintReceipt(result);
@@ -158,7 +171,7 @@ namespace SmartSave.Controllers
                 clientID = 0;
             }
             if (clientID > 0)
-                return RedirectToAction("ViewClient", "Client", new { id = clientID });
+                return RedirectToAction("PaidTransactions", "Client", new { id = clientID });
             else
                 return RedirectToAction(nameof(Transactions));
         }
@@ -187,7 +200,7 @@ namespace SmartSave.Controllers
                 if (await (_service.ReversePayment(paymentsFile, (TransactionTypeList)transactionTypeID)) == 0)
                 {
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewTransaction", new { id=paymentsFile.TransactionID });
+                    return RedirectToAction("ViewTransaction", new { id = paymentsFile.TransactionID });
                 }
             }
 
@@ -217,36 +230,34 @@ namespace SmartSave.Controllers
             if (UtilityService.IsNotNull(transaction))
             {
                 ProofOfPayment printOut = new ProofOfPayment();
-                using (MemoryStream stream = new MemoryStream())
+                using MemoryStream stream = new MemoryStream();
+                try
                 {
-                    try
+                    Document document = printOut.Print(transaction);
+                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+                    pdfRenderer.Document = document;
+                    pdfRenderer.RenderDocument();
+                    if (UtilityService.StatementPasswordProtect && passwordProtect)
                     {
-                        Document document = printOut.Print(transaction);
-                        PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                        pdfRenderer.Document = document;
-                        pdfRenderer.RenderDocument();
-                        if (UtilityService.StatementPasswordProtect && passwordProtect)
-                        {
-                            PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
-                            securitySettings.UserPassword = clientIDNumber;
-                            securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
-                            // Restrict some rights.
-                            securitySettings.PermitAccessibilityExtractContent = false;
-                            securitySettings.PermitAnnotations = false;
-                            securitySettings.PermitAssembleDocument = false;
-                            securitySettings.PermitExtractContent = false;
-                            securitySettings.PermitFormsFill = true;
-                            securitySettings.PermitFullQualityPrint = false;
-                            securitySettings.PermitModifyDocument = true;
-                            securitySettings.PermitPrint = false;
-                        }
-                        pdfRenderer.PdfDocument.Save(stream, false);
-                        return new Receipt() { Document = stream.ToArray(), TransRef = transaction.TransRef };
+                        PdfSecuritySettings securitySettings = pdfRenderer.PdfDocument.SecuritySettings;
+                        securitySettings.UserPassword = clientIDNumber;
+                        securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
+                        // Restrict some rights.
+                        securitySettings.PermitAccessibilityExtractContent = false;
+                        securitySettings.PermitAnnotations = false;
+                        securitySettings.PermitAssembleDocument = false;
+                        securitySettings.PermitExtractContent = false;
+                        securitySettings.PermitFormsFill = true;
+                        securitySettings.PermitFullQualityPrint = false;
+                        securitySettings.PermitModifyDocument = true;
+                        securitySettings.PermitPrint = false;
                     }
-                    catch (Exception ex)
-                    {
-                        CustomLog.Log(LogSource.GUI, ex);
-                    }
+                    pdfRenderer.PdfDocument.Save(stream, false);
+                    return new Receipt() { Document = stream.ToArray(), TransRef = transaction.TransRef };
+                }
+                catch (Exception ex)
+                {
+                    CustomLog.Log(LogSource.GUI, ex);
                 }
             }
             return null;
@@ -441,8 +452,10 @@ namespace SmartSave.Controllers
             using (MemoryStream stream = new MemoryStream())
             {
                 Document document = printOut.Print(company, clientDeduction);
-                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                pdfRenderer.Document = document;
+                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
+                {
+                    Document = document
+                };
                 pdfRenderer.RenderDocument();
                 pdfRenderer.PdfDocument.Save(stream, false);
                 return File(stream.ToArray(), "application/pdf", $"SalarySchedule.pdf");
@@ -587,6 +600,7 @@ namespace SmartSave.Controllers
         public ActionResult GetAssertByProductID(int productID)
         {
             SelectList assertLists = null;
+            decimal TransactionFee = 0M;
             if (productID != 0)
             {
                 List<Assert> assertList = _settingService.GetAssertsLinkedToProduct(productID);
@@ -596,8 +610,13 @@ namespace SmartSave.Controllers
                     t.Name,
                 });
                 assertLists = new SelectList(assertList, "AssertID", "Name");
+
+                TransactionFee = _settingService.GetTransactionFee(productID);
+
             }
-            return Json(assertLists);
+            return Json(new Models.ProductAssert { Fee = TransactionFee, Asserts = assertLists });
+
+
         }
 
         [HttpPost]

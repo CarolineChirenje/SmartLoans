@@ -17,11 +17,12 @@ namespace SmartReporting
             try
             {
                 string _selectClause = @"WITH CTE_Trans AS (
-                                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Entity,t.TransactionID,t.ParentPaymentID
+                                        SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode , CASE WHEN a.Name IS NOT NULL THEN CONCAT(t.TransRef,' : ', a.Name) ELSE CONCAT(t.TransRef,' : ', t.Narration) END AS Counter,t.Amount,p.Name AS Entity,t.TransactionID,t.ParentPaymentID
                                         FROM Transactions t
                                         INNER JOIN Products p ON p.ProductID=t.ProductID
                                         INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
-                                        UNION ALL
+										LEFT JOIN AssertCategories a ON t.AssertCategoryID=a.AssertCategoryID
+                                       UNION ALL
                                         SELECT  t.ClientID, t.TransactionDate, t.PaymentDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,c.Title AS Entity,t.TransactionID,t.ParentPaymentID
                                         FROM Transactions t
                                         INNER JOIN Courses c ON c.CourseID=t.CourseID
@@ -43,10 +44,11 @@ namespace SmartReporting
             DataTable results = null;
             try
             {
-                string _selectClause = @"SELECT t.PaymentDate,t.TransactionDate,tt.Code AS TransCode ,CONCAT(t.TransRef,' : ', t.Narration) AS Counter,t.Amount,p.Name AS Product,t.TransactionID,t.ParentPaymentID
+                string _selectClause = @"SELECT t.PaymentDate,t.TransactionDate,tt.Code AS TransCode ,CASE WHEN a.Name IS NOT NULL THEN CONCAT(t.TransRef,' : ', a.Name) ELSE CONCAT(t.TransRef,' : ', t.Narration) END AS Counter,t.Amount,p.Name AS Product,t.TransactionID,t.ParentPaymentID
                                             FROM Transactions t
                                             INNER JOIN Products p ON p.ProductID=t.ProductID
-                                            INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID ";
+                                            INNER JOIN TransactionType tt ON t.TransactionTypeID=tt.TransactionTypeID
+                                            LEFT JOIN AssertCategories a ON t.AssertCategoryID=a.AssertCategoryID  ";
                 string sqlQuery = _selectClause + $"WHERE t.ClientID={_statement.ClientID}  AND t.TransactionDate>'{_statement.StartDate.ToString("yyyy-MM-dd")}' AND t.TransactionDate < '{ _statement.EndDate.ToString("yyyy-MM-dd")}'";
 
                 if (_statement.ProductID > 0)

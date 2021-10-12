@@ -18,6 +18,9 @@ namespace SmartDomain
         public decimal DeductionPercentage { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal IncreamentPercentage { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal TransactionalFee { get; set; }
         public bool IsActive { get; set; }
         public int CompanyID { get; set; }
         public virtual Company Company { get; set; }
@@ -40,9 +43,10 @@ namespace SmartDomain
         [NotMapped]
         public string deductPercentage { get; set; }
 
+        [NotMapped]
+        public string transactionalLevy { get; set; }
 
 
-        
 
 
 

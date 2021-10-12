@@ -73,7 +73,7 @@ namespace SmartReporting
                 paragraph = section.AddParagraph();
                 paragraph.Format.SpaceBefore = "0.5cm";
                 paragraph.Style = StyleNames.Heading1;
-                paragraph.AddFormattedText($"{title} - {_paymentFile.Client.AccountNumber}", TextFormat.Bold);
+                paragraph.AddFormattedText($"{title} - {_paymentFile.Client.AccountNumber}/{_paymentFile.TransRef}", TextFormat.Bold);
                 paragraph.Format.Alignment = ParagraphAlignment.Center;
                 paragraph = section.AddParagraph();
 
@@ -177,7 +177,7 @@ namespace SmartReporting
                     tblrow7.Cells[0].Format.Font.Bold = true;
                     tblrow7.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                     tblrow7.Cells[0].Format.Alignment = ParagraphAlignment.Left;
-                    tblrow7.Cells[0].AddParagraph($"{UtilityService.ShowDate(_paymentFile.TransactionDate)}");
+                    tblrow7.Cells[0].AddParagraph($"{UtilityService.ShowDate(_paymentFile.PaymentDate)}");
 
                 paragraph = section.AddParagraph();
             }
@@ -231,7 +231,7 @@ namespace SmartReporting
                 row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
 
                
-                row.Cells[1].AddParagraph("Reference");
+                row.Cells[1].AddParagraph("Category");
                 row.Cells[1].Format.Font.Bold = UtilityService.StatementShowTableBoarders;
                 row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
@@ -264,11 +264,13 @@ namespace SmartReporting
                 row1.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                 row1.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                 row1.Cells[0].AddParagraph(ReportingUtilities.ToTitleCase(_paymentFile.Entity));
-               
+             
+                string sqlCustomSetting = $"SELECT TOP 1 Name FROM AssertCategories WHERE AssertCategoryID={_paymentFile.AssertCategoryID};";
+                string category = GetData.GetStringValue(sqlCustomSetting);
                 row1.Cells[1].Borders.Visible = UtilityService.StatementShowTableBoarders;
                 row1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
                 row1.Cells[1].Format.Alignment = ParagraphAlignment.Center;
-                row1.Cells[1].AddParagraph(_paymentFile.TransRef);
+                row1.Cells[1].AddParagraph(String.IsNullOrEmpty(category)?"" : category);
 
                 row1.Cells[2].Borders.Visible = UtilityService.StatementShowTableBoarders;
                 row1.Cells[2].Format.Alignment = ParagraphAlignment.Right;

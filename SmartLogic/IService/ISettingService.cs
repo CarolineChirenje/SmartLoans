@@ -35,7 +35,7 @@ namespace SmartLogic
 
         List<CourseOutline> GetCourseOutlines(int courseID);
         List<CourseOutline> GetUserAttendedSessions(int clientid, int courseid);
-
+        decimal GetTransactionFee(int productID);
         List<Assert> GetAssertsLinkedToProduct(int productID);
         List<AssertCategory> GetAssertCategory(int assertID);
         List<Assert> GetAssertsList();

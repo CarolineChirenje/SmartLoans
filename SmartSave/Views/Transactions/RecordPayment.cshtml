@@ -135,9 +135,16 @@
                     }
                 </div>
                 <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Transaction Fees</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="TransactionalLevy" name="TransactionalLevy" value="0.00" onchange="CalculateTotal()">
+                        <span id="TransactionalLevyError" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Price</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Price" name="Price"  value="0.00" onchange="CalculateTotal()">
+                        <input type="text" class="form-control" id="Price" name="Price" value="0.00" onchange="CalculateTotal()">
                         <span id="PriceError" class="text-danger text-bold"></span>
                     </div>
                 </div>
@@ -148,7 +155,7 @@
                         <span id="UnitsError" class="text-danger text-bold"></span>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Pay Amount</label>
                     <div class="col-sm-10">
@@ -239,7 +246,7 @@
                 $(":submit").attr("disabled", true);
             }
             else {
-                $("#AmountError").text("");
+               // $("#AmountError").text("");
                 $(":submit").removeAttr("disabled");
             }
         })
@@ -273,9 +280,17 @@
         
         var unit = $('#Units').val();
         var price = $('#Price').val();
-           var total = unit * price;
-            total = total.toFixed(2);
-            $('#Amount').val(total);
+        var total = unit * price;
+    
+        var finaltotal = total;
+        var levy = $('#TransactionalLevy').val();
+        if (levy > 0) {
+
+            var levyamount = (total * levy) / 100;
+            finaltotal = total + levyamount;
+        }
+        finaltotal = finaltotal.toFixed(2);
+        $('#Amount').val(finaltotal);
           }
    
     function GetProduct(_clientID) {
@@ -322,20 +337,28 @@
             cache: false,
             type: "POST",
             success: function (data) {
+                console.log(data);
                 var markup = "<option value='0'>----</option>";
-                if (data == null || data.length == 0) {
+                if (data == null) {
                     $("#AssertListNotFound").text("No Asserts Linked To Product")
                    // $(":submit").attr("disabled", true);
                 }
                 else {
+                   
                     $("#AssertListNotFound").text("");
-                   // $(":submit").removeAttr("disabled");
-
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
+                      $("#TransactionalLevy").val(data.fee);
+                    if (data.asserts == null || data.asserts.length == 0) {
+                        $("#AssertListNotFound").text("No Asserts Linked To Product")
+                        $("#AssertList").html("").show();
+                    }
+                    else {
+                        for (var x = 0; x < data.asserts.length; x++) {
+                            markup += "<option value=" + data.asserts[x].value + ">" + data.asserts[x].text + "</option>";
+                        }
+                        $("#AssertList").html(markup).show();
                     }
                 }
-                $("#AssertList").html(markup).show();
+              
             },
             error: function (reponse) {
                 alert("error : " + reponse);
