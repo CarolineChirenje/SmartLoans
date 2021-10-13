@@ -197,7 +197,7 @@ namespace SmartReporting
                 }
                 else
                 {
-                    columnName = "Report";
+                    columnName = "Statement";
                     columnValue = statement.ToString().Replace("_", " ");
                 }
                 // Create the item table
@@ -340,7 +340,7 @@ namespace SmartReporting
 
                     // Before you can add a row, you must define the columns
                     Column column = this.table.AddColumn("3.5cm");
-                    column.Format.Alignment = ParagraphAlignment.Center;
+                    column.Format.Alignment = ParagraphAlignment.Left;
 
 
                     column = this.table.AddColumn("2cm");
@@ -363,7 +363,7 @@ namespace SmartReporting
                     row.Shading.Color = HeaderColor;
                     int countCellColumn = 0;
 
-                    row.Cells[countCellColumn].AddParagraph("Transaction Date");
+                    row.Cells[countCellColumn].AddParagraph("Payment Date");
                     row.Cells[countCellColumn].Format.Font.Bold = true;
                     row.Cells[countCellColumn].Format.Alignment = UtilityService.StatementShowTableBoarders ? ParagraphAlignment.Center : ParagraphAlignment.Left;
                     row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
@@ -407,7 +407,7 @@ namespace SmartReporting
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
                         row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
-                        row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("TransactionDate").ToString("yyyy-MM-dd HH:mm:ss"));
+                        row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
                         countCellValue++;
 
 
@@ -529,7 +529,7 @@ namespace SmartReporting
                     row.Format.Font.Bold = true;
                     row.Shading.Color = HeaderColor;
                     int countCellColumn = 0;
-                    row.Cells[countCellColumn].AddParagraph("Transaction Date");
+                    row.Cells[countCellColumn].AddParagraph("Payment Date");
                     row.Cells[countCellColumn].Format.Font.Bold = true;
                     row.Cells[countCellColumn].Format.Alignment = ParagraphAlignment.Left;
                     row.Cells[countCellColumn].VerticalAlignment = VerticalAlignment.Bottom;
@@ -574,7 +574,7 @@ namespace SmartReporting
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
                         row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Left;
-                        row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("TransactionDate").ToString("yyyy-MM-dd HH:mm:ss"));
+                        row1.Cells[countCellValue].AddParagraph(transaction.Field<DateTime>("PaymentDate").ToString("yyyy-MM-dd"));
                         countCellValue++;
 
 
@@ -809,11 +809,7 @@ namespace SmartReporting
                 DataTable Results = Reports.Deductions(_statement);
                 DataTable Transactions = Results;
                 if (Results != null && Results.Rows.Count > 0)
-                {
-                    //if (this._statement.PrintReversalsOnStatement)
-                    //    Transactions = Results;
-                    //else
-                    //    Transactions = RemoveReversals(Results);
+                {                 
                     // Create the item table
                     this.table = section.AddTable();
                     this.table.Style = "Table";
@@ -987,13 +983,11 @@ namespace SmartReporting
                         { //From transactions get transactions with parent payment=0;
                             var transactionsWithNoReversals = (from filterTrans in transactions.AsEnumerable()
                                                                where filterTrans.Field<int>("ParentPaymentID") == 0
-                                                               select filterTrans)?.CopyToDataTable();
-
+                                                              select filterTrans)?.CopyToDataTable();
                             if (transactionsWithNoReversals != null)
                                 Transactions = transactionsWithNoReversals;
                             else
                                 Transactions = Results;
-
                         }
                         catch (Exception ex)
                         {

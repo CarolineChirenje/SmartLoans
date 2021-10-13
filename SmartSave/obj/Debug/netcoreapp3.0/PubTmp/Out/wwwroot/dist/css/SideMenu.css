@@ -1,0 +1,22 @@
+﻿/*.main-sidebar {
+    background-color: #00a65a !important
+}
+
+.header {
+    background-color: #00a65a !important
+}
+
+.sidebar-form {
+    background-color: #ffffff !important
+}*/
+.skin-green-light .main-sidebar .navbar {
+    background-color: #bdac3c !important
+}
+
+    .skin-green-light .main-sidebar .navbar .sidebar-toggle:hover {
+        background-color: #ac9b2b !important
+    }
+
+.skin-green-light .main-sidebar .logo {
+    background-color: #bdac3c !important;
+}
