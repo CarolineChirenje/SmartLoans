@@ -213,6 +213,10 @@ namespace SmartInterfaces
         public string Intake { get; set; }
         public string AttendanceDate { get; set; }
         public string Status { get; set; }
+        public string Session { get; set; }
+
+        public string CourseTopic { get; set; }
+
 
     }
 
@@ -377,7 +381,11 @@ namespace SmartInterfaces
         public int? CourseIntakeID { get; set; }
         public string Intake { get; set; }
         public string CourseName { get; set; }
+        public int Topics { get; set; }
+
         public int Sessions { get; set; }
+
+        public int CompletedSessions { get; set; }
         public DateTime DateRegistered { get; set; }
         public string RegistrationDate { get; set; }
         public string DateCompleted { get; set; }

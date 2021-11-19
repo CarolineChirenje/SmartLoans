@@ -12,8 +12,8 @@ namespace SmartDomain
         public int ClientTranscriptID { get; set; }
         public int ClientCourseID { get; set; }
         public virtual ClientCourse ClientCourse { get; set; }
-        public int CourseOutlineID { get; set; }
-        public DateTime DateRegistered { get; set; }
+        public int CourseSessionID { get; set; }
+        public DateTime DateCompleted { get; set; }
 
     }
 }

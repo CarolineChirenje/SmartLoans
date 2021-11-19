@@ -77,6 +77,8 @@ namespace SmartLogic
         Task<ClientCourse> FindCourse(int id);
         Task<int> Save(ClientCourse ClientCourse);
         Task<bool> HasActiveEnrollement(int clientID, int courseID);
+
+        Task<bool> MaximumCourseLimitReached(int courseIntakeID);
         Task<int> Update(ClientCourse ClientCourse);
         Task<int> ActionCourse(int id);
 

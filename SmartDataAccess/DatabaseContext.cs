@@ -187,7 +187,8 @@ namespace SmartDataAccess
         public DbSet<InvoiceStatus> InvoiceStatuses { get; set; }
         public DbSet<DeductionType> DeductionTypes { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<CourseOutline> CourseOutlines { get; set; }
+        public DbSet<CourseTopic> CourseTopics { get; set; }
+        public DbSet<CourseSession> CourseSessions { get; set; }
         public DbSet<CourseFee> CourseFees { get; set; }
         public DbSet<CourseFeeHistory> CourseFeeHistory { get; set; }
         public DbSet<CourseIntake> CourseIntakes { get; set; }
@@ -229,6 +230,8 @@ namespace SmartDataAccess
 
         public DbSet<Layout> Layouts { get; set; }
         public DbSet<LayoutMenu> LayoutMenus { get; set; }
+        public DbSet<UserAccessRestriction> UserAccessRestrictions { get; set; }
+        
 
         // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
         // Script-Migration -From 20180904195021_InitialCreate

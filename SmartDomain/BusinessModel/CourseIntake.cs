@@ -27,7 +27,7 @@ namespace SmartDomain
         [NotMapped]
         public DateTime AttendanceDate { get; set; }
         [NotMapped]
-        public int CourseOutLine { get; set; }
+        public int CourseTopic { get; set; }
         
 
     }

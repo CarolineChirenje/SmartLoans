@@ -11,6 +11,7 @@ namespace SmartHelper
         Reporting,
         Custom_Settings,
         Invoicing,
+        Programmes,
         //
         Menu = 9998,
         Developer_Menu = 999,
@@ -792,10 +793,10 @@ namespace SmartHelper
         Delete_Assert,
         View_Assert,
 
-        Add_Course_Outline,
-        Update_Course_Outline,
-        Delete_Course_Outline,
-        View_Course_Outline,
+        Add_Course_Topic,
+        Update_Course_Topic,
+        Delete_Course_Topic,
+        View_Course_Topic,
 
         Add_Course_Intake,
         Update_Course_Intake,
@@ -814,7 +815,11 @@ namespace SmartHelper
         View_Layouts,
         View_Licences,
         View_Maintanances,
-        View_Technical_Support_Settings
+        View_Technical_Support_Settings,
+        Add_Course_Session,
+        Update_Course_Session,
+        Delete_Course_Session,
+        View_Course_Session,
     }
     public enum InvoiceState
     {   Created = 1,

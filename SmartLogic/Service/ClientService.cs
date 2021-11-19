@@ -395,7 +395,10 @@ namespace SmartLogic
             {
                 var registers = _context.AttendanceRegisterDetails.
                    Include(c => c.AttendanceRegister).
-                     ThenInclude(c => c.CourseIntake).
+                   ThenInclude(c => c.CourseTopic).
+                   ThenInclude(c => c.CourseSessions).
+                                     Include(c => c.AttendanceRegister).
+                                       ThenInclude(c => c.CourseIntake).
                        ThenInclude(c => c.Course).
                    Include(c => c.Client).
                    Where(c => c.ClientID == clientID).
@@ -417,7 +420,8 @@ namespace SmartLogic
                         AttendanceDate = registerDetail.AttendanceRegister.AttendanceDate,
                         Intake = registerDetail.AttendanceRegister.CourseIntake.Duration,
                         Status = registerDetail.AttendanceStatus,
-                        Course = registerDetail.AttendanceRegister.CourseOutline.Course.Title
+                        Course = registerDetail.AttendanceRegister.CourseTopic.Course?.Title,
+                        CourseTopic = $"{registerDetail.AttendanceRegister.CourseTopic.Course?.Title} - {registerDetail.AttendanceRegister.CourseTopic?.Name}",
 
                     });
                 }
@@ -1024,7 +1028,7 @@ namespace SmartLogic
                 throw;
             }
         }
-      
+
         //MedicalDetail
         public Medical MedicalFiles(int clientID)
         {
@@ -1426,14 +1430,46 @@ namespace SmartLogic
         }
 
         //Client Course
+        public int AttendedSessions(int clientCourseID)
+        {
+            try
+            {
+                var result = _context.ClientTranscripts.Where(ct => ct.ClientCourseID == clientCourseID).ToList();
+                if (result == null)
+                    return 0;
+                return result.Count();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public int GetCourseSessions(int courseTopicID)
+        {
+            try
+            {
+                var result = _context.CourseSessions.Where(ct => ct.CourseTopicID == courseTopicID).ToList();
+                if (result == null)
+                    return 0;
+                return result.Count();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public CoachingProgrammes Courses(int clientID)
         {
             try
             {
                 var transactions = _context.ClientCourses.
+                 Include(c => c.CourseIntake).
                 Include(c => c.Course).
-                 ThenInclude(c => c.CourseOutlines).
-                              Where(c => c.ClientID == clientID).ToList();
+                ThenInclude(c => c.CourseTopics).
+                ThenInclude(c => c.CourseSessions).
+                 Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
                 CoachingProgrammes course = new CoachingProgrammes();
@@ -1441,17 +1477,20 @@ namespace SmartLogic
                 course.ClientForm = FindClient(clientID).Result;
                 List<CourseList> result = new List<CourseList>();
 
-                foreach (var transaction in transactions)
+                foreach (var transaction in transactions.Distinct())
                 {
                     result.Add(new CourseList
                     {
+
                         CourseID = transaction.CourseID,
                         ClientID = transaction.ClientID,
                         ClientCourseID = transaction.ClientCourseID,
                         CourseIntakeID = transaction.CourseIntakeID,
                         DateCompleted = transaction.DateCompleted.HasValue ? UtilityService.ShowDateTime(transaction.DateCompleted.Value) : "Not Complete",
                         Intake = transaction.CourseIntake?.Duration,
-                        Sessions = transaction.Course.CourseOutlines == null ? 0 : transaction.Course.CourseOutlines.Count(),
+                        Topics = transaction.Course.CourseTopics == null ? 0 : transaction.Course.CourseTopics.Count(),
+                        Sessions = (transaction.Course.CourseTopics == null && transaction.Course.CourseTopics.Select(c => c.CourseSessions) == null) ? 0 : transaction.Course.CourseTopics.Sum(c => c.CourseSessions.Count),
+                        CompletedSessions = transaction.Course.CourseTopics == null ? 0 : AttendedSessions(transaction.ClientCourseID),
                         Status = UtilityService.ShowYesOrNo(transaction.IsDeRegistered),
                         CourseName = transaction.Course.Title,
                         RegistrationDate = UtilityService.ShowDateTime(transaction.DateRegistered),
@@ -1477,7 +1516,7 @@ namespace SmartLogic
                   Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
                   Include(c => c.Client).ThenInclude(at => at.ClientAccountType).
                   Include(c => c.Course).
-                  ThenInclude(c => c.CourseOutlines).
+                  ThenInclude(c => c.CourseTopics).
                   Include(c => c.Course).
                   ThenInclude(c => c.CourseIntakes).
                  Where(t => t.ClientCourseID == id).FirstOrDefaultAsync();
@@ -1568,6 +1607,30 @@ namespace SmartLogic
             }
         }
 
+      
+        public async Task<bool> MaximumCourseLimitReached(int courseIntakeID)
+        {
+            try
+            {
+
+                //1.Same course is still not completed or not deregistered
+                var students = await _context.ClientCourses.Where(c => c.CourseIntakeID == courseIntakeID).ToListAsync();
+                int studentCount = 0;
+                if (students != null)
+                    studentCount = students.Count();
+                int courseCapacity = 0;
+                var courseLimit = await _context.CourseIntakes.Where(c => c.CourseIntakeID == courseIntakeID).FirstOrDefaultAsync();
+                if (courseLimit != null)
+                    courseCapacity = courseLimit.MaximumCapacity;
+                bool result =(studentCount>=courseCapacity);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
         public async Task<bool> HasActiveEnrollement(int clientID, int courseID)
         {
@@ -1615,7 +1678,7 @@ namespace SmartLogic
             {
                 IEnumerable<int> courseOutlines = from c in _context.ClientTranscripts
                                                   where c.ClientCourseID == clientCourseID
-                                                  select c.CourseOutlineID;
+                                                  select c.CourseSessionID;
                 List<int> old_sessions = courseOutlines.ToList();
                 List<int> add_sessions = new List<int>();
                 List<int> remove_sessions = new List<int>();
@@ -1627,20 +1690,20 @@ namespace SmartLogic
                     add_sessions = updated_Details.ToList();
                     return await AddSessions(clientCourseID, add_sessions);
                 }
-                foreach (var courseOutline in _context.CourseOutlines)
+                foreach (var courseSession in _context.CourseSessions)
                 {
-                    if (selectedSessions.Contains(courseOutline.CourseOutlineID.ToString()))
+                    if (selectedSessions.Contains(courseSession.CourseSessionID.ToString()))
                     {
-                        if (!old_sessions.Contains(courseOutline.CourseOutlineID))
+                        if (!old_sessions.Contains(courseSession.CourseSessionID))
                         {
-                            add_sessions.Add(courseOutline.CourseOutlineID);
+                            add_sessions.Add(courseSession.CourseSessionID);
                         }
                     }
                     else
                     {
-                        if (old_sessions.Contains(courseOutline.CourseOutlineID))
+                        if (old_sessions.Contains(courseSession.CourseSessionID))
                         {
-                            remove_sessions.Add(courseOutline.CourseOutlineID);
+                            remove_sessions.Add(courseSession.CourseSessionID);
                         }
                     }
                 }
@@ -1665,8 +1728,8 @@ namespace SmartLogic
                     ClientTranscript transcript = new ClientTranscript
                     {
                         ClientCourseID = clientCourseID,
-                        CourseOutlineID = sessionid,
-                        DateRegistered = DateTime.Now,
+                        CourseSessionID = sessionid,
+                        DateCompleted = DateTime.Now,
                         LastChangedBy = UtilityService.CurrentUserName,
                         LastChangedDate = DateTime.Now
                     };
@@ -1688,7 +1751,7 @@ namespace SmartLogic
 
                 List<ClientTranscript> courseTranscripts = await _context.ClientTranscripts.Where(r => r.ClientCourseID == clientCourseID).ToListAsync();
                 var transcriptsToBeRemoved = courseTranscripts
-                        .Where(x => sessions.Any(y => y == x.CourseOutlineID));
+                        .Where(x => sessions.Any(y => y == x.CourseSessionID));
                 _context.ClientTranscripts.RemoveRange(transcriptsToBeRemoved);
                 return (await _context.SaveChangesAsync());
             }
@@ -1731,7 +1794,7 @@ namespace SmartLogic
                 foreach (var item in clientProducts)
                 {
 
-                    ClientForm client =  FindClient(item.ClientID).Result;
+                    ClientForm client = FindClient(item.ClientID).Result;
                     invoiceEntries.Add(new InvoiceEntries
                     {
                         ClientProductID = item.ClientProductID,
@@ -2010,7 +2073,7 @@ namespace SmartLogic
                         Occupation = transaction.Client.Occupation,
                         InvoiceNumber = transaction.InvoiceNumber,
                         Salary = transaction.Salary,
-                        Status=transaction.PaymentStatus.Name
+                        Status = transaction.PaymentStatus.Name
 
                     });
                 }
@@ -2079,7 +2142,7 @@ namespace SmartLogic
                     AddressLine2 = result.AddressLine2,
                     City = result.City,
                     CountryID = result.CountryID,
-                    Country= result.CountryID.HasValue?GetCountryName(result.CountryID.Value):null,
+                    Country = result.CountryID.HasValue ? GetCountryName(result.CountryID.Value) : null,
                     Occupation = result.Occupation,
                     Salary = result.Salary,
                     ClientAccountTypeID = result.ClientAccountTypeID,

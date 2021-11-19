@@ -42,10 +42,13 @@ namespace SmartDomain
         public string Password { get; set; }
 
         public DateTime PasswordExpiryDate { get; set; }
+     
         public bool IsActive { get; set; }
         public bool CanOverrideMaintananceMode { get; set; }
         public byte[] ProfileImage { get; set; }
         public virtual List<UserRole> UserRoles { get; set; }
+
+        public virtual List<UserAccessRestriction> UserAccessRestrictions { get; set; }
 
         [NotMapped]
         public virtual List<int> RoleList { get; set; }

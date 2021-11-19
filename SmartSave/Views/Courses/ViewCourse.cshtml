@@ -47,9 +47,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Sessions</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Topics</label>
                     <div class="col-sm-10">
-                        <a data-toggle="modal" data-target="#CourseSessions">@Model.CourseOutlines?.Count()</a>
+                       
+                        <a data-toggle="modal" data-target="#CourseSessions">@Model.CourseTopics?.Count()</a>
                     </div>
                 </div>
 
@@ -112,10 +113,10 @@
                                 <a href="#Fees" data-toggle="tab">Fees</a>
                             </li>
                         }
-                        @if (UtilityService.HasPermission(Permissions.View_Course_Outline))
+                        @if (UtilityService.HasPermission(Permissions.View_Course_Topic))
                         {
                             <li>
-                                <a href="#CourseOutline" data-toggle="tab">Sessions</a>
+                                <a href="#CourseTopic" data-toggle="tab">Topics</a>
                             </li>
                         }
 
@@ -184,7 +185,7 @@
                                 }
                             </div>
                         </div>
-                        <div class="tab-pane fade in" id="CourseOutline">
+                        <div class="tab-pane fade in" id="CourseTopic">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     Information
@@ -197,25 +198,27 @@
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
+                                                <th>Sessions</th>
                                                 <th>Is Active</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Model.CourseOutlines != null)
+                                            @if (Model.CourseTopics != null)
                                             {
 
-                                                foreach (var item in Model.CourseOutlines)
+                                                foreach (var item in Model.CourseTopics)
                                                 {
-                                                    <tr>
-                                                        @{
-                                                            string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                            <tr>
+                                                @{
+                                                    string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
 
-                                                        }
-                                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                                        <td>@activeStatus</td>
-                                                        <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseOutline" asp-route-outlineid="@item.CourseOutlineID" asp-route-courseid="@item.CourseID">View</a> | <a asp-controller="Courses" asp-action="ActionCourseOutline" asp-route-outlineid="@item.CourseOutlineID" asp-route-courseid="@item.CourseID">Delete</a></td>
-                                                    </tr>
+                                                }
+                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CourseSessions.Count)</td>
+                                                <td>@activeStatus</td>
+                                                <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseTopic" asp-route-id="@item.CourseTopicID">View</a> | <a asp-controller="Courses" asp-action="ActionCourseTopic" asp-route-outlineid="@item.CourseTopicID" asp-route-courseid="@item.CourseID">Delete</a></td>
+                                            </tr>
                                                 }
                                             }
                                     </table>
@@ -223,7 +226,7 @@
                             </div>
 
                             <div class="box-footer">
-                                <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddCourseOutline">Add Session</a>
+                                <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddCourseTopic">Add Topic</a>
                             </div>
                         </div>
                         <div class="tab-pane fade in" id="CourseIntake">
@@ -286,7 +289,7 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="AddCourseOutline" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="AddCourseTopic" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -295,14 +298,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" asp-controller="Courses" asp-action="AddCourseOutline">
+            <form method="post" asp-controller="Courses" asp-action="AddCourseTopic">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Course:</label>
                         <input type="text" class="form-control" value="@Model.Title" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Session:</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Topic:</label>
                         <input type="text" class="form-control" name="Name">
                     </div>
                     <div class="form-group">
@@ -318,7 +321,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save Session</button>
+                    <button type="submit" class="btn btn-primary">Save Topic</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                 </div>

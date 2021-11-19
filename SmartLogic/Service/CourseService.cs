@@ -26,7 +26,6 @@ namespace SmartLogic
             {
 
                 Course Course = await FindCourse(id);
-
                 if (DatabaseAction.Remove == action)
                     _context.Courses.Remove(Course);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
@@ -50,12 +49,11 @@ namespace SmartLogic
         {
             try
             {
-
                 return await _context.Courses.
-          Include(c => c.CourseOutlines).
-          Include(c => c.CourseIntakes).
-          AsNoTracking().
-          ToListAsync();
+                Include(c => c.CourseTopics).
+                Include(c => c.CourseIntakes).
+                AsNoTracking().
+                ToListAsync();
             }
             catch (Exception ex)
             {
@@ -68,7 +66,7 @@ namespace SmartLogic
             try
             {
                 return await _context.Courses.
-                    Include(c => c.CourseOutlines).
+                    Include(c => c.CourseTopics).
                     Include(c => c.CourseIntakes).
                     Where(c => c.DateCreated.Date >= DateTime.Now.AddDays(-1).Date && c.DateCreated.Date <= DateTime.Now.Date).ToListAsync();
             }
@@ -115,7 +113,8 @@ namespace SmartLogic
             {
 
                 return await _context.Courses.
-                Include(c => c.CourseOutlines).
+                Include(c => c.CourseTopics).
+                ThenInclude(c => c.CourseSessions).
                 Include(c => c.CourseIntakes).
                 Include(c => c.CourseFees).
                 ThenInclude(c => c.Frequency).
@@ -163,15 +162,14 @@ namespace SmartLogic
             }
         }
 
-        //Course Outline
-        public async Task<int> ActionCourseOutline(int id, DatabaseAction action)
+        //Course Topics
+        public async Task<int> ActionCourseTopic(int id, DatabaseAction action)
         {
             try
             {
-
-                CourseOutline outline = await FindCourseOutline(id);
+                CourseTopic outline = await FindCourseTopic(id);
                 if (DatabaseAction.Remove == action)
-                    _context.CourseOutlines.Remove(outline);
+                    _context.CourseTopics.Remove(outline);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     outline.IsActive = DatabaseAction.Deactivate == action ? false : true;
@@ -179,7 +177,6 @@ namespace SmartLogic
                     outline.LastChangedDate = DateTime.Now;
                     _context.Update(outline);
                 }
-
                 return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
@@ -188,13 +185,13 @@ namespace SmartLogic
                 throw;
             }
         }
-        public async Task<int> Save(CourseOutline courseOutline)
+        public async Task<int> Save(CourseTopic courseTopic)
         {
             try
             {
-                courseOutline.LastChangedBy = UtilityService.CurrentUserName;
-                courseOutline.LastChangedDate = DateTime.Now;
-                _context.Add(courseOutline);
+                courseTopic.LastChangedBy = UtilityService.CurrentUserName;
+                courseTopic.LastChangedDate = DateTime.Now;
+                _context.Add(courseTopic);
                 return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
@@ -203,16 +200,16 @@ namespace SmartLogic
                 throw;
             }
         }
-        public async Task<int> Update(CourseOutline outline)
+        public async Task<int> Update(CourseTopic courseTopic)
         {
             try
             {
-                CourseOutline courseOutline = _context.CourseOutlines.Find(outline.CourseOutlineID);
-                courseOutline.IsActive = outline.IsActive;
-                courseOutline.Name = outline.Name;
-                courseOutline.LastChangedBy = UtilityService.CurrentUserName;
-                courseOutline.LastChangedDate = DateTime.Now;
-                _context.Update(courseOutline);
+                CourseTopic topic = _context.CourseTopics.Find(courseTopic.CourseTopicID);
+                topic.IsActive = courseTopic.IsActive;
+                topic.Name = courseTopic.Name;
+                topic.LastChangedBy = UtilityService.CurrentUserName;
+                topic.LastChangedDate = DateTime.Now;
+                _context.Update(topic);
                 return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
@@ -221,12 +218,12 @@ namespace SmartLogic
                 throw;
             }
         }
-        public List<CourseOutline> GetCourseOutlines(int courseID)
+        public List<CourseTopic> GetCourseTopics(int courseID)
         {
             try
             {
-                return _context.CourseOutlines
-.Where(c => c.CourseID == courseID).ToList();
+                return _context.CourseTopics
+             .Where(c => c.CourseID == courseID).ToList();
             }
             catch (Exception ex)
             {
@@ -236,13 +233,102 @@ namespace SmartLogic
 
         }
 
-        public async Task<CourseOutline> FindCourseOutline(int id)
+        public async Task<CourseTopic> FindCourseTopic(int id)
         {
             try
             {
-                return await _context.CourseOutlines.
+                return await _context.CourseTopics.
                      Include(c => c.Course).
-                    Where(c => c.CourseOutlineID == id).FirstOrDefaultAsync();
+                      Include(c => c.CourseSessions).
+                    Where(c => c.CourseTopicID == id).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+
+        //Course Sessions
+        public async Task<int> ActionCourseSession(int id, DatabaseAction action)
+        {
+            try
+            {
+                CourseSession session = await FindCourseSession(id);
+                if (DatabaseAction.Remove == action)
+                    _context.CourseSessions.Remove(session);
+                else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+                {
+                    session.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    session.LastChangedBy = UtilityService.CurrentUserName;
+                    session.LastChangedDate = DateTime.Now;
+                    _context.Update(session);
+                }
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Save(CourseSession session)
+        {
+            try
+            {
+                session.LastChangedBy = UtilityService.CurrentUserName;
+                session.LastChangedDate = DateTime.Now;
+                _context.Add(session);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Update(CourseSession courseSession)
+        {
+            try
+            {
+                CourseSession session = _context.CourseSessions.Find(courseSession.CourseSessionID);
+                session.IsActive = courseSession.IsActive;
+                session.Name = courseSession.Name;
+                session.LastChangedBy = UtilityService.CurrentUserName;
+                session.LastChangedDate = DateTime.Now;
+                _context.Update(session);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public List<CourseSession> GetCourseSessions(int courseTopicID)
+        {
+            try
+            {
+                return _context.CourseSessions
+             .Where(c => c.CourseTopicID == courseTopicID).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
+
+        public async Task<CourseSession> FindCourseSession(int id)
+        {
+            try
+            {
+                return await _context.CourseSessions.
+                  Include(c => c.CourseTopic).
+                     ThenInclude(c => c.Course).
+                    Where(c => c.CourseSessionID == id).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -458,7 +544,7 @@ namespace SmartLogic
                Include(c => c.Client).
                ThenInclude(c => c.JointApplicant).
                ThenInclude(c => c.Title)
-               .Where(c => c.CourseIntakeID == courseIntakeID).Select(c => c.Client).ToList();
+               .Where(c => c.CourseIntakeID == courseIntakeID).Select(c => c.Client).Distinct().ToList();
                 return clients;
             }
             catch (Exception ex)
@@ -467,13 +553,13 @@ namespace SmartLogic
                 throw;
             }
         }
-        public bool RegisterExist(int courseIntakeID, string dateMarked)
+        public bool RegisterExist(int courseIntakeID, string dateMarked, int courseTopicID)
         {
             try
             {
 
                 var exists = _context.AttendanceRegisters
-                          .Any(c => c.CourseIntakeID == courseIntakeID && c.AttendanceDate.Equals(dateMarked));
+                          .Any(c => c.CourseIntakeID == courseIntakeID && c.AttendanceDate.Equals(dateMarked) && c.CourseTopicID==courseTopicID);
                 return exists;
             }
             catch (Exception ex)
@@ -493,8 +579,8 @@ namespace SmartLogic
                 attendanceRegister.RequestedBy = UtilityService.CurrentUserName;
                 attendanceRegister.CourseIntakeID = courseIntake.CourseIntakeID;
                 attendanceRegister.LastChangedBy = UtilityService.CurrentUserName;
-                if (courseIntake.CourseOutLine > 0)
-                    attendanceRegister.CourseOutlineID = courseIntake.CourseOutLine;
+                if (courseIntake.CourseTopic > 0)
+                    attendanceRegister.CourseTopicID = courseIntake.CourseTopic;
                 attendanceRegister.LastChangedDate = DateTime.Now;
                 _context.AttendanceRegisters.Add(attendanceRegister);
                 result = _context.SaveChanges();
@@ -542,6 +628,28 @@ namespace SmartLogic
             }
 
         }
+        public async Task<int> DeleteRegister(int id)
+        {
+            int result;
+            try
+            {
+                var registerDetails = await _context.AttendanceRegisterDetails.Where(ar=>ar.AttendanceRegisterID==id).ToListAsync();
+                _context.AttendanceRegisterDetails.RemoveRange(registerDetails);
+
+                var register = await _context.AttendanceRegisters.FindAsync(id);
+                _context.AttendanceRegisters.Remove(register);
+
+                result = await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+
+        }
+
         public async Task<AttendanceRegister> FindRegister(int id)
         {
             try
@@ -551,7 +659,7 @@ namespace SmartLogic
                      Include(c => c.AttendanceRegisterDetails).
                      ThenInclude(c => c.Client).
                      Include(c => c.CourseIntake).
-                     ThenInclude(c => c.Course).ThenInclude(c => c.CourseOutlines).
+                     ThenInclude(c => c.Course).ThenInclude(c => c.CourseTopics).
                     Where(c => c.AttendanceRegisterID == id).FirstOrDefaultAsync();
             }
             catch (Exception ex)

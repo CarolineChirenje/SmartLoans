@@ -410,7 +410,7 @@
                                 <div>
                                     <div class="checkbox">
                                         @{
-                                            int sessions = Model.Course.CourseOutlines == null ? 0 : Model.Course.CourseOutlines.Count();
+                                            int sessions = Model.Course.CourseTopics == null ? 0 : Model.Course.CourseTopics.Count();
 
                                         }
                                         @if (UtilityService.HasPermission(Permissions.Update_Client_Course))

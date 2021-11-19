@@ -13,8 +13,8 @@ namespace SmartDomain
         public int CourseIntakeID { get; set; }
         public virtual CourseIntake CourseIntake { get; set; }
 
-        public int? CourseOutlineID { get; set; }
-        public virtual CourseOutline CourseOutline { get; set; }
+        public int? CourseTopicID { get; set; }
+        public virtual CourseTopic CourseTopic { get; set; }
 
         public string AttendanceDate { get; set; }
 

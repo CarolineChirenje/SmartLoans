@@ -100,7 +100,15 @@ namespace SmartReporting
                 tblrow.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                 tblrow.Cells[0].Format.Font.Bold = true;
-                tblrow.Cells[0].AddParagraph(_register.CourseIntake.Course.Title);
+                tblrow.Cells[0].AddParagraph($"{_register.CourseIntake.Course.Title}");
+
+                Row tblrow0 = this.table.AddRow();
+                tblrow0.Borders.Visible = false;
+                tblrow0.TopPadding = 1.5;
+                tblrow0.Cells[0].Borders.Visible = false;
+                tblrow0.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+                tblrow0.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                tblrow0.Cells[0].AddParagraph(_register.CourseTopic?.Name);
 
                 Row tblrow1 = this.table.AddRow();
                 tblrow1.Borders.Visible = false;

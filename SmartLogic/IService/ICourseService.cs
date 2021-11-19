@@ -20,14 +20,19 @@ namespace SmartLogic
         Task<List<Course>> Courses();
         Task<List<Course>> NewCourses();
 
-        // Course Outline
-        Task<int> Save(CourseOutline CourseOutline);
-        Task<int> Update(CourseOutline CourseOutline);
-        Task<int> ActionCourseOutline(int id, DatabaseAction action);
-        Task<CourseOutline> FindCourseOutline(int id);
-        List<CourseOutline> GetCourseOutlines(int courseID);
+        // Course Topic
+        Task<int> Save(CourseTopic CourseTopic);
+        Task<int> Update(CourseTopic CourseTopic);
+        Task<int> ActionCourseTopic(int id, DatabaseAction action);
+        Task<CourseTopic> FindCourseTopic(int id);
+        List<CourseTopic> GetCourseTopics(int courseID);
 
-
+        // Course Session
+        Task<int> Save(CourseSession courseSession);
+        Task<int> Update(CourseSession courseSession);
+        Task<int> ActionCourseSession(int id, DatabaseAction action);
+        Task<CourseSession> FindCourseSession(int id);
+        List<CourseSession> GetCourseSessions(int courseTopicID);
 
         // Course Intake
         Task<int> Save(CourseIntake courseIntake);
@@ -37,8 +42,9 @@ namespace SmartLogic
         List<CourseIntake> GetCourseIntakes(int courseID);
         List<Client> GetEnrollmentList(int intakeID);
         Task<int> MarkRegister(CourseIntake courseIntake, string[] enrolmentList);
-        bool RegisterExist(int courseIntakeID, string dateMarked);
+        bool RegisterExist(int courseIntakeID, string dateMarked,int courseTopicID);
         Task<AttendanceRegister> FindRegister(int id);
+        Task<int> DeleteRegister(int id);
 
         //Course Fee
         Task<CourseFee> FindCourseFee(int id);

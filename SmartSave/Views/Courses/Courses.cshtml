@@ -28,7 +28,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Sessions</th>
+                                <th>Topics</th>
                                 <th>Is Active</th>
 
                                 <th>Last Changed Date</th>
@@ -44,7 +44,7 @@
                                     @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
                                         string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
                                         string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
-                                        int sessionCount = item.CourseOutlines == null ? 0 : item.CourseOutlines.Count();
+                                        int sessionCount = item.CourseTopics == null ? 0 : item.CourseTopics.Count();
                                     }
                                     @if (UtilityService.HasPermission(Permissions.View_Course))
                                     {

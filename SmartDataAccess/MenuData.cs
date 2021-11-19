@@ -75,7 +75,17 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
-               
+                  new MenuGroup()
+                {
+                    MenuGroupID = (int)MenuGroups.Programmes,
+                    DisplayName = MenuGroups.Programmes.ToString().Replace("_", " "),
+                    IsActive = true,
+                    IsActiveMenu = false,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-graduation-cap"),
+                    OrderNo = 8,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
                 new MenuGroup()
                 {
                     MenuGroupID = (int)MenuGroups.Menu,
@@ -237,7 +247,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 10,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
+                    MenuGroupID = (int)MenuGroups.Programmes,
                     DisplayName = "Coaching Programmes",
                     ControllerName = "Courses",
                     ActionName = "Courses",
@@ -381,6 +391,19 @@ namespace SmartDataAccess
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-globe"),
                     OrderNo =20,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+                  new Menu()
+                {
+                    MenuID =21,
+                    MenuGroupID = (int)MenuGroups.Reporting,
+                    DisplayName = "Reports",
+                    ControllerName = "Reporting",
+                    ActionName = "Report",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fas fa-registered"),
+                    OrderNo =21,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },

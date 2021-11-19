@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartDataAccess;
 using SmartDomain;
 using SmartHelper;
+using SmartInterfaces;
 using SmartLog;
 using CustomSetting = SmartDomain.CustomSetting;
 
@@ -374,13 +375,13 @@ namespace SmartLogic
                 throw;
             }
         }
-        public List<CourseOutline> GetCourseOutlines(int courseID)
+        public List<CourseTopic> GetCourseOutlines(int courseID)
         {
             try
             {
 
-                return _context.CourseOutlines
-   .Where(c => c.CourseID == courseID).ToList();
+                return _context.CourseTopics.Include(c=>c.CourseSessions)
+               .Where(c => c.CourseID == courseID).ToList();
 
             }
             catch (Exception ex)
@@ -389,7 +390,24 @@ namespace SmartLogic
                 throw;
             }
         }
-        public List<CourseOutline> GetUserAttendedSessions(int clientid, int courseid)
+
+        public List<CourseBreakDown> GetCourseBreakDown(int courseID)
+        {
+            try
+            {
+
+              var result=  _context.CourseTopics.Include(c => c.CourseSessions)
+                   .Where(c => c.CourseID == courseID).Select(c=> new CourseBreakDown { CourseName=c.Name , CourseSessions=c.CourseSessions.ToList() }).ToList();
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public List<CourseSession> GetUserAttendedSessions(int clientid, int courseid)
         {
             try
             {
@@ -399,11 +417,11 @@ namespace SmartLogic
                 if (UtilityService.IsNotNull(clientCourse))
                     _ClientCourseID = clientCourse.ClientCourseID;
 
-                IEnumerable<int> courseOutlines = from c in _context.ClientTranscripts
+                IEnumerable<int> courseSessions = from c in _context.ClientTranscripts
                                                   where c.ClientCourseID == _ClientCourseID
-                                                  select c.CourseOutlineID;
-                return _context.CourseOutlines
-               .Where(c => courseOutlines.Contains(c.CourseOutlineID)).ToList();
+                                                  select c.CourseSessionID;
+                return _context.CourseSessions
+               .Where(c => courseSessions.Contains(c.CourseSessionID)).ToList();
 
             }
             catch (Exception ex)

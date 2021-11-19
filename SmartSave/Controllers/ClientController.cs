@@ -1270,6 +1270,13 @@ namespace SmartSave.Controllers
                     TempData["Error"] = "A  similar course enrolment is currently active.To register for the same course please make sure that the existing  enrollment has been deregistered or marked as complete"; ;
                     return RedirectToAction("Courses", new { id = ClientCourse.ClientID });
                 }
+
+                bool courseLimitReached = await _service.MaximumCourseLimitReached(ClientCourse.CourseIntakeID.Value);
+                if (courseLimitReached)
+                {
+                    TempData["Error"] = "Maximum Enrolment Limit has been reached for this Course Intake Extend the Enrolment Capacity or Create A new Intake"; 
+                    return RedirectToAction("Courses", new { id = ClientCourse.ClientID });
+                }
                 if (await (_service.Save(ClientCourse)) == 0)
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
@@ -1330,6 +1337,51 @@ namespace SmartSave.Controllers
                 return View(clientFee);
             return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
         }
+
+        public ActionResult ViewSessions(int courseID, int clientcourseid)
+        {
+            int clientID = Convert.ToInt32(HttpContext.Session.GetString("ClientID"));
+            if (courseID == 0 || clientID==0 || clientcourseid==0)
+                return RedirectToAction("ViewClient", new { id =clientID });
+            ClientCourse clientCourse =  _service.FindCourse(clientcourseid).Result;
+             if(clientCourse==null)
+                return RedirectToAction("ViewClient", new { id = clientID });
+
+            ClientCourseView result= new ClientCourseView();
+            result.IsDeRegistered = clientCourse.IsDeRegistered;
+            result.DateCompleted = clientCourse.DateCompleted;
+            result.ClientID = clientID;
+            result.CourseID = courseID;
+            result.ClientCourseID = clientcourseid;
+            var client = _service.FindClient(clientID).Result;
+            result.Client = client;
+            var courseBreakDown = _settingService.GetCourseBreakDown(courseID).ToList();
+          
+            if (UtilityService.IsNotNull(courseBreakDown))
+            {
+                var clientSessions = new HashSet<int>(_settingService.GetUserAttendedSessions(clientID, courseID)?.Select(c => c.CourseSessionID));
+                var courseList = new List<CourseView>();
+                foreach (var course in courseBreakDown)
+                {
+                    CourseView courseView = new CourseView();
+                    courseView.Sessions = new List<CheckBoxListItem>();
+                    courseView.Topic = course.CourseName;
+                    var sessions = course.CourseSessions.ToList();
+                    foreach (var session in sessions)
+                    {
+                        courseView.Sessions.Add(new CheckBoxListItem
+                        {
+                            ID = session.CourseSessionID,
+                            Name = session.Name,
+                            IsChecked = clientSessions.Contains(session.CourseSessionID)
+                        });
+                    }
+                    courseList.Add(courseView);
+                }
+                result.Course = courseList;
+           }
+            return View(result);
+            }
         [HttpPost]
         public async Task<IActionResult> UpdateSessions(string[] selectedSessions, ClientCourse clientCourse)
         {
@@ -1595,16 +1647,17 @@ namespace SmartSave.Controllers
             int courseID = Convert.ToInt32(HttpContext.Session.GetString("CourseID"));
             if (courseID > 0)
             {
+               // var allSessions = _settingService.GetCourseBreakDown(courseID).OrderBy(r => r.CourseName).GroupBy(r => r.CourseName);
                 var allSessions = _settingService.GetCourseOutlines(courseID).OrderBy(r => r.Name);
-                var clientSessions = new HashSet<int>(_settingService.GetUserAttendedSessions(clientID, courseID)?.Select(c => c.CourseOutlineID));
+                var clientSessions = new HashSet<int>(_settingService.GetUserAttendedSessions(clientID, courseID)?.Select(c => c.CourseTopicID));
                 var viewModel = new List<CheckBoxListItem>();
                 foreach (var session in allSessions)
                 {
                     viewModel.Add(new CheckBoxListItem
                     {
-                        ID = session.CourseOutlineID,
+                        ID = session.CourseTopicID,
                         Name = session.Name,
-                        IsChecked = clientSessions.Contains(session.CourseOutlineID)
+                        IsChecked = clientSessions.Contains(session.CourseTopicID)
                     });
                 }
                 ViewBag.SessionsList = viewModel;

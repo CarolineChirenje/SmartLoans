@@ -8,7 +8,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        @Model.ClientForm.ClientRef
+        @Model.ClientForm?.ClientRef
     </h1>
 </section>
 <!-- Main content -->
@@ -19,7 +19,7 @@
             <div class="tab-pane fade in" id="Courses">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        @Model.ClientForm.ClientRef - Coaching Programmes
+                        @Model.ClientForm?.ClientRef - Coaching Programmes
                     </div>
                 </div>
                 <!-- /.panel-heading -->
@@ -31,7 +31,9 @@
                                     <th>Name</th>
                                     <th>Intake</th>
                                     <th>Date Registered</th>
+                                    <th>Topics</th>
                                     <th>Sessions</th>
+                                    <th>Completed Sessions</th>
                                     <th>Date Completed</th>
                                     <th>Is De-Registered</th>
                                 </tr>
@@ -39,22 +41,21 @@
                             <tbody>
                                 @if (Model.CourseList != null)
                                 {
-
-                                    foreach (var item in Model.CourseList)
-                                    {
                                         var courses = Model.CourseList.OrderByDescending(x => x.DateRegistered);
                                         @foreach (var course in courses)
                                         {
-                                            <tr>
-                                                <td><a asp-controller="Client" asp-action="ViewClientCourse" asp-route-id="@course.ClientCourseID">@course.CourseName</a></td>
-                                                <td>@course.Intake</td>
-                                                <td>@course.RegistrationDate</td>
-                                                <td>@course.Sessions</td>
-                                                <td>@course.DateCompleted</td>
-                                                <td>@course.Status</td>
-                                            </tr>
+                                <tr>
+                                    <td><a asp-controller="Client" asp-action="ViewClientCourse" asp-route-id="@course.ClientCourseID">@course.CourseName</a></td>
+                                    <td>@course.Intake</td>
+                                    <td>@course.RegistrationDate</td>
+                                    <td>@course.Topics</td>
+                                    <td>@course.Sessions</td>
+                                    <td>@course.CompletedSessions</td>
+                                    <td>@course.DateCompleted</td>
+                                    <td>@course.Status</td>
+                                </tr>
                                         }
-                                    }
+                                    
                                 }
                         </table>
                     </div>

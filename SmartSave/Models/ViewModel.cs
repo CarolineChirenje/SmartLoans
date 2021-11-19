@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using SmartDomain;
+using SmartInterfaces;
 
 namespace SmartSave.Models
 {
@@ -83,7 +84,23 @@ namespace SmartSave.Models
         public string Name { get; set; }
         public bool IsChecked { get; set; }
     }
-
+    public class CourseView
+    {
+       
+        public string Topic { get; set; }
+        public List<CheckBoxListItem> Sessions { get; set; }
+    }
+    public class ClientCourseView
+    {
+        public int ClientID { get; set; }
+        public bool IsDeRegistered { get; set; }
+        public DateTime? DateCompleted { get; set; }
+       
+        public int CourseID { get; set; }
+        public int ClientCourseID { get; set; }
+        public ClientForm Client { get; set; }
+        public List<CourseView> Course { get; set; }
+    }
     public class DashBoardViewModel
     {
         public int NewClientsCount { get; set; }

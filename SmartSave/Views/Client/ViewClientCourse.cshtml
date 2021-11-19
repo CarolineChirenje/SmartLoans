@@ -48,14 +48,15 @@
                                 <div>
                                     <div class="checkbox">
                                         @{
-                                            int sessions = Model.Course.CourseOutlines == null ? 0 : Model.Course.CourseOutlines.Count();
+                                            int sessions = Model.Course.CourseTopics == null ? 0 : Model.Course.CourseTopics.Count();
 
                                         }
                                         @if (UtilityService.HasPermission(Permissions.Update_Client_Course))
                                         {
-                                            <label>
-                                                <a data-toggle="modal" data-target="#CourseSessions">@sessions</a>
-                                            </label>
+                                        <label>
+                                            @*<a data-toggle="modal" data-target="#CourseSessions">@sessions</a>*@
+                                            <a target="_blank" asp-controller="Client" asp-action="ViewSessions" asp-route-courseID="@Model.CourseID" asp-route-clientcourseid="@Model.ClientCourseID">@sessions</a>
+                                        </label>
                                         }
                                         else
                                         {

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using SmartDomain;
+using SmartInterfaces;
+
 namespace SmartLogic
 {
 
@@ -33,8 +35,9 @@ namespace SmartLogic
         List<Country> GetCountryList();
         List<Frequency> GetFrequencyList();
 
-        List<CourseOutline> GetCourseOutlines(int courseID);
-        List<CourseOutline> GetUserAttendedSessions(int clientid, int courseid);
+        List<CourseTopic> GetCourseOutlines(int courseID);
+        List<CourseBreakDown> GetCourseBreakDown(int courseID);
+        List<CourseSession> GetUserAttendedSessions(int clientid, int courseid);
         decimal GetTransactionFee(int productID);
         List<Assert> GetAssertsLinkedToProduct(int productID);
         List<AssertCategory> GetAssertCategory(int assertID);
