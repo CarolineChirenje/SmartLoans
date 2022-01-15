@@ -144,6 +144,12 @@ namespace SmartInterfaces
         public List<ContactList> ContactLists { get; set; }
     }
 
+    public class ClientKonapoFunds
+    {
+        public int ClientID { get; set; }
+                public List<KonapoFund> KonapoFunds { get; set; }
+    }
+
     public class ContactList
     {
         public int ClientID { get; set; }

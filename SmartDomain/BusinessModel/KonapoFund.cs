@@ -19,5 +19,8 @@ namespace SmartDomain
 
         public DateTime RegistrationDate { get { return DateTime.Now; } }
         public virtual List<KonapoFundDetail> KonapoFundDetails { get; set; }
+
+        [NotMapped]
+        public string FundDetails{ get { return $"{KonapoRef}-{Fund?.Name}"; } }
     }
 }

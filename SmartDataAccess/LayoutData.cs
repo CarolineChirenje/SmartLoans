@@ -210,7 +210,7 @@ namespace SmartDataAccess
                     LayoutMenuID =13,
                     LayoutID = (int)LayoutComponent.Client,
                     DisplayName = "Konapo Fund",
-                    ControllerName = "KonapoFund",
+                    ControllerName = "Client",
                     ActionName = "KonapoFunds",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),

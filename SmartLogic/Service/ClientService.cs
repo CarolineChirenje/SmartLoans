@@ -61,7 +61,31 @@ namespace SmartLogic
             return result;
 
         }
+        public async Task<ClientKonapoFunds> GetClientKonapoFunds(int clientID)
+        {
+            try
+            {
+             var konapo = await _context.KonapoFunds.Where(p => p.ClientID == clientID)
+               .Include(m => m.Client)
+                               .Include(p => p.Fund)
+                .ThenInclude(p => p.FundCategories)
+                .ThenInclude(p => p.FundCategoryItems)
+             .AsNoTracking()
+             .ToListAsync();
 
+                ClientKonapoFunds clientKonapoFunds = new ClientKonapoFunds
+                {
+                    ClientID = clientID,
+                    KonapoFunds = konapo
+                };
+             return clientKonapoFunds;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<ClientPeek> GetClient(string emailAddress = null, string idnumber = null, int? clientID = null)
         {
             try

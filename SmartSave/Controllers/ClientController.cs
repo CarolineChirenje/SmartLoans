@@ -103,6 +103,26 @@ namespace SmartSave.Controllers
             return RedirectToAction("Dashboard", "Home");
         }
 
+        public ActionResult KonapoFunds(int id)
+        {
+            try
+            {
+               
+                    Permissions permission = Permissions.View_Konapo_Fund;
+                    if (!UtilityService.HasPermission(permission))
+                        return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+                ClientKonapoFunds clientKonapo = _service.GetClientKonapoFunds(id).Result;
+                    return View(clientKonapo);
+               
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+
+
+        }
         public IActionResult AddClient()
         {
             GetDropDownLists();

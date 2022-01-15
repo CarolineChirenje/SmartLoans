@@ -92,6 +92,25 @@ namespace SmartLogic
         }
 
 
+          public List<CustomSelectList> GetFunds(string term)
+        {
+            try
+            {
+                var funds = (from fund in _context.Funds
+                                 where fund.IsActive && fund.Name.StartsWith(term)
+                                 select new CustomSelectList
+                                 {
+                                     Name = fund.Name,
+                                     ID = fund.FundID
+                                 }).ToList();
+                return funds;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<KonapoFund> GetKonapoFund(int KonapoFundID)
         {
             try

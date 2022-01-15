@@ -1,0 +1,97 @@
+﻿@model  SmartInterfaces.ClientKonapoFunds
+@using SmartHelper;
+@{
+    TempData["Title"] = "Konapo Funds";
+}
+
+<section class="content-header">
+    <h1>
+        @TempData["Title"]
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">@TempData["Title"]</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Manage Fund Items</h3>
+
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Ref</th>
+                                <th>Fund</th>
+                                <th>Is Active</th>
+                                <th>Last Changed By</th>
+                                <th>Last Changed Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            if(Model.KonapoFunds!=null){
+                            @foreach (var item in Model.KonapoFunds)
+                            {
+
+                            <tr>
+                                @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                    string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                    string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
+
+                                }
+                                @if (UtilityService.HasPermission(Permissions.View_Konapo_Fund))
+                                {
+                                    <td><a asp-controller="KonapoFund" asp-action="ViewKonapoFund" asp-route-id="@item.KonapoFundID">@item.KonapoRef</a> </td>
+                                }
+                                else
+                                {
+                                    <td>@Html.DisplayFor(modelItem => item.KonapoRef)</td>
+                                }
+
+                                @if (UtilityService.HasPermission(Permissions.View_Fund))
+                                {
+                                    <td><a asp-controller="Fund" asp-action="ViewFund" asp-route-id="@item.FundID">@item.Fund.Name</a> </td>
+                                }
+                                else
+                                {
+                                    <td>@Html.DisplayFor(modelItem => item.Fund.Name)</td>
+                                }
+                                <td>@activeStatus</td>
+                                <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                <td>@dateCreated</td>
+                            </tr>
+                            }
+                            }
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    @if (UtilityService.HasPermission(Permissions.Add_Konapo_Fund))
+                    {
+                        <a class="btn btn-success pull-right" asp-controller="KonapoFund" asp-route-id="@Model.ClientID" asp-action="AddKonapoFund">New</a><br />
+                    }
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+
+</script>

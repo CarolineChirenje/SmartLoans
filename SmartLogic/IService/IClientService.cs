@@ -25,6 +25,8 @@ namespace SmartLogic
         Register AttendanceRegisters(int clientID);
         Task<bool> ClientExists(int Clientid = 0);
 
+        Task<ClientKonapoFunds> GetClientKonapoFunds(int clientID);
+
         //Notes
         Comments ClientNotes(int clientID);
         Task<ClientNote> FindNote(int id);

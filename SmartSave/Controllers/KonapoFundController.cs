@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -15,13 +16,14 @@ namespace SmartSave.Controllers
     public class KonapoFundController : BaseController<KonapoFundController>
     {
         private readonly IKonapoFundService _service;
-   
-        public KonapoFundController(IKonapoFundService service, ISettingService settingService)
+        private readonly IClientService _clientservice;
+        public KonapoFundController(IKonapoFundService service, IClientService clientService)
         {
             _service = service;
-          
+            _clientservice = clientService;
+
         }
-        public ActionResult KonapoFunds(string refNum = null, bool newfundsOnly = false ,int id=0)
+        public ActionResult KonapoFunds(string refNum = null, bool newfundsOnly = false, int id = 0)
         {
             try
             {
@@ -56,16 +58,19 @@ namespace SmartSave.Controllers
 
 
         }
-     
 
-        public IActionResult AddKonapoFund()
+
+        public IActionResult AddKonapoFund(int id=0)
         {
+         if(id>0)
+                HttpContext.Session.SetString("ClientID", id.ToString());
+            PopulateDropDownList();
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> AddKonapoFund(KonapoFund KonapoFund)
         {
-        
+
             if (ModelState.IsValid)
             {
                 if (await _service.IsDuplicate(KonapoFund))
@@ -83,18 +88,24 @@ namespace SmartSave.Controllers
         // GET:
         public async Task<IActionResult> ViewKonapoFund(int id = 0)
         {
-          
+
             if (id == 0)
                 return RedirectToAction(nameof(KonapoFunds));
 
             return View(await _service.GetKonapoFund(id));
         }
-
+        [HttpPost]
+        public JsonResult FundSearch(string prefix)
+        {
+         
+            var funds = _service.GetFunds(prefix);
+            return Json(funds);
+        }
 
         [HttpPost]
         public async Task<IActionResult> ViewKonapoFund(KonapoFund KonapoFund)
         {
-         
+
             if (ModelState.IsValid)
             {
                 KonapoFund update = await (_service.GetKonapoFund(KonapoFund.KonapoFundID));
@@ -122,7 +133,24 @@ namespace SmartSave.Controllers
             }
 
         }
-      
 
+        private void PopulateDropDownList()
+        {
+
+            int clientID = 0;
+            try
+            {
+                clientID = Convert.ToInt32(HttpContext.Session.GetString("ClientID"));
+            }
+            catch (Exception)
+            {
+                clientID = 0;
+            }
+            var ClientList = _clientservice.Clients().Select(t => new
+            {
+                t.ClientID,
+                Name = $" {t.ClientFullName} - {t.AccountNumber}",            }).OrderBy(t => t.Name);
+            ViewBag.ClientList = new SelectList(ClientList, "ClientID", "Name", clientID);
+        }
     }
 }

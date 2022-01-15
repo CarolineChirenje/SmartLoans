@@ -42,10 +42,16 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Name" value="@Model.KonapoRef">
+                        <label for="inputEmail3" class="form-control label-default">@Model.FundDetails</label>
                     </div>
                 </div>
-                
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Date Registered</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.RegistrationDate)</label>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
                     <div class="col-sm-2">
@@ -88,4 +94,75 @@
         </form>
     </div>
     <!-- /.box -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Additional Information
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <!-- Nav tabs -->
+
+                    <ul class="nav nav-tabs">
+
+                        <li class="active">
+                            <a href="#FundCategory" data-toggle="tab">Categories</a>
+                        </li>
+
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade in active " id="FundCategory">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Information
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="dataTable_wrapper">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Is Active</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.Fund.FundCategories != null)
+                                            {
+
+                                                foreach (var item in Model.Fund.FundCategories)
+                                                {
+                                                    <tr>
+                                                        @{
+                                                            string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+
+                                                        }
+                                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                        <td>@activeStatus</td>
+                                                        <td><a asp-controller="Fund" asp-action="ViewFundCategory" asp-route-Categoryid="@item.FundCategoryID" asp-route-Fundid="@item.FundID">View</a> | <a asp-controller="KonapoFund" asp-action="ViewCategory" asp-route-Categoryid="@item.FundCategoryID" asp-route-Fundid="@item.FundID">Edit</a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                            </div>
+                        </div>
+
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+            </div>
+        </div>
+    </div>
 </section>

@@ -19751,3 +19751,4 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.CopyComple
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.genruntimeconfig.cache
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\KonapoFunds.cshtml.g.cs
