@@ -21,3 +21,27 @@ D:\Dev Projects\SmartSave\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.csproj.C
 D:\Dev Projects\SmartSave\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.csproj.CopyComplete
 D:\Dev Projects\SmartSave\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.dll
 D:\Dev Projects\SmartSave\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.pdb
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartLogic.deps.json
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartLogic.dll
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartLogic.pdb
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartDataAccess.dll
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartDomain.dll
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartHelper.dll
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartInterfaces.dll
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartLog.dll
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartReporting.dll
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartDataAccess.pdb
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartLog.pdb
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartInterfaces.pdb
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartReporting.pdb
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.csproj.CopyComplete
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.dll
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.0\SmartLogic.pdb

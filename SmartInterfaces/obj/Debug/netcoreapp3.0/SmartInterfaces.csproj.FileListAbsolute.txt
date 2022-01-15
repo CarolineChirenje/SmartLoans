@@ -13,3 +13,19 @@ D:\Dev Projects\SmartSave\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterface
 D:\Dev Projects\SmartSave\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.csproj.CopyComplete
 D:\Dev Projects\SmartSave\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.dll
 D:\Dev Projects\SmartSave\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.pdb
+C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.0\SmartInterfaces.deps.json
+C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.0\SmartInterfaces.dll
+C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.0\SmartInterfaces.pdb
+C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.0\SmartDomain.dll
+C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.0\SmartHelper.dll
+C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
+C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.csproj.CopyComplete
+C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.dll
+C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.0\SmartInterfaces.pdb

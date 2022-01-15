@@ -86,6 +86,17 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
+                    new MenuGroup()
+                {
+                    MenuGroupID = (int)MenuGroups.Konapo_Fund_Set_Up,
+                    DisplayName = MenuGroups.Konapo_Fund_Set_Up.ToString().Replace("_", " "),
+                    IsActive = true,
+                    IsActiveMenu = false,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
+                    OrderNo = 8,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
                 new MenuGroup()
                 {
                     MenuGroupID = (int)MenuGroups.Menu,
@@ -407,7 +418,45 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
-
+                  new Menu()
+                {
+                    MenuID =22,
+                    MenuGroupID = (int)MenuGroups.Konapo_Fund_Set_Up,
+                    DisplayName = "Konapo Funds",
+                    ControllerName = "Fund",
+                    ActionName = "Fund",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-calculator"),
+                    OrderNo =22,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+                    new Menu()
+                {
+                    MenuID =23,
+                    MenuGroupID = (int)MenuGroups.Konapo_Fund_Set_Up,
+                    DisplayName = "Fund Items",
+                    ControllerName = "FundItem",
+                    ActionName = "FundItems",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-navicon"),
+                    OrderNo =23,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+                   new Menu()
+                {
+                    MenuID =24,
+                    MenuGroupID = (int)MenuGroups.Employees,
+                    DisplayName = "Konpo Funds",
+                    ControllerName = "KonapoFund",
+                    ActionName = "KonapoFunds",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
+                    OrderNo =24,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
               // put new menu here
               
                   new Menu()

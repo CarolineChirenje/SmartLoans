@@ -12,6 +12,8 @@ namespace SmartHelper
         Custom_Settings,
         Invoicing,
         Programmes,
+        Konapo_Fund_Set_Up,
+
         //
         Menu = 9998,
         Developer_Menu = 999,
@@ -820,6 +822,18 @@ namespace SmartHelper
         Update_Course_Session,
         Delete_Course_Session,
         View_Course_Session,
+        Add_Fund,
+        Update_Fund,
+        Delete_Fund,
+        View_Fund,
+        Add_Fund_Item,
+        Update_Fund_Item,
+        Delete_Fund_Item,
+        View_Fund_Item,
+        Add_Konapo_Fund,
+        Update_Konapo_Fund,
+        Delete_Konapo_Fund,
+        View_Konapo_Fund
     }
     public enum InvoiceState
     {   Created = 1,
@@ -959,6 +973,12 @@ namespace SmartHelper
     {
         Company = 1,
         Individual = 2,
+    }
+
+    public enum Cash_Type
+    {
+        Bank = 1,
+        Cash = 2,
     }
 }
 

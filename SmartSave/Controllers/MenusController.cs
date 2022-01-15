@@ -58,11 +58,11 @@ namespace SmartSave.Controllers
                 if (await (_service.Update(MenuGroup)) == 0)
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 else
-                    return View(MenuGroup);
+                    return RedirectToAction("ViewMenuGroup", new { id = MenuGroup.MenuGroupID });
             }
             else
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return  View(MenuGroup);
+            return RedirectToAction("ViewMenuGroup", new {id= MenuGroup.MenuGroupID });
         }
 
         public async Task<IActionResult> Delete(int id)

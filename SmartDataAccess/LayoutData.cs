@@ -205,6 +205,20 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
+                   new LayoutMenu()
+                {
+                    LayoutMenuID =13,
+                    LayoutID = (int)LayoutComponent.Client,
+                    DisplayName = "Konapo Fund",
+                    ControllerName = "KonapoFund",
+                    ActionName = "KonapoFunds",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
+                    OrderNo = 13,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
             };
             return menus.ToArray();
 

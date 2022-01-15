@@ -1,0 +1,10 @@
+2022-01-15 14:44:11:44 :Logic Base : System.ArgumentNullException: Value cannot be null. (Parameter 'entity')
+   at Microsoft.EntityFrameworkCore.Utilities.Check.NotNull[T](T value, String parameterName)
+   at Microsoft.EntityFrameworkCore.DbContext.Remove[TEntity](TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.Remove(TEntity entity)
+   at SmartLogic.KonapoFundService.Delete(Int32 id) in C:\DEV\SmartWealth\SmartLogic\Service\KonapoFundService.cs:line 161
+2022-01-15 14:47:12:26 :Logic Base : System.ArgumentNullException: Value cannot be null. (Parameter 'entity')
+   at Microsoft.EntityFrameworkCore.Utilities.Check.NotNull[T](T value, String parameterName)
+   at Microsoft.EntityFrameworkCore.DbContext.Remove[TEntity](TEntity entity)
+   at Microsoft.EntityFrameworkCore.Internal.InternalDbSet`1.Remove(TEntity entity)
+   at SmartLogic.KonapoFundService.DeleteFundItem(Int32 id) in C:\DEV\SmartWealth\SmartLogic\Service\KonapoFundService.cs:line 403

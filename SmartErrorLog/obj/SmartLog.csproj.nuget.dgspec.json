@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj": {}
+    "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {}
   },
   "projects": {
-    "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj": {
+    "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
         "projectName": "SmartLog",
-        "projectPath": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\obj\\",
+        "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
+        "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
+        "outputPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,9 +26,10 @@
         },
         "frameworks": {
           "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
             "projectReferences": {
-              "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj": {
-                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj"
+              "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
               }
             }
           }
@@ -44,6 +42,7 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
           "imports": [
             "net461",
             "net462",
@@ -73,24 +72,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.415\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj": {
+    "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj",
         "projectName": "SmartHelper",
-        "projectPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\obj\\",
+        "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj",
+        "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
+        "outputPath": "C:\\DEV\\SmartWealth\\SmartHelper\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -102,6 +98,7 @@
         },
         "frameworks": {
           "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
             "projectReferences": {}
           }
         },
@@ -113,6 +110,7 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
           "dependencies": {
             "Dapper": {
               "target": "Package",
@@ -156,7 +154,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.415\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

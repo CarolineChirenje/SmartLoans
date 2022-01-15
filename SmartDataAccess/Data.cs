@@ -1266,7 +1266,7 @@ namespace SmartDataAccess
             }
             return invoices.ToArray();
         }
-       
+
         public static DeductionType[] GetDeductionTypes()
         {
             List<DeductionType> lists = new List<DeductionType>();
@@ -1295,8 +1295,28 @@ namespace SmartDataAccess
                 lists.Add(new TechnicalSupport()
                 {
                     TechnicalSupportID = (int)x.ID,
-                    Name=x.Name.ToString().Replace("_"," "),
+                    Name = x.Name.ToString().Replace("_", " "),
                     Value = String.Empty,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+            }
+            return lists.ToArray();
+        }
+
+        public static FundSource[] GetFundSources()
+        {
+            List<FundSource> lists = new List<FundSource>();
+            var p = from Cash_Type s in Enum.GetValues(typeof(Cash_Type))
+                    select new { ID = s, Name = s.ToString() };
+            foreach (var x in p)
+            {
+                lists.Add(new FundSource()
+                {
+                    FundSourceID = (int)x.ID,
+                    Name = x.Name.ToString().Replace("_", " "),
+                    IsActive=true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
