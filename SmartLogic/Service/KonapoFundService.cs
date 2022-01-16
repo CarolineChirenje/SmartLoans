@@ -202,14 +202,30 @@ namespace SmartLogic
         public async Task<KonapoFund> FindKonapoFund(int konapoFundID)
         {
             try
-            {
-                //return await _context.KonapoFunds.Where(r => r.Fund.Name.ToUpper() == name.Trim().ToUpper())
-                //               .AsNoTracking()
-                //            .FirstOrDefaultAsync();
-
-                return await _context.KonapoFunds.Where(r => r.KonapoFundID == konapoFundID)
+            { return await _context.KonapoFunds.Where(r => r.KonapoFundID == konapoFundID)
                            .AsNoTracking()
                         .FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<KonapoFundCTI> FindKonapoFundCTI(int konapoFundCTIID)
+        {
+            try
+            {    return await _context.KonapoFundCTIs.Where(r => r.KonapoFundCTIID == konapoFundCTIID)
+                   .Include(c=>c.FundCategoryItem)
+                    .ThenInclude(c => c.FundCategory)
+                     .Include(c => c.FundCategoryItem)
+                    .ThenInclude(c => c.FundItem)
+                    .Include(c=>c.FundSource)
+                   .Include(c=>c.KonapoFundCT)
+                   .ThenInclude(c => c.KonapoFund)
+                    .ThenInclude(c => c.Fund)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {

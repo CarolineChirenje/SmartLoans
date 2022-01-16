@@ -17,10 +17,12 @@ namespace SmartSave.Controllers
     {
         private readonly IKonapoFundService _service;
         private readonly IClientService _clientservice;
-        public KonapoFundController(IKonapoFundService service, IClientService clientService)
+        private readonly ISettingService _settingService;
+        public KonapoFundController(IKonapoFundService service, IClientService clientService, ISettingService settingService)
         {
             _service = service;
             _clientservice = clientService;
+            _settingService = settingService;
 
         }
         public ActionResult KonapoFunds(string refNum = null, bool newfundsOnly = false, int id = 0)
@@ -60,9 +62,9 @@ namespace SmartSave.Controllers
         }
 
 
-        public IActionResult AddKonapoFund(int id=0)
+        public IActionResult AddKonapoFund(int id = 0)
         {
-         if(id>0)
+            if (id > 0)
                 HttpContext.Session.SetString("ClientID", id.ToString());
             PopulateDropDownList();
             return View();
@@ -84,7 +86,7 @@ namespace SmartSave.Controllers
 
             }
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction("KonapoFunds", "Client", new { id=KonapoFund.ClientID });
+            return RedirectToAction("KonapoFunds", "Client", new { id = KonapoFund.ClientID });
         }
         // GET:
         public async Task<IActionResult> ViewKonapoFund(int id = 0)
@@ -127,7 +129,39 @@ namespace SmartSave.Controllers
             var fund = await _service.GetKonapoFundCategory(id);
             return View(fund);
         }
+        public async Task<IActionResult> ViewKonapoFundItem(int id)
+        {
+            if (id == 0)
+                return RedirectToAction(nameof(KonapoFunds));
+            PopulateDropDownList();
+            var fund = await _service.FindKonapoFundCTI(id);
+            return View(fund);
+        }
 
+
+        [HttpPost]
+        public async Task<IActionResult> ViewKonapoFundItem(KonapoFundCTI KonapoFund)
+        {
+            Decimal ProjectedCost = UtilityService.GetDecimalAmount(KonapoFund.ProjectedCostAmount);
+            Decimal Amount = UtilityService.GetDecimalAmount(KonapoFund.AmountProvided);
+            KonapoFund.KonapoAmount = Amount;
+            KonapoFund.ProjectedCost = ProjectedCost;
+            if (ModelState.IsValid)
+            {
+                PopulateDropDownList();
+                KonapoFundCTI update = await (_service.FindKonapoFundCTI(KonapoFund.KonapoFundCTIID));
+                if (UtilityService.IsNotNull(update))
+                {
+                    if (await (_service.Update(KonapoFund)) == 0)
+                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return RedirectToAction("ViewKonapoFundItem", new { id=KonapoFund.KonapoFundCTIID });
+                }
+                return View(KonapoFund);
+            }
+            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            return RedirectToAction("ViewKonapoFundItem", new { id = KonapoFund.KonapoFundCTIID });
+
+        }
         public async Task<IActionResult> Delete(int id)
         {
             if (await (_service.DeleteKonapoFund(id)) > 0)
@@ -142,7 +176,6 @@ namespace SmartSave.Controllers
 
         private void PopulateDropDownList()
         {
-
             int clientID = 0;
             try
             {
@@ -155,8 +188,17 @@ namespace SmartSave.Controllers
             var ClientList = _clientservice.Clients().Select(t => new
             {
                 t.ClientID,
-                Name = $" {t.ClientFullName} - {t.AccountNumber}",            }).OrderBy(t => t.Name);
+                Name = $" {t.ClientFullName} - {t.AccountNumber}",
+            }).OrderBy(t => t.Name);
             ViewBag.ClientList = new SelectList(ClientList, "ClientID", "Name", clientID);
+
+            var fundSourceList = _settingService.GetActiveFundSource().Select(t => new
+            {
+                t.FundSourceID,
+                Name = t.Name,
+            }).OrderBy(t => t.Name);
+            ViewBag.FundSourceList = new SelectList(fundSourceList, "FundSourceID", "Name");
+
         }
     }
 }

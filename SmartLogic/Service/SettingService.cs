@@ -186,7 +186,19 @@ namespace SmartLogic
                 throw;
             }
         }
+       public List<FundSource> GetActiveFundSource()
+        {
+            try
+            {
 
+                return _context.FundSources.Where(T => T.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public List<TransactionType> GetActiveTransactionTypeList()
         {
             try

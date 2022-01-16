@@ -19,6 +19,7 @@ namespace SmartLogic
         Task<ClientKonapoFund> GetKonapoFund(int KonapoFundId);
         Task<ClientKonapoFundItems> GetKonapoFundCategory(int KonapoFundCTID);
         Task<KonapoFund> FindKonapoFund(int KonapoFundId);
+        Task<KonapoFundCTI> FindKonapoFundCTI(int konapoFundCTIID);
         Task<List<KonapoFund>> GetKonapoFunds(string refNumber = null, bool newfundsOnly = false);
         Task<List<KonapoFund>> GetClientKonapoFunds(int clientID);
         Task<bool> IsDuplicate(KonapoFund KonapoFund);

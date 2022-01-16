@@ -19753,3 +19753,4 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.genruntimeconfig.cache
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\ViewKopanoFundCategory.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\ViewKonapoFundItem.cshtml.g.cs
