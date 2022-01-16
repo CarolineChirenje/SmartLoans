@@ -19,7 +19,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Manage Fund Items</h3>
+                    <h3 class="box-title">Manage Konapo Funds</h3>
 
                 </div>
                 <!-- /.box-header -->
@@ -30,12 +30,13 @@
                                 <th>Ref</th>
                                 <th>Fund</th>
                                 <th>Is Active</th>
+                                <th>Categories</th>
                                 <th>Last Changed By</th>
                                 <th>Last Changed Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            if(Model.KonapoFunds!=null){
+                            @if(Model.KonapoFunds!=null){
                             @foreach (var item in Model.KonapoFunds)
                             {
 
@@ -56,13 +57,14 @@
 
                                 @if (UtilityService.HasPermission(Permissions.View_Fund))
                                 {
-                                    <td><a asp-controller="Fund" asp-action="ViewFund" asp-route-id="@item.FundID">@item.Fund.Name</a> </td>
+                                    <td><a asp-controller="Fund" target="_blank" asp-action="ViewFund" asp-route-id="@item.FundID">@item.Fund.Name</a> </td>
                                 }
                                 else
                                 {
                                     <td>@Html.DisplayFor(modelItem => item.Fund.Name)</td>
                                 }
                                 <td>@activeStatus</td>
+                                <td>@Html.DisplayFor(modelItem => item.Categories)</td>
                                 <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
                                 <td>@dateCreated</td>
                             </tr>

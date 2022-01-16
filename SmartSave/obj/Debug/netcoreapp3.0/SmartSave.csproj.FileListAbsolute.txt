@@ -9872,16 +9872,6 @@ D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\staticwebassets\Smar
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 D:\Dev Projects\SmartSave\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.genruntimeconfig.cache
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.Resource.resources
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.GenerateResource.cache
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.GeneratedMSBuildEditorConfig.editorconfig
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfoInputs.cache
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfo.cs
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.CoreCompileInputs.cache
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.MvcApplicationPartsAssemblyInfo.cache
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cache
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cs
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.AssemblyReference.cache
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.0\appsettings.Development.json
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.0\appsettings.json
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.0\Custom\vendors\bootstrap-wysihtml5\component.json
@@ -19581,6 +19571,16 @@ C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.pdb
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.0\SmartMail.pdb
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.0\SmartReporting.pdb
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.Resource.resources
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.GenerateResource.cache
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.MvcApplicationPartsAssemblyInfo.cache
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cache
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.RazorAssemblyInfo.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\staticwebassets\SmartSave.StaticWebAssets.Manifest.cache
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\staticwebassets\SmartSave.StaticWebAssets.xml
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\scopedcss\bundle\SmartSave.styles.css
@@ -19604,6 +19604,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\Courses.
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\Deductions.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\Dependents.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\Documents.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\KonapoFunds.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\MedicalFiles.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\Notes.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\PaidTransactions.cshtml.g.cs
@@ -19751,4 +19752,4 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.CopyComple
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.genruntimeconfig.cache
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Client\KonapoFunds.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\ViewKopanoFundCategory.cshtml.g.cs

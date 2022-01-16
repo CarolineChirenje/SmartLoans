@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20220115073132_KonapoFundRefractoring.Designer.cs" />
     <Compile Remove="Migrations\20220115075250_KopanoFundRefractoring.cs" />
     <Compile Remove="Migrations\20220115075250_KopanoFundRefractoring.Designer.cs" />
+    <Compile Remove="Migrations\20220116003055_RefractorTables.cs" />
+    <Compile Remove="Migrations\20220116003055_RefractorTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

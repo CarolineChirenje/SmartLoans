@@ -16,12 +16,17 @@ namespace SmartDataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            // modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-           // modelBuilder.Entity<KonapoFund>()
-           //.HasMany(p => p.KonapoFundDetails)
-           //.WithOne(t => t.KonapoFund)
-           //.OnDelete(DeleteBehavior.NoAction);
-  
+            modelBuilder.Entity(typeof(KonapoFundCT))
+                 .HasOne(typeof(KonapoFund), "KonapoFund")
+                 .WithMany()
+                 .HasForeignKey("KonapoFundID")
+                 .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
+
+            modelBuilder.Entity(typeof(KonapoFundCTI))
+                 .HasOne(typeof(KonapoFundCT), "KonapoFundCT")
+                 .WithMany()
+                 .HasForeignKey("KonapoFundCTID")
+                 .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
             modelBuilder.Entity<UserRole>().HasKey(sc => new { sc.UserID, sc.RoleID });
 
             //System Roles
@@ -247,9 +252,10 @@ namespace SmartDataAccess
         public DbSet<FundCategoryItem> FundCategoryItems { get; set; }
         public DbSet<FundSource> FundSources { get; set; }
         public DbSet<KonapoFund> KonapoFunds { get; set; }
-        public DbSet<KonapoFundDetail> KonapoFundDetails { get; set; }
+        public DbSet<KonapoFundCT> KonapoFundCTs { get; set; }
+        public DbSet<KonapoFundCTI> KonapoFundCTIs { get; set; }
         
-        public DbSet<KonapoFundDetailHistory> KonapoFundHistories { get; set; }
+        public DbSet<KonapoFundCTIHistory> KonapoFundCTIHistories { get; set; }
         // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
         // Script-Migration -From 20180904195021_InitialCreate
     }

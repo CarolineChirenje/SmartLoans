@@ -80,10 +80,11 @@ namespace SmartSave.Controllers
                 }
                 if (await (_service.Save(KonapoFund)) == 0)
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction(nameof(KonapoFunds));
+                return RedirectToAction("KonapoFunds", "Client", new { id = KonapoFund.ClientID });
+
             }
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return View(KonapoFund);
+            return RedirectToAction("KonapoFunds", "Client", new { id=KonapoFund.ClientID });
         }
         // GET:
         public async Task<IActionResult> ViewKonapoFund(int id = 0)
@@ -91,13 +92,12 @@ namespace SmartSave.Controllers
 
             if (id == 0)
                 return RedirectToAction(nameof(KonapoFunds));
-
-            return View(await _service.GetKonapoFund(id));
+            var fund = await _service.GetKonapoFund(id);
+            return View(fund);
         }
         [HttpPost]
         public JsonResult FundSearch(string prefix)
         {
-         
             var funds = _service.GetFunds(prefix);
             return Json(funds);
         }
@@ -105,10 +105,9 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewKonapoFund(KonapoFund KonapoFund)
         {
-
             if (ModelState.IsValid)
             {
-                KonapoFund update = await (_service.GetKonapoFund(KonapoFund.KonapoFundID));
+                KonapoFund update = await (_service.FindKonapoFund(KonapoFund.KonapoFundID));
                 if (UtilityService.IsNotNull(update))
                 {
                     if (await (_service.Update(KonapoFund)) == 0)
@@ -120,7 +119,14 @@ namespace SmartSave.Controllers
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(KonapoFund);
         }
+        public async Task<IActionResult> ViewKopanoFundCategory(int id)
+        {
 
+            if (id == 0)
+                return RedirectToAction(nameof(KonapoFunds));
+            var fund = await _service.GetKonapoFundCategory(id);
+            return View(fund);
+        }
 
         public async Task<IActionResult> Delete(int id)
         {

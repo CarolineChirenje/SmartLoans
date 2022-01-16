@@ -149,7 +149,30 @@ namespace SmartInterfaces
         public int ClientID { get; set; }
                 public List<KonapoFund> KonapoFunds { get; set; }
     }
+    public class ClientKonapoFund
+    {
+        public int ClientID { get; set; }
+        public int FundID { get; set; }
+        public int KonapoFundID { get; set; }
+        public string KonapoRef { get; set; }
+        public KonapoFund KonapoFund { get; set; }
+        public List<KonapoFundCT> KonapoFundCTs { get; set; }
+    }
 
+    public class ClientKonapoFundItems
+    {
+        public int ClientID { get; set; }
+        public int FundID { get; set; }
+        public int KonapoFundID { get; set; }
+        public string CategoryName { get; set; }
+        public int CategoryID { get; set; }
+        public string KonapoRef { get; set; }
+        public string FundDetails { get; set; }
+        
+        public bool IsActive { get; set; }
+        public KonapoFund KonapoFund { get; set; }
+        public List<KonapoFundCTI> KonapoFundCTIs { get; set; }
+    }
     public class ContactList
     {
         public int ClientID { get; set; }

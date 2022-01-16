@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using SmartDataAccess;
 using SmartDomain;
 using SmartHelper;
+using SmartInterfaces;
 using SmartLog;
 using System;
 using System.Collections.Generic;
@@ -77,12 +78,19 @@ namespace SmartLogic
             try
             {
                 return await _context.KonapoFunds.Where(p => p.ClientID == clientID)
-               .Include(m => m.Client)
-                               .Include(p => p.Fund)
-                .ThenInclude(p => p.FundCategories)
-                .ThenInclude(p => p.FundCategoryItems)
-             .AsNoTracking()
-             .ToListAsync();
+                            .Include(p => p.Fund)
+                            .Include(p => p.KonapoFundCTs)
+                            .ThenInclude(p => p.FundCategory)
+                            .Include(p => p.KonapoFundCTs)
+                            .ThenInclude(p => p.KonapoFundCTIs)
+                            .ThenInclude(p => p.FundCategoryItem)
+                            .Include(p => p.KonapoFundCTs)
+                            .ThenInclude(p => p.KonapoFundCTIs)
+                            .ThenInclude(p => p.FundSource)
+                            .Include(m => m.Client)
+                            .AsNoTracking()
+
+                            .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -92,17 +100,17 @@ namespace SmartLogic
         }
 
 
-          public List<CustomSelectList> GetFunds(string term)
+        public List<CustomSelectList> GetFunds(string term)
         {
             try
             {
                 var funds = (from fund in _context.Funds
-                                 where fund.IsActive && fund.Name.StartsWith(term)
-                                 select new CustomSelectList
-                                 {
-                                     Name = fund.Name,
-                                     ID = fund.FundID
-                                 }).ToList();
+                             where fund.IsActive && fund.Name.StartsWith(term)
+                             select new CustomSelectList
+                             {
+                                 Name = fund.Name,
+                                 ID = fund.FundID
+                             }).ToList();
                 return funds;
             }
             catch (Exception ex)
@@ -111,21 +119,38 @@ namespace SmartLogic
                 throw;
             }
         }
-        public async Task<KonapoFund> GetKonapoFund(int KonapoFundID)
+        public async Task<ClientKonapoFund> GetKonapoFund(int KonapoFundID)
         {
             try
             {
-
                 KonapoFund KonapoFund = await _context.KonapoFunds
-                   .Where(r => r.KonapoFundID == KonapoFundID)
-                           .Include(m => m.Client)
-                      .Include(p => p.KonapoFundDetails)
-                      .Include(p => p.Fund)
-                      .ThenInclude(p => p.FundCategories)
-                      .ThenInclude(p => p.FundCategoryItems)
-                   .AsNoTracking().FirstOrDefaultAsync();
+                .Where(p => p.KonapoFundID == KonapoFundID)
+                .Include(p => p.Fund)
+                 .FirstOrDefaultAsync();
+                if (UtilityService.IsNull(KonapoFund))
+                    return null;
+                ClientKonapoFund fund = new ClientKonapoFund
+                {
+                    ClientID = KonapoFund.ClientID,
+                    FundID = KonapoFund.FundID,
+                    KonapoRef = KonapoFund.KonapoRef,
+                    KonapoFundID = KonapoFund.KonapoFundID,
+                    KonapoFund = KonapoFund
+                };
 
-                return KonapoFund;
+                List<KonapoFundCT> konapoFundCTs =
+                _context.KonapoFundCTs.Where(c => c.KonapoFundID == KonapoFund.KonapoFundID)
+                .Include(c => c.FundCategory)
+                .Include(c => c.KonapoFundCTIs)
+                .ThenInclude(c => c.FundCategoryItem)
+                .ThenInclude(c => c.FundItem)
+                .Include(c => c.KonapoFundCTIs)
+                .ThenInclude(c => c.FundSource)
+                .AsNoTracking()
+                .ToList();
+
+                fund.KonapoFundCTs = konapoFundCTs;
+                return fund;
             }
             catch (Exception ex)
             {
@@ -133,17 +158,58 @@ namespace SmartLogic
                 throw;
             }
         }
-        public async Task<KonapoFund> GetKonapoFund(string name)
+
+        public async Task<ClientKonapoFundItems> GetKonapoFundCategory(int KonapoFundCTID)
         {
             try
             {
-                return await _context.KonapoFunds.Where(r => r.Fund.Name.ToUpper() == name.Trim().ToUpper())
-                              .Include(m => m.Client)
-                      .Include(p => p.KonapoFundDetails)
-                      .Include(p => p.Fund)
-                      .ThenInclude(p => p.FundCategories)
-                      .ThenInclude(p => p.FundCategoryItems)
-                               .AsNoTracking().FirstOrDefaultAsync();
+                KonapoFundCT KonapoFund = await _context.KonapoFundCTs
+                .Where(p => p.KonapoFundCTID == KonapoFundCTID)
+                .Include(p => p.KonapoFund)
+                .ThenInclude(p => p.Fund)
+                .Include(p => p.FundCategory)
+                 .FirstOrDefaultAsync();
+                if (UtilityService.IsNull(KonapoFund))
+                    return null;
+                ClientKonapoFundItems fund = new ClientKonapoFundItems
+                {
+                    ClientID = KonapoFund.KonapoFund.ClientID,
+                    FundID = KonapoFund.KonapoFund.FundID,
+                    KonapoRef = KonapoFund.KonapoFund.KonapoRef,
+                    KonapoFundID = KonapoFund.KonapoFundID,
+                    CategoryID=KonapoFundCTID,
+                    CategoryName=KonapoFund.FundCategory.Name,
+                    KonapoFund=KonapoFund.KonapoFund,
+                    FundDetails = KonapoFund.KonapoFund.FundDetails,
+                    IsActive=KonapoFund.IsActive
+                };
+                List<KonapoFundCTI> konapoFundCTIs =
+                _context.KonapoFundCTIs.Where(p => p.KonapoFundCTID == KonapoFundCTID)
+                 .Include(c => c.FundCategoryItem)
+                .ThenInclude(c => c.FundItem)
+                .Include(c => c.FundSource)
+                .AsNoTracking()
+                .ToList();
+                fund.KonapoFundCTIs = konapoFundCTIs;
+                return fund;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<KonapoFund> FindKonapoFund(int konapoFundID)
+        {
+            try
+            {
+                //return await _context.KonapoFunds.Where(r => r.Fund.Name.ToUpper() == name.Trim().ToUpper())
+                //               .AsNoTracking()
+                //            .FirstOrDefaultAsync();
+
+                return await _context.KonapoFunds.Where(r => r.KonapoFundID == konapoFundID)
+                           .AsNoTracking()
+                        .FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -157,12 +223,18 @@ namespace SmartLogic
             {
 
                 var funds = await _context.KonapoFunds
-                  .Include(m => m.Client)
-                 .Include(p => p.Fund)
-                   .ThenInclude(p => p.FundCategories)
-                   .ThenInclude(p => p.FundCategoryItems)
-                .AsNoTracking()
-                .ToListAsync();
+                            .Include(p => p.Fund)
+                            .Include(p => p.KonapoFundCTs)
+                            .ThenInclude(p => p.FundCategory)
+                            .Include(p => p.KonapoFundCTs)
+                            .ThenInclude(p => p.KonapoFundCTIs)
+                            .ThenInclude(p => p.FundCategoryItem)
+                            .Include(p => p.KonapoFundCTs)
+                            .ThenInclude(p => p.KonapoFundCTIs)
+                            .ThenInclude(p => p.FundSource)
+                            .Include(m => m.Client)
+                            .AsNoTracking()
+                            .ToListAsync();
                 if (funds == null)
                     return null;
 
@@ -210,7 +282,10 @@ namespace SmartLogic
                 KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
                 KonapoFund.LastChangedDate = DateTime.Now;
                 _context.Add(KonapoFund);
-                await _context.SaveChangesAsync();
+                int result = await _context.SaveChangesAsync();
+                if (result > 0)
+                    // create categories linked to fund
+                    await SaveActiveKonapoFundCT(KonapoFund.FundID, KonapoFund.KonapoFundID);
                 return KonapoFund.KonapoFundID;
             }
             catch (Exception ex)
@@ -240,7 +315,7 @@ namespace SmartLogic
             try
             {
 
-                KonapoFund KonapoFund = await GetKonapoFund(KonapoFundID);
+                KonapoFund KonapoFund = _context.KonapoFunds.Find(KonapoFundID);
                 if (DatabaseAction.Remove == action)
                     _context.KonapoFunds.Remove(KonapoFund);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
@@ -272,16 +347,16 @@ namespace SmartLogic
             }
         }
 
-        public async Task<int> Save(KonapoFundDetail konapoFundDetail)
+        public async Task<int> Save(KonapoFundCTI konapoFundCTI)
         {
             try
             {
 
-                konapoFundDetail.LastChangedBy = UtilityService.CurrentUserName;
-                konapoFundDetail.LastChangedDate = DateTime.Now;
-                _context.Add(konapoFundDetail);
+                konapoFundCTI.LastChangedBy = UtilityService.CurrentUserName;
+                konapoFundCTI.LastChangedDate = DateTime.Now;
+                _context.Add(konapoFundCTI);
                 await _context.SaveChangesAsync();
-                return konapoFundDetail.KonapoFundDetailID;
+                return konapoFundCTI.KonapoFundCTIID;
             }
             catch (Exception ex)
             {
@@ -289,11 +364,11 @@ namespace SmartLogic
                 throw;
             }
         }
-        public async Task<bool> IsDuplicate(KonapoFundDetail KonapoFund)
+        public async Task<bool> IsDuplicate(KonapoFundCTI KonapoFund)
         {
             try
             {
-                KonapoFundDetail Fund = await _context.KonapoFundDetails.Where(b => b.FundCategoryItemID == KonapoFund.FundCategoryItemID && b.KFundID == KonapoFund.KFundID).FirstOrDefaultAsync();
+                KonapoFundCTI Fund = await _context.KonapoFundCTIs.Where(b => b.FundCategoryItemID == KonapoFund.FundCategoryItemID && b.KonapoFundCTID == KonapoFund.KonapoFundCTID).FirstOrDefaultAsync();
                 return UtilityService.IsNotNull(Fund);
             }
             catch (Exception ex)
@@ -302,13 +377,13 @@ namespace SmartLogic
                 throw;
             }
         }
-        public async Task<int> Update(KonapoFundDetail update)
+        public async Task<int> Update(KonapoFundCTI update)
         {
             try
             {
 
-                KonapoFundDetail KonapoFund = _context.KonapoFundDetails.Find(update.KonapoFundDetailID);
-                KonapoFundDetail old_KonapoFund = KonapoFund;
+                KonapoFundCTI KonapoFund = _context.KonapoFundCTIs.Find(update.KonapoFundCTIID);
+                KonapoFundCTI old_KonapoFund = KonapoFund;
                 KonapoFund.ProjectedCost = update.ProjectedCost;
                 KonapoFund.KonapoAmount = update.KonapoAmount;
                 KonapoFund.FundSourceID = update.FundSourceID;
@@ -317,8 +392,8 @@ namespace SmartLogic
                 _context.Update(KonapoFund);
 
                 // save history
-                KonapoFundDetailHistory KonapoFundHistory = new KonapoFundDetailHistory();
-                KonapoFundHistory.KonapoFundDetailID = old_KonapoFund.KonapoFundDetailID;
+                KonapoFundCTIHistory KonapoFundHistory = new KonapoFundCTIHistory();
+                KonapoFundHistory.KonapoFundCTIID = old_KonapoFund.KonapoFundCTIID;
                 KonapoFundHistory.FundSourceID = old_KonapoFund.FundSourceID;
                 KonapoFundHistory.ProjectedCost = old_KonapoFund.ProjectedCost;
                 KonapoFundHistory.KonapoAmount = old_KonapoFund.KonapoAmount;
@@ -334,12 +409,12 @@ namespace SmartLogic
             }
 
         }
-        public async Task<int> DeleteKonapoFundDetail(int id)
+        public async Task<int> DeleteKonapoFundCTI(int id)
         {
             try
             {
-                var KonapoFund = await _context.KonapoFundDetails.FindAsync(id);
-                _context.KonapoFundDetails.Remove(KonapoFund);
+                var KonapoFund = await _context.KonapoFundCTIs.FindAsync(id);
+                _context.KonapoFundCTIs.Remove(KonapoFund);
                 return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
@@ -349,16 +424,15 @@ namespace SmartLogic
             }
         }
 
-        public async Task<List<KonapoFundDetail>> GetKonapoFundDetails(int id)
+        public async Task<List<KonapoFundCTI>> GetKonapoFundCTIs(int categoryId)
         {
             try
             {
-                return await _context.KonapoFundDetails.Where(p => p.KFundID == id)
+                return await _context.KonapoFundCTIs.Where(p => p.KonapoFundCTID == categoryId)
                .Include(m => m.FundSource)
                 .Include(p => p.FundCategoryItem)
                 .ThenInclude(p => p.FundCategory)
                 .ThenInclude(p => p.Fund)
-               
              .AsNoTracking()
              .ToListAsync();
             }
@@ -368,8 +442,87 @@ namespace SmartLogic
                 throw;
             }
         }
+        public async Task<bool> IsDuplicate(KonapoFundCT KonapoFund)
+        {
+            try
+            {
+                KonapoFundCT Fund = await _context.KonapoFundCTs.Where(b => b.KonapoFundID == KonapoFund.KonapoFundID && b.FundCategoryID == KonapoFund.FundCategoryID).FirstOrDefaultAsync();
+                return UtilityService.IsNotNull(Fund);
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> SaveActiveKonapoFundCT(int fundID, int konapoFundID)
+        {
+            int result = 0;
+            try
+            {
+                var categories = _context.FundCategories.
+                 Include(fc => fc.FundCategoryItems).
+                 Where(f => f.FundID == fundID && f.IsActive).ToList();
+                foreach (var category in categories)
+                {
+                    KonapoFundCT konapoFundCT = new KonapoFundCT
+                    {
+                        KonapoFundID = konapoFundID,
+                        FundCategoryID = category.FundCategoryID,
+                        IsActive = true
+                    };
+
+                    if (!IsDuplicate(konapoFundCT).Result)
+                        result = await Save(konapoFundCT);
+
+                    if (result > 0)
+                    {
+                        var fundItems = category.FundCategoryItems.Where(f => f.IsActive).ToList();
+                        if (fundItems != null && fundItems.Count() > 0)
+                        {
+                            foreach (var fundItem in fundItems)
+                            {
+                                KonapoFundCTI konapoFundCTI = new KonapoFundCTI
+                                {
+                                    FundCategoryItemID = fundItem.FundCategoryItemID,
+                                    KonapoFundCTID = category.FundCategoryID,
+                                    FundSourceID = (int)Cash_Type.Unknown
+                                };
+                                if (!IsDuplicate(konapoFundCTI).Result)
+                                    await Save(konapoFundCTI);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+            return result;
+        }
 
 
+
+        public async Task<int> Save(KonapoFundCT konapoFundCT)
+        {
+            try
+            {
+
+                konapoFundCT.LastChangedBy = UtilityService.CurrentUserName;
+                konapoFundCT.LastChangedDate = DateTime.Now;
+                _context.Add(konapoFundCT);
+                int result = await _context.SaveChangesAsync();
+                return konapoFundCT.KonapoFundCTID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         #endregion KonapoFund
 
         #region Fund

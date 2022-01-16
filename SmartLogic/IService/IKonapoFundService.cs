@@ -1,5 +1,6 @@
 ﻿using SmartDomain;
 using SmartHelper;
+using SmartInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,16 +16,18 @@ namespace SmartLogic
         Task<int> Save(KonapoFund KonapoFund);
         Task<int> Update(KonapoFund KonapoFund);
         Task<int> ActionKonapoFund(int KonapoFundId, DatabaseAction action);
-        Task<KonapoFund> GetKonapoFund(int KonapoFundId);
+        Task<ClientKonapoFund> GetKonapoFund(int KonapoFundId);
+        Task<ClientKonapoFundItems> GetKonapoFundCategory(int KonapoFundCTID);
+        Task<KonapoFund> FindKonapoFund(int KonapoFundId);
         Task<List<KonapoFund>> GetKonapoFunds(string refNumber = null, bool newfundsOnly = false);
         Task<List<KonapoFund>> GetClientKonapoFunds(int clientID);
         Task<bool> IsDuplicate(KonapoFund KonapoFund);
         List<CustomSelectList> GetFunds(string term);
-        Task<int> DeleteKonapoFundDetail(int id);
-        Task<int> Save(KonapoFundDetail KonapoFund);
-        Task<int> Update(KonapoFundDetail KonapoFund);
-        Task<bool> IsDuplicate(KonapoFundDetail KonapoFund);
-        Task<List<KonapoFundDetail>> GetKonapoFundDetails(int KonapoFundId);
+        Task<int> DeleteKonapoFundCTI(int id);
+        Task<int> Save(KonapoFundCTI KonapoFund);
+        Task<int> Update(KonapoFundCTI KonapoFund);
+        Task<bool> IsDuplicate(KonapoFundCTI KonapoFund);
+        Task<List<KonapoFundCTI>> GetKonapoFundCTIs(int KonapoFundId);
 
         //Funds
         Task<List<Fund>> Funds();

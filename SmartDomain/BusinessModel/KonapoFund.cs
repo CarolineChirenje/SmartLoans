@@ -18,9 +18,12 @@ namespace SmartDomain
         public bool IsActive { get; set; }
 
         public DateTime RegistrationDate { get { return DateTime.Now; } }
-        public virtual List<KonapoFundDetail> KonapoFundDetails { get; set; }
+        public virtual List<KonapoFundCT> KonapoFundCTs { get; set; }
 
         [NotMapped]
         public string FundDetails{ get { return $"{KonapoRef}-{Fund?.Name}"; } }
+
+        [NotMapped]
+        public int Categories { get { return KonapoFundCTs == null ? 0 : KonapoFundCTs.Count; } }
     }
 }

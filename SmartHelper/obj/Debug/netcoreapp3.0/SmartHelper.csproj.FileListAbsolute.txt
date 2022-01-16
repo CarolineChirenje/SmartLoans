@@ -13,6 +13,7 @@ C:\DEV\SmartWealth\SmartHelper\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
 C:\DEV\SmartWealth\SmartHelper\bin\Debug\netcoreapp3.0\SmartHelper.deps.json
 C:\DEV\SmartWealth\SmartHelper\bin\Debug\netcoreapp3.0\SmartHelper.dll
 C:\DEV\SmartWealth\SmartHelper\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.csproj.AssemblyReference.cache
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.SmartHelper.resources
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.csproj.GenerateResource.cache
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.GeneratedMSBuildEditorConfig.editorconfig
@@ -21,4 +22,3 @@ C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.AssemblyInfo.
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.csproj.CoreCompileInputs.cache
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.dll
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.pdb
-C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.0\SmartHelper.csproj.AssemblyReference.cache

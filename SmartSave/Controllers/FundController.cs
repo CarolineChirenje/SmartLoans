@@ -128,8 +128,8 @@ namespace SmartSave.Controllers
                 {
                     TempData["Error"] = "A Category Item with the Same Name Already Exists";
                     return RedirectToAction("ViewFundCategory", new { id = fundCategoryItem.FundCategoryID });
-
-                }
+               }
+                fundCategoryItem.IsActive = true;
                 if (await (_service.Save(fundCategoryItem)) == 0)
                 {
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");

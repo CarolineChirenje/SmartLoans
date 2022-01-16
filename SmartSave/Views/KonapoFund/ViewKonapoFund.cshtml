@@ -1,8 +1,9 @@
-﻿@model SmartDomain.KonapoFund
+﻿
+@model SmartInterfaces.ClientKonapoFund;
 @using SmartHelper;
 <section class="content-header">
     <h1>
-   Konapo Fund
+        Konapo Fund
     </h1>
 </section>
 <!-- Main content -->
@@ -42,13 +43,13 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
                     <div class="col-sm-10">
-                        <label for="inputEmail3" class="form-control label-default">@Model.FundDetails</label>
+                        <label for="inputEmail3" class="form-control label-default">@Model.KonapoFund.FundDetails</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Date Registered</label>
                     <div class="col-sm-10">
-                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.RegistrationDate)</label>
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.RegistrationDate)</label>
                     </div>
                 </div>
 
@@ -56,7 +57,7 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
                     <div class="col-sm-2">
                         <label class="checkbox-inline">
-                            @Html.CheckBoxFor(model => model.IsActive)
+                            @Html.CheckBoxFor(model => model.KonapoFund.IsActive)
                         </label>
 
                     </div>
@@ -66,14 +67,14 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
                     <div class="col-sm-10">
-                        <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                        <label for="inputEmail3" class="form-control label-default">@Model.KonapoFund.LastChangedBy</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
                     <div class="col-sm-10">
-                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.LastChangedDate)</label>
                     </div>
                 </div>
                 <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
@@ -128,24 +129,27 @@
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Is Active</th>
+                                                <th>Category Items</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Model.Fund.FundCategories != null)
+                                            @if (Model.KonapoFundCTs != null)
                                             {
 
-                                                foreach (var item in Model.Fund.FundCategories)
+                                                foreach (var item in Model.KonapoFundCTs)
                                                 {
-                                                    <tr>
-                                                        @{
-                                                            string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                            <tr>
+                                                @{
+                                                    string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
 
-                                                        }
-                                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                                        <td>@activeStatus</td>
-                                                        <td><a asp-controller="Fund" asp-action="ViewFundCategory" asp-route-Categoryid="@item.FundCategoryID" asp-route-Fundid="@item.FundID">View</a> | <a asp-controller="KonapoFund" asp-action="ViewCategory" asp-route-Categoryid="@item.FundCategoryID" asp-route-Fundid="@item.FundID">Edit</a></td>
-                                                    </tr>
+                                                }
+                                                
+                                                <td><a asp-controller="KonapoFund" asp-action="ViewKopanoFundCategory" asp-route-id="@item.KonapoFundCTID">@item.FundCategory.Name</a></td>
+                                                <td>@activeStatus</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CategoryItems)</td>
+                                                <td><a asp-controller="KonapoFund" asp-action="ViewCategory" asp-route-Categoryid="@item.FundCategoryID" asp-route-Fundid="@Model.FundID">Edit</a></td>
+                                            </tr>
                                                 }
                                             }
                                     </table>
