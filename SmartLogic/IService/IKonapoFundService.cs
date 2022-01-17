@@ -18,6 +18,7 @@ namespace SmartLogic
         Task<int> ActionKonapoFund(int KonapoFundId, DatabaseAction action);
         Task<ClientKonapoFund> GetKonapoFund(int KonapoFundId);
         Task<ClientKonapoFundItems> GetKonapoFundCategory(int KonapoFundCTID);
+        Task<ClientKonapoFundCalculation> GetKonapoFundCalculation(int KonapoFundId);
         Task<KonapoFund> FindKonapoFund(int KonapoFundId);
         Task<KonapoFundCTI> FindKonapoFundCTI(int konapoFundCTIID);
         Task<List<KonapoFund>> GetKonapoFunds(string refNumber = null, bool newfundsOnly = false);

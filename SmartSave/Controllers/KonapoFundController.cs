@@ -122,9 +122,7 @@ namespace SmartSave.Controllers
             return View(KonapoFund);
         }
         public async Task<IActionResult> ViewKopanoFundCategory(int id)
-        {
-
-            if (id == 0)
+        {            if (id == 0)
                 return RedirectToAction(nameof(KonapoFunds));
             var fund = await _service.GetKonapoFundCategory(id);
             return View(fund);
@@ -137,7 +135,13 @@ namespace SmartSave.Controllers
             var fund = await _service.FindKonapoFundCTI(id);
             return View(fund);
         }
-
+        public async Task<IActionResult> Calculation(int id)
+        {
+            if (id == 0)
+                return RedirectToAction(nameof(KonapoFunds));
+            var fund = await _service.GetKonapoFundCalculation(id);
+            return View(fund);
+        }
 
         [HttpPost]
         public async Task<IActionResult> ViewKonapoFundItem(KonapoFundCTI KonapoFund)

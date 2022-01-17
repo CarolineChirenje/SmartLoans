@@ -9,6 +9,7 @@ using SmartInterfaces;
 using SmartLog;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -148,6 +149,53 @@ namespace SmartLogic
                 .ToList();
 
                 fund.KonapoFundCTs = konapoFundCTs;
+                return fund;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+       
+        public async Task<ClientKonapoFundCalculation> GetKonapoFundCalculation(int KonapoFundID)
+        {
+            try
+            {
+                KonapoFund KonapoFund = await _context.KonapoFunds
+                .Where(p => p.KonapoFundID == KonapoFundID)
+                .Include(p => p.Fund)
+                 .FirstOrDefaultAsync();
+                if (UtilityService.IsNull(KonapoFund))
+                    return null;
+                ClientKonapoFundCalculation fund = new ClientKonapoFundCalculation
+                {
+                    ClientID = KonapoFund.ClientID,
+                    FundID = KonapoFund.FundID,
+                    KonapoRef = KonapoFund.KonapoRef,
+                    KonapoFundID = KonapoFund.KonapoFundID,
+                    KonapoFund = KonapoFund,
+                    FundName=KonapoFund.Fund.Name
+                };
+
+                decimal kopanoFundResult = 0m;
+                string sqlCustomSetting = @"SELECT SUM(ISNULL(kfci.KonapoAmount,0))
+                        FROM KonapoFundCTIs kfci
+                        INNER JOIN KonapoFundCTs kfc ON kfci.KonapoFundCTID=kfc.KonapoFundCTID
+                        INNER JOIN KonapoFunds kf ON kfc.KonapoFundID=kf.KonapoFundID
+                        WHERE kf.KonapoFundID='" + KonapoFundID + "'";
+                string result = GetData.GetStringValue(sqlCustomSetting);
+                try
+                {
+                    if (!String.IsNullOrEmpty(result))
+                        kopanoFundResult = Decimal.Parse(result,CultureInfo.InvariantCulture);
+                }
+                catch (Exception ex)
+                {
+                    CustomLog.Log(LogSource.Logic_Base, ex);
+                }
+                fund.KhonapoFundAmount = Math.Round(kopanoFundResult,2);
                 return fund;
             }
             catch (Exception ex)

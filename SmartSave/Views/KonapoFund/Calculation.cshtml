@@ -1,0 +1,169 @@
+﻿
+@model SmartInterfaces.ClientKonapoFundCalculation;
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+        Konapo Fund
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+            <h3 class="box-title">@Model.KonapoRef</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="/KonapoFund/ViewKonapoFund">
+
+            @if (TempData["Error"] != null)
+            {<div class="container">
+                    <div class="text-danger">@TempData["Error"].ToString()</div>
+                </div>
+                <br />
+            }
+            <div class="container">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
+
+            @if (TempData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@TempData["Success"].ToString()</div>
+                </div>
+            }
+            @if (TempData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@TempData["Warning"].ToString()</div>
+                </div>
+            }
+        <div class="box-body">
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                <div class="col-sm-10">
+                    <label for="inputEmail3" class="form-control label-default">@Model.KonapoFund.FundDetails</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Khonapo Fund</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Fund" name="Fund" value="@Model.KhonapoFundAmount"  onchange="CalculateTotal()" disabled>
+                   </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Minimum Survival Period (Months)</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Period" name="Period" value="12" onchange="CalculateTotal()">
+                    <span id="PeriodError" class="text-danger text-bold"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="EmergencyTotal" name="EmergencyTotal"  onchange="CalculateTotal()" disabled>
+                    <span id="EmergencyTotalError" class="text-danger text-bold"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Annual Total</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="AnnualTotal" name="AnnualTotal"  onchange="CalculateTotal()" disabled>
+                    <span id="AnnualTotalError" class="text-danger text-bold"></span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Retirement LifeTime (Years)</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Retirement" name="Retirement" value="25" onchange="CalculateTotal()">
+                    <span id="RetirementError" class="text-danger text-bold"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label"> (LifeTime)</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="LifeTimeTotal" name="LifeTimeTotal"  onchange="CalculateTotal()" disabled>
+                    <span id="LifeTimeTotalError" class="text-danger text-bold"></span>
+                </div>
+            </div>
+         
+            <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
+        </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="KonapoFund" asp-action="ViewKonapoFund" asp-route-id="@Model.KonapoFundID">Cancel</a>
+            
+                <a class="btn btn-small btn-success pull-right" asp-controller="KonapoFund" asp-action="PrintCalculation" asp-route-id="@Model.KonapoFundID">Print</a>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+  
+</section>
+
+<script>
+
+    $(document).ready(function () {
+              CalculateTotal();
+
+    });
+
+
+    $(function () {
+        $('#Period').blur(function () {
+            var tempVal = $('#Period').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#PeriodError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#PeriodError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+
+        $('#Retirement').blur(function () {
+            var tempVal = $('#Retirement').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#Retirement").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#Retirement").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+
+       
+    })
+
+    function CalculateTotal() {
+
+        var retirement = $('#Retirement').val();
+        var period = $('#Period').val();
+        var fund = $('#Fund').val();
+       fund=fund.replace(",", ".")
+      
+        //Calculate Annual 
+        var emergencyfund = fund * period;
+        emergencyfund = emergencyfund.toFixed(2);
+        $('#EmergencyTotal').val(emergencyfund);
+
+        //Annual Fund
+        var annualfund = fund * 12;
+        annualfund = annualfund.toFixed(2);
+        $('#AnnualTotal').val(annualfund);
+        //Calculate Retirement 
+        var retirementTotal = annualfund * retirement;
+        retirementTotal = retirementTotal.toFixed(2);
+        $('#LifeTimeTotal').val(retirementTotal);
+    }
+
+ 
+</script>
