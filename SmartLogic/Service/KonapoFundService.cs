@@ -140,13 +140,11 @@ namespace SmartLogic
 
                 List<KonapoFundCT> konapoFundCTs =
                 _context.KonapoFundCTs.Where(c => c.KonapoFundID == KonapoFund.KonapoFundID)
-                .Include(c => c.FundCategory)
                 .Include(c => c.KonapoFundCTIs)
                 .ThenInclude(c => c.FundCategoryItem)
                 .ThenInclude(c => c.FundItem)
-                .Include(c => c.KonapoFundCTIs)
-                .ThenInclude(c => c.FundSource)
-                .AsNoTracking()
+                .Include(c => c.FundCategory)
+                 .AsNoTracking()
                 .ToList();
 
                 fund.KonapoFundCTs = konapoFundCTs;

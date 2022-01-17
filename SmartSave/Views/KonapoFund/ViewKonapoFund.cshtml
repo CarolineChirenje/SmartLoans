@@ -128,8 +128,6 @@
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
-                                                <th>Is Active</th>
-                                                <th>Category Items</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -139,17 +137,21 @@
 
                                                 foreach (var item in Model.KonapoFundCTs)
                                                 {
-                                            <tr>
-                                                @{
-                                                    string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+                                                    <tr>
+                                                        @{
+                                                            string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
 
-                                                }
-                                                
-                                                <td><a asp-controller="KonapoFund" asp-action="ViewKopanoFundCategory" asp-route-id="@item.KonapoFundCTID">@item.FundCategory.Name</a></td>
-                                                <td>@activeStatus</td>
-                                                <td>@Html.DisplayFor(modelItem => item.CategoryItems)</td>
-                                                <td><a asp-controller="KonapoFund" asp-action="ViewCategory" asp-route-Categoryid="@item.FundCategoryID" asp-route-Fundid="@Model.FundID">Edit</a></td>
-                                            </tr>
+                                                        }
+                                                        @if (UtilityService.HasPermission(Permissions.View_Fund))
+                                                        {
+                                                            <td><a asp-controller="Fund" target="_blank" asp-action="ViewFundCategory" asp-route-Categoryid="@item.FundCategoryID" asp-route-Fundid="@Model.FundID">@item.FundCategory.Name</a></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>@item.FundCategory.Name</td>
+                                                        }
+                                                        <td><a asp-controller="KonapoFund" asp-action="ViewKopanoFundCategory" asp-route-id="@item.KonapoFundCTID">View Fund Items</a></td>
+                                                    </tr>
                                                 }
                                             }
                                     </table>
