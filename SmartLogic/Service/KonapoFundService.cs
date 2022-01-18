@@ -9,6 +9,7 @@ using SmartInterfaces;
 using SmartLog;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -180,23 +181,46 @@ namespace SmartLogic
                 };
 
                 decimal kopanoFundResult = 0m;
-                string sqlCustomSetting = @"SELECT SUM(ISNULL(kfci.KonapoAmount,0))
+               
+                try
+                {
+                    string sqlCustomSetting = @"SELECT SUM(ISNULL(kfci.KonapoAmount,0))
                         FROM KonapoFundCTIs kfci
                         INNER JOIN KonapoFundCTs kfc ON kfci.KonapoFundCTID=kfc.KonapoFundCTID
                         INNER JOIN KonapoFunds kf ON kfc.KonapoFundID=kf.KonapoFundID
                         WHERE kf.KonapoFundID='" + KonapoFundID + "'";
-                string result = GetData.GetStringValue(sqlCustomSetting);
-                try
-                {
+                    string result = GetData.GetStringValue(sqlCustomSetting);
                     if (!String.IsNullOrEmpty(result))
                         kopanoFundResult = Decimal.Parse(result,CultureInfo.InvariantCulture);
+                    fund.KhonapoFundAmount = Math.Round(kopanoFundResult, 2);
                 }
                 catch (Exception ex)
                 {
                     CustomLog.Log(LogSource.Logic_Base, ex);
                 }
-                fund.KhonapoFundAmount = Math.Round(kopanoFundResult,2);
-                return fund;
+             
+                try
+                {
+                    string sqlCustomSetting = @"SELECT kfc.FundCategoryID AS CategoryID, fc.Name  AS Category, ISNULL(SUM(ISNULL(kfci.KonapoAmount,0)),0) AS TotalAmount
+                        FROM KonapoFundCTIs kfci
+                        INNER JOIN KonapoFundCTs kfc ON kfci.KonapoFundCTID=kfc.KonapoFundCTID
+                        INNER JOIN FundCategories fc ON kfc.FundCategoryID=fc.FundCategoryID
+                        INNER JOIN KonapoFunds kf ON kfc.KonapoFundID=kf.KonapoFundID
+                        WHERE kf.KonapoFundID='" + KonapoFundID + "'GROUP BY kfc.FundCategoryID , fc.Name ORDER BY kfc.FundCategoryID ";
+                    DataTable result = GetData.GetDataTable(sqlCustomSetting);
+                    if (result != null && result.Rows.Count > 0)
+                    {
+                        List<CategoryAmount> categoryAmounts = new List<CategoryAmount>();
+                        categoryAmounts = GetData.ConvertDataTable<CategoryAmount>(result);
+                        fund.CategoryAmount = categoryAmounts;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    CustomLog.Log(LogSource.Logic_Base, ex);
+                }
+              
+              return fund;
             }
             catch (Exception ex)
             {
