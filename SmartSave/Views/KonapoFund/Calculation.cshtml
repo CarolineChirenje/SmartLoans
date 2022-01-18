@@ -118,7 +118,16 @@
                     <ul class="nav nav-tabs">
 
                         <li class="active">
-                            <a href="#FundCategory" data-toggle="tab">Monthly: Breakdown by amount and percentage</a>
+                            <a href="#FundCategory" data-toggle="tab">Monthly: Breakdown By Amount And Percentage</a>
+                        </li>
+                        <li>
+                            <a href="#TargetCalculation" data-toggle="tab">Time Required to Reach Target</a>
+                        </li>
+                        <li>
+                            <a href="#CompoundCalculation" data-toggle="tab">Compound Growth Calculator : Regular Deposits</a>
+                        </li>
+                        <li>
+                            <a href="#OTInvestment" data-toggle="tab">Compound Growth Calculator : One Time Investment</a>
                         </li>
 
                     </ul>
@@ -160,7 +169,7 @@
                                             <tr>
                                                 <th style="text-align:right">Total:</th>
                                                 <th></th>
-                                                <th></th>
+                                                <th id="TotalPercentage"></th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -171,7 +180,196 @@
                                 @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
                             </div>
                         </div>
+                        <div class="tab-pane fade in  " id="TargetCalculation">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Estimations
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="box-body">
 
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Income (Average)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="IncomeAverage" name="IncomeAverage" value="0.00" onchange="CalculateTotal()">
+                                        <span id="IncomeAverageError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Committment</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Committment" name="Committment" value="0.00" onchange="CalculateTotal()">
+                                        <span id="CommittmentError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund Target (Months)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="FundTargetMonths" name="FundTargetMonths" onchange="CalculateTotal()" disabled>
+                                        <span id="FundTargetMonthsError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund Target (Years)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="FundTargetYears" name="FundTargetYears" onchange="CalculateTotal()" disabled>
+                                        <span id="FundTargetYearsError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+
+                                <br />
+                                <br />
+                            </div>
+
+                            <div class="box-footer">
+                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                            </div>
+                        </div>
+                        <div class="tab-pane fade in  " id="CompoundCalculation">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Compound Growth -Regular Deposits
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="box-body">
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Initial Amount Available To Invest</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="InvestmentAmount" name="InvestmentAmount" value="0.00" onchange="CalculateTotal()">
+                                        <span id="InvestmentAmountError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Interest Rate</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="InterestRate" name="InterestRate" value="0.00" onchange="CalculateTotal()">
+                                        <span id="InterestRateError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Tenure (Years)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Tenure" name="Tenure" onchange="CalculateTotal()" disabled>
+                                        <span id="TenureError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Payments /Year</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="PaymentsYear" name="PaymentsYear" onchange="CalculateTotal()" disabled>
+                                        <span id="PaymentsYearError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Contributions</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="ContributionsMonth" name="ContributionsMonth" onchange="CalculateTotal()" disabled>
+                                        <span id="ContributionsMonthError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Post Tenure Value</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="PostTenureValue" name="PostTenureValue" onchange="CalculateTotal()" disabled>
+                                        <span id="PostTenureValueError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Multiplier</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Multiplier" name="Multiplier" onchange="CalculateTotal()" disabled>
+                                        <span id="MultiplierError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+
+                            <div class="box-footer">
+                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                            </div>
+                        </div>
+                        <div class="tab-pane fade in  " id="OTInvestment">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    One Time Investment : Compound Growth Calculator
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="box-body">
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Investment Amount</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="InvestmentAmountOT" name="InvestmentAmountOT" value="0.00" onchange="CalculateTotal()">
+                                        <span id="InvestmentAmountOTError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Interest Rate</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="InterestRateOT" name="InterestRateOT" value="0.00" onchange="CalculateTotal()">
+                                        <span id="InterestRateOTError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Tenure</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="TenureOT" name="TenureOT" value="0.00" onchange="CalculateTotal()">
+                                        <span id="TenureOTError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Value After Tenure</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="ValueAfterTenureOT" name="ValueAfterTenureOT" disabled>
+                                        <span id="ValueAfterTenureOTError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Multiplier</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="MultiplierOT" name="MultiplierOT"  disabled>
+                                        <span id="MultiplierOTError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+
+                            <div class="box-footer">
+                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                            </div>
+                        </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -187,7 +385,6 @@
         $('#calc').DataTable({
             "footerCallback": function (row, data, start, end, display) {
                 var api = this.api(), data;
-
                 // Remove the formatting to get integer data for summation
                 var intVal = function (i) {
                     return typeof i === 'string' ?
@@ -195,6 +392,7 @@
                         typeof i === 'number' ?
                             i : 0;
                 }
+
                 // Total Amount over all pages
                 totalamount = api
                     .column(1)
@@ -202,7 +400,7 @@
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
                     }, 0);
-                
+
                 // Total Amount  over this page
                 pageTotalAmount = api
                     .column(1, { page: 'current' })
@@ -211,19 +409,44 @@
                         return intVal(a) + intVal(b);
                     }, 0);
 
-               
-                console.log("Total Amount");
-                console.log(totalamount);
-               
+
+                //console.log("Total Amount");
+                //console.log(totalamount);
+
                 // Update footer
                 $(api.column(1).footer()).html(
                     '$' + pageTotalAmount + ' ( $' + totalamount + ' total)'
                 );
+                populatePercentages();
 
-               
+                // Total  Percentage
+                totalPercentage = api
+                    .column(2)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                // Total Amount  over this page
+
+                pageTotalPercentage = api
+                    .column(2, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                //console.log("Total Page Percentage");
+                //console.log(pageTotalPercentage);
+                //console.log("Total Percentage");
+                //console.log(totalPercentage);
+                // Update footer
+                $(api.column(2).footer()).html(
+                    '$' + pageTotalPercentage + ' ( $' + totalPercentage + '%)'
+                );
+
+
             }
         });
-    }); 
+    });
     $(function () {
         $('#Period').blur(function () {
             var tempVal = $('#Period').val();
@@ -248,6 +471,41 @@
                 $(":submit").removeAttr("disabled");
             }
         })
+        $('#Committment').blur(function () {
+            var tempVal = $('#Committment').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#CommittmentError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#CommittmentError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+
+
+        $('#IncomeAverage').blur(function () {
+            var tempVal = $('#IncomeAverage').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#IncomeAverageError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#IncomeAverageError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+        $('#IncomeAverage').blur(function () {
+            var tempVal = $('#IncomeAverage').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#IncomeAverageError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#IncomeAverageError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
     })
 
     function CalculateTotal() {
@@ -256,6 +514,8 @@
         var period = $('#Period').val();
         var fund = $('#Fund').val();
         fund = fund.replace(",", ".")
+        var incomeAv = $('#IncomeAverage').val();
+        var comm = $('#Committment').val();
 
         //Calculate Annual
         var emergencyfund = fund * period;
@@ -270,7 +530,77 @@
         var retirementTotal = annualfund * retirement;
         retirementTotal = retirementTotal.toFixed(2);
         $('#LifeTimeTotal').val(retirementTotal);
+
+        //Calculate
+        var commitAmount = $.isNumeric(comm) ? comm : 0;
+        var targetMonths = commitAmount > 0 ? emergencyfund / commitAmount : 0;
+        targetMonths = targetMonths.toFixed(2);
+        var targetYears = targetMonths / 12;
+        targetYears = targetYears.toFixed(2);
+        $('#FundTargetMonths').val(targetMonths);
+        $('#FundTargetYears').val(targetYears);
+
+        //Compound :Regular
+        var investmentAmount = $('#InvestmentAmount').val();
+        var interestRate = $('#InterestRate').val();
+        var tenure = $('#Tenure').val();
+        var contributionsMonth = $('#ContributionsMonth').val();
+        var paymentsYear = $('#PaymentsYear').val();
+        var contributionsMonth = $('#ContributionsMonth').val();
+        var postTenureValue = $('#PostTenureValue').val();
+        var multiplier = $('#Multiplier').val();
+
+        // Compound : One Time
+
+        var investmentAmountOT = $('#InvestmentAmountOT').val();
+        var interestRateOT = $('#InterestRateOT').val();
+        var tenureOT = $('#TenureOT').val();
+        //=investmentAmountOT * (1 + interestRateOT) ^ tenureOT
+        var investAmountP1 = 1 + (interestRateOT / 100);
+        var tothePowerOfResult = Math.pow(investAmountP1, tenureOT)
+        var valueAfterXyears = investmentAmountOT * tothePowerOfResult;
+        valueAfterXyears = valueAfterXyears.toFixed(2);
+        multiplierOT = investmentAmountOT > 0 ? valueAfterXyears / investmentAmountOT : 0;
+        multiplierOT = multiplierOT.toFixed(2);
+
+        $('#MultiplierOT').val(multiplierOT);
+        $('#ValueAfterTenureOT').val(valueAfterXyears);
+
     }
 
+    function getValue(amount) {
 
+        var result = typeof amount === 'string' ?
+            amount.replace(/[\$,]/g, '') / 100 :
+            typeof i === 'number' ?
+                amount : 0;
+        return result
+
+    }
+
+    function populatePercentages() {
+        var total = 0.0;
+        // calculate the percentage for each row:
+        $('#calc').DataTable().rows().every(function (rowIdx, tableLoop, rowLoop) {
+            // first calcuate the total:
+            $('#calc').DataTable().rows().every(function (rowIdx, tableLoop, rowLoop) {
+                // assumes amounts are not null, all numeric, and are in column 2:
+                total = total + getValue(this.data()[1]);
+            });
+            // Remove the formatting to get integer data for summation
+            var amount = getValue(this.data()[1]);
+            // calculate percent to 2 decimal places:
+            var percentage = Math.round((amount / total) * 10000) / 100;
+            var cells = $('#calc').DataTable().cells(rowIdx, 2);
+            //console.log("This value Percentage ");
+            //console.log(percentage);
+            cells.every(function () {
+                this.data(percentage);
+            });
+
+        });
+    }
+    $('div#calc_filter.dataTables_filter > label > input').keyup(function (e) {
+        populatePercentages();
+    });
 </script>
