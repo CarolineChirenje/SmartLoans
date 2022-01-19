@@ -121,18 +121,14 @@
                             <a href="#FundCategory" data-toggle="tab">Monthly: Breakdown By Amount And Percentage</a>
                         </li>
                         <li>
-                            <a href="#TargetCalculation" data-toggle="tab">Time Required to Reach Target</a>
-                        </li>
-                        <li>
-                            <a href="#TimeTarget" data-toggle="tab">Time to Reach Emergency Fund (Accounting for Progress)</a>
-                        </li>
-                        <li>
-                            <a href="#CompoundCalculation" data-toggle="tab">Compound Growth Calculator : Regular Deposits</a>
+                            <a href="#TargetCalculation" data-toggle="tab">Target Calculator</a>
                         </li>
                         <li>
                             <a href="#OTInvestment" data-toggle="tab">Compound Growth Calculator : One Time Investment</a>
                         </li>
-
+                        <li>
+                            <a href="#CompoundCalculation" data-toggle="tab">Compound Growth Calculator : Regular Deposits</a>
+                        </li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -183,122 +179,11 @@
                                 @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
                             </div>
                         </div>
-                        <div class="tab-pane fade in  " id="TimeTarget">
-                            <div class="panel panel-success">
-                                <div class="panel-heading">
-                                    Time to Reach Emergency Fund  (Accounting for Progress)
-                                </div>
-                            </div>
-                            <!-- /.panel-heading -->
-                            <div class="box-body">
 
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Progress Made</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Progress" name="Progress" value="0.00" onchange="CalculateTotal()">
-                                        <span id="ProgressError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Balance To Target</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Balance" name="Balance" value="0.00" onchange="CalculateTotal()">
-                                        <span id="BalanceError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Commitment </label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="MCommitment" name="MCommitment" onchange="CalculateTotal()" disabled>
-                                        <span id="MCommitmentError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Years)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="TargetRYears" name="TargetRYears" onchange="CalculateTotal()" disabled>
-                                        <span id="TargetRYearsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Months)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="TargetRMonths" name="TargetRMonths" onchange="CalculateTotal()" disabled>
-                                        <span id="TargetRMonthsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="panel panel-success">
-                                    <div class="panel-heading">
-                                        Time to Reach Annual Target
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Progress Made</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id=A"Progress" name="AProgress" value="0.00" onchange="CalculateTotal()">
-                                        <span id="AProgressError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Balance To Target</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ABalance" name="ABalance" value="0.00" onchange="CalculateTotal()">
-                                        <span id="ABalanceError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Commitment </label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="AMCommitment" name="AMCommitment" onchange="CalculateTotal()" disabled>
-                                        <span id="AMCommitmentError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Years)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ATargetRYears" name="ATargetRYears" onchange="CalculateTotal()" disabled>
-                                        <span id="ATargetRYearsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Months)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ATargetRMonths" name="ATargetRMonths" onchange="CalculateTotal()" disabled>
-                                        <span id="ATargetRMonthsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                            </div>
-
-                            <div class="box-footer">
-                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
-                            </div>
-                        </div>
                         <div class="tab-pane fade in  " id="TargetCalculation">
                             <div class="panel panel-success">
                                 <div class="panel-heading">
-                                    Estimations
+                                    Time Required (How long will it take me/us to reach the target)
                                 </div>
                             </div>
                             <!-- /.panel-heading -->
@@ -338,9 +223,112 @@
                                         <span id="FundTargetYearsError" class="text-danger text-bold"></span>
                                     </div>
                                 </div>
+                                <br />
+                                <br />
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        Time to Reach Emergency Fund  (Accounting for Progress)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Progress Made</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Progress" name="Progress" value="0.00" onchange="CalculateTotal()">
+                                        <span id="ProgressError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Balance To Target</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Balance" name="Balance" value="0.00" onchange="CalculateTotal()">
+                                        <span id="BalanceError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Commitment </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="MCommitment" name="MCommitment" onchange="CalculateTotal()" disabled>
+                                        <span id="MCommitmentError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Years)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="TargetRYears" name="TargetRYears" onchange="CalculateTotal()" disabled>
+                                        <span id="TargetRYearsError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        Time to Reach Annual Target
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Progress Made</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="AProgress" name="AProgress" value="0.00" onchange="CalculateTotal()">
+                                        <span id="AProgressError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Balance To Target</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="ABalance" name="ABalance" value="0.00" onchange="CalculateTotal()">
+                                        <span id="ABalanceError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Commitment </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="AMCommitment" name="AMCommitment" onchange="CalculateTotal()" disabled>
+                                        <span id="AMCommitmentError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Months)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="TargetRMonths" name="TargetRMonths" onchange="CalculateTotal()" disabled>
+                                        <span id="TargetRMonthsError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Months)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="ATargetRMonths" name="ATargetRMonths" onchange="CalculateTotal()" disabled>
+                                        <span id="ATargetRMonthsError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Years)</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="ATargetRYears" name="ATargetRYears" onchange="CalculateTotal()" disabled>
+                                        <span id="ATargetRYearsError" class="text-danger text-bold"></span>
+                                    </div>
+                                </div>
 
                                 <br />
                                 <br />
+
                             </div>
 
                             <div class="box-footer">
@@ -499,7 +487,7 @@
         CalculateTableTotal();
         CalculateTotal();
         CalculateCI();
-        
+
     });
     $(function () {
         validateDecimalInput('#Period');
@@ -623,7 +611,7 @@
         $('#FundTargetMonths').val(targetMonths);
         $('#FundTargetYears').val(targetYears);
 
-       
+
 
 
         // Compound : One Time
@@ -644,10 +632,10 @@
 
         // Target Emergency Fund
         var progress = $('#Progress').val();
-        var mCommitment = commitAmount; 
+        var mCommitment = commitAmount;
         $('#MCommitment').val(mCommitment);
-       
-      
+
+
         var balance = (emergencyfund - progress) <= 0 ? 0 : (emergencyfund - progress);
         balance = balance.toFixed(2);
         $('#Balance').val(balance);
@@ -677,10 +665,10 @@
 
         var atargetRYears = atargetRMonths / 12;
         atargetRYears = atargetRYears.toFixed(2);
-        $('#aTargetRYears').val(atargetRYears)
+        $('#ATargetRYears').val(atargetRYears)
 
     }
-    
+
     function CalculateCI() {
         //Compound :Regular
         var investmentAmount = $('#InvestmentAmount').val();
@@ -715,7 +703,7 @@
         var multiplier = totalInvestment > 0 ? postTenureValue / totalInvestment : 0;
         console.log("Total multiplier : " + multiplier);
         multiplier = multiplier.toFixed(6);
-       
+
         $('#Multiplier').val(multiplier);
 
         var monthlyRate = (interestRate / 100) / 12;
