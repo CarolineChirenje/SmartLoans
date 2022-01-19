@@ -182,7 +182,12 @@ namespace SmartSave.Controllers
             }
             return RedirectToAction("ViewFund", new { id = FundCategory.FundID });
         }
-
+        public async Task<IActionResult> ViewCategory(int id)
+        {            
+            HttpContext.Session.SetString("FundCategoryID", id.ToString());
+            PopulateDropDownList();
+            return View(await _service.FindFundCategory(id));
+        }
         public async Task<IActionResult> ViewFundCategory(int Categoryid, int Fundid)
         {
             if (Categoryid == 0)

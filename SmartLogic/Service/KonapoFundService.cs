@@ -179,7 +179,16 @@ namespace SmartLogic
                     KonapoFund = KonapoFund,
                     FundName = KonapoFund.Fund.Name
                 };
+                List<KonapoFundCT> konapoFundCTs =
+              _context.KonapoFundCTs.Where(c => c.KonapoFundID == KonapoFund.KonapoFundID)
+              .Include(c => c.KonapoFundCTIs)
+              .ThenInclude(c => c.FundCategoryItem)
+              .ThenInclude(c => c.FundItem)
+              .Include(c => c.FundCategory)
+               .AsNoTracking()
+              .ToList();
 
+                fund.KonapoFundCTs = konapoFundCTs;
                 decimal kopanoFundResult = 0m;
 
                 try

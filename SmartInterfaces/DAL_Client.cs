@@ -161,7 +161,7 @@ namespace SmartInterfaces
 
         public KonapoFund KonapoFund { get; set; }
         public decimal KhonapoFundAmount { get; set; }
-
+        public List<KonapoFundCT> KonapoFundCTs { get; set; }
         public List<CategoryAmount> CategoryAmount { get; set; }
     }
 
