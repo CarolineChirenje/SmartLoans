@@ -29,4 +29,15 @@ namespace SmartSave
             return View("ClientMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Client));
         }
     }
+
+    [ViewComponent(Name = "KhonapoMenuList")]
+    public class KhonapoMenuListViewComponent : ViewComponent
+    {
+        private readonly IMenuService _service;
+        public KhonapoMenuListViewComponent(IMenuService service) => _service = service;
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View("KhonapoMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Khonapo_Fund));
+        }
+    }
 }

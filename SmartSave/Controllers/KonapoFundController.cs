@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using SmartDomain;
 using SmartHelper;
+using SmartInterfaces;
 using SmartLogic;
 
 
@@ -94,6 +95,7 @@ namespace SmartSave.Controllers
 
             if (id == 0)
                 return RedirectToAction(nameof(KonapoFunds));
+            HttpContext.Session.SetString("KonapoFundID", id.ToString());
             //var fund = await _service.GetKonapoFund(id);
             //return View(fund);
             var fund = await _service.GetKonapoFundCalculation(id);
@@ -107,21 +109,21 @@ namespace SmartSave.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ViewKonapoFund(KonapoFund KonapoFund)
+        public async Task<IActionResult> ViewKonapoFund(ClientKonapoFundCalculation KonapoFund)
         {
-            if (ModelState.IsValid)
-            {
+           
                 KonapoFund update = await (_service.FindKonapoFund(KonapoFund.KonapoFundID));
                 if (UtilityService.IsNotNull(update))
                 {
-                    if (await (_service.Update(KonapoFund)) == 0)
+                KonapoFund kfund = new KonapoFund
+                {
+                    KonapoFundID = KonapoFund.KonapoFundID,
+                    IsActive = KonapoFund.IsActive
+                };
+                    if (await (_service.Update(kfund)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction(nameof(KonapoFunds));
-                }
-                return View(KonapoFund);
-            }
-            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return View(KonapoFund);
+                             }
+            return RedirectToAction("ViewKonapoFund",new { id = KonapoFund.KonapoFundID });
         }
         public async Task<IActionResult> ViewKopanoFundCategory(int id)
         {            if (id == 0)

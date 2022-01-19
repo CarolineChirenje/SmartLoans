@@ -369,7 +369,6 @@ namespace SmartLogic
                 KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
                 KonapoFund.LastChangedDate = DateTime.Now;
                 _context.Update(KonapoFund);
-
                 return await _context.SaveChangesAsync();
             }
             catch (Exception ex)

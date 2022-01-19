@@ -219,6 +219,49 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
+
+                 new LayoutMenu()
+                {
+                    LayoutMenuID =14,
+                    LayoutID = (int)LayoutComponent.Khonapo_Fund,
+                    DisplayName = "Fund Set Up",
+                    ControllerName = "Fund",
+                    ActionName = "Fund",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-calculator"),
+                    OrderNo =14,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser",
+                    LinkRequiresID=false
+                },
+                    new LayoutMenu()
+                {
+                   LayoutMenuID =15,
+                    LayoutID = (int)LayoutComponent.Khonapo_Fund,
+                    DisplayName = "Fund Items",
+                    ControllerName = "FundItem",
+                    ActionName = "FundItems",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-navicon"),
+                    OrderNo =15,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser",
+                    LinkRequiresID=false
+                },
+                   new LayoutMenu()
+                {
+                    LayoutMenuID =16,
+                    LayoutID = (int)LayoutComponent.Khonapo_Fund,
+                    DisplayName = "Konapo Funds",
+                    ControllerName = "KonapoFund",
+                    ActionName = "KonapoFunds",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
+                    OrderNo =16,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser",
+                      LinkRequiresID=false
+                },
             };
             return menus.ToArray();
 

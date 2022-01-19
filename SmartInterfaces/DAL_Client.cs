@@ -156,7 +156,8 @@ namespace SmartInterfaces
         public int FundID { get; set; }
         public int KonapoFundID { get; set; }
         public string KonapoRef { get; set; }
-
+       public bool IsActive { get; set; }
+        
         public string FundName { get; set; }
 
         public KonapoFund KonapoFund { get; set; }

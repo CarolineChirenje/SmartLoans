@@ -19668,6 +19668,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\FundItem\FundIt
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\FundItem\ViewFundItem.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Fund\AddFund.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Fund\Fund.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Fund\ViewCategory.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Fund\ViewFund.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Fund\ViewFundCategory.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Home\About.cshtml.g.cs
@@ -19680,6 +19681,8 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Home\UnAuthoriz
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\AddKonapoFund.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\KonapoFunds.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\ViewKonapoFund.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\ViewKonapoFundItem.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\ViewKopanoFundCategory.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Layouts\AddMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Layouts\Layouts.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Layouts\ViewLayoutGroup.cshtml.g.cs
@@ -19718,6 +19721,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\Roles.csh
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\ViewPermission.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Roles\ViewRole.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Shared\Components\ClientMenuList\ClientMenu.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Shared\Components\KhonapoMenuList\KhonapoMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Shared\Components\MenuList\MainMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_Footer.cshtml.g.cs
@@ -19752,6 +19756,3 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.csproj.CopyComple
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\SmartSave.genruntimeconfig.cache
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\ViewKopanoFundCategory.cshtml.g.cs
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\KonapoFund\ViewKonapoFundItem.cshtml.g.cs
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.0\Razor\Views\Fund\ViewCategory.cshtml.g.cs

@@ -15,7 +15,8 @@ namespace SmartDomain
         public int OrderNo { get; set; }
         public bool IsActive { get; set; }
         public string PathName { get { return $"{ControllerName}/{ActionName}/"; } }
-      
+        public bool LinkRequiresID { get; set; } = true;
+
 
     }
 }

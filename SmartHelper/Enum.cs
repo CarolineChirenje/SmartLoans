@@ -12,8 +12,8 @@ namespace SmartHelper
         Custom_Settings,
         Invoicing,
         Programmes,
-        Konapo_Fund_Set_Up,
-
+        Konapo_Fund,
+       
         //
         Menu = 9998,
         Developer_Menu = 999,
@@ -21,12 +21,14 @@ namespace SmartHelper
     public enum LayoutComponent
     {
         Client = 1,
-        Products
+        Products,
+        Khonapo_Fund
     }
     public enum Menu_Component
     {//Name must the same with ComponentList
         MenuList = 1,
         ClientMenuList,
+        KhonapoMenuList
     }
     public enum DaysOfTheWeek
     {
