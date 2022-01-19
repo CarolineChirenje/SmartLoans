@@ -979,7 +979,7 @@ namespace SmartHelper
     {
         Bank = 1,
         Cash = 2,
-        Unknown
+        Not_Specified
     }
 }
 
