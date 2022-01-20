@@ -14,572 +14,609 @@
 
             <h3 class="box-title">@Model.KonapoRef</h3>
         </div>
+
         <!-- /.box-header -->
-        <!-- form start -->
-        <form class="form-horizontal" method="post" action="/KonapoFund/ViewKonapoFund">
+        <div id="accordion" class="accordioncontainer">
+            <h3>Fund Details</h3>
+            <!-- form start -->
+            <form class="form-horizontal" method="post" action="/KonapoFund/ViewKonapoFund">
 
-            @if (TempData["Error"] != null)
-            {<div class="container">
-                    <div class="text-danger">@TempData["Error"].ToString()</div>
+                @if (TempData["Error"] != null)
+                {<div class="container">
+                        <div class="text-danger">@TempData["Error"].ToString()</div>
+                    </div>
+                    <br />
+                }
+                <div class="container">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                 </div>
-                <br />
-            }
-            <div class="container">
-                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-            </div>
 
-            @if (TempData["Success"] != null)
-            {<div class="container">
-                    <div class="text-success">@TempData["Success"].ToString()</div>
-                </div>
-            }
-            @if (TempData["Warning"] != null)
-            {<div class="container">
-                    <div class="text-warning">@TempData["Warning"].ToString()</div>
-                </div>
-            }
-        <div class="box-body">
+                @if (TempData["Success"] != null)
+                {<div class="container">
+                        <div class="text-success">@TempData["Success"].ToString()</div>
+                    </div>
+                }
+                @if (TempData["Warning"] != null)
+                {<div class="container">
+                        <div class="text-warning">@TempData["Warning"].ToString()</div>
+                    </div>
+                }
+                <div class="box-body">
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@Model.KonapoFund.FundDetails</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Date Registered</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.RegistrationDate)</label>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@Model.KonapoFund.FundDetails</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Client</label>
+                        <div class="col-sm-10">
+                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                            {
+                                <a asp-controller="Client" target="_blank" asp-action="ViewClient" asp-route-id="@Model.ClientID">@Model.ClientRef</a>
+                            }
+                            else
+                            {
+                                @Model.ClientRef
+                            }
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
-                <div class="col-sm-2">
-                    <label class="checkbox-inline">
-                        @Html.CheckBoxFor(model => model.KonapoFund.IsActive)
-                    </label>
+                        </div>
+                    </div>
 
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@Model.KonapoFund.LastChangedBy</label>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Date Registered</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.RegistrationDate)</label>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.LastChangedDate)</label>
-                </div>
-            </div>
-            <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Khonapo Fund</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="Fund" name="Fund" value="@Model.KhonapoFundAmount" onchange="CalculateTotal()" disabled>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                        <div class="col-sm-2">
+                            <label class="checkbox-inline">
+                                @Html.CheckBoxFor(model => model.KonapoFund.IsActive)
+                            </label>
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Minimum Survival Period (Months)</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="Period" name="Period" value="12" onchange="CalculateTotal()">
-                    <span id="PeriodError" class="text-danger text-bold"></span>
-                </div>
-            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@Model.KonapoFund.LastChangedBy</label>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="EmergencyTotal" name="EmergencyTotal" onchange="CalculateTotal()" disabled>
-                    <span id="EmergencyTotalError" class="text-danger text-bold"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Annual Total</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="AnnualTotal" name="AnnualTotal" onchange="CalculateTotal()" disabled>
-                    <span id="AnnualTotalError" class="text-danger text-bold"></span>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.LastChangedDate)</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Khonapo Fund</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Fund" name="Fund" value="@Model.KhonapoFundAmount" onchange="CalculateTotal()" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Minimum Survival Period (Months)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Period" name="Period" value="12" onchange="CalculateTotal()">
+                            <span id="PeriodError" class="text-danger text-bold"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="EmergencyTotal" name="EmergencyTotal" onchange="CalculateTotal()" disabled>
+                            <span id="EmergencyTotalError" class="text-danger text-bold"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Annual Total</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="AnnualTotal" name="AnnualTotal" onchange="CalculateTotal()" disabled>
+                            <span id="AnnualTotalError" class="text-danger text-bold"></span>
+                        </div>
+                    </div>
 
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Retirement LifeTime (Years)</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="Retirement" name="Retirement" value="25" onchange="CalculateTotal()">
-                    <span id="RetirementError" class="text-danger text-bold"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label"> (LifeTime)</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="LifeTimeTotal" name="LifeTimeTotal" onchange="CalculateTotal()" disabled>
-                    <span id="LifeTimeTotalError" class="text-danger text-bold"></span>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Retirement LifeTime (Years)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Retirement" name="Retirement" value="25" onchange="CalculateTotal()">
+                            <span id="RetirementError" class="text-danger text-bold"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label"> (LifeTime)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="LifeTimeTotal" name="LifeTimeTotal" onchange="CalculateTotal()" disabled>
+                            <span id="LifeTimeTotalError" class="text-danger text-bold"></span>
+                        </div>
+                    </div>
 
-            <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
+                    <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    @if (UtilityService.HasPermission(Permissions.Update_Fund_Item))
+                    {
+                        <button type="submit" class="btn btn-info">Update</button>
+                    }
+                    @if (UtilityService.HasPermission(Permissions.Delete_Fund_Item))
+                    {
+                        <a class="btn btn-danger" asp-controller="KonapoFund" asp-action="Delete" asp-route-id="@Model.KonapoFundID">Delete</a>
+                    }
+                    </div>
+                <!-- /.box-footer -->
+            </form>
+            <!-- /.box -->
+            <h3>Fund Calculations</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Categories & Calculations
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <!-- Nav tabs -->
+
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#TargetCalculation" data-toggle="tab">Target Calculator</a>
+                                </li>
+                                <li>
+                                    <a href="#Breakdown" data-toggle="tab">Breakdown By Amount And Percentage</a>
+                                </li>
+
+                                <li>
+                                    <a href="#OTInvestment" data-toggle="tab">Compound Growth Calculator : One Time Investment</a>
+                                </li>
+                                <li>
+                                    <a href="#CompoundCalculation" data-toggle="tab">Compound Growth Calculator : Regular Deposits</a>
+                                </li>
+                                <li>
+                                    <a href="#FundCategory" data-toggle="tab">Categories</a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+
+                                <div class="tab-pane fade in  active" id="TargetCalculation">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            Time Required (How long will it take me/us to reach the target)
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="box-body">
+
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Monthly Income (Average)</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="IncomeAverage" name="IncomeAverage" value="0.00" onchange="CalculateTotal()">
+                                                <span id="IncomeAverageError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Monthly Committment</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="Committment" name="Committment" value="0.00" onchange="CalculateTotal()">
+                                                <span id="CommittmentError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund Target (Months)</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="FundTargetMonths" name="FundTargetMonths" onchange="CalculateTotal()" disabled>
+                                                <span id="FundTargetMonthsError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund Target (Years)</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="FundTargetYears" name="FundTargetYears" onchange="CalculateTotal()" disabled>
+                                                <span id="FundTargetYearsError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">
+                                                Time to Reach Emergency Fund  (Accounting for Progress)
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Progress Made</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="Progress" name="Progress" value="0.00" onchange="CalculateTotal()">
+                                                <span id="ProgressError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Balance To Target</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="Balance" name="Balance" value="0.00" onchange="CalculateTotal()">
+                                                <span id="BalanceError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Monthly Commitment </label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="MCommitment" name="MCommitment" onchange="CalculateTotal()" disabled>
+                                                <span id="MCommitmentError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Years)</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="TargetRYears" name="TargetRYears" onchange="CalculateTotal()" disabled>
+                                                <span id="TargetRYearsError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">
+                                                Time to Reach Annual Target
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Progress Made</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="AProgress" name="AProgress" value="0.00" onchange="CalculateTotal()">
+                                                <span id="AProgressError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Balance To Target</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="ABalance" name="ABalance" value="0.00" onchange="CalculateTotal()">
+                                                <span id="ABalanceError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Monthly Commitment </label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="AMCommitment" name="AMCommitment" onchange="CalculateTotal()" disabled>
+                                                <span id="AMCommitmentError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Months)</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="TargetRMonths" name="TargetRMonths" onchange="CalculateTotal()" disabled>
+                                                <span id="TargetRMonthsError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Months)</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="ATargetRMonths" name="ATargetRMonths" onchange="CalculateTotal()" disabled>
+                                                <span id="ATargetRMonthsError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Years)</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="ATargetRYears" name="ATargetRYears" onchange="CalculateTotal()" disabled>
+                                                <span id="ATargetRYearsError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <br />
+
+                                    </div>
+
+                                    <div class="box-footer">
+                                        @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade in" id="Breakdown">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            Monthly: Breakdowns
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="dataTable_wrapper">
+                                            <table class="table table-striped table-bordered table-hover" id="calc">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Category</th>
+                                                        <th>Amount</th>
+                                                        <th>Percentage</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.CategoryAmount != null)
+                                                    {
+
+                                                        foreach (var item in Model.CategoryAmount)
+                                                        {
+                                                            <tr>
+                                                                <td><a asp-controller="Fund" target="_blank" asp-action="ViewFundCategory" asp-route-id="@item.CategoryID">@item.Category</a></td>
+                                                                <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th style="text-align:right">Total:</th>
+                                                        <th></th>
+                                                        <th id="TotalPercentage"></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-footer">
+                                        @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade in  " id="CompoundCalculation">
+                                    <div class="panel panel-danger">
+                                        <div class="panel-heading ">
+                                            Compound Growth -Regular Deposits
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="box-body">
+
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Initial Amount Available To Invest</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="InvestmentAmount" name="InvestmentAmount" value="0.00" onchange="CalculateCI()">
+                                                <span id="InvestmentAmountError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Interest Rate</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="InterestRate" name="InterestRate" value="0.00" onchange="CalculateCI()">
+                                                <span id="InterestRateError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Tenure (Years)</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="Tenure" name="Tenure" onchange="CalculateCI()">
+                                                <span id="TenureError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Payments /Year</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="PaymentsYear" name="PaymentsYear" onchange="CalculateCI()">
+                                                <span id="PaymentsYearError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Monthly Contributions</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="ContributionsMonth" name="ContributionsMonth" onchange="CalculateCI()">
+                                                <span id="ContributionsMonthError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Post Tenure Value</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="PostTenureValue" name="PostTenureValue" onchange="CalculateCI()" disabled>
+                                                <span id="PostTenureValueError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Multiplier</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="Multiplier" name="Multiplier" onchange="CalculateCI()" disabled>
+                                                <span id="MultiplierError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    </div>
+
+                                    <div class="box-footer">
+                                        @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade in  " id="OTInvestment">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            One Time Investment : Compound Growth Calculator
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="box-body">
+
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Investment Amount</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="InvestmentAmountOT" name="InvestmentAmountOT" value="0.00" onchange="CalculateTotal()">
+                                                <span id="InvestmentAmountOTError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Interest Rate</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="InterestRateOT" name="InterestRateOT" value="0.00" onchange="CalculateTotal()">
+                                                <span id="InterestRateOTError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Tenure</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="TenureOT" name="TenureOT" value="0.00" onchange="CalculateTotal()">
+                                                <span id="TenureOTError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Value After Tenure</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="ValueAfterTenureOT" name="ValueAfterTenureOT" disabled>
+                                                <span id="ValueAfterTenureOTError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Multiplier</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="MultiplierOT" name="MultiplierOT" disabled>
+                                                <span id="MultiplierOTError" class="text-danger text-bold"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    </div>
+
+                                    <div class="box-footer">
+                                        @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade in" id="FundCategory">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            Categories
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="dataTable_wrapper">
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.KonapoFundCTs != null)
+                                                    {
+
+                                                        foreach (var item in Model.KonapoFundCTs)
+                                                        {
+                                                            <tr>
+                                                                @{
+                                                                    string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+
+                                                                }
+                                                                @if (UtilityService.HasPermission(Permissions.View_Fund))
+                                                                {
+                                                                    <td><a asp-controller="Fund" target="_blank" asp-action="ViewCategory" asp-route-id="@item.FundCategoryID">@item.FundCategory.Name</a></td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@item.FundCategory.Name</td>
+                                                                }
+                                                                <td><a asp-controller="KonapoFund" asp-action="ViewKopanoFundCategory" asp-route-id="@item.KonapoFundCTID">View Fund Items</a></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-footer">
+                                        @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                                    </div>
+                                </div>
+
+
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-            <!-- /.box-body -->
+
         <div class="box-footer">
             <a class="btn btn-default" asp-controller="KonapoFund" asp-action="KonapoFunds">Cancel</a>
-            @if (UtilityService.HasPermission(Permissions.Update_Fund_Item))
-            {
-                <button type="submit" class="btn btn-info">Update</button>
-            }
-            @if (UtilityService.HasPermission(Permissions.Delete_Fund_Item))
-            {
-                <a class="btn btn-danger" asp-controller="KonapoFund" asp-action="Delete" asp-route-id="@Model.KonapoFundID">Delete</a>
-            }
             <a class="btn btn-small btn-success pull-right" asp-controller="KonapoFund" asp-action="PrintCalculation" asp-route-id="@Model.KonapoFundID">Print</a>
-        </div>
-            <!-- /.box-footer -->
-        </form>
-    </div>
-    <!-- /.box -->
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Categories & Calculations
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <!-- Nav tabs -->
-
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="#TargetCalculation" data-toggle="tab">Target Calculator</a>
-                        </li>
-                        <li>
-                            <a href="#Breakdown" data-toggle="tab">Breakdown By Amount And Percentage</a>
-                        </li>
-
-                        <li>
-                            <a href="#OTInvestment" data-toggle="tab">Compound Growth Calculator : One Time Investment</a>
-                        </li>
-                        <li>
-                            <a href="#CompoundCalculation" data-toggle="tab">Compound Growth Calculator : Regular Deposits</a>
-                        </li>
-                        <li >
-                            <a href="#FundCategory" data-toggle="tab">Categories</a>
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-
-                        <div class="tab-pane fade in  active" id="TargetCalculation">
-                            <div class="panel panel-success">
-                                <div class="panel-heading">
-                                    Time Required (How long will it take me/us to reach the target)
-                                </div>
-                            </div>
-                            <!-- /.panel-heading -->
-                            <div class="box-body">
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Income (Average)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="IncomeAverage" name="IncomeAverage" value="0.00" onchange="CalculateTotal()">
-                                        <span id="IncomeAverageError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Committment</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Committment" name="Committment" value="0.00" onchange="CalculateTotal()">
-                                        <span id="CommittmentError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund Target (Months)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="FundTargetMonths" name="FundTargetMonths" onchange="CalculateTotal()" disabled>
-                                        <span id="FundTargetMonthsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund Target (Years)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="FundTargetYears" name="FundTargetYears" onchange="CalculateTotal()" disabled>
-                                        <span id="FundTargetYearsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="panel panel-success">
-                                    <div class="panel-heading">
-                                        Time to Reach Emergency Fund  (Accounting for Progress)
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Progress Made</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Progress" name="Progress" value="0.00" onchange="CalculateTotal()">
-                                        <span id="ProgressError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Balance To Target</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Balance" name="Balance" value="0.00" onchange="CalculateTotal()">
-                                        <span id="BalanceError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Commitment </label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="MCommitment" name="MCommitment" onchange="CalculateTotal()" disabled>
-                                        <span id="MCommitmentError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Years)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="TargetRYears" name="TargetRYears" onchange="CalculateTotal()" disabled>
-                                        <span id="TargetRYearsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-
-                                <div class="panel panel-success">
-                                    <div class="panel-heading">
-                                        Time to Reach Annual Target
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Progress Made</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="AProgress" name="AProgress" value="0.00" onchange="CalculateTotal()">
-                                        <span id="AProgressError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Balance To Target</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ABalance" name="ABalance" value="0.00" onchange="CalculateTotal()">
-                                        <span id="ABalanceError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Commitment </label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="AMCommitment" name="AMCommitment" onchange="CalculateTotal()" disabled>
-                                        <span id="AMCommitmentError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Months)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="TargetRMonths" name="TargetRMonths" onchange="CalculateTotal()" disabled>
-                                        <span id="TargetRMonthsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Months)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ATargetRMonths" name="ATargetRMonths" onchange="CalculateTotal()" disabled>
-                                        <span id="ATargetRMonthsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Time To Reach Target(Years)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ATargetRYears" name="ATargetRYears" onchange="CalculateTotal()" disabled>
-                                        <span id="ATargetRYearsError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-
-                                <br />
-                                <br />
-
-                            </div>
-
-                            <div class="box-footer">
-                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade in" id="Breakdown">
-                            <div class="panel panel-success">
-                                <div class="panel-heading">
-                                    Monthly: Breakdowns
-                                </div>
-                            </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div class="dataTable_wrapper">
-                                    <table class="table table-striped table-bordered table-hover" id="calc">
-                                        <thead>
-                                            <tr>
-                                                <th>Category</th>
-                                                <th>Amount</th>
-                                                <th>Percentage</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (Model.CategoryAmount != null)
-                                            {
-
-                                                foreach (var item in Model.CategoryAmount)
-                                                {
-                                                    <tr>
-                                                        <td><a asp-controller="Fund" target="_blank" asp-action="ViewFundCategory" asp-route-id="@item.CategoryID">@item.Category</a></td>
-                                                        <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
-                                                        <td></td>
-                                                    </tr>
-                                                }
-                                            }
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th style="text-align:right">Total:</th>
-                                                <th></th>
-                                                <th id="TotalPercentage"></th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="box-footer">
-                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade in  " id="CompoundCalculation">
-                            <div class="panel panel-danger">
-                                <div class="panel-heading ">
-                                    Compound Growth -Regular Deposits
-                                </div>
-                            </div>
-                            <!-- /.panel-heading -->
-                            <div class="box-body">
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Initial Amount Available To Invest</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="InvestmentAmount" name="InvestmentAmount" value="0.00" onchange="CalculateCI()">
-                                        <span id="InvestmentAmountError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Interest Rate</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="InterestRate" name="InterestRate" value="0.00" onchange="CalculateCI()">
-                                        <span id="InterestRateError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Tenure (Years)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Tenure" name="Tenure" onchange="CalculateCI()">
-                                        <span id="TenureError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Payments /Year</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="PaymentsYear" name="PaymentsYear" onchange="CalculateCI()">
-                                        <span id="PaymentsYearError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Monthly Contributions</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ContributionsMonth" name="ContributionsMonth" onchange="CalculateCI()">
-                                        <span id="ContributionsMonthError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Post Tenure Value</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="PostTenureValue" name="PostTenureValue" onchange="CalculateCI()" disabled>
-                                        <span id="PostTenureValueError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Multiplier</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Multiplier" name="Multiplier" onchange="CalculateCI()" disabled>
-                                        <span id="MultiplierError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                            </div>
-
-                            <div class="box-footer">
-                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade in  " id="OTInvestment">
-                            <div class="panel panel-success">
-                                <div class="panel-heading">
-                                    One Time Investment : Compound Growth Calculator
-                                </div>
-                            </div>
-                            <!-- /.panel-heading -->
-                            <div class="box-body">
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Investment Amount</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="InvestmentAmountOT" name="InvestmentAmountOT" value="0.00" onchange="CalculateTotal()">
-                                        <span id="InvestmentAmountOTError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Interest Rate</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="InterestRateOT" name="InterestRateOT" value="0.00" onchange="CalculateTotal()">
-                                        <span id="InterestRateOTError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Tenure</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="TenureOT" name="TenureOT" value="0.00" onchange="CalculateTotal()">
-                                        <span id="TenureOTError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Value After Tenure</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ValueAfterTenureOT" name="ValueAfterTenureOT" disabled>
-                                        <span id="ValueAfterTenureOTError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Multiplier</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="MultiplierOT" name="MultiplierOT" disabled>
-                                        <span id="MultiplierOTError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                            </div>
-
-                            <div class="box-footer">
-                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade in" id="FundCategory">
-                            <div class="panel panel-success">
-                                <div class="panel-heading">
-                                    Categories
-                                </div>
-                            </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div class="dataTable_wrapper">
-                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (Model.KonapoFundCTs != null)
-                                            {
-
-                                                foreach (var item in Model.KonapoFundCTs)
-                                                {
-                                                    <tr>
-                                                        @{
-                                                            string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
-
-                                                        }
-                                                        @if (UtilityService.HasPermission(Permissions.View_Fund))
-                                                        {
-                                                            <td><a asp-controller="Fund" target="_blank" asp-action="ViewCategory" asp-route-id="@item.FundCategoryID">@item.FundCategory.Name</a></td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td>@item.FundCategory.Name</td>
-                                                        }
-                                                        <td><a asp-controller="KonapoFund" asp-action="ViewKopanoFundCategory" asp-route-id="@item.KonapoFundCTID">View Fund Items</a></td>
-                                                    </tr>
-                                                }
-                                            }
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="box-footer">
-                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
-                            </div>
-                        </div>
-
-
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-
-            </div>
         </div>
     </div>
+
 </section>
+<link href="~/dist/css/anchor.css" rel="stylesheet" />
 <script>
+
     $(document).ready(function () {
+
         CalculateTableTotal();
         CalculateTotal();
         CalculateCI();
 
+    });
+
+    $(function () {
+        $("#accordion").accordion({
+            /*It will disable all the active(open) pane i.e .
+            collapsible: true,
+            active:false,*/
+            heightStyle: "content",
+
+        });
     });
     $(function () {
         validateDecimalInput('#Period');
@@ -605,6 +642,7 @@
         validateDecimalInput('#ATargetRYears');
         validateDecimalInput('#ATargetRMonths');
     })
+
     function CalculateTableTotal() {
         $('#calc').DataTable({
             "footerCallback": function (row, data, start, end, display) {
@@ -760,7 +798,6 @@
         $('#ATargetRYears').val(atargetRYears)
 
     }
-
     function CalculateCI() {
         //Compound :Regular
         var investmentAmount = $('#InvestmentAmount').val();
@@ -809,8 +846,8 @@
             typeof i === 'number' ?
                 amount : 0;
         return result
-
     }
+
     function validateDecimalInput(control) {
 
         let controlError = control.concat('Error');

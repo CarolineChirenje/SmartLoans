@@ -14,6 +14,15 @@ namespace SmartLogic
     public class ClientService : IClientService
     {
         private readonly DatabaseContext _context;
+        public ClientService()
+        {
+            if (_context == null)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+                optionsBuilder.UseSqlServer(GetData.SSDBConnection);
+                _context = new DatabaseContext(optionsBuilder.Options);
+            }
+        }
         public ClientService(DatabaseContext context) => _context = context;
         ICustomSettingsService _settingService = new CustomSettingsService();
         ITransactionService _transactionService = new TransactionService();
@@ -190,6 +199,25 @@ namespace SmartLogic
                 throw ex;
             }
 
+        }
+
+        public string GetClientRef(int clientID)
+        {
+            try
+            {
+                var ClientForm = FindClient(clientID).Result;
+                if (UtilityService.IsNull(ClientForm))
+                    return "Uknown";
+                else
+                    return ClientForm.ClientFullName;
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                return "Uknown";
+            }
+            
         }
         public async Task<int> Save(ClientForm clientForm)
         {

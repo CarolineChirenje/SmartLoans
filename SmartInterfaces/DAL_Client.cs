@@ -159,7 +159,7 @@ namespace SmartInterfaces
        public bool IsActive { get; set; }
         
         public string FundName { get; set; }
-
+        public string ClientRef { get; set; }
         public KonapoFund KonapoFund { get; set; }
         public decimal KhonapoFundAmount { get; set; }
         public List<KonapoFundCT> KonapoFundCTs { get; set; }

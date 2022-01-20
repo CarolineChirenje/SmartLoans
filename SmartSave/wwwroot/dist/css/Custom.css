@@ -1,3 +1,13 @@
-﻿.ui-front {
-    z-index: 100 !important;
+﻿.ui-accordion {
+    position: relative;
+
 }
+.ui-accordion-header {
+    background-color: #00A65A !important;
+}
+
+    .ui-accordion-header.ui-state-active {
+        background-color: #00A65A !important;
+    }
+
+

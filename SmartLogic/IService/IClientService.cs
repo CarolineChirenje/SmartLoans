@@ -18,6 +18,7 @@ namespace SmartLogic
         Task<int> ActionClient(int id, DatabaseAction action);
         Task<int> Save(ClientForm client);
         Task<int> Update(ClientForm client);
+        string GetClientRef(int clientID);
         Task<ClientForm> FindClient(int Clientid = 0, string accountNumber = null);
         List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0);
         Task<List<string>> ClientAccountNumbers(string account);

@@ -22,6 +22,8 @@ namespace SmartLogic
     {
         private readonly DatabaseContext _context;
         ICustomSettingsService _settingService = new CustomSettingsService();
+        IClientService _clientService = new ClientService();
+
         public KonapoFundService(DatabaseContext context) => _context = context;
 
         #region KonapoRef
@@ -160,13 +162,14 @@ namespace SmartLogic
         }
 
 
+        
         public async Task<ClientKonapoFundCalculation> GetKonapoFundCalculation(int KonapoFundID)
         {
             try
             {
                 KonapoFund KonapoFund = await _context.KonapoFunds
                 .Where(p => p.KonapoFundID == KonapoFundID)
-                .Include(p => p.Fund)
+                                .Include(p => p.Fund)
                  .FirstOrDefaultAsync();
                 if (UtilityService.IsNull(KonapoFund))
                     return null;
@@ -177,7 +180,8 @@ namespace SmartLogic
                     KonapoRef = KonapoFund.KonapoRef,
                     KonapoFundID = KonapoFund.KonapoFundID,
                     KonapoFund = KonapoFund,
-                    FundName = KonapoFund.Fund.Name
+                    FundName = KonapoFund.Fund.Name,
+                    ClientRef = _clientService.GetClientRef(KonapoFund.ClientID)
                 };
                 List<KonapoFundCT> konapoFundCTs =
               _context.KonapoFundCTs.Where(c => c.KonapoFundID == KonapoFund.KonapoFundID)

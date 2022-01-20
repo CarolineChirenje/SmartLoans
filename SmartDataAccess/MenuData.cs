@@ -93,7 +93,7 @@ namespace SmartDataAccess
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
-                    OrderNo = 8,
+                    OrderNo = 5,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
@@ -422,7 +422,7 @@ namespace SmartDataAccess
                     new Menu()
                 {
                     MenuID =22,
-                    MenuGroupID = (int)MenuGroups.,
+                    MenuGroupID = (int)MenuGroups.Konapo_Fund,
                     DisplayName = "Konapo Fund",
                     ControllerName = "Client",
                     ActionName = "KonapoFunds",

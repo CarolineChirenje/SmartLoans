@@ -92,6 +92,7 @@
                 </div>
             </div>
             <input type="hidden" name="KonapoFundCTIID" value="@Model.KonapoFundCTIID" />
+            <input type="hidden" name="KonapoFundCTID" value="@Model.KonapoFundCTID" />
         </div>
             <!-- /.box-body -->
             <div class="box-footer">
@@ -99,7 +100,7 @@
                 @if (UtilityService.HasPermission(Permissions.Add_Fund_Item))
                 {
                     <button type="submit" class="btn btn-info pull-right">
-                        Update
+                        Process
                     </button>}
             </div>
             <!-- /.box-footer -->

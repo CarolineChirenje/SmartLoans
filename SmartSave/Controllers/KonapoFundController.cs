@@ -156,12 +156,12 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(KonapoFund)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewKonapoFundItem", new { id=KonapoFund.KonapoFundCTIID });
+                    return RedirectToAction("ViewKopanoFundCategory", new { id=KonapoFund.KonapoFundCTID });
                 }
                 return View(KonapoFund);
             }
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction("ViewKonapoFundItem", new { id = KonapoFund.KonapoFundCTIID });
+            return RedirectToAction("ViewKopanoFundCategory", new { id = KonapoFund.KonapoFundCTID });
 
         }
         public async Task<IActionResult> Delete(int id)

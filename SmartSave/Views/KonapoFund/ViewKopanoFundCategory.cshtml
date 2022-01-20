@@ -87,7 +87,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <a class="btn btn-default" asp-controller="KonapoFund" asp-action="KonapoFunds">Cancel</a>
+                <a class="btn btn-default" asp-controller="KonapoFund" asp-action="ViewKonapoFund" asp-route-id="@Model.KonapoFund.KonapoFundID">Cancel</a>
             </div>
             <!-- /.box-footer -->
         </form>
@@ -129,7 +129,7 @@
                                                 <th>Projected Cost</th>
                                                 <th>Form</th>
                                                 <th>Amount</th>
-                                                <th>Edit</th>
+                                                <th>Capture</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -143,7 +143,7 @@
                                                         <td>@Html.DisplayFor(modelItem => item.ProjectedCost)</td>
                                                         <td>@Html.DisplayFor(modelItem => item.FundSource.Name)</td>
                                                         <td>@Html.DisplayFor(modelItem => item.KonapoAmount)</td>
-                                                        <td><a class="btn  btn-small btn-success" asp-controller="KonapoFund" target="_blank" asp-action="ViewKonapoFundItem" asp-route-id="@item.KonapoFundCTIID">Edit</a></td>
+                                                        <td><a class="btn  btn-small btn-success" asp-controller="KonapoFund" target="_blank" asp-action="ViewKonapoFundItem" asp-route-id="@item.KonapoFundCTIID">Update</a></td>
                                                     </tr>
                                                 }
                                             }
@@ -219,6 +219,10 @@
                 console.log(totalamount);
                 console.log("Total Projected Amount");
                 console.log(pageProjectedCost);
+                pageTotalAmount = pageTotalAmount.toFixed(2);
+                totalamount = totalamount.toFixed(2);
+                pageProjectedCost = pageProjectedCost.toFixed(2);
+                totalprojectedCost = totalprojectedCost.toFixed(2);
                 // Update footer
                 $(api.column(3).footer()).html(
                     '$' + pageTotalAmount + ' ( $' + totalamount + ' total)'
