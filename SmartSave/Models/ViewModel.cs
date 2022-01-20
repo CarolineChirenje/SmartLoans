@@ -108,7 +108,7 @@ namespace SmartSave.Models
         public int CoursePrograms { get; set; }
         public int Notices { get; set; }
 
-
+        public int NewFunds { get; set; }
 
     }
 

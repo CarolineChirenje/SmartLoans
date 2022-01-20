@@ -10,7 +10,21 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
     </ol>
-</section>
+    @if (UtilityService.HasPermission(Permissions.View_Dashboard_Notices))
+    {
+    @if (Model.Notices > 0)
+    {
+<br/>
+<br/>
+<div class="alert info">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    You have
+    <a asp-controller="NoticeBoard" target="_blank" asp-action="ActiveNotices" class="small-box-footer">@Model.Notices</a>
+    new Notifications
+</div>
+        }
+    }
+    </section>
 <!-- Main content -->
 <section class="content">
     <!-- Small boxes (Stat box) -->
@@ -21,13 +35,13 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>@Model.Notices</h3>
-                        <p>Notices</p>
+                        <h3>@Model.NewFunds</h3>
+                        <p>Khonapo Funds</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-ios-chatbubble"></i>
                     </div>
-                    <a asp-controller="NoticeBoard" asp-action="ActiveNotices" class="small-box-footer">View Notices <i class="fa fa-arrow-circle-right"></i></a>
+                     <a asp-controller="KonapoFund" asp-action="KonapoFunds" asp-route-newfundsOnly="true" class="small-box-footer">View Funds <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->

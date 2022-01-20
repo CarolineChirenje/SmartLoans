@@ -17,11 +17,11 @@ namespace SmartDomain
         public virtual Fund Fund { get; set; }
         public bool IsActive { get; set; }
 
-        public DateTime RegistrationDate { get { return DateTime.Now; } }
+        public DateTime RegistrationDate { get; set; }
         public virtual List<KonapoFundCT> KonapoFundCTs { get; set; }
 
         [NotMapped]
-        public string FundDetails{ get { return $"{KonapoRef}-{Fund?.Name}"; } }
+        public string FundDetails{ get { return $"{KonapoRef} - {Fund?.Name}"; } }
 
         [NotMapped]
         public int Categories { get { return KonapoFundCTs == null ? 0 : KonapoFundCTs.Count; } }

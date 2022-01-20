@@ -8,6 +8,7 @@ namespace SmartLogic
     public interface IDashboardService
     {
         int GetNewClientRegistrations();
+        int GetNewKhonapoFunds();
         int GetProductPayments();
         int GetOpenNotices();
         int GetNewCourses();

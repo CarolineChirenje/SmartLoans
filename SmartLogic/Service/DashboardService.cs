@@ -32,6 +32,20 @@ namespace SmartLogic
                 throw;
             }
         }
+        
+          public int GetNewKhonapoFunds()
+        {
+            try
+            {
+
+                return _context.KonapoFunds.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).Count();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
 
         public int GetNewClientRegistrations()

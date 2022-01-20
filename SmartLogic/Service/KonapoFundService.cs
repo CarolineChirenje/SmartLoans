@@ -386,6 +386,7 @@ namespace SmartLogic
         {
             try
             {
+                KonapoFund.RegistrationDate = DateTime.Now;
                 KonapoFund.KonapoRef = NewKonapoRef;
                 KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
                 KonapoFund.LastChangedDate = DateTime.Now;
