@@ -14,9 +14,10 @@
         <div class="box-header with-border">
             <h3 class="box-title">Add Konapo Fund</h3>
         </div>
+       
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" action="AddKonapoFund">
+        <form class="form-horizontal" method="post" action="AddKonapoFund" new { onsubmit="showLoader(this);" }>
 
             @if (TempData["Error"] != null)
             {<div class="container">
@@ -88,6 +89,21 @@
     <!-- /.box -->
 </section>
 <script>
+    var showLoader = function (form) {
+        $("<div />").css({
+            'position': 'fixed',
+            'left': 0,
+            'right': 0,
+            'bottom': 0,
+            'top': 0,
+            'background': '#0020ff36',
+            'z-index': '99',
+            'text-align': 'center'
+        }).appendTo($("body"))
+            .append(
+                $("<img />").attr("src", "https://mir-s3-cdn-cf.behance.net/project_modules/disp/35771931234507.564a1d2403b3a.gif")
+            );
+    }
     $(document).ready(function () {
         $("#FundName").autocomplete({
             source: function (request, response) {

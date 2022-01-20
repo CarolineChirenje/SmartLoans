@@ -30,7 +30,7 @@
                                 <th>Ref</th>
                                 <th>Fund</th>
                                 <th>Is Active</th>
-                                <th>Categories</th>
+                                <th>Registration Date</th>
                                 <th>Last Changed By</th>
                                 <th>Last Changed Date</th>
                             </tr>
@@ -64,7 +64,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.Fund.Name)</td>
                                 }
                                 <td>@activeStatus</td>
-                                <td>@Html.DisplayFor(modelItem => item.Categories)</td>
+                                <td>@UtilityService.ShowDateTime(item.RegistrationDate)</td>
                                 <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
                                 <td>@dateCreated</td>
                             </tr>

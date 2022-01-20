@@ -47,8 +47,8 @@ namespace SmartSave.Controllers
                     if (!UtilityService.HasPermission(permission))
                         return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
-                    if (UtilityService.IsNotNull(funds) && funds.Count == 1)
-                        return RedirectToAction("ViewKonapoFund", new { id = Convert.ToInt32(funds.FirstOrDefault().KonapoFundID) });
+                    //if (UtilityService.IsNotNull(funds) && funds.Count == 1)
+                    //    return RedirectToAction("ViewKonapoFund", new { id = Convert.ToInt32(funds.FirstOrDefault().KonapoFundID) });
 
                     return View(funds);
                 }
@@ -81,9 +81,9 @@ namespace SmartSave.Controllers
                     TempData[MessageDisplayType.Error.ToString()] = "Failed to Create Fund Item a Fund Item  with the same Name Already Exists";
                     return View(KonapoFund);
                 }
-                if (await (_service.Save(KonapoFund)) == 0)
-                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("KonapoFunds", "Client", new { id = KonapoFund.ClientID });
+                int KonapoFundID = await (_service.Save(KonapoFund));
+                if (KonapoFundID > 0)
+                    return RedirectToAction("ViewKonapoFund", new { id = KonapoFundID });
 
             }
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -111,22 +111,23 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewKonapoFund(ClientKonapoFundCalculation KonapoFund)
         {
-           
-                KonapoFund update = await (_service.FindKonapoFund(KonapoFund.KonapoFundID));
-                if (UtilityService.IsNotNull(update))
-                {
+
+            KonapoFund update = await (_service.FindKonapoFund(KonapoFund.KonapoFundID));
+            if (UtilityService.IsNotNull(update))
+            {
                 KonapoFund kfund = new KonapoFund
                 {
                     KonapoFundID = KonapoFund.KonapoFundID,
                     IsActive = KonapoFund.IsActive
                 };
-                    if (await (_service.Update(kfund)) == 0)
-                        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                             }
-            return RedirectToAction("ViewKonapoFund",new { id = KonapoFund.KonapoFundID });
+                if (await (_service.Update(kfund)) == 0)
+                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            }
+            return RedirectToAction("ViewKonapoFund", new { id = KonapoFund.KonapoFundID });
         }
         public async Task<IActionResult> ViewKopanoFundCategory(int id)
-        {            if (id == 0)
+        {
+            if (id == 0)
                 return RedirectToAction(nameof(KonapoFunds));
             var fund = await _service.GetKonapoFundCategory(id);
             return View(fund);
@@ -139,7 +140,7 @@ namespace SmartSave.Controllers
             var fund = await _service.FindKonapoFundCTI(id);
             return View(fund);
         }
-      
+
 
         [HttpPost]
         public async Task<IActionResult> ViewKonapoFundItem(KonapoFundCTI KonapoFund)
@@ -156,7 +157,7 @@ namespace SmartSave.Controllers
                 {
                     if (await (_service.Update(KonapoFund)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewKopanoFundCategory", new { id=KonapoFund.KonapoFundCTID });
+                    return RedirectToAction("ViewKopanoFundCategory", new { id = KonapoFund.KonapoFundCTID });
                 }
                 return View(KonapoFund);
             }

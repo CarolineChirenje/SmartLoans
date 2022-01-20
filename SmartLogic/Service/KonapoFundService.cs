@@ -162,7 +162,7 @@ namespace SmartLogic
         }
 
 
-        
+
         public async Task<ClientKonapoFundCalculation> GetKonapoFundCalculation(int KonapoFundID)
         {
             try
@@ -410,6 +410,13 @@ namespace SmartLogic
             try
             {
                 var KonapoFund = await _context.KonapoFunds.FindAsync(id);
+                if (UtilityService.IsNull(KonapoFund))
+                    return 0;
+                var fundCT = _context.KonapoFundCTs.Where(fc => fc.KonapoFundID == id).ToList();
+                List<int> fundCTList = fundCT.Select(c => c.KonapoFundCTID).ToList();
+                var fundCTI = _context.KonapoFundCTIs.Where(p => fundCTList.Any(p2 => p2 == p.KonapoFundCTIID)).ToList();
+                _context.KonapoFundCTIs.RemoveRange(fundCTI);
+                _context.KonapoFundCTs.RemoveRange(fundCT);
                 _context.KonapoFunds.Remove(KonapoFund);
                 return (await _context.SaveChangesAsync());
             }
@@ -584,7 +591,7 @@ namespace SmartLogic
                     if (!IsDuplicate(konapoFundCT).Result)
                         result = await Save(konapoFundCT);
 
-                    if (result > 0)
+                    if (result > 0) // ID used to save KFCT
                     {
                         var fundItems = category.FundCategoryItems.Where(f => f.IsActive).ToList();
                         if (fundItems != null && fundItems.Count() > 0)
@@ -594,7 +601,7 @@ namespace SmartLogic
                                 KonapoFundCTI konapoFundCTI = new KonapoFundCTI
                                 {
                                     FundCategoryItemID = fundItem.FundCategoryItemID,
-                                    KonapoFundCTID = category.FundCategoryID,
+                                    KonapoFundCTID = result,
                                     FundSourceID = (int)Cash_Type.Not_Specified
                                 };
                                 if (!IsDuplicate(konapoFundCTI).Result)
@@ -685,9 +692,9 @@ namespace SmartLogic
             try
             {
                 Fund Fund = _context.Funds.Find(fund.FundID);
-                Fund.IsActive = Fund.IsActive;
-                Fund.Name = Fund.Name;
-                Fund.Description = Fund.Description;
+                Fund.IsActive = fund.IsActive;
+                Fund.Name = fund.Name;
+                Fund.Description = fund.Description;
                 Fund.LastChangedBy = UtilityService.CurrentUserName;
                 Fund.LastChangedDate = DateTime.Now;
                 _context.Update(Fund);

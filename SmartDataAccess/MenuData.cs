@@ -422,7 +422,7 @@ namespace SmartDataAccess
                     new Menu()
                 {
                     MenuID =22,
-                    MenuGroupID = (int)MenuGroups.Konapo_Fund,
+                    MenuGroupID = (int)MenuGroups.Employees,
                     DisplayName = "Konapo Fund",
                     ControllerName = "Client",
                     ActionName = "KonapoFunds",

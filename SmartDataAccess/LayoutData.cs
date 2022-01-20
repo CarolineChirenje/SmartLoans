@@ -257,7 +257,7 @@ namespace SmartDataAccess
                     ActionName = "KonapoFunds",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
-                    OrderNo =16,
+                    OrderNo =0,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser",
                       LinkRequiresID=false

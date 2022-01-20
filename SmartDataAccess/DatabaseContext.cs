@@ -20,13 +20,13 @@ namespace SmartDataAccess
                  .HasOne(typeof(KonapoFund), "KonapoFund")
                  .WithMany()
                  .HasForeignKey("KonapoFundID")
-                 .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
+                 .OnDelete(DeleteBehavior.NoAction); // no ON DELETE
 
             modelBuilder.Entity(typeof(KonapoFundCTI))
                  .HasOne(typeof(KonapoFundCT), "KonapoFundCT")
                  .WithMany()
                  .HasForeignKey("KonapoFundCTID")
-                 .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
+                 .OnDelete(DeleteBehavior.NoAction); // no ON DELETE
             modelBuilder.Entity<UserRole>().HasKey(sc => new { sc.UserID, sc.RoleID });
 
             //System Roles
