@@ -73,6 +73,11 @@ namespace SmartSave.Controllers
                 case "Client":
                     component = Menu_Component.ClientMenuList;
                     break;
+                case "KonapoFund":
+                case "Fund":
+                case "FundItem":
+                    component = Menu_Component.KhonapoMenuList;
+                    break;
                 default:
                     component = Menu_Component.MenuList;
                     break;
