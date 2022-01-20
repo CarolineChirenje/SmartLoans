@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>SmartLogic</id>
+    <version>1.0.0</version>
+    <authors>SmartLogic</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.0">
+        <dependency id="SmartDataAccess" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="SmartDomain" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="SmartLog" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="SmartInterfaces" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="SmartReporting" version="1.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.0\SmartLogic.dll" target="lib\netcoreapp3.0\SmartLogic.dll" />
+  </files>
+</package>

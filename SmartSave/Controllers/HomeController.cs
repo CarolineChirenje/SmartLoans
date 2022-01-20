@@ -4,7 +4,8 @@ using SmartLogic;
 using SmartHelper;
 
 namespace SmartSave.Controllers
-{   [OverrideMenuComponentFilter]
+{
+    [OverrideMenuComponentFilter]
     public class HomeController : Controller
     {
 
@@ -18,21 +19,21 @@ namespace SmartSave.Controllers
             DashBoardViewModel dashboard = new DashBoardViewModel
             {
                 ProductPayments = _service.GetProductPayments(),
-                               NewClientsCount = _service.GetNewClientRegistrations(),
+                NewClientsCount = _service.GetNewClientRegistrations(),
                 CoursePrograms = _service.GetNewCourses(),
-                Notices = _service.GetOpenNotices()
-              
+                Notices = _service.GetOpenNotices(),
+                NewFunds = _service.GetNewKhonapoFunds()
             };
             return View(dashboard);
-           
+
         }
-    
-      
+
+
         public IActionResult Privacy()
         {
             return View();
         }
-     
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
