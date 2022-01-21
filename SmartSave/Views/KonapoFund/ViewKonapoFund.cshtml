@@ -696,7 +696,7 @@
 
                 // Update footer
                 $(api.column(1).footer()).html(
-                    '$' + pageTotalAmount + ' ( $' + totalamount + ' total)'
+                    '$' + pageTotalAmount + ' ($' + totalamount + ' total)'
                 );
                 populatePercentages();
 
@@ -721,11 +721,10 @@
                 //console.log(totalPercentage);
                 // Update footer
                 $(api.column(2).footer()).html(
-                    '$' + pageTotalPercentage + ' ( $' + totalPercentage + '%)'
+                    pageTotalPercentage + '%' +  ' (' + totalPercentage + '% total)'
                 );
 
-
-            }
+                           }
         });
     }
     function CalculateTotal() {
@@ -864,7 +863,7 @@
     function getValue(amount) {
 
         var result = typeof amount === 'string' ?
-            amount.replace(/[\$,]/g, '') / 100 :
+            amount.replace(/[\$,]/g, '') *1 :
             typeof i === 'number' ?
                 amount : 0;
         return result
