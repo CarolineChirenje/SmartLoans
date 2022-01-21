@@ -432,7 +432,7 @@ namespace SmartHelper
                 {
                     roleID = Int32.Parse(_Role);
                 }
-                catch (Exception ex)
+                catch
                 {
 
                 }
@@ -499,7 +499,7 @@ namespace SmartHelper
                 {
                     userType = Int32.Parse(_result, System.Globalization.CultureInfo.InvariantCulture); ;
                 }
-                catch (Exception ex)
+                catch 
                 {
 
                 }

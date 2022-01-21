@@ -109,21 +109,21 @@ namespace SmartSave.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ViewKonapoFund(ClientKonapoFundCalculation KonapoFund)
+        public async Task<IActionResult> ViewKonapoFund(ClientKonapoFundCalculation clientKonapoFundCalculation)
         {
 
-            KonapoFund update = await (_service.FindKonapoFund(KonapoFund.KonapoFundID));
+            KonapoFund update = await (_service.FindKonapoFund(clientKonapoFundCalculation.KonapoFundID));
             if (UtilityService.IsNotNull(update))
             {
                 KonapoFund kfund = new KonapoFund
                 {
-                    KonapoFundID = KonapoFund.KonapoFundID,
-                    IsActive = KonapoFund.IsActive
+                    KonapoFundID = clientKonapoFundCalculation.KonapoFundID,
+                    IsActive = clientKonapoFundCalculation.IsActive
                 };
                 if (await (_service.Update(kfund)) == 0)
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
-            return RedirectToAction("ViewKonapoFund", new { id = KonapoFund.KonapoFundID });
+            return RedirectToAction("ViewKonapoFund", new { id = clientKonapoFundCalculation.KonapoFundID });
         }
         public async Task<IActionResult> ViewKopanoFundCategory(int id)
         {
@@ -198,7 +198,7 @@ namespace SmartSave.Controllers
             var fundSourceList = _settingService.GetActiveFundSource().Select(t => new
             {
                 t.FundSourceID,
-                Name = t.Name,
+                t.Name,
             }).OrderBy(t => t.Name);
             ViewBag.FundSourceList = new SelectList(fundSourceList, "FundSourceID", "Name");
 

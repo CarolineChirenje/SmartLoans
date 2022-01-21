@@ -209,7 +209,7 @@ namespace SmartSave.Controllers
             else
             {
                 TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("ViewClient", new { id = id });
+                return RedirectToAction("ViewClient", new { id });
             }
         }
 
@@ -585,13 +585,15 @@ namespace SmartSave.Controllers
             }
             if (ClientID == 0)
                 return RedirectToAction(nameof(Clients));
-            Statement statement = new Statement();
-            statement.ClientID = ClientID;
-            statement.ProductID = ProductID;
-            statement.StartDate = startDate;
-            statement.EndDate = endDate;
-            statement.PrintReversalsOnStatement = printReversalsOnStatement;
-            statement.StatementID = StatementID;
+            Statement statement = new Statement
+            {
+                ClientID = ClientID,
+                ProductID = ProductID,
+                StartDate = startDate,
+                EndDate = endDate,
+                PrintReversalsOnStatement = printReversalsOnStatement,
+                StatementID = StatementID
+            };
             statement.Client = _service.FindClient(statement.ClientID).Result;
             statement.Product = _settingService.FindProduct(statement.ProductID);
 
@@ -613,9 +615,11 @@ namespace SmartSave.Controllers
                 };
 
                 attachments.Add(attachment);
-                Email email = new Email();
-                email.To = statement.Client.EmailAddress;
-                email.AttachmentFromMemory = attachments;
+                Email email = new Email
+                {
+                    To = statement.Client.EmailAddress,
+                    AttachmentFromMemory = attachments
+                };
                 if (UtilityService.IsNotNull(emailTemplate))
                 {
                     email.Body = emailTemplate.Body;
@@ -665,8 +669,10 @@ namespace SmartSave.Controllers
             }
             if (ClientID == 0)
                 return RedirectToAction(nameof(Clients));
-            OutstandingStatement statement = new OutstandingStatement();
-            statement.ClientID = ClientID;
+            OutstandingStatement statement = new OutstandingStatement
+            {
+                ClientID = ClientID
+            };
             statement.Client = _service.FindClient(statement.ClientID).Result;
             string filename = statement.Client.AccountNumber;
             byte[] pdfFile = GeneratePDFOutstandingPaymentsStatement(statement, emailStatement);
@@ -686,9 +692,11 @@ namespace SmartSave.Controllers
 
                 attachments.Add(attachment);
 
-                Email email = new Email();
-                email.To = statement.Client.EmailAddress;
-                email.AttachmentFromMemory = attachments;
+                Email email = new Email
+                {
+                    To = statement.Client.EmailAddress,
+                    AttachmentFromMemory = attachments
+                };
                 if (UtilityService.IsNotNull(emailTemplate))
                 {
                     email.Body = emailTemplate.Body;
@@ -723,9 +731,11 @@ namespace SmartSave.Controllers
                 {
                     Document document = printOut.Print(statement);
                     // Create a renderer for the MigraDoc document.
-                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                    // Associate the MigraDoc document with a renderer
-                    pdfRenderer.Document = document;
+                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
+                    {
+                        // Associate the MigraDoc document with a renderer
+                        Document = document
+                    };
                     // Layout and render document to PDF
                     pdfRenderer.RenderDocument();
                     pdfRenderer.PdfDocument.Save(stream, false);
@@ -752,9 +762,11 @@ namespace SmartSave.Controllers
                 {
                     Document document = printOut.Print(statement);
                     // Create a renderer for the MigraDoc document.
-                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                    // Associate the MigraDoc document with a renderer
-                    pdfRenderer.Document = document;
+                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
+                    {
+                        // Associate the MigraDoc document with a renderer
+                        Document = document
+                    };
 
                     // Layout and render document to PDF
                     pdfRenderer.RenderDocument();
@@ -783,7 +795,7 @@ namespace SmartSave.Controllers
             if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
             {
                 const int emSize = 100;
-                string watermark = $"{UtilityService.SiteEnvironment.ToString()}";
+                string watermark = $"{UtilityService.SiteEnvironment}";
                 // Create the font for drawing the watermark.
                 var font = new XFont("Times New Roman", emSize, XFontStyle.BoldItalic);
                 //this makes _mem resizeable 
@@ -810,9 +822,11 @@ namespace SmartSave.Controllers
                     gfx.TranslateTransform(-page.Width / 2, -page.Height / 2);
 
                     // Create a string format.
-                    var format = new XStringFormat();
-                    format.Alignment = XStringAlignment.Near;
-                    format.LineAlignment = XLineAlignment.Near;
+                    var format = new XStringFormat
+                    {
+                        Alignment = XStringAlignment.Near,
+                        LineAlignment = XLineAlignment.Near
+                    };
 
                     // Create a dimmed red brush.
                     XBrush brush = new XSolidBrush(XColor.FromArgb(128, 255, 0, 0));
@@ -931,10 +945,13 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 ClientForm clientForm = await _service.FindClient(payment.ClientID);
-                if (await (_paymentService.CreatePayment(payment, (TransactionTypeList)payment.TransactionTypeID)) == 0)
+                if (UtilityService.IsNotNull(clientForm))
                 {
-                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return RedirectToAction("ViewClient", new { id = payment.ClientID });
+                    if (await (_paymentService.CreatePayment(payment, (TransactionTypeList)payment.TransactionTypeID)) == 0)
+                    {
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                        return RedirectToAction("ViewClient", new { id = payment.ClientID });
+                    }
                 }
             }
             return RedirectToAction("ViewClient", new { id = payment.ClientID });
@@ -1367,12 +1384,14 @@ namespace SmartSave.Controllers
              if(clientCourse==null)
                 return RedirectToAction("ViewClient", new { id = clientID });
 
-            ClientCourseView result= new ClientCourseView();
-            result.IsDeRegistered = clientCourse.IsDeRegistered;
-            result.DateCompleted = clientCourse.DateCompleted;
-            result.ClientID = clientID;
-            result.CourseID = courseID;
-            result.ClientCourseID = clientcourseid;
+            ClientCourseView result = new ClientCourseView
+            {
+                IsDeRegistered = clientCourse.IsDeRegistered,
+                DateCompleted = clientCourse.DateCompleted,
+                ClientID = clientID,
+                CourseID = courseID,
+                ClientCourseID = clientcourseid
+            };
             var client = _service.FindClient(clientID).Result;
             result.Client = client;
             var courseBreakDown = _settingService.GetCourseBreakDown(courseID).ToList();
@@ -1383,9 +1402,11 @@ namespace SmartSave.Controllers
                 var courseList = new List<CourseView>();
                 foreach (var course in courseBreakDown)
                 {
-                    CourseView courseView = new CourseView();
-                    courseView.Sessions = new List<CheckBoxListItem>();
-                    courseView.Topic = course.CourseName;
+                    CourseView courseView = new CourseView
+                    {
+                        Sessions = new List<CheckBoxListItem>(),
+                        Topic = course.CourseName
+                    };
                     var sessions = course.CourseSessions.ToList();
                     foreach (var session in sessions)
                     {

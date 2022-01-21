@@ -106,12 +106,14 @@ body {
     /*// .skin-[skinname] .main-header .navbar {
     background-color: #054a71;
 }*/
-    .main-footer {
-  background: #fff;
-  padding: 15px;
-  color: #444;
-  border-top: 1px solid #d2d6de;
+    .main-footer
+{
+    background: #fff;
+    padding: 15px;
+    color: #444;
+    border-top: 1px solid #d2d6de;
 }
+
 /* Fixed layout */
 .fixed .main-header,
 .fixed .main-sidebar,

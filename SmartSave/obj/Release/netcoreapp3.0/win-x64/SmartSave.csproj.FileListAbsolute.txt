@@ -1,9 +1,0 @@
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\win-x64\SmartSave.csprojAssemblyReference.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\win-x64\SmartSave.Resource.resources
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\win-x64\SmartSave.csproj.GenerateResource.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\win-x64\SmartSave.AssemblyInfoInputs.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\win-x64\SmartSave.AssemblyInfo.cs
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\win-x64\SmartSave.csproj.CoreCompileInputs.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\win-x64\SmartSave.MvcApplicationPartsAssemblyInfo.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\win-x64\SmartSave.RazorAssemblyInfo.cache
-D:\Dev Projects\SmartSave\SmartSave\obj\Release\netcoreapp3.0\win-x64\SmartSave.RazorAssemblyInfo.cs

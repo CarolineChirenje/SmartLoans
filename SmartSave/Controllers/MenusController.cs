@@ -124,7 +124,7 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewMenu", new { id = menu.MenuID });
         }
         [HttpGet]
-        public IActionResult AddMenu(int id)
+        public IActionResult AddMenu()
         {
             ViewBag.MenuGroups = GetMenuGroups();
             return View();

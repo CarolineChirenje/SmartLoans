@@ -227,7 +227,7 @@ namespace SmartSave.Controllers
                 t.Name,
             }).OrderBy(t => t.Name);
 
-            ViewBag.CompanyList = new SelectList(company, "CompanyID", "Name", defaultCompany.HasValue ? defaultCompany.Value : UtilityService.DefaultCompanyID);
+            ViewBag.CompanyList = new SelectList(company, "CompanyID", "Name", defaultCompany ?? UtilityService.DefaultCompanyID);
 
 
             var allAsserts = _service.Asserts().Result;

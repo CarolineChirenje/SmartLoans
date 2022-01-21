@@ -89,7 +89,7 @@ namespace SmartHelper
             {
                 permissionCount = Int32.Parse(countValue);
             }
-            catch (Exception ex)
+            catch
             {
 
                 permissionCount = 0;

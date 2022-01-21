@@ -223,7 +223,6 @@
     <!-- /.box -->
 </section>
 <script>
-
     $(document).ready(function () {
         document.getElementById('PaymentDate').value = new Date().toISOString().substring(0, 10);
         $('#ClientID').change(function (e) {
@@ -236,52 +235,34 @@
         CalculateTotal();
 
     });
-
-
     $(function () {
-        $('#Amount').blur(function () {
-            var tempVal = $('#Amount').val();
-            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
-                $("#AmountError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
-                $(":submit").attr("disabled", true);
-            }
-            else {
-               // $("#AmountError").text("");
-                $(":submit").removeAttr("disabled");
-            }
-        })
+        validateDecimalInput('#Amount');
+        validateDecimalInput('#Price');
+        validateDecimalInput('#Units');
 
-        $('#Price').blur(function () {
-            var tempVal = $('#Price').val();
-            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
-                $("#PriceError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
-                $(":submit").attr("disabled", true);
-            }
-            else {
-                $("#PriceError").text("");
-                $(":submit").removeAttr("disabled");
-            }
-        })
-
-        $('#Units').blur(function () {
-            var tempVal = $('#Units').val();
-            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
-                $("#UnitsError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
-                $(":submit").attr("disabled", true);
-            }
-            else {
-                $("#UnitsError").text("");
-                $(":submit").removeAttr("disabled");
-            }
-        })
     })
+    function validateDecimalInput(control) {
 
+        let controlError = control.concat('Error');
+        //console.log(controlError)
+        $(control).blur(function () {
+            var tempVal = $(control).val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $(controlError).text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $(controlError).text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+    }
     function CalculateTotal() {
-        
+
         var unit = $('#Units').val();
         var price = $('#Price').val();
         var total = unit * price;
-    
+
         var finaltotal = total;
         var levy = $('#TransactionalLevy').val();
         if (levy > 0) {
@@ -291,13 +272,12 @@
         }
         finaltotal = finaltotal.toFixed(2);
         $('#Amount').val(finaltotal);
-          }
-   
+    }
     function GetProduct(_clientID) {
         var processmessage = "<option value='0'> Please wait whilst we retrieve Products registered to Individual...</option>";
         $("#ProductList").html(processmessage).show();
         var url = "/Transactions/GetProductByClientID/";
-       // alert(_clientID);
+        // alert(_clientID);
         $.ajax({
             url: url,
             data: { clientID: _clientID },
@@ -312,7 +292,7 @@
                 else {
                     $("#ProductListNotFound").text("");
                     $(":submit").removeAttr("disabled");
-                 
+
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
                     }
@@ -325,12 +305,11 @@
         });
 
     }
-
     function GetAssertList(_productID) {
         var procemessage = "<option value='0'> Please wait whilst we retrieve Asserts registered to Product...</option>";
         $("#AssertList").html(procemessage).show();
         var url = "/Transactions/GetAssertByProductID/";
-      
+
         $.ajax({
             url: url,
             data: { productID: _productID },
@@ -341,12 +320,12 @@
                 var markup = "<option value='0'>----</option>";
                 if (data == null) {
                     $("#AssertListNotFound").text("No Asserts Linked To Product")
-                   // $(":submit").attr("disabled", true);
+                    // $(":submit").attr("disabled", true);
                 }
                 else {
-                   
+
                     $("#AssertListNotFound").text("");
-                      $("#TransactionalLevy").val(data.fee);
+                    $("#TransactionalLevy").val(data.fee);
                     if (data.asserts == null || data.asserts.length == 0) {
                         $("#AssertListNotFound").text("No Asserts Linked To Product")
                         $("#AssertList").html("").show();
@@ -358,7 +337,7 @@
                         $("#AssertList").html(markup).show();
                     }
                 }
-              
+
             },
             error: function (reponse) {
                 alert("error : " + reponse);

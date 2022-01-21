@@ -24,11 +24,12 @@ namespace SmartLogic
             }
         }
         public ClientService(DatabaseContext context) => _context = context;
-        ICustomSettingsService _settingService = new CustomSettingsService();
-        ITransactionService _transactionService = new TransactionService();
+
+        readonly ICustomSettingsService _settingService = new CustomSettingsService();
+        readonly ITransactionService _transactionService = new TransactionService();
         public async Task<int> ActionClientStatus(int id, DatabaseAction action)
         {
-            int result = 0;
+            int result;
             try
             {
                 Client Client = _context.Clients.Find(id);
@@ -37,7 +38,7 @@ namespace SmartLogic
                     _context.Clients.Remove(Client);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    Client.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    Client.IsActive = DatabaseAction.Deactivate != action;
                     Client.LastChangedBy = UtilityService.CurrentUserName;
                     Client.LastChangedDate = DateTime.Now;
                     _context.Update(Client);
@@ -223,25 +224,27 @@ namespace SmartLogic
         {
             try
             {
-                Client client = new Client();
-                client.IDNumber = clientForm.IDNumber;
-                client.Initials = clientForm.Initials;
-                client.FirstName = clientForm.FirstName;
-                client.LastName = clientForm.LastName;
-                client.GenderID = clientForm.GenderID;
-                client.TitleID = clientForm.TitleID;
-                client.ClientAccountTypeID = clientForm.ClientAccountTypeID;
-                client.ClientGroupID = clientForm.ClientGroupID;
-                client.CompanyID = clientForm.CompanyID;
-                client.EmailAddress = clientForm.EmailAddress;
-                client.DateOfBirth = clientForm.DateOfBirth;
-                client.CountryID = clientForm.CountryID;
-                client.City = clientForm.City;
-                client.MobileNumber = clientForm.MobileNumber;
-                client.Occupation = clientForm.Occupation;
-                client.DepartmentID = clientForm.DepartmentID;
-                client.AddressLine1 = clientForm.AddressLine1;
-                client.AddressLine2 = clientForm.AddressLine2;
+                Client client = new Client
+                {
+                    IDNumber = clientForm.IDNumber,
+                    Initials = clientForm.Initials,
+                    FirstName = clientForm.FirstName,
+                    LastName = clientForm.LastName,
+                    GenderID = clientForm.GenderID,
+                    TitleID = clientForm.TitleID,
+                    ClientAccountTypeID = clientForm.ClientAccountTypeID,
+                    ClientGroupID = clientForm.ClientGroupID,
+                    CompanyID = clientForm.CompanyID,
+                    EmailAddress = clientForm.EmailAddress,
+                    DateOfBirth = clientForm.DateOfBirth,
+                    CountryID = clientForm.CountryID,
+                    City = clientForm.City,
+                    MobileNumber = clientForm.MobileNumber,
+                    Occupation = clientForm.Occupation,
+                    DepartmentID = clientForm.DepartmentID,
+                    AddressLine1 = clientForm.AddressLine1,
+                    AddressLine2 = clientForm.AddressLine2
+                };
                 if (UtilityService.AutoGenerateAccountNumber)
                     client.AccountNumber = NewClientAccountNumber;
                 else
@@ -257,24 +260,26 @@ namespace SmartLogic
                 {
                     if (UtilityService.IsNotNull(clientForm.JointApplicant))
                     {
-                        client.JointApplicant = new JointApplicant();
-                        client.JointApplicant.IDNumber = clientForm.JointApplicant.IDNumber;
-                        client.JointApplicant.Initials = clientForm.JointApplicant.Initials;
-                        client.JointApplicant.FirstName = clientForm.JointApplicant.FirstName;
-                        client.JointApplicant.LastName = clientForm.JointApplicant.LastName;
-                        client.JointApplicant.ApplicantTitleID = clientForm.JointApplicant.ApplicantTitleID;
-                        client.JointApplicant.ApplicantGenderID = clientForm.JointApplicant.ApplicantGenderID;
-                        client.JointApplicant.RelationshipTypeID = clientForm.JointApplicant.RelationshipTypeID;
-                        client.JointApplicant.EmailAddress = clientForm.JointApplicant.EmailAddress;
-                        client.JointApplicant.DateOfBirth = clientForm.JointApplicant.DateOfBirth;
-                        client.JointApplicant.CountryID = clientForm.JointApplicant.CountryID;
-                        client.JointApplicant.City = clientForm.JointApplicant.City;
-                        client.JointApplicant.MobileNumber = clientForm.JointApplicant.MobileNumber;
-                        client.JointApplicant.AddressLine1 = clientForm.JointApplicant.AddressLine1;
-                        client.JointApplicant.AddressLine2 = clientForm.JointApplicant.AddressLine2;
-                        client.JointApplicant.RecordStatusID = (int)RecordState.Active;
-                        client.JointApplicant.LastChangedBy = UtilityService.CurrentUserName;
-                        client.JointApplicant.LastChangedDate = DateTime.Now;
+                        client.JointApplicant = new JointApplicant
+                        {
+                            IDNumber = clientForm.JointApplicant.IDNumber,
+                            Initials = clientForm.JointApplicant.Initials,
+                            FirstName = clientForm.JointApplicant.FirstName,
+                            LastName = clientForm.JointApplicant.LastName,
+                            ApplicantTitleID = clientForm.JointApplicant.ApplicantTitleID,
+                            ApplicantGenderID = clientForm.JointApplicant.ApplicantGenderID,
+                            RelationshipTypeID = clientForm.JointApplicant.RelationshipTypeID,
+                            EmailAddress = clientForm.JointApplicant.EmailAddress,
+                            DateOfBirth = clientForm.JointApplicant.DateOfBirth,
+                            CountryID = clientForm.JointApplicant.CountryID,
+                            City = clientForm.JointApplicant.City,
+                            MobileNumber = clientForm.JointApplicant.MobileNumber,
+                            AddressLine1 = clientForm.JointApplicant.AddressLine1,
+                            AddressLine2 = clientForm.JointApplicant.AddressLine2,
+                            RecordStatusID = (int)RecordState.Active,
+                            LastChangedBy = UtilityService.CurrentUserName,
+                            LastChangedDate = DateTime.Now
+                        };
 
                     }
                 }
@@ -301,12 +306,14 @@ namespace SmartLogic
                 if (oldSalary != clientForm.Salary)
                 {
 
-                    ClientOccupationHistory clientOccupationHistory = new ClientOccupationHistory();
-                    clientOccupationHistory.ClientID = updateClient.ClientID;
-                    clientOccupationHistory.Salary = oldSalary;
-                    clientOccupationHistory.Occupation = updateClient.Occupation;
-                    clientOccupationHistory.LastChangedDate = updateClient.LastChangedDate;
-                    clientOccupationHistory.LastChangedBy = updateClient.LastChangedBy;
+                    ClientOccupationHistory clientOccupationHistory = new ClientOccupationHistory
+                    {
+                        ClientID = updateClient.ClientID,
+                        Salary = oldSalary,
+                        Occupation = updateClient.Occupation,
+                        LastChangedDate = updateClient.LastChangedDate,
+                        LastChangedBy = updateClient.LastChangedBy
+                    };
                     _context.Add(clientOccupationHistory);
                 }
                 if (UtilityService.IsNotNull(updateClient))
@@ -458,9 +465,11 @@ namespace SmartLogic
 
                 if (UtilityService.IsNull(registers))
                     return null;
-                Register register = new Register();
-                register.ClientID = clientID;
-                register.ClientForm = FindClient(clientID).Result;
+                Register register = new Register
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<RegisterList> result = new List<RegisterList>();
 
                 foreach (var registerDetail in registers)
@@ -639,7 +648,7 @@ namespace SmartLogic
                     _context.Clients.Remove(Client);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    Client.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    Client.IsActive = DatabaseAction.Deactivate != action;
                     Client.LastChangedBy = UtilityService.CurrentUserName;
                     Client.LastChangedDate = DateTime.Now;
                     _context.Update(Client);
@@ -683,9 +692,11 @@ namespace SmartLogic
                      Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(clientNotes))
                     return null;
-                Comments comments = new Comments();
-                comments.ClientID = clientID;
-                comments.ClientForm = FindClient(clientID).Result;
+                Comments comments = new Comments
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<CommentsList> result = new List<CommentsList>();
 
                 foreach (var clientNote in clientNotes)
@@ -816,9 +827,11 @@ namespace SmartLogic
                  Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(clientContacts))
                     return null;
-                Contacts contacts = new Contacts();
-                contacts.ClientID = clientID;
-                contacts.ClientForm = FindClient(clientID).Result;
+                Contacts contacts = new Contacts
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<ContactList> result = new List<ContactList>();
 
                 foreach (var clientContact in clientContacts)
@@ -931,9 +944,11 @@ namespace SmartLogic
                 Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(clientDocs))
                     return null;
-                Docs docs = new Docs();
-                docs.ClientID = clientID;
-                docs.ClientForm = FindClient(clientID).Result;
+                Docs docs = new Docs
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<DocumentList> result = new List<DocumentList>();
 
                 foreach (var document in clientDocs)
@@ -1055,9 +1070,11 @@ namespace SmartLogic
                                Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
-                SalaryHistory history = new SalaryHistory();
-                history.ClientID = clientID;
-                history.ClientForm = FindClient(clientID).Result;
+                SalaryHistory history = new SalaryHistory
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<SalaryHistoryList> result = new List<SalaryHistoryList>();
 
                 foreach (var transaction in transactions)
@@ -1090,9 +1107,11 @@ namespace SmartLogic
                                Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(medicalDetails))
                     return null;
-                Medical medical = new Medical();
-                medical.ClientID = clientID;
-                medical.ClientForm = FindClient(clientID).Result;
+                Medical medical = new Medical
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<MedicalList> result = new List<MedicalList>();
 
                 foreach (var medicalDetail in medicalDetails)
@@ -1204,9 +1223,11 @@ namespace SmartLogic
                                                      Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(clientDependents))
                     return null;
-                Dependents dependents = new Dependents();
-                dependents.ClientID = clientID;
-                dependents.ClientForm = FindClient(clientID).Result;
+                Dependents dependents = new Dependents
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<DependentsList> result = new List<DependentsList>();
 
                 foreach (var clientDependent in clientDependents)
@@ -1347,14 +1368,16 @@ namespace SmartLogic
                         FrequencyList frequencyList = (FrequencyList)productFee.FrequencyID;
                         if (frequencyList == FrequencyList.Once_Off)
                         {
-                            ClientFee clientFee = new ClientFee();
-                            clientFee.ClientID = clientProduct.ClientID;
-                            clientFee.ProductFeeID = productFee.ProductFeeID;
-                            clientFee.Amount = productFee.Amount;
-                            clientFee.LastChangedBy = UtilityService.CurrentUserName;
-                            clientFee.LastChangedDate = DateTime.Now;
-                            clientFee.ClientProductID = clientProduct.ClientProductID;
-                            clientFee.DueDate = dueDate;
+                            ClientFee clientFee = new ClientFee
+                            {
+                                ClientID = clientProduct.ClientID,
+                                ProductFeeID = productFee.ProductFeeID,
+                                Amount = productFee.Amount,
+                                LastChangedBy = UtilityService.CurrentUserName,
+                                LastChangedDate = DateTime.Now,
+                                ClientProductID = clientProduct.ClientProductID,
+                                DueDate = dueDate
+                            };
                             _context.Add(clientFee);
                         }
 
@@ -1362,14 +1385,16 @@ namespace SmartLogic
                         {
                             for (int i = 1; i < 13; i++)
                             {
-                                ClientFee clientFee = new ClientFee();
-                                clientFee.ClientID = clientProduct.ClientID;
-                                clientFee.ProductFeeID = productFee.ProductFeeID;
-                                clientFee.Amount = productFee.Amount;
-                                clientFee.LastChangedBy = UtilityService.CurrentUserName;
-                                clientFee.LastChangedDate = DateTime.Now;
-                                clientFee.ClientProductID = clientProduct.ClientProductID;
-                                clientFee.DueDate = dueDate;
+                                ClientFee clientFee = new ClientFee
+                                {
+                                    ClientID = clientProduct.ClientID,
+                                    ProductFeeID = productFee.ProductFeeID,
+                                    Amount = productFee.Amount,
+                                    LastChangedBy = UtilityService.CurrentUserName,
+                                    LastChangedDate = DateTime.Now,
+                                    ClientProductID = clientProduct.ClientProductID,
+                                    DueDate = dueDate
+                                };
                                 _context.Add(clientFee);
 
                                 dueDate = dueDate.AddMonths(i);
@@ -1435,9 +1460,11 @@ namespace SmartLogic
                 Where(t => t.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(products))
                     return null;
-                ClientPackages packages = new ClientPackages();
-                packages.ClientID = clientID;
-                packages.ClientForm = FindClient(clientID).Result;
+                ClientPackages packages = new ClientPackages
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<ProductList> result = new List<ProductList>();
 
                 foreach (var product in products)
@@ -1524,9 +1551,11 @@ namespace SmartLogic
                  Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
-                CoachingProgrammes course = new CoachingProgrammes();
-                course.ClientID = clientID;
-                course.ClientForm = FindClient(clientID).Result;
+                CoachingProgrammes course = new CoachingProgrammes
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<CourseList> result = new List<CourseList>();
 
                 foreach (var transaction in transactions.Distinct())
@@ -1598,14 +1627,16 @@ namespace SmartLogic
                         FrequencyList frequencyList = (FrequencyList)courseFee.FrequencyID;
                         if (frequencyList == FrequencyList.Once_Off)
                         {
-                            ClientFee clientFee = new ClientFee();
-                            clientFee.ClientID = ClientCourse.ClientID;
-                            clientFee.CourseFeeID = courseFee.CourseFeeID;
-                            clientFee.Amount = courseFee.Amount;
-                            clientFee.LastChangedBy = UtilityService.CurrentUserName;
-                            clientFee.LastChangedDate = DateTime.Now;
-                            clientFee.ClientCourseID = ClientCourse.ClientCourseID;
-                            clientFee.DueDate = dueDate;
+                            ClientFee clientFee = new ClientFee
+                            {
+                                ClientID = ClientCourse.ClientID,
+                                CourseFeeID = courseFee.CourseFeeID,
+                                Amount = courseFee.Amount,
+                                LastChangedBy = UtilityService.CurrentUserName,
+                                LastChangedDate = DateTime.Now,
+                                ClientCourseID = ClientCourse.ClientCourseID,
+                                DueDate = dueDate
+                            };
                             _context.Add(clientFee);
                         }
 
@@ -1613,14 +1644,16 @@ namespace SmartLogic
                         {
                             for (int i = 1; i < 13; i++)
                             {
-                                ClientFee clientFee = new ClientFee();
-                                clientFee.ClientID = ClientCourse.ClientID;
-                                clientFee.CourseFeeID = courseFee.CourseFeeID;
-                                clientFee.Amount = courseFee.Amount;
-                                clientFee.LastChangedBy = UtilityService.CurrentUserName;
-                                clientFee.LastChangedDate = DateTime.Now;
-                                clientFee.ClientCourseID = ClientCourse.ClientCourseID;
-                                clientFee.DueDate = dueDate;
+                                ClientFee clientFee = new ClientFee
+                                {
+                                    ClientID = ClientCourse.ClientID,
+                                    CourseFeeID = courseFee.CourseFeeID,
+                                    Amount = courseFee.Amount,
+                                    LastChangedBy = UtilityService.CurrentUserName,
+                                    LastChangedDate = DateTime.Now,
+                                    ClientCourseID = ClientCourse.ClientCourseID,
+                                    DueDate = dueDate
+                                };
                                 _context.Add(clientFee);
                                 dueDate = dueDate.AddMonths(i);
                             }
@@ -1823,8 +1856,10 @@ namespace SmartLogic
                 if (UtilityService.IsNull(invoice))
                     return null;
 
-                InvoicePackage invoicePackage = new InvoicePackage();
-                invoicePackage.InvoiceDetail = invoice;
+                InvoicePackage invoicePackage = new InvoicePackage
+                {
+                    InvoiceDetail = invoice
+                };
                 List<InvoiceEntries> invoiceEntries = new List<InvoiceEntries>();
 
                 IEnumerable<int> ClientIDs;
@@ -1992,9 +2027,11 @@ namespace SmartLogic
                  Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
-                Transactions trans = new Transactions();
-                trans.ClientID = clientID;
-                trans.ClientForm = FindClient(clientID).Result;
+                Transactions trans = new Transactions
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<TransactionList> result = new List<TransactionList>();
 
                 foreach (var transaction in transactions)
@@ -2037,10 +2074,12 @@ namespace SmartLogic
                 Where(c => c.ClientID == clientID && !c.DatePaid.HasValue && c.DueDate.Date < cutoffDate.Date).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
-                PendingTransactions trans = new PendingTransactions();
-                trans.ClientID = clientID;
-                trans.ClientForm = FindClient(clientID).Result;
-                trans.CutOffDate = UtilityService.ShowDateTime(cutoffDate);
+                PendingTransactions trans = new PendingTransactions
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result,
+                    CutOffDate = UtilityService.ShowDateTime(cutoffDate)
+                };
 
                 var outstandingCoursePayments = transactions.Where(c => c.CourseFeeID.HasValue).Distinct().ToList();
                 var outstandingProductPayments = transactions.Where(p => p.ProductFeeID.HasValue).Distinct().ToList();
@@ -2105,9 +2144,11 @@ namespace SmartLogic
                 Where(c => c.ClientID == clientID && c.Invoice.InvoiceStatusID == invoiceStatusID).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
-                Deductions trans = new Deductions();
-                trans.ClientID = clientID;
-                trans.ClientForm = FindClient(clientID).Result;
+                Deductions trans = new Deductions
+                {
+                    ClientID = clientID,
+                    ClientForm = FindClient(clientID).Result
+                };
                 List<InvoiceList> result = new List<InvoiceList>();
 
                 foreach (var transaction in transactions)
@@ -2147,9 +2188,11 @@ namespace SmartLogic
                                Where(c => c.ClientID == clientID).ToList();
                 if (UtilityService.IsNull(transactions))
                     return null;
-                Statement statement = new Statement();
-                statement.ClientID = clientID;
-                statement.Client = FindClient(clientID).Result;
+                Statement statement = new Statement
+                {
+                    ClientID = clientID,
+                    Client = FindClient(clientID).Result
+                };
                 List<ProdList> result = new List<ProdList>();
 
                 foreach (var transaction in transactions)

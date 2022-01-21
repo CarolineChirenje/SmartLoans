@@ -15,7 +15,7 @@ namespace SmartSave.Controllers
     {
         private readonly IKonapoFundService _service;
    
-        public FundItemController(IKonapoFundService service, ISettingService settingService)
+        public FundItemController(IKonapoFundService service)
         {
             _service = service;
           

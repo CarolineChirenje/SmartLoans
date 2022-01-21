@@ -181,12 +181,18 @@
                 var api = this.api(), data;
 
                 // Remove the formatting to get integer data for summation
+                //var intVal = function (i) {
+                //    return typeof i === 'string' ?
+                //        i.replace(/[\$,]/g, '') / 100 :
+                //        typeof i === 'number' ?
+                //            i : 0;
+                //}
                 var intVal = function (i) {
                     return typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '') / 100 :
+                        i.replace(/[\$,]/g, '') * 1 :
                         typeof i === 'number' ?
                             i : 0;
-                }
+                };
                 // Total Amount over all pages
                 totalamount = api
                     .column(3)

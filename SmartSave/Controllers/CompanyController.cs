@@ -58,15 +58,12 @@ namespace SmartSave.Controllers
                     if (CompanyLogo.Length > 0)
                     {
                         //Getting FileName
-                        var fileName = Path.GetFileName(CompanyLogo.FileName);
+                        //var fileName = Path.GetFileName(CompanyLogo.FileName);
                         //Getting file Extension
-                        var fileExtension = Path.GetExtension(fileName);
-
-                        using (var target = new MemoryStream())
-                        {
-                            CompanyLogo.CopyTo(target);
-                            Company.CompanyLogo = target.ToArray();
-                        }
+                        //var fileExtension = Path.GetExtension(fileName);
+                        using var target = new MemoryStream();
+                        CompanyLogo.CopyTo(target);
+                        Company.CompanyLogo = target.ToArray();
                     }
                 }
                 if (await (_service.Save(Company)) == 0)
@@ -104,15 +101,13 @@ namespace SmartSave.Controllers
                         if (CompanyLogo.Length > 0)
                         {
                             //Getting FileName
-                            var fileName = Path.GetFileName(CompanyLogo.FileName);
+                           // var fileName = Path.GetFileName(CompanyLogo.FileName);
                             //Getting file Extension
-                            var fileExtension = Path.GetExtension(fileName);
+                            //var fileExtension = Path.GetExtension(fileName);
 
-                            using (var target = new MemoryStream())
-                            {
-                                CompanyLogo.CopyTo(target);
-                                Company.CompanyLogo = target.ToArray();
-                            }
+                            using var target = new MemoryStream();
+                            CompanyLogo.CopyTo(target);
+                            Company.CompanyLogo = target.ToArray();
                         }
                     }
                     if (await (_service.Update(Company)) == 0)

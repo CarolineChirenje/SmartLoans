@@ -16,7 +16,7 @@ namespace SmartSave.Controllers
     public abstract class BaseController<T> : Controller where T : BaseController<T>
     {
         private ILogger<T> _logger;
-        protected ILogger<T> Logger => _logger ?? (_logger = HttpContext?.RequestServices.GetService<ILogger<T>>());
+        protected ILogger<T> Logger => _logger ??= HttpContext?.RequestServices.GetService<ILogger<T>>();
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             try
@@ -67,7 +67,7 @@ namespace SmartSave.Controllers
         }
         private Menu_Component GetMenuComponent(string executingController)
         {
-            Menu_Component component = Menu_Component.MenuList;
+            Menu_Component component;
             switch (executingController)
             {
                 case "Client":
@@ -77,6 +77,12 @@ namespace SmartSave.Controllers
                 case "Fund":
                 case "FundItem":
                     component = Menu_Component.KhonapoMenuList;
+                    break;
+                case "Support":
+                case "Licence":
+                case "Maintanance":
+                case "FeatureFlag":
+                    component = Menu_Component.DeveloperMenuList;
                     break;
                 default:
                     component = Menu_Component.MenuList;

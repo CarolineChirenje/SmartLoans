@@ -38,7 +38,7 @@ namespace SmartLogic
                 }
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    Company.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    Company.IsActive = DatabaseAction.Deactivate != action;
                     Company.LastChangedBy = UtilityService.CurrentUserName;
                     Company.LastChangedDate = DateTime.Now;
                     _context.Update(Company);
@@ -120,7 +120,7 @@ namespace SmartLogic
                         }
                         catch (Exception ex)
                         {
-                                                    CustomLog.Log(LogSource.Logic_Base, ex);
+                            CustomLog.Log(LogSource.Logic_Base, ex);
                         }
                     }
                 }
@@ -155,14 +155,12 @@ namespace SmartLogic
                             var defaultCompany = _context.Companies.Where(s => s.IsDefault && s.CompanyID != Company.CompanyID).FirstOrDefault();
                             if (UtilityService.IsNotNull(defaultCompany))
                             {
-                               defaultCompany.IsDefault = false;
+                                defaultCompany.IsDefault = false;
                                 _context.Update(defaultCompany);
                             }
                         }
-                        catch (Exception ex)
-                        {
-
-                            //throw;
+                        catch
+                        {                            //throw;
                         }
 
                     }

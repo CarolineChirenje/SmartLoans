@@ -367,16 +367,16 @@ namespace SmartSave.Controllers
                 return RedirectToAction("ViewCourseIntake", new { intakeId = Convert.ToInt32(HttpContext.Session.GetString("CourseIntakeID")), courseid = Convert.ToInt32(HttpContext.Session.GetString("CourseID")) });
             }
             AttendanceRegisterPrintOut printOut = new AttendanceRegisterPrintOut();
-            using (MemoryStream stream = new MemoryStream())
+            using MemoryStream stream = new MemoryStream();
+            Document document = printOut.Print(register); ;
+            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
             {
-                Document document = printOut.Print(register); ;
-                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                pdfRenderer.Document = document;
-                pdfRenderer.RenderDocument();
-                pdfRenderer.PdfDocument.Save(stream, false);
+                Document = document
+            };
+            pdfRenderer.RenderDocument();
+            pdfRenderer.PdfDocument.Save(stream, false);
 
-                return File(stream.ToArray(), "application/pdf", $"Register_{register.AttendanceDate}.pdf");
-            }
+            return File(stream.ToArray(), "application/pdf", $"Register_{register.AttendanceDate}.pdf");
 
         }
         public ActionResult DeleteRegister(int id)

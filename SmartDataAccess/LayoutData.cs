@@ -262,6 +262,62 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser",
                       LinkRequiresID=false
                 },
+                   new LayoutMenu()
+                {
+                    LayoutMenuID =17,
+                    LayoutID = (int)LayoutComponent.Developer_Menu,
+                    DisplayName = "Support",
+                    ControllerName = "Support",
+                    ActionName = "Support",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-anchor"),
+                    OrderNo =17,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                
+                  new LayoutMenu()
+                {
+                    LayoutMenuID =18,
+                    LayoutID = (int)LayoutComponent.Developer_Menu,
+                    DisplayName = "Licence",
+                    ControllerName = "Licence",
+                    ActionName = "Licence",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa  fa-key"),
+                    OrderNo =18,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+                 new LayoutMenu()
+                {
+                    LayoutMenuID =19,
+                    LayoutID = (int)LayoutComponent.Developer_Menu,
+                    DisplayName = "Maintanance",
+                    ControllerName = "Maintanance",
+                    ActionName = "Maintanance",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-wrench"),
+                    OrderNo =19,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                  new LayoutMenu()
+                {
+                    LayoutMenuID =20,
+                    LayoutID = (int)LayoutComponent.Developer_Menu,
+                    DisplayName = "Feature Flags",
+                    ControllerName = "FeatureFlag",
+                    ActionName = "FeatureFlag",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-building"),
+                    OrderNo =9999,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
             };
             return menus.ToArray();
 

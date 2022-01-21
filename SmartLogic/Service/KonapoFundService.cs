@@ -21,8 +21,8 @@ namespace SmartLogic
     public class KonapoFundService : IKonapoFundService
     {
         private readonly DatabaseContext _context;
-        ICustomSettingsService _settingService = new CustomSettingsService();
-        IClientService _clientService = new ClientService();
+        readonly ICustomSettingsService _settingService = new CustomSettingsService();
+        readonly IClientService _clientService = new ClientService();
 
         public KonapoFundService(DatabaseContext context) => _context = context;
 
@@ -436,7 +436,7 @@ namespace SmartLogic
                     _context.KonapoFunds.Remove(KonapoFund);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    KonapoFund.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    KonapoFund.IsActive = DatabaseAction.Deactivate != action;
                     KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
                     KonapoFund.LastChangedDate = DateTime.Now;
                     _context.Update(KonapoFund);
@@ -508,13 +508,15 @@ namespace SmartLogic
                 _context.Update(KonapoFund);
 
                 // save history
-                KonapoFundCTIHistory KonapoFundHistory = new KonapoFundCTIHistory();
-                KonapoFundHistory.KonapoFundCTIID = old_KonapoFund.KonapoFundCTIID;
-                KonapoFundHistory.FundSourceID = old_KonapoFund.FundSourceID;
-                KonapoFundHistory.ProjectedCost = old_KonapoFund.ProjectedCost;
-                KonapoFundHistory.KonapoAmount = old_KonapoFund.KonapoAmount;
-                KonapoFundHistory.LastChangedBy = old_KonapoFund.LastChangedBy;
-                KonapoFundHistory.LastChangedDate = old_KonapoFund.LastChangedDate;
+                KonapoFundCTIHistory KonapoFundHistory = new KonapoFundCTIHistory
+                {
+                    KonapoFundCTIID = old_KonapoFund.KonapoFundCTIID,
+                    FundSourceID = old_KonapoFund.FundSourceID,
+                    ProjectedCost = old_KonapoFund.ProjectedCost,
+                    KonapoAmount = old_KonapoFund.KonapoAmount,
+                    LastChangedBy = old_KonapoFund.LastChangedBy,
+                    LastChangedDate = old_KonapoFund.LastChangedDate
+                };
                 _context.Add(KonapoFundHistory);
                 return await _context.SaveChangesAsync();
             }
@@ -715,7 +717,7 @@ namespace SmartLogic
                     _context.Funds.Remove(Fund);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    Fund.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    Fund.IsActive = DatabaseAction.Deactivate != action;
                     Fund.LastChangedBy = UtilityService.CurrentUserName;
                     Fund.LastChangedDate = DateTime.Now;
                     _context.Update(Fund);
@@ -817,7 +819,7 @@ namespace SmartLogic
                     _context.FundItems.Remove(FundItem);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    FundItem.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    FundItem.IsActive = DatabaseAction.Deactivate != action;
                     FundItem.LastChangedBy = UtilityService.CurrentUserName;
                     FundItem.LastChangedDate = DateTime.Now;
                     _context.Update(FundItem);
@@ -954,7 +956,7 @@ namespace SmartLogic
                     _context.FundCategories.Remove(FundCategory);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    FundCategory.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    FundCategory.IsActive = DatabaseAction.Deactivate != action;
                     FundCategory.LastChangedBy = UtilityService.CurrentUserName;
                     FundCategory.LastChangedDate = DateTime.Now;
                     _context.Update(FundCategory);
@@ -1057,7 +1059,7 @@ namespace SmartLogic
                     _context.FundCategoryItems.Remove(FundCategory);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    FundCategory.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    FundCategory.IsActive = DatabaseAction.Deactivate != action;
                     FundCategory.LastChangedBy = UtilityService.CurrentUserName;
                     FundCategory.LastChangedDate = DateTime.Now;
                     _context.Update(FundCategory);

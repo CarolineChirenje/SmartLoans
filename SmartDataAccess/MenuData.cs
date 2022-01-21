@@ -454,11 +454,11 @@ namespace SmartDataAccess
                 {
                     MenuID =9994,
                     MenuGroupID = (int)MenuGroups.Developer_Menu,
-                    DisplayName = "Support",
-                    ControllerName = "Support",
-                    ActionName = "Support",
+                    DisplayName = "Technical Menu",
+                    ControllerName = "FeatureFlag",
+                    ActionName = "Dashboard",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-anchor"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-desktop"),
                     OrderNo =9994,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -478,62 +478,22 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                new Menu()
-                {
-                    MenuID =9996,
-                    MenuGroupID = (int)MenuGroups.Developer_Menu,
-                    DisplayName = "Licence",
-                    ControllerName = "Licence",
-                    ActionName = "Licence",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa  fa-key"),
-                    OrderNo =9996,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-                },
-               new Menu()
-                {
-                    MenuID =9997,
-                    MenuGroupID = (int)MenuGroups.Developer_Menu,
-                    DisplayName = "Maintanance",
-                    ControllerName = "Maintanance",
-                    ActionName = "Maintanance",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-wrench"),
-                    OrderNo =9997,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
                  new Menu()
                 {
-                    MenuID = 9998,
+                    MenuID = 9996,
                     MenuGroupID = (int)MenuGroups.Menu,
                     DisplayName = "Main Menu",
                     ControllerName = "Menus",
                     ActionName = "MainMenu",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-book"),
-                    OrderNo = 9998,
+                    OrderNo = 9996,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
                
-                  new Menu()
-                {
-                    MenuID =9999,
-                    MenuGroupID = (int)MenuGroups.Developer_Menu,
-                    DisplayName = "Feature Flags",
-                    ControllerName = "FeatureFlag",
-                    ActionName = "FeatureFlag",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-building"),
-                    OrderNo =9999,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
+              
             };
             return menus.ToArray();
 

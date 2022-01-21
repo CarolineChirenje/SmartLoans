@@ -131,7 +131,7 @@ namespace SmartLogic
         {
             try
             {
-                        var user = _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefault();
+                        var user =await _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
             return UtilityService.IsNotNull(user);
             }
             catch (Exception ex)

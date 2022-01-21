@@ -6,7 +6,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_PublishTargetUrl>C:\Publish\REM</_PublishTargetUrl>
-    <History>True|2022-01-20T10:35:06.9071304Z;False|2022-01-20T21:28:32.1467930+11:00;False|2022-01-20T20:39:22.4780938+11:00;</History>
+    <History>True|2022-01-20T10:57:02.1104690Z;True|2022-01-20T21:35:06.9071304+11:00;False|2022-01-20T21:28:32.1467930+11:00;False|2022-01-20T20:39:22.4780938+11:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <DestinationConnectionStrings Include="SSDBConnection">

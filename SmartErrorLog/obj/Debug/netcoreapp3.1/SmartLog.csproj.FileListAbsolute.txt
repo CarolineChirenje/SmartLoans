@@ -1,0 +1,14 @@
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.1\SmartLog.deps.json
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.1\SmartLog.dll
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.1\SmartLog.pdb
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.1\SmartHelper.dll
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.1\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.csproj.CopyComplete
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.dll
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.pdb

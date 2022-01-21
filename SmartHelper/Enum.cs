@@ -22,13 +22,15 @@ namespace SmartHelper
     {
         Client = 1,
         Products,
-        Khonapo_Fund
+        Khonapo_Fund,
+        Developer_Menu
     }
     public enum Menu_Component
     {//Name must the same with ComponentList
         MenuList = 1,
         ClientMenuList,
-        KhonapoMenuList
+        KhonapoMenuList,
+        DeveloperMenuList
     }
     public enum DaysOfTheWeek
     {
