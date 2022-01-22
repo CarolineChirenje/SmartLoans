@@ -10,7 +10,15 @@ using SmartDomain;
 using SmartHelper;
 using SmartInterfaces;
 using SmartLogic;
-
+using SmartExtensions;
+using SmartReporting;
+using System.IO;
+using MigraDocCore.DocumentObjectModel;
+using MigraDocCore.Rendering;
+using SmartLog;
+using PdfSharpCore.Pdf.IO;
+using PdfSharpCore.Drawing;
+using PdfSharpCore.Pdf.Security;
 
 namespace SmartSave.Controllers
 {
@@ -175,6 +183,188 @@ namespace SmartSave.Controllers
                 return RedirectToAction("ViewKonapoFund", new { id });
             }
 
+        }
+
+        [HttpPost]
+        public JsonResult GetKhonapoReport([FromBody] KhonapoReport report)
+        {
+            try
+            {
+                if (report != null)
+                {
+                    if (report.KonapoFundID.ToInt() > 0)
+                    {
+                        int clientID = report.ClientID.ToInt();
+                        if (clientID > 0)
+                            report.Client = _clientservice.FindClient(clientID).Result;
+                        string filename = report.FundReference;
+
+                        byte[] pdfFile = GenerateKhonapoReport(report);
+                        if (pdfFile != null)
+                            return Json(new { filename = filename + ".pdf", fileContents = Convert.ToBase64String(pdfFile) });
+                      
+                        else
+                            return Json(null);
+
+                    }
+                    return Json(null);
+                }
+                else
+                    return Json(null);
+
+            }
+            catch (Exception ex)
+            {
+
+                return Json(null);
+            }
+
+        }
+        //public  ActionResult GetKhonapoReport([FromBody] KhonapoReport report)
+        //{
+        //    try
+        //    {
+        //        if (report != null)
+        //        {
+        //            int kfund = report.KonapoFundID.ToInt();
+        //            if (kfund > 0)
+        //            {
+        //                int clientID = report.ClientID.ToInt();
+        //                if (clientID > 0)
+        //                    report.Client = _clientservice.FindClient(clientID).Result;
+        //                string filename = report.FundReference;
+
+        //                byte[] pdfFile = GenerateKhonapoReport(report);
+        //                if (pdfFile != null)
+        //                    return File(pdfFile, "application/pdf", filename + ".pdf");
+        //                else
+        //                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+        //                return RedirectToAction("ViewKonapoFund", new { id= kfund });
+
+        //            }
+        //            TempData[MessageDisplayType.Error.ToString()] ="Failed to Generate Report";
+        //            return RedirectToAction("ViewKonapoFund", new { id = kfund });
+        //        }
+        //        else
+        //            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+        //        return RedirectToAction(nameof(KonapoFunds));
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+        //        return RedirectToAction(nameof(KonapoFunds));
+        //    }
+
+        //}
+        private byte[] GenerateKhonapoReport(KhonapoReport statement)
+        {
+            byte[] pdffile = null;
+            KhonapoFundReport printOut = new KhonapoFundReport();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                try
+                {
+                    Document document = printOut.Print(statement);
+                    // Create a renderer for the MigraDoc document.
+                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
+                    {
+                        // Associate the MigraDoc document with a renderer
+                        Document = document
+                    };
+                    // Layout and render document to PDF
+                    pdfRenderer.RenderDocument();
+                    pdfRenderer.PdfDocument.Save(stream, false);
+                    byte[] finalDocument = ProcessPDF(stream.ToArray(), statement.Client.IDNumber.Trim());
+                    pdffile = finalDocument;
+                }
+                catch (Exception ex)
+                {
+
+                    CustomLog.Log(LogSource.GUI, ex);
+                }
+
+            }
+            return pdffile;
+        }
+        private byte[] ProcessPDF(byte[] documentGenerated, string IDNumber, bool isEmail=false)
+        {
+            MemoryStream stream = new MemoryStream(0);
+            stream.Write(documentGenerated, 0, documentGenerated.Length);
+            var document = PdfReader.Open(stream, UtilityService.StatementPasswordForAdmin.Trim(), PdfDocumentOpenMode.Modify);
+
+            if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+            {
+                const int emSize = 100;
+                string watermark = $"{UtilityService.SiteEnvironment}";
+                // Create the font for drawing the watermark.
+                var font = new XFont("Times New Roman", emSize, XFontStyle.BoldItalic);
+                //this makes _mem resizeable 
+
+                // var document = PdfReader.Open(stream, PdfDocumentOpenMode.Modify);
+                // Set version to PDF 1.4 (Acrobat 5) because we use transparency.
+                if (document.Version < 14)
+                    document.Version = 14;
+
+                for (var idx = 0; idx < document.Pages.Count; idx++)
+                {
+                    var page = document.Pages[idx];
+
+                    // Variation 1: Draw a watermark as a text string.
+                    // Get an XGraphics object for drawing beneath the existing content.
+                    var gfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Prepend);
+
+                    // Get the size (in points) of the text.
+                    var size = gfx.MeasureString(watermark, font);
+
+                    // Define a rotation transformation at the center of the page.
+                    gfx.TranslateTransform(page.Width / 2, page.Height / 2);
+                    gfx.RotateTransform(-Math.Atan(page.Height / page.Width) * 180 / Math.PI);
+                    gfx.TranslateTransform(-page.Width / 2, -page.Height / 2);
+
+                    // Create a string format.
+                    var format = new XStringFormat
+                    {
+                        Alignment = XStringAlignment.Near,
+                        LineAlignment = XLineAlignment.Near
+                    };
+
+                    // Create a dimmed red brush.
+                    XBrush brush = new XSolidBrush(XColor.FromArgb(128, 255, 0, 0));
+
+                    // Draw the string.
+                    gfx.DrawString(watermark, font, brush,
+                        new XPoint((page.Width - size.Width) / 2, (page.Height - size.Height) / 2),
+                        format);
+
+                }
+            }
+
+            if (UtilityService.StatementPasswordProtect && isEmail)
+            {
+                PdfSecuritySettings securitySettings = document.SecuritySettings;
+                // Setting one of the passwords automatically sets the security level to 
+                // PdfDocumentSecurityLevel.Encrypted128Bit.
+                securitySettings.UserPassword = IDNumber;
+                securitySettings.OwnerPassword = UtilityService.StatementPasswordForAdmin.Trim();
+
+                // Don't use 40 bit encryption unless needed for compatibility
+                //securitySettings.DocumentSecurityLevel = PdfDocumentSecurityLevel.Encrypted40Bit;
+
+                // Restrict some rights.
+                securitySettings.PermitAccessibilityExtractContent = false;
+                securitySettings.PermitAnnotations = false;
+                securitySettings.PermitAssembleDocument = false;
+                securitySettings.PermitExtractContent = false;
+                securitySettings.PermitFormsFill = true;
+                securitySettings.PermitFullQualityPrint = false;
+                securitySettings.PermitModifyDocument = true;
+                securitySettings.PermitPrint = false;
+
+            }
+            document.Save(stream, false);
+            var _document = stream.ToArray();
+            return _document;
         }
 
         private void PopulateDropDownList()

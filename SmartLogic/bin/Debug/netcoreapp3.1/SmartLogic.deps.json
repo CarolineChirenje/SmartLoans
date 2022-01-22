@@ -1252,6 +1252,11 @@
           "SmartDomain.dll": {}
         }
       },
+      "SmartExtensions/1.0.0": {
+        "runtime": {
+          "SmartExtensions.dll": {}
+        }
+      },
       "SmartHelper/1.0.0": {
         "dependencies": {
           "Dapper": "2.0.123",
@@ -1293,6 +1298,7 @@
           "MigraDocCore.Rendering": "1.3.10",
           "PdfSharpCore": "1.3.10",
           "SmartDomain": "1.0.0",
+          "SmartExtensions": "1.0.0",
           "SmartInterfaces": "1.0.0",
           "SmartLog": "1.0.0",
           "System.Data.DataSetExtensions": "4.5.0",
@@ -2129,6 +2135,11 @@
       "sha512": ""
     },
     "SmartDomain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SmartExtensions/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -28,3 +28,5 @@ C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CoreCompil
 C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.dll
 C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartExtensions.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartExtensions.pdb

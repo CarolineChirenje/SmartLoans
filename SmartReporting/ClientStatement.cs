@@ -260,7 +260,7 @@ namespace SmartReporting
                 tblrow1.Cells[1].Borders.Visible = false;
                 tblrow1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                tblrow1.Cells[1].AddParagraph($"{_statement.StartDate.ToString("dd-MMM-yyyy")} to {_statement.EndDate.ToString("dd-MMM-yyyy")}");
+                tblrow1.Cells[1].AddParagraph($"{_statement.StartDate:dd-MMM-yyyy} to {_statement.EndDate:dd-MMM-yyyy}");
 
                 tblrow1.Cells[2].Borders.Visible = false;
                 tblrow1.Cells[2].Format.Alignment = ParagraphAlignment.Left;

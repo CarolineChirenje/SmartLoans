@@ -9892,3 +9892,5 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.csproj.CopyComple
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.genruntimeconfig.cache
+C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartExtensions.dll
+C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartExtensions.pdb

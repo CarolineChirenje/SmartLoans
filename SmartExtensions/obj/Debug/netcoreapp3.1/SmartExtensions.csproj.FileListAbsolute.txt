@@ -1,0 +1,10 @@
+C:\DEV\SmartWealth\SmartExtensions\bin\Debug\netcoreapp3.1\SmartExtensions.deps.json
+C:\DEV\SmartWealth\SmartExtensions\bin\Debug\netcoreapp3.1\SmartExtensions.dll
+C:\DEV\SmartWealth\SmartExtensions\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
+C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.dll
+C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.pdb

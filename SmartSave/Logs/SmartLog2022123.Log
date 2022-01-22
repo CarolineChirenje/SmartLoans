@@ -1,0 +1,274 @@
+2022-01-23 07:31:11:31 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:31:11:44 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:31:11:45 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 07:31:11:64 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:31:11:65 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:31:11:67 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 07:31:13:27 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:31:13:30 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:31:13:33 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 07:31:19:75 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:31:19:78 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:31:19:80 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 07:31:36:53 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:31:36:56 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:31:36:58 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 07:31:40:03 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:31:40:05 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:31:40:07 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 07:31:45:84 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:31:45:86 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:31:45:87 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 07:31:49:49 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:31:49:51 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:31:49:53 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 07:34:09:69 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:34:09:72 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:34:09:74 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 07:37:04:99 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+2022-01-23 07:37:05:05 :Reporting : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+2022-01-23 07:37:05:07 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'text')
+   at MigraDocCore.DocumentObjectModel.ParagraphElements.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.Paragraph.AddText(String text)
+   at MigraDocCore.DocumentObjectModel.DocumentElements.AddParagraph(String text)
+   at MigraDocCore.DocumentObjectModel.Tables.Cell.AddParagraph(String paragraphText)
+   at SmartReporting.KhonapoFundReport.PrintFormValues(String name, String value) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 321
+   at SmartReporting.KhonapoFundReport.PrintCalculationForm() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 298
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 40
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268
+2022-01-23 10:04:08:21 :Reporting : System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'index')
+   at MigraDocCore.DocumentObjectModel.Tables.Cells.get_Item(Int32 index)
+   at MigraDocCore.DocumentObjectModel.Tables.Table.SetEdge(Int32 clm, Int32 row, Int32 clms, Int32 rows, Edge edge, BorderStyle style, Unit width, Color clr)
+   at SmartReporting.KhonapoFundReport.PrintMonthlyBreakdown() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 441
+2022-01-23 10:04:08:30 :Reporting : System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'index')
+   at MigraDocCore.DocumentObjectModel.Tables.Cells.get_Item(Int32 index)
+   at MigraDocCore.DocumentObjectModel.Tables.Table.SetEdge(Int32 clm, Int32 row, Int32 clms, Int32 rows, Edge edge, BorderStyle style, Unit width, Color clr)
+   at SmartReporting.KhonapoFundReport.PrintMonthlyBreakdown() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 441
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 41
+2022-01-23 10:04:08:33 :GUI : System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'index')
+   at MigraDocCore.DocumentObjectModel.Tables.Cells.get_Item(Int32 index)
+   at MigraDocCore.DocumentObjectModel.Tables.Table.SetEdge(Int32 clm, Int32 row, Int32 clms, Int32 rows, Edge edge, BorderStyle style, Unit width, Color clr)
+   at SmartReporting.KhonapoFundReport.PrintMonthlyBreakdown() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 441
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 261
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 41
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268

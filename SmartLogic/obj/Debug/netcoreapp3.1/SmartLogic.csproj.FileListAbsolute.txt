@@ -22,3 +22,5 @@ C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.CoreComp
 C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.dll
 C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.pdb
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.1\SmartExtensions.dll
+C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.1\SmartExtensions.pdb

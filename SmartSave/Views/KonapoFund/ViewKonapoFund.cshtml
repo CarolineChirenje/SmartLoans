@@ -92,7 +92,10 @@
                                 <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.LastChangedDate)</label>
                             </div>
                         </div>
-                        <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
+                        <input type="hidden" id="KonapoFundID" name="KonapoFundID" value="@Model.KonapoFundID" />
+                        <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                        <input type="hidden" id="FundName" name="FundName" value="@Model.FundName" />
+                        <input type="hidden" id="FundReference" name="FundReference" value="@Model.KonapoRef" />
                     </section>
                 </div>
                 <!-- /.box-body -->
@@ -613,12 +616,14 @@
 
         <div class="box-footer">
             <a class="btn btn-default" asp-controller="KonapoFund" asp-action="KonapoFunds">Cancel</a>
-            <a class="btn btn-small btn-success pull-right" asp-controller="KonapoFund" asp-action="PrintCalculation" asp-route-id="@Model.KonapoFundID">Print</a>
+            <a class="btn btn-small btn-success pull-right" id="btnPrint">Print</a>
         </div>
     </div>
 
 </section>
 <link href="~/dist/css/anchor.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js" integrity="sha256-H8xrCe0tZFi/C2CgxkmiGksqVaxhW0PFcUKZJZo1yNU=" crossorigin="anonymous"></script>
+
 <script>
 
     $(document).ready(function () {
@@ -636,6 +641,11 @@
             active:false,*/
             heightStyle: "content",
 
+        });
+    });
+    $(function () {
+        $('#btnPrint').click(function () {
+            PrintForm();
         });
     });
     $(function () {
@@ -874,7 +884,6 @@
                 amount : 0;
         return result
     }
-
     function validateDecimalInput(control) {
 
         let controlError = control.concat('Error');
@@ -891,7 +900,6 @@
             }
         })
     }
-
     function populatePercentages() {
         var total = 0.0;
         // calculate the percentage for each row:
@@ -917,4 +925,157 @@
     $('div#calc_filter.dataTables_filter > label > input').keyup(function (e) {
         populatePercentages();
     });
+
+    function PrintForm() {
+
+        //var monthlybreakdown = $('#calc').tableToJSON();
+        //console.log(monthlybreakdown);
+        //console.log(JSON.stringify(monthlybreakdown));
+        var fund = $('#Fund').val();
+        fund = fund.replace(",", ".")
+        var KonapoFundID = $('#KonapoFundID').val();
+        var ClientID = $('#ClientID').val();
+        var FundReference = $('#FundReference').val();
+        var FundName = $('#FundName').val();
+        //Calculation Form
+        var CFPeriod = $('#Period').val();
+        var CFEmergencyfund = $('#EmergencyTotal').val();
+        var CFAnnualFund = $('#AnnualTotal').val();
+        var CFLifeTimeRetirement = $('#LifeTimeTotal').val();
+        var CFRetirementPeriod = $('#Retirement').val();
+        var CFFund = fund;
+        //Compound Interest : OTI
+        var OTIInvestmentAmount = $('#InvestmentAmountOT').val();
+        var OTIInterestRate = $('#InterestRateOT').val();
+        var OTITenure = $('#TenureOT').val();
+        var OTITotalValue = $('#ValueAfterTenureOT').val();
+        var OTIMultiplier = $('#MultiplierOT').val();
+        //Target : TimeRequired
+        var TTRIncomeAverage = $('#IncomeAverage').val();
+        var TTRCommittment = $('#Committment').val();
+        var TTRFundTargetMonths = $('#FundTargetMonths').val();
+        var TTRFundTargetYears = $('#FundTargetYears').val();
+        //Target : AccountingForProgress
+        var TAFPProgress = $('#Progress').val();
+        var TAFPBalance = $('#Balance').val();
+        var TAFPCommittment = $('#MCommitment').val();
+        var TAFPTargetMonths = $('#TargetRMonths').val();
+        var TAFPTargetYears = $('#TargetRYears').val();
+
+        //Target : AnnualTarget
+        var TATProgress = $('#AProgress').val();
+        var TATBalance = $('#ABalance').val();
+        var TATCommittment = $('#AMCommitment').val();
+        var TATTargetMonths = $('#ATargetRMonths').val();
+        var TATTargetYears = $('#ATargetRYears').val();
+
+        var konapoCalculations = {
+            "KonapoFundID": KonapoFundID,
+            "ClientID": ClientID,
+            "FundName": FundName,
+            "FundReference": FundReference,
+            //Calculation Form
+            "CFEmergencyfund": CFEmergencyfund,
+            "CFPeriod": CFPeriod,
+            "CFAnnualFund": CFAnnualFund,
+            "CFLifeTimeRetirement": CFLifeTimeRetirement,
+            "CFRetirementPeriod": CFRetirementPeriod,
+            "CFFund": CFFund,
+
+            //Compound Interest One Time Investment
+            "OTIInvestmentAmount": OTIInvestmentAmount,
+            "OTIInterestRate": OTIInterestRate,
+            "OTITenure": OTITenure,
+            "OTITotalValue": OTITotalValue,
+            "OTIMultiplier": OTIMultiplier,
+
+            //Target : TimeRequired
+            "TTRIncomeAverage": TTRIncomeAverage,
+            "TTRCommittment": TTRCommittment,
+            "TTRFundTargetMonths": TTRFundTargetMonths,
+            "TTRFundTargetYears": TTRFundTargetYears,
+
+            //Target : AccountForProgress
+            "TAFPProgress": TAFPProgress,
+            "TAFPBalance": TAFPBalance,
+            "TAFPCommittment": TAFPCommittment,
+            "TAFPTargetMonths": TAFPTargetMonths,
+            "TAFPTargetYears": TAFPTargetYears,
+
+            //Target : AnnualTarget
+            "TATProgress": TATProgress,
+            "TATBalance": TATBalance,
+            "TATCommittment": TATCommittment,
+            "TATTargetMonths": TATTargetMonths,
+            "TATTargetYears": TATTargetYears,
+
+            ////MonthlyBreakDown
+            //"MonthlyBreakDown": monthlybreakdown
+        };
+        console.log(konapoCalculations);
+        console.log(JSON.stringify(konapoCalculations));
+
+        if (konapoCalculations != null) {
+            $.ajax({
+                type: "POST",
+                url: "/KonapoFund/GetKhonapoReport/",
+                data: JSON.stringify(konapoCalculations),
+                contentType: "application/json;",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        console.log("Response received ");
+                        console.log(response);
+                        console.log(response.filename);
+
+                        var fileName = response.filename;
+                        console.log('File Name ' + fileName);
+                        var bytes = _base64ToArrayBuffer(response.fileContents);
+                        saveByteArray(fileName, bytes);
+                    }
+
+                    else {
+                        alert("An error has occurred.This application may no longer proceed with downloading the report.Please contact your System Administrator for Assistance");
+                    }
+
+                },
+                failure: function (response) {
+                    alert("An error has occurred.This application may no longer proceed with downloading the report.Please contact your System Administrator for Assistance");
+                    console.log(response.responseText);
+                },
+                error: function (response) {
+                    alert("An error has occurred.This application may no longer proceed with downloading the report.Please contact your System Administrator for Assistance");
+                    console.log(response.responseText);
+                }
+            });
+        }
+
+    }
+
+    function _base64ToArrayBuffer(base64) {
+        var binary_string = window.atob(base64);
+        var len = binary_string.length;
+        var bytes = new Uint8Array(len);
+        for (var i = 0; i < len; i++) {
+            bytes[i] = binary_string.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
+
+    function saveByteArray(reportName, byte) {
+        var blob = new Blob([byte], { type: "application/octetstream" });
+        var isIE = false || !!document.documentMode;
+        if (isIE) {
+            window.navigator.msSaveBlob(blob, reportName);
+        } else {
+            var url = window.URL || window.webkitURL;
+            link = url.createObjectURL(blob);
+            var a = $("<a />");
+            a.attr("download", reportName);
+            a.attr("href", link);
+            $("body").append(a);
+            a[0].click();
+            $("body").remove(a);
+        }
+    }
 </script>
