@@ -9780,6 +9780,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Courses\ViewCou
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Currency\Currency.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Currency\ViewCurrency.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\CustomSettings\CustomSettings.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\CustomSettings\Dashboard.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\CustomSettings\ViewCustomSettings.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Department\Add.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Department\Department.cshtml.g.cs
@@ -9846,6 +9847,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Product\AddProd
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Product\Product.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Product\ViewProduct.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Product\ViewProductFee.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Reporting\Dashboard.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Roles\Add.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Roles\RolePermissions.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Roles\Roles.cshtml.g.cs
@@ -9855,6 +9857,8 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Componen
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\DeveloperMenuList\DeveloperMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\KhonapoMenuList\KhonapoMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\MenuList\MainMenu.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\ReportingMenuList\ReportingMenu.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\SettingsMenuList\SettingsMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Footer.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs

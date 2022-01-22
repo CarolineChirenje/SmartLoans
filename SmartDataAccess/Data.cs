@@ -361,7 +361,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Site_Customer_Service_Number,
                     Name = AppSetting.Site_Customer_Service_Number.ToString().Replace("_", " "),
-                    Value=@"0609162043",
+                    Value=@"+61411629968",
                     Description="Customer Support Number",
                     CustomVariableTypeID=(int)VariableType.String,
                     IsActive = true,

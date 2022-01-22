@@ -9,7 +9,7 @@
         @TempData["Title"]
     </h1>
     <ol class="breadcrumb">
-        <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="~/CustomSettings/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">@TempData["Title"]</li>
     </ol>
 </section>
@@ -75,7 +75,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    <a class="btn btn-default" asp-controller="CustomSettings" asp-action="Dashboard">Cancel</a>
                     @if (UtilityService.HasPermission(Permissions.Add_Department))
                     {
                         <a href="Add" class="btn btn-success pull-right">Create</a><br />

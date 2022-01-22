@@ -8,14 +8,14 @@ using System.Reflection;
 
 namespace SmartDataAccess
 {
-   public static class LayoutData
+    public static class LayoutData
     {
         public static Layout[] GetLayouts()
         {
             List<Layout> layouts = new List<Layout>();
 
             var layout = from LayoutComponent s in Enum.GetValues(typeof(LayoutComponent))
-                    select new { ID = s, Name = s.ToString() };
+                         select new { ID = s, Name = s.ToString() };
 
             foreach (var x in layout)
             {
@@ -276,7 +276,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                
+
                   new LayoutMenu()
                 {
                     LayoutMenuID =18,
@@ -313,11 +313,189 @@ namespace SmartDataAccess
                     ActionName = "FeatureFlag",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-building"),
-                    OrderNo =9999,
+                    OrderNo =20,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
+                 new LayoutMenu()
+                {
+                    LayoutMenuID =21,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Application Settings",
+                    ControllerName = "CustomSettings",
+                    ActionName = "CustomSettings",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-spinner"),
+                    OrderNo = 21,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+               },
+                         new LayoutMenu()
+                {
+                    LayoutMenuID =22,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "User Management",
+                    ControllerName = "User",
+                    ActionName = "Users",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-users"),
+                    OrderNo =22,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new LayoutMenu()
+                {
+                    LayoutMenuID =23,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Roles & Permissions",
+                    ControllerName = "Roles",
+                    ActionName = "Roles",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-asterisk"),
+                    OrderNo = 23,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new LayoutMenu()
+                {
+                    LayoutMenuID =24,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Companies",
+                    ControllerName = "Company",
+                    ActionName = "Companies",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-building"),
+                    OrderNo =24,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                                    },
+
+                new LayoutMenu()
+                {
+                    LayoutMenuID =25,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Transaction Types",
+                    ControllerName = "TransactionType",
+                    ActionName = "TransactionType",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-money"),
+                    OrderNo = 25,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new LayoutMenu()
+                {
+                    LayoutMenuID =26,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Asserts",
+                    ControllerName = "Assert",
+                    ActionName = "Assert",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-lightbulb-o"),
+                    OrderNo =26,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+                new LayoutMenu()
+                {
+                    LayoutMenuID =27,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Banks",
+                    ControllerName = "BankAccounts",
+                    ActionName = "BankAccounts",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-university"),
+                    OrderNo =27,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new LayoutMenu()
+                {
+                    LayoutMenuID =28,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Notice Board",
+                    ControllerName = "NoticeBoard",
+                    ActionName = "NoticeBoard",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-bell"),
+                    OrderNo =28,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+               },
+               new LayoutMenu()
+                {
+                    LayoutMenuID =29,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Email Templates",
+                    ControllerName = "EmailTemplate",
+                    ActionName = "EmailTemplate",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-envelope-o"),
+                    OrderNo =29,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+
+               new LayoutMenu()
+                {
+                    LayoutMenuID =30,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Departments",
+                    ControllerName = "Department",
+                    ActionName = "Department",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-building"),
+                    OrderNo =30,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                new LayoutMenu()
+                {
+                    LayoutMenuID =31,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Document Types",
+                    ControllerName = "DocumentType",
+                    ActionName = "DocumentTypes",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-file"),
+                    OrderNo = 31,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+               },
+                 new LayoutMenu()
+                {
+                    LayoutMenuID =32,
+                    LayoutID = (int)LayoutComponent.Settings,
+                                        DisplayName = "Currency",
+                    ControllerName = "Currency",
+                    ActionName = "Currency",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-money"),
+                    OrderNo =32,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+               new LayoutMenu()
+                {
+                    LayoutMenuID =33,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Country",
+                    ControllerName = "Country",
+                    ActionName = "Country",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-globe"),
+                    OrderNo =33,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+
             };
             return menus.ToArray();
 

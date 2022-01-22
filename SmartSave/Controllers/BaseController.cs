@@ -84,6 +84,24 @@ namespace SmartSave.Controllers
                 case "FeatureFlag":
                     component = Menu_Component.DeveloperMenuList;
                     break;
+                case "CustomSettings":
+                case "User":
+                case "Roles":
+                case "Company":
+                case "TransactionType":
+                case "Assert":
+                case "BankAccounts":
+                case "NoticeBoard":
+                case "EmailTemplate":
+                case "Department":
+                case "DocumentType":
+                case "Currency":
+                case "Country":
+                    component = Menu_Component.SettingsMenuList;
+                    break;
+                case "Reporting":
+                    component = Menu_Component.ReportingMenuList;
+                    break;
                 default:
                     component = Menu_Component.MenuList;
                     break;

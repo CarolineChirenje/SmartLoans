@@ -9,10 +9,10 @@ namespace SmartHelper
         Employees,
         Core_Services,
         Reporting,
-        Custom_Settings,
+        Settings,
         Invoicing,
         Programmes,
-        Konapo_Fund,
+        Konapo,
        
         //
         Menu = 9998,
@@ -23,14 +23,18 @@ namespace SmartHelper
         Client = 1,
         Products,
         Khonapo_Fund,
-        Developer_Menu
+        Developer_Menu,
+        Settings,
+        Reporting
     }
     public enum Menu_Component
     {//Name must the same with ComponentList
         MenuList = 1,
         ClientMenuList,
         KhonapoMenuList,
-        DeveloperMenuList
+        DeveloperMenuList,
+        SettingsMenuList,
+        ReportingMenuList
     }
     public enum DaysOfTheWeek
     {

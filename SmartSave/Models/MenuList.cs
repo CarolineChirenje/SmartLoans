@@ -51,4 +51,26 @@ namespace SmartSave
             return View("DeveloperMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Developer_Menu));
         }
     }
+
+    [ViewComponent(Name = "SettingsMenuList")]
+    public class SettingsMenuListViewComponent : ViewComponent
+    {
+        private readonly IMenuService _service;
+        public SettingsMenuListViewComponent(IMenuService service) => _service = service;
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View("SettingsMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Settings));
+        }
+    }
+    [ViewComponent(Name = "ReportingMenuList")]
+    public class ReportingListViewComponent : ViewComponent
+    {
+        private readonly IMenuService _service;
+        public ReportingListViewComponent(IMenuService service) => _service = service;
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View("ReportingMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Reporting));
+        }
+    }
+
 }

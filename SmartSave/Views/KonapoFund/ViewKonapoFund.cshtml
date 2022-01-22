@@ -3,7 +3,7 @@
 @using SmartHelper;
 <section class="content-header">
     <h1>
-        Konapo Fund
+        Konapo Fund @Model.KonapoFund.FundDetails
     </h1>
 </section>
 <!-- Main content -->
@@ -42,11 +42,6 @@
                 }
                 <div class="box-body">
                     <section>
-                        <div class="panel panel-success">
-                            <div class="panel-heading ">
-                                Fund Information
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
                             <div class="col-sm-10">
@@ -99,65 +94,13 @@
                         </div>
                         <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
                     </section>
-                    <section>
-                        <div class="panel panel-success">
-                            <div class="panel-heading ">
-                                @Model.FundName Calculation
-                            </div>
-                        </div>
-                       
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Khonapo Fund</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="Fund" name="Fund" value="@Model.KhonapoFundAmount" onchange="CalculateTotal()" disabled>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Minimum Survival Period (Months)</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="Period" name="Period" value="12" onchange="CalculateTotal()">
-                                <span id="PeriodError" class="text-danger text-bold"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="EmergencyTotal" name="EmergencyTotal" onchange="CalculateTotal()" disabled>
-                                <span id="EmergencyTotalError" class="text-danger text-bold"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Annual @Model.FundName</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="AnnualTotal" name="AnnualTotal" onchange="CalculateTotal()" disabled>
-                                <span id="AnnualTotalError" class="text-danger text-bold"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Retirement LifeTime (Years)</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="Retirement" name="Retirement" value="25" onchange="CalculateTotal()">
-                                <span id="RetirementError" class="text-danger text-bold"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">@Model.FundName (LifeTime)</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="LifeTimeTotal" name="LifeTimeTotal" onchange="CalculateTotal()" disabled>
-                                <span id="LifeTimeTotalError" class="text-danger text-bold"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
-                    </section>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
                     @if (UtilityService.HasPermission(Permissions.Update_Fund_Item))
                     {
-                        <button type="submit" class="btn btn-info">Update</button>
+                        var name = @Model.IsActive ? "Deactivate" : "Activate";
+                        <button type="submit" class="btn btn-info">@name</button>
                     }
                     @if (UtilityService.HasPermission(Permissions.Delete_Fund_Item))
                     {
@@ -166,13 +109,77 @@
                 </div>
                 <!-- /.box-footer -->
             </form>
+            <h3>@Model.FundName Calculation</h3>
+            <div class="row">
+                <div class="box-body">
+                    <section>
+
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label text-danger">Khonapo Fund</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Fund" name="Fund" value="@Model.KhonapoFundAmount" onchange="CalculateTotal()" disabled>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Minimum Survival Period (Months)</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Period" name="Period" value="12" onchange="CalculateTotal()">
+                                <span id="PeriodError" class="text-danger text-bold"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Emergency Fund</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="EmergencyTotal" name="EmergencyTotal" onchange="CalculateTotal()" disabled>
+                                <span id="EmergencyTotalError" class="text-danger text-bold"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Annual @Model.FundName</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="AnnualTotal" name="AnnualTotal" onchange="CalculateTotal()" disabled>
+                                <span id="AnnualTotalError" class="text-danger text-bold"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Retirement LifeTime (Years)</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Retirement" name="Retirement" value="25" onchange="CalculateTotal()">
+                                <span id="RetirementError" class="text-danger text-bold"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">@Model.FundName (LifeTime)</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="LifeTimeTotal" name="LifeTimeTotal" onchange="CalculateTotal()" disabled>
+                                <span id="LifeTimeTotalError" class="text-danger text-bold"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
+                    </section>
+                </div>
+            </div>
             <!-- /.box -->
-            <h3>@Model.FundName Calculations</h3>
+            <h3>@Model.FundName Projections and Breakdown</h3>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Categories & Calculations
+                            Projections and Breakdown
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -193,7 +200,7 @@
                                     <a href="#CompoundCalculation" data-toggle="tab">Compound Growth Calculator : Regular Deposits</a>
                                 </li>
                                 <li>
-                                    <a href="#FundCategory" data-toggle="tab">Categories</a>
+                                    <a href="#FundCategory" data-toggle="tab">Update Fund Items</a>
                                 </li>
                             </ul>
                             <!-- Tab panes -->
@@ -607,7 +614,6 @@
         <div class="box-footer">
             <a class="btn btn-default" asp-controller="KonapoFund" asp-action="KonapoFunds">Cancel</a>
             <a class="btn btn-small btn-success pull-right" asp-controller="KonapoFund" asp-action="PrintCalculation" asp-route-id="@Model.KonapoFundID">Print</a>
-
         </div>
     </div>
 
@@ -721,10 +727,10 @@
                 //console.log(totalPercentage);
                 // Update footer
                 $(api.column(2).footer()).html(
-                    pageTotalPercentage + '%' +  ' (' + totalPercentage + '% total)'
+                    pageTotalPercentage + '%' + ' (' + totalPercentage + '% total)'
                 );
 
-                           }
+            }
         });
     }
     function CalculateTotal() {
@@ -863,7 +869,7 @@
     function getValue(amount) {
 
         var result = typeof amount === 'string' ?
-            amount.replace(/[\$,]/g, '') *1 :
+            amount.replace(/[\$,]/g, '') * 1 :
             typeof i === 'number' ?
                 amount : 0;
         return result

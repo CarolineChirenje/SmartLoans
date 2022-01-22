@@ -6,9 +6,9 @@ using System.Text;
 
 namespace SmartDataAccess
 {
-   public class MenuData
+    public class MenuData
     {
-       public static MenuGroup[] GetMenuGroups()
+        public static MenuGroup[] GetMenuGroups()
         {
             List<MenuGroup> parentMenus = new List<MenuGroup>
             {
@@ -51,7 +51,7 @@ namespace SmartDataAccess
 
                 },
 
-             
+
                  new MenuGroup()
                 {
                     MenuGroupID = (int)MenuGroups.Reporting,
@@ -66,8 +66,8 @@ namespace SmartDataAccess
                 },
                 new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = MenuGroups.Custom_Settings.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Settings,
+                    DisplayName = MenuGroups.Settings.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-wrench"),
@@ -88,8 +88,8 @@ namespace SmartDataAccess
                 },
                     new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Konapo_Fund,
-                    DisplayName = MenuGroups.Konapo_Fund.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Konapo,
+                    DisplayName = MenuGroups.Konapo.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
@@ -97,7 +97,7 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
-                
+
                 new MenuGroup()
                 {
                     MenuGroupID = (int)MenuGroups.Menu,
@@ -140,7 +140,7 @@ namespace SmartDataAccess
             return parentMenus.ToArray();
 
         }
-       public static Menu[] GetMenus()
+        public static Menu[] GetMenus()
         {
             List<Menu> menus = new List<Menu>
             {
@@ -172,35 +172,49 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
+                   new Menu()
+                {
+                    MenuID =3,
+                    MenuGroupID = (int)MenuGroups.Konapo,
+                    DisplayName = "Konapo Fund",
+                    ControllerName = "KonapoFund",
+                    ActionName = "KonapoFunds",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-calculator"),
+                    OrderNo = 3,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
                 new Menu()
                 {
-                    MenuID = 3,
+                    MenuID = 4,
                     MenuGroupID = (int)MenuGroups.Core_Services,
                     DisplayName = "Transactions",
                     ControllerName = "Transactions",
                     ActionName = "Transactions",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-money"),
-                    OrderNo = 2,
+                    OrderNo = 4,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
                    new Menu()
                 {
-                    MenuID = 4,
+                    MenuID = 5,
                     MenuGroupID = (int)MenuGroups.Invoicing,
                     DisplayName = "Invoices",
                     ControllerName = "Transactions",
                     ActionName = "Invoices",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-gear"),
-                    OrderNo = 4,
+                    OrderNo = 5,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
-              
+
                 new Menu()
                 {
                     MenuID = 6,
@@ -214,239 +228,50 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
-                new Menu()
-                {
-                    MenuID =7,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Application Settings",
-                    ControllerName = "CustomSettings",
-                    ActionName = "CustomSettings",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-spinner"),
-                    OrderNo = 7,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-               },
-                new Menu()
-                {
-                    MenuID =8,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "User Management",
-                    ControllerName = "User",
-                    ActionName = "Users",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-users"),
-                    OrderNo = 8,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                new Menu()
-                {
-                    MenuID = 9,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Roles & Permissions",
-                    ControllerName = "Roles",
-                    ActionName = "Roles",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-asterisk"),
-                    OrderNo = 9,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
 
                 new Menu()
                 {
-                    MenuID = 10,
+                    MenuID = 7,
                     MenuGroupID = (int)MenuGroups.Programmes,
                     DisplayName = "Coaching Programmes",
                     ControllerName = "Courses",
                     ActionName = "Courses",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-university"),
-                    OrderNo = 10,
+                    OrderNo = 7,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
+
                   new Menu()
                 {
-                    MenuID =11,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Companies",
-                    ControllerName = "Company",
-                    ActionName = "Companies",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-building"),
-                    OrderNo =11,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-                                    },
-               
-                  new Menu()
-                {
-                    MenuID =12,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Transaction Types",
-                    ControllerName = "TransactionType",
-                    ActionName = "TransactionType",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-money"),
-                    OrderNo = 12,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                 new Menu()
-                {
-                    MenuID =13,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Asserts",
-                    ControllerName = "Assert",
-                    ActionName = "Assert",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-lightbulb-o"),
-                    OrderNo =13,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-                },
-                 new Menu()
-                {
-                    MenuID =14,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Banks",
-                    ControllerName = "BankAccounts",
-                    ActionName = "BankAccounts",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-university"),
-                    OrderNo =14,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                 new Menu()
-                {
-                    MenuID = 15,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Notice Board",
-                    ControllerName = "NoticeBoard",
-                    ActionName = "NoticeBoard",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-bell"),
-                    OrderNo =15,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-               },
-                new Menu()
-                {
-                    MenuID =16,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Email Templates",
-                    ControllerName = "EmailTemplate",
-                    ActionName = "EmailTemplate",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-envelope-o"),
-                    OrderNo =16,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-                },
-
-                new Menu()
-                {
-                    MenuID =17,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Departments",
-                    ControllerName = "Department",
-                    ActionName = "Department",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-building"),
-                    OrderNo =17,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                new Menu()
-                {
-                    MenuID = 18,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Document Types",
-                    ControllerName = "DocumentType",
-                    ActionName = "DocumentTypes",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-file"),
-                    OrderNo = 18,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-               },
-                           new Menu()
-                {
-                    MenuID =19,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Currency",
-                    ControllerName = "Currency",
-                    ActionName = "Currency",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-money"),
-                    OrderNo =19,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
-                 new Menu()
-                {
-                    MenuID =20,
-                    MenuGroupID = (int)MenuGroups.Custom_Settings,
-                    DisplayName = "Country",
-                    ControllerName = "Country",
-                    ActionName = "Country",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-globe"),
-                    OrderNo =20,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-                },
-                  new Menu()
-                {
-                    MenuID =21,
+                    MenuID= 8,
                     MenuGroupID = (int)MenuGroups.Reporting,
                     DisplayName = "Reports",
                     ControllerName = "Reporting",
-                    ActionName = "Report",
+                    ActionName = "DashBoard",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fas fa-registered"),
-                    OrderNo =21,
+                    OrderNo =8,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
                     new Menu()
                 {
-                    MenuID =22,
-                    MenuGroupID = (int)MenuGroups.Employees,
-                    DisplayName = "Konapo Fund",
-                    ControllerName = "Client",
-                    ActionName = "KonapoFunds",
+                    MenuID =9,
+                    MenuGroupID = (int)MenuGroups.Settings,
+                    DisplayName = "Parameters",
+                    ControllerName = "CustomSettings",
+                    ActionName = "Dashboard",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
-                    OrderNo = 3,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-gear"),
+                    OrderNo = 9,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
                 },
-                    new Menu()
-                {
-                    MenuID =23,
-                    MenuGroupID = (int)MenuGroups.Konapo_Fund,
-                    DisplayName = "Konapo Fund",
-                    ControllerName = "KonapoFund",
-                    ActionName = "KonapoFunds",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
-                    OrderNo = 23,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
+                 
                 
               // put new menu here
               
@@ -492,8 +317,8 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-               
-              
+
+
             };
             return menus.ToArray();
 
