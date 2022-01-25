@@ -16,10 +16,9 @@ namespace SmartDomain
         public int FundID { get; set; }
         public virtual Fund Fund { get; set; }
         public bool IsActive { get; set; }
-
         public DateTime RegistrationDate { get; set; }
         public virtual List<KonapoFundCT> KonapoFundCTs { get; set; }
-
+        public virtual List<KonapoFundReport> KonapoFundReports { get; set; }
         [NotMapped]
         public string FundDetails{ get { return $"{KonapoRef} - {Fund?.Name}"; } }
 

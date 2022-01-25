@@ -12,6 +12,10 @@ namespace SmartLogic
     public interface IKonapoFundService
     {
 
+       
+        Task<int> Save(KonapoFundReport konapoFundReport);
+        Task<int> Update(KonapoFundReport konapoFundReport);
+        Task<KonapoFundReport> FindKonapoReport(int konapoFundReportID);
         Task<int> DeleteKonapoFund(int id);
         Task<int> Save(KonapoFund KonapoFund);
         Task<int> Update(KonapoFund KonapoFund);

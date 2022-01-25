@@ -23,7 +23,15 @@ namespace SmartLogic
         private readonly DatabaseContext _context;
         readonly ICustomSettingsService _settingService = new CustomSettingsService();
         readonly IClientService _clientService = new ClientService();
-
+        public KonapoFundService()
+        {
+            if (_context == null)
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+                optionsBuilder.UseSqlServer(GetData.SSDBConnection);
+                _context = new DatabaseContext(optionsBuilder.Options);
+            }
+        }
         public KonapoFundService(DatabaseContext context) => _context = context;
 
         #region KonapoRef
@@ -77,6 +85,48 @@ namespace SmartLogic
         }
         #endregion Client Account No
         #region KonapoFund
+
+        public async Task<int> Update(KonapoFund update)
+        {
+            try
+            {
+
+                KonapoFund KonapoFund = _context.KonapoFunds.Find(update.KonapoFundID);
+                KonapoFund old_KonapoFund = KonapoFund;
+                KonapoFund.IsActive = update.IsActive;
+                KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
+                KonapoFund.LastChangedDate = DateTime.Now;
+                _context.Update(KonapoFund);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
+        public async Task<int> Save(KonapoFund KonapoFund)
+        {
+            try
+            {
+                KonapoFund.RegistrationDate = DateTime.Now;
+                KonapoFund.KonapoRef = NewKonapoRef;
+                KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
+                KonapoFund.LastChangedDate = DateTime.Now;
+                _context.Add(KonapoFund);
+                int result = await _context.SaveChangesAsync();
+                if (result > 0)
+                    // create categories linked to fund
+                    await SaveActiveKonapoFundCT(KonapoFund.FundID, KonapoFund.KonapoFundID);
+                return KonapoFund.KonapoFundID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<List<KonapoFund>> GetClientKonapoFunds(int clientID)
         {
             try
@@ -102,8 +152,6 @@ namespace SmartLogic
                 throw;
             }
         }
-
-
         public List<CustomSelectList> GetFunds(string term)
         {
             try
@@ -160,8 +208,6 @@ namespace SmartLogic
                 throw;
             }
         }
-
-
 
         public async Task<ClientKonapoFundCalculation> GetKonapoFundCalculation(int KonapoFundID)
         {
@@ -360,20 +406,35 @@ namespace SmartLogic
                 throw;
             }
         }
-
-
-        public async Task<int> Update(KonapoFund update)
+        public async Task<KonapoFundReport> FindKonapoReport(int konapoFundReportID)
+        {
+            try
+            {
+                return await _context.KonapoFundReports.Where(r => r.KonapoFundReportID == konapoFundReportID)
+                             .AsNoTracking()
+                          .FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Update(KonapoFundReport konapoFundReport)
         {
             try
             {
 
-                KonapoFund KonapoFund = _context.KonapoFunds.Find(update.KonapoFundID);
-                KonapoFund old_KonapoFund = KonapoFund;
-                KonapoFund.IsActive = update.IsActive;
-                KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
-                KonapoFund.LastChangedDate = DateTime.Now;
-                _context.Update(KonapoFund);
-                return await _context.SaveChangesAsync();
+                KonapoFundReport konareport = _context.KonapoFundReports.Find(konapoFundReport.KonapoFundReportID);
+                if (UtilityService.IsNotNull(konareport))
+                {
+                    konareport.Report = konapoFundReport.Report;
+                    konareport.LastChangedBy = UtilityService.CurrentUserName;
+                    konareport.LastChangedDate = DateTime.Now;
+                    _context.Update(konareport);
+                    return await _context.SaveChangesAsync();
+                }
+                return 0;
             }
             catch (Exception ex)
             {
@@ -382,20 +443,16 @@ namespace SmartLogic
             }
 
         }
-        public async Task<int> Save(KonapoFund KonapoFund)
+
+        public async Task<int> Save(KonapoFundReport konapoFundReport)
         {
             try
             {
-                KonapoFund.RegistrationDate = DateTime.Now;
-                KonapoFund.KonapoRef = NewKonapoRef;
-                KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
-                KonapoFund.LastChangedDate = DateTime.Now;
-                _context.Add(KonapoFund);
+                konapoFundReport.LastChangedBy = UtilityService.CurrentUserName;
+                konapoFundReport.LastChangedDate = DateTime.Now;
+                _context.Add(konapoFundReport);
                 int result = await _context.SaveChangesAsync();
-                if (result > 0)
-                    // create categories linked to fund
-                    await SaveActiveKonapoFundCT(KonapoFund.FundID, KonapoFund.KonapoFundID);
-                return KonapoFund.KonapoFundID;
+                return result;
             }
             catch (Exception ex)
             {
@@ -403,7 +460,6 @@ namespace SmartLogic
                 throw;
             }
         }
-
 
         public async Task<int> DeleteKonapoFund(int id)
         {

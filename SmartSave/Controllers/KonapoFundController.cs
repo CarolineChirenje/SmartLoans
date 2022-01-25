@@ -186,31 +186,48 @@ namespace SmartSave.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetKhonapoReport([FromBody] KhonapoReport report)
+        public JsonResult GetKhonapoReport([FromBody] SmartInterfaces.KhonapoReport report)
         {
             try
             {
                 if (report != null)
                 {
-                    if (report.KonapoFundID.ToInt() > 0)
+                    int KonapoFundID = report.KonapoFundID.ToInt();
+                    if (KonapoFundID > 0)
                     {
                         int clientID = report.ClientID.ToInt();
                         if (clientID > 0)
                             report.Client = _clientservice.FindClient(clientID).Result;
-                        string filename = report.FundReference;
+                        report.Transactions = Reports.MonthlyBreakdown(KonapoFundID);
 
-                        byte[] pdfFile = GenerateKhonapoReport(report);
-                        if (pdfFile != null)
-                            return Json(new { filename = filename + ".pdf", fileContents = Convert.ToBase64String(pdfFile) });
-                      
+                        string filename = report.FundReference;
+                        SmartDomain.KonapoFundReport khonapoFundReport = new SmartDomain.KonapoFundReport()
+                        {
+                            JsonData = report.SerializetoJSON().ToString(),
+                            KonapoFundID = KonapoFundID,
+                            FileName = filename
+                        };
+                        int khonapoReportID = _service.Save(khonapoFundReport).Result;
+                        if (khonapoReportID > 0)
+                        {
+                            report.KonapoFundReportID = khonapoReportID.ToString();
+                            byte[] pdfFile = GenerateKhonapoReport(report);
+                            if (pdfFile != null)
+                            {
+                                khonapoFundReport.Report = pdfFile;
+                                _service.Update(khonapoFundReport);
+                                return Json(new { filename = filename + ".pdf", fileContents = Convert.ToBase64String(pdfFile) });
+                            }
+                            else
+                                return Json(null);
+                        }
                         else
                             return Json(null);
-
                     }
                     return Json(null);
                 }
                 else
-                    return Json(null);
+                    return Json("The report was empty");
 
             }
             catch (Exception ex)
@@ -220,43 +237,36 @@ namespace SmartSave.Controllers
             }
 
         }
-        //public  ActionResult GetKhonapoReport([FromBody] KhonapoReport report)
-        //{
-        //    try
-        //    {
-        //        if (report != null)
-        //        {
-        //            int kfund = report.KonapoFundID.ToInt();
-        //            if (kfund > 0)
-        //            {
-        //                int clientID = report.ClientID.ToInt();
-        //                if (clientID > 0)
-        //                    report.Client = _clientservice.FindClient(clientID).Result;
-        //                string filename = report.FundReference;
+        public ActionResult ReprintKhonapoReport(int id)
+        {
+            try
+            {
+                if (id > 0)
+                {
 
-        //                byte[] pdfFile = GenerateKhonapoReport(report);
-        //                if (pdfFile != null)
-        //                    return File(pdfFile, "application/pdf", filename + ".pdf");
-        //                else
-        //                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-        //                return RedirectToAction("ViewKonapoFund", new { id= kfund });
+                    KonapoFundReport report = _service.FindKonapoReport(id).Result;
+                    if (UtilityService.IsNotNull(report))
+                    {
+                        string filename = report.FileName;
+                        byte[] pdfFile = report.Report;
+                        if (pdfFile != null)
+                            return File(pdfFile, "application/pdf", filename + ".pdf");
+                        else
+                            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    }
+                    return RedirectToAction("LogOut", "Login");
 
-        //            }
-        //            TempData[MessageDisplayType.Error.ToString()] ="Failed to Generate Report";
-        //            return RedirectToAction("ViewKonapoFund", new { id = kfund });
-        //        }
-        //        else
-        //            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-        //        return RedirectToAction(nameof(KonapoFunds));
+                }
+                return RedirectToAction("LogOut", "Login");
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-        //        return RedirectToAction(nameof(KonapoFunds));
-        //    }
+            }
+            catch (Exception ex)
+            {
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                return RedirectToAction(nameof(KonapoFunds));
+            }
 
-        //}
+        }
         private byte[] GenerateKhonapoReport(KhonapoReport statement)
         {
             byte[] pdffile = null;
@@ -287,7 +297,7 @@ namespace SmartSave.Controllers
             }
             return pdffile;
         }
-        private byte[] ProcessPDF(byte[] documentGenerated, string IDNumber, bool isEmail=false)
+        private byte[] ProcessPDF(byte[] documentGenerated, string IDNumber, bool isEmail = false)
         {
             MemoryStream stream = new MemoryStream(0);
             stream.Write(documentGenerated, 0, documentGenerated.Length);

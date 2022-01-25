@@ -254,7 +254,7 @@ namespace SmartDataAccess
         public DbSet<KonapoFund> KonapoFunds { get; set; }
         public DbSet<KonapoFundCT> KonapoFundCTs { get; set; }
         public DbSet<KonapoFundCTI> KonapoFundCTIs { get; set; }
-        
+        public DbSet<KonapoFundReport> KonapoFundReports { get; set; }
         public DbSet<KonapoFundCTIHistory> KonapoFundCTIHistories { get; set; }
         // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
         // Script-Migration -From 20180904195021_InitialCreate

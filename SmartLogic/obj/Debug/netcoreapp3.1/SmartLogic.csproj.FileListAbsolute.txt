@@ -1,3 +1,8 @@
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.CoreCompileInputs.cache
 C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.1\SmartLogic.deps.json
 C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.1\SmartLogic.dll
 C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.1\SmartLogic.pdb
@@ -16,11 +21,6 @@ C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.1\SmartReporting.pdb
 C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
 C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.1\SmartHelper.pdb
 C:\DEV\SmartWealth\SmartLogic\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
-C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.AssemblyReference.cache
-C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.GeneratedMSBuildEditorConfig.editorconfig
-C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.AssemblyInfoInputs.cache
-C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.AssemblyInfo.cs
-C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.CoreCompileInputs.cache
 C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.dll
 C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.pdb

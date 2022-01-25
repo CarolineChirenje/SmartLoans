@@ -90,6 +90,7 @@
                             <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
                             <div class="col-sm-10">
                                 <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.LastChangedDate)</label>
+
                             </div>
                         </div>
                         <input type="hidden" id="KonapoFundID" name="KonapoFundID" value="@Model.KonapoFundID" />
@@ -172,6 +173,15 @@
                         </div>
                         <br />
                         <br />
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Display On Report</label>
+                            <div class="checkbox">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" data-val="true" id="CFDisplayOnReport"
+                                           name="IsActive" value="true">
+                                </label>
+                            </div>
+                        </div>
                         <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
                     </section>
                 </div>
@@ -254,6 +264,17 @@
                                         </div>
                                         <br />
                                         <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Display On Report</label>
+                                            <div class="checkbox">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" data-val="true" id="TTRDisplayOnReport"
+                                                           name="TTRDisplayOnReport" value="true">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
                                         <div class="panel panel-success">
                                             <div class="panel-heading">
                                                 Time to Reach Emergency Fund (Accounting for Progress)
@@ -307,7 +328,18 @@
                                         </div>
                                         <br />
                                         <br />
-
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Display On Report</label>
+                                            <div class="checkbox">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" data-val="true" id="TAFPDisplayOnReport"
+                                                           name="TAFPDisplayOnReport" value="true">
+                                                </label>
+                                            </div>
+                                       
+                                        </div>
+                                        <br />
+                                        <br />
                                         <div class="panel panel-success">
                                             <div class="panel-heading">
                                                 Time to Reach Annual @Model.FundName Target
@@ -361,6 +393,16 @@
                                         </div>
                                         <br />
                                         <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Display On Report</label>
+                                            <div class="checkbox">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" data-val="true" id="TATDisplayOnReport"
+                                                           name="TATDisplayOnReport" value="true">
+                                                </label>
+                                            </div>
+                                          
+                                        </div>
                                     </div>
 
                                     <div class="box-footer">
@@ -411,7 +453,15 @@
                                     </div>
 
                                     <div class="box-footer">
-                                        @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Display On Report</label>
+                                            <div class="checkbox">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" data-val="true" id="MBDisplayOnReport"
+                                                           name="MBDisplayOnReport" value="true">
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -454,7 +504,7 @@
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Payments /Year</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="PaymentsYear" name="PaymentsYear" onchange="CalculateCI()">
+                                                <input type="text" class="form-control" id="PaymentsYear" name="PaymentsYear" value="12" onchange="CalculateCI()">
                                                 <span id="PaymentsYearError" class="text-danger text-bold"></span>
                                             </div>
                                         </div>
@@ -487,6 +537,15 @@
                                         </div>
                                         <br />
                                         <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Display On Report</label>
+                                            <div class="checkbox">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" data-val="true" id="RDMultiplier"
+                                                           name="RDMultiplier" value="true">
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="box-footer">
@@ -548,6 +607,15 @@
                                         </div>
                                         <br />
                                         <br />
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">Display On Report</label>
+                                            <div class="checkbox">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" data-val="true" id="OTIDisplayOnReport"
+                                                           name="OTIDisplayOnReport" value="true">
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="box-footer">
@@ -627,8 +695,7 @@
 <script>
 
     $(document).ready(function () {
-
-        CalculateTableTotal();
+            CalculateTableTotal();
         CalculateTotal();
         CalculateCI();
 
@@ -648,6 +715,7 @@
             PrintForm();
         });
     });
+
     $(function () {
         validateDecimalInput('#Period');
         validateDecimalInput('#Retirement');
@@ -672,7 +740,16 @@
         validateDecimalInput('#ATargetRYears');
         validateDecimalInput('#ATargetRMonths');
     })
-
+    $(function () {
+       
+        $("#TATDisplayOnReport").prop('checked', true);
+        $("#OTIDisplayOnReport").prop("checked", true);
+        $("#RDDisplayOnReport").prop("checked", true);
+        $("#CFDisplayOnReport").prop("checked", true);
+        $("#TAFPDisplayOnReport").prop("checked", true);
+        $("#TTRDisplayOnReport").prop("checked", true);
+        $("#MBDisplayOnReport").prop("checked", true);
+    });
     function CalculateTableTotal() {
         $('#calc').DataTable({
             "footerCallback": function (row, data, start, end, display) {
@@ -794,13 +871,10 @@
         $('#MultiplierOT').val(multiplierOT);
         $('#ValueAfterTenureOT').val(valueAfterXyears);
 
-
-
         // Target Emergency Fund
         var progress = $('#Progress').val();
         var mCommitment = commitAmount;
         $('#MCommitment').val(mCommitment);
-
 
         var balance = (emergencyfund - progress) <= 0 ? 0 : (emergencyfund - progress);
         balance = balance.toFixed(2);
@@ -950,30 +1024,35 @@
         var CFLifeTimeRetirement = $('#LifeTimeTotal').val();
         var CFRetirementPeriod = $('#Retirement').val();
         var CFFund = fund;
+        var CFDisplayOnReport = $('#CFDisplayOnReport').is(':checked');
         //Compound Interest : OTI
         var OTIInvestmentAmount = $('#InvestmentAmountOT').val();
         var OTIInterestRate = $('#InterestRateOT').val();
         var OTITenure = $('#TenureOT').val();
         var OTITotalValue = $('#ValueAfterTenureOT').val();
         var OTIMultiplier = $('#MultiplierOT').val();
+        var OTIDisplayOnReport = $('#OTIDisplayOnReport').is(':checked');
+
         //Target : TimeRequired
         var TTRIncomeAverage = $('#IncomeAverage').val();
         var TTRCommittment = $('#Committment').val();
         var TTRFundTargetMonths = $('#FundTargetMonths').val();
         var TTRFundTargetYears = $('#FundTargetYears').val();
+        var TTRDisplayOnReport = $('#TTRDisplayOnReport').is(':checked');
         //Target : AccountingForProgress
         var TAFPProgress = $('#Progress').val();
         var TAFPBalance = $('#Balance').val();
         var TAFPCommittment = $('#MCommitment').val();
         var TAFPTargetMonths = $('#TargetRMonths').val();
         var TAFPTargetYears = $('#TargetRYears').val();
-
+        var TAFPDisplayOnReport = $('#TAFPDisplayOnReport').is(':checked');
         //Target : AnnualTarget
         var TATProgress = $('#AProgress').val();
         var TATBalance = $('#ABalance').val();
         var TATCommittment = $('#AMCommitment').val();
         var TATTargetMonths = $('#ATargetRMonths').val();
         var TATTargetYears = $('#ATargetRYears').val();
+        var TATDisplayOnReport = $('#TATDisplayOnReport').is(':checked');
 
 
         //Compound Interest Regular Deposits
@@ -985,7 +1064,9 @@
         var RDPaymentsYear = $('#PaymentsYear').val();
         var RDTotalValue = $('#PostTenureValue').val();
         var RDMultiplier = $('#Multiplier').val();
-
+        var RDDisplayOnReport = $('#RDDisplayOnReport').is(':checked');
+        var MBDisplayOnReport = $('#MBDisplayOnReport').is(':checked');
+        var CurrentURL = window.location.port ? $(location).attr('protocol') + $(location).attr('port') + '//' + $(location).attr('hostname') : $(location).attr('protocol') + '//' + $(location).attr('hostname');
         var konapoCalculations = {
             "KonapoFundID": KonapoFundID,
             "ClientID": ClientID,
@@ -998,6 +1079,7 @@
             "CFLifeTimeRetirement": CFLifeTimeRetirement,
             "CFRetirementPeriod": CFRetirementPeriod,
             "CFFund": CFFund,
+            "CFDisplayOnReport": CFDisplayOnReport,
 
             //Compound Interest One Time Investment
             "OTIInvestmentAmount": OTIInvestmentAmount,
@@ -1005,19 +1087,20 @@
             "OTITenure": OTITenure,
             "OTITotalValue": OTITotalValue,
             "OTIMultiplier": OTIMultiplier,
-
+            "OTIDisplayOnReport": OTIDisplayOnReport,
             //Target : TimeRequired
             "TTRIncomeAverage": TTRIncomeAverage,
             "TTRCommittment": TTRCommittment,
             "TTRFundTargetMonths": TTRFundTargetMonths,
             "TTRFundTargetYears": TTRFundTargetYears,
-
+            "TTRDisplayOnReport": TTRDisplayOnReport,
             //Target : AccountForProgress
             "TAFPProgress": TAFPProgress,
             "TAFPBalance": TAFPBalance,
             "TAFPCommittment": TAFPCommittment,
             "TAFPTargetMonths": TAFPTargetMonths,
             "TAFPTargetYears": TAFPTargetYears,
+            "TAFPDisplayOnReport": TAFPDisplayOnReport,
 
             //Target : AnnualTarget
             "TATProgress": TATProgress,
@@ -1025,7 +1108,7 @@
             "TATCommittment": TATCommittment,
             "TATTargetMonths": TATTargetMonths,
             "TATTargetYears": TATTargetYears,
-
+            "TATDisplayOnReport": TATDisplayOnReport,
 
             //Compound Interest Regular Deposits
             "RDInvestmentAmount": RDInvestmentAmount,
@@ -1035,7 +1118,10 @@
             "RDContributions": RDContributions,
             "RDTotalValue": RDTotalValue,
             "RDMultiplier": RDMultiplier,
+            "RDDisplayOnReport": RDDisplayOnReport,
 
+            "MBDisplayOnReport": MBDisplayOnReport,
+            "CurrentURL": CurrentURL
         };
         console.log(konapoCalculations);
         console.log(JSON.stringify(konapoCalculations));
@@ -1055,8 +1141,12 @@
 
                         var fileName = response.filename;
                         console.log('File Name ' + fileName);
-                        var bytes = _base64ToArrayBuffer(response.fileContents);
-                        saveByteArray(fileName, bytes);
+                        if (fileName === undefined || fileName === null)
+                            alert(response);
+                        else {
+                            var bytes = _base64ToArrayBuffer(response.fileContents);
+                            saveByteArray(fileName, bytes);
+                        }
                     }
 
                     else {

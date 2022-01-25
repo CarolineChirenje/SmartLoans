@@ -1,15 +1,38 @@
-﻿using SmartHelper;
+﻿using QRCoder;
+using SmartHelper;
 using SmartInterfaces;
 using SmartLog;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Text;
-
+using SmartExtensions;
 namespace SmartReporting
 {
+   
     public static class Reports
     {
+        //public static string GenerateQRCode(string textToEmbed)
+        //{
+        //    QRCodeGenerator QrGenerator = new QRCodeGenerator();
+        //    QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(textToEmbed, QRCodeGenerator.ECCLevel.Q);
+        //    QRCode QrCode = new QRCode(QrCodeInfo);
+        //    Bitmap QrBitmap = QrCode.GetGraphic(60);
+        //    byte[] BitmapArray = QrBitmap.BitmapToByteArray();
+        //    string QrUri = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(BitmapArray));
+        //    return QrUri;
+        //}
+        public static byte[] GenerateQRCode(string textToEmbed)
+        {
+            QRCodeGenerator QrGenerator = new QRCodeGenerator();
+            QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(textToEmbed, QRCodeGenerator.ECCLevel.Q);
+            QRCode QrCode = new QRCode(QrCodeInfo);
+            Bitmap QrBitmap = QrCode.GetGraphic(60);
+            byte[] BitmapArray = QrBitmap.BitmapToByteArray();
+           // string QrUri = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(BitmapArray));
+            return BitmapArray;
+        }
         public static DataTable Transactional(Statement _statement)
         {
 

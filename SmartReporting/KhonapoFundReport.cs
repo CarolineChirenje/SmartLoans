@@ -1,6 +1,8 @@
 ﻿using MigraDocCore.DocumentObjectModel;
 using MigraDocCore.DocumentObjectModel.Shapes;
 using MigraDocCore.DocumentObjectModel.Tables;
+using MigraDocCore.DocumentObjectModel.MigraDoc.DocumentObjectModel.Shapes;
+using static MigraDocCore.DocumentObjectModel.MigraDoc.DocumentObjectModel.Shapes.ImageSource;
 using SmartExtensions;
 using SmartHelper;
 using SmartInterfaces;
@@ -40,6 +42,7 @@ namespace SmartReporting
                 AddressAndHeader();
                 AccountDetails();
                 TransactionDetails();
+                PrintQRCode();
             }
             catch (Exception ex)
             {
@@ -248,20 +251,34 @@ namespace SmartReporting
         void TransactionDetails()
         {
 
-            PrintCalculationForm();
+            if (_statement.CFDisplayOnReport)
+                PrintCalculationForm();
+            if (!_statement.TTRDisplayOnReport &&
+            !_statement.TATDisplayOnReport &&
+            !_statement.RDDisplayOnReport &&
+           !_statement.MBDisplayOnReport &&
+            !_statement.TAFPDisplayOnReport
+           )
+                return;
             PrintSubTitles($"{_statement.FundName}  Projections and Breakdown".ToUpper(), ParagraphAlignment.Left, true, false);
             //Target : TimeRequired
-            PrintTargetTimeRequired();
+            if (_statement.TTRDisplayOnReport)
+                PrintTargetTimeRequired();
             //Target : AccountingForProgress
-            PrintTargetAccountForProgress();
+            if (_statement.TAFPDisplayOnReport)
+                PrintTargetAccountForProgress();
             //Target : TargetAnnual
-            PrintTargetAnnualTarget();
+            if (_statement.TATDisplayOnReport)
+                PrintTargetAnnualTarget();
             //Compound Interest : Regular Deposits
-            PrintCIRD();
+            if (_statement.RDDisplayOnReport)
+                PrintCIRD();
             //Compound Interest : OTI
-            PrintCIOTI();
+            if (_statement.OTIDisplayOnReport)
+                PrintCIOTI();
             //MonthlyBreakDown
-            PrintMonthlyBreakdown();
+            if (_statement.MBDisplayOnReport)
+                PrintMonthlyBreakdown();
 
         }
 
@@ -397,8 +414,7 @@ namespace SmartReporting
             {
                 PrintSubTitles($"Monthly: Breakdown of {_statement.FundName} by Amount and Percentage");
                 Paragraph paragraph = null;
-                DataTable Transactions = Reports.MonthlyBreakdown(_statement.KonapoFundID.ToInt());
-
+                DataTable Transactions = _statement.Transactions;
                 if (Transactions != null && Transactions.Rows.Count > 0)
                 {
                     // Create the item table
@@ -410,18 +426,15 @@ namespace SmartReporting
                         this.table.Borders.Width = 0.25;
                         this.table.Borders.Left.Width = 0.25;
                         this.table.Borders.Right.Width = 0.25;
-
                     }
 
                     else
                     {
-
                         this.table.Borders.Width = 0;
                         this.table.Borders.Left.Width = 0;
                         this.table.Borders.Right.Width = 0;
                         this.table.Rows.LeftIndent = 0;
                     }
-
                     // Before you can add a row, you must define the columns
                     Column column = this.table.AddColumn("8.3cm");
                     column.Format.Alignment = ParagraphAlignment.Left;
@@ -484,7 +497,7 @@ namespace SmartReporting
                         countCellValue++;
 
                         decimal _extractedValue = Math.Round(transaction.Field<decimal>("TotalAsAPercentage"), 2);
-                        string Percentage = _extractedValue.ToString().Replace(",",".");
+                        string Percentage = _extractedValue.ToString().Replace(",", ".");
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Right;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
@@ -510,7 +523,7 @@ namespace SmartReporting
                     row2.Cells[0].MergeRight = finalCountCellValue - 2;
                     row2.Cells[0].AddParagraph("Total");
                     row2.Cells[finalCountCellValue - 1].AddParagraph(String.Format(culture, "{0:C}", TotalAmount));
-                    row2.Cells[finalCountCellValue].AddParagraph($"{TotalPercentage.ToString().Replace(",",".")}%");
+                    row2.Cells[finalCountCellValue].AddParagraph($"{TotalPercentage.ToString().Replace(",", ".")}%");
                     // Set the borders of the specified cell range
                     if (UtilityService.StatementShowTableBoarders)
                         this.table.SetEdge(finalCountCellValue - 1, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
@@ -539,6 +552,35 @@ namespace SmartReporting
             }
         }
 
+        void PrintQRCode()
+        {
+            try
+            {
+                string url = String.IsNullOrEmpty(_statement.CurrentURL) ? UtilityService.SiteURL : _statement.CurrentURL;
+                string viewReportUrl = $"{url}/KonapoFund/ReprintKhonapoReport/{_statement.KonapoFundReportID}";
+                var qrcode = Reports.GenerateQRCode(viewReportUrl);
+
+                var imageSource = FromBinary("qrcode.png", () => qrcode);
+
+                Paragraph paragraph = section.AddParagraph();
+                paragraph.Format.SpaceBefore = "1.5cm";
+                paragraph.Format.Alignment = ParagraphAlignment.Center;
+                Image image = paragraph.Section.AddImage(imageSource);
+                image.Height = "5cm";
+                image.LockAspectRatio = true;
+                image.RelativeVertical = RelativeVertical.Line;
+                image.RelativeHorizontal = RelativeHorizontal.Margin;
+                image.Top = ShapePosition.Center;
+                image.Left = ShapePosition.Center;
+                image.WrapFormat.Style = WrapStyle.Through;
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
+            }
+        }
         void PrintFormValues(string name, string value, bool formatNumbers = true)
         {
             Row tblRow = this.table.AddRow();
@@ -612,7 +654,7 @@ namespace SmartReporting
         {
             try
             {
-              return   (String.IsNullOrEmpty(value) || value.Equals("0.00")) ? "Value After Years" : $"Value After {value} Years";
+                return (String.IsNullOrEmpty(value) || value.Equals("0.00")) ? "Value After Years" : $"Value After {value} Years";
 
             }
             catch (Exception)
