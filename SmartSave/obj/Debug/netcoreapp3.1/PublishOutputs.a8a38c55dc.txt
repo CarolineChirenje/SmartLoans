@@ -9583,6 +9583,8 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\dist\img
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\dist\js\adminlte.js
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\dist\js\adminlte.min.js
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\dist\js\demo.js
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\dist\js\jquery.tabletojson.js
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\dist\js\jquery.tabletojson.min.js
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\dist\js\pages\dashboard.js
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\dist\js\pages\dashboard2.js
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\favicon.ico
@@ -9624,6 +9626,8 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\lib\jque
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.js
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.js
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.map
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.tabletojson.js
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.tabletojson.min.js
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\lib\jquery\LICENSE.txt
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\SmartResources\SmartLogo.png
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\appsettings.Development.json
@@ -9789,6 +9793,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\runtimes\win\lib
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartDataAccess.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartDomain.dll
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartExtensions.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartHelper.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartInterfaces.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartLog.dll
@@ -9798,6 +9803,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartReporting.d
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartDataAccess.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartDomain.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartLog.pdb
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartExtensions.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartInterfaces.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartLogic.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartHelper.pdb

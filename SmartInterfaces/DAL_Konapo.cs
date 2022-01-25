@@ -39,6 +39,13 @@ namespace SmartInterfaces
         public string TATCommittment { get; set; }
         public string TATTargetMonths { get; set; }
         public string TATTargetYears { get; set; }
+        public string RDInvestmentAmount { get; set; }
+        public string RDInterestRate { get; set; }
+        public string RDTenure { get; set; }
+        public string RDContributions { get; set; }
+        public string RDPaymentsYear { get; set; }
+        public string RDTotalValue { get; set; }
+        public string RDMultiplier { get; set; }
         public ClientForm Client { get; set; }
        
     }

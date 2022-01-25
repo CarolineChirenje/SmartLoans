@@ -1,0 +1,20 @@
+2022-01-25 19:56:16:63 :Reporting : System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'index')
+   at MigraDocCore.DocumentObjectModel.Tables.Cells.get_Item(Int32 index)
+   at MigraDocCore.DocumentObjectModel.Tables.Table.SetEdge(Int32 clm, Int32 row, Int32 clms, Int32 rows, Edge edge, BorderStyle style, Unit width, Color clr)
+   at MigraDocCore.DocumentObjectModel.Tables.Table.SetEdge(Int32 clm, Int32 row, Int32 clms, Int32 rows, Edge edge, BorderStyle style, Unit width)
+   at SmartReporting.KhonapoFundReport.PrintMonthlyBreakdown() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 494
+2022-01-25 19:56:16:71 :Reporting : System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'index')
+   at MigraDocCore.DocumentObjectModel.Tables.Cells.get_Item(Int32 index)
+   at MigraDocCore.DocumentObjectModel.Tables.Table.SetEdge(Int32 clm, Int32 row, Int32 clms, Int32 rows, Edge edge, BorderStyle style, Unit width, Color clr)
+   at MigraDocCore.DocumentObjectModel.Tables.Table.SetEdge(Int32 clm, Int32 row, Int32 clms, Int32 rows, Edge edge, BorderStyle style, Unit width)
+   at SmartReporting.KhonapoFundReport.PrintMonthlyBreakdown() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 494
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 264
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 42
+2022-01-25 19:56:16:73 :GUI : System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'index')
+   at MigraDocCore.DocumentObjectModel.Tables.Cells.get_Item(Int32 index)
+   at MigraDocCore.DocumentObjectModel.Tables.Table.SetEdge(Int32 clm, Int32 row, Int32 clms, Int32 rows, Edge edge, BorderStyle style, Unit width, Color clr)
+   at MigraDocCore.DocumentObjectModel.Tables.Table.SetEdge(Int32 clm, Int32 row, Int32 clms, Int32 rows, Edge edge, BorderStyle style, Unit width)
+   at SmartReporting.KhonapoFundReport.PrintMonthlyBreakdown() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 494
+   at SmartReporting.KhonapoFundReport.TransactionDetails() in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 264
+   at SmartReporting.KhonapoFundReport.Print(KhonapoReport statement) in C:\DEV\SmartWealth\SmartReporting\KhonapoFundReport.cs:line 42
+   at SmartSave.Controllers.KonapoFundController.GenerateKhonapoReport(KhonapoReport statement) in C:\DEV\SmartWealth\SmartSave\Controllers\KonapoFundController.cs:line 268

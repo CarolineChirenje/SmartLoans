@@ -256,6 +256,8 @@ namespace SmartReporting
             PrintTargetAccountForProgress();
             //Target : TargetAnnual
             PrintTargetAnnualTarget();
+            //Compound Interest : Regular Deposits
+            PrintCIRD();
             //Compound Interest : OTI
             PrintCIOTI();
             //MonthlyBreakDown
@@ -357,8 +359,31 @@ namespace SmartReporting
                 PrintFormValues("Investment Amount", _statement.OTIInvestmentAmount);
                 PrintFormValues("Interest Rate", _statement.OTIInterestRate);
                 PrintFormValues("Tenure", _statement.OTITenure);
-                PrintFormValues(String.IsNullOrEmpty(_statement.OTITenure) ? "Value After Years" : $"Value After {_statement.OTITenure} Years", _statement.OTITotalValue);
+                PrintFormValues(GetTenureLable(_statement.OTITenure), _statement.OTITotalValue);
                 PrintFormValues("Multiplier", _statement.OTIMultiplier);
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Reporting, ex);
+                throw;
+            }
+        }
+
+        void PrintCIRD()
+        {
+            try
+            {
+                PrintSubTitles($"Regular Deposits : Compound Growth Calculations");
+                Paragraph paragraph = null;
+                Column column = DefineTableAndColumns();
+                paragraph = this.addressFrame.AddParagraph();
+                PrintFormValues($"Initial Amount Available To Invest in {_statement.FundName}", _statement.RDInvestmentAmount);
+                PrintFormValues("Interest Rate / Rate of Return", _statement.RDInterestRate);
+                PrintFormValues("Tenure / Number of Years", _statement.RDTenure);
+                PrintFormValues("Number of Payments / Contributions in a Year", _statement.RDPaymentsYear);
+                PrintFormValues("Monthly Contributions", _statement.RDContributions);
+                PrintFormValues(GetTenureLable(_statement.RDTenure), _statement.RDTotalValue);
+                PrintFormValues("Multiplier", _statement.RDMultiplier);
             }
             catch (Exception ex)
             {
@@ -458,7 +483,8 @@ namespace SmartReporting
                         row1.Cells[countCellValue].AddParagraph(String.Format(culture, "{0:C}", transaction.Field<decimal>("TotalAmount")));
                         countCellValue++;
 
-                        decimal Percentage = Math.Round(transaction.Field<decimal>("TotalAsAPercentage"), 2);
+                        decimal _extractedValue = Math.Round(transaction.Field<decimal>("TotalAsAPercentage"), 2);
+                        string Percentage = _extractedValue.ToString().Replace(",",".");
                         row1.Cells[countCellValue].Borders.Visible = UtilityService.StatementShowTableBoarders;
                         row1.Cells[countCellValue].Format.Alignment = ParagraphAlignment.Right;
                         row1.Cells[countCellValue].VerticalAlignment = VerticalAlignment.Bottom;
@@ -484,10 +510,10 @@ namespace SmartReporting
                     row2.Cells[0].MergeRight = finalCountCellValue - 2;
                     row2.Cells[0].AddParagraph("Total");
                     row2.Cells[finalCountCellValue - 1].AddParagraph(String.Format(culture, "{0:C}", TotalAmount));
-                    row2.Cells[finalCountCellValue].AddParagraph($"{TotalPercentage}%");
+                    row2.Cells[finalCountCellValue].AddParagraph($"{TotalPercentage.ToString().Replace(",",".")}%");
                     // Set the borders of the specified cell range
                     if (UtilityService.StatementShowTableBoarders)
-                        this.table.SetEdge(finalCountCellValue, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
+                        this.table.SetEdge(finalCountCellValue - 1, this.table.Rows.Count - 1, 1, 1, Edge.Box, BorderStyle.Single, 0.75);
                 }
                 else
                 {
@@ -513,7 +539,7 @@ namespace SmartReporting
             }
         }
 
-        void PrintFormValues(string name, string value)
+        void PrintFormValues(string name, string value, bool formatNumbers = true)
         {
             Row tblRow = this.table.AddRow();
             tblRow.TopPadding = 1.5;
@@ -526,7 +552,14 @@ namespace SmartReporting
             tblRow.Cells[1].Borders.Visible = false;
             tblRow.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
             tblRow.Cells[1].Format.Alignment = ParagraphAlignment.Right;
-            tblRow.Cells[1].AddParagraph(String.IsNullOrEmpty(value) ? String.Empty : value);
+
+            if (formatNumbers)
+            {
+                string amount = String.IsNullOrEmpty(value) ? "0.00" : value;
+                tblRow.Cells[1].AddParagraph(amount.ToFormattedCurrency());
+            }
+            else
+                tblRow.Cells[1].AddParagraph(String.IsNullOrEmpty(value) ? String.Empty : value);
         }
         void PrintSubTitles(string title, ParagraphAlignment paragraphAlignment = ParagraphAlignment.Left, bool showBoarder = true, bool shadeParagraph = true)
         {
@@ -575,6 +608,19 @@ namespace SmartReporting
             return column;
         }
 
+        string GetTenureLable(string value)
+        {
+            try
+            {
+              return   (String.IsNullOrEmpty(value) || value.Equals("0.00")) ? "Value After Years" : $"Value After {value} Years";
+
+            }
+            catch (Exception)
+            {
+                return "Value After Years";
+
+            }
+        }
     }
 
 }
