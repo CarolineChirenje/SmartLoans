@@ -2,11 +2,13 @@ C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartReporting.deps.js
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartReporting.dll
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartReporting.pdb
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartDomain.dll
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartExtensions.dll
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartHelper.dll
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartInterfaces.dll
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartLog.dll
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartDomain.pdb
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartLog.pdb
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartInterfaces.pdb
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartHelper.pdb
 C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
@@ -20,5 +22,3 @@ C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.
 C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.dll
 C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.pdb
-C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartExtensions.dll
-C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\SmartExtensions.pdb

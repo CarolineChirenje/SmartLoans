@@ -357,8 +357,8 @@ namespace SmartReporting
                 Column column = DefineTableAndColumns();
                 paragraph = this.addressFrame.AddParagraph();
                 PrintFormValues("Investment Amount", _statement.OTIInvestmentAmount);
-                PrintFormValues("Interest Rate", _statement.OTIInterestRate);
-                PrintFormValues("Tenure", _statement.OTITenure);
+                PrintFormValues("Interest Rate / Rate of Return", _statement.OTIInterestRate);
+                PrintFormValues("Tenure / Number of Years", _statement.OTITenure);
                 PrintFormValues(GetTenureLable(_statement.OTITenure), _statement.OTITotalValue);
                 PrintFormValues("Multiplier", _statement.OTIMultiplier);
             }

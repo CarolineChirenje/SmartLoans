@@ -9688,6 +9688,7 @@ C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartDataAccess.dll
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartDomain.dll
+C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartExtensions.dll
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartHelper.dll
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartInterfaces.dll
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartLog.dll
@@ -9697,6 +9698,7 @@ C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartReporting.dll
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartDataAccess.pdb
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartDomain.pdb
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartLog.pdb
+C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartInterfaces.pdb
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartLogic.pdb
 C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartHelper.pdb
@@ -9892,5 +9894,3 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.csproj.CopyComple
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.genruntimeconfig.cache
-C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartExtensions.dll
-C:\DEV\SmartWealth\SmartSave\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
