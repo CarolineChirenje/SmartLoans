@@ -213,7 +213,7 @@
                                     <a href="#CompoundCalculation" data-toggle="tab">Compound Growth Calculator : Regular Deposits</a>
                                 </li>
                                 <li>
-                                    <a href="#FundCategory" data-toggle="tab">Update Fund Items</a>
+                                    <a href="#Reporting" data-toggle="tab">Reports</a>
                                 </li>
                             </ul>
                             <!-- Tab panes -->
@@ -336,7 +336,7 @@
                                                            name="TAFPDisplayOnReport" value="true">
                                                 </label>
                                             </div>
-                                       
+
                                         </div>
                                         <br />
                                         <br />
@@ -401,7 +401,7 @@
                                                            name="TATDisplayOnReport" value="true">
                                                 </label>
                                             </div>
-                                          
+
                                         </div>
                                     </div>
 
@@ -623,7 +623,77 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade in" id="FundCategory">
+                                <div class="tab-pane fade in" id="Reporting">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            Printed Reports
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="dataTable_wrapper">
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date Printed</th>
+                                                        <th>Printed By</th>
+                                                        <th>Download</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.KonapoFundReport != null)
+                                                    {
+
+                                                        foreach (var item in Model.KonapoFundReport)
+                                                        {
+                                                    <tr>
+                                                        @{
+                                                            string datePrinted = UtilityService.ShowDateTime(item.LastChangedDate);
+                                                        }
+                                                        <td>@datePrinted</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
+                                                        <td><a asp-controller="KonapoFund" asp-action="ReprintKhonapoReport" asp-route-id="@item.KonapoFundReportID">Download</a></td>
+                                                         </tr>
+                                                        }
+                                                    }
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-footer">
+                                        @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                                    </div>
+                                </div>
+
+
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <h3>@Model.FundName Fund Items</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Fund Items
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+
+                                <li class="active">
+                                    <a href="#FundCategory" data-toggle="tab">Update Fund Items</a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="FundCategory">
                                     <div class="panel panel-success">
                                         <div class="panel-heading">
                                             Categories
@@ -670,8 +740,6 @@
                                         @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
                                     </div>
                                 </div>
-
-
                                 <!-- /.panel-body -->
                             </div>
                             <!-- /.panel -->
@@ -695,7 +763,7 @@
 <script>
 
     $(document).ready(function () {
-            CalculateTableTotal();
+        CalculateTableTotal();
         CalculateTotal();
         CalculateCI();
 
@@ -741,7 +809,7 @@
         validateDecimalInput('#ATargetRMonths');
     })
     $(function () {
-       
+
         $("#TATDisplayOnReport").prop('checked', true);
         $("#OTIDisplayOnReport").prop("checked", true);
         $("#RDDisplayOnReport").prop("checked", true);

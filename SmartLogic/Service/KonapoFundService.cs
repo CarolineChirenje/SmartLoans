@@ -286,7 +286,8 @@ namespace SmartLogic
                 {
                     CustomLog.Log(LogSource.Logic_Base, ex);
                 }
-
+                var reports = _context.KonapoFundReports.Where(k => k.KonapoFundID == KonapoFundID && k.Report != null).OrderByDescending(k=>k.LastChangedDate).ToList();
+                fund.KonapoFundReport = reports;
                 return fund;
             }
             catch (Exception ex)

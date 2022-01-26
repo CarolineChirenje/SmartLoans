@@ -42,7 +42,7 @@ namespace SmartReporting
                 AddressAndHeader();
                 AccountDetails();
                 TransactionDetails();
-                PrintQRCode();
+              //  PrintQRCode();
             }
             catch (Exception ex)
             {
@@ -559,9 +559,7 @@ namespace SmartReporting
                 string url = String.IsNullOrEmpty(_statement.CurrentURL) ? UtilityService.SiteURL : _statement.CurrentURL;
                 string viewReportUrl = $"{url}/KonapoFund/ReprintKhonapoReport/{_statement.KonapoFundReportID}";
                 var qrcode = Reports.GenerateQRCode(viewReportUrl);
-
                 var imageSource = FromBinary("qrcode.png", () => qrcode);
-
                 Paragraph paragraph = section.AddParagraph();
                 paragraph.Format.SpaceBefore = "1.5cm";
                 paragraph.Format.Alignment = ParagraphAlignment.Center;
