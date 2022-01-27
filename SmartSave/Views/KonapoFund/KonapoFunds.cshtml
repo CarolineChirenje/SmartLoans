@@ -29,46 +29,43 @@
                             <tr>
                                 <th>Ref</th>
                                 <th>Fund</th>
-                                <th>Is Active</th>
+                                <th>Status</th>
                                 <th>Registration Date</th>
-                                <th>Last Changed By</th>
-                                <th>Last Changed Date</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            @if(Model!=null){
-                            @foreach (var item in Model)
+                            @if (Model != null)
                             {
+                                @foreach (var item in Model)
+                                {
 
-                                <tr>
-                                    @{ string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
-                                        string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
-                                        string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
-                                        string reference =@item.KonapoRef + "/" + @item.Client.ClientFullName;
-                                    }
-                                    @if (UtilityService.HasPermission(Permissions.View_Konapo_Fund))
-                                    {
-                                        <td><a asp-controller="KonapoFund" asp-action="ViewKonapoFund" asp-route-id="@item.KonapoFundID">@reference</a> </td>
-                                    }
-                                    else
-                                    {
-                                        <td>@Html.DisplayFor(modelItem => item.KonapoRef)</td>
-                                    }
+                                    <tr>
+                                        @{ string activeStatus = UtilityService.ShowActiveStatus(item.IsActive);
+                                            string reference = @item.KonapoRef + "/" + @item.Client.ClientFullName;
+                                        }
+                                        @if (UtilityService.HasPermission(Permissions.View_Konapo_Fund))
+                                        {
+                                            <td><a asp-controller="KonapoFund" asp-action="ViewKonapoFund" asp-route-id="@item.KonapoFundID">@reference</a> </td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.DisplayFor(modelItem => item.KonapoRef)</td>
+                                        }
 
-                                    @if (UtilityService.HasPermission(Permissions.View_Fund))
-                                    {
-                                        <td><a asp-controller="Fund" target="_blank" asp-action="ViewFund" asp-route-id="@item.FundID">@item.Fund.Name</a> </td>
-                                    }
-                                    else
-                                    {
-                                        <td>@Html.DisplayFor(modelItem => item.Fund.Name)</td>
-                                    }
-                                    <td>@activeStatus</td>
-                                    <td>@UtilityService.ShowDateTime(item.RegistrationDate)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-                                    <td>@dateCreated</td>
-                                </tr>
-                            }
+                                        @if (UtilityService.HasPermission(Permissions.View_Fund))
+                                        {
+                                            <td><a asp-controller="Fund" target="_blank" asp-action="ViewFund" asp-route-id="@item.FundID">@item.Fund.Name</a> </td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.DisplayFor(modelItem => item.Fund.Name)</td>
+                                        }
+                                        <td>@activeStatus</td>
+                                        <td>@UtilityService.ShowDateTime(item.RegistrationDate)</td>
+                                        
+                                    </tr>
+                                }
                             }
                     </table>
                 </div>

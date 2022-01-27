@@ -1,5 +1,0 @@
-2022-01-17 21:13:42:70 :Logic Base : System.FormatException: Input string was not in a correct format.
-   at System.Number.ThrowOverflowOrFormatException(ParsingStatus status, TypeCode type)
-   at System.Number.ParseDecimal(ReadOnlySpan`1 value, NumberStyles styles, NumberFormatInfo info)
-   at System.Decimal.Parse(String s)
-   at SmartLogic.KonapoFundService.GetKonapoFundCalculation(Int32 KonapoFundID) in C:\DEV\SmartWealth\SmartLogic\Service\KonapoFundService.cs:line 191

@@ -79,9 +79,9 @@ namespace SmartLogic
         {
             try
             {
-            return _context.NoticeBoard.
-            Where(r =>
-               r.IsActive && (r.StartDate.Date > DateTime.Now.AddDays(-8).Date && r.EndDate.Date < DateTime.Now.AddDays(8).Date)).Count();
+                  return _context.NoticeBoard.
+                           Where(r =>
+                              r.IsActive && (r.EndDate >= DateTime.Now)).Count();
 
             }
             catch (Exception ex)

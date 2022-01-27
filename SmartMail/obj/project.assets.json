@@ -543,10 +543,10 @@
           }
         }
       },
-      "MigraDocCore.DocumentObjectModel/1.3.10": {
+      "MigraDocCore.DocumentObjectModel/1.3.11": {
         "type": "package",
         "dependencies": {
-          "PdfSharpCore": "1.3.10",
+          "PdfSharpCore": "1.3.11",
           "System.Collections.NonGeneric": "4.3.0",
           "System.Reflection.TypeExtensions": "4.7.0"
         },
@@ -557,12 +557,12 @@
           "lib/netcoreapp3.1/MigraDocCore.DocumentObjectModel.dll": {}
         }
       },
-      "MigraDocCore.Rendering/1.3.10": {
+      "MigraDocCore.Rendering/1.3.11": {
         "type": "package",
         "dependencies": {
-          "MigraDocCore.DocumentObjectModel": "1.3.10",
-          "PdfSharpCore": "1.3.10",
-          "PdfSharpCore.Charting": "1.3.10",
+          "MigraDocCore.DocumentObjectModel": "1.3.11",
+          "PdfSharpCore": "1.3.11",
+          "PdfSharpCore.Charting": "1.3.11",
           "System.Diagnostics.Debug": "4.3.0",
           "System.Diagnostics.Tracing": "4.3.0"
         },
@@ -626,7 +626,7 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
-      "PdfSharpCore/1.3.10": {
+      "PdfSharpCore/1.3.11": {
         "type": "package",
         "dependencies": {
           "SixLabors.Fonts": "1.0.0-beta0013",
@@ -644,10 +644,10 @@
           }
         }
       },
-      "PdfSharpCore.Charting/1.3.10": {
+      "PdfSharpCore.Charting/1.3.11": {
         "type": "package",
         "dependencies": {
-          "PdfSharpCore": "1.3.10",
+          "PdfSharpCore": "1.3.11",
           "System.Collections.NonGeneric": "4.3.0"
         },
         "compile": {
@@ -894,7 +894,7 @@
           "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {}
         }
       },
-      "SkiaSharp/2.80.2": {
+      "SkiaSharp/2.80.3": {
         "type": "package",
         "dependencies": {
           "System.Memory": "4.5.3"
@@ -921,6 +921,36 @@
           "runtimes/win-x86/native/libSkiaSharp.dll": {
             "assetType": "native",
             "rid": "win-x86"
+          }
+        }
+      },
+      "SkiaSharp.NativeAssets.Linux.NoDependencies/2.80.3": {
+        "type": "package",
+        "dependencies": {
+          "SkiaSharp": "2.80.3"
+        },
+        "compile": {
+          "lib/netstandard1.3/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/linux-arm/native/libSkiaSharp.so": {
+            "assetType": "native",
+            "rid": "linux-arm"
+          },
+          "runtimes/linux-arm64/native/libSkiaSharp.so": {
+            "assetType": "native",
+            "rid": "linux-arm64"
+          },
+          "runtimes/linux-musl-x64/native/libSkiaSharp.so": {
+            "assetType": "native",
+            "rid": "linux-musl-x64"
+          },
+          "runtimes/linux-x64/native/libSkiaSharp.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
           }
         }
       },
@@ -2404,9 +2434,10 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
-          "MigraDocCore.DocumentObjectModel": "1.3.10",
-          "MigraDocCore.Rendering": "1.3.10",
-          "PdfSharpCore": "1.3.10",
+          "MigraDocCore.DocumentObjectModel": "1.3.11",
+          "MigraDocCore.Rendering": "1.3.11",
+          "PdfSharpCore": "1.3.11",
+          "SkiaSharp.NativeAssets.Linux.NoDependencies": "2.80.3",
           "SkiaSharp.QrCode": "0.4.1",
           "SmartDomain": "1.0.0",
           "SmartExtensions": "1.0.0",
@@ -3336,10 +3367,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "MigraDocCore.DocumentObjectModel/1.3.10": {
-      "sha512": "Xr9AX8dgJgb4VC6W4XttSauwaHf8bkw5G3hqEIf6Efgy2m+EeSuFZ00vh+dKUfHs4uhoUIQnqGC8Y2P/XjpLEw==",
+    "MigraDocCore.DocumentObjectModel/1.3.11": {
+      "sha512": "IJMl8ErxlwaWAX/y8B9gj1GCcsR7aVDY5hUuvYrs2qrqPFnKcYduqFO0VyYhfvGMlNXSpJVlcVxUp6wxtFyajA==",
       "type": "package",
-      "path": "migradoccore.documentobjectmodel/1.3.10",
+      "path": "migradoccore.documentobjectmodel/1.3.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3348,14 +3379,14 @@
         "lib/netcoreapp3.1/MigraDocCore.DocumentObjectModel.dll",
         "lib/netstandard1.3/MigraDocCore.DocumentObjectModel.dll",
         "lib/netstandard2.0/MigraDocCore.DocumentObjectModel.dll",
-        "migradoccore.documentobjectmodel.1.3.10.nupkg.sha512",
+        "migradoccore.documentobjectmodel.1.3.11.nupkg.sha512",
         "migradoccore.documentobjectmodel.nuspec"
       ]
     },
-    "MigraDocCore.Rendering/1.3.10": {
-      "sha512": "y495ty2iIDhyERMdr8vNFzghleOdAggFUWw63xhDok2qwYbzsIqbeZ4a3vlkuECjWYYHwbAAT3O23suD3Kdv7A==",
+    "MigraDocCore.Rendering/1.3.11": {
+      "sha512": "85uqu/42jwhifbfgkaURn+g1q/5psKFAlzOmJAig8OTNd4GdOt6shP9G6y7kwjl8g8wHiEHfQ6dL8JVJ3dvNJw==",
       "type": "package",
-      "path": "migradoccore.rendering/1.3.10",
+      "path": "migradoccore.rendering/1.3.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3364,7 +3395,7 @@
         "lib/netcoreapp3.1/MigraDocCore.Rendering.dll",
         "lib/netstandard1.3/MigraDocCore.Rendering.dll",
         "lib/netstandard2.0/MigraDocCore.Rendering.dll",
-        "migradoccore.rendering.1.3.10.nupkg.sha512",
+        "migradoccore.rendering.1.3.11.nupkg.sha512",
         "migradoccore.rendering.nuspec"
       ]
     },
@@ -3567,10 +3598,10 @@
         "packageIcon.png"
       ]
     },
-    "PdfSharpCore/1.3.10": {
-      "sha512": "haKIazl+xxE9fZTIdJMjhUNitEAVjsA6SjfS+gD6N2yCSEUZI04RA1ynEquDdEQ5A2rAxVpunyS4IoB1mBTUvQ==",
+    "PdfSharpCore/1.3.11": {
+      "sha512": "JNR+y5LNQSDHpJFiOCWmvKv9IHlSdWlUOvsDtaAdjC4aLW4ekmXx4M74TkerqOgo4MpVQ1fhLgvnvTazPowfvA==",
       "type": "package",
-      "path": "pdfsharpcore/1.3.10",
+      "path": "pdfsharpcore/1.3.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3583,14 +3614,14 @@
         "lib/netstandard1.3/de/PdfSharpCore.resources.dll",
         "lib/netstandard2.0/PdfSharpCore.dll",
         "lib/netstandard2.0/de/PdfSharpCore.resources.dll",
-        "pdfsharpcore.1.3.10.nupkg.sha512",
+        "pdfsharpcore.1.3.11.nupkg.sha512",
         "pdfsharpcore.nuspec"
       ]
     },
-    "PdfSharpCore.Charting/1.3.10": {
-      "sha512": "GZkCl6hM6wDveXWRwHsajiQmRuCpiD5e2J0SSLvOTj2GtoqZL+xzBCaK+t9oWHzIoUpa2SQVrZ8bN6nk5HMj8g==",
+    "PdfSharpCore.Charting/1.3.11": {
+      "sha512": "XUPVs/TGUzQx+e/uEZzn++y+AMAJ4bfSH3phBFWmoaC3RCBgqNvFPLF0LgDRvjyJw9A+2ELkZuqyvhRCYPad/Q==",
       "type": "package",
-      "path": "pdfsharpcore.charting/1.3.10",
+      "path": "pdfsharpcore.charting/1.3.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3599,7 +3630,7 @@
         "lib/netcoreapp3.1/PdfSharpCore.Charting.dll",
         "lib/netstandard1.3/PdfSharpCore.Charting.dll",
         "lib/netstandard2.0/PdfSharpCore.Charting.dll",
-        "pdfsharpcore.charting.1.3.10.nupkg.sha512",
+        "pdfsharpcore.charting.1.3.11.nupkg.sha512",
         "pdfsharpcore.charting.nuspec"
       ]
     },
@@ -3951,10 +3982,10 @@
         "sixlabors.imagesharp.nuspec"
       ]
     },
-    "SkiaSharp/2.80.2": {
-      "sha512": "D25rzdCwh+3L+XyXqpNa+H/yiLJbE3/R3K/XexwHyQjGdzZvSufFW3oqf3En7hhqSIsxsJ8f5NEZ0J5W5wlGBg==",
+    "SkiaSharp/2.80.3": {
+      "sha512": "qX6tGNP3+MXNYe2pKm0PCRiJ/cx+LTeLaggwZifB7sUMXhECfKKKHJq45VqZKt37xQegnCCdf1jHXwmHeJQs5Q==",
       "type": "package",
-      "path": "skiasharp/2.80.2",
+      "path": "skiasharp/2.80.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3992,6 +4023,7 @@
         "buildTransitive/xamarinmac2.0/SkiaSharp.targets",
         "buildTransitive/xamarintvos1.0/SkiaSharp.targets",
         "buildTransitive/xamarinwatchos1.0/SkiaSharp.targets",
+        "interactive-extensions/dotnet/SkiaSharp.DotNet.Interactive.dll",
         "lib/monoandroid1.0/SkiaSharp.dll",
         "lib/monoandroid1.0/SkiaSharp.xml",
         "lib/net462/SkiaSharp.dll",
@@ -4030,8 +4062,29 @@
         "runtimes/win10-x86/nativeassets/uap10.0/libEGL.dll",
         "runtimes/win10-x86/nativeassets/uap10.0/libGLESv2.dll",
         "runtimes/win10-x86/nativeassets/uap10.0/libSkiaSharp.dll",
-        "skiasharp.2.80.2.nupkg.sha512",
+        "skiasharp.2.80.3.nupkg.sha512",
         "skiasharp.nuspec"
+      ]
+    },
+    "SkiaSharp.NativeAssets.Linux.NoDependencies/2.80.3": {
+      "sha512": "fMfXO2YRwceJjAN+gsUopmwsPQqW3iiBmnF+ZRMDOAgZRQM47Eih7acExqYkSVv8qoqR9/24Q6RjZW2ScF7k4Q==",
+      "type": "package",
+      "path": "skiasharp.nativeassets.linux.nodependencies/2.80.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "THIRD-PARTY-NOTICES.txt",
+        "build/net462/SkiaSharp.NativeAssets.Linux.NoDependencies.targets",
+        "buildTransitive/net462/SkiaSharp.NativeAssets.Linux.NoDependencies.targets",
+        "lib/net462/_._",
+        "lib/netstandard1.3/_._",
+        "runtimes/linux-arm/native/libSkiaSharp.so",
+        "runtimes/linux-arm64/native/libSkiaSharp.so",
+        "runtimes/linux-musl-x64/native/libSkiaSharp.so",
+        "runtimes/linux-x64/native/libSkiaSharp.so",
+        "skiasharp.nativeassets.linux.nodependencies.2.80.3.nupkg.sha512",
+        "skiasharp.nativeassets.linux.nodependencies.nuspec"
       ]
     },
     "SkiaSharp.QrCode/0.4.1": {

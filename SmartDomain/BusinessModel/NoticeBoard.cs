@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SmartDomain
@@ -23,6 +24,10 @@ namespace SmartDomain
         public int PriorityRankID { get; set; }
         public virtual PriorityRank PriorityRank { get; set; }
         public bool IsActive { get; set; }
-              
+
+        [NotMapped]
+        public string DetailsPreview { get { return (String.IsNullOrEmpty(Details) || Details.Length < 50) ? Details : Details.Substring(0, 50); } }
+
+
     }
 }

@@ -1,3 +1,0 @@
-2021-05-15 18:47:23:05 :GUI : System.ArgumentNullException: Value cannot be null. (Parameter 'value')
-   at System.Boolean.Parse(String value)
-   at SmartSave.Controllers.ClientController.OustandingStatement(IFormCollection formCollection) in D:\Dev Projects\SmartSave\SmartSave\Controllers\ClientController.cs:line 623
