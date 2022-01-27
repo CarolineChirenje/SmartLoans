@@ -42,7 +42,8 @@ namespace SmartReporting
                 AddressAndHeader();
                 AccountDetails();
                 TransactionDetails();
-              //  PrintQRCode();
+                if (statement.SavePrintedReport)
+                    PrintQRCode();
             }
             catch (Exception ex)
             {
@@ -556,27 +557,31 @@ namespace SmartReporting
         {
             try
             {
+
                 string url = String.IsNullOrEmpty(_statement.CurrentURL) ? UtilityService.SiteURL : _statement.CurrentURL;
                 string viewReportUrl = $"{url}/KonapoFund/ReprintKhonapoReport/{_statement.KonapoFundReportID}";
                 var qrcode = Reports.GenerateQRCode(viewReportUrl);
-                var imageSource = FromBinary("qrcode.png", () => qrcode);
-                Paragraph paragraph = section.AddParagraph();
-                paragraph.Format.SpaceBefore = "1.5cm";
-                paragraph.Format.Alignment = ParagraphAlignment.Center;
-                Image image = paragraph.Section.AddImage(imageSource);
-                image.Height = "5cm";
-                image.LockAspectRatio = true;
-                image.RelativeVertical = RelativeVertical.Line;
-                image.RelativeHorizontal = RelativeHorizontal.Margin;
-                image.Top = ShapePosition.Center;
-                image.Left = ShapePosition.Center;
-                image.WrapFormat.Style = WrapStyle.Through;
-
+                if (qrcode != null)
+                {
+                    var imageSource = FromBinary("qrcode.png", () => qrcode,100);
+                    Paragraph paragraph = section.AddParagraph();
+                    paragraph.Format.SpaceBefore = "1.5cm";
+                    paragraph.Format.Alignment = ParagraphAlignment.Center;
+                    Image image = paragraph.Section.AddImage(imageSource);
+                    image.Height = "5.3cm";
+                    image.Width= "5.3cm";
+                    image.LockAspectRatio = true;
+                    image.RelativeVertical = RelativeVertical.Line;
+                    image.RelativeHorizontal = RelativeHorizontal.Margin;
+                    image.Top = ShapePosition.Center;
+                    image.Left = ShapePosition.Center;
+                    image.WrapFormat.Style = WrapStyle.Through;
+                }
             }
             catch (Exception ex)
             {
                 CustomLog.Log(LogSource.Reporting, ex);
-                throw;
+
             }
         }
         void PrintFormValues(string name, string value, bool formatNumbers = true)

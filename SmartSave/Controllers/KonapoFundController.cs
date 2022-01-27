@@ -186,7 +186,7 @@ namespace SmartSave.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetKhonapoReport([FromBody] SmartInterfaces.KhonapoReport report)
+        public JsonResult GetKhonapoReport([FromBody] KhonapoReport report)
         {
             try
             {
@@ -201,21 +201,25 @@ namespace SmartSave.Controllers
                         report.Transactions = Reports.MonthlyBreakdown(KonapoFundID);
 
                         string filename = report.FundReference;
-                        SmartDomain.KonapoFundReport khonapoFundReport = new SmartDomain.KonapoFundReport()
+                        KonapoFundReport khonapoFundReport = new SmartDomain.KonapoFundReport()
                         {
                             JsonData = report.SerializetoJSON().ToString(),
                             KonapoFundID = KonapoFundID,
                             FileName = filename
                         };
-                        int khonapoReportID = _service.Save(khonapoFundReport).Result;
-                        if (khonapoReportID > 0)
+                        int khonapoReportID=0;
+                         if (report.SavePrintedReport)
+                         khonapoReportID = _service.Save(khonapoFundReport).Result;
+                        if (khonapoReportID > 0 || !report.SavePrintedReport)
                         {
                             report.KonapoFundReportID = khonapoReportID.ToString();
                             byte[] pdfFile = GenerateKhonapoReport(report);
                             if (pdfFile != null)
-                            {
-                                khonapoFundReport.Report = pdfFile;
-                                _service.Update(khonapoFundReport);
+                            {   if (report.SavePrintedReport)
+                                {
+                                    khonapoFundReport.Report = pdfFile;
+                                    _service.Update(khonapoFundReport);
+                                }
                                 return Json(new { filename = filename + ".pdf", fileContents = Convert.ToBase64String(pdfFile) });
                             }
                             else

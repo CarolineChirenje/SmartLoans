@@ -1,42 +1,57 @@
-﻿using QRCoder;
-using SmartHelper;
+﻿using SmartHelper;
 using SmartInterfaces;
 using SmartLog;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
-using SmartExtensions;
-using System.Drawing;
+using SkiaSharp.QrCode;
+using SkiaSharp;
+using System.IO;
 
 namespace SmartReporting
 {
-   
+
     public static class Reports
     {
-        //public static string GenerateQRCode(string textToEmbed)
-        //{
-        //    QRCodeGenerator QrGenerator = new QRCodeGenerator();
-        //    QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(textToEmbed, QRCodeGenerator.ECCLevel.Q);
-        //    QRCode QrCode = new QRCode(QrCodeInfo);
-        //    Bitmap QrBitmap = QrCode.GetGraphic(60);
-        //    byte[] BitmapArray = QrBitmap.BitmapToByteArray();
-        //    string QrUri = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(BitmapArray));
-        //    return QrUri;
-        //}
-        public static byte[] GenerateQRCode(string textToEmbed)
+        
+        public static byte[] GenerateQRCode(string content)
         {
-            QRCodeGenerator QrGenerator = new QRCodeGenerator();
-            QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(textToEmbed, QRCodeGenerator.ECCLevel.Q);
-            QRCode QrCode = new QRCode(QrCodeInfo);
-            Bitmap QrBitmap = QrCode.GetGraphic(60);
-            byte[] BitmapArray = QrBitmap.BitmapToByteArray();
-           // string QrUri = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(BitmapArray));
-            return BitmapArray;
+            byte[] fileInBytes = null;
+            try
+            {
+                using (var generator = new QRCodeGenerator())
+                {
+                    // Generate QrCode
+                    var qr = generator.CreateQrCode(content, ECCLevel.L);
+                    // Render to canvas
+                    var info = new SKImageInfo(512, 512);
+                    using (var surface = SKSurface.Create(info))
+                    {
+                        var canvas = surface.Canvas;
+                        canvas.Render(qr, info.Width, info.Height);
+
+                        // Output to Stream -> Memory Stream
+                        using (var image = surface.Snapshot())
+                        using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+                        {
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                data.SaveTo(memoryStream);
+                                if (memoryStream != null)
+                                    fileInBytes = memoryStream.ToArray();
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Reporting, ex);
+            }
+            return fileInBytes;
         }
         public static DataTable Transactional(Statement _statement)
         {
-
             DataTable results = null;
             try
             {
@@ -189,7 +204,7 @@ namespace SmartReporting
                        DROP TABLE IF EXISTS  #BreakDowns
                        ";
                 results = GetData.GetDataTable(sqlCustomSetting);
-               
+
             }
             catch (Exception ex)
             {

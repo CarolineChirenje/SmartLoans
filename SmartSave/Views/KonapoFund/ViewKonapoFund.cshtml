@@ -752,7 +752,13 @@
 
         <div class="box-footer">
             <a class="btn btn-default" asp-controller="KonapoFund" asp-action="KonapoFunds">Cancel</a>
-            <a class="btn btn-small btn-success pull-right" id="btnPrint">Print</a>
+            <a class="btn btn-small btn-success pull-right" id="btnPrint">Print</a>&nbsp;&nbsp;
+            <div class="checkbox pull-right">
+                <label class="checkbox-inline">
+                    <input type="checkbox" data-val="true" id="SavePrintedReport"
+                           name="SavePrintedReport" value="true">Save Printed Report &nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+            </div>
         </div>
     </div>
 
@@ -817,6 +823,8 @@
         $("#TAFPDisplayOnReport").prop("checked", true);
         $("#TTRDisplayOnReport").prop("checked", true);
         $("#MBDisplayOnReport").prop("checked", true);
+        $("#SavePrintedReport").prop("checked", true);
+        
     });
     function CalculateTableTotal() {
         $('#calc').DataTable({
@@ -1135,6 +1143,8 @@
         var RDDisplayOnReport = $('#RDDisplayOnReport').is(':checked');
         var MBDisplayOnReport = $('#MBDisplayOnReport').is(':checked');
         var CurrentURL = window.location.port ? $(location).attr('protocol') + $(location).attr('port') + '//' + $(location).attr('hostname') : $(location).attr('protocol') + '//' + $(location).attr('hostname');
+        var SavePrintedReport = $('#SavePrintedReport').is(':checked');
+        
         var konapoCalculations = {
             "KonapoFundID": KonapoFundID,
             "ClientID": ClientID,
@@ -1189,7 +1199,8 @@
             "RDDisplayOnReport": RDDisplayOnReport,
 
             "MBDisplayOnReport": MBDisplayOnReport,
-            "CurrentURL": CurrentURL
+            "CurrentURL": CurrentURL,
+            "SavePrintedReport": SavePrintedReport
         };
         console.log(konapoCalculations);
         console.log(JSON.stringify(konapoCalculations));

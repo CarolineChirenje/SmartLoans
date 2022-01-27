@@ -56,6 +56,8 @@ namespace SmartInterfaces
         public bool MBDisplayOnReport { get; set; }
         public string CurrentURL { get; set; }
         public string KonapoFundReportID { get; set; }
+
+        public bool SavePrintedReport { get; set; }
         
         public ClientForm Client { get; set; }
 
