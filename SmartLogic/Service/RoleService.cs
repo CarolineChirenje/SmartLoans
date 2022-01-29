@@ -350,7 +350,7 @@ namespace SmartLogic
                     _context.Roles.Remove(roles);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    roles.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    roles.IsActive = DatabaseAction.Deactivate != action;
                     roles.LastChangedBy = UtilityService.CurrentUserName;
                     roles.LastChangedDate = DateTime.Now;
                     _context.Update(roles);
@@ -535,7 +535,7 @@ namespace SmartLogic
                 int _removeResult = await RemoveMenusFromRole(roleID, remove_Menus);
                 result = _addResult + _removeResult;
             }
-            catch (Exception ex)
+            catch 
             {
                 return 0;
             }

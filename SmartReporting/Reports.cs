@@ -2,17 +2,56 @@
 using SmartInterfaces;
 using SmartLog;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
+using SkiaSharp.QrCode;
+using SkiaSharp;
+using System.IO;
 
 namespace SmartReporting
 {
+
     public static class Reports
     {
+        
+        public static byte[] GenerateQRCode(string content)
+        {
+            byte[] fileInBytes = null;
+            try
+            {
+                using (var generator = new QRCodeGenerator())
+                {
+                    // Generate QrCode
+                    var qr = generator.CreateQrCode(content, ECCLevel.L);
+                    // Render to canvas
+                    var info = new SKImageInfo(512, 512);
+                    using (var surface = SKSurface.Create(info))
+                    {
+                        var canvas = surface.Canvas;
+                        canvas.Render(qr, info.Width, info.Height);
+
+                        // Output to Stream -> Memory Stream
+                        using (var image = surface.Snapshot())
+                        using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+                        {
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                data.SaveTo(memoryStream);
+                                if (memoryStream != null)
+                                    fileInBytes = memoryStream.ToArray();
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Reporting, ex);
+            }
+            return fileInBytes;
+        }
         public static DataTable Transactional(Statement _statement)
         {
-
             DataTable results = null;
             try
             {
@@ -111,7 +150,6 @@ namespace SmartReporting
             }
             return results;
         }
-
         public static DataTable Deductions(Statement _statement)
         {
             DataTable results = null;
@@ -132,6 +170,45 @@ namespace SmartReporting
             catch (Exception ex)
             {
                 CustomLog.Log(LogSource.Reporting, ex);
+            }
+            return results;
+        }
+        public static DataTable MonthlyBreakdown(int KonapoFundID)
+        {
+            DataTable results = null;
+            try
+            {
+                string sqlCustomSetting = @$"
+                        DROP TABLE IF EXISTS  #TempValues
+                        DROP TABLE IF EXISTS  #BreakDowns
+                        SELECT kfc.FundCategoryID AS CategoryID, fc.Name  AS Category, ISNULL(SUM(ISNULL(kfci.KonapoAmount,0)),0) AS TotalAmount
+                        INTO #TempValues
+                        FROM KonapoFundCTIs kfci
+                        INNER JOIN KonapoFundCTs kfc ON kfci.KonapoFundCTID=kfc.KonapoFundCTID
+                        INNER JOIN FundCategories fc ON kfc.FundCategoryID=fc.FundCategoryID
+                        INNER JOIN KonapoFunds kf ON kfc.KonapoFundID=kf.KonapoFundID
+                        WHERE kf.KonapoFundID={KonapoFundID}
+                        GROUP BY kfc.FundCategoryID , fc.Name
+                        ORDER BY kfc.FundCategoryID 
+                        SELECT
+						* 
+						INTO #BreakDowns
+						FROM #TempValues 
+		               WHERE TotalAmount!=0
+
+					   SELECT Category, TotalAmount, 
+					   ROUND(TotalAmount * 100.0 / SUM(TotalAmount), 1) AS TotalAsAPercentage
+				       FROM #BreakDowns
+					   GROUP BY Category,TotalAmount
+				       DROP TABLE IF EXISTS  #TempValues
+                       DROP TABLE IF EXISTS  #BreakDowns
+                       ";
+                results = GetData.GetDataTable(sqlCustomSetting);
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
             }
             return results;
         }

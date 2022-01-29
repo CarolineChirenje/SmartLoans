@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
@@ -24,27 +25,21 @@ namespace SmartHelper
         {
             string currentDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
             string maintananceQuery = $"SELECT TOP 1 * FROM Maintanances WHERE StartDate<='{currentDate}' AND EndDate>='{currentDate}';";
-            using (IDbConnection db = new SqlConnection(SSDBConnection))
-            {
-                return db.Query<Maintain>(maintananceQuery).SingleOrDefault();
-            }
+            using IDbConnection db = new SqlConnection(SSDBConnection);
+            return db.Query<Maintain>(maintananceQuery).SingleOrDefault();
         }
         public static Licensing LicenceMode()
         {
             string currentDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
             string licenceQuery = $"SELECT TOP 1 * FROM Licences WHERE StartDate<='{currentDate}' AND EndDate<='{currentDate}';";
-            using (IDbConnection db = new SqlConnection(SSDBConnection))
-            {
-                return db.Query<Licensing>(licenceQuery).SingleOrDefault();
-            }
+            using IDbConnection db = new SqlConnection(SSDBConnection);
+            return db.Query<Licensing>(licenceQuery).SingleOrDefault();
         }
         public static CustomSetting GetSettingValue(int CustomSettingID)
         {
             string sqlCustomSetting = $"SELECT TOP 1 * FROM CustomSettings WHERE CustomSettingID={CustomSettingID};";
-            using (IDbConnection db = new SqlConnection(SSDBConnection))
-            {
-                return db.Query<CustomSetting>(sqlCustomSetting).SingleOrDefault();
-            }
+            using IDbConnection db = new SqlConnection(SSDBConnection);
+            return db.Query<CustomSetting>(sqlCustomSetting).SingleOrDefault();
         }
 
         public static DataTable GetDataTable(string sqlQuery)
@@ -64,16 +59,13 @@ namespace SmartHelper
 
         public static string GetStringValue(string sqlQuery)
         {
-            using (IDbConnection db = new SqlConnection(SSDBConnection))
-            {
-                return db.Query<string>(sqlQuery)?.SingleOrDefault();
-            }
+            using IDbConnection db = new SqlConnection(SSDBConnection);
+            return db.Query<string>(sqlQuery)?.SingleOrDefault();
         }
 
         public static bool IsPermitted(int _permissionID)
         {
             string countValue;
-            int permissionCount = 0;
             string _selectClause = @"SELECT COUNT(rp.PermissionID) FROM Users u 
               INNER JOIN UserRoles ur ON u.UserID = ur.UserID
               INNER JOIN RolePermissions rp ON ur.RoleID = rp.RoleID ";
@@ -84,16 +76,17 @@ namespace SmartHelper
                 countValue = db.Query<string>(sqlCustomSetting).SingleOrDefault();
             }
 
+            int permissionCount;
             try
             {
                 permissionCount = Int32.Parse(countValue);
             }
-            catch (Exception ex)
+            catch
             {
 
                 permissionCount = 0;
             }
-            return (permissionCount == 0) ? false : true;
+            return permissionCount != 0;
 
         }
         public static string GetSupportValue(int supportListID)
@@ -130,7 +123,33 @@ namespace SmartHelper
             return string.IsNullOrEmpty(configValue) ? "Data Source=172.105.28.87;Initial Catalog=SmartSave;User Id=sa;Password=Ch1gumbu6299##" : configValue;
 
         }
+        public static List<T> ConvertDataTable<T>(DataTable dt)
+        {
+            List<T> data = new List<T>();
+            foreach (DataRow row in dt.Rows)
+            {
+                T item = GetItem<T>(row);
+                data.Add(item);
+            }
+            return data;
+        }
+        public static T GetItem<T>(DataRow dr)
+        {
+            Type temp = typeof(T);
+            T obj = Activator.CreateInstance<T>();
 
+            foreach (DataColumn column in dr.Table.Columns)
+            {
+                foreach (PropertyInfo pro in temp.GetProperties())
+                {
+                    if (pro.Name == column.ColumnName)
+                        pro.SetValue(obj, dr[column.ColumnName], null);
+                    else
+                        continue;
+                }
+            }
+            return obj;
+        }
         public static string   Environment()
         {
             _configuration = LoadAppConfigurations;

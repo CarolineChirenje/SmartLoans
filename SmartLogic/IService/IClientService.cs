@@ -18,12 +18,15 @@ namespace SmartLogic
         Task<int> ActionClient(int id, DatabaseAction action);
         Task<int> Save(ClientForm client);
         Task<int> Update(ClientForm client);
+        string GetClientRef(int clientID);
         Task<ClientForm> FindClient(int Clientid = 0, string accountNumber = null);
         List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0);
         Task<List<string>> ClientAccountNumbers(string account);
         Task<ClientPeek> GetClient(string emailAddress=null, string idnumber=null,int? clientID=null);
         Register AttendanceRegisters(int clientID);
         Task<bool> ClientExists(int Clientid = 0);
+
+        Task<ClientKonapoFunds> GetClientKonapoFunds(int clientID);
 
         //Notes
         Comments ClientNotes(int clientID);

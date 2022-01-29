@@ -19,11 +19,11 @@ namespace SmartSave.Controllers
 {
     public class UserController : BaseController<UserController>
     {
-        IUserService _service;
-        IRoleService _roleservice;
-        IDepartmentService _departmentservice;
-        IMailService _mailservice;
-        IEmailTemplateService _emailTemplateService;
+        private readonly IUserService _service;
+        readonly IRoleService _roleservice;
+        readonly IDepartmentService _departmentservice;
+        readonly IMailService _mailservice;
+        readonly IEmailTemplateService _emailTemplateService;
         public UserController(IUserService service, IRoleService roleservice,
         IDepartmentService departmentService, IMailService mailService, IEmailTemplateService emailTemplateService)
         {
@@ -78,15 +78,13 @@ namespace SmartSave.Controllers
                     if (ProfileImage.Length > 0)
                     {
                         //Getting FileName
-                        var fileName = Path.GetFileName(ProfileImage.FileName);
+                        // var fileName = Path.GetFileName(ProfileImage.FileName);
                         //Getting file Extension
-                        var fileExtension = Path.GetExtension(fileName);
+                        // var fileExtension = Path.GetExtension(fileName);
 
-                        using (var target = new MemoryStream())
-                        {
-                            ProfileImage.CopyTo(target);
-                            user.ProfileImage = target.ToArray();
-                        }
+                        using var target = new MemoryStream();
+                        ProfileImage.CopyTo(target);
+                        user.ProfileImage = target.ToArray();
                     }
                 }
                 int result = await _service.Save(user);
@@ -98,8 +96,10 @@ namespace SmartSave.Controllers
                 else
                 {
                     EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.New_User_Account_Created).Result;
-                    Email email = new Email();
-                    email.To = user.EmailAddress;
+                    Email email = new Email
+                    {
+                        To = user.EmailAddress
+                    };
 
                     if (UtilityService.IsNotNull(emailTemplate))
                     {
@@ -117,7 +117,7 @@ namespace SmartSave.Controllers
                         email.Body = UtilityService.HtmlDecode(_emailBody);
                         email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
                     }
-                    _mailservice.SendMail(email);
+                    await _mailservice.SendMail(email);
 
                     return RedirectToAction("ViewUser", new { id = result });
                 }
@@ -166,15 +166,13 @@ namespace SmartSave.Controllers
                         if (ProfileImage.Length > 0)
                         {
                             //Getting FileName
-                            var fileName = Path.GetFileName(ProfileImage.FileName);
+                            // var fileName = Path.GetFileName(ProfileImage.FileName);
                             //Getting file Extension
-                            var fileExtension = Path.GetExtension(fileName);
+                            // var fileExtension = Path.GetExtension(fileName);
 
-                            using (var target = new MemoryStream())
-                            {
-                                ProfileImage.CopyTo(target);
-                                user.ProfileImage = target.ToArray();
-                            }
+                            using var target = new MemoryStream();
+                            ProfileImage.CopyTo(target);
+                            user.ProfileImage = target.ToArray();
                         }
                     }
                     if (await (_service.Update(user)) == 0)
@@ -203,15 +201,14 @@ namespace SmartSave.Controllers
 
         // UserRoles
         [HttpPost]
-        public async Task<IActionResult> AddUserRoles(string[] selectedRoles, UserRole user)
+        public async Task<IActionResult> AddUserRoles(string[] selectedRoles, UserRole userRole)
         {
 
-            if (await (_service.UpdateRoles(user.UserID, selectedRoles)) == 0)
+            if (await (_service.UpdateRoles(userRole.UserID, selectedRoles)) == 0)
             {
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
-
-            return RedirectToAction("ViewUser", new { id = user.UserID });
+            return RedirectToAction("ViewUser", new { id = userRole.UserID });
 
         }
 
@@ -257,7 +254,7 @@ namespace SmartSave.Controllers
             var userTypeList = _service.GetUserTypes().Select(t => new
             {
                 t.UserTypeID,
-                Name = t.Name,
+                t.Name,
             }).OrderBy(t => t.Name);
 
             ViewBag.UserTypeList = new SelectList(userTypeList, "UserTypeID", "Name");

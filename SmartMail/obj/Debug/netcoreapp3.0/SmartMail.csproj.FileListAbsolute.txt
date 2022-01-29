@@ -23,3 +23,29 @@ D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.csproj.Cor
 D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.csproj.CopyComplete
 D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.dll
 D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartMail.deps.json
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartMail.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartMail.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartDataAccess.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartDomain.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartHelper.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartInterfaces.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartLog.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartLogic.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartReporting.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartLogic.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartDataAccess.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartInterfaces.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartLog.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.0\SmartReporting.pdb
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.csproj.CopyComplete
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.dll
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.0\SmartMail.pdb

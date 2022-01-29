@@ -11,4 +11,9 @@ namespace SmartSave
     {
             public override void OnActionExecuting(ActionExecutingContext filterContext) => UtilityService.MenuComponent = Menu_Component.MenuList;
     }
+
+    public class OverrideUserNotFoundFilter : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext) => UtilityService.CanOverrideUserNotFound =true;
+    }
 }

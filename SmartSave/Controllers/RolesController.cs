@@ -134,17 +134,17 @@ namespace SmartSave.Controllers
             return View(permission);
         }
         [HttpPost]
-        public async Task<IActionResult> AddUserToRole(UserRole user)
+        public async Task<IActionResult> AddUserToRole(UserRole userRole)
         {
-            Role update = await (_service.GetRole(user.RoleID));
+            Role update = await (_service.GetRole(userRole.RoleID));
             if (UtilityService.IsNull(update))
                 return RedirectToAction(nameof(Roles));
-            if (await _service.Save(user) == 0)
+            if (await _service.Save(userRole) == 0)
             {
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             }
 
-            return RedirectToAction("ViewRole", new {id= user.RoleID });
+            return RedirectToAction("ViewRole", new {id= userRole.RoleID });
         }
 
 
@@ -244,7 +244,7 @@ namespace SmartSave.Controllers
             var activeRoles = _service.GetRoles().Select(t => new
             {
                 t.RoleID,
-                Name = t.Name,
+                t.Name,
             }).OrderBy(t => t.Name);
             ViewBag.RoleList = new SelectList(activeRoles, "RoleID", "Name");
         }

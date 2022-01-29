@@ -14,6 +14,7 @@ namespace SmartSave.Controllers
     {
         private readonly IFeatureFlagService _service;
         public FeatureFlagController(IFeatureFlagService service) => _service = service;
+        public IActionResult Dashboard() => View();
 
         public async Task<IActionResult> FeatureFlag()
         {

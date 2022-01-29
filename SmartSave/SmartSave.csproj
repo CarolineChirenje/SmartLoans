@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
     <NoWin32Manifest>true</NoWin32Manifest>
     <UserSecretsId>9330986b-5e12-4bd0-bdf6-36fbf1a35c18</UserSecretsId>
@@ -81,17 +81,20 @@
 
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.1.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <!--<PackageReference Include="Microsoft.AspNetCore.App" />-->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
+ 
   </ItemGroup>
 
   <ItemGroup>
@@ -112,6 +115,7 @@
     <ProjectReference Include="..\SmartDataAccess\SmartDataAccess.csproj" />
     <ProjectReference Include="..\SmartDomain\SmartDomain.csproj" />
     <ProjectReference Include="..\SmartErrorLog\SmartLog.csproj" />
+    <ProjectReference Include="..\SmartExtensions\SmartExtensions.csproj" />
     <ProjectReference Include="..\SmartInterfaces\SmartInterfaces.csproj" />
     <ProjectReference Include="..\SmartLogic\SmartLogic.csproj" />
     <ProjectReference Include="..\SmartHelper\SmartHelper.csproj" />
@@ -121,6 +125,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="SmartResources\" />
   </ItemGroup>
   

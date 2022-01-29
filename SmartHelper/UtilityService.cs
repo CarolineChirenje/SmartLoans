@@ -104,7 +104,7 @@ namespace SmartHelper
             {
 
                 string value = GetData.GetSettingValue((int)AppSetting.Capture_VAT_Inclusive_Payments)?.Value;
-                return value.Equals("true") ? true : false;
+                return value.Equals("true");
 
             }
         }
@@ -114,7 +114,7 @@ namespace SmartHelper
             {
 
                 string value = GetData.GetSettingValue((int)AppSetting.Application_Is_VAT_Compliant)?.Value;
-                return value.Equals("true") ? true : false;
+                return value.Equals("true");
 
             }
         }
@@ -125,7 +125,7 @@ namespace SmartHelper
             {
 
                 string value = GetData.GetSettingValue((int)AppSetting.Account_Number_Auto_Generate)?.Value;
-                return value.Equals("true") ? true : false;
+                return value.Equals("true");
 
             }
         }
@@ -135,7 +135,7 @@ namespace SmartHelper
             {
 
                 string value = GetData.GetSettingValue((int)AppSetting.Application_Role_Based_Menus)?.Value;
-                return value.Equals("true") ? true : false;
+                return value.Equals("true");
 
             }
         }
@@ -146,7 +146,7 @@ namespace SmartHelper
             {
 
                 string _percentage = GetData.GetSettingValue((int)AppSetting.VAT_Percentage)?.Value;
-                decimal _vatPercentage = 0;
+                decimal _vatPercentage;
                 try
                 {
                     _vatPercentage = decimal.Parse(_percentage, System.Globalization.CultureInfo.InvariantCulture);
@@ -189,7 +189,7 @@ namespace SmartHelper
             {
 
                 string value = GetData.GetSettingValue((int)AppSetting.Statement_Password_Protect)?.Value;
-                return value.Equals("true") ? true : false;
+                return value.Equals("true");
 
             }
         }
@@ -210,7 +210,7 @@ namespace SmartHelper
             {
 
                 string value = GetData.GetSettingValue((int)AppSetting.Statement_Show_Table_Boarders)?.Value;
-                return value.Equals("true") ? true : false;
+                return value.Equals("true");
 
             }
         }
@@ -432,7 +432,7 @@ namespace SmartHelper
                 {
                     roleID = Int32.Parse(_Role);
                 }
-                catch (Exception ex)
+                catch
                 {
 
                 }
@@ -499,7 +499,7 @@ namespace SmartHelper
                 {
                     userType = Int32.Parse(_result, System.Globalization.CultureInfo.InvariantCulture); ;
                 }
-                catch (Exception ex)
+                catch 
                 {
 
                 }
@@ -608,6 +608,7 @@ namespace SmartHelper
         static string _currentFullName;
         static byte[] _userProfileImage;
         static bool _canOverrideMaintananceMode;
+        static bool _canOverrideUserNotFound;
         static int _ClientID;
         public static int CurrentUserTypeID;
         static Menu_Component _component;
@@ -674,6 +675,18 @@ namespace SmartHelper
             }
 
         }
+        public static bool CanOverrideUserNotFound
+        {
+            get
+            {
+                return _canOverrideUserNotFound;
+            }
+            set
+            {
+                _canOverrideUserNotFound = value;
+            }
+
+        }
         public static Menu_Component MenuComponent
         {
             get
@@ -695,10 +708,9 @@ namespace SmartHelper
           }
         public static decimal GetDecimalAmount(string Amount)
         {
-            decimal _amount = 0;
             var cul = CultureInfo.GetCultureInfo("EN-us");
             Amount = Amount.Replace(",", ".");
-            decimal.TryParse(Amount, NumberStyles.AllowDecimalPoint, cul, out _amount);
+            decimal.TryParse(Amount, NumberStyles.AllowDecimalPoint, cul, out decimal _amount);
             return _amount;
         }
    
@@ -712,7 +724,7 @@ namespace SmartHelper
         ///Generate QueryRef
         internal static string GenerateQueryRef()
         {
-            string queryRef = $"Q{DateTime.Now.Year.ToString()}{ DateTime.Now.ToString("MMM").ToUpper()}{RandomAlphanumeric()}";
+            string queryRef = $"Q{DateTime.Now.Year}{ DateTime.Now.ToString("MMM").ToUpper()}{RandomAlphanumeric()}";
             return queryRef;
         }
       

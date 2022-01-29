@@ -13,6 +13,8 @@ namespace SmartDomain
         public int ErrorLogID { get; set; }
         public int LogTypeID { get; set; }
         public string Error { get; set; }
+
+        public string Exception { get; set; }
         public DateTime DateGenerated { get; set; }
 
     }

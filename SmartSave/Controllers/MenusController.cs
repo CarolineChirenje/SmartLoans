@@ -58,11 +58,11 @@ namespace SmartSave.Controllers
                 if (await (_service.Update(MenuGroup)) == 0)
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 else
-                    return View(MenuGroup);
+                    return RedirectToAction("ViewMenuGroup", new { id = MenuGroup.MenuGroupID });
             }
             else
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return  View(MenuGroup);
+            return RedirectToAction("ViewMenuGroup", new {id= MenuGroup.MenuGroupID });
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -124,7 +124,7 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewMenu", new { id = menu.MenuID });
         }
         [HttpGet]
-        public IActionResult AddMenu(int id)
+        public IActionResult AddMenu()
         {
             ViewBag.MenuGroups = GetMenuGroups();
             return View();
@@ -153,7 +153,7 @@ namespace SmartSave.Controllers
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("ChildMenus", new { MenuGroupID }); ;
         }
-        public async Task<IActionResult> ChangeMenuStatus(int id, int MenuGroupID, bool status)
+        public async Task<IActionResult> ChangeMenuStatus(int id, bool status)
         {
             if (await (_service.ActionMenu(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

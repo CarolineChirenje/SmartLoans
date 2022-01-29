@@ -11,3 +11,17 @@ D:\Dev Projects\SmartSave\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.csproj.
 D:\Dev Projects\SmartSave\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.csproj.CopyComplete
 D:\Dev Projects\SmartSave\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.dll
 D:\Dev Projects\SmartSave\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.pdb
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.0\SmartLog.deps.json
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.0\SmartLog.dll
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.0\SmartLog.pdb
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.0\SmartHelper.dll
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.csproj.CopyComplete
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.dll
+C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.0\SmartLog.pdb

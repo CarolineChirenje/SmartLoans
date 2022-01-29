@@ -11,3 +11,17 @@ D:\Dev Projects\SmartSave\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.csproj
 D:\Dev Projects\SmartSave\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.csproj.CopyComplete
 D:\Dev Projects\SmartSave\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.dll
 D:\Dev Projects\SmartSave\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.pdb
+C:\DEV\SmartWealth\SmartDomain\bin\Debug\netcoreapp3.0\SmartDomain.deps.json
+C:\DEV\SmartWealth\SmartDomain\bin\Debug\netcoreapp3.0\SmartDomain.dll
+C:\DEV\SmartWealth\SmartDomain\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+C:\DEV\SmartWealth\SmartDomain\bin\Debug\netcoreapp3.0\SmartHelper.dll
+C:\DEV\SmartWealth\SmartDomain\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartDomain\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
+C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.csproj.CopyComplete
+C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.dll
+C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.0\SmartDomain.pdb

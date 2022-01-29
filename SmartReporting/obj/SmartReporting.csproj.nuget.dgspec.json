@@ -1,37 +1,35 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dev Projects\\SmartSave\\SmartReporting\\SmartReporting.csproj": {}
+    "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj": {}
   },
   "projects": {
-    "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj": {
+    "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj",
         "projectName": "SmartDomain",
-        "projectPath": "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev Projects\\SmartSave\\SmartDomain\\obj\\",
+        "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj",
+        "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
+        "outputPath": "C:\\DEV\\SmartWealth\\SmartDomain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.0": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj": {
-                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj"
+              "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
               }
             }
           }
@@ -43,7 +41,18 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.0": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "System.Runtime.CompilerServices.Unsafe": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.Text.Encodings.Web": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -54,57 +63,41 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.0.1, 3.0.1]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.415\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj": {
+    "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
         "projectName": "SmartLog",
-        "projectPath": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\obj\\",
+        "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
+        "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
+        "outputPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.0": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj": {
-                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj"
+              "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
               }
             }
           }
@@ -116,7 +109,18 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.0": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "System.Runtime.CompilerServices.Unsafe": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.Text.Encodings.Web": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -127,54 +131,38 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.0.1, 3.0.1]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.415\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj": {
+    "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj",
-        "projectName": "SmartHelper",
-        "projectPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\obj\\",
+        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj",
+        "projectName": "SmartExtensions",
+        "projectPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj",
+        "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
+        "outputPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.0": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -185,19 +173,100 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.0": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj",
+        "projectName": "SmartHelper",
+        "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj",
+        "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
+        "outputPath": "C:\\DEV\\SmartWealth\\SmartHelper\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Dapper": {
               "target": "Package",
-              "version": "[1.60.6, )"
+              "version": "[2.0.123, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[2.2.0, )"
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
-              "version": "[2.2.0, )"
+              "version": "[6.0.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.3, )"
+            },
+            "System.Runtime.CompilerServices.Unsafe": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.Text.Encodings.Web": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             }
           },
           "imports": [
@@ -210,60 +279,44 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.0.1, 3.0.1]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.415\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj": {
+    "C:\\DEV\\SmartWealth\\SmartInterfaces\\SmartInterfaces.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartInterfaces\\SmartInterfaces.csproj",
         "projectName": "SmartInterfaces",
-        "projectPath": "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\obj\\",
+        "projectPath": "C:\\DEV\\SmartWealth\\SmartInterfaces\\SmartInterfaces.csproj",
+        "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
+        "outputPath": "C:\\DEV\\SmartWealth\\SmartInterfaces\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.0": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj": {
-                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj"
+              "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj"
               },
-              "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj": {
-                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartHelper\\SmartHelper.csproj"
+              "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
               }
             }
           }
@@ -275,7 +328,18 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.0": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "System.Runtime.CompilerServices.Unsafe": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.Text.Encodings.Web": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -286,63 +350,50 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.0.1, 3.0.1]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.415\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Dev Projects\\SmartSave\\SmartReporting\\SmartReporting.csproj": {
+    "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev Projects\\SmartSave\\SmartReporting\\SmartReporting.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj",
         "projectName": "SmartReporting",
-        "projectPath": "D:\\Dev Projects\\SmartSave\\SmartReporting\\SmartReporting.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev Projects\\SmartSave\\SmartReporting\\obj\\",
+        "projectPath": "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj",
+        "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
+        "outputPath": "C:\\DEV\\SmartWealth\\SmartReporting\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.0": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj": {
-                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartDomain\\SmartDomain.csproj"
+              "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj"
               },
-              "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj": {
-                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartErrorLog\\SmartLog.csproj"
+              "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj"
               },
-              "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj": {
-                "projectPath": "D:\\Dev Projects\\SmartSave\\SmartInterfaces\\SmartInterfaces.csproj"
+              "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj"
+              },
+              "C:\\DEV\\SmartWealth\\SmartInterfaces\\SmartInterfaces.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartInterfaces\\SmartInterfaces.csproj"
               }
             }
           }
@@ -354,23 +405,48 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.0": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "MigraDocCore.DocumentObjectModel": {
               "target": "Package",
-              "version": "[0.1.1, )"
+              "version": "[1.3.11, )"
             },
             "MigraDocCore.Rendering": {
               "target": "Package",
-              "version": "[0.1.1, )"
+              "version": "[1.3.11, )"
             },
             "PdfSharpCore": {
               "target": "Package",
-              "version": "[1.2.16, )"
+              "version": "[1.3.11, )"
+            },
+            "SkiaSharp.NativeAssets.Linux.NoDependencies": {
+              "target": "Package",
+              "version": "[2.80.3, )"
+            },
+            "SkiaSharp.QrCode": {
+              "target": "Package",
+              "version": "[0.4.1, )"
             },
             "System.Data.DataSetExtensions": {
               "target": "Package",
               "version": "[4.5.0, )"
+            },
+            "System.Runtime.CompilerServices.Unsafe": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.Text.Encodings.Web": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "ZXing.Net": {
+              "target": "Package",
+              "version": "[0.16.7, )"
+            },
+            "ZXing.Net.Bindings.CoreCompat.System.Drawing": {
+              "target": "Package",
+              "version": "[0.16.5-beta, )"
             }
           },
           "imports": [
@@ -383,26 +459,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.0.1, 3.0.1]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.415\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

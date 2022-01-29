@@ -1,0 +1,243 @@
+﻿
+@model SmartInterfaces.ClientKonapoFundItems;
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+        Konapo Fund
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+            <h3 class="box-title">@Model.KonapoRef</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="/KonapoFund/ViewKonapoFund">
+
+            @if (TempData["Error"] != null)
+            {<div class="container">
+                    <div class="text-danger">@TempData["Error"].ToString()</div>
+                </div>
+                <br />
+            }
+            <div class="container">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
+
+            @if (TempData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@TempData["Success"].ToString()</div>
+                </div>
+            }
+            @if (TempData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@TempData["Warning"].ToString()</div>
+                </div>
+            }
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                    <div class="col-sm-10">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Category</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.CategoryName</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Date Registered</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.RegistrationDate)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                    <div class="col-sm-2">
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.IsActive)
+                        </label>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.KonapoFund.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.KonapoFund.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="KonapoFundID" value="@Model.KonapoFundID" />
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="KonapoFund" asp-action="ViewKonapoFund" asp-route-id="@Model.KonapoFund.KonapoFundID">Cancel</a>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Category Items
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <!-- Nav tabs -->
+
+                    <ul class="nav nav-tabs">
+
+                        <li class="active">
+                            <a href="#FundCategory" data-toggle="tab">Categories</a>
+                        </li>
+
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade in active " id="FundCategory">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Information
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="dataTable_wrapper">
+                                    <table class="table table-striped table-bordered table-hover" id="calc">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Projected Cost</th>
+                                                <th>Form</th>
+                                                <th>Amount</th>
+                                                <th>Capture</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.KonapoFundCTIs != null)
+                                            {
+
+                                                foreach (var item in Model.KonapoFundCTIs)
+                                                {
+                                                    <tr>
+                                                        <td><a asp-controller="FundItem" target="_blank" asp-action="ViewFundItem" asp-route-id="@item.FundCategoryItemID">@item.FundCategoryItem.FundItem.Name</a></td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ProjectedCost)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.FundSource.Name)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.KonapoAmount)</td>
+                                                        <td><a class="btn  btn-small btn-success" asp-controller="KonapoFund" target="_blank" asp-action="ViewKonapoFundItem" asp-route-id="@item.KonapoFundCTIID">Update</a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th style="text-align:right">Total Projected Cost:</th>
+                                                <th></th>
+                                                <th style="text-align:right">Total Amount:</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                @*<a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddFundCategory">Add Category</a>*@
+                            </div>
+                        </div>
+
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $('#calc').DataTable({
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                //var intVal = function (i) {
+                //    return typeof i === 'string' ?
+                //        i.replace(/[\$,]/g, '') / 100 :
+                //        typeof i === 'number' ?
+                //            i : 0;
+                //}
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+                // Total Amount over all pages
+                totalamount = api
+                    .column(3)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                // Total Amount over all pages
+                totalprojectedCost = api
+                    .column(1)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                // Total Amount  over this page
+                pageTotalAmount = api
+                    .column(3, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                pageProjectedCost = api
+                    .column(1, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                console.log("Total Amount");
+                console.log(totalamount);
+                console.log("Total Projected Amount");
+                console.log(pageProjectedCost);
+                pageTotalAmount = pageTotalAmount.toFixed(2);
+                totalamount = totalamount.toFixed(2);
+                pageProjectedCost = pageProjectedCost.toFixed(2);
+                totalprojectedCost = totalprojectedCost.toFixed(2);
+                // Update footer
+                $(api.column(3).footer()).html(
+                    '$' + pageTotalAmount + ' ( $' + totalamount + ' total)'
+                );
+
+                $(api.column(1).footer()).html(
+                    '$' + pageProjectedCost + ' ( $' + totalprojectedCost + ' total)'
+                );
+            }
+        });
+    });
+</script>

@@ -2,3 +2,31 @@ D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csprojAsse
 D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfoInputs.cache
 D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfo.cs
 D:\Dev Projects\SmartSave\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartMail.deps.json
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartMail.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartMail.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartDataAccess.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartDomain.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartExtensions.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartHelper.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartInterfaces.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartLog.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartLogic.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartReporting.dll
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartDomain.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartLogic.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartDataAccess.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartInterfaces.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartLog.pdb
+C:\DEV\SmartWealth\SmartMail\bin\Debug\netcoreapp3.1\SmartReporting.pdb
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CopyComplete
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.dll
+C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.pdb

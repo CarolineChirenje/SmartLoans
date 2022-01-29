@@ -11,11 +11,22 @@ namespace SmartDataAccess
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-          
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
+            modelBuilder.Entity(typeof(KonapoFundCT))
+                 .HasOne(typeof(KonapoFund), "KonapoFund")
+                 .WithMany()
+                 .HasForeignKey("KonapoFundID")
+                 .OnDelete(DeleteBehavior.NoAction); // no ON DELETE
+
+            modelBuilder.Entity(typeof(KonapoFundCTI))
+                 .HasOne(typeof(KonapoFundCT), "KonapoFundCT")
+                 .WithMany()
+                 .HasForeignKey("KonapoFundCTID")
+                 .OnDelete(DeleteBehavior.NoAction); // no ON DELETE
             modelBuilder.Entity<UserRole>().HasKey(sc => new { sc.UserID, sc.RoleID });
 
             //System Roles
@@ -56,7 +67,7 @@ namespace SmartDataAccess
             //   relationship types
             modelBuilder.Entity<RelationshipType>().HasData(
              Data.GetRelationshipTypes());
-                    
+
             //   custom variable types
             modelBuilder.Entity<CustomVariableType>().HasData(
            Data.GetCustomVariableTypes());
@@ -141,12 +152,14 @@ namespace SmartDataAccess
             modelBuilder.Entity<LayoutMenu>().HasData(
            LayoutData.GetLayoutMenus());
 
-          
             modelBuilder.Entity<DeductionType>().HasData(
           Data.GetDeductionTypes());
             modelBuilder.Entity<TechnicalSupport>().HasData(
            Data.GetSupportInformation());
-            
+            modelBuilder.Entity<FundSource>().HasData(
+          Data.GetFundSources());
+
+
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -211,10 +224,10 @@ namespace SmartDataAccess
         public DbSet<Titles> Titles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<CustomVariableType> VariableTypes { get; set; }
-               public DbSet<CustomSetting> CustomSettings { get; set; }
+        public DbSet<CustomSetting> CustomSettings { get; set; }
         public DbSet<Maintanance> Maintanances { get; set; }
         public DbSet<Licence> Licences { get; set; }
-               public DbSet<TechnicalSupport> TechnicalSupports { get; set; }
+        public DbSet<TechnicalSupport> TechnicalSupports { get; set; }
         public DbSet<ErrorLog> ErrorLogging { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<DocumentFormat> DocumentFormats { get; set; }
@@ -231,8 +244,18 @@ namespace SmartDataAccess
         public DbSet<Layout> Layouts { get; set; }
         public DbSet<LayoutMenu> LayoutMenus { get; set; }
         public DbSet<UserAccessRestriction> UserAccessRestrictions { get; set; }
-        
 
+
+        public DbSet<Fund> Funds { get; set; }
+        public DbSet<FundItem> FundItems { get; set; }
+        public DbSet<FundCategory> FundCategories { get; set; }
+        public DbSet<FundCategoryItem> FundCategoryItems { get; set; }
+        public DbSet<FundSource> FundSources { get; set; }
+        public DbSet<KonapoFund> KonapoFunds { get; set; }
+        public DbSet<KonapoFundCT> KonapoFundCTs { get; set; }
+        public DbSet<KonapoFundCTI> KonapoFundCTIs { get; set; }
+        public DbSet<KonapoFundReport> KonapoFundReports { get; set; }
+        public DbSet<KonapoFundCTIHistory> KonapoFundCTIHistories { get; set; }
         // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
         // Script-Migration -From 20180904195021_InitialCreate
     }

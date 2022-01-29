@@ -1,0 +1,138 @@
+﻿
+@model SmartDomain.KonapoFundCTI;
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+        Konapo Fund
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+            <h3 class="box-title">@Model.KonapoFundCT.KonapoFund.FundDetails</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="/KonapoFund/ViewKonapoFundItem">
+
+            @if (TempData["Error"] != null)
+            {<div class="container">
+                    <div class="text-danger">@TempData["Error"].ToString()</div>
+                </div>
+                <br />
+            }
+            <div class="container">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
+
+            @if (TempData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@TempData["Success"].ToString()</div>
+                </div>
+            }
+            @if (TempData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@TempData["Warning"].ToString()</div>
+                </div>
+            }
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Category</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.FundCategoryItem?.FundCategory?.Name</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Item</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.FundCategoryItem?.FundItem?.Name</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="FundSourceID" class="col-sm-2 control-label">Fund Source</label>
+                    <div class="col-sm-10">
+                        <select asp-for="FundSourceID" class="form-control"
+                                asp-items="ViewBag.FundSourceList">
+                            <option>----</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Projected Cost</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="ProjectedCostAmount" name="ProjectedCostAmount" value="0.00" onchange="CalculateTotal()">
+                        <span id="ProjectedCostError" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Amount</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="AmountProvided" name="AmountProvided" value="0.00" onchange="CalculateTotal()">
+                        <span id="AmountProvidedError" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="KonapoFundCTIID" value="@Model.KonapoFundCTIID" />
+                <input type="hidden" name="KonapoFundCTID" value="@Model.KonapoFundCTID" />
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="KonapoFund" asp-action="ViewKopanoFundCategory" asp-route-id="@Model.KonapoFundCTID">Cancel</a>
+                @if (UtilityService.HasPermission(Permissions.Add_Fund_Item))
+                {
+                    <button type="submit" class="btn btn-info pull-right">
+                        Process
+                    </button>}
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+
+</section>
+<script>
+
+    $(document).ready(function () {
+    });
+
+    $(function () {
+        validateDecimalInput('#ProjectedCostAmount');
+        validateDecimalInput('#AmountProvided');
+
+    })
+    function validateDecimalInput(control) {
+
+        let controlError = control.concat('Error');
+        //console.log(controlError)
+        $(control).blur(function () {
+            var tempVal = $(control).val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $(controlError).text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $(controlError).text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+    }
+</script>

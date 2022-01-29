@@ -30,7 +30,7 @@ namespace SmartLogic
                     _context.Courses.Remove(Course);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    Course.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    Course.IsActive = DatabaseAction.Deactivate != action;
                     Course.LastChangedBy = UtilityService.CurrentUserName;
                     Course.LastChangedDate = DateTime.Now;
                     _context.Update(Course);
@@ -172,7 +172,7 @@ namespace SmartLogic
                     _context.CourseTopics.Remove(outline);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    outline.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    outline.IsActive = DatabaseAction.Deactivate != action;
                     outline.LastChangedBy = UtilityService.CurrentUserName;
                     outline.LastChangedDate = DateTime.Now;
                     _context.Update(outline);
@@ -260,7 +260,7 @@ namespace SmartLogic
                     _context.CourseSessions.Remove(session);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    session.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    session.IsActive = DatabaseAction.Deactivate != action;
                     session.LastChangedBy = UtilityService.CurrentUserName;
                     session.LastChangedDate = DateTime.Now;
                     _context.Update(session);
@@ -401,16 +401,18 @@ namespace SmartLogic
             try
             {
                 //Fee History
-                CourseFeeHistory feeHistory = new CourseFeeHistory();
-                feeHistory.Amount = courseFee.Amount;
-                feeHistory.Description = courseFee.Description;
-                feeHistory.IsActive = courseFee.IsActive;
-                feeHistory.FrequencyID = courseFee.FrequencyID;
-                feeHistory.Name = courseFee.Name;
-                feeHistory.CourseID = courseFee.CourseID;
-                feeHistory.CourseFeeID = courseFee.CourseFeeID;
-                feeHistory.LastChangedBy = courseFee.LastChangedBy;
-                feeHistory.LastChangedDate = courseFee.LastChangedDate;
+                CourseFeeHistory feeHistory = new CourseFeeHistory
+                {
+                    Amount = courseFee.Amount,
+                    Description = courseFee.Description,
+                    IsActive = courseFee.IsActive,
+                    FrequencyID = courseFee.FrequencyID,
+                    Name = courseFee.Name,
+                    CourseID = courseFee.CourseID,
+                    CourseFeeID = courseFee.CourseFeeID,
+                    LastChangedBy = courseFee.LastChangedBy,
+                    LastChangedDate = courseFee.LastChangedDate
+                };
                 _context.Add(feeHistory);
             }
             catch (Exception ex)
@@ -454,7 +456,7 @@ namespace SmartLogic
                     _context.CourseIntakes.Remove(intake);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    intake.IsActive = DatabaseAction.Deactivate == action ? false : true;
+                    intake.IsActive = DatabaseAction.Deactivate != action;
                     intake.LastChangedBy = UtilityService.CurrentUserName;
                     intake.LastChangedDate = DateTime.Now;
                     _context.Update(intake);
@@ -574,11 +576,13 @@ namespace SmartLogic
             {
                 int result = 0;
                 // Create Attendace Register Record
-                AttendanceRegister attendanceRegister = new AttendanceRegister();
-                attendanceRegister.AttendanceDate = courseIntake.AttendanceDate.ToString("yyyy-MMM-dd");
-                attendanceRegister.RequestedBy = UtilityService.CurrentUserName;
-                attendanceRegister.CourseIntakeID = courseIntake.CourseIntakeID;
-                attendanceRegister.LastChangedBy = UtilityService.CurrentUserName;
+                AttendanceRegister attendanceRegister = new AttendanceRegister
+                {
+                    AttendanceDate = courseIntake.AttendanceDate.ToString("yyyy-MMM-dd"),
+                    RequestedBy = UtilityService.CurrentUserName,
+                    CourseIntakeID = courseIntake.CourseIntakeID,
+                    LastChangedBy = UtilityService.CurrentUserName
+                };
                 if (courseIntake.CourseTopic > 0)
                     attendanceRegister.CourseTopicID = courseIntake.CourseTopic;
                 attendanceRegister.LastChangedDate = DateTime.Now;

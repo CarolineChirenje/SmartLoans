@@ -19,3 +19,25 @@ D:\Dev Projects\SmartSave\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.
 D:\Dev Projects\SmartSave\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.csproj.CopyComplete
 D:\Dev Projects\SmartSave\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.dll
 D:\Dev Projects\SmartSave\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.pdb
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartReporting.deps.json
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartReporting.dll
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartReporting.pdb
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartDomain.dll
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartHelper.dll
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartInterfaces.dll
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartLog.dll
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartDomain.pdb
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartLog.pdb
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartInterfaces.pdb
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.0\SmartHelper.dll.config
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.Resource.resources
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.csproj.GenerateResource.cache
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.csproj.CopyComplete
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.dll
+C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.0\SmartReporting.pdb

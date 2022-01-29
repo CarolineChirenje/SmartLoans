@@ -5,11 +5,12 @@ using System.Text;
 
 namespace SmartDomain
 {
-  public  class Frequency:ChangeAudit
+    public class Frequency : ChangeAudit
     {
         [Key]
         public int FrequencyID { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
     }
+   
 }

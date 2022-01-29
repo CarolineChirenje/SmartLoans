@@ -15,77 +15,55 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+<div class="modal-body">
+    <div class="form-group">
+        <div class="dataTable_wrapper">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
 
+                <tr>
+                    @{
+                        int cnt = 0;
 
-@if (Model != null)
-{
-
-    IEnumerable<SmartDomain.NoticeBoard> notices = ViewBag.Notices as IEnumerable<SmartDomain.NoticeBoard>;
-
-    int? noticesCount = notices?.Count();
-    int take = 3;
-    @if (!noticesCount.HasValue)
-    {
-        return;
-    }
-    @if (noticesCount == 0)
-    {
-        return;
-    }
-    @if (noticesCount == 1)
-    {
-        take = 1;
-    }
-    @for (int count = 0; count < notices.Count(); count += take)
-    {
-        var subItems = notices.Skip(count).Take(take).ToList();
-
-
-        int subCount = 0;
-        @foreach (var item in subItems)
-        {
-            @if (count % 1 == 0)
-            {
-                
-                <!-- /.row -->
-                <div class="row">
-                    <div class="col-lg-4">
-                      
-                            <div class="@UtilityService.GetPanelColor(count)">
-                                <div class="panel-heading">
-                                    <a asp-controller="NoticeBoard" asp-action="ViewNotice" asp-route-id="@item.NoticeID">@item.Title</a>
+                        @foreach (var item in Model)
+                        {
+                            if (cnt++ % 3 == 0)
+                            {
+                            @:</tr><tr>
+                            }
+                            @:<td>
+                                <div class="@UtilityService.GetPanelColor(cnt)">
+                                    <div class="panel-heading">
+                                        <a asp-controller="NoticeBoard" asp-action="ViewNotice" asp-route-id="@item.NoticeID">@item.Title</a>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p> @item.DetailsPreview  <a asp-controller="NoticeBoard" asp-action="ViewNotice" asp-route-id="@item.NoticeID">View More ...</a></p>
+                                    </div>
+                                    <div class="panel-footer">
+                                        @item.PriorityRank.Name
+                                    </div>
                                 </div>
-                                <div class="panel-body">
-                                    <p> @item.Details</p>
-                                </div>
-                                <div class="panel-footer">
-                                    @item.PriorityRank.Name
-                                </div>
-                            </div>
-                        </div>
-                 
-                   @if (count % 2 == 0)
-                    {
-                       
-                        <div class="col-lg-4">
-                            <div class="panel panel-warning">
-                                <div class="panel-heading">
-                                    <a asp-controller="NoticeBoard" asp-action="ViewNotice" asp-route-id="@item.NoticeID">@item.Title</a>
-                                </div>
-                                <div class="panel-body">
-                                    <p> @item.Details</p>
-                                </div>
-                                <div class="panel-footer">
-                                    @item.PriorityRank.Name
-                                </div>
-                            </div>
-                        </div>
+                                @:</td>
+                        }
+                    @:</tr>
                     }
-                    @if (count % 3 == 0)
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    @*@if (Model != null)
+        {
+            int cnt = 0;
+            <div class="row">
+                <div class="col-lg-4">
+                    @foreach (var item in Model)
                     {
-                        subCount++;
-                        <div class="col-lg-4">
-                            <div class="panel panel-danger">
+                        if (cnt++ % 2 == 0)
+                        {
+
+
+                            <div class="@UtilityService.GetPanelColor(cnt)">
                                 <div class="panel-heading">
                                     <a asp-controller="NoticeBoard" asp-action="ViewNotice" asp-route-id="@item.NoticeID">@item.Title</a>
                                 </div>
@@ -96,13 +74,10 @@
                                     @item.PriorityRank.Name
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
                 </div>
-                count +=  take;
-            }
-        }
-    }
-}
+            </div>
 
+        }*@
 

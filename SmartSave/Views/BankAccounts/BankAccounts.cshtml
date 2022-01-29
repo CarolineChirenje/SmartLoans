@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    <a class="btn btn-default" asp-controller="CustomSettings" asp-action="Dashboard">Cancel</a>
                     @if (UtilityService.HasPermission(Permissions.Add_Bank_Account))
                     {
                         <a class="btn btn-success pull-right" asp-controller="BankAccounts" asp-action="AddBankAccount">New</a><br />

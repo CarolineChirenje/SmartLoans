@@ -21,7 +21,7 @@ namespace SmartSave.Controllers
             _service = service;
             _settingService = settingService;
         }
-
+        public IActionResult Dashboard() => View();
         public async Task<IActionResult> CustomSettings()
         {
             List<CustomSetting> customSettings = await _service.CustomSettings();

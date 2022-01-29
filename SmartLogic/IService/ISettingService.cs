@@ -17,6 +17,7 @@ namespace SmartLogic
         List<Gender> GenderList();
         List<Product> GetActiveProductList();
         List<TransactionType> GetActiveTransactionTypeList();
+        List<FundSource> GetActiveFundSource();
         List<Course> GetActiveCourseList();
         Product FindProduct(int productid);
         Company FindDefaultCompany();

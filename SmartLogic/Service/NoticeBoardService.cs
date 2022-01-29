@@ -60,7 +60,7 @@ namespace SmartLogic
 
                 return await _context.NoticeBoard
             .Include(x => x.PriorityRank)
-            .Where(n => n.IsActive && n.EndDate.Date < DateTime.Now.AddDays(8).Date)
+            .Where(n => n.IsActive && n.EndDate>=DateTime.Now)
             .AsNoTracking()
             .ToListAsync();
             }
@@ -124,10 +124,18 @@ namespace SmartLogic
         {
             try
             {
-
-                NoticeBoard.LastChangedBy = UtilityService.CurrentUserName;
-                NoticeBoard.LastChangedDate = DateTime.Now;
-                _context.Update(NoticeBoard);
+                var nb = _context.NoticeBoard.Find(NoticeBoard.NoticeID);
+                if (UtilityService.IsNull(nb))
+                    return 0;
+                nb.Title = NoticeBoard.Title;
+                nb.Details = NoticeBoard.Details;
+                nb.PriorityRankID = NoticeBoard.PriorityRankID;
+                nb.StartDate = NoticeBoard.StartDate;
+                nb.EndDate = NoticeBoard.EndDate;
+                nb.IsActive = NoticeBoard.IsActive;
+                nb.LastChangedBy = UtilityService.CurrentUserName;
+                nb.LastChangedDate = DateTime.Now;
+                _context.Update(nb);
                 return await _context.SaveChangesAsync();
             }
             catch (Exception ex)

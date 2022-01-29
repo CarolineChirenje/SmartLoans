@@ -133,9 +133,11 @@ namespace SmartSave.Controllers
                                     };
 
                                     attachments.Add(attachment);
-                                    Email email = new Email();
-                                    email.To = statement.EmailAddress;
-                                    email.AttachmentFromMemory = attachments;
+                                    Email email = new Email
+                                    {
+                                        To = statement.EmailAddress,
+                                        AttachmentFromMemory = attachments
+                                    };
                                     if (UtilityService.IsNotNull(emailTemplate))
                                     {
                                         email.Body = emailTemplate.Body;
@@ -234,8 +236,10 @@ namespace SmartSave.Controllers
                 try
                 {
                     Document document = printOut.Print(transaction);
-                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                    pdfRenderer.Document = document;
+                    PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
+                    {
+                        Document = document
+                    };
                     pdfRenderer.RenderDocument();
                     if (UtilityService.StatementPasswordProtect && passwordProtect)
                     {
@@ -327,7 +331,7 @@ namespace SmartSave.Controllers
         {
             HttpContext.Session.SetString("InvoiceID", id.ToString());
             var deductions = _service.GetInvoiceDetail(id);
-            deductions.InvoiceTitle = $"Invoice Entries for Invoice Number - {id.ToString()}";
+            deductions.InvoiceTitle = $"Invoice Entries for Invoice Number - {id}";
             return View(deductions);
         }
         [HttpPost]
@@ -350,7 +354,7 @@ namespace SmartSave.Controllers
                     {
                         clientDeductionID = Convert.ToInt32(HttpContext.Session.GetString("InvoiceID"));
                     }
-                    catch (Exception ex)
+                    catch
                     {
                     }
                     TempData[MessageDisplayType.Success.ToString()] = $"{clientDeductionsDetails.Count()} removed successfully";
@@ -426,7 +430,7 @@ namespace SmartSave.Controllers
             {
                 invoiceID = _service.ProcessInvoice(clientProductID, invoiceID);
                 var invoiceDetails = _service.GetInvoiceDetails(clientProductID, invoice.InvoiceDate).Result;
-                TempData["Title"] = $"Invoice Entries for Invoice Number - {invoiceID.ToString()}";
+                TempData["Title"] = $"Invoice Entries for Invoice Number - {invoiceID}";
 
                 return View(invoiceDetails);
             }
@@ -442,24 +446,22 @@ namespace SmartSave.Controllers
                 {
                     id = Convert.ToInt32(HttpContext.Session.GetString("InvoiceID"));
                 }
-                catch (Exception ex)
+                catch
                 {
                 }
             }
             Company company = _settingService.FindDefaultCompany();
             Invoice clientDeduction = _service.GetInvoice(id);
             SmartReporting.InvoiceSchedule printOut = new SmartReporting.InvoiceSchedule();
-            using (MemoryStream stream = new MemoryStream())
+            using MemoryStream stream = new MemoryStream();
+            Document document = printOut.Print(company, clientDeduction);
+            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
             {
-                Document document = printOut.Print(company, clientDeduction);
-                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
-                {
-                    Document = document
-                };
-                pdfRenderer.RenderDocument();
-                pdfRenderer.PdfDocument.Save(stream, false);
-                return File(stream.ToArray(), "application/pdf", $"SalarySchedule.pdf");
-            }
+                Document = document
+            };
+            pdfRenderer.RenderDocument();
+            pdfRenderer.PdfDocument.Save(stream, false);
+            return File(stream.ToArray(), "application/pdf", $"SalarySchedule.pdf");
         }
 
 
@@ -503,15 +505,15 @@ namespace SmartSave.Controllers
             }
             Company company = _settingService.FindDefaultCompany();
             InvoiceSchedule printOut = new InvoiceSchedule();
-            using (MemoryStream stream = new MemoryStream())
+            using MemoryStream stream = new MemoryStream();
+            Document document = printOut.Print(company, invoice);
+            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
             {
-                Document document = printOut.Print(company, invoice);
-                PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-                pdfRenderer.Document = document;
-                pdfRenderer.RenderDocument();
-                pdfRenderer.PdfDocument.Save(stream, false);
-                return File(stream.ToArray(), "application/pdf", $"SalarySchedule.pdf");
-            }
+                Document = document
+            };
+            pdfRenderer.RenderDocument();
+            pdfRenderer.PdfDocument.Save(stream, false);
+            return File(stream.ToArray(), "application/pdf", $"SalarySchedule.pdf");
         }
         private void GetDropDownLists()
         {
@@ -629,11 +631,13 @@ namespace SmartSave.Controllers
                 assertCategories.Select(t => new
                 {
                     t.AssertCategoryID,
-                    Name = t.Name,
+                   t.Name,
                 }).OrderBy(t => t.Name);
                 categoryList = new SelectList(assertCategories, "AssertCategoryID", "Name");
             }
             return Json(categoryList);
         }
+
+     
     }
 }

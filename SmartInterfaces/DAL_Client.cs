@@ -144,6 +144,60 @@ namespace SmartInterfaces
         public List<ContactList> ContactLists { get; set; }
     }
 
+    public class ClientKonapoFunds
+    {
+        public int ClientID { get; set; }
+                public List<KonapoFund> KonapoFunds { get; set; }
+    }
+
+    public class ClientKonapoFundCalculation
+    {
+        public int ClientID { get; set; }
+        public int FundID { get; set; }
+        public int KonapoFundID { get; set; }
+        public string KonapoRef { get; set; }
+       public bool IsActive { get; set; }
+        
+        public string FundName { get; set; }
+        public string ClientRef { get; set; }
+        public KonapoFund KonapoFund { get; set; }
+        public decimal KhonapoFundAmount { get; set; }
+        public List<KonapoFundCT> KonapoFundCTs { get; set; }
+        public List<CategoryAmount> CategoryAmount { get; set; }
+
+        public List<KonapoFundReport> KonapoFundReport { get; set; }
+    }
+
+    public class CategoryAmount
+    {
+        public int CategoryID { get; set; }
+        public string Category { get; set; }
+        public decimal? TotalAmount { get; set; }
+    }
+        public class ClientKonapoFund
+    {
+        public int ClientID { get; set; }
+        public int FundID { get; set; }
+        public int KonapoFundID { get; set; }
+        public string KonapoRef { get; set; }
+        public KonapoFund KonapoFund { get; set; }
+        public List<KonapoFundCT> KonapoFundCTs { get; set; }
+    }
+
+    public class ClientKonapoFundItems
+    {
+        public int ClientID { get; set; }
+        public int FundID { get; set; }
+        public int KonapoFundID { get; set; }
+        public string CategoryName { get; set; }
+        public int CategoryID { get; set; }
+        public string KonapoRef { get; set; }
+        public string FundDetails { get; set; }
+        
+        public bool IsActive { get; set; }
+        public KonapoFund KonapoFund { get; set; }
+        public List<KonapoFundCTI> KonapoFundCTIs { get; set; }
+    }
     public class ContactList
     {
         public int ClientID { get; set; }

@@ -51,6 +51,8 @@ namespace SmartDomain
         public virtual List<InvoiceDetails> InvoiceDetails { get; set; }
         public List<AttendanceRegisterDetail> AttendanceRegister { get; set; }
         public virtual List<ClientOccupationHistory> ClientOccupationHistory { get; set; }
+
+        public List<KonapoFund> KonapoFunds { get; set; }
         [NotMapped]
         public bool IsJointAccount { get { return ClientAccountTypeID == (int)Client_AccountType.Joint; } }
         [NotMapped]

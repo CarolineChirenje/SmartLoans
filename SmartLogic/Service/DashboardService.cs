@@ -32,6 +32,20 @@ namespace SmartLogic
                 throw;
             }
         }
+        
+          public int GetNewKhonapoFunds()
+        {
+            try
+            {
+
+                return _context.KonapoFunds.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).Count();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
 
         public int GetNewClientRegistrations()
@@ -65,9 +79,9 @@ namespace SmartLogic
         {
             try
             {
-            return _context.NoticeBoard.
-            Where(r =>
-               r.IsActive && (r.StartDate.Date > DateTime.Now.AddDays(-8).Date && r.EndDate.Date < DateTime.Now.AddDays(8).Date)).Count();
+                  return _context.NoticeBoard.
+                           Where(r =>
+                              r.IsActive && (r.EndDate >= DateTime.Now)).Count();
 
             }
             catch (Exception ex)

@@ -1,6 +1,0 @@
-2021-05-18 16:23:00:75 :Mail : System.TimeoutException: The operation has timed out.
-   at MailKit.Net.SocketUtils.ConnectAsync(String host, Int32 port, IPEndPoint localEndPoint, Int32 timeout, Boolean doAsync, CancellationToken cancellationToken)
-   at MailKit.MailService.ConnectSocket(String host, Int32 port, Boolean doAsync, CancellationToken cancellationToken)
-   at MailKit.Net.Smtp.SmtpClient.ConnectAsync(String host, Int32 port, SecureSocketOptions options, Boolean doAsync, CancellationToken cancellationToken)
-   at MailKit.Net.Smtp.SmtpClient.Connect(String host, Int32 port, SecureSocketOptions options, CancellationToken cancellationToken)
-   at SmartMail.MailService.SendMail(Email email, Boolean sendAsync) in D:\Dev Projects\SmartSave\SmartMail\MailService.cs:line 136
