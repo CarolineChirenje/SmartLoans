@@ -64,7 +64,8 @@ namespace SmartInterfaces
         public string KonapoFundReportID { get; set; }
 
         public bool SavePrintedReport { get; set; }
-        
+
+        public string QRCodeURL { get; set; }
         public ClientForm Client { get; set; }
 
         public DataTable Transactions { get; set; }

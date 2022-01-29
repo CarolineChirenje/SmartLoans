@@ -429,6 +429,7 @@ namespace SmartLogic
                 KonapoFundReport konareport = _context.KonapoFundReports.Find(konapoFundReport.KonapoFundReportID);
                 if (UtilityService.IsNotNull(konareport))
                 {
+                    konareport.QRCodeURL = konapoFundReport.QRCodeURL;
                     konareport.Report = konapoFundReport.Report;
                     konareport.LastChangedBy = UtilityService.CurrentUserName;
                     konareport.LastChangedDate = DateTime.Now;
@@ -452,8 +453,8 @@ namespace SmartLogic
                 konapoFundReport.LastChangedBy = UtilityService.CurrentUserName;
                 konapoFundReport.LastChangedDate = DateTime.Now;
                 _context.Add(konapoFundReport);
-                int result = await _context.SaveChangesAsync();
-                return result;
+                 await _context.SaveChangesAsync();
+                return konapoFundReport.KonapoFundReportID;
             }
             catch (Exception ex)
             {

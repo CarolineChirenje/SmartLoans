@@ -9878,6 +9878,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Componen
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\DeveloperMenuList\DeveloperMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\KhonapoMenuList\KhonapoMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\MenuList\MainMenu.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\NoMenuList\BlankMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\ReportingMenuList\ReportingMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\SettingsMenuList\SettingsMenu.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
@@ -9913,4 +9914,3 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.csproj.CopyComple
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.genruntimeconfig.cache
-C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\NoMenuList\BlankMenu.cshtml.g.cs

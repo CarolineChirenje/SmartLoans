@@ -201,18 +201,28 @@ namespace SmartSave.Controllers
                         report.Transactions = Reports.MonthlyBreakdown(KonapoFundID);
 
                         string filename = report.FundReference;
-                        KonapoFundReport khonapoFundReport = new SmartDomain.KonapoFundReport()
+
+                        int khonapoReportID = 0;
+                        KonapoFundReport khonapoFundReport = new KonapoFundReport()
                         {
                             JsonData = report.SerializetoJSON().ToString(),
                             KonapoFundID = KonapoFundID,
-                            FileName = filename
+                            FileName = filename,
                         };
-                        int khonapoReportID = 0;
                         if (report.SavePrintedReport)
+                        {
                             khonapoReportID = _service.Save(khonapoFundReport).Result;
+                            report.KonapoFundReportID = khonapoReportID.ToString();
+                            khonapoFundReport.KonapoFundReportID = khonapoReportID;
+                            string url = String.IsNullOrEmpty(report.CurrentURL) ? UtilityService.SiteURL : report.CurrentURL;
+                            string qrCodeReportUrl = $"{url}/KonapoFund/Verify/{khonapoFundReport.KonapoFundReportID}";
+                            report.QRCodeURL = qrCodeReportUrl;
+                            khonapoFundReport.QRCodeURL = qrCodeReportUrl;
+                        }
+
                         if (khonapoReportID > 0 || !report.SavePrintedReport)
                         {
-                            report.KonapoFundReportID = khonapoReportID.ToString();
+
                             byte[] pdfFile = GenerateKhonapoReport(report);
                             if (pdfFile != null)
                             {

@@ -558,9 +558,7 @@ namespace SmartReporting
             try
             {
 
-                string url = String.IsNullOrEmpty(_statement.CurrentURL) ? UtilityService.SiteURL : _statement.CurrentURL;
-                string viewReportUrl = $"{url}/KonapoFund/Verify/{_statement.KonapoFundReportID}";
-                var qrcode = Reports.GenerateQRCode(viewReportUrl);
+               var qrcode = Reports.GenerateQRCode(_statement.QRCodeURL);
                 if (qrcode != null)
                 {
                     var imageSource = FromBinary("qrcode.png", () => qrcode,100);
