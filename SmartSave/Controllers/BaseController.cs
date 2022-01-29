@@ -21,6 +21,13 @@ namespace SmartSave.Controllers
         {
             try
             {
+                var actionDescriptor = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)filterContext.ActionDescriptor);
+                string controllerName = actionDescriptor.ControllerName;
+                string ActionName = actionDescriptor.ActionName;
+                var userNotFoundAttribute = actionDescriptor.EndpointMetadata.OfType<OverrideUserNotFoundFilter>();
+                if (userNotFoundAttribute.Any())
+                    UtilityService.CanOverrideUserNotFound = true;
+
                 var maintananceMode = GetData.MaintananceMode();
                 var licenceMode = GetData.LicenceMode();
                 if (UtilityService.IsNotNull(maintananceMode) && !UtilityService.CanOverrideMaintananceMode)
@@ -41,24 +48,28 @@ namespace SmartSave.Controllers
                 }
                 else
                 {
-                    if (UtilityService.IsNull(UtilityService.CurrentUserName))
+                    if (UtilityService.IsNull(UtilityService.CurrentUserName) && !UtilityService.CanOverrideUserNotFound)
                     {
                         filterContext.Result = new RedirectToRouteResult(
-       new RouteValueDictionary {
+                          new RouteValueDictionary {
                                 { "Controller", "Login" },
                                 { "Action", "UserNotFound" }
                    });
                     }
                 }
+                if (!UtilityService.CanOverrideUserNotFound)
+                {
 
-                var actionDescriptor = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)filterContext.ActionDescriptor);
-                string controllerName = actionDescriptor.ControllerName;
-                string ActionName = actionDescriptor.ActionName;
-                var attributes = actionDescriptor.EndpointMetadata.OfType<OverrideMenuComponentFilter>();
-                if (attributes.Any())
-                    UtilityService.MenuComponent = Menu_Component.MenuList;
+                    var attributes = actionDescriptor.EndpointMetadata.OfType<OverrideMenuComponentFilter>();
+                    if (attributes.Any())
+                        UtilityService.MenuComponent = Menu_Component.MenuList;
+                    else
+                        UtilityService.MenuComponent = GetMenuComponent(controllerName);
+                }
                 else
-                    UtilityService.MenuComponent = GetMenuComponent(controllerName);
+                {
+                    UtilityService.MenuComponent = Menu_Component.NoMenuList;
+                }
             }
             catch (Exception ex)
             {

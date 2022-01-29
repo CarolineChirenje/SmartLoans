@@ -1,0 +1,52 @@
+﻿@model SmartInterfaces.KhonapoReportVerification;
+@using SmartHelper;
+@{
+    Layout = "_LayoutNoMenu";
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div id="layoutError_content">
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    @if (Model.Verified)
+                    {
+                        <div class="text-center mt-4">
+                            <h1 class="display-1 text-success text-bold">Congratulations!</h1>
+                            <center>
+                                <button type="button" class="btn btn-success">Verification Successful <span class="badge"><i class="fa fa-thumbs-o-up"></i></span></button>
+                                <p class="lead">
+                                    Verification process completed successfully.<br />
+                                    This report was generated on the <b>@Model.PrintDate</b>.
+                                    To get a copy of the report please click the button below.
+                                </p>
+                                <a class="btn btn-success" asp-controller="KonapoFund" asp-action="ReprintKhonapoReport" asp-route-id="@Model.KhonapoReportID">Download</a>
+                            </center>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center mt-4">
+                            <h1 class="display-1 text-danger text-bold">Oops</h1>
+                            <button type="button" class="btn btn-danger">Verification Failed <span class="badge"><i class="fa fa-thumbs-o-down"></i></span></button>
+                            <center>
+                                <p class="lead">
+                                    We failed to verify your report.<br />
+                                    For any enquiry, please email <b>@UtilityService.CustomerServiceEmail</b> , or call <a href="@UtilityService.WhatappSendMessageLink" style="text-decoration: none;" target="_blank"><img src="~/dist/img/Whatsapp.png" class="user-image" alt="Link to Send Message on Whatsapp" width="25" height="25" /></a> @UtilityService.ApplicationName customer service  at <b>@UtilityService.CustomerServiceNumber</b>.<br /><br /> Regards,<br /><b>@UtilityService.ApplicationName Team</b>.
+                                </p>
+                            </center>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

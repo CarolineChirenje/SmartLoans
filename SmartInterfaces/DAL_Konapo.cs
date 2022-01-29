@@ -4,9 +4,15 @@ using System.Data;
 using System.Text;
 
 namespace SmartInterfaces
-
-
 {
+    public class KhonapoReportVerification
+    {
+        public int KonapoFundID { get; set; }
+        public int KhonapoReportID { get; set; }
+        public bool Verified { get; set; }
+        public string PrintDate { get; set; } = "Unknown";
+       
+    }
 
     public class KhonapoReport
     {

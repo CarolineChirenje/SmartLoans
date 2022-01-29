@@ -207,15 +207,16 @@ namespace SmartSave.Controllers
                             KonapoFundID = KonapoFundID,
                             FileName = filename
                         };
-                        int khonapoReportID=0;
-                         if (report.SavePrintedReport)
-                         khonapoReportID = _service.Save(khonapoFundReport).Result;
+                        int khonapoReportID = 0;
+                        if (report.SavePrintedReport)
+                            khonapoReportID = _service.Save(khonapoFundReport).Result;
                         if (khonapoReportID > 0 || !report.SavePrintedReport)
                         {
                             report.KonapoFundReportID = khonapoReportID.ToString();
                             byte[] pdfFile = GenerateKhonapoReport(report);
                             if (pdfFile != null)
-                            {   if (report.SavePrintedReport)
+                            {
+                                if (report.SavePrintedReport)
                                 {
                                     khonapoFundReport.Report = pdfFile;
                                     _service.Update(khonapoFundReport);
@@ -241,6 +242,7 @@ namespace SmartSave.Controllers
             }
 
         }
+        [OverrideUserNotFoundFilter]
         public ActionResult ReprintKhonapoReport(int id)
         {
             try
@@ -270,6 +272,21 @@ namespace SmartSave.Controllers
                 return RedirectToAction(nameof(KonapoFunds));
             }
 
+        }
+
+        [OverrideUserNotFoundFilter]
+        public ActionResult Verify(int id)
+        {
+            var report = _service.FindKonapoReport(id).Result;
+            KhonapoReportVerification result = new KhonapoReportVerification();
+            if (report != null)
+            {
+                result.KhonapoReportID = report.KonapoFundReportID;
+                result.KonapoFundID = report.KonapoFundID;
+                result.Verified = true;
+                result.PrintDate = UtilityService.ShowDateTime(report.LastChangedDate);
+            }
+            return View(result);
         }
         private byte[] GenerateKhonapoReport(KhonapoReport statement)
         {

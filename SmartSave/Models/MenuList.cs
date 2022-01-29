@@ -73,4 +73,14 @@ namespace SmartSave
         }
     }
 
+    public class NoMenuListViewComponent : ViewComponent
+    {
+        //private readonly IMenuService _service;
+        //public NoMenuListViewComponent(IMenuService service) => _service = service;
+        public  IViewComponentResult Invoke()
+        {
+            return View("BlankMenu");
+        }
+    }
+
 }

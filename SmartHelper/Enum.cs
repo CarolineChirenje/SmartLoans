@@ -34,7 +34,9 @@ namespace SmartHelper
         KhonapoMenuList,
         DeveloperMenuList,
         SettingsMenuList,
-        ReportingMenuList
+        ReportingMenuList,
+        NoMenuList
+
     }
     public enum DaysOfTheWeek
     {

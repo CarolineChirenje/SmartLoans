@@ -608,6 +608,7 @@ namespace SmartHelper
         static string _currentFullName;
         static byte[] _userProfileImage;
         static bool _canOverrideMaintananceMode;
+        static bool _canOverrideUserNotFound;
         static int _ClientID;
         public static int CurrentUserTypeID;
         static Menu_Component _component;
@@ -671,6 +672,18 @@ namespace SmartHelper
             set
             {
                 _canOverrideMaintananceMode = value;
+            }
+
+        }
+        public static bool CanOverrideUserNotFound
+        {
+            get
+            {
+                return _canOverrideUserNotFound;
+            }
+            set
+            {
+                _canOverrideUserNotFound = value;
             }
 
         }

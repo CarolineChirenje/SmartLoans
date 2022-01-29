@@ -559,7 +559,7 @@ namespace SmartReporting
             {
 
                 string url = String.IsNullOrEmpty(_statement.CurrentURL) ? UtilityService.SiteURL : _statement.CurrentURL;
-                string viewReportUrl = $"{url}/KonapoFund/ReprintKhonapoReport/{_statement.KonapoFundReportID}";
+                string viewReportUrl = $"{url}/KonapoFund/Verify/{_statement.KonapoFundReportID}";
                 var qrcode = Reports.GenerateQRCode(viewReportUrl);
                 if (qrcode != null)
                 {

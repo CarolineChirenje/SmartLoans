@@ -9832,6 +9832,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Home\UnAuthorizedAccess.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\KonapoFund\AddKonapoFund.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\KonapoFund\KonapoFunds.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\KonapoFund\Verify.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\KonapoFund\ViewKonapoFund.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\KonapoFund\ViewKonapoFundItem.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\KonapoFund\ViewKopanoFundCategory.cshtml.g.cs
@@ -9912,3 +9913,4 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.csproj.CopyComple
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.genruntimeconfig.cache
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\NoMenuList\BlankMenu.cshtml.g.cs
