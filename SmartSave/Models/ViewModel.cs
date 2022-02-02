@@ -161,4 +161,10 @@ namespace SmartSave.Models
         public string Name { get; set; }
     }
 
+    public class ConfirmCode
+    {
+        public string Code { get; set; }
+        public bool DoNotAskForTheDay { get; set; }
+    }
+
 }

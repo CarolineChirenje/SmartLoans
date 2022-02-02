@@ -9852,6 +9852,7 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Login\Login.csh
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Login\PasswordReset.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Login\RegisterAccount.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Login\UserNotFound.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Login\Verify.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Maintanance\AddMaintanance.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Maintanance\Maintanance.cshtml.g.cs
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Maintanance\MaintananceMode.cshtml.g.cs

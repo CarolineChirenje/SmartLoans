@@ -309,14 +309,14 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-                     new SmartDomain.CustomSetting()
+                new SmartDomain.CustomSetting()
                 {
-                    CustomSettingID = (int)AppSetting.Password_Reset_Pin_Code_Length,
-                    Name = AppSetting.Password_Reset_Pin_Code_Length.ToString().Replace("_", " "),
-                    Value="5",
-                    Description="Password Reset Pin Code Length",
+                    CustomSettingID = (int)AppSetting.Pin_Code_Length,
+                    Name = AppSetting.Pin_Code_Length.ToString().Replace("_", " "),
+                    Value="6",
+                    Description="Pin Code Length",
                     CustomVariableTypeID=(int)VariableType.Integer,
-                                     IsActive = true,
+                    IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
@@ -337,10 +337,10 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Site_URL,
                     Name = AppSetting.Site_URL.ToString().Replace("_", " "),
-                    Value=@"https://localhost:5001",
+                    Value=@"http://smartwealth.elroitec.com/",
                     Description="Site URL",
                     CustomVariableTypeID=(int)VariableType.String,
-                                     IsActive = true,
+                    IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
@@ -389,7 +389,7 @@ namespace SmartDataAccess
                     Value="1",
                     Description="Current System Environment Set it to 1 For Test Environment  or 2 for Production Environment if no value has been set System defaults to Test Environment ",
                     CustomVariableTypeID=(int)VariableType.Integer,
-                                     IsActive = true,
+                    IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 
@@ -501,6 +501,30 @@ namespace SmartDataAccess
                              IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Allow_Two_Factor_Authentication,
+                    Name = AppSetting.Allow_Two_Factor_Authentication.ToString().Replace("_", " "),
+                    Value="true",
+                    Description="Increases System Security by Allowing Users to Authenticate Themselves Twice",
+                    CustomVariableTypeID=(int)VariableType.Boolean,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
+                 new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Pass_Code_Validity_Period,
+                    Name = AppSetting.Pass_Code_Validity_Period.ToString().Replace("_", " "),
+                    Value="60",
+                    Description="Passcode Validity Period in Minutes",
+                    CustomVariableTypeID=(int)VariableType.Integer,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
                 },
                 };
 
@@ -1316,7 +1340,26 @@ namespace SmartDataAccess
                 {
                     FundSourceID = (int)x.ID,
                     Name = x.Name.ToString().Replace("_", " "),
-                    IsActive=true,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                });
+            }
+            return lists.ToArray();
+        }
+
+        public static PinCodeType[] GetPinCodeTypes()
+        {
+            List<PinCodeType> lists = new List<PinCodeType>();
+            var p = from CodeType s in Enum.GetValues(typeof(CodeType))
+                    select new { ID = s, Name = s.ToString() };
+            foreach (var x in p)
+            {
+                lists.Add(new PinCodeType()
+                {
+                    PinCodeTypeID = (int)x.ID,
+                    Name = x.Name.ToString().Replace("_", " "),
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
 

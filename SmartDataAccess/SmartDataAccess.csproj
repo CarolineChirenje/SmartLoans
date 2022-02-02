@@ -11,6 +11,12 @@
     <Compile Remove="Migrations\20220115075250_KopanoFundRefractoring.Designer.cs" />
     <Compile Remove="Migrations\20220116003055_RefractorTables.cs" />
     <Compile Remove="Migrations\20220116003055_RefractorTables.Designer.cs" />
+    <Compile Remove="Migrations\20220201225628_PinCodeTypes.cs" />
+    <Compile Remove="Migrations\20220201225628_PinCodeTypes.Designer.cs" />
+    <Compile Remove="Migrations\20220202035509_ForeignKeyInclusing.cs" />
+    <Compile Remove="Migrations\20220202035509_ForeignKeyInclusing.Designer.cs" />
+    <Compile Remove="Migrations\20220202041246_PinCodeTypes.cs" />
+    <Compile Remove="Migrations\20220202041246_PinCodeTypes.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

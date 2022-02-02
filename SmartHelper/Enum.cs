@@ -590,7 +590,7 @@ namespace SmartHelper
         Statement_Password_Protect,
         Statement_Password_For_Admin,
         Statement_Show_Table_Boarders,
-        Password_Reset_Pin_Code_Length,
+        Pin_Code_Length,
         Password_Reset_Pin_Validity,
         Site_URL,
         Site_Reset_Password_URL,
@@ -609,6 +609,8 @@ namespace SmartHelper
         Report_Body_Font_Size,
         Report_Footer_Font_Name,
         Report_Footer_Font_Size,
+        Allow_Two_Factor_Authentication,
+        Pass_Code_Validity_Period
 
     }
 
@@ -991,5 +993,12 @@ namespace SmartHelper
         Cash = 2,
         Not_Specified
     }
+
+    public enum CodeType
+    {
+        Password_Reset = 1,
+        Multi_Factor_Authenticator = 2,
+        Account_Creation
+      }
 }
 

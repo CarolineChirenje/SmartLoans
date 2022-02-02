@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartDomain;
+using SmartHelper;
 
 namespace SmartDataAccess
 {
@@ -120,7 +121,7 @@ namespace SmartDataAccess
            Data.GetEmailTemplates());
 
             //custom settings
-            modelBuilder.Entity<CustomSetting>().HasData(
+            modelBuilder.Entity<SmartDomain.CustomSetting>().HasData(
               Data.GetApplicationSettings());
 
             modelBuilder.Entity<RoleMenu>().HasData(
@@ -158,10 +159,16 @@ namespace SmartDataAccess
            Data.GetSupportInformation());
             modelBuilder.Entity<FundSource>().HasData(
           Data.GetFundSources());
+            modelBuilder.Entity<PinCodeType>().HasData(
+          Data.GetPinCodeTypes());
+            //modelBuilder.Entity<UserAuthenticationCode>()
+            // .Property(p => p.PinCodeTypeID)
+            // .HasDefaultValue((int)CodeType.Password_Reset);
 
 
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserAccessGrant> UserAccessGrants { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RecordStatus> RecordStatus { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
@@ -188,6 +195,7 @@ namespace SmartDataAccess
         public DbSet<ClientAccountType> ClientAccountTypes { get; set; }
         public DbSet<ClientGroup> ClientGroups { get; set; }
         public DbSet<UserAuthenticationCode> UserAuthenticationCodes { get; set; }
+        public DbSet<PinCodeType> PinCodeTypes { get; set; }
         public DbSet<ClientMedicalDetail> ClientMedicalDetails { get; set; }
         public DbSet<NoticeBoard> NoticeBoard { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -224,7 +232,7 @@ namespace SmartDataAccess
         public DbSet<Titles> Titles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<CustomVariableType> VariableTypes { get; set; }
-        public DbSet<CustomSetting> CustomSettings { get; set; }
+        public DbSet<SmartDomain.CustomSetting> CustomSettings { get; set; }
         public DbSet<Maintanance> Maintanances { get; set; }
         public DbSet<Licence> Licences { get; set; }
         public DbSet<TechnicalSupport> TechnicalSupports { get; set; }

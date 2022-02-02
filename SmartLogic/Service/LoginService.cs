@@ -20,16 +20,18 @@ namespace SmartLogic
 
         public LoginService(DatabaseContext context) => _context = context;
 
-        
+
 
         public async Task<User> Login(string username, string password)
         {
             try
             {
 
-                        string encryptedPassword = Encryption.Encrypt(password);
-            return await _context.Users.FirstOrDefaultAsync(u => u.EmailAddress == username &&
-             u.Password == encryptedPassword);
+                string encryptedPassword = Encryption.Encrypt(password);
+                return await _context.Users
+                .Include(u => u.UserAccessGrants)
+                .FirstOrDefaultAsync(u => u.EmailAddress.Equals(username)
+                 && u.Password.Equals(encryptedPassword));
 
             }
             catch (Exception ex)
@@ -54,8 +56,7 @@ namespace SmartLogic
         {
             try
             {
-
-                        return _context.UserAuthenticationCodes.Any(p => p.PinCode.Equals(pincode));
+                return _context.UserAuthenticationCodes.Any(p => p.PinCode.Equals(pincode));
             }
             catch (Exception ex)
             {
@@ -68,14 +69,12 @@ namespace SmartLogic
         {
             try
             {
+                string pincode = Encryption.Encrypt(UtilityService.GenerateRandomNumbers(UtilityService.PinCodeLength).ToString());
+                if (PinCodeExists(pincode))
+                    return GeneratePinCode();
 
-                        string pincode = Encryption.Encrypt(UtilityService.GenerateRandomNumbers(UtilityService.PinCodeLength).ToString());
-            
-            if (PinCodeExists(pincode))
-                return GeneratePinCode();
-
-            else
-                return pincode;
+                else
+                    return pincode;
             }
             catch (Exception ex)
             {
@@ -87,39 +86,48 @@ namespace SmartLogic
 
 
         #endregion PinCode
-        public async Task<string> ResetPassword(string emailaddress, string idnumber, bool isAccountCreation)
+
+        public AuthenticateResult GeneratePinCode(UserAuthenticate userAuthenticate)
         {
             try
             {
+                Client client = new Client();
+                User user = new User();
+                if (userAuthenticate.IsAccountCreation)
+                {
+                    client = _context.Clients.FirstOrDefault(u => u.EmailAddress.Equals(userAuthenticate.EmailAddress) && u.IDNumber.Equals(userAuthenticate.IDNumber));
+                    if (UtilityService.IsNull(client))
+                        return null;
+                }
+                else
+                {
+                    user = _context.Users.FirstOrDefault(u => u.EmailAddress.Equals(userAuthenticate.EmailAddress));
+                    if (UtilityService.IsNull(user))
+                        return null;
+                }
+                string encryptedPinCode = NewPinCode;
+                UserAuthenticationCode pin = new UserAuthenticationCode();
+                if (userAuthenticate.IsAccountCreation)
+                    pin.ClientID = client.ClientID;
+                else
+                    pin.UserID = user.UserID;
+                pin.DateRequested = DateTime.Now;
+                pin.PinCode = encryptedPinCode;
+                if (userAuthenticate.CodeType == CodeType.Multi_Factor_Authenticator)
+                    pin.ExpiryDate = pin.DateRequested.AddMinutes(UtilityService.PassCodeValidityPeriod);
+                else
+                    pin.ExpiryDate = pin.DateRequested.AddDays(UtilityService.PinCodeValidityPeriod);
 
-           
-            Client client=new Client();
-            User user = new User();
-            if (isAccountCreation) {
-                client = await _context.Clients.FirstOrDefaultAsync(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber));
-                if (UtilityService.IsNull(client))
-                    return "";
-            }
-            else
-            {
-          user  = await _context.Users.FirstOrDefaultAsync(u => u.EmailAddress.Equals(emailaddress));
-                if (UtilityService.IsNull(user))
-                    return "";
-            }
-            string encryptedPinCode = NewPinCode;
-            UserAuthenticationCode pin = new UserAuthenticationCode();
-             if( isAccountCreation)
-                pin.ClientID = client.ClientID;
-            else
-            pin.UserID = user.UserID;
-            pin.DateRequested = DateTime.Now;
-            pin.PinCode = encryptedPinCode;
-            pin.ExpiryDate = pin.DateRequested.AddDays(UtilityService.PinCodeValidityPeriod);
-            pin.IsAccountCreation = isAccountCreation;
-            _context.UserAuthenticationCodes.Add(pin);
-             await _context.SaveChangesAsync();
-
-            return encryptedPinCode;
+                pin.IsAccountCreation = userAuthenticate.IsAccountCreation;
+                pin.PinCodeTypeID = userAuthenticate.IsAccountCreation ? (int)CodeType.Account_Creation : (int)userAuthenticate.CodeType;
+                _context.UserAuthenticationCodes.Add(pin);
+                _context.SaveChanges();
+                AuthenticateResult result = new AuthenticateResult()
+                {
+                    ExpiryDate = pin.ExpiryDate,
+                    PinCode = pin.PinCode
+                };
+                return result;
             }
             catch (Exception ex)
             {
@@ -131,8 +139,8 @@ namespace SmartLogic
         {
             try
             {
-                        var user =await _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
-            return UtilityService.IsNotNull(user);
+                var user = await _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
+                return UtilityService.IsNotNull(user);
             }
             catch (Exception ex)
             {
@@ -141,43 +149,67 @@ namespace SmartLogic
             }
         }
 
-        public async Task<UserAuthenticationCode> ConfirmCode(string code, bool isAccountCreation)
+        public async Task<UserAuthenticationCode> ConfirmCode(UserAuthenticate userAuthenticate)
         {
             try
             {
-
-                       string encryptedPinCode = Encryption.Encrypt(code);
-            UserAuthenticationCode pinReset = await _context.UserAuthenticationCodes
-                        .FirstOrDefaultAsync(u => u.PinCode.Equals(encryptedPinCode) && u.IsAccountCreation==isAccountCreation);
-           
-            return pinReset;
+                string encryptedPinCode = Encryption.Encrypt(userAuthenticate.PinCode);
+                UserAuthenticationCode pinReset = await _context.UserAuthenticationCodes
+                            .Include(u => u.User)
+                            .FirstOrDefaultAsync(u => u.PinCode.Equals(encryptedPinCode)
+                            && u.IsAccountCreation == userAuthenticate.IsAccountCreation
+                            && u.PinCodeTypeID == (int)userAuthenticate.CodeType);
+                if (UtilityService.IsNotNull(pinReset) && pinReset.PinCodeTypeID == (int)CodeType.Multi_Factor_Authenticator)
+                {
+                    DateTime midnightToday = DateTime.Now.Date.AddDays(1).AddSeconds(-1);
+                    UserAccessGrant accessGrant = new UserAccessGrant()
+                    {
+                        UserID = pinReset.UserID.HasValue ? pinReset.UserID.Value : userAuthenticate.UserID,
+                        AllowUntil = midnightToday
+                    };
+                    Save(accessGrant);
+                }
+                return pinReset;
             }
             catch (Exception ex)
             {
                 CustomLog.Log(LogSource.Logic_Base, ex);
                 throw;
+            }
+        }
+        public void Save(UserAccessGrant accessGrant)
+        {
+            try
+            {
+                accessGrant.LastChangedBy = UtilityService.CurrentUserName;
+                accessGrant.LastChangedDate = DateTime.Now;
+                _context.Add(accessGrant);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
             }
         }
         public async Task<int> PasswordChange(int userid, string password)
         {
             try
             {
+                string encryptedPassword = Encryption.Encrypt(password);
+                User user = await _context.Users
+                            .FirstOrDefaultAsync(u => u.UserID == userid);
 
-                        string encryptedPassword = Encryption.Encrypt(password);
-            User user = await _context.Users
-                        .FirstOrDefaultAsync(u => u.UserID==userid);
-
-            if (UtilityService.IsNull(user))
-                return 0;
-            user.Password = encryptedPassword;
-            user.LastChangedBy = UtilityService.CurrentUserName;
-            user.PasswordExpiryDate = DateTime.Now.AddDays(UtilityService.PasswordValidityPeriod);
-            user.LastChangedDate = DateTime.Now;
+                if (UtilityService.IsNull(user))
+                    return 0;
+                user.Password = encryptedPassword;
+                user.LastChangedBy = UtilityService.CurrentUserName;
+                user.PasswordExpiryDate = DateTime.Now.AddDays(UtilityService.PasswordValidityPeriod);
+                user.LastChangedDate = DateTime.Now;
 
 
-            _context.Update(user);
+                _context.Update(user);
 
-            return await _context.SaveChangesAsync();
+                return await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -185,6 +217,6 @@ namespace SmartLogic
                 throw;
             }
         }
-      
+
     }
 }

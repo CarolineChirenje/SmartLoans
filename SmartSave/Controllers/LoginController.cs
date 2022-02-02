@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Http;
 using System.Threading;
 using SmartInterfaces;
 using SmartMail;
+using SmartLog;
+using System.Linq;
 
 namespace SmartSave.Controllers
 {
@@ -79,27 +81,11 @@ namespace SmartSave.Controllers
                     UtilityService.UserProfileImage = user.ProfileImage;
                     UtilityService.CurrentUserTypeID = user.UserTypeID;
                     UtilityService.CanOverrideMaintananceMode = user.CanOverrideMaintananceMode;
-                                     if (DateTime.Now > user.PasswordExpiryDate)
+                    if (DateTime.Now > user.PasswordExpiryDate)
                         return RedirectToAction("PasswordReset", new { id = user.UserID });
-
                     else
-                    {
-                        if (user.UserTypeID == (int)TypeOfUser.Employee)
-                        {
-                            ClientPeek client = await _clientService.GetClient(user.EmailAddress, user.IDNumber);
-                            if (UtilityService.IsNotNull(client))
-                            {
-                                return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
-                            }
-                            else
-                                return RedirectToLocal(returnUrl);
-                        }
-                        else
-                            return RedirectToLocal(returnUrl);
-
-                    }
+                        return RedirectToSystem(returnUrl, user);
                 }
-
                 else
                 {
                     TempData[MessageDisplayType.Warning.ToString()] = UtilityService.GetMessageToDisplay("USERINACTIVE");
@@ -112,6 +98,55 @@ namespace SmartSave.Controllers
                 return View(model);
             }
         }
+        private ActionResult RedirectToSystem(string returnUrl, User user = null)
+        {
+            if (user == null)
+                return RedirectToLocal(returnUrl);
+            bool accessDefaultGrant = user.UserAccessGrants.Any(a => a.AllowUntil > DateTime.Now);
+            if (UtilityService.AllowTwoFactorAuthentication && !accessDefaultGrant)
+            {
+                try
+                {
+                    HttpContext.Session.SetString("UserIDKey", user.UserID.ToString());
+                    UserAuthenticate userAuthenticate = new UserAuthenticate()
+                    {
+                        EmailAddress = user.EmailAddress,
+                        FullName = user.UserFullName,
+                        CodeType = CodeType.Multi_Factor_Authenticator,
+                    };
+                    var result = _service.GeneratePinCode(userAuthenticate);
+                    if (UtilityService.IsNotNull(result.PinCode))
+                    {
+                        userAuthenticate.PinCode = result.PinCode;
+                        userAuthenticate.ExpiryDate = UtilityService.ShowDateTime(result.ExpiryDate);
+                        return RedirectToAction("Authenticate", "Login", userAuthenticate);
+                    }
+                    else
+                        return RedirectToLocal(returnUrl);
+                }
+                catch (Exception ex)
+                {
+                    CustomLog.Log(LogSource.Logic_Base, ex);
+                    return RedirectToLocal(returnUrl);
+                }
+            }
+            else
+                return RedirectToLandingPage(user);
+        }
+        private ActionResult RedirectToLandingPage(User user)
+        {
+            if (user.UserTypeID == (int)TypeOfUser.Employee)
+            {
+                ClientPeek client = _clientService.GetClient(user.EmailAddress, user.IDNumber).Result;
+                if (UtilityService.IsNotNull(client))
+                    return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
+                else
+                    return RedirectToAction("Dashboard", "Home");
+            }
+            else
+                return RedirectToAction("Dashboard", "Home");
+
+        }
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -119,6 +154,75 @@ namespace SmartSave.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Dashboard", "Home");
+
+        }
+        public ActionResult Authenticate(UserAuthenticate userAuthenticate)
+        {
+
+            Email email = new Email();
+            email.To = userAuthenticate.EmailAddress;
+            email.AttachmentFromMemory = null;
+            string _emailBody = @$"Hello {userAuthenticate.FullName},<br/><br/>" +
+                          "Your one time passcode for <a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + "</a> is : <br/>" +
+                          "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>" + Encryption.Decrypt(userAuthenticate.PinCode) + "</b><br/>" +
+                           "Please be aware that this code is valid until "
+                            + userAuthenticate.ExpiryDate + ".<br/><br/>" +
+                           @"Regards,<br/><br/><b>" + UtilityService.ApplicationName + " Customer Service</b><br/><br/><br/>"
+                           + "Please do not reply to this email.<br/><br/>" +
+                            @"For any questions or information, please contact: email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/>";
+            email.Body = UtilityService.HtmlDecode(_emailBody);
+            email.Subject = UtilityService.SiteEnvironment == SiteEnvironment.Production ? $"Passcode for {UtilityService.ApplicationName}" : $"{UtilityService.SiteEnvironment} - Passcode for {UtilityService.ApplicationName}";
+            bool emailSuccessResult = _mailService.SendMail(email).Result;
+            if (emailSuccessResult)
+                return RedirectToAction(nameof(Verify));
+            else
+            {
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                return View();
+            }
+
+        }
+
+        public ActionResult Verify()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Verify(ConfirmCode confirmCode)
+        {
+
+            if (UtilityService.IsNotNull(confirmCode.Code))
+            {
+                int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
+                UserAuthenticate userAuthenticate = new UserAuthenticate()
+                {
+                    UserID = userID,
+                    CodeType = CodeType.Multi_Factor_Authenticator,
+                    PinCode = confirmCode.Code
+                };
+                UserAuthenticationCode userAuthenticationCode = await _service.ConfirmCode(userAuthenticate);
+                if (UtilityService.IsNotNull(userAuthenticationCode))
+                {
+                    DateTime calculatedExpiryDate = userAuthenticationCode.ExpiryDate;
+                    if (DateTime.Now > calculatedExpiryDate)
+                    {
+                        TempData[MessageDisplayType.Error.ToString()] = $"This pin expired on {UtilityService.ShowDateTime(calculatedExpiryDate)}";
+                        return View(confirmCode);
+                    }
+                    else
+                        return RedirectToLandingPage(userAuthenticationCode.User);
+                }
+                else
+                {
+                    TempData[MessageDisplayType.Error.ToString()] = "Pass Code Mismatch";
+                    return View(confirmCode);
+                }
+            }
+            else
+            {
+                TempData[MessageDisplayType.Error.ToString()] = "Invalid Confirmation Code";
+                return View(confirmCode);
+            }
         }
 
 
@@ -133,11 +237,16 @@ namespace SmartSave.Controllers
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(model);
             }
-
-            string pincode = await _service.ResetPassword(model.EmailAddress, null, false);
-            if (UtilityService.IsNotNull(pincode))
+            UserAuthenticate authenticate = new UserAuthenticate()
             {
-
+                IsAccountCreation = false,
+                EmailAddress = model.EmailAddress,
+                CodeType = CodeType.Password_Reset
+            };
+            var result = _service.GeneratePinCode(authenticate);
+            if (UtilityService.IsNotNull(result))
+            {
+                string pincode = result.PinCode;
                 Email email = new Email();
                 email.To = model.EmailAddress;
                 email.AttachmentFromMemory = null;
@@ -175,9 +284,15 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> ForgotPasswordConfirmation(string Code)
         {
+            int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
+            UserAuthenticate userAuthenticate = new UserAuthenticate()
+            {
+                UserID = userID,
+                CodeType = CodeType.Password_Reset,
+                PinCode = Code
+            };
 
-
-            UserAuthenticationCode pinReset = await _service.ConfirmCode(Code);
+            UserAuthenticationCode pinReset = await _service.ConfirmCode(userAuthenticate);
             if (UtilityService.IsNotNull(pinReset))
             {
                 DateTime calculatedExpiryDate = pinReset.ExpiryDate;
@@ -191,7 +306,6 @@ namespace SmartSave.Controllers
                     return RedirectToAction("PasswordReset", new { id = pinReset.UserID });
 
                 }
-
             }
             else
             {
@@ -258,9 +372,17 @@ namespace SmartSave.Controllers
                     TempData[MessageDisplayType.Error.ToString()] = $"An account registered  with the following Email Address {client.EmailAddress} and ID Number {client.IDNumber} already exists please try to do a password reset if you have forgotten your details or contact our Customer Service Support on {UtilityService.CustomerServiceNumber}   for further help";
                     return View(model);
                 }
-                string pincode = await _service.ResetPassword(model.EmailAddress, model.IDNumber, true);
-                if (UtilityService.IsNotNull(pincode))
+                UserAuthenticate authenticate = new UserAuthenticate()
                 {
+                    IsAccountCreation = true,
+                    EmailAddress = model.EmailAddress,
+                    IDNumber = model.IDNumber,
+                    CodeType = CodeType.Password_Reset
+                };
+                var result = _service.GeneratePinCode(authenticate);
+                if (UtilityService.IsNotNull(result))
+                {
+                    string pincode = result.PinCode;
                     Email email = new Email();
                     email.To = model.EmailAddress;
                     email.AttachmentFromMemory = null;
@@ -305,9 +427,12 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAccountConfirmation(string Code)
         {
-
-
-            UserAuthenticationCode pinReset = await _service.ConfirmCode(Code, true);
+            UserAuthenticate userAuthenticate = new UserAuthenticate()
+            {
+                PinCode = Code,
+                IsAccountCreation = true
+            };
+            UserAuthenticationCode pinReset = await _service.ConfirmCode(userAuthenticate);
             if (UtilityService.IsNotNull(pinReset))
             {
                 DateTime calculatedExpiryDate = pinReset.ExpiryDate;
@@ -319,9 +444,7 @@ namespace SmartSave.Controllers
                 else
                 {
                     return RedirectToAction("FinaliseAccount", new { id = pinReset.ClientID });
-
                 }
-
             }
             else
             {
@@ -329,7 +452,6 @@ namespace SmartSave.Controllers
                 return View(Code);
             }
         }
-
 
         [AllowAnonymous]
         public ActionResult FinaliseAccount(int id)
@@ -343,7 +465,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> FinaliseAccount()
         {
             int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
-                      ClientPeek client = _clientService.GetClient(clientID:userID).Result;
+            ClientPeek client = _clientService.GetClient(clientID: userID).Result;
             User user = new User();
             user.EmailAddress = client.EmailAddress;
             user.FirstName = client.FirstName;

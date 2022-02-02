@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -38,25 +39,25 @@ namespace SmartDomain
         [DisplayName("Last Name")]
         public string LastName { get; set; }
         public string UserName { get; set; }
-     
+
         public string Password { get; set; }
 
         public DateTime PasswordExpiryDate { get; set; }
-     
+
         public bool IsActive { get; set; }
         public bool CanOverrideMaintananceMode { get; set; }
         public byte[] ProfileImage { get; set; }
         public virtual List<UserRole> UserRoles { get; set; }
-
+        public virtual List<UserAccessGrant> UserAccessGrants { get; set; }
+        
         public virtual List<UserAccessRestriction> UserAccessRestrictions { get; set; }
 
         [NotMapped]
         public virtual List<int> RoleList { get; set; }
-        
+
         [NotMapped]
         public string UserFullName { get { return String.Concat(LastName, " ", FirstName); } }
 
-   
-    }
 
+    }
 }

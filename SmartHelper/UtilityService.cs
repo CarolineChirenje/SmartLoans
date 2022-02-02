@@ -118,7 +118,17 @@ namespace SmartHelper
 
             }
         }
-      
+        public static bool AllowTwoFactorAuthentication
+        {
+            get
+            {
+
+                string value = GetData.GetSettingValue((int)AppSetting.Allow_Two_Factor_Authentication)?.Value;
+                return value.Equals("true");
+
+            }
+        }
+
         public static bool AutoGenerateAccountNumber
         {
             get
@@ -278,7 +288,25 @@ namespace SmartHelper
 
             }
         }
+        public static int PasscodeValidityPeriod
+        {
+            get
+            {
+                string _period = GetData.GetSettingValue((int)AppSetting.Pass_Code_Validity_Period)?.Value;
+                int expiryPeriod = 60;
+                try
+                {
+                    expiryPeriod = Int32.Parse(_period);
+                }
+                catch (Exception)
+                {
 
+
+                }
+                return expiryPeriod;
+
+            }
+        }
         public static int MaximumFileSize
         {
             get
@@ -443,7 +471,7 @@ namespace SmartHelper
         {
             get
             {
-                string sqlCustomSetting = $"SELECT TOP 1 Value FROM CustomSettings WHERE CustomSettingID={(int)AppSetting.Password_Reset_Pin_Code_Length};";
+                string sqlCustomSetting = $"SELECT TOP 1 Value FROM CustomSettings WHERE CustomSettingID={(int)AppSetting.Pin_Code_Length};";
                 string _pincodeLengthID = GetData.GetStringValue(sqlCustomSetting);
                 int pincodeLengthID = 4;
                 try
@@ -474,6 +502,24 @@ namespace SmartHelper
 
                 }
                 return pincodeValidityPeriod;
+            }
+        }
+        public static int PassCodeValidityPeriod
+        {
+            get
+            {
+                string _result = GetData.GetSettingValue((int)AppSetting.Pass_Code_Validity_Period)?.Value;
+                int passCodeValidityPeriod = 0;
+                try
+                {
+                    passCodeValidityPeriod = Int32.Parse(_result);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                return passCodeValidityPeriod;
             }
         }
         public static bool FeatureFlagOn(int id)
