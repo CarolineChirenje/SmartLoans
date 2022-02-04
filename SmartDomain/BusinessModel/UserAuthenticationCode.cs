@@ -22,6 +22,7 @@ namespace SmartDomain
         [ForeignKey("PinCodeTypeID")]
         public int PinCodeTypeID { get; set; }
         public virtual PinCodeType PinCodeType { get; set; }
+        public bool IsValid { get; set; }
 
     }
 
@@ -36,6 +37,8 @@ namespace SmartDomain
         public CodeType CodeType { get; set; }
         public bool DoNotAskForTheDay { get; set; } = false;
         public string ExpiryDate { get; set; }
+        public bool IsReverify { get; set; }
+        public bool Success { get; set; } = true;
     }
 
     public class AuthenticateResult

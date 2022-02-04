@@ -9,6 +9,8 @@ namespace SmartLogic
  public   interface ILoginService
     {
         Task<User> Login(string username, string password);
+
+        Task<User> GetUser(int userid);
         AuthenticateResult GeneratePinCode(UserAuthenticate userAuthenticate);
         Task<UserAuthenticationCode> ConfirmCode(UserAuthenticate userAuthenticate);
         Task<int> PasswordChange( int userid, string password);

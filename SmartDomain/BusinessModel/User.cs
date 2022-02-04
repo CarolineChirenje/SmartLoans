@@ -56,6 +56,9 @@ namespace SmartDomain
         public virtual List<int> RoleList { get; set; }
 
         [NotMapped]
+        public virtual bool ReVerify { get; set; }
+
+        [NotMapped]
         public string UserFullName { get { return String.Concat(LastName, " ", FirstName); } }
 
 

@@ -161,11 +161,9 @@ namespace SmartDataAccess
           Data.GetFundSources());
             modelBuilder.Entity<PinCodeType>().HasData(
           Data.GetPinCodeTypes());
-            //modelBuilder.Entity<UserAuthenticationCode>()
-            // .Property(p => p.PinCodeTypeID)
-            // .HasDefaultValue((int)CodeType.Password_Reset);
-
-
+            modelBuilder.Entity<UserAuthenticationCode>()
+             .Property(p => p.IsValid)
+             .HasDefaultValue(true);
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserAccessGrant> UserAccessGrants { get; set; }

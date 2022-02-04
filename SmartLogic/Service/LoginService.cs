@@ -41,6 +41,23 @@ namespace SmartLogic
             }
         }
 
+
+        public async Task<User> GetUser(int userid)
+        {
+            try
+            {
+
+                return await _context.Users
+               .Include(u => u.UserAccessGrants)
+               .FirstOrDefaultAsync(u => u.UserID == userid);
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         #region PinCode
         public string NewPinCode
         {
@@ -117,11 +134,41 @@ namespace SmartLogic
                     pin.ExpiryDate = pin.DateRequested.AddMinutes(UtilityService.PassCodeValidityPeriod);
                 else
                     pin.ExpiryDate = pin.DateRequested.AddDays(UtilityService.PinCodeValidityPeriod);
-
+                pin.IsValid = true;
                 pin.IsAccountCreation = userAuthenticate.IsAccountCreation;
                 pin.PinCodeTypeID = userAuthenticate.IsAccountCreation ? (int)CodeType.Account_Creation : (int)userAuthenticate.CodeType;
                 _context.UserAuthenticationCodes.Add(pin);
                 _context.SaveChanges();
+
+                if (pin.PinCodeTypeID == (int)CodeType.Multi_Factor_Authenticator && userAuthenticate.IsReverify)
+                {
+                    try
+                    {
+                        int UserAuthenticationCodeID = pin.UserAuthenticationCodeID;
+                        //Invalidate all other pins for today
+                        var pincodes = _context.UserAuthenticationCodes.Where(
+                             p => p.UserAuthenticationCodeID != UserAuthenticationCodeID
+                             && p.IsValid
+                             && p.UserID == userAuthenticate.UserID
+                             && p.ExpiryDate.Date == DateTime.Now.Date
+                             ).Select(x => x.UserAuthenticationCodeID).ToList();
+
+                        
+                        if (UtilityService.IsNotNull(pincodes))
+                        {
+                            var some = _context.UserAuthenticationCodes.Where(x => pincodes.Contains(x.UserAuthenticationCodeID)).ToList();
+                            some.ForEach(a => a.IsValid = false);
+                            _context.SaveChanges();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        CustomLog.Log(LogSource.Logic_Base, ex);
+                    }
+
+
+                }
                 AuthenticateResult result = new AuthenticateResult()
                 {
                     ExpiryDate = pin.ExpiryDate,
@@ -158,8 +205,11 @@ namespace SmartLogic
                             .Include(u => u.User)
                             .FirstOrDefaultAsync(u => u.PinCode.Equals(encryptedPinCode)
                             && u.IsAccountCreation == userAuthenticate.IsAccountCreation
-                            && u.PinCodeTypeID == (int)userAuthenticate.CodeType);
-                if (UtilityService.IsNotNull(pinReset) && pinReset.PinCodeTypeID == (int)CodeType.Multi_Factor_Authenticator)
+                            && u.PinCodeTypeID == (int)userAuthenticate.CodeType
+                            && u.IsValid);
+                if (UtilityService.IsNotNull(pinReset) &&
+                pinReset.PinCodeTypeID == (int)CodeType.Multi_Factor_Authenticator &&
+                userAuthenticate.DoNotAskForTheDay)
                 {
                     DateTime midnightToday = DateTime.Now.Date.AddDays(1).AddSeconds(-1);
                     UserAccessGrant accessGrant = new UserAccessGrant()

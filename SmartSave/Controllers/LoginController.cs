@@ -113,6 +113,8 @@ namespace SmartSave.Controllers
                         EmailAddress = user.EmailAddress,
                         FullName = user.UserFullName,
                         CodeType = CodeType.Multi_Factor_Authenticator,
+                        UserID = user.UserID,
+                        IsReverify=user.ReVerify
                     };
                     var result = _service.GeneratePinCode(userAuthenticate);
                     if (UtilityService.IsNotNull(result.PinCode))
@@ -174,7 +176,7 @@ namespace SmartSave.Controllers
             email.Subject = UtilityService.SiteEnvironment == SiteEnvironment.Production ? $"Passcode for {UtilityService.ApplicationName}" : $"{UtilityService.SiteEnvironment} - Passcode for {UtilityService.ApplicationName}";
             bool emailSuccessResult = _mailService.SendMail(email).Result;
             if (emailSuccessResult)
-                return RedirectToAction(nameof(Verify));
+                return RedirectToAction("Verify", "Login", userAuthenticate);
             else
             {
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -182,24 +184,33 @@ namespace SmartSave.Controllers
             }
 
         }
-
-        public ActionResult Verify()
+        public ActionResult ReVerify(int id)
         {
-            return View();
+            User user = _service.GetUser(id).Result;
+            user.ReVerify = true;
+            return RedirectToSystem(string.Empty, user);
+        }
+        public ActionResult Verify(UserAuthenticate userAuthenticate)
+        {
+            if (userAuthenticate == null)
+                return RedirectToSystem(string.Empty, null);
+            return View(userAuthenticate);
         }
         [HttpPost]
         public async Task<IActionResult> Verify(ConfirmCode confirmCode)
         {
+            int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
+            UserAuthenticate userAuthenticate = new UserAuthenticate()
+            {
+                UserID = confirmCode.UserID == 0 ? userID : confirmCode.UserID,
+                CodeType = CodeType.Multi_Factor_Authenticator,
+                PinCode = confirmCode.Code,
+                DoNotAskForTheDay = confirmCode.DoNotAskForTheDay,
+                
+            };
 
             if (UtilityService.IsNotNull(confirmCode.Code))
-            {
-                int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
-                UserAuthenticate userAuthenticate = new UserAuthenticate()
-                {
-                    UserID = userID,
-                    CodeType = CodeType.Multi_Factor_Authenticator,
-                    PinCode = confirmCode.Code
-                };
+            {                
                 UserAuthenticationCode userAuthenticationCode = await _service.ConfirmCode(userAuthenticate);
                 if (UtilityService.IsNotNull(userAuthenticationCode))
                 {
@@ -207,7 +218,8 @@ namespace SmartSave.Controllers
                     if (DateTime.Now > calculatedExpiryDate)
                     {
                         TempData[MessageDisplayType.Error.ToString()] = $"This pin expired on {UtilityService.ShowDateTime(calculatedExpiryDate)}";
-                        return View(confirmCode);
+                        userAuthenticate.Success = false;
+                        return View(userAuthenticate);
                     }
                     else
                         return RedirectToLandingPage(userAuthenticationCode.User);
@@ -215,13 +227,15 @@ namespace SmartSave.Controllers
                 else
                 {
                     TempData[MessageDisplayType.Error.ToString()] = "Pass Code Mismatch";
-                    return View(confirmCode);
+                    userAuthenticate.Success = false;
+                    return View(userAuthenticate);
                 }
             }
             else
             {
                 TempData[MessageDisplayType.Error.ToString()] = "Invalid Confirmation Code";
-                return View(confirmCode);
+                userAuthenticate.Success = false;
+                return View(userAuthenticate);
             }
         }
 
