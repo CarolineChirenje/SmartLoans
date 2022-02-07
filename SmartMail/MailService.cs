@@ -51,6 +51,7 @@ namespace SmartMail
             else
                 return (false);
         }
+        public bool SendEmail(Email email) => SendMail(email).Result;
 
         public async Task<bool> SendMail(Email email)
         {

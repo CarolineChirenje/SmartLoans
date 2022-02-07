@@ -12,3 +12,5 @@ C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.csproj.CoreCom
 C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.dll
 C:\DEV\SmartWealth\SmartErrorLog\obj\Debug\netcoreapp3.1\SmartLog.pdb
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\DEV\SmartWealth\SmartErrorLog\bin\Debug\netcoreapp3.1\appsettings.json

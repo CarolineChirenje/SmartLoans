@@ -121,6 +121,7 @@
     <ProjectReference Include="..\SmartHelper\SmartHelper.csproj" />
     <ProjectReference Include="..\SmartLogic\SmartLogic.csproj" />
     <ProjectReference Include="..\SmartMail\SmartMail.csproj" />
+    <ProjectReference Include="..\SmartQueue\SmartAsync.csproj" />
     <ProjectReference Include="..\SmartReporting\SmartReporting.csproj" />
   </ItemGroup>
 

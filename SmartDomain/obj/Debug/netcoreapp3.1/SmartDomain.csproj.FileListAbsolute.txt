@@ -12,3 +12,5 @@ C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.1\SmartDomain.csproj.CoreCo
 C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.1\SmartDomain.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.1\SmartDomain.dll
 C:\DEV\SmartWealth\SmartDomain\obj\Debug\netcoreapp3.1\SmartDomain.pdb
+C:\DEV\SmartWealth\SmartDomain\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\DEV\SmartWealth\SmartDomain\bin\Debug\netcoreapp3.1\appsettings.json

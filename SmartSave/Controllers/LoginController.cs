@@ -1,20 +1,19 @@
 ﻿using SmartLogic;
-
 using SmartSave.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using SmartDataAccess;
 using SmartHelper;
 using SmartDomain;
 using System;
 using Microsoft.AspNetCore.Http;
-using System.Threading;
 using SmartInterfaces;
 using SmartMail;
 using SmartLog;
 using System.Linq;
+using SmartExtensions;
+using SmartAsync;
 
 namespace SmartSave.Controllers
 {
@@ -24,7 +23,6 @@ namespace SmartSave.Controllers
     {
         private readonly DatabaseContext _context;
         private readonly ILoginService _service;
-        private readonly IMailService _mailService;
         private readonly IClientService _clientService;
         private readonly IUserService _userService;
 
@@ -33,7 +31,6 @@ namespace SmartSave.Controllers
         {
             _context = context;
             _service = service;
-            _mailService = mailService;
             _clientService = clientService;
             _userService = userService;
 
@@ -114,7 +111,7 @@ namespace SmartSave.Controllers
                         FullName = user.UserFullName,
                         CodeType = CodeType.Multi_Factor_Authenticator,
                         UserID = user.UserID,
-                        IsReverify=user.ReVerify
+                        IsReverify = user.ReVerify
                     };
                     var result = _service.GeneratePinCode(userAuthenticate);
                     if (UtilityService.IsNotNull(result.PinCode))
@@ -174,7 +171,7 @@ namespace SmartSave.Controllers
                             @"For any questions or information, please contact: email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/>";
             email.Body = UtilityService.HtmlDecode(_emailBody);
             email.Subject = UtilityService.SiteEnvironment == SiteEnvironment.Production ? $"Passcode for {UtilityService.ApplicationName}" : $"{UtilityService.SiteEnvironment} - Passcode for {UtilityService.ApplicationName}";
-            bool emailSuccessResult = _mailService.SendMail(email).Result;
+            bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
             if (emailSuccessResult)
                 return RedirectToAction("Verify", "Login", userAuthenticate);
             else
@@ -206,11 +203,11 @@ namespace SmartSave.Controllers
                 CodeType = CodeType.Multi_Factor_Authenticator,
                 PinCode = confirmCode.Code,
                 DoNotAskForTheDay = confirmCode.DoNotAskForTheDay,
-                
+
             };
 
             if (UtilityService.IsNotNull(confirmCode.Code))
-            {                
+            {
                 UserAuthenticationCode userAuthenticationCode = await _service.ConfirmCode(userAuthenticate);
                 if (UtilityService.IsNotNull(userAuthenticationCode))
                 {
@@ -244,7 +241,7 @@ namespace SmartSave.Controllers
         public ActionResult ForgotPassword() => View();
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -272,13 +269,12 @@ namespace SmartSave.Controllers
                                @"If you need help, or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/><b>" + UtilityService.ApplicationName + " Customer Service</b>.";
                 email.Body = UtilityService.HtmlDecode(_emailBody);
                 email.Subject = $"Password Reset -{UtilityService.ApplicationName}";
-                bool emailSuccessResult = await _mailService.SendMail(email);
+                bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
                 if (emailSuccessResult)
                 {
                     TempData[MessageDisplayType.Success.ToString()] = $"We have sent an email {model.EmailAddress} with the password reset details.";
                     return View(model);
                 }
-
                 else
                 {
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -318,7 +314,6 @@ namespace SmartSave.Controllers
                 else
                 {
                     return RedirectToAction("PasswordReset", new { id = pinReset.UserID });
-
                 }
             }
             else
@@ -407,7 +402,7 @@ namespace SmartSave.Controllers
                                     @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
                     email.Body = UtilityService.HtmlDecode(_emailBody);
                     email.Subject = $"Account Creation - {UtilityService.ApplicationName}";
-                    bool emailSuccessResult = await _mailService.SendMail(email);
+                    bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
                     if (emailSuccessResult)
                     {
                         TempData[MessageDisplayType.Success.ToString()] = $"We have sent an email to {model.EmailAddress} with further  details regarding account creation.";
@@ -419,7 +414,6 @@ namespace SmartSave.Controllers
                         return View(model);
                     }
                 }
-
                 else
                 {
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -505,7 +499,7 @@ namespace SmartSave.Controllers
                                 @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ". Your login password is <b>" + _userService.GetCredential(result) + "</b>.<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
                 email.Body = UtilityService.HtmlDecode(_emailBody);
                 email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
-                bool emailSuccessResult = await _mailService.SendMail(email);
+                bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
                 if (emailSuccessResult)
                 {
                     TempData[MessageDisplayType.Success.ToString()] = $"Account creation complete.We have sent an email to {client.EmailAddress} with your login credentials.";

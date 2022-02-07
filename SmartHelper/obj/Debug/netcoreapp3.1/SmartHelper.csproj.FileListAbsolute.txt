@@ -11,3 +11,5 @@ C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.AssemblyInfo.
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.csproj.CoreCompileInputs.cache
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.dll
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartHelper\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\DEV\SmartWealth\SmartHelper\bin\Debug\netcoreapp3.1\appsettings.json
