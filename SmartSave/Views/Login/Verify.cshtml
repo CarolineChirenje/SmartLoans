@@ -1,4 +1,5 @@
 ﻿@using SmartHelper;
+@using SmartExtensions;
 @model SmartDomain.UserAuthenticate;
 @{
     Layout = null;
@@ -54,49 +55,48 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                @if (Model.Success)
-                {<p>
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            An email has been sent to your registered account<br /> -
-                            "@Model.EmailAddress".<br />
-                            Please enter the code to sign in.
-                        </div>
-                    </div>
-                </p>}
-                <p>&nbsp;</p>
+                         
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Enter Code</h3>
+                        <h5 class="panel-title">
+                            Verify  your Email
+                        </h5>
                     </div>
 
                     <div class="panel-body">
                         <form class="form-horizontal" method="post" action="Verify">
                             <div class="login-box-body">
                                 <fieldset>
-
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="Code" placeholder="Pass Code" required autofocus>
-                                    </div>
-                                    <div class="form-group">
-                                        <a asp-controller="Login" asp-action="ReVerify" asp-route-id="@Model.UserID">Resend Code</a>
-                                        <div class="checkbox">
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" data-val="true" id="DoNotAskForTheDay"
-                                                       name="DoNotAskForTheDay" value="true">Please Do Not Ask Me Again Today
-                                            </label>
+                                    @if (Model.Success)
+                                    {
+                                        <div class="form-group">
+                                            Enter the @UtilityService.PinCodeLength digit code sent to <b>@Model.EmailAddress.EmailToMask()</b>.
                                         </div>
-                                    </div>
-                                    <input type="hidden" name="UserID" value="@Model.UserID" />
+                                        <div class="form-group">
+                                            <b style="color:red">Important:</b> We'll send a one-time passcode to you to this email address if we need to check<br/> it's you accessing your account.
+                                           </div> }
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="Code" placeholder="Pass Code" required autofocus>
+                                            </div>
+                                            <div class="form-group">
+                                                Need another verification Code ?  <a asp-controller="Login" asp-action="ReVerify" asp-route-id="@Model.UserID">Resend</a>
+                                                <div class="checkbox">
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" data-val="true" id="DoNotAskForTheDay"
+                                                               name="DoNotAskForTheDay" value="true"><b>Please Do Not Ask Me Again Today</b>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="UserID" value="@Model.UserID" />
 
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-lg btn-success btn-block">Verify</button>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-lg btn-success btn-block">Verify Code</button>
 
-                                    </div><br />
-                                    <div class="form-group">
-                                        <a class="btn btn-lg btn-default btn-block" asp-controller="Login" asp-action="Logout">Cancel</a>
-                                    </div>
-                                </fieldset>
+                                            </div><br />
+                                            <div class="form-group">
+                                                <a class="btn btn-lg btn-default btn-block" asp-controller="Login" asp-action="Logout">Cancel</a>
+                                            </div>
+                                    </fieldset>
                             </div>
                         </form>
                     </div>

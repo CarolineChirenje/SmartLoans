@@ -790,6 +790,10 @@ namespace SmartHelper
                     _min = 1000;
                     _max = 9999;
                     break;
+                case 6:
+                    _min = 100000;
+                    _max = 999999;
+                    break;
                 default:
                     break;
             }

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SmartExtensions
 {
@@ -18,6 +19,22 @@ namespace SmartExtensions
                 result = Int32.Parse(value);
             }
             catch
+            {
+
+            }
+            return result;
+        }
+        public static string EmailToMask(this string email)
+        {
+            string result = email;
+            try
+            {
+               // string input = "jhon@abc.com";
+                string pattern = @"(?<=[\w]{1})[\w-\._\+%]*(?=[\w]{1}@)";
+                 result = Regex.Replace(email, pattern, m => new string('*', m.Length));
+
+            }
+            catch (Exception)
             {
 
             }
