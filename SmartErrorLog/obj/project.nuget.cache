@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "QXv6Ze3HSTDlGJ475Wf+rZ1icOlhSuNKjHh+aeW9V93Fnw6ilginNQbl44z93DK8r7D17mZywWG67Xvn1dYjzw==",
+  "dgSpecHash": "d7kx0GBQ7n+2mznUAjvcIkCuGT3D6idS24MJ/cLe8jNRBTqFkhkRhrcA7tKA6BajURToxU7yTDNYB4iv9LX4zg==",
   "success": true,
   "projectFilePath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.extensions.configuration.binder\\6.0.0\\microsoft.extensions.configuration.binder.6.0.0.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\6.0.0\\microsoft.extensions.configuration.fileextensions.6.0.0.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.extensions.configuration.json\\6.0.0\\microsoft.extensions.configuration.json.6.0.0.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\6.0.0\\microsoft.extensions.fileproviders.abstractions.6.0.0.nupkg.sha512",

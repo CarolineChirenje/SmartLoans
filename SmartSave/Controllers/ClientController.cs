@@ -24,6 +24,8 @@ using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf.IO;
 using PdfSharpCore.Pdf;
 using SmartMail;
+using SmartAsync;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -36,13 +38,12 @@ namespace SmartSave.Controllers
         readonly ITransactionService _paymentService;
         readonly IDepartmentService _departmentService;
         readonly IBankAccountservice _bankService;
-        readonly IMailService _mailService;
         readonly IFeatureFlagService _featureFlagService;
         private readonly IEmailTemplateService _emailTemplateService;
 
         public ClientController(IClientService service, IUserService userService, IDocumentTypeService documentTypeService,
         ISettingService settingService, ITransactionService paymentService,
-        IBankAccountservice bankService, IDepartmentService departmentService, IMailService mailservice,
+        IBankAccountservice bankService, IDepartmentService departmentService,
         IFeatureFlagService featureFlagService, IEmailTemplateService emailTemplateService)
         {
             _service = service;
@@ -52,7 +53,6 @@ namespace SmartSave.Controllers
             _paymentService = paymentService;
             _bankService = bankService;
             _departmentService = departmentService;
-            _mailService = mailservice;
             _featureFlagService = featureFlagService;
             _emailTemplateService = emailTemplateService;
         }
@@ -107,13 +107,11 @@ namespace SmartSave.Controllers
         {
             try
             {
-               
-                    Permissions permission = Permissions.View_Konapo_Fund;
-                    if (!UtilityService.HasPermission(permission))
-                        return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+                Permissions permission = Permissions.View_Konapo_Fund;
+                if (!UtilityService.HasPermission(permission))
+                    return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
                 ClientKonapoFunds clientKonapo = _service.GetClientKonapoFunds(id).Result;
-                    return View(clientKonapo);
-               
+                return View(clientKonapo);
             }
             catch (Exception ex)
             {
@@ -195,7 +193,6 @@ namespace SmartSave.Controllers
                         return View(client);
                     }
                 }
-
                 return RedirectToAction("ViewClient", new { id = client.ClientID });
             }
             TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -241,7 +238,6 @@ namespace SmartSave.Controllers
             {
                 if (await (_service.Save(ClientContact)) == 0)
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
             }
             return RedirectToAction("Contacts", new { id = ClientContact.ClientID });
         }
@@ -260,9 +256,7 @@ namespace SmartSave.Controllers
 
         [HttpPost]
         public async Task<IActionResult> ViewContact(ClientContact clientContact)
-        {
-
-            if (UtilityService.IsNotNull(clientContact))
+        {            if (UtilityService.IsNotNull(clientContact))
             {
                 GetDropDownLists();
                 int clientContactID = clientContact.ClientContactID;
@@ -514,7 +508,7 @@ namespace SmartSave.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GenerateStatementAsync(IFormCollection formCollection)
+        public ActionResult GenerateStatementAsync(IFormCollection formCollection)
         {
             var _clientID = formCollection["ClientID"];
             bool emailStatement = false;
@@ -571,8 +565,7 @@ namespace SmartSave.Controllers
             {
             }
             try
-
-            {                             
+            {
                 emailStatement = Boolean.Parse(formCollection["EmailStatement"]);
             }
             catch (Exception)
@@ -596,13 +589,11 @@ namespace SmartSave.Controllers
             };
             statement.Client = _service.FindClient(statement.ClientID).Result;
             statement.Product = _settingService.FindProduct(statement.ProductID);
-
             string filename = statement.Client.AccountNumber;
             ClientStatement printOut = new ClientStatement();
             byte[] pdfFile = GeneratePDFStatement(statement, emailStatement);
             if (!emailStatement)
                 return File(pdfFile, "application/pdf", filename + ".pdf");
-
             else
             {
                 EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.Client_Statement).Result;
@@ -626,10 +617,9 @@ namespace SmartSave.Controllers
                     email.Subject = emailTemplate.Subject;
                 }
                 string emailAddress = statement.Client.EmailAddress;
-                bool emailSuccessResult = await _mailService.SendMail(email);
+                bool emailSuccessResult = RabbitQueue.Publish(email.ToJson());
                 if (emailSuccessResult)
                 {
-
                     if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
                         emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
@@ -645,7 +635,7 @@ namespace SmartSave.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> OustandingStatementAsync(IFormCollection formCollection)
+        public ActionResult OustandingStatementAsync(IFormCollection formCollection)
         {
             var _clientID = formCollection["ClientID"];
             bool emailStatement = false;
@@ -703,7 +693,7 @@ namespace SmartSave.Controllers
                     email.Subject = emailTemplate.Subject;
                 }
                 string emailAddress = statement.Client.EmailAddress;
-                bool emailSuccessResult = await _mailService.SendMail(email);
+                bool emailSuccessResult = RabbitQueue.Publish(email.ToJson());
                 if (emailSuccessResult)
                 {
                     if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
@@ -715,7 +705,6 @@ namespace SmartSave.Controllers
                     if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
                         emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
-                
                 }
                 return RedirectToAction("PendingTransactions", new { id = statement.ClientID });
             }
@@ -728,8 +717,7 @@ namespace SmartSave.Controllers
             using (MemoryStream stream = new MemoryStream())
             {
                 try
-                {
-                    Document document = printOut.Print(statement);
+                {                    Document document = printOut.Print(statement);
                     // Create a renderer for the MigraDoc document.
                     PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
                     {
@@ -810,7 +798,7 @@ namespace SmartSave.Controllers
                     var page = document.Pages[idx];
 
                     // Variation 1: Draw a watermark as a text string.
-                                       // Get an XGraphics object for drawing beneath the existing content.
+                    // Get an XGraphics object for drawing beneath the existing content.
                     var gfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Prepend);
 
                     // Get the size (in points) of the text.
@@ -1311,7 +1299,7 @@ namespace SmartSave.Controllers
                 bool courseLimitReached = await _service.MaximumCourseLimitReached(ClientCourse.CourseIntakeID.Value);
                 if (courseLimitReached)
                 {
-                    TempData["Error"] = "Maximum Enrolment Limit has been reached for this Course Intake Extend the Enrolment Capacity or Create A new Intake"; 
+                    TempData["Error"] = "Maximum Enrolment Limit has been reached for this Course Intake Extend the Enrolment Capacity or Create A new Intake";
                     return RedirectToAction("Courses", new { id = ClientCourse.ClientID });
                 }
                 if (await (_service.Save(ClientCourse)) == 0)
@@ -1378,10 +1366,10 @@ namespace SmartSave.Controllers
         public ActionResult ViewSessions(int courseID, int clientcourseid)
         {
             int clientID = Convert.ToInt32(HttpContext.Session.GetString("ClientID"));
-            if (courseID == 0 || clientID==0 || clientcourseid==0)
-                return RedirectToAction("ViewClient", new { id =clientID });
-            ClientCourse clientCourse =  _service.FindCourse(clientcourseid).Result;
-             if(clientCourse==null)
+            if (courseID == 0 || clientID == 0 || clientcourseid == 0)
+                return RedirectToAction("ViewClient", new { id = clientID });
+            ClientCourse clientCourse = _service.FindCourse(clientcourseid).Result;
+            if (clientCourse == null)
                 return RedirectToAction("ViewClient", new { id = clientID });
 
             ClientCourseView result = new ClientCourseView
@@ -1395,7 +1383,7 @@ namespace SmartSave.Controllers
             var client = _service.FindClient(clientID).Result;
             result.Client = client;
             var courseBreakDown = _settingService.GetCourseBreakDown(courseID).ToList();
-          
+
             if (UtilityService.IsNotNull(courseBreakDown))
             {
                 var clientSessions = new HashSet<int>(_settingService.GetUserAttendedSessions(clientID, courseID)?.Select(c => c.CourseSessionID));
@@ -1420,9 +1408,9 @@ namespace SmartSave.Controllers
                     courseList.Add(courseView);
                 }
                 result.Course = courseList;
-           }
-            return View(result);
             }
+            return View(result);
+        }
         [HttpPost]
         public async Task<IActionResult> UpdateSessions(string[] selectedSessions, ClientCourse clientCourse)
         {
@@ -1524,8 +1512,6 @@ namespace SmartSave.Controllers
             List<Company> companies = _settingService.GetCompanies(true);
             if (companies != null)
             {
-
-
                 companies.Select(t => new
                 {
                     t.CompanyID,
@@ -1688,7 +1674,6 @@ namespace SmartSave.Controllers
             int courseID = Convert.ToInt32(HttpContext.Session.GetString("CourseID"));
             if (courseID > 0)
             {
-               // var allSessions = _settingService.GetCourseBreakDown(courseID).OrderBy(r => r.CourseName).GroupBy(r => r.CourseName);
                 var allSessions = _settingService.GetCourseOutlines(courseID).OrderBy(r => r.Name);
                 var clientSessions = new HashSet<int>(_settingService.GetUserAttendedSessions(clientID, courseID)?.Select(c => c.CourseTopicID));
                 var viewModel = new List<CheckBoxListItem>();
@@ -1714,7 +1699,6 @@ namespace SmartSave.Controllers
 
             ViewBag.TransactionTypeList = new SelectList(transactionTypeList, "TransactionTypeID", "Name", (int)TransactionTypeList.Payment);
 
-
             var assertList = _settingService.GetAssertsList().Select(t => new
             {
                 t.AssertID,
@@ -1722,26 +1706,18 @@ namespace SmartSave.Controllers
             }).OrderBy(t => t.Name);
 
             ViewBag.AssertList = new SelectList(assertList, "AssertID", "Name");
-
-
             var assertCategoryList = _settingService.GetAssertCategoryList().Select(t => new
             {
                 t.AssertCategoryID,
                 t.Name,
             }).OrderBy(t => t.Name);
-
             ViewBag.AssertCategoryList = new SelectList(assertCategoryList, "AssertCategoryID", "Name");
-
-
             var country = _settingService.GetCountryList().Select(t => new
             {
                 t.CountryID,
                 t.Name,
             }).OrderBy(t => t.Name);
-
             ViewBag.CountryList = new SelectList(country, "CountryID", "Name");
-
-
             var titleList = _settingService.GetTitles().Select(t => new
             {
                 t.TitleID,
@@ -1763,16 +1739,12 @@ namespace SmartSave.Controllers
                 t.Name,
             }).OrderBy(t => t.Name);
             ViewBag.CourseIntakeList = new SelectList(intakeList, "CourseIntakeID", "Name");
-
-
             var affliationList = _settingService.GetAffiliations().Select(t => new
             {
                 ID = t.ClientGroupID,
                 t.Name,
             }).OrderBy(t => t.Name);
             ViewBag.AffiliationList = new SelectList(affliationList, "ID", "Name", (int)Affiliation.Individual);
-
-
             ViewBag.CompanyList = GetCompanyList();
 
 

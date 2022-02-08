@@ -11,6 +11,13 @@ namespace SmartExtensions
     public static class ExtensionMethod
     {
         static CultureInfo culture = new CultureInfo("en-US");
+
+        public static string ToJson<T>(this T _object) => JsonConvert.SerializeObject((object)_object);
+
+        public static string ToPrettyJson<T>(this T _object) => JsonConvert.SerializeObject((object)_object, Formatting.Indented);
+
+        public static T FromJson<T>(this string _object) => JsonConvert.DeserializeObject<T>(_object);
+
         public static int ToInt(this string value)
         {
             int result = 0;
@@ -33,6 +40,22 @@ namespace SmartExtensions
                 string pattern = @"(?<=[\w]{1})[\w-\._\+%]*(?=[\w]{1}@)";
                  result = Regex.Replace(email, pattern, m => new string('*', m.Length));
 
+            }
+            catch (Exception)
+            {
+
+            }
+            return result;
+        }
+
+        public static string CreateDirectoryIfNotExists(this string directory)
+        {
+            string result = directory;
+            try
+            {
+                bool exists = Directory.Exists(directory);
+                if (!exists)
+                    Directory.CreateDirectory(directory);
             }
             catch (Exception)
             {

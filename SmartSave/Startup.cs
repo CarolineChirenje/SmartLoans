@@ -8,11 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SmartDataAccess;
+using SmartExtensions;
 using SmartHelper;
 using SmartLogic;
 using SmartLogic.IService;
 using SmartMail;
 using System;
+using System.IO;
 
 namespace SmartSave
 {
@@ -20,7 +22,7 @@ namespace SmartSave
     {
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            
+
             Configuration = configuration;
 
             var builder = new ConfigurationBuilder()
@@ -40,7 +42,7 @@ namespace SmartSave
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-                
+
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
 
@@ -78,7 +80,7 @@ namespace SmartSave
             services.AddScoped<IFeatureFlagService, FeatureFlagService>();
             services.AddScoped<ILicenceService, LicenceService>();
             services.AddScoped<ISupportService, SupportService>();
-            
+
             // Add MVC services to the services container.
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
@@ -86,8 +88,8 @@ namespace SmartSave
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(GetData.GetSessionTimeOut());
             });
-            }
-            
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostEnvironment env, ILoggerFactory loggerFactory)
         {
@@ -113,9 +115,11 @@ namespace SmartSave
                     name: "default",
                     template: "{controller=Login}/{action=Login}/{id?}");
             });
-           if(GetData.EnableLogger())
-            loggerFactory.AddFile("SmartWealth-{Date}.txt");
-           
-               }
+            if (GetData.EnableLogger())
+            {
+                SmartHelper.SmartLog log = GetData.SmartLogData();
+                loggerFactory.AddFile($"{log.LogDirectory.CreateDirectoryIfNotExists()}\\SmartWealth-{DateTime.Now.Date.ToString("yyyy-MM-dd")}.txt");
+            }
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace SmartMail
     public interface IMailService
     {
          Task<bool> SendMail(Email email);
+
+        bool SendEmail(Email email);
     }
 }

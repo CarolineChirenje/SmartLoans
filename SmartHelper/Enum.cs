@@ -908,8 +908,14 @@ namespace SmartHelper
         Mail,
         Error_Log,
         Uknown,
-        Base_Controller
+        Base_Controller,
+        Rabbit_MQ
 
+    }
+    public enum Queues
+    {
+        Emails = 1,
+        Log = 2,
     }
     public enum Support
     {

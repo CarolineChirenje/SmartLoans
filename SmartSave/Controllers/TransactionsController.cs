@@ -20,6 +20,8 @@ using PdfSharpCore.Pdf.Security;
 using SmartLog;
 using SmartInterfaces;
 using SmartMail;
+using SmartAsync;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -30,24 +32,20 @@ namespace SmartSave.Controllers
         private readonly IClientService _ClientService;
         private readonly IBankAccountservice _bankService;
         private readonly IEmailTemplateService _emailTemplateService;
-        readonly IMailService _mailService;
         private Receipt receipt = null;
-        public TransactionsController(ITransactionService service, IClientService ClientService, ISettingService settingService, IBankAccountservice bankService, IEmailTemplateService emailTemplateService, IMailService mailService)
+        public TransactionsController(ITransactionService service, IClientService ClientService, ISettingService settingService, IBankAccountservice bankService, IEmailTemplateService emailTemplateService)
         {
             _service = service;
             _ClientService = ClientService;
             _settingService = settingService;
             _bankService = bankService;
             _emailTemplateService = emailTemplateService;
-            _mailService = mailService;
         }
-
         public async Task<IActionResult> Transactions()
         {
             Permissions permission = Permissions.View_Payment;
             if (!UtilityService.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
-
             List<Transaction> transactions = await _service.Transactions();
             List<Transaction> _transactions = transactions.OrderByDescending(t => t.TransactionDate).ToList();
             return View(_transactions);
@@ -89,7 +87,7 @@ namespace SmartSave.Controllers
                     Price = Price,
                     Units = Units,
                     TransactionFee = Fee,
-                    TransactionRate=TransFee,
+                    TransactionRate = TransFee,
                     ClientID = paymentsFile.ClientID,
                     ProductID = paymentsFile.ProductID,
                     PaymentDate = paymentsFile.PaymentDate,
@@ -144,7 +142,7 @@ namespace SmartSave.Controllers
                                         email.Subject = emailTemplate.Subject;
                                     }
                                     string emailAddress = statement.EmailAddress;
-                                    bool emailSuccessResult = await _mailService.SendMail(email);
+                                    bool emailSuccessResult = RabbitQueue.Publish(email.ToJson());
                                     if (emailSuccessResult)
                                     {
                                         if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
@@ -631,13 +629,13 @@ namespace SmartSave.Controllers
                 assertCategories.Select(t => new
                 {
                     t.AssertCategoryID,
-                   t.Name,
+                    t.Name,
                 }).OrderBy(t => t.Name);
                 categoryList = new SelectList(assertCategories, "AssertCategoryID", "Name");
             }
             return Json(categoryList);
         }
 
-     
+
     }
 }

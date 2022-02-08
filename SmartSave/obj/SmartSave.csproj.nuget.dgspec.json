@@ -331,6 +331,10 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[6.0.0, )"
@@ -593,6 +597,73 @@
         }
       }
     },
+    "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj",
+        "projectName": "SmartAsync",
+        "projectPath": "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj",
+        "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
+        "outputPath": "C:\\DEV\\SmartWealth\\SmartQueue\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj"
+              },
+              "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.2.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -749,6 +820,9 @@
               },
               "C:\\DEV\\SmartWealth\\SmartMail\\SmartMail.csproj": {
                 "projectPath": "C:\\DEV\\SmartWealth\\SmartMail\\SmartMail.csproj"
+              },
+              "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj"
               },
               "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj": {
                 "projectPath": "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj"

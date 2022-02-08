@@ -1,0 +1,16 @@
+C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartQueue.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartQueue.AssemblyInfoInputs.cache
+C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartQueue.AssemblyInfo.cs
+C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartQueue.csproj.CoreCompileInputs.cache
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartQueue.deps.json
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartQueue.dll
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartQueue.pdb
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartHelper.dll
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartLog.dll
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartLog.pdb
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartHelper.pdb
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
+C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartQueue.csproj.AssemblyReference.cache
+C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartQueue.csproj.CopyComplete
+C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartQueue.dll
+C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartQueue.pdb

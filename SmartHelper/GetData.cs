@@ -2,14 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 
 namespace SmartHelper
 {
@@ -116,8 +112,8 @@ namespace SmartHelper
         }
         public static string SSDBConnectionValue()
         {
-          
-              string  _environment = Environment();
+
+            string _environment = Environment();
             string connectionStringName = $"SSDBConnection{_environment}";
             string configValue = _configuration.GetConnectionString(connectionStringName);
             return string.IsNullOrEmpty(configValue) ? "Data Source=172.105.28.87;Initial Catalog=SmartSave;User Id=sa;Password=Ch1gumbu6299##" : configValue;
@@ -150,7 +146,7 @@ namespace SmartHelper
             }
             return obj;
         }
-        public static string   Environment()
+        public static string Environment()
         {
             _configuration = LoadAppConfigurations;
             string _environment = _configuration.GetSection("SiteEnvironment").Value;
@@ -176,7 +172,7 @@ namespace SmartHelper
             return showDeveloperExceptions;
 
         }
-        
+
         public static int GetSessionTimeOut()
         {
             _configuration = LoadAppConfigurations;
@@ -188,9 +184,34 @@ namespace SmartHelper
             catch
             {
             }
-           return sessionTimeOut;
+            return sessionTimeOut;
         }
 
+        public static RabbitMQConfig GetRabbitMQConfig()
+        {
+            try
+            {
+                GetData._configuration = GetData.LoadAppConfigurations;
+                return GetData._configuration.GetSection("RabbitMQConfig").Get<RabbitMQConfig>();
+            }
+            catch
+            {
+            }
+            return (RabbitMQConfig)null;
+        }
+
+        public static MailOptions GetMailOptions()
+        {
+            try
+            {
+                GetData._configuration = GetData.LoadAppConfigurations;
+                return GetData._configuration.GetSection("MailOptions").Get<MailOptions>();
+            }
+            catch
+            {
+            }
+            return (MailOptions)null;
+        }
         public static bool EnableLogger()
         {
             _configuration = LoadAppConfigurations;

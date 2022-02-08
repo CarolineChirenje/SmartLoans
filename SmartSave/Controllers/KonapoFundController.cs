@@ -274,15 +274,13 @@ namespace SmartSave.Controllers
 
                 }
                 return RedirectToAction("LogOut", "Login");
-
-            }
+           }
             catch (Exception ex)
             {
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return RedirectToAction(nameof(KonapoFunds));
             }
-
-        }
+       }
 
         [OverrideUserNotFoundFilter]
         public ActionResult Verify(int id)
