@@ -193,7 +193,6 @@ namespace SmartSave.Controllers
                         return View(client);
                     }
                 }
-
                 return RedirectToAction("ViewClient", new { id = client.ClientID });
             }
             TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -239,7 +238,6 @@ namespace SmartSave.Controllers
             {
                 if (await (_service.Save(ClientContact)) == 0)
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
             }
             return RedirectToAction("Contacts", new { id = ClientContact.ClientID });
         }
@@ -258,9 +256,7 @@ namespace SmartSave.Controllers
 
         [HttpPost]
         public async Task<IActionResult> ViewContact(ClientContact clientContact)
-        {
-
-            if (UtilityService.IsNotNull(clientContact))
+        {            if (UtilityService.IsNotNull(clientContact))
             {
                 GetDropDownLists();
                 int clientContactID = clientContact.ClientContactID;
@@ -709,7 +705,6 @@ namespace SmartSave.Controllers
                     if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
                         emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
-
                 }
                 return RedirectToAction("PendingTransactions", new { id = statement.ClientID });
             }
@@ -722,8 +717,7 @@ namespace SmartSave.Controllers
             using (MemoryStream stream = new MemoryStream())
             {
                 try
-                {
-                    Document document = printOut.Print(statement);
+                {                    Document document = printOut.Print(statement);
                     // Create a renderer for the MigraDoc document.
                     PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
                     {

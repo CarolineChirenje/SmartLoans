@@ -156,20 +156,7 @@ namespace SmartSave.Controllers
         }
         public ActionResult Authenticate(UserAuthenticate userAuthenticate)
         {
-
-            Email email = new Email();
-            email.To = userAuthenticate.EmailAddress;
-            email.AttachmentFromMemory = null;
-            string _emailBody = @$"Hello {userAuthenticate.FullName},<br/><br/>" +
-                          "Your one time passcode for <a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + "</a> is : <br/>" +
-                          "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>" + Encryption.Decrypt(userAuthenticate.PinCode) + "</b><br/>" +
-                           "Please be aware that this code is valid until "
-                            + userAuthenticate.ExpiryDate + ".<br/><br/>" +
-                           @"Regards,<br/><br/><b>" + UtilityService.ApplicationName + " Customer Service</b><br/><br/><br/>"
-                           + "Please do not reply to this email.<br/><br/>" +
-                            @"For any questions or information, please contact: email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/>";
-            email.Body = UtilityService.HtmlDecode(_emailBody);
-            email.Subject = UtilityService.SiteEnvironment == SiteEnvironment.Production ? $"Passcode for {UtilityService.ApplicationName}" : $"{UtilityService.SiteEnvironment} - Passcode for {UtilityService.ApplicationName}";
+            Email email = EmailService.SendPassCode(userAuthenticate);
             bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
             if (emailSuccessResult)
                 return RedirectToAction("Verify", "Login", userAuthenticate);
@@ -256,18 +243,8 @@ namespace SmartSave.Controllers
             var result = _service.GeneratePinCode(authenticate);
             if (UtilityService.IsNotNull(result))
             {
-                string pincode = result.PinCode;
-                Email email = new Email();
-                email.To = model.EmailAddress;
-                email.AttachmentFromMemory = null;
-                string _emailBody = @"We have sent you this email in response to your request to reset your password on " + UtilityService.ApplicationName + ".<br/><br/>" +
-                              "To reset your password for <a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + "</a>, please follow the link below:<a href = " + UtilityService.SiteURLPasswordReset + ">Password Reset Link </a>." +
-                              "CONFIRMATION CODE <b>" + Encryption.Decrypt(pincode) + "</b><br/><br/>" +
-                               "We recommend that you keep your password secure and not share it with anyone.If you feel your password has been compromised, you can change it by  logging in to  " +
-                               "<a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + " </a>  ,going to your profile and clicking the  <b>'Change Email Address or Password'</b> link.<br/><br/>" +
-                               @"If you need help, or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/><b>" + UtilityService.ApplicationName + " Customer Service</b>.";
-                email.Body = UtilityService.HtmlDecode(_emailBody);
-                email.Subject = $"Password Reset -{UtilityService.ApplicationName}";
+                authenticate.PinCode = result.PinCode;
+                Email email = EmailService.SendPasswordReset(authenticate);
                 bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
                 if (emailSuccessResult)
                 {
@@ -390,17 +367,8 @@ namespace SmartSave.Controllers
                 var result = _service.GeneratePinCode(authenticate);
                 if (UtilityService.IsNotNull(result))
                 {
-                    string pincode = result.PinCode;
-                    Email email = new Email();
-                    email.To = model.EmailAddress;
-                    email.AttachmentFromMemory = null;
-                    string _emailBody = @"We have sent you this email in response to your request to create an account on " + UtilityService.ApplicationName + ".<br/><br/>" +
-                                  "To continue  with this process on <a href = " + UtilityService.SiteURL + ">" + UtilityService.ApplicationName + "</a> , please follow the link below : <a href = " + UtilityService.SiteURLAccountCreation + ">Account Creation  Link </a> ." +
-                                    "CONFIRMATION CODE <b>" + Encryption.Decrypt(pincode) + "</b><br/><br/>" +
-                                   "We recommend that you keep your account details secure and not share it with anyone.If you feel your credentials have  been compromised, " +
-                                    @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ".<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
-                    email.Body = UtilityService.HtmlDecode(_emailBody);
-                    email.Subject = $"Account Creation - {UtilityService.ApplicationName}";
+                    authenticate.PinCode = result.PinCode;
+                    Email email = EmailService.SendAccountCreationCode(authenticate); 
                     bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
                     if (emailSuccessResult)
                     {
@@ -408,8 +376,7 @@ namespace SmartSave.Controllers
                         return View(model);
                     }
                     else
-                    {
-                        TempData[MessageDisplayType.Success.ToString()] = $"Failed to send email with further  details regarding account creation.Please contact our Customer Service Support on {UtilityService.CustomerServiceNumber} for help.";
+                    {  TempData[MessageDisplayType.Success.ToString()] = $"Failed to send email with further  details regarding account creation.Please contact our Customer Service Support on {UtilityService.CustomerServiceNumber} for help.";
                         return View(model);
                     }
                 }
@@ -449,8 +416,7 @@ namespace SmartSave.Controllers
                     return View(Code);
                 }
                 else
-                {
-                    return RedirectToAction("FinaliseAccount", new { id = pinReset.ClientID });
+                {                    return RedirectToAction("FinaliseAccount", new { id = pinReset.ClientID });
                 }
             }
             else
@@ -489,16 +455,9 @@ namespace SmartSave.Controllers
             }
             else
             {
-
-                Email email = new Email();
-                email.To = client.EmailAddress;
-                email.AttachmentFromMemory = null;
-                string _emailBody = @"Your user account has been created successfully  account on " + UtilityService.ApplicationName + ".<br/><br/>" +
-                                   "We recommend that you keep your account details secure and not share it with anyone.If you feel your credentials have  been compromised, " +
-                                @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + "customer service  at  " + UtilityService.CustomerServiceNumber + ". Your login password is <b>" + _userService.GetCredential(result) + "</b>.<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
-                email.Body = UtilityService.HtmlDecode(_emailBody);
-                email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
-                bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
+              string  password= _userService.GetCredential(result);
+                Email email = EmailService.SendAccountCreationConfirmation(client.EmailAddress,password);
+                 bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
                 if (emailSuccessResult)
                 {
                     TempData[MessageDisplayType.Success.ToString()] = $"Account creation complete.We have sent an email to {client.EmailAddress} with your login credentials.";
