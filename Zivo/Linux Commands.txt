@@ -1,0 +1,7 @@
+ cp -R /home/elroitecProjects/SmartWealth/Test /home/elroitecProjects/SmartWealth/Test2
+ sudo systemctl daemon-reload
+ sudo systemctl enable SmartAsyncMailing.service 
+ sudo systemctl start SmartAsyncMailing.service 
+ sudo systemctl status SmartAsyncMailing.service 
+ ls -la
+ 

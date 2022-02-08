@@ -17,5 +17,3 @@ C:\DEV\SmartWealth\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.cspro
 C:\DEV\SmartWealth\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.dll
 C:\DEV\SmartWealth\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.pdb
 C:\DEV\SmartWealth\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.genruntimeconfig.cache
-C:\DEV\SmartWealth\SmartDataAccess\bin\Debug\netcoreapp3.1\appsettings.Development.json
-C:\DEV\SmartWealth\SmartDataAccess\bin\Debug\netcoreapp3.1\appsettings.json

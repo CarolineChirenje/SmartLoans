@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Http;
 using SmartDataAccess;
 using System.IO;
 using SmartMail;
+using SmartAsync;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -22,15 +24,13 @@ namespace SmartSave.Controllers
         private readonly IUserService _service;
         readonly IRoleService _roleservice;
         readonly IDepartmentService _departmentservice;
-        readonly IMailService _mailservice;
         readonly IEmailTemplateService _emailTemplateService;
         public UserController(IUserService service, IRoleService roleservice,
-        IDepartmentService departmentService, IMailService mailService, IEmailTemplateService emailTemplateService)
+        IDepartmentService departmentService, IEmailTemplateService emailTemplateService)
         {
             _service = service;
             _roleservice = roleservice;
             _departmentservice = departmentService;
-            _mailservice = mailService;
             _emailTemplateService = emailTemplateService;
         }
 
@@ -50,9 +50,6 @@ namespace SmartSave.Controllers
             ViewBag.UserID = user.UserID;
             return View(_service.GetUserRoles(id));
         }
-
-
-
         public IActionResult AddUser()
         {
             PopulateDropDownLists();
@@ -117,12 +114,9 @@ namespace SmartSave.Controllers
                         email.Body = UtilityService.HtmlDecode(_emailBody);
                         email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
                     }
-                    await _mailservice.SendMail(email);
-
+                    RabbitQueue.Publish(email.ToJson());
                     return RedirectToAction("ViewUser", new { id = result });
                 }
-
-
             }
             return View(user);
         }
@@ -136,7 +130,6 @@ namespace SmartSave.Controllers
                 return File(ProfileImage, "image/png");
             else
                 return null;
-
         }
 
         // GET:
@@ -145,7 +138,6 @@ namespace SmartSave.Controllers
             if (id == 0 && username == null)
                 return RedirectToAction(nameof(Users));
             ViewBag.DepartmentList = GetDepartments();
-
             HttpContext.Session.SetString("UserID", id.ToString());
             PopulateDropDownLists();
             return View(await _service.FindUser(id, username));

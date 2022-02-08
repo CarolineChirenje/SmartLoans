@@ -14,5 +14,3 @@ C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.cspro
 C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.dll
 C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.pdb
-C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.1\appsettings.Development.json
-C:\DEV\SmartWealth\SmartInterfaces\bin\Debug\netcoreapp3.1\appsettings.json

@@ -22,5 +22,3 @@ C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.
 C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.dll
 C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.pdb
-C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\appsettings.Development.json
-C:\DEV\SmartWealth\SmartReporting\bin\Debug\netcoreapp3.1\appsettings.json

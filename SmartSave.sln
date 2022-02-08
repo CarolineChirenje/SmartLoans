@@ -23,9 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartMail", "SmartMail\Smar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartExtensions", "SmartExtensions\SmartExtensions.csproj", "{53646761-F3DE-40A7-AFEC-12D5FAB696EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAsync", "SmartQueue\SmartAsync.csproj", "{D3D7F9ED-0539-4139-9ADE-DB17FAE36B36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartAsync", "SmartQueue\SmartAsync.csproj", "{D3D7F9ED-0539-4139-9ADE-DB17FAE36B36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAsyncMailing", "SmartAsynMailing\SmartAsyncMailing.csproj", "{2A16BDE8-8239-49EF-BA29-3E19C0FC6EC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartAsyncMailing", "SmartAsyncMailing\SmartAsyncMailing.csproj", "{6E6E1383-B514-4946-A9A2-8C11E81EB7FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,10 +77,10 @@ Global
 		{D3D7F9ED-0539-4139-9ADE-DB17FAE36B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3D7F9ED-0539-4139-9ADE-DB17FAE36B36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3D7F9ED-0539-4139-9ADE-DB17FAE36B36}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2A16BDE8-8239-49EF-BA29-3E19C0FC6EC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A16BDE8-8239-49EF-BA29-3E19C0FC6EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A16BDE8-8239-49EF-BA29-3E19C0FC6EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A16BDE8-8239-49EF-BA29-3E19C0FC6EC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E6E1383-B514-4946-A9A2-8C11E81EB7FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E6E1383-B514-4946-A9A2-8C11E81EB7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E6E1383-B514-4946-A9A2-8C11E81EB7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E6E1383-B514-4946-A9A2-8C11E81EB7FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

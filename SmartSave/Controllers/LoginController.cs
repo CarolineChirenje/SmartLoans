@@ -26,14 +26,13 @@ namespace SmartSave.Controllers
         private readonly IClientService _clientService;
         private readonly IUserService _userService;
 
-        public LoginController(DatabaseContext context, ILoginService service, IMailService mailService,
+        public LoginController(DatabaseContext context, ILoginService service,
         IClientService clientService, IUserService userService)
         {
             _context = context;
             _service = service;
             _clientService = clientService;
             _userService = userService;
-
         }
         public IActionResult UserNotFound()
         {
