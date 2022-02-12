@@ -94,7 +94,7 @@
 
         <!-- /.box-body -->
         <div class="box-footer">
-            @if (UtilityService.HasPermission(Permissions.Add_Bank_Account))
+            @if (UserAppData.HasPermission(Permissions.Add_Bank_Account))
             {
                 <button type="submit" class="btn btn-info pull-right">Create</button>
             }

@@ -8,6 +8,7 @@ using SmartHelper;
 using SmartDomain;
 using SmartLogic.IService;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -19,7 +20,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> TransactionType()
         {
             Permissions permission = Permissions.View_Transaction_Type;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.TransactionType());
@@ -54,7 +55,7 @@ namespace SmartSave.Controllers
            // PopulateDropDownList();
            
                 TransactionType update = await (_service.FindTransactionType(TransactionType.TransactionTypeID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                 TransactionType.TransactionStatus = await _service.FindTransactionStatus(TransactionType.TransactionStatusID);
                 if (await (_service.Update(TransactionType)) == 0)

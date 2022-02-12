@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartLogic;
 
@@ -29,7 +30,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Companies()
         {
             Permissions permission = Permissions.View_Company;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Companies());
@@ -94,7 +95,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Company company = await (_service.FindCompany(Company.CompanyID));
-                if (UtilityService.IsNotNull(company))
+                if (company.IsNotNull())
                 {   // To convert the  uploaded Photo as Byte Array before save to DB    
                     if (CompanyLogo != null)
                     {
@@ -125,7 +126,7 @@ namespace SmartSave.Controllers
         public ActionResult RetrieveImage(int id)
         {
             Company company = _service.FindCompany(id).Result;
-            if (UtilityService.IsNull(company))
+            if (company.IsNull())
                 return null;
             byte[] logo = company.CompanyLogo;
             if (logo != null)
@@ -141,7 +142,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ActionCompany(int id, bool status)
         {
             Company company = await (_service.FindCompany(id));
-            if (UtilityService.IsNotNull(company))
+            if (company.IsNotNull())
             {
                 if (await (_service.ActionCompany(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
                 {
@@ -155,7 +156,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             Company company = await (_service.FindCompany(id));
-            if (UtilityService.IsNotNull(company))
+            if (company.IsNotNull())
             {
                 if (await (_service.ActionCompany(id, DatabaseAction.Remove)) > 0)
                     return RedirectToAction(nameof(Companies));

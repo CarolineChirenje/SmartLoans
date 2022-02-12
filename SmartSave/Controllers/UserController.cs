@@ -38,7 +38,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Users()
         {
             Permissions permission = Permissions.View_User;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Users());
@@ -98,21 +98,18 @@ namespace SmartSave.Controllers
                         To = user.EmailAddress
                     };
 
-                    if (UtilityService.IsNotNull(emailTemplate))
+                    if (emailTemplate.IsNotNull())
                     {
                         email.Body = emailTemplate.Body + _service.GetCredential(result);
                         email.Subject = emailTemplate.Subject;
                     }
                     else
-                    {
-
-
-                        email.AttachmentFromMemory = null;
-                        string _emailBody = @"Dear  " + user.UserFullName + ",<br/><br/> Your user account has been created successfully  account on " + UtilityService.ApplicationName + ".<br/><br/>" +
+                    {                        email.AttachmentFromMemory = null;
+                        string _emailBody = @"Dear  " + user.UserFullName + ",<br/><br/> Your user account has been created successfully  account on " + UserAppData.ApplicationName + ".<br/><br/>" +
                                    "We recommend that you keep your account details secure and not share it with anyone.If you feel your credentials have  been compromised, " +
-                                @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UtilityService.ApplicationName + " customer service  at  " + UtilityService.CustomerServiceNumber + ". Your login password is <b>" + _service.GetCredential(result) + "</b>.<br/><br/> Regards,<br/><br/><br/>" + UtilityService.ApplicationName + " Customer Service";
+                                @"or you have any other questions, feel free to email " + UtilityService.CustomerServiceEmail + ", or call " + UserAppData.ApplicationName + " customer service  at  " + UtilityService.CustomerServiceNumber + ". Your login password is <b>" + _service.GetCredential(result) + "</b>.<br/><br/> Regards,<br/><br/><br/>" + UserAppData.ApplicationName + " Customer Service";
                         email.Body = UtilityService.HtmlDecode(_emailBody);
-                        email.Subject = $"New Account Created - {UtilityService.ApplicationName}";
+                        email.Subject = $"New Account Created - {UserAppData.ApplicationName}";
                     }
                     RabbitQueue.Publish(email.ToJson());
                     return RedirectToAction("ViewUser", new { id = result });
@@ -123,7 +120,7 @@ namespace SmartSave.Controllers
         public ActionResult RetrieveImage(int id)
         {
             User user = _service.FindUser(id).Result;
-            if (UtilityService.IsNull(user))
+            if (user.IsNull())
                 return null;
             byte[] ProfileImage = user.ProfileImage;
             if (ProfileImage != null)
@@ -151,7 +148,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 User update = await _service.FindUser(user.UserID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 { // To convert the  uploaded Photo as Byte Array before save to DB    
                     if (ProfileImage != null)
                     {

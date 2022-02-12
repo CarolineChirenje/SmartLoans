@@ -10,6 +10,7 @@ using System.Globalization;
 using Microsoft.VisualBasic;
 using Microsoft.EntityFrameworkCore.Internal;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -92,17 +93,17 @@ namespace SmartLogic
                 PaymentsFile.TransRef = NewTransactionRef;
                 PaymentsFile.TransactionTypeID = (int)transaction;
                 PaymentsFile.PaymentStatusID = (int)PaymentState.Paid;
-                PaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
+                PaymentsFile.LastChangedBy = UserAppData.CurrentUserName;
                 PaymentsFile.LastChangedDate = DateTime.Now;
                 _context.Add(PaymentsFile);
                 result = await _context.SaveChangesAsync();
                 if (PaymentsFile.ClientFeeID.HasValue)
                 {
                     ClientFee clientFee = _context.ClientFees.Find(PaymentsFile.ClientFeeID);
-                    if (UtilityService.IsNotNull(clientFee))
+                    if (clientFee.IsNotNull())
                     {
                         clientFee.DatePaid = DateTime.Now;
-                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                        clientFee.LastChangedBy = UserAppData.CurrentUserName;
                         clientFee.LastChangedDate = DateTime.Now;
                         _context.Update(clientFee);
                         result = await _context.SaveChangesAsync();
@@ -194,7 +195,7 @@ namespace SmartLogic
                     Year = DateTime.Now.Year,
                     Month = DateTime.Now.Month,
                     ParentPaymentID = transactionID,
-                    LastChangedBy = UtilityService.CurrentUserName,
+                    LastChangedBy = UserAppData.CurrentUserName,
                     LastChangedDate = DateTime.Now,
                     TransactionTypeID = (int)transaction,
                     PaymentStatusID = (int)PaymentState.Reversed,
@@ -223,10 +224,10 @@ namespace SmartLogic
                 if (PaymentsFile.ClientFeeID.HasValue)
                 {
                     ClientFee clientFee = _context.ClientFees.Find(PaymentsFile.ClientFeeID);
-                    if (UtilityService.IsNotNull(clientFee))
+                    if (clientFee.IsNotNull())
                     {
                         clientFee.DatePaid = null;
-                        clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                        clientFee.LastChangedBy = UserAppData.CurrentUserName;
                         clientFee.LastChangedDate = DateTime.Now;
                         _context.Update(clientFee);
                         result = await _context.SaveChangesAsync();
@@ -262,7 +263,7 @@ namespace SmartLogic
                 Transaction oldPaymentsFile = _context.Transactions.Find(transactionID);
                 string old_Narration = oldPaymentsFile.Narration;
                 string append_Narration = $"(R) - {newTransRef}.";
-                oldPaymentsFile.LastChangedBy = UtilityService.CurrentUserName;
+                oldPaymentsFile.LastChangedBy = UserAppData.CurrentUserName;
                 oldPaymentsFile.LastChangedDate = DateTime.Now;
                 oldPaymentsFile.PaymentStatusID = oldPaymentStatus;
                 oldPaymentsFile.ReversalPaymentID = reversalPaymentID;
@@ -427,7 +428,7 @@ namespace SmartLogic
             var clientDeduction = _context.Invoices
                     .FirstOrDefault(cd => cd.InvoiceID == InvoiceID);
             InvoiceState invoiceState = InvoiceState.Unknown;
-            if (UtilityService.IsNotNull(clientDeduction))
+            if (clientDeduction.IsNotNull())
                 invoiceState = (InvoiceState)clientDeduction.InvoiceStatusID;
 
             return invoiceState;
@@ -456,10 +457,10 @@ namespace SmartLogic
                 int result = 0;
                 Invoice update = _context.Invoices.
                 Where(t => t.InvoiceID == InvoiceID).FirstOrDefault();
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     update.InvoiceStatusID = (int)InvoiceState.Finalised;
-                    update.LastChangedBy = UtilityService.CurrentUserName;
+                    update.LastChangedBy = UserAppData.CurrentUserName;
                     update.LastChangedDate = DateTime.Now;
                     _context.Entry(update).State = EntityState.Modified;
                     result = _context.SaveChanges();
@@ -481,7 +482,7 @@ namespace SmartLogic
                 {
                     InvoiceDate = InvoiceDate,
                     DueDate = DueDate,
-                    LastChangedBy = UtilityService.CurrentUserName,
+                    LastChangedBy = UserAppData.CurrentUserName,
                     LastChangedDate = DateTime.Now,
                     InvoiceStatusID = (int)InvoiceState.Created,
 
@@ -513,7 +514,7 @@ namespace SmartLogic
                        ThenInclude(c => c.ClientOccupationHistory).
                        Where(t => ClientProductIDs.Contains(t.ClientProductID)).ToList();
 
-                if (UtilityService.IsNotNull(clientProduct) && clientProduct.Count() > 0)
+                if (!clientProduct.ListIsEmpty())
                 {
                     foreach (var item in clientProduct)
                     {//1.
@@ -531,7 +532,7 @@ namespace SmartLogic
                             else
                                 deductionApplied = DeductionApplied.Product;
                             var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
-                            if (UtilityService.IsNotNull(_lastSalary))
+                            if (_lastSalary.IsNotNull())
                                 _previousSalary = _lastSalary.Salary;
 
                             if (_previousSalary.HasValue)
@@ -561,7 +562,7 @@ namespace SmartLogic
                             TotalDeductionPercentage = _totalDeductionPercentage,
                             DeductionPercentage = _percentageDeduction,
                             AdditionalDeductionPercentage = _percentageIncrement,
-                            LastChangedBy = UtilityService.CurrentUserName,
+                            LastChangedBy = UserAppData.CurrentUserName,
                             LastChangedDate = DateTime.Now,
                             InvoiceNumber = $"{item.Client.AccountNumber}-INV-{InvoiceID}",
                             DeductionTypeID = (int)deductionApplied,
@@ -579,10 +580,10 @@ namespace SmartLogic
                         {
                             Invoice update = _context.Invoices.
                             Where(t => t.InvoiceID == InvoiceID).FirstOrDefault();
-                            if (UtilityService.IsNotNull(update))
+                            if (update.IsNotNull())
                             {
                                 update.InvoiceStatusID = (int)InvoiceState.Processed;
-                                update.LastChangedBy = UtilityService.CurrentUserName;
+                                update.LastChangedBy = UserAppData.CurrentUserName;
                                 update.LastChangedDate = DateTime.Now;
                                 _context.Entry(update).State = EntityState.Modified;
                                 return _context.SaveChanges();
@@ -704,11 +705,11 @@ namespace SmartLogic
                 int result = 0;
                 InvoiceDetails invoiceDetails = _context.InvoiceDetails.
                 Where(t => t.InvoiceDetailID == invoiceDetailID).FirstOrDefault();
-                if (UtilityService.IsNotNull(invoiceDetails))
+                if (invoiceDetails.IsNotNull())
                 {
                     invoiceDetails.PaymentStatusID = paymentStatusID;
                     invoiceDetails.DatePaid = DatePaid;
-                    invoiceDetails.LastChangedBy = UtilityService.CurrentUserName;
+                    invoiceDetails.LastChangedBy = UserAppData.CurrentUserName;
                     invoiceDetails.LastChangedDate = DateTime.Now;
                     _context.Entry(invoiceDetails).State = EntityState.Modified;
                     result = _context.SaveChanges();

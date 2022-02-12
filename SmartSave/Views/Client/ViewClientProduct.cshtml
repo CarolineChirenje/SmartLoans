@@ -93,12 +93,12 @@
 
                         </div>
                         <div class="modal-footer">
-                            @if (UtilityService.HasPermission(Permissions.Update_Client_Product))
+                            @if (UserAppData.HasPermission(Permissions.Update_Client_Product))
                             {
                                 <button type="submit" class="btn btn-primary">Update</button>}
-                            @if (UtilityService.HasPermission(Permissions.Delete_Client_Product))
+                            @if (UserAppData.HasPermission(Permissions.Delete_Client_Product))
                             {<a class="btn btn-danger" asp-controller="Client" asp-action="ActionClientProduct" asp-route-productid="@Model.ClientProductID" asp-route-Clientid="@Model.ClientID">Delete</a>
-                            }  @if (UtilityService.HasPermission(Permissions.View_Client))
+                            }  @if (UserAppData.HasPermission(Permissions.View_Client))
                             {<a class="btn btn-info" asp-controller="Client" asp-action="Products" asp-route-id="@Model.ClientID">View More Products</a>
                             } <a class="btn btn-default" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">Cancel</a>
                         </div>

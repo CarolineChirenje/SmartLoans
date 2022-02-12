@@ -43,7 +43,7 @@
                                     <th>Name</th>
                                     <th>Last Changed Date</th>
                                     <th>Changed By</th>
-                                    @if (UtilityService.HasPermission(Permissions.Remove_Permissions))
+                                    @if (UserAppData.HasPermission(Permissions.Remove_Permissions))
                                     {
                                         <th>Action</th>
                                     }
@@ -57,7 +57,7 @@
                                         @{
                                             string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
                                         }
-                                        @if (UtilityService.HasPermission(Permissions.View_Permissions))
+                                        @if (UserAppData.HasPermission(Permissions.View_Permissions))
                                         {
                                             <td><a target="_blank" asp-controller="Roles" asp-action="ViewPermission" asp-route-id="@item.PermissionID">@item.Permission.Name</a></td>
 
@@ -69,7 +69,7 @@
                                         }
                                         <td>@dateCreated</td>
                                         <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
-                                        @if (UtilityService.HasPermission(Permissions.Remove_Permissions))
+                                        @if (UserAppData.HasPermission(Permissions.Remove_Permissions))
                                         {
                                             <td><a asp-controller="Roles" asp-action="RemovePermission" asp-route-id="@item.PermissionID" asp-route-roleID="@item.RoleID">Remove</a></td>
                                         }

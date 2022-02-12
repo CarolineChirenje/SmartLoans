@@ -14,3 +14,5 @@ C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.csproj.CoreComp
 C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.dll
 C:\DEV\SmartWealth\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.pdb
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartExtensions.dll
+C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartExtensions.pdb

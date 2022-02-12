@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SmartDataAccess;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartInterfaces;
 using SmartLog;
@@ -362,7 +363,7 @@ namespace SmartLogic
             }
         }
         public List<User> GetInstructors() => _context.Users
-        .Include(ur => ur.UserRoles).Where(x => x.IsActive).ToList();
+        .Include(ur => ur.UserRoles).Where(x => x.IsActive && x.IsInstructor).ToList();
 
         public Custom DocumentFormatMatch(string documentFormat, int DocumentTypeID)
         {
@@ -426,7 +427,7 @@ namespace SmartLogic
 
                 var clientCourse = _context.ClientCourses.Where(c => c.ClientID == clientid && c.CourseID == courseid).FirstOrDefault();
                 int _ClientCourseID = 0;
-                if (UtilityService.IsNotNull(clientCourse))
+                if (clientCourse.IsNotNull())
                     _ClientCourseID = clientCourse.ClientCourseID;
 
                 IEnumerable<int> courseSessions = from c in _context.ClientTranscripts

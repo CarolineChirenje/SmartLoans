@@ -85,11 +85,11 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="DocumentType" asp-action="DocumentTypes">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Document_Type))
+                @if (UserAppData.HasPermission(Permissions.Update_Document_Type))
                 {
                     <button type="submit" class="btn btn-info">Update</button>
                 }
-                @if (UtilityService.HasPermission(Permissions.Delete_Document_Type))
+                @if (UserAppData.HasPermission(Permissions.Delete_Document_Type))
                 {
                     <a class="btn btn-danger" asp-controller="DocumentType" asp-action="Delete" asp-route-id="@Model.DocumentTypeID">Delete</a>
                 }

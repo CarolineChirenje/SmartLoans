@@ -43,7 +43,7 @@
                                             string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
 
                                         }
-                                        @if (UtilityService.HasPermission(Permissions.Update_Currency))
+                                        @if (UserAppData.HasPermission(Permissions.Update_Currency))
                                         {
                                             <td><a asp-controller="Currency" asp-action="ViewCurrency" asp-route-id="@item.CurrencyID">@item.Name</a></td>
                                         }

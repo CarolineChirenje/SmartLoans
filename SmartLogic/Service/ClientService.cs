@@ -8,6 +8,7 @@ using SmartHelper;
 using SmartDataAccess;
 using SmartLog;
 using SmartInterfaces;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -39,7 +40,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     Client.IsActive = DatabaseAction.Deactivate != action;
-                    Client.LastChangedBy = UtilityService.CurrentUserName;
+                    Client.LastChangedBy = UserAppData.CurrentUserName;
                     Client.LastChangedDate = DateTime.Now;
                     _context.Update(Client);
                 }
@@ -106,7 +107,7 @@ namespace SmartLogic
                 else
                     result = await _context.Clients.Where(c => c.EmailAddress.Equals(emailAddress) && c.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
 
-                if (UtilityService.IsNotNull(result))
+                if (result.IsNotNull())
                 {
                     ClientPeek peek = PeekClient(result);
                     return peek;
@@ -143,7 +144,7 @@ namespace SmartLogic
                     Client = await _context.Clients.FindAsync(Clientid);
                 else
                     Client = await _context.Clients.Where(r => r.AccountNumber.Equals(accountNumber.Trim())).FirstOrDefaultAsync();
-                if (UtilityService.IsNotNull(Client))
+                if (Client.IsNotNull())
                 {
                     Client result = await _context.Clients.AsNoTracking().
                                 Include(c => c.JointApplicant).ThenInclude(r => r.RecordStatus).
@@ -171,7 +172,7 @@ namespace SmartLogic
         {
             try
             {
-                if (UtilityService.IsNull(result))
+                if (result.IsNotNull())
                     return null;
                 JointApplicantForm jointApplicant = new JointApplicantForm
                 {
@@ -207,7 +208,7 @@ namespace SmartLogic
             try
             {
                 var ClientForm = FindClient(clientID).Result;
-                if (UtilityService.IsNull(ClientForm))
+                if (ClientForm.IsNull())
                     return "Uknown";
                 else
                     return ClientForm.ClientFullName;
@@ -251,14 +252,14 @@ namespace SmartLogic
                     client.AccountNumber = clientForm.AccountNumber;
 
                 client.UserName = UtilityService.GenerateUserName(clientForm.FirstName, clientForm.LastName);
-                client.LastChangedBy = UtilityService.CurrentUserName;
+                client.LastChangedBy = UserAppData.CurrentUserName;
                 client.LastChangedDate = DateTime.Now;
                 client.RegistrationDate = DateTime.Now;
                 client.IsActive = clientForm.IsActive;
 
                 if (clientForm.ClientAccountTypeID == (int)Client_AccountType.Joint)
                 {
-                    if (UtilityService.IsNotNull(clientForm.JointApplicant))
+                    if (clientForm.JointApplicant.IsNotNull())
                     {
                         client.JointApplicant = new JointApplicant
                         {
@@ -277,7 +278,7 @@ namespace SmartLogic
                             AddressLine1 = clientForm.JointApplicant.AddressLine1,
                             AddressLine2 = clientForm.JointApplicant.AddressLine2,
                             RecordStatusID = (int)RecordState.Active,
-                            LastChangedBy = UtilityService.CurrentUserName,
+                            LastChangedBy = UserAppData.CurrentUserName,
                             LastChangedDate = DateTime.Now
                         };
 
@@ -316,7 +317,7 @@ namespace SmartLogic
                     };
                     _context.Add(clientOccupationHistory);
                 }
-                if (UtilityService.IsNotNull(updateClient))
+                if (updateClient.IsNotNull())
                 {
                     updateClient.FirstName = clientForm.FirstName;
                     updateClient.TitleID = clientForm.TitleID;
@@ -333,7 +334,7 @@ namespace SmartLogic
                     updateClient.DateOfBirth = clientForm.DateOfBirth;
                     updateClient.DepartmentID = clientForm.DepartmentID;
                     updateClient.GenderID = clientForm.GenderID;
-                    updateClient.LastChangedBy = UtilityService.CurrentUserName;
+                    updateClient.LastChangedBy = UserAppData.CurrentUserName;
                     updateClient.LastChangedDate = DateTime.Now;
                     updateClient.Salary = clientForm.Salary;
                     updateClient.Occupation = clientForm.Occupation;
@@ -346,11 +347,11 @@ namespace SmartLogic
                 if (result > 0)
                 {  // also need to update id number and email address on user account 
                     User user = _context.Users.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
-                    if (UtilityService.IsNotNull(user))
+                    if (user.IsNotNull())
                     {
                         user.EmailAddress = clientForm.EmailAddress;
                         user.IDNumber = clientForm.IDNumber;
-                        user.LastChangedBy = UtilityService.CurrentUserName;
+                        user.LastChangedBy = UserAppData.CurrentUserName;
                         user.LastChangedDate = DateTime.Now;
                         _context.Update(user);
                         result = await _context.SaveChangesAsync();
@@ -359,7 +360,7 @@ namespace SmartLogic
 
                     if (clientForm.ClientAccountTypeID == (int)Client_AccountType.Joint)
                     {
-                        if (UtilityService.IsNotNull(clientForm.JointApplicant))
+                        if (clientForm.JointApplicant.IsNotNull())
                         {
                             clientForm.JointApplicant.ClientID = clientForm.ClientID;
                             await Update(clientForm.JointApplicant);
@@ -381,14 +382,14 @@ namespace SmartLogic
             try
             {
                 JointApplicant updateApplicant = await _context.JointApplicants.FindAsync(applicantForm.JointApplicantID);
-                if (UtilityService.IsNotNull(updateApplicant))
+                if (updateApplicant.IsNotNull())
                     updateApplicant = await _context.JointApplicants.Where(ja => ja.ClientID == applicantForm.ClientID).FirstOrDefaultAsync();
 
-                if (UtilityService.IsNotNull(updateApplicant))
+                if (updateApplicant.IsNotNull())
                     return await Update(applicantForm);
 
                 applicantForm.RecordStatusID = (int)RecordState.Active;
-                applicantForm.LastChangedBy = UtilityService.CurrentUserName;
+                applicantForm.LastChangedBy = UserAppData.CurrentUserName;
                 applicantForm.LastChangedDate = DateTime.Now;
                 _context.Add(applicantForm);
                 await _context.SaveChangesAsync();
@@ -408,10 +409,10 @@ namespace SmartLogic
             try
             {
                 JointApplicant jointApplicant = await _context.JointApplicants.FindAsync(applicant.JointApplicantID);
-                if (UtilityService.IsNull(jointApplicant))
+                if (jointApplicant.IsNotNull())
                     jointApplicant = await _context.JointApplicants.Where(ja => ja.ClientID == applicant.ClientID).FirstOrDefaultAsync();
 
-                if (UtilityService.IsNotNull(jointApplicant))
+                if (jointApplicant.IsNotNull())
                 {
                     jointApplicant.ApplicantTitleID = applicant.ApplicantTitleID;
 
@@ -428,7 +429,7 @@ namespace SmartLogic
                     jointApplicant.MobileNumber = applicant.MobileNumber;
                     jointApplicant.DateOfBirth = applicant.DateOfBirth;
                     jointApplicant.ApplicantGenderID = applicant.ApplicantGenderID;
-                    jointApplicant.LastChangedBy = UtilityService.CurrentUserName;
+                    jointApplicant.LastChangedBy = UserAppData.CurrentUserName;
                     jointApplicant.LastChangedDate = DateTime.Now;
                     jointApplicant.RelationshipTypeID = applicant.RelationshipTypeID;
                     _context.Update(jointApplicant);
@@ -463,7 +464,7 @@ namespace SmartLogic
                    Where(c => c.ClientID == clientID).
                    OrderByDescending(c => c.AttendanceRegister.AttendanceDate).ToList();
 
-                if (UtilityService.IsNull(registers))
+                if (registers.IsNotNull())
                     return null;
                 Register register = new Register
                 {
@@ -537,7 +538,7 @@ namespace SmartLogic
                     if (record.IsJointAccount)
                     {
                         var jointApplicant = _context.JointApplicants.Where(c => c.ClientID == client.ClientID).FirstOrDefault();
-                        if (UtilityService.IsNotNull(jointApplicant))
+                        if (jointApplicant.IsNotNull())
                         {
                             record.ApplicantTitleID = jointApplicant.ApplicantTitleID;
                             record.JointApplicantInitials = jointApplicant.Initials;
@@ -649,7 +650,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     Client.IsActive = DatabaseAction.Deactivate != action;
-                    Client.LastChangedBy = UtilityService.CurrentUserName;
+                    Client.LastChangedBy = UserAppData.CurrentUserName;
                     Client.LastChangedDate = DateTime.Now;
                     _context.Update(Client);
                 }
@@ -670,7 +671,7 @@ namespace SmartLogic
                 var client = await _context.Clients.
                  Include(c => c.Company).
                 Where(c => c.ClientID == clientID).FirstOrDefaultAsync();
-                if (UtilityService.IsNull(client))
+                if (client.IsNull())
                     return null;
                 var company = client.Company;
                 return company;
@@ -690,7 +691,7 @@ namespace SmartLogic
                 var clientNotes = _context.ClientNotes.
                                 Include(ut => ut.UserType).
                      Where(c => c.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(clientNotes))
+                if (clientNotes.ListIsEmpty())
                     return null;
                 Comments comments = new Comments
                 {
@@ -747,12 +748,12 @@ namespace SmartLogic
         {
             try
             {
-                if (!UtilityService.IsNotNull(ClientNote.DueDate))
+                if (!ClientNote.DueDate.IsNotNull())
                     ClientNote.DueDate = DateTime.Now.AddDays(5);
-                if (!UtilityService.IsNotNull(ClientNote.DateClosed))
+                if (!ClientNote.DateClosed.IsNotNull())
                     ClientNote.DateClosed = DateTime.MinValue;
-                ClientNote.UserTypeID = UtilityService.CurrentUserTypeID;
-                ClientNote.UploadedBy = ClientNote.LastChangedBy = UtilityService.CurrentUserName;
+                ClientNote.UserTypeID = UserAppData.CurrentUserTypeID;
+                ClientNote.UploadedBy = ClientNote.LastChangedBy = UserAppData.CurrentUserName;
                 ClientNote.LastChangedDate = DateTime.Now;
                 ClientNote.DateUploaded = DateTime.Now;
 
@@ -773,16 +774,16 @@ namespace SmartLogic
                 ClientNote clientNote = _context.ClientNotes.Find(note.ClientNoteID);
                 clientNote.Comment = note.Comment;
                 clientNote.DateClosed = note.DateClosed;
-                if (UtilityService.IsNull(note.DueDate))
-                    clientNote.DueDate = DateTime.Now.AddDays(UtilityService.IsNull(UtilityService.ClientNotesDefaultDueDateInterval) ? 5 : UtilityService.ClientNotesDefaultDueDateInterval);
+                if (note.DueDate.IsNull())
+                    clientNote.DueDate = DateTime.Now.AddDays(UtilityService.ClientNotesDefaultDueDateInterval.IsNull() ? 5 : UtilityService.ClientNotesDefaultDueDateInterval);
                 else
                     clientNote.DueDate = note.DueDate;
-                if (UtilityService.IsNull(note.DateClosed))
+                if (note.DateClosed.IsNull())
                     clientNote.DateClosed = DateTime.MinValue;
                 else
                     clientNote.DateClosed = note.DateClosed;
-                clientNote.UserTypeID = UtilityService.CurrentUserTypeID;
-                clientNote.LastChangedBy = UtilityService.CurrentUserName;
+                clientNote.UserTypeID = UserAppData.CurrentUserTypeID;
+                clientNote.LastChangedBy = UserAppData.CurrentUserName;
                 clientNote.LastChangedDate = DateTime.Now;
                 _context.Update(clientNote);
                 return await _context.SaveChangesAsync();
@@ -803,7 +804,7 @@ namespace SmartLogic
                 if (DatabaseAction.Close == action)
                 {
                     ClientNote.DateClosed = DateTime.Now;
-                    ClientNote.LastChangedBy = UtilityService.CurrentUserName;
+                    ClientNote.LastChangedBy = UserAppData.CurrentUserName;
                     ClientNote.LastChangedDate = DateTime.Now;
                     _context.ClientNotes.Update(ClientNote);
                 }
@@ -825,7 +826,7 @@ namespace SmartLogic
                                 Include(ct => ct.RelationshipType).
                  Include(ct => ct.ContactType).
                  Where(c => c.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(clientContacts))
+                if (clientContacts.ListIsEmpty())
                     return null;
                 Contacts contacts = new Contacts
                 {
@@ -864,7 +865,7 @@ namespace SmartLogic
             Include(c => c.Client).ThenInclude(c => c.Title).
         Include(c => c.Client).ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title).
         Where(t => t.ClientContactID == id).FirstOrDefaultAsync();
-                if (UtilityService.IsNull(clientContact))
+                if (clientContact.IsNull())
                     return null;
                 return clientContact;
             }
@@ -879,7 +880,7 @@ namespace SmartLogic
             try
             {
 
-                ClientContact.LastChangedBy = UtilityService.CurrentUserName;
+                ClientContact.LastChangedBy = UserAppData.CurrentUserName;
                 ClientContact.LastChangedDate = DateTime.Now;
                 _context.Add(ClientContact);
                 return (await _context.SaveChangesAsync());
@@ -902,7 +903,7 @@ namespace SmartLogic
                 update.ContactTypeID = Clientcontact.ContactTypeID;
                 update.ContactPerson = Clientcontact.ContactPerson;
                 update.Contact = Clientcontact.Contact;
-                update.LastChangedBy = UtilityService.CurrentUserName;
+                update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Entry(update).State = EntityState.Modified;
                 return await _context.SaveChangesAsync();
@@ -922,7 +923,7 @@ namespace SmartLogic
                     _context.ClientContacts.Remove(contact);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    contact.LastChangedBy = UtilityService.CurrentUserName;
+                    contact.LastChangedBy = UserAppData.CurrentUserName;
                     contact.LastChangedDate = DateTime.Now;
                     _context.Update(contact);
                 }
@@ -942,7 +943,7 @@ namespace SmartLogic
                 var clientDocs = _context.ClientDocuments.
                 Include(cd => cd.DocumentType).
                 Where(c => c.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(clientDocs))
+                if (clientDocs.ListIsEmpty())
                     return null;
                 Docs docs = new Docs
                 {
@@ -996,7 +997,7 @@ namespace SmartLogic
         {
             try
             {
-                ClientDocument.UploadedBy = ClientDocument.LastChangedBy = UtilityService.CurrentUserName;
+                ClientDocument.UploadedBy = ClientDocument.LastChangedBy = UserAppData.CurrentUserName;
                 ClientDocument.DateUploaded = ClientDocument.LastChangedDate = DateTime.Now;
                 _context.Add(ClientDocument);
                 return (await _context.SaveChangesAsync());
@@ -1013,7 +1014,7 @@ namespace SmartLogic
             try
             {
 
-                document.LastChangedBy = UtilityService.CurrentUserName;
+                document.LastChangedBy = UserAppData.CurrentUserName;
                 document.LastChangedDate = DateTime.Now;
                 _context.Update(document);
                 await _context.SaveChangesAsync();
@@ -1051,7 +1052,7 @@ namespace SmartLogic
 
 
                 ClientDocument clientDocument = await _context.ClientDocuments.Where(c => c.ClientID == clientID && c.DocumentTypeID == documentTypeID).FirstOrDefaultAsync();
-                bool result = UtilityService.IsNotNull(clientDocument);
+                bool result = clientDocument.IsNotNull();
 
                 return result;
             }
@@ -1068,7 +1069,7 @@ namespace SmartLogic
             {
                 var transactions = _context.ClientOccupationHistory.
                                Where(c => c.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(transactions))
+                if (transactions.ListIsEmpty())
                     return null;
                 SalaryHistory history = new SalaryHistory
                 {
@@ -1105,7 +1106,7 @@ namespace SmartLogic
             {
                 var medicalDetails = _context.ClientMedicalDetails.
                                Where(c => c.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(medicalDetails))
+                if (medicalDetails.ListIsEmpty())
                     return null;
                 Medical medical = new Medical
                 {
@@ -1157,7 +1158,7 @@ namespace SmartLogic
             try
             {
 
-                ClientMedicalDetail.LastChangedBy = UtilityService.CurrentUserName;
+                ClientMedicalDetail.LastChangedBy = UserAppData.CurrentUserName;
                 ClientMedicalDetail.LastChangedDate = DateTime.Now;
                 _context.Add(ClientMedicalDetail);
                 return (await _context.SaveChangesAsync());
@@ -1181,7 +1182,7 @@ namespace SmartLogic
                 medicalDetail.Hospital = MedicalDetail.Doctor;
                 medicalDetail.Other = MedicalDetail.Other;
                 medicalDetail.Telephone = MedicalDetail.Telephone;
-                medicalDetail.LastChangedBy = UtilityService.CurrentUserName;
+                medicalDetail.LastChangedBy = UserAppData.CurrentUserName;
                 medicalDetail.LastChangedDate = DateTime.Now;
                 medicalDetail.PrescribedMedication = MedicalDetail.PrescribedMedication;
                 _context.Update(medicalDetail);
@@ -1203,7 +1204,7 @@ namespace SmartLogic
                     _context.ClientMedicalDetails.Remove(ClientMedicalDetail);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    ClientMedicalDetail.LastChangedBy = UtilityService.CurrentUserName;
+                    ClientMedicalDetail.LastChangedBy = UserAppData.CurrentUserName;
                     ClientMedicalDetail.LastChangedDate = DateTime.Now;
                     _context.Update(ClientMedicalDetail);
                 }
@@ -1221,7 +1222,7 @@ namespace SmartLogic
             {
                 var clientDependents = _context.ClientDependents.
                                                      Where(c => c.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(clientDependents))
+                if (clientDependents.IsNull())
                     return null;
                 Dependents dependents = new Dependents
                 {
@@ -1274,7 +1275,7 @@ namespace SmartLogic
             try
             {
                 ClientDependent.RegistrationDate = DateTime.Now;
-                ClientDependent.LastChangedBy = UtilityService.CurrentUserName;
+                ClientDependent.LastChangedBy = UserAppData.CurrentUserName;
                 ClientDependent.LastChangedDate = DateTime.Now;
                 _context.Add(ClientDependent);
                 return (await _context.SaveChangesAsync());
@@ -1300,7 +1301,7 @@ namespace SmartLogic
                 dependent.ClientID = ClientDependent.ClientID;
                 dependent.LastName = ClientDependent.LastName;
                 dependent.GenderID = ClientDependent.GenderID;
-                dependent.LastChangedBy = UtilityService.CurrentUserName;
+                dependent.LastChangedBy = UserAppData.CurrentUserName;
                 dependent.LastChangedDate = DateTime.Now;
                 _context.Update(dependent);
                 return await _context.SaveChangesAsync();
@@ -1354,7 +1355,7 @@ namespace SmartLogic
             try
             {
                 int result = 0;
-                clientProduct.LastChangedBy = UtilityService.CurrentUserName;
+                clientProduct.LastChangedBy = UserAppData.CurrentUserName;
                 clientProduct.LastChangedDate = DateTime.Now;
                 _context.Add(clientProduct);
                 result = await _context.SaveChangesAsync();
@@ -1373,7 +1374,7 @@ namespace SmartLogic
                                 ClientID = clientProduct.ClientID,
                                 ProductFeeID = productFee.ProductFeeID,
                                 Amount = productFee.Amount,
-                                LastChangedBy = UtilityService.CurrentUserName,
+                                LastChangedBy = UserAppData.CurrentUserName,
                                 LastChangedDate = DateTime.Now,
                                 ClientProductID = clientProduct.ClientProductID,
                                 DueDate = dueDate
@@ -1390,7 +1391,7 @@ namespace SmartLogic
                                     ClientID = clientProduct.ClientID,
                                     ProductFeeID = productFee.ProductFeeID,
                                     Amount = productFee.Amount,
-                                    LastChangedBy = UtilityService.CurrentUserName,
+                                    LastChangedBy = UserAppData.CurrentUserName,
                                     LastChangedDate = DateTime.Now,
                                     ClientProductID = clientProduct.ClientProductID,
                                     DueDate = dueDate
@@ -1421,7 +1422,7 @@ namespace SmartLogic
                 ClientProduct.DeductionPercentage = clientProduct.DeductionPercentage;
                 ClientProduct.IsActive = clientProduct.IsActive;
                 ClientProduct.DoNotDeduct = clientProduct.DoNotDeduct;
-                ClientProduct.LastChangedBy = UtilityService.CurrentUserName;
+                ClientProduct.LastChangedBy = UserAppData.CurrentUserName;
                 ClientProduct.LastChangedDate = DateTime.Now;
                 _context.Update(ClientProduct);
                 int _result = await _context.SaveChangesAsync();
@@ -1458,7 +1459,7 @@ namespace SmartLogic
                 var products = _context.ClientProducts.
                               Include(p => p.Product).
                 Where(t => t.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(products))
+                if (products.ListIsEmpty())
                     return null;
                 ClientPackages packages = new ClientPackages
                 {
@@ -1549,7 +1550,7 @@ namespace SmartLogic
                 ThenInclude(c => c.CourseTopics).
                 ThenInclude(c => c.CourseSessions).
                  Where(c => c.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(transactions))
+                if (transactions.ListIsEmpty())
                     return null;
                 CoachingProgrammes course = new CoachingProgrammes
                 {
@@ -1613,7 +1614,7 @@ namespace SmartLogic
             try
             {
                 ClientCourse.DateRegistered = DateTime.Now;
-                ClientCourse.LastChangedBy = UtilityService.CurrentUserName;
+                ClientCourse.LastChangedBy = UserAppData.CurrentUserName;
                 ClientCourse.LastChangedDate = DateTime.Now;
                 _context.Add(ClientCourse);
                 int _result = await _context.SaveChangesAsync();
@@ -1632,7 +1633,7 @@ namespace SmartLogic
                                 ClientID = ClientCourse.ClientID,
                                 CourseFeeID = courseFee.CourseFeeID,
                                 Amount = courseFee.Amount,
-                                LastChangedBy = UtilityService.CurrentUserName,
+                                LastChangedBy = UserAppData.CurrentUserName,
                                 LastChangedDate = DateTime.Now,
                                 ClientCourseID = ClientCourse.ClientCourseID,
                                 DueDate = dueDate
@@ -1649,7 +1650,7 @@ namespace SmartLogic
                                     ClientID = ClientCourse.ClientID,
                                     CourseFeeID = courseFee.CourseFeeID,
                                     Amount = courseFee.Amount,
-                                    LastChangedBy = UtilityService.CurrentUserName,
+                                    LastChangedBy = UserAppData.CurrentUserName,
                                     LastChangedDate = DateTime.Now,
                                     ClientCourseID = ClientCourse.ClientCourseID,
                                     DueDate = dueDate
@@ -1679,7 +1680,7 @@ namespace SmartLogic
                 course.CourseID = Course.CourseID;
                 course.DateCompleted = Course.DateCompleted;
                 course.IsDeRegistered = Course.IsDeRegistered;
-                course.LastChangedBy = UtilityService.CurrentUserName;
+                course.LastChangedBy = UserAppData.CurrentUserName;
                 course.LastChangedDate = DateTime.Now;
                 _context.Update(course);
 
@@ -1724,7 +1725,7 @@ namespace SmartLogic
 
                 //1.Same course is still not completed or not deregistered
                 ClientCourse course = await _context.ClientCourses.Where(c => c.ClientID == clientID && c.CourseID == courseID && !c.DateCompleted.HasValue && !c.IsDeRegistered).FirstOrDefaultAsync();
-                bool result = UtilityService.IsNotNull(course);
+                bool result = course.IsNotNull();
 
                 return result;
             }
@@ -1743,7 +1744,7 @@ namespace SmartLogic
 
                 ClientCourse course = _context.ClientCourses.Find(id);
                 course.IsDeRegistered = true;
-                course.LastChangedBy = UtilityService.CurrentUserName;
+                course.LastChangedBy = UserAppData.CurrentUserName;
                 course.LastChangedDate = DateTime.Now;
                 _context.Update(course);
 
@@ -1815,7 +1816,7 @@ namespace SmartLogic
                         ClientCourseID = clientCourseID,
                         CourseSessionID = sessionid,
                         DateCompleted = DateTime.Now,
-                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedBy = UserAppData.CurrentUserName,
                         LastChangedDate = DateTime.Now
                     };
                     _context.Add(transcript);
@@ -1853,7 +1854,7 @@ namespace SmartLogic
             {
 
                 var invoice = _context.Invoices.Find(InvoiceID);
-                if (UtilityService.IsNull(invoice))
+                if (invoice.IsNull())
                     return null;
 
                 InvoicePackage invoicePackage = new InvoicePackage
@@ -1969,19 +1970,19 @@ namespace SmartLogic
                    FirstOrDefault();
 
 
-                if (UtilityService.IsNull(_clientFee))
+                if (_clientFee.IsNull())
                     return 0;
 
                 Transaction addPaymentsFile = new Transaction()
                 {
                     Year = DateTime.Now.Year,
                     Month = DateTime.Now.Month,
-                    Amount = UtilityService.HasPermission(Permissions.Override_Payment) ? clientFee.Amount : _clientFee.Amount,
+                    Amount = UserAppData.HasPermission(Permissions.Override_Payment) ? clientFee.Amount : _clientFee.Amount,
                     ClientID = clientFee.ClientID,
                     PaymentDate = DateTime.Now,
                     PaymentStatusID = (int)PaymentState.Paid,
                     TransactionDate = DateTime.Now,
-                    LastChangedBy = UtilityService.CurrentUserName,
+                    LastChangedBy = UserAppData.CurrentUserName,
                     LastChangedDate = DateTime.Now,
                     BankAccountID = clientFee.BankAccountID,
                     TransactionTypeID = (int)TransactionTypeList.Fee,
@@ -2002,7 +2003,7 @@ namespace SmartLogic
                 {
 
                     _clientFee.DatePaid = DateTime.Now;
-                    _clientFee.LastChangedBy = UtilityService.CurrentUserName;
+                    _clientFee.LastChangedBy = UserAppData.CurrentUserName;
                     _clientFee.LastChangedDate = DateTime.Now;
                     _context.Update(_clientFee);
                     await _context.SaveChangesAsync();
@@ -2025,7 +2026,7 @@ namespace SmartLogic
                 Include(t => t.Product).
                 Include(t => t.Course).
                  Where(c => c.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(transactions))
+                if (transactions.ListIsEmpty())
                     return null;
                 Transactions trans = new Transactions
                 {
@@ -2072,7 +2073,7 @@ namespace SmartLogic
                                 Include(p => p.CourseFee).ThenInclude(p => p.Frequency).
 
                 Where(c => c.ClientID == clientID && !c.DatePaid.HasValue && c.DueDate.Date < cutoffDate.Date).ToList();
-                if (UtilityService.IsNull(transactions))
+                if (transactions.ListIsEmpty())
                     return null;
                 PendingTransactions trans = new PendingTransactions
                 {
@@ -2142,7 +2143,7 @@ namespace SmartLogic
                 Include(c => c.Client).
                  Include(p => p.PaymentStatus).
                 Where(c => c.ClientID == clientID && c.Invoice.InvoiceStatusID == invoiceStatusID).ToList();
-                if (UtilityService.IsNull(transactions))
+                if (transactions.ListIsEmpty())
                     return null;
                 Deductions trans = new Deductions
                 {
@@ -2186,7 +2187,7 @@ namespace SmartLogic
                 var transactions = _context.ClientProducts.
                 Include(c => c.Product).
                                Where(c => c.ClientID == clientID).ToList();
-                if (UtilityService.IsNull(transactions))
+                if (transactions.ListIsEmpty())
                     return null;
                 Statement statement = new Statement
                 {

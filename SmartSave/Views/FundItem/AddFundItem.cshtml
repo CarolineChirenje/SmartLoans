@@ -61,7 +61,7 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="FundItem" asp-action="FundItems">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Add_Fund_Item))
+                @if (UserAppData.HasPermission(Permissions.Add_Fund_Item))
                 {
                     <button type="submit" class="btn btn-info pull-right">
                         Create

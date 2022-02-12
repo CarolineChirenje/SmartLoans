@@ -1,5 +1,5 @@
 ﻿@model SmartDomain.ClientNote
-
+@using SmartExtensions;
 @using SmartHelper;
 @using System.Collections.Generic;
 @{
@@ -235,7 +235,7 @@
                         </div>
                     </div>
                 </section>
-                @if (Model.Client.IsJointAccount && UtilityService.IsNotNull(Model.Client.JointApplicant))
+                @if (Model.Client.IsJointAccount && Model.Client.JointApplicant.IsNotNull())
                 {
                     <section id="CoApplicantInfo">
                         <h5 class="box-title">Co-Applicant Information</h5>
@@ -404,7 +404,7 @@
                                 <input asp-for="@Model.DueDate" type="date" class="form-control" />
                                 <span asp-validation-for="@Model.DueDate class=" text-danger"></span>
                             </div>
-                            @if (UtilityService.UserType != (int)TypeOfUser.Employee)
+                            @if (UserAppData.CurrentUserTypeID != (int)TypeOfUser.Employee)
                             {
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">Visible To Admin Only</label>
@@ -459,16 +459,16 @@
 
                         </div>
                         <div class="modal-footer">
-                            @if (UtilityService.HasPermission(Permissions.Update_Client_Note))
+                            @if (UserAppData.HasPermission(Permissions.Update_Client_Note))
                             {
                                 <button type="submit" class="btn btn-primary">Update</button>
                                 <a class="btn btn-success" asp-controller="Client" asp-action="CloseNote" asp-route-noteid="@Model.ClientNoteID" asp-route-Clientid="@Model.ClientID">Close</a>
                             }
-                            @if (UtilityService.HasPermission(Permissions.Delete_Client_Product))
+                            @if (UserAppData.HasPermission(Permissions.Delete_Client_Product))
                             {
                                 <a class="btn btn-danger" asp-controller="Client" asp-action="ActionNote" asp-route-noteid="@Model.ClientNoteID" asp-route-Clientid="@Model.ClientID">Delete</a>
                             }
-                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                            @if (UserAppData.HasPermission(Permissions.View_Client))
                             {
                                 <a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Notes</a>
                             } <a class="btn btn-default" asp-controller="Client" asp-action="Clients">Cancel</a>

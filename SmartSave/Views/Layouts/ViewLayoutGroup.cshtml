@@ -60,7 +60,7 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Layouts" asp-action="Layouts">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Menu))
+                @if (UserAppData.HasPermission(Permissions.Update_Menu))
                 {
                     <button type="submit" class="btn btn-info pull-right">Update</button>
                 }
@@ -79,7 +79,7 @@
                         <!-- Nav tabs -->
 
                         <ul class="nav nav-tabs" id="myTab">
-                            @if (UtilityService.HasPermission(Permissions.View_Menu))
+                            @if (UserAppData.HasPermission(Permissions.View_Menu))
                             {
                                 <li class="active">
                                     <a href="#ChildMenu" data-toggle="tab">Child Layouts</a>
@@ -124,7 +124,7 @@
                                                         }
 
 
-                                                        @if (UtilityService.HasPermission(Permissions.View_Menu))
+                                                        @if (UserAppData.HasPermission(Permissions.View_Menu))
                                                         {
                                                             <td><a asp-controller="Layouts" asp-action="ViewMenu" asp-route-id="@item.LayoutMenuID">@item.DisplayName</a></td>
                                                         }
@@ -148,7 +148,7 @@
                                 </div>
 
                                 <div class="box-footer">
-                                    @if (UtilityService.HasPermission(Permissions.Add_Menu))
+                                    @if (UserAppData.HasPermission(Permissions.Add_Menu))
                                     {
                                         <a asp-controller="Layouts" asp-action="AddMenu" class="btn btn-info pull-right">New Menu</a><br />
                                     }

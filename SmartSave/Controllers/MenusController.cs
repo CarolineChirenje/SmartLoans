@@ -7,6 +7,7 @@ using SmartLogic;
 using Microsoft.AspNetCore.Mvc;
 using SmartDomain;
 using SmartHelper;
+using SmartExtensions;
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,7 +22,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> MainMenu()
         {
             Permissions permission = Permissions.View_Menu;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.MenuGroups());
@@ -86,7 +87,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ChildMenus(int id)
         {
             MenuGroup MenuGroup = await (_service.FindMenuGroup(id));
-            if (UtilityService.IsNotNull(MenuGroup))
+            if (MenuGroup.IsNotNull())
             {
                 ViewBag.MenuGroupName = MenuGroup.DisplayName;
                 ViewBag.MenuGroupID = id;
@@ -112,7 +113,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Menu update = await (_service.FindMenu(menu.MenuID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(menu)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

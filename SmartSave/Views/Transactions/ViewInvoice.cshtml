@@ -1,5 +1,7 @@
 ﻿@model SmartDomain.Invoice;
 @using SmartHelper;
+@using SmartExtensions;
+
 <section class="content-header">
     <h1>
         Invoice Details
@@ -75,7 +77,7 @@
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Total Invoice Entries</label>
                 <div class="col-sm-10">
-                    @if (UtilityService.HasPermission(Permissions.View_Invoice_Details))
+                    @if (UserAppData.HasPermission(Permissions.View_Invoice_Details))
                     {
                         <a asp-controller="Transactions" asp-action="InvoiceDetails" asp-route-id="@Model.InvoiceID">@Model.InvoiceDetails?.Count()</a>
                     }
@@ -108,15 +110,15 @@
 
             <!-- /.box-body -->
             <div class="box-footer">
-                @if (UtilityService.HasPermission(Permissions.Delete_Invoice))
+                @if (UserAppData.HasPermission(Permissions.Delete_Invoice))
                 {
                     <a class="btn btn-danger" asp-controller="Transactions" asp-action="DeleteInvoice" asp-route-id="@Model.InvoiceID">Delete Invoice</a>
                 } &nbsp;&nbsp;&nbsp;
-                @if (UtilityService.HasPermission(Permissions.Process_Invoice) && (InvoiceState)Model.InvoiceStatusID == InvoiceState.Created)
+                @if (UserAppData.HasPermission(Permissions.Process_Invoice) && (InvoiceState)Model.InvoiceStatusID == InvoiceState.Created)
                 {
                     <a class="btn btn-success" asp-controller="Transactions" asp-action="ProcessInvoice" asp-route-id="@Model.InvoiceID">Process Invoice</a>
                 }&nbsp;&nbsp;&nbsp;
-                @if (UtilityService.HasPermission(Permissions.Finalise_Invoice) && (InvoiceState)Model.InvoiceStatusID == InvoiceState.Processed)
+                @if (UserAppData.HasPermission(Permissions.Finalise_Invoice) && (InvoiceState)Model.InvoiceStatusID == InvoiceState.Processed)
                 {
                     <a class="btn btn-success" asp-controller="Transactions" asp-action="FinaliseInvoice" asp-route-id="@Model.InvoiceID">Finalise Invoice</a>
                 }&nbsp;&nbsp;&nbsp;
@@ -180,14 +182,14 @@
                                                                 <tr>
                                                                     @{
                                                                         string affiliation = String.Empty;
-                                                                        if (UtilityService.IsNotNull(item.Client.ClientGroupID))
+                                                                        if (item.Client.ClientGroupID.IsNotNull())
                                                                         {
                                                                             affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company?.Name : "");
                                                                         }
                                                                     }
                                                                     <td align="center"><input type="checkbox" id="checkBoxAll" name="InvoiceDetailID" value="@item.InvoiceDetailID" /></td>
                                                                     <td>@affiliation</td>
-                                                                    @if (UtilityService.HasPermission(Permissions.View_User))
+                                                                    @if (UserAppData.HasPermission(Permissions.View_User))
                                                                     {
                                                                         <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@item.Client.ClientFullName</a></td>
                                                                     }
@@ -197,7 +199,7 @@
                                                                     }
                                                                     <td>@Html.DisplayFor(modelItem => item.Client.Occupation)</td>
                                                                     <td>@Html.DisplayFor(modelItem => item.Client.Salary)</td>
-                                                                    @if (UtilityService.HasPermission(Permissions.View_Product))
+                                                                    @if (UserAppData.HasPermission(Permissions.View_Product))
                                                                     {
                                                                         <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Product.Name</a></td>
                                                                     }

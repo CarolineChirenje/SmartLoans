@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartDataAccess;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartLog;
 using System;
@@ -24,7 +25,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     NoticeBoard.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                    NoticeBoard.LastChangedBy = UtilityService.CurrentUserName;
+                    NoticeBoard.LastChangedBy = UserAppData.CurrentUserName;
                     NoticeBoard.LastChangedDate = DateTime.Now;
                     _context.Update(NoticeBoard);
                 }
@@ -109,7 +110,7 @@ namespace SmartLogic
             try
             {
 
-                NoticeBoard.LastChangedBy = UtilityService.CurrentUserName;
+                NoticeBoard.LastChangedBy = UserAppData.CurrentUserName;
                 NoticeBoard.LastChangedDate = DateTime.Now;
                 _context.Add(NoticeBoard);
                 return (await _context.SaveChangesAsync());
@@ -125,7 +126,7 @@ namespace SmartLogic
             try
             {
                 var nb = _context.NoticeBoard.Find(NoticeBoard.NoticeID);
-                if (UtilityService.IsNull(nb))
+                if (nb.IsNotNull())
                     return 0;
                 nb.Title = NoticeBoard.Title;
                 nb.Details = NoticeBoard.Details;
@@ -133,7 +134,7 @@ namespace SmartLogic
                 nb.StartDate = NoticeBoard.StartDate;
                 nb.EndDate = NoticeBoard.EndDate;
                 nb.IsActive = NoticeBoard.IsActive;
-                nb.LastChangedBy = UtilityService.CurrentUserName;
+                nb.LastChangedBy = UserAppData.CurrentUserName;
                 nb.LastChangedDate = DateTime.Now;
                 _context.Update(nb);
                 return await _context.SaveChangesAsync();

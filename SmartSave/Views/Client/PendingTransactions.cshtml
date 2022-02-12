@@ -46,7 +46,7 @@
                                         foreach (var item in clientFees)
                                         {
                                             <tr>
-                                                @if (UtilityService.HasPermission(Permissions.View_Product))
+                                                @if (UserAppData.HasPermission(Permissions.View_Product))
                                                 {
                                                     <td><a target="_blank" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Entity</a></td>
 
@@ -55,7 +55,7 @@
                                                 {
                                                     <td>@Html.DisplayFor(modelItem => item.Entity)</td>
                                                 }
-                                                @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
+                                                @if (UserAppData.HasPermission(Permissions.View_Product_Fee))
                                                 {
                                                     <td><a target="_blank" asp-controller="Product" asp-action="ViewProductFee" asp-route-id="@item.ProductFeeID">@item.FeeName</a></td>
 
@@ -67,7 +67,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PaymentTerms)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
-                                                @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
+                                                @if (UserAppData.HasPermission(Permissions.View_Client_Payments))
                                                 {
 
                                                     <td><a asp-controller="Client" asp-action="ClientFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
@@ -83,7 +83,7 @@
                                         foreach (var item in clientFees)
                                         {
                                             <tr>
-                                                @if (UtilityService.HasPermission(Permissions.View_Course))
+                                                @if (UserAppData.HasPermission(Permissions.View_Course))
                                                 {
                                                     <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseID">@item.Entity</a></td>
 
@@ -93,7 +93,7 @@
                                                     <td>@Html.DisplayFor(modelItem => item.Entity)</td>
 
                                                 }
-                                                @if (UtilityService.HasPermission(Permissions.View_Course_Fee))
+                                                @if (UserAppData.HasPermission(Permissions.View_Course_Fee))
                                                 {
                                                     <td><a target="_blank" asp-controller="Courses" asp-action="ViewCourseFee" asp-route-id="@item.CourseFeeID">@item.FeeName</a></td>
 
@@ -105,7 +105,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PaymentTerms)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
-                                                @if (UtilityService.HasPermission(Permissions.View_Client_Payments))
+                                                @if (UserAppData.HasPermission(Permissions.View_Client_Payments))
                                                 {
 
                                                     <td><a asp-controller="Client" asp-action="ClientCourseFeePayment" asp-route-id="@item.ClientFeeID">View</a></td>
@@ -115,7 +115,7 @@
                                     }
                             </table>
                         </div>
-                        @if (UtilityService.HasPermission(Permissions.Generate_Client_Statement))
+                        @if (UserAppData.HasPermission(Permissions.Generate_Client_Statement))
                         {
                             <br />
                             <div class="form-group">
@@ -131,7 +131,7 @@
                         }
                         <input type="hidden" name="ClientID" value="@Model.ClientID" />
                         <div class="box-footer">
-                            @if (UtilityService.HasPermission(Permissions.Generate_Client_Statement))
+                            @if (UserAppData.HasPermission(Permissions.Generate_Client_Statement))
                             {
                                 <button type="submit" class="btn btn-success">Generate Statement</button><br />
                             }

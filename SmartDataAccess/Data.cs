@@ -349,7 +349,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Site_Customer_Service_Email,
                     Name = AppSetting.Site_Customer_Service_Email.ToString().Replace("_", " "),
-                    Value=@"carochire@gmail.com",
+                    Value=@"welovecoding@elroitec.co.za",
                     Description="Customer Support Email",
                     CustomVariableTypeID=(int)VariableType.String,
                                       IsActive = true,
@@ -870,7 +870,7 @@ namespace SmartDataAccess
                 new Company()
                 {
                     CompanyID = 1,
-                    Name = String.IsNullOrEmpty(UtilityService.ApplicationName) ? "Smart Save" : UtilityService.ApplicationName,
+                    Name = String.IsNullOrEmpty(UserAppData.ApplicationName) ? "Smart Save" : UserAppData.ApplicationName,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser",
                     IsActive = true,

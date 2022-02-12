@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using SmartDataAccess;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartInterfaces;
 using SmartLog;
@@ -94,7 +95,7 @@ namespace SmartLogic
                 KonapoFund KonapoFund = _context.KonapoFunds.Find(update.KonapoFundID);
                 KonapoFund old_KonapoFund = KonapoFund;
                 KonapoFund.IsActive = update.IsActive;
-                KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
+                KonapoFund.LastChangedBy = UserAppData.CurrentUserName;
                 KonapoFund.LastChangedDate = DateTime.Now;
                 _context.Update(KonapoFund);
                 return await _context.SaveChangesAsync();
@@ -112,7 +113,7 @@ namespace SmartLogic
             {
                 KonapoFund.RegistrationDate = DateTime.Now;
                 KonapoFund.KonapoRef = NewKonapoRef;
-                KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
+                KonapoFund.LastChangedBy = UserAppData.CurrentUserName;
                 KonapoFund.LastChangedDate = DateTime.Now;
                 _context.Add(KonapoFund);
                 int result = await _context.SaveChangesAsync();
@@ -142,6 +143,8 @@ namespace SmartLogic
                             .ThenInclude(p => p.KonapoFundCTIs)
                             .ThenInclude(p => p.FundSource)
                             .Include(m => m.Client)
+                            .ThenInclude(m => m.JointApplicant)
+                             .ThenInclude(m =>m.Title)
                             .AsNoTracking()
 
                             .ToListAsync();
@@ -179,7 +182,7 @@ namespace SmartLogic
                 .Where(p => p.KonapoFundID == KonapoFundID)
                 .Include(p => p.Fund)
                  .FirstOrDefaultAsync();
-                if (UtilityService.IsNull(KonapoFund))
+                if (KonapoFund.IsNull())
                     return null;
                 ClientKonapoFund fund = new ClientKonapoFund
                 {
@@ -217,7 +220,7 @@ namespace SmartLogic
                 .Where(p => p.KonapoFundID == KonapoFundID)
                                 .Include(p => p.Fund)
                  .FirstOrDefaultAsync();
-                if (UtilityService.IsNull(KonapoFund))
+                if (KonapoFund.IsNull())
                     return null;
                 ClientKonapoFundCalculation fund = new ClientKonapoFundCalculation
                 {
@@ -307,7 +310,7 @@ namespace SmartLogic
                 .ThenInclude(p => p.Fund)
                 .Include(p => p.FundCategory)
                  .FirstOrDefaultAsync();
-                if (UtilityService.IsNull(KonapoFund))
+                if (KonapoFund.IsNull())
                     return null;
                 ClientKonapoFundItems fund = new ClientKonapoFundItems
                 {
@@ -377,8 +380,7 @@ namespace SmartLogic
         {
             try
             {
-
-                var funds = await _context.KonapoFunds
+                                var funds = await _context.KonapoFunds
                             .Include(p => p.Fund)
                             .Include(p => p.KonapoFundCTs)
                             .ThenInclude(p => p.FundCategory)
@@ -389,6 +391,11 @@ namespace SmartLogic
                             .ThenInclude(p => p.KonapoFundCTIs)
                             .ThenInclude(p => p.FundSource)
                             .Include(m => m.Client)
+                            .ThenInclude(m => m.JointApplicant).ThenInclude(r => r.RecordStatus)
+                            .Include(m => m.Client)
+                            .ThenInclude(c => c.JointApplicant).ThenInclude(ct => ct.Title)
+                            .Include(m => m.Client)
+                            .ThenInclude(c => c.Title)
                             .AsNoTracking()
                             .ToListAsync();
                 if (funds == null)
@@ -427,11 +434,11 @@ namespace SmartLogic
             {
 
                 KonapoFundReport konareport = _context.KonapoFundReports.Find(konapoFundReport.KonapoFundReportID);
-                if (UtilityService.IsNotNull(konareport))
+                if (konareport.IsNotNull())
                 {
                     konareport.QRCodeURL = konapoFundReport.QRCodeURL;
                     konareport.Report = konapoFundReport.Report;
-                    konareport.LastChangedBy = UtilityService.CurrentUserName;
+                    konareport.LastChangedBy = UserAppData.CurrentUserName;
                     konareport.LastChangedDate = DateTime.Now;
                     _context.Update(konareport);
                     return await _context.SaveChangesAsync();
@@ -450,7 +457,7 @@ namespace SmartLogic
         {
             try
             {
-                konapoFundReport.LastChangedBy = UtilityService.CurrentUserName;
+                konapoFundReport.LastChangedBy = UserAppData.CurrentUserName;
                 konapoFundReport.LastChangedDate = DateTime.Now;
                 _context.Add(konapoFundReport);
                  await _context.SaveChangesAsync();
@@ -468,7 +475,7 @@ namespace SmartLogic
             try
             {
                 var KonapoFund = await _context.KonapoFunds.FindAsync(id);
-                if (UtilityService.IsNull(KonapoFund))
+                if (KonapoFund.IsNull())
                     return 0;
                 var fundCT = _context.KonapoFundCTs.Where(fc => fc.KonapoFundID == id).ToList();
                 List<int> fundCTList = fundCT.Select(c => c.KonapoFundCTID).ToList();
@@ -495,7 +502,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     KonapoFund.IsActive = DatabaseAction.Deactivate != action;
-                    KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
+                    KonapoFund.LastChangedBy = UserAppData.CurrentUserName;
                     KonapoFund.LastChangedDate = DateTime.Now;
                     _context.Update(KonapoFund);
                 }
@@ -512,7 +519,7 @@ namespace SmartLogic
             try
             {
                 KonapoFund Fund = await _context.KonapoFunds.Where(b => b.ClientID == KonapoFund.ClientID && b.FundID == KonapoFund.FundID).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(Fund);
+                return Fund.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -526,7 +533,7 @@ namespace SmartLogic
             try
             {
 
-                konapoFundCTI.LastChangedBy = UtilityService.CurrentUserName;
+                konapoFundCTI.LastChangedBy = UserAppData.CurrentUserName;
                 konapoFundCTI.LastChangedDate = DateTime.Now;
                 _context.Add(konapoFundCTI);
                 await _context.SaveChangesAsync();
@@ -543,7 +550,7 @@ namespace SmartLogic
             try
             {
                 KonapoFundCTI Fund = await _context.KonapoFundCTIs.Where(b => b.FundCategoryItemID == KonapoFund.FundCategoryItemID && b.KonapoFundCTID == KonapoFund.KonapoFundCTID).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(Fund);
+                return Fund.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -561,7 +568,7 @@ namespace SmartLogic
                 KonapoFund.ProjectedCost = update.ProjectedCost;
                 KonapoFund.KonapoAmount = update.KonapoAmount;
                 KonapoFund.FundSourceID = update.FundSourceID;
-                KonapoFund.LastChangedBy = UtilityService.CurrentUserName;
+                KonapoFund.LastChangedBy = UserAppData.CurrentUserName;
                 KonapoFund.LastChangedDate = DateTime.Now;
                 _context.Update(KonapoFund);
 
@@ -623,7 +630,7 @@ namespace SmartLogic
             try
             {
                 KonapoFundCT Fund = await _context.KonapoFundCTs.Where(b => b.KonapoFundID == KonapoFund.KonapoFundID && b.FundCategoryID == KonapoFund.FundCategoryID).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(Fund);
+                return Fund.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -687,7 +694,7 @@ namespace SmartLogic
             try
             {
 
-                konapoFundCT.LastChangedBy = UtilityService.CurrentUserName;
+                konapoFundCT.LastChangedBy = UserAppData.CurrentUserName;
                 konapoFundCT.LastChangedDate = DateTime.Now;
                 _context.Add(konapoFundCT);
                 int result = await _context.SaveChangesAsync();
@@ -721,7 +728,7 @@ namespace SmartLogic
         {
             try
             {
-                Fund.LastChangedBy = UtilityService.CurrentUserName;
+                Fund.LastChangedBy = UserAppData.CurrentUserName;
                 Fund.LastChangedDate = DateTime.Now;
                 _context.Add(Fund);
                 await _context.SaveChangesAsync();
@@ -739,7 +746,7 @@ namespace SmartLogic
             try
             {
                 Fund Fund = await _context.Funds.Where(b => b.Name.Equals(fund.Name)).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(Fund);
+                return Fund.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -755,7 +762,7 @@ namespace SmartLogic
                 Fund.IsActive = fund.IsActive;
                 Fund.Name = fund.Name;
                 Fund.Description = fund.Description;
-                Fund.LastChangedBy = UtilityService.CurrentUserName;
+                Fund.LastChangedBy = UserAppData.CurrentUserName;
                 Fund.LastChangedDate = DateTime.Now;
                 _context.Update(Fund);
                 return await _context.SaveChangesAsync();
@@ -776,7 +783,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     Fund.IsActive = DatabaseAction.Deactivate != action;
-                    Fund.LastChangedBy = UtilityService.CurrentUserName;
+                    Fund.LastChangedBy = UserAppData.CurrentUserName;
                     Fund.LastChangedDate = DateTime.Now;
                     _context.Update(Fund);
                 }
@@ -824,7 +831,7 @@ namespace SmartLogic
         {
             try
             {
-                FundItem.LastChangedBy = UtilityService.CurrentUserName;
+                FundItem.LastChangedBy = UserAppData.CurrentUserName;
                 FundItem.LastChangedDate = DateTime.Now;
                 _context.Add(FundItem);
                 await _context.SaveChangesAsync();
@@ -842,7 +849,7 @@ namespace SmartLogic
             try
             {
                 FundItem FundItem = await _context.FundItems.Where(b => b.Name.Equals(fundItem.Name)).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(FundItem);
+                return FundItem.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -857,7 +864,7 @@ namespace SmartLogic
                 FundItem FundItem = _context.FundItems.Find(fundItem.FundItemID);
                 FundItem.IsActive = fundItem.IsActive;
                 FundItem.Name = fundItem.Name;
-                FundItem.LastChangedBy = UtilityService.CurrentUserName;
+                FundItem.LastChangedBy = UserAppData.CurrentUserName;
                 FundItem.LastChangedDate = DateTime.Now;
                 _context.Update(FundItem);
                 return await _context.SaveChangesAsync();
@@ -878,7 +885,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     FundItem.IsActive = DatabaseAction.Deactivate != action;
-                    FundItem.LastChangedBy = UtilityService.CurrentUserName;
+                    FundItem.LastChangedBy = UserAppData.CurrentUserName;
                     FundItem.LastChangedDate = DateTime.Now;
                     _context.Update(FundItem);
                 }
@@ -975,7 +982,7 @@ namespace SmartLogic
         {
             try
             {
-                FundCategory.LastChangedBy = UtilityService.CurrentUserName;
+                FundCategory.LastChangedBy = UserAppData.CurrentUserName;
                 FundCategory.LastChangedDate = DateTime.Now;
                 _context.Add(FundCategory);
                 return (await _context.SaveChangesAsync());
@@ -994,7 +1001,7 @@ namespace SmartLogic
                 FundCategory FundCategory = _context.FundCategories.Find(fundCategory.FundCategoryID);
                 FundCategory.IsActive = fundCategory.IsActive;
                 FundCategory.Name = fundCategory.Name;
-                FundCategory.LastChangedBy = UtilityService.CurrentUserName;
+                FundCategory.LastChangedBy = UserAppData.CurrentUserName;
                 FundCategory.LastChangedDate = DateTime.Now;
                 _context.Update(FundCategory);
                 return (await _context.SaveChangesAsync());
@@ -1015,7 +1022,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     FundCategory.IsActive = DatabaseAction.Deactivate != action;
-                    FundCategory.LastChangedBy = UtilityService.CurrentUserName;
+                    FundCategory.LastChangedBy = UserAppData.CurrentUserName;
                     FundCategory.LastChangedDate = DateTime.Now;
                     _context.Update(FundCategory);
                 }
@@ -1032,7 +1039,7 @@ namespace SmartLogic
             try
             {
                 FundCategory _FundCategory = await _context.FundCategories.Where(b => b.Name.Equals(FundCategory.Name)).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(_FundCategory);
+                return _FundCategory.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -1079,7 +1086,7 @@ namespace SmartLogic
         {
             try
             {
-                fundCategoryItem.LastChangedBy = UtilityService.CurrentUserName;
+                fundCategoryItem.LastChangedBy = UserAppData.CurrentUserName;
                 fundCategoryItem.LastChangedDate = DateTime.Now;
                 _context.Add(fundCategoryItem);
                 return (await _context.SaveChangesAsync());
@@ -1097,7 +1104,7 @@ namespace SmartLogic
 
                 FundCategoryItem fundCategoryItem1 = _context.FundCategoryItems.Find(fundCategoryItem.FundCategoryID);
                 fundCategoryItem1.IsActive = fundCategoryItem.IsActive;
-                fundCategoryItem1.LastChangedBy = UtilityService.CurrentUserName;
+                fundCategoryItem1.LastChangedBy = UserAppData.CurrentUserName;
                 fundCategoryItem1.LastChangedDate = DateTime.Now;
                 _context.Update(fundCategoryItem1);
                 return (await _context.SaveChangesAsync());
@@ -1118,7 +1125,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     FundCategory.IsActive = DatabaseAction.Deactivate != action;
-                    FundCategory.LastChangedBy = UtilityService.CurrentUserName;
+                    FundCategory.LastChangedBy = UserAppData.CurrentUserName;
                     FundCategory.LastChangedDate = DateTime.Now;
                     _context.Update(FundCategory);
                 }
@@ -1137,7 +1144,7 @@ namespace SmartLogic
             try
             {
                 FundCategoryItem fundCategoryItem1 = await _context.FundCategoryItems.Where(b => b.FundCategoryID == fundCategoryItem.FundCategoryID && b.FundItemID == fundCategoryItem.FundItemID).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(fundCategoryItem1);
+                return fundCategoryItem1.IsNotNull();
             }
             catch (Exception ex)
             {

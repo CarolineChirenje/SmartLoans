@@ -91,7 +91,7 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Employees Linked To Product</label>
                     <div class="col-sm-10">
-                        @if (UtilityService.HasPermission(Permissions.View_User))
+                        @if (UserAppData.HasPermission(Permissions.View_User))
                         {
                             <a asp-controller="Product" asp-action="ClientsLinkedToProduct" asp-route-id="@Model.ProductID">@Model.Product.ClientCount</a>
                         }
@@ -120,11 +120,11 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Product))
+                @if (UserAppData.HasPermission(Permissions.Update_Product))
                 {
                     <button type="submit" class="btn btn-info">Update</button>
                 }
-                @if (UtilityService.HasPermission(Permissions.Delete_Product))
+                @if (UserAppData.HasPermission(Permissions.Delete_Product))
                 {
                     <a class="btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.ProductID">Delete</a>
                 }
@@ -196,16 +196,16 @@
 
                         </div>
                         <div class="modal-footer">
-                            @if (UtilityService.HasPermission(Permissions.Update_Product_Fee))
+                            @if (UserAppData.HasPermission(Permissions.Update_Product_Fee))
                             {
                                 <button type="submit" class="btn btn-primary">Update</button>
                               
                             }
-                            @if (UtilityService.HasPermission(Permissions.Delete_Product_Fee))
+                            @if (UserAppData.HasPermission(Permissions.Delete_Product_Fee))
                             {
                                 <a class="btn btn-danger" asp-controller="Product" asp-action="ActionProductFee" asp-route-productFeeID="@Model.ProductFeeID" asp-route-productID="@Model.ProductID">Delete</a>
                             }
-                            @if (UtilityService.HasPermission(Permissions.View_Product))
+                            @if (UserAppData.HasPermission(Permissions.View_Product))
                             {
                                 <a class="btn btn-info" asp-controller="Product" asp-action="ViewProduct" asp-route-id="@Model.ProductID">View More Fees</a>
                             } <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>

@@ -54,7 +54,7 @@
                                             string status = @item.IsActive ? "Deactivate" : "Reactivate";
 
                                         }
-                                        @if (UtilityService.HasPermission(Permissions.View_Department))
+                                        @if (UserAppData.HasPermission(Permissions.View_Department))
                                         {
                                             <td><a asp-controller="Department" asp-action="ViewDepartment" asp-route-id="@item.DepartmentID">@item.Name</a></td>
                                         }
@@ -76,7 +76,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="CustomSettings" asp-action="Dashboard">Cancel</a>
-                    @if (UtilityService.HasPermission(Permissions.Add_Department))
+                    @if (UserAppData.HasPermission(Permissions.Add_Department))
                     {
                         <a href="Add" class="btn btn-success pull-right">Create</a><br />
                     }

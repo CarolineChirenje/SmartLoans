@@ -14,6 +14,8 @@ using System.IO;
 using SmartReporting;
 using MigraDocCore.Rendering;
 using MigraDocCore.DocumentObjectModel;
+using SmartExtensions;
+
 namespace SmartSave.Controllers
 {
     public class CoursesController : BaseController<CoursesController>
@@ -30,7 +32,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Courses(bool newCoursesOnly = false)
         {
             Permissions permission = Permissions.View_Course;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             if (newCoursesOnly)
@@ -80,7 +82,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Course update = await (_service.FindCourse(Course.CourseID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(Course)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -126,7 +128,7 @@ namespace SmartSave.Controllers
             }
             return RedirectToAction("ViewCourse", new { id = CourseTopic.CourseID });
         }
-       
+
         public async Task<IActionResult> ViewCourseTopic(int id)
         {
             if (id == 0)
@@ -141,7 +143,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
 
-                if (UtilityService.IsNotNull(_CourseTopic))
+                if (_CourseTopic.IsNotNull())
                 {
                     if (await (_service.Update(CourseTopic)) == 0)
                     {
@@ -179,7 +181,7 @@ namespace SmartSave.Controllers
                 }
 
             }
-            return RedirectToAction("ViewCourseTopic", new { id =courseSession.CourseTopicID });
+            return RedirectToAction("ViewCourseTopic", new { id = courseSession.CourseTopicID });
         }
         public async Task<IActionResult> ViewCourseSession(int sessionid, int coursetopicid)
         {
@@ -195,7 +197,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
 
-                if (UtilityService.IsNotNull(courseSession))
+                if (courseSession.IsNotNull())
                 {
                     if (await (_service.Update(session)) == 0)
                     {
@@ -220,7 +222,7 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewCourseTopic", new { id = coursetopicid });
         }
 
-        
+
         // CourseFees
         [HttpPost]
         public async Task<IActionResult> AddCourseFee(CourseFee courseFee)
@@ -244,7 +246,7 @@ namespace SmartSave.Controllers
 
             PopulateDropDownList();
             CourseFee courseFee = await _service.FindCourseFee(id);
-            if (UtilityService.IsNotNull(courseFee))
+            if (courseFee.IsNotNull())
                 return View(courseFee);
             else
                 return RedirectToAction("ViewCourse", new { id = Convert.ToInt32(HttpContext.Session.GetString("CourseID")) });
@@ -256,7 +258,7 @@ namespace SmartSave.Controllers
         {
             PopulateDropDownList();
             CourseFee update = await _service.FindCourseFee(courseFee.CourseFeeID);
-            if (UtilityService.IsNotNull(update))
+            if (update.IsNotNull())
             {
                 if (await (_service.Update(courseFee)) == 0)
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -313,8 +315,7 @@ namespace SmartSave.Controllers
             CourseIntake _courseIntake = await _service.FindCourseIntake(courseIntake.CourseIntakeID);
             if (ModelState.IsValid)
             {
-
-                if (UtilityService.IsNotNull(_courseIntake))
+                if (_courseIntake.IsNotNull())
                 {
                     if (await (_service.Update(_courseIntake)) == 0)
                     {
@@ -347,7 +348,7 @@ namespace SmartSave.Controllers
             else
             {
                 CourseIntake update = await (_service.FindCourseIntake(intake.CourseIntakeID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.MarkRegister(intake, enrolmentList)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -360,9 +361,8 @@ namespace SmartSave.Controllers
         {
 
             AttendanceRegister register = _service.FindRegister(id).Result;
-            if (UtilityService.IsNull(register))
+            if (register.IsNull())
             {
-
                 TempData[MessageDisplayType.Error.ToString()] = $"Failed to download attendance register";
                 return RedirectToAction("ViewCourseIntake", new { intakeId = Convert.ToInt32(HttpContext.Session.GetString("CourseIntakeID")), courseid = Convert.ToInt32(HttpContext.Session.GetString("CourseID")) });
             }
@@ -383,10 +383,10 @@ namespace SmartSave.Controllers
         {
 
             int result = _service.DeleteRegister(id).Result;
-            if (result==0)
-                           TempData[MessageDisplayType.Error.ToString()] = $"Failed to delete attendance register";
-                return RedirectToAction("ViewCourseIntake", new { intakeId = Convert.ToInt32(HttpContext.Session.GetString("CourseIntakeID")), courseid = Convert.ToInt32(HttpContext.Session.GetString("CourseID")) });
-      
+            if (result == 0)
+                TempData[MessageDisplayType.Error.ToString()] = $"Failed to delete attendance register";
+            return RedirectToAction("ViewCourseIntake", new { intakeId = Convert.ToInt32(HttpContext.Session.GetString("CourseIntakeID")), courseid = Convert.ToInt32(HttpContext.Session.GetString("CourseID")) });
+
         }
 
         public void PopulateDropDownList()

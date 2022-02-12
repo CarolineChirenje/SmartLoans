@@ -87,11 +87,20 @@
                         </label>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Course Instructor</label>
+                    <div class="checkbox">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" data-val="true" id="IsInstructor"
+                                   name="IsInstructor" value="true">
+                        </label>
+                    </div>
+                </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="User" asp-action="Users">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Add_User))
+                @if (UserAppData.HasPermission(Permissions.Add_User))
                 {
                     <button type="submit" class="btn btn-info pull-right">Add</button>
                 }

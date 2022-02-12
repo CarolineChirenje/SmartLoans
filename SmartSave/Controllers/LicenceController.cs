@@ -8,6 +8,7 @@ using SmartHelper;
 using SmartDomain;
 using SmartLogic.IService;
 using Licence = SmartDomain.Licence;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -19,7 +20,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Licence()
         {
             Permissions permission = Permissions.View_Licences;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Licence());
@@ -32,7 +33,7 @@ namespace SmartSave.Controllers
         public IActionResult LicenceMode()
         {
             var licenceMode = _service.FindActiveLicence();
-            if (UtilityService.IsNotNull(licenceMode) && !UtilityService.CanOverrideMaintananceMode)
+            if (licenceMode.IsNotNull() && !UserAppData.CanOverrideMaintananceMode)
                 return View(licenceMode);
             else
                 return RedirectToAction("Login", "Login");
@@ -68,7 +69,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Licence update = await (_service.FindLicence(Licence.LicenceID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(Licence)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

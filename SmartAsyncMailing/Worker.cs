@@ -24,7 +24,7 @@ namespace SmartAsyncMailing
         private ConnectionFactory _connectionFactory;
         private IConnection _connection;
         private IModel _channel;
-        private string QueueName = $"{(object)UtilityService.SiteEnvironment}_{(object)Queues.Emails.ToString()}";
+        private string QueueName = $"{(object)UserAppData.SiteEnvironment}_{(object)Queues.Emails.ToString()}";
         private readonly IMailService _mailer;
 
         public Worker(ILogger<Worker> logger, IMailService mailer)
@@ -36,7 +36,7 @@ namespace SmartAsyncMailing
         public override Task StartAsync(CancellationToken cancellationToken)
         {
             RabbitMQConfig rabbitMqConfig = GetData.GetRabbitMQConfig();
-            if (UtilityService.IsNull((object)rabbitMqConfig))
+            if (((object)rabbitMqConfig).IsNull())
             {
                 CustomLog.Log(LogSource.Rabbit_MQ, new Exception("No Rabbit MQ End Points Found Consume Action Failed to Complete"));
                 return base.StartAsync(cancellationToken);
@@ -106,12 +106,12 @@ namespace SmartAsyncMailing
         {
             try
             {
-                if (UtilityService.IsNotNull((object)message))
+                if (message.IsNotNull())
                 {
                     this._logger.LogInformation(string.Format("Received message from Rabbit Queue [{0}] for processing at: {1}", (object)this.QueueName, (object)DateTimeOffset.Now));
                     Email email = message.FromJson<Email>();
-                    this._logger.LogInformation(string.Format("Processing Email [{0}]: {1}", (object)UtilityService.SiteEnvironment, (object)DateTimeOffset.Now));
-                    if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                    this._logger.LogInformation(string.Format("Processing Email [{0}]: {1}", (object)UserAppData.SiteEnvironment, (object)DateTimeOffset.Now));
+                    if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
                         email.To = UtilityService.TestEmailAddress;
                     bool flag =  _mailer.SendEmail(email);
                     this._logger.LogInformation(string.Format("Send Email to {0} at: {1} : Status {2}", (object)email.To, (object)DateTimeOffset.Now, (object)flag));

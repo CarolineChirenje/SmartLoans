@@ -69,7 +69,7 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="DocumentType" asp-action="DocumentTypes">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Add_Document_Type))
+                @if (UserAppData.HasPermission(Permissions.Add_Document_Type))
                 {
                     <button type="submit" class="btn btn-info pull-right">
                         Create

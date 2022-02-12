@@ -9,6 +9,7 @@ using SmartDomain;
 using SmartDataAccess;
 using SmartHelper;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -29,7 +30,7 @@ namespace SmartLogic
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
                 FeatureFlag.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                FeatureFlag.LastChangedBy = UtilityService.CurrentUserName;
+                FeatureFlag.LastChangedBy = UserAppData.CurrentUserName;
                 FeatureFlag.LastChangedDate = DateTime.Now;
                 _context.Update(FeatureFlag);
             }
@@ -96,13 +97,11 @@ namespace SmartLogic
             try
             {
 
-                       FeatureFlag featureFlag =  FindFeatureFlag(id).Result;
-            if (UtilityService.IsNotNull(featureFlag))
+           FeatureFlag featureFlag =  FindFeatureFlag(id).Result;
+            if (featureFlag.IsNotNull())
                 return featureFlag.IsActive;
             else
                 return false;
-
-
             }
             catch (Exception ex)
             {
@@ -115,7 +114,7 @@ namespace SmartLogic
             try
             {
 
-                        FeatureFlag.LastChangedBy = UtilityService.CurrentUserName;
+                        FeatureFlag.LastChangedBy = UserAppData.CurrentUserName;
             FeatureFlag.LastChangedDate = DateTime.Now;
             _context.Add(FeatureFlag);
             return (await _context.SaveChangesAsync());
@@ -136,7 +135,7 @@ namespace SmartLogic
                         FeatureFlag update = await FindFeatureFlag(FeatureFlag.FeatureFlagID);
             update.Name = FeatureFlag.Name;
             update.IsActive = FeatureFlag.IsActive;
-                        update.LastChangedBy = UtilityService.CurrentUserName;
+                        update.LastChangedBy = UserAppData.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();

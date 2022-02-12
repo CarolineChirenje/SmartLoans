@@ -495,7 +495,34 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
+                 new LayoutMenu()
+                {
+                    LayoutMenuID =34,
+                    LayoutID = (int)LayoutComponent.Employees,
+                    DisplayName = "My Account",
+                    ControllerName = "Client",
+                    ActionName = "MyAccount",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-heart"),
+                    OrderNo = 34,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
 
+                },
+                 new LayoutMenu()
+                {
+                    LayoutMenuID =35,
+                    LayoutID = (int)LayoutComponent.Employers,
+                    DisplayName = "Employees",
+                    ControllerName = "Client",
+                    ActionName = "Clients",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-users"),
+                    OrderNo = 35,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
             };
             return menus.ToArray();
 

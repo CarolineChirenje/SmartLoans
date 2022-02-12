@@ -25,7 +25,9 @@ namespace SmartHelper
         Khonapo_Fund,
         Developer_Menu,
         Settings,
-        Reporting
+        Reporting,
+        Employees,
+        Employers
     }
     public enum Menu_Component
     {//Name must the same with ComponentList
@@ -35,8 +37,9 @@ namespace SmartHelper
         DeveloperMenuList,
         SettingsMenuList,
         ReportingMenuList,
-        NoMenuList
-
+        NoMenuList,
+        EmployeeMenuList,
+        EmployerMenuList
     }
     public enum DaysOfTheWeek
     {
@@ -925,6 +928,7 @@ namespace SmartHelper
         Website,
         Whatsapp_Support_Message,
         Database_Server_IP,
+        Support_Email_Address
 
     }
     public enum DeductionApplied

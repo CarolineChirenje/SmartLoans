@@ -57,7 +57,7 @@
 
                                         }
 
-                                        @if (UtilityService.HasPermission(Permissions.View_Menu))
+                                        @if (UserAppData.HasPermission(Permissions.View_Menu))
                                         {
                                             <td><a asp-controller="Menus" asp-action="ViewMenuGroup" asp-route-id="@item.MenuGroupID">@item.DisplayName</a></td>
                                         }
@@ -69,7 +69,7 @@
                                         <td>@Html.DisplayFor(modelItem => item.OrderNo)</td>
                                         <td>@activeStatus</td>
                                         <td>@activeTab</td>
-                                        @if (UtilityService.HasPermission(Permissions.View_Menu))
+                                        @if (UserAppData.HasPermission(Permissions.View_Menu))
                                         {
                                             <td><a>@item.Menus?.Count()</a></td>
 

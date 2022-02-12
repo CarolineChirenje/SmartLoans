@@ -179,7 +179,7 @@
                         </div>
                     </div>
                 }
-                @if (UtilityService.HasPermission(Permissions.Auto_Generate_Receipt))
+                @if (UserAppData.HasPermission(Permissions.Auto_Generate_Receipt))
                 {
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Generate Receipt</label>
@@ -193,7 +193,7 @@
 
                 }
 
-                @if (UtilityService.HasPermission(Permissions.Email_Receipt_To_Client))
+                @if (UserAppData.HasPermission(Permissions.Email_Receipt_To_Client))
                 {
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Email Receipt to Client</label>
@@ -209,7 +209,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                @if (UtilityService.HasPermission(Permissions.Capture_Payment))
+                @if (UserAppData.HasPermission(Permissions.Capture_Payment))
                 {
                     <button type="submit" class="btn btn-success pull-right">Submit</button>
 

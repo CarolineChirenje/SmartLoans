@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using SmartDataAccess;
 using SmartSave.Models;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -31,7 +32,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Product()
         {
             Permissions permission = Permissions.View_Product;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Products());
@@ -94,7 +95,7 @@ namespace SmartSave.Controllers
                 if (_transactionalLevy > 0M)
                     Product.TransactionalFee = _transactionalLevy;
                 Product update = await (_service.GetProduct(Product.ProductID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(Product)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -128,7 +129,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> AddProductAssert(string[] selectedAsserts, Product product)
         {
             Product update = await (_service.GetProduct(product.ProductID));
-            if (UtilityService.IsNotNull(update))
+            if (update.IsNotNull())
             {
                 if (await (_service.UpdateProductAsserts(product.ProductID, selectedAsserts)) == 0)
                 {
@@ -165,7 +166,7 @@ namespace SmartSave.Controllers
 
             GetDropDownLists();
             ProductFee productFee = await _service.FindProductFee(id);
-            if (UtilityService.IsNotNull(productFee))
+            if (productFee.IsNotNull())
                 return View(productFee);
             else
                 return RedirectToAction("ViewProduct", new { id = Convert.ToInt32(HttpContext.Session.GetString("ProductID")) });
@@ -179,7 +180,7 @@ namespace SmartSave.Controllers
 
             GetDropDownLists();
             ProductFee update = await _service.FindProductFee(productFee.ProductFeeID);
-            if (UtilityService.IsNotNull(update))
+            if (update.IsNotNull())
             {
                 if (await (_service.Update(productFee)) == 0)
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");

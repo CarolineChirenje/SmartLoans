@@ -44,7 +44,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Transactions()
         {
             Permissions permission = Permissions.View_Payment;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
             List<Transaction> transactions = await _service.Transactions();
             List<Transaction> _transactions = transactions.OrderByDescending(t => t.TransactionDate).ToList();
@@ -95,7 +95,7 @@ namespace SmartSave.Controllers
                     PaymentStatusID = (int)PaymentState.Paid,
                     TransactionDate = DateTime.Now,
                     ParentPaymentID = paymentsFile.ParentPaymentID,
-                    LastChangedBy = UtilityService.CurrentUserName,
+                    LastChangedBy = UserAppData.CurrentUserName,
                     LastChangedDate = DateTime.Now,
                     BankAccountID = paymentsFile.BankAccountID,
                     TransactionTypeID = paymentsFile.TransactionTypeID,
@@ -112,14 +112,14 @@ namespace SmartSave.Controllers
                         if (paymentsFile.AutoEmailReceipt)
                         {
                             ClientPeek statement = await _ClientService.GetClient(clientID: paymentsFile.ClientID);
-                            if (UtilityService.IsNull(statement))
+                            if (statement.IsNull())
                             {
                                 receipt = PrintReceipt(result);
                             }
                             else
                             {
                                 receipt = PrintReceipt(result, true, statement.IDNumber);
-                                if (UtilityService.IsNotNull(receipt))
+                                if (receipt.IsNotNull())
                                 {
                                     EmailTemplate emailTemplate = _emailTemplateService.GetEmailTemplate((int)EmailTypeList.Client_Statement).Result;
                                     List<AttachmentFromMemory> attachments = new List<AttachmentFromMemory>();
@@ -136,7 +136,7 @@ namespace SmartSave.Controllers
                                         To = statement.EmailAddress,
                                         AttachmentFromMemory = attachments
                                     };
-                                    if (UtilityService.IsNotNull(emailTemplate))
+                                    if (emailTemplate.IsNotNull())
                                     {
                                         email.Body = emailTemplate.Body;
                                         email.Subject = emailTemplate.Subject;
@@ -145,7 +145,7 @@ namespace SmartSave.Controllers
                                     bool emailSuccessResult = RabbitQueue.Publish(email.ToJson());
                                     if (emailSuccessResult)
                                     {
-                                        if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                                        if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
                                             emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                                         TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
                                     }
@@ -195,7 +195,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ActionTransaction(int id, int transactionTypeID)
         {
             Transaction paymentsFile = await (_service.PaymentFile(id));
-            if (UtilityService.IsNotNull(paymentsFile))
+            if (paymentsFile.IsNotNull())
             {
                 if (await (_service.ReversePayment(paymentsFile, (TransactionTypeList)transactionTypeID)) == 0)
                 {
@@ -215,7 +215,7 @@ namespace SmartSave.Controllers
             if (receipt == null)
             {
                 receipt = PrintReceipt(id);
-                if (UtilityService.IsNull(receipt))
+                if (receipt.IsNull())
                     return RedirectToAction(nameof(Transactions));
                 else
                     return File(receipt.Document, "application/pdf", receipt.TransRef + ".pdf");
@@ -227,7 +227,7 @@ namespace SmartSave.Controllers
         private Receipt PrintReceipt(int id, bool passwordProtect = false, string clientIDNumber = null)
         {
             Transaction transaction = _service.PaymentFile(id).Result;
-            if (UtilityService.IsNotNull(transaction))
+            if (transaction.IsNotNull())
             {
                 ProofOfPayment printOut = new ProofOfPayment();
                 using MemoryStream stream = new MemoryStream();
@@ -269,7 +269,7 @@ namespace SmartSave.Controllers
         public ActionResult GenerateInvoice()
         {
             Permissions permission = Permissions.View_Invoice;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             GetDropDownLists();
@@ -302,7 +302,7 @@ namespace SmartSave.Controllers
         public ActionResult ProcessInvoice(int id)
         {
             var invoice = _service.GetInvoice(id);
-            if (UtilityService.IsNull(invoice))
+            if (invoice.IsNull())
                 return RedirectToAction(nameof(GenerateInvoice));
             var clients = _ClientService.GetPotentialInvoiceEntries(invoice.InvoiceID, invoice.ProductID ?? 0, invoice.InvoiceDate);
             return View(clients);
@@ -366,7 +366,7 @@ namespace SmartSave.Controllers
         public ActionResult ViewInvoice(int id)
         {
             Invoice deduction = _service.GetInvoice(id);
-            if (UtilityService.IsNull(deduction))
+            if (deduction.IsNull())
                 return RedirectToAction(nameof(Invoices));
             return View(deduction);
         }
@@ -411,7 +411,7 @@ namespace SmartSave.Controllers
             if (invoiceID > 0)
             {
                 invoice = _service.GetInvoice(invoiceID);
-                if (UtilityService.IsNull(invoice))
+                if (invoice.IsNull())
                     return RedirectToAction(nameof(GenerateInvoice));
                 HttpContext.Session.SetString("InvoiceID", invoiceID.ToString());
             }
@@ -482,7 +482,7 @@ namespace SmartSave.Controllers
             if (invoiceID > 0)
             {
                 invoice = _service.GetInvoice(invoiceID);
-                if (UtilityService.IsNull(invoice))
+                if (invoice.IsNull())
                     return RedirectToAction(nameof(GenerateInvoice));
                 HttpContext.Session.SetString("InvoiceID", invoiceID.ToString());
             }

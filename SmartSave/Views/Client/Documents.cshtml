@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="box-footer">
-                    @if (UtilityService.HasPermission(Permissions.Client_Upload_Document))
+                    @if (UserAppData.HasPermission(Permissions.Client_Upload_Document))
                     {
                         <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#DocumentForm">Upload Document</a>
                     }
@@ -102,7 +102,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    @if (UtilityService.HasPermission(Permissions.Client_Upload_Document))
+                    @if (UserAppData.HasPermission(Permissions.Client_Upload_Document))
                     {
                         <button type="submit" class="btn btn-primary">Upload</button>
                     }

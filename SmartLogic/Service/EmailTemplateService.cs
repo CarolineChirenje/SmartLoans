@@ -62,7 +62,7 @@ namespace SmartLogic
             try
             {
 
-                        update.LastChangedBy = UtilityService.CurrentUserName;
+                        update.LastChangedBy = UserAppData.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();
@@ -78,7 +78,7 @@ namespace SmartLogic
             try
             {
 
-                       EmailTemplate.LastChangedBy = UtilityService.CurrentUserName;
+                       EmailTemplate.LastChangedBy = UserAppData.CurrentUserName;
             EmailTemplate.LastChangedDate = DateTime.Now;
             _context.Add(EmailTemplate);
             return (await _context.SaveChangesAsync());

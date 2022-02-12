@@ -61,7 +61,7 @@
                                             string value = @item.Value;
 
                                         }
-                                        @if (UtilityService.HasPermission(Permissions.View_Custom_Setting))
+                                        @if (UserAppData.HasPermission(Permissions.View_Custom_Setting))
                                         {
                                             <td><a asp-controller="CustomSettings" asp-action="ViewCustomSettings" asp-route-id="@item.CustomSettingID">@item.Name</a></td>
                                         }

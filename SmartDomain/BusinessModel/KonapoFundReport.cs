@@ -15,6 +15,6 @@ namespace SmartDomain
         public string JsonData { get; set; }
         public string FileName { get; set; }
         public string QRCodeURL { get; set; }
-        public  byte[] ? Report { get; set; }
+        public byte[] Report { get; set; }
     }
 }

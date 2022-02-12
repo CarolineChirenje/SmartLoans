@@ -1,5 +1,6 @@
 ﻿@model SmartDomain.InvoicePackage;
 @using SmartHelper;
+@using SmartExtensions;
 @{
     TempData["Title"] = "Employees on Schedule";
 }
@@ -20,7 +21,7 @@
             <div class="box">
                 <div class="box-header">
                     @{ var invoiceDetails = "Invoice Details";
-                        if (UtilityService.IsNotNull(Model))
+                        if (Model.IsNotNull())
                         {
                             invoiceDetails = Model.InvoiceDetail.InvoiceHeading; //$"Invoice No {Model.InvoiceDetail.InvoiceID} Due - {UtilityService.ShowDate(Model.InvoiceDetail.DueDate)}  Status - {Model.InvoiceDetail.Status}";
                         }
@@ -63,7 +64,7 @@
 
                                             }
                                             <td align="center"><input type="checkbox" id="checkBoxAll" name="ClientProductID" value="@clientList[i].ClientProductID" /></td>
-                                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                                            @if (UserAppData.HasPermission(Permissions.View_Client))
                                             {
                                                 <td><a target="_blank" asp-controller="Client" asp-action="ViewClient" asp-route-id="@clientList[i].ClientID">@clientList[i].ClientFullName</a></td>
                                             }
@@ -83,7 +84,7 @@
                     </div>
                     <input type="hidden" name="InvoiceID" value="@Model.InvoiceDetail.InvoiceID" />
                     <div class="box-footer">
-                        @if (UtilityService.HasPermission(Permissions.Generate_Invoices))
+                        @if (UserAppData.HasPermission(Permissions.Generate_Invoices))
                         {<button type="submit" class="btn btn-success pull-right">Generate Entries</button><br />
                         }
                         <a class="btn btn-default" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@Model.InvoiceDetail.InvoiceID">Cancel</a>

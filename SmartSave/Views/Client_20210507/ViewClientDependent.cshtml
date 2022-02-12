@@ -1,5 +1,6 @@
 ﻿@model SmartDomain.ClientDependent
 @using SmartHelper;
+@using SmartExtensions;
 @using System.Collections.Generic;
 @{
     TempData["Title"] = "Client Details";
@@ -240,7 +241,7 @@
                         </div>
                     </div>
                 </section>
-                @if (Model.Client.IsJointAccount && UtilityService.IsNotNull(Model.Client.JointApplicant))
+                @if (Model.Client.IsJointAccount && Model.Client.JointApplicant.IsNotNull())
                 {
                     <section id="CoApplicantInfo">
                         <h5 class="box-title">Co-Applicant Information</h5>
@@ -465,14 +466,14 @@
                             <input type="hidden" name="ClientID" value="@Model.ClientID" />
                         </div>
                         <div class="modal-footer">
-                            @if (UtilityService.HasPermission(Permissions.Update_Client_Dependent))
+                            @if (UserAppData.HasPermission(Permissions.Update_Client_Dependent))
                             {
                                 <button type="submit" class="btn btn-primary">Update</button>
-                            } @if (UtilityService.HasPermission(Permissions.Delete_Client_Dependent))
+                            } @if (UserAppData.HasPermission(Permissions.Delete_Client_Dependent))
                             {
                                 <a class="btn btn-danger" asp-controller="Client" asp-action="ActionDependent" asp-route-Dependentid="@Model.ClientDependentID" asp-route-Clientid="@Model.ClientID">Delete</a>
                             }
-                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                            @if (UserAppData.HasPermission(Permissions.View_Client))
                             {
                                 <a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">View More Details</a>
                             }<a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>

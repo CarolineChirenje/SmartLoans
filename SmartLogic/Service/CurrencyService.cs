@@ -9,6 +9,7 @@ using SmartDomain;
 using SmartDataAccess;
 using SmartHelper;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -29,7 +30,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     Currency.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                    Currency.LastChangedBy = UtilityService.CurrentUserName;
+                    Currency.LastChangedBy = UserAppData.CurrentUserName;
                     Currency.LastChangedDate = DateTime.Now;
                     _context.Update(Currency);
                 }
@@ -91,7 +92,7 @@ namespace SmartLogic
         {
             try
             {
-                Currency.LastChangedBy = UtilityService.CurrentUserName;
+                Currency.LastChangedBy = UserAppData.CurrentUserName;
                 Currency.LastChangedDate = DateTime.Now;
                 _context.Add(Currency);
                 return (await _context.SaveChangesAsync());
@@ -109,11 +110,11 @@ namespace SmartLogic
             try
             {
                 Currency update = await FindCurrency(Currency.CurrencyID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     update.Name = Currency.Name;
                     update.IsActive = Currency.IsActive;
-                    update.LastChangedBy = UtilityService.CurrentUserName;
+                    update.LastChangedBy = UserAppData.CurrentUserName;
                     update.LastChangedDate = DateTime.Now;
                     _context.Update(update);
 

@@ -27,6 +27,8 @@ namespace SmartSave.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
+        
+     
 
     }
 
@@ -42,6 +44,8 @@ namespace SmartSave.Models
 
         [Required]
         public int UserID { get; set; }
+
+        public int ResetTypeID { get; set; } = 1;
 
     }
 

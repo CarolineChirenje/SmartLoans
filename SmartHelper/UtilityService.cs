@@ -37,16 +37,34 @@ namespace SmartHelper
             return "panel panel-info";
         }
 
-        public static bool HasPermission(Permissions permission) => GetData.IsPermitted((int)permission);
 
         public static string GetValue(Support support) => GetData.GetSupportValue((int)support);
 
-        public static string ApplicationName
+        public static string GetApplicationName
         {
             get
             {
                 return GetData.GetSettingValue((int)AppSetting.Application_Name)?.Value;
 
+            }
+        }
+        public static SiteEnvironment GetEnvironment
+        {
+            get
+            {
+
+                string _result = GetData.GetSettingValue((int)AppSetting.Site_Default_Environment)?.Value;
+                int _siteEnv = 1;
+                try
+                {
+                    _siteEnv = Int32.Parse(_result, CultureInfo.InvariantCulture);
+                }
+                catch (Exception)
+                {
+
+                }
+
+                return (SiteEnvironment)_siteEnv;
             }
         }
 
@@ -70,7 +88,7 @@ namespace SmartHelper
         {
             get
             {
-                return $"Hi, {UtilityService.ApplicationName} Team,I am having technical issues on {UtilityService.ApplicationName} may you please assist? Thank you!";
+                return $"Hi, {UserAppData.ApplicationName} Team,I am having technical issues on {UserAppData.ApplicationName} may you please assist? Thank you!";
 
             }
         }
@@ -128,7 +146,6 @@ namespace SmartHelper
 
             }
         }
-
         public static bool AutoGenerateAccountNumber
         {
             get
@@ -149,7 +166,6 @@ namespace SmartHelper
 
             }
         }
-
         public static string VATPercentage
         {
             get
@@ -173,26 +189,7 @@ namespace SmartHelper
 
             }
         }
-        public static SiteEnvironment SiteEnvironment
-        {
-            get
-            {
 
-                string _result = GetData.GetSettingValue((int)AppSetting.Site_Default_Environment)?.Value;
-                int _siteEnv = 1;
-                try
-                {
-                    _siteEnv = Int32.Parse(_result, System.Globalization.CultureInfo.InvariantCulture);
-                }
-                catch (Exception)
-                {
-
-                }
-
-                return (SiteEnvironment)_siteEnv;
-            }
-        }
-        
         public static bool StatementPasswordProtect
         {
             get
@@ -367,7 +364,7 @@ namespace SmartHelper
                 return accountNumber;
             else
             {
-               string lastFourDigits = accountNumber.Substring((accountNumber.Length - 4), 4);
+                string lastFourDigits = accountNumber.Substring((accountNumber.Length - 4), 4);
                 int remaining_digits = accLength - 4;
                 StringBuilder sb = new StringBuilder("X", remaining_digits);
                 for (int i = 1; i < remaining_digits; i++)
@@ -423,48 +420,13 @@ namespace SmartHelper
 
             }
         }
-       public static byte[] CompanyLogo
+        public static byte[] CompanyLogo
         {
             get
             {
                 return GetData.CompanyLogo();
 
 
-            }
-        }
-        public static string UserRole
-        {
-            get
-            {
-                string sqlCustomSetting = @"SELECT TOP 1 r.Name FROM Users u 
-                INNER JOIN UserRoles ur ON  ur.UserID=u.UserID
-                INNER JOIN Roles r ON ur.RoleID=r.RoleID
-                WHERE u.UserName='" + UtilityService.CurrentUserName + "'";
-                string _userRole = GetData.GetStringValue(sqlCustomSetting);
-
-                return _userRole;
-
-            }
-        }
-        public static int UserRoleID
-        {
-            get
-            {
-                string sqlCustomSetting = @"SELECT TOP 1 r.RoleID FROM Users u 
-                INNER JOIN UserRoles ur ON  ur.UserID=u.UserID
-                INNER JOIN Roles r ON ur.RoleID=r.RoleID
-                WHERE u.UserName='" + UtilityService.CurrentUserName + "'";
-                string _Role = GetData.GetStringValue(sqlCustomSetting);
-                int roleID = 0;
-                try
-                {
-                    roleID = Int32.Parse(_Role);
-                }
-                catch
-                {
-
-                }
-                return roleID;
             }
         }
         public static int PinCodeLength
@@ -524,7 +486,7 @@ namespace SmartHelper
         }
         public static bool FeatureFlagOn(int id)
         {
-                    string sqlCustomSetting = $"SELECT TOP 1 IsActive  FROM FeatureFlags WHERE FeatureFlagID={id};";
+            string sqlCustomSetting = $"SELECT TOP 1 IsActive  FROM FeatureFlags WHERE FeatureFlagID={id};";
             string _result = GetData.GetStringValue(sqlCustomSetting);
             if (String.IsNullOrEmpty(_result))
                 return false;
@@ -533,30 +495,12 @@ namespace SmartHelper
             else
                 return false;
         }
-        public static int UserType
-        {
-            get
-            {
-
-                string sqlCustomSetting = $"SELECT TOP 1  u.UserTypeID FROM  Users u WHERE  UserName='{CurrentUserName}';";
-                string _result = GetData.GetStringValue(sqlCustomSetting);
-                int userType = 0;
-                try
-                {
-                    userType = Int32.Parse(_result, System.Globalization.CultureInfo.InvariantCulture); ;
-                }
-                catch 
-                {
-
-                }
-               return userType;
-            }
-        }
+  
         public static List<int> GetRoleMenus
         {
             get
             {
-                string sqlCustomSetting = $"SELECT rm.MenuID FROM RoleMenus rm WHERE rm.RoleID={UserRoleID};";
+                string sqlCustomSetting = $"SELECT rm.MenuID FROM RoleMenus rm WHERE rm.RoleID={UserAppData.UserRoleID};";
                 DataTable _result = GetData.GetDataTable(sqlCustomSetting);
                 List<int> results = (from row in _result.AsEnumerable() select Convert.ToInt32(row["MenuID"])).ToList();
                 return results;
@@ -566,7 +510,7 @@ namespace SmartHelper
         {
             get
             {
-                string sqlCustomSetting = $"SELECT DISTINCT m.MenuGroupID FROM RoleMenus rm INNER JOIN Menus m ON rm.MenuID = m.MenuID WHERE rm.RoleID={UserRoleID};";
+                string sqlCustomSetting = $"SELECT DISTINCT m.MenuGroupID FROM RoleMenus rm INNER JOIN Menus m ON rm.MenuID = m.MenuID WHERE rm.RoleID={UserAppData.UserRoleID};";
                 DataTable _result = GetData.GetDataTable(sqlCustomSetting);
                 List<int> results = (from row in _result.AsEnumerable() select Convert.ToInt32(row["MenuGroupID"])).ToList();
                 return results;
@@ -645,113 +589,12 @@ namespace SmartHelper
 
             }
         }
-       
-        
-        /// <summary>
-        /// Static value protected by access routine.
-        /// </summary>
-        static string _currentUserName;
-        static string _currentFullName;
-        static byte[] _userProfileImage;
-        static bool _canOverrideMaintananceMode;
-        static bool _canOverrideUserNotFound;
-        static int _ClientID;
-        public static int CurrentUserTypeID;
-        static Menu_Component _component;
-        /// <summary>
-        /// Access routine for global variable.
-        /// </summary>
-        public static string CurrentUserName
-        {
-            get
-            {
-                return _currentUserName;
-            }
-            set
-            {
-                _currentUserName = value;
-            }
-        }
 
-        
-        public static int ClientID
-        {
-            get
-            {
-                return _ClientID;
-            }
-            set
-            {
-                _ClientID = value;
-            }
-        }
-        public static string UserFullName
-        {
-            get
-            {
-                return _currentFullName;
-            }
-            set
-            {
-                _currentFullName = value;
-            }
-        }
-        public static byte[] UserProfileImage
-        {
-            get
-            {
-                return _userProfileImage;
-            }
-            set
-            {
-                _userProfileImage = value;
-            }
 
-        }
-
-        public static bool CanOverrideMaintananceMode
-        {
-            get
-            {
-                return _canOverrideMaintananceMode;
-            }
-            set
-            {
-                _canOverrideMaintananceMode = value;
-            }
-
-        }
-        public static bool CanOverrideUserNotFound
-        {
-            get
-            {
-                return _canOverrideUserNotFound;
-            }
-            set
-            {
-                _canOverrideUserNotFound = value;
-            }
-
-        }
-        public static Menu_Component MenuComponent
-        {
-            get
-            {
-                return _component;
-            }
-            set
-            {
-                _component = value;
-            }
-        }
         public static void ClearUserNames()
         {
-            UtilityService.UserFullName = string.Empty;
-            UtilityService.CurrentUserName = string.Empty;
-            UtilityService.UserProfileImage = null;
-            UtilityService.CanOverrideMaintananceMode = false;
-            UtilityService.MenuComponent = Menu_Component.MenuList;
-          }
+            UserAppData.MenuComponent = Menu_Component.MenuList;
+        }
         public static decimal GetDecimalAmount(string Amount)
         {
             var cul = CultureInfo.GetCultureInfo("EN-us");
@@ -759,12 +602,9 @@ namespace SmartHelper
             decimal.TryParse(Amount, NumberStyles.AllowDecimalPoint, cul, out decimal _amount);
             return _amount;
         }
-   
+
         public static string HtmlDecode(string htmlValue) => WebUtility.HtmlDecode(htmlValue);
         public static string HtmlEncode(string stringValue) => WebUtility.HtmlEncode(stringValue);
-        public static bool ListIsNotEmpty(List<Object> value) => (value != null) && (value.Count > 0);
-        public static bool IsNotNull(Object value) => value != null;
-        public static bool IsNull(Object value) => value == null;
         public static bool StringParameterHasValue(string value) => !String.IsNullOrEmpty(value);
         public static string GenerateUserName(string firstName, string LastName) => $"{firstName.Substring(0, 1).ToUpper()}{LastName}{GenerateRandomNumbers(2)}";
         ///Generate QueryRef
@@ -773,9 +613,7 @@ namespace SmartHelper
             string queryRef = $"Q{DateTime.Now.Year}{ DateTime.Now.ToString("MMM").ToUpper()}{RandomAlphanumeric()}";
             return queryRef;
         }
-      
 
-        public static string GetUserType(int userTypeID) => Enum.GetName(typeof(TypeOfUser), userTypeID);
         public static int GenerateRandomNumbers(int numberSize = 4)
         {
             int _min = 1000;
@@ -846,7 +684,7 @@ namespace SmartHelper
         public static string ShowOpenCloseAction(bool status) => status ? "Open" : "Closed";
         public static string ShowGender(int gender) => Enum.GetName(typeof(GenderOrientation), gender);
 
-            }
     }
+}
 
 

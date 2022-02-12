@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SmartExtensions;
 using SmartHelper;
 using SmartLog;
 using System;
@@ -14,14 +15,14 @@ namespace SmartAsync
 
         public static bool Publish(string message, Queues queue= Queues.Emails)
         {
-            if (UtilityService.IsNull((object)config))
+            if (((object)config).IsNull())
             {
                 CustomLog.Log(LogSource.Rabbit_MQ, new Exception("No Rabbit MQ End Points Found Publish Action Failed to Complete"));
                 return false;
             }
             try
             {
-                string routingKey = string.Format("{0}_{1}", (object)UtilityService.SiteEnvironment, (object)queue);
+                string routingKey = string.Format("{0}_{1}", (object)UserAppData.SiteEnvironment, (object)queue);
                 using (IConnection connection = new ConnectionFactory()
                 {
                     HostName = config.EndPoint,
@@ -51,12 +52,12 @@ namespace SmartAsync
             ConsumeResponse response = new ConsumeResponse();
             try
             {
-                if (UtilityService.IsNull((object)config))
+                if (((object)config).IsNull())
                 {
                     CustomLog.Log(LogSource.Rabbit_MQ, new Exception("No Rabbit MQ End Points Found Consume Action Failed to Complete"));
                     return response;
                 }
-                string queue1 = string.Format("{0}_{1}", (object)UtilityService.SiteEnvironment, (object)queue);
+                string queue1 = string.Format("{0}_{1}", (object)UserAppData.SiteEnvironment, (object)queue);
                 using (IConnection connection = new ConnectionFactory()
                 {
                     HostName = config.EndPoint,

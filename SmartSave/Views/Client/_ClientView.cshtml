@@ -1,5 +1,6 @@
 ﻿@model SmartInterfaces.ClientForm;
 @using SmartHelper;
+@using SmartExtensions;
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">@Model.ClientFullName</h3>
@@ -214,7 +215,7 @@
                     </div>
                 </div>
             </section>
-            @if (Model.IsJointAccount && UtilityService.IsNotNull(Model.JointApplicant))
+            @if (Model.IsJointAccount && Model.JointApplicant.IsNotNull())
             {
                 <section id="CoApplicantInfo">
                     <h5 class="box-title text-warning text-bold">Co-Applicant Information</h5>
@@ -360,16 +361,16 @@
         {
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Client" asp-action="Clients">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Client) && (UtilityService.UserType != (int)TypeOfUser.Employee))
+                @if (UserAppData.HasPermission(Permissions.Update_Client) && (UserAppData.CurrentUserTypeID != (int)TypeOfUser.Employee))
                 {
                     <button type="submit" class="btn btn-info pull-right">Update</button>
                 }
-                @if (UtilityService.HasPermission(Permissions.Client_Update_Personal_Details) && (UtilityService.UserType == (int)TypeOfUser.Employee))
+                @if (UserAppData.HasPermission(Permissions.Client_Update_Personal_Details) && (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employee))
                 {
                     <button type="submit" class="btn btn-info pull-right">Update My Personal Details</button>@String.Empty;
                 }
 
-                @if (UtilityService.HasPermission(Permissions.Delete_Client))
+                @if (UserAppData.HasPermission(Permissions.Delete_Client))
                 {
                     <a class="btn btn-danger" asp-controller="Client" asp-action="Delete" asp-route-id="@Model.ClientID">Delete</a>
                 }

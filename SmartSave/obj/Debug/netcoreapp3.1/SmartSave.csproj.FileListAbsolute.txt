@@ -9920,3 +9920,6 @@ C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.csproj.CopyComple
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.dll
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.pdb
 C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\SmartSave.genruntimeconfig.cache
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\EmployeeMenuList\EmployeeMenu.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\EmployerMenuList\EmployerMenu.cshtml.g.cs
+C:\DEV\SmartWealth\SmartSave\obj\Debug\netcoreapp3.1\Razor\Views\External\Dashboard.cshtml.g.cs

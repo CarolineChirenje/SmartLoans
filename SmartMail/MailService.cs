@@ -2,6 +2,7 @@
 using MailKit.Security;
 using MimeKit;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartLog;
 using SmartLogic;
@@ -61,7 +62,7 @@ namespace SmartMail
             try
             {  //set the sender address of the mail message
                 mMailMessage.From.Add(new MailboxAddress(MAILDISPLAYNAME, CREDENTIALUSERNAME));
-                if (UtilityService.SiteEnvironment == SiteEnvironment.Production)
+                if (UserAppData.SiteEnvironment == SiteEnvironment.Production)
                 {
                     //set the recipient address of the mail message
                     foreach (var address in email.To.Split(','))
@@ -94,24 +95,24 @@ namespace SmartMail
                 //set the priority
                 mMailMessage.Priority = MessagePriority.Urgent;
                 //add any attachments from the filesystem
-                if (UtilityService.IsNotNull(email.FileSystemAttachmentList))
+                if (!email.FileSystemAttachmentList.ListIsEmpty())
                 {
                     foreach (var filepath in email.FileSystemAttachmentList)
                     {
                         // add attachments from file path
-                        if (UtilityService.IsNotNull(filepath))
+                        if (filepath.IsNotNull())
                         {
                             builder.Attachments.Add(filepath.Name);
                             //  mMailMessage.Attachments.Add(new Attachment(filepath.Name));
                         }
                     }
                 }
-                if (UtilityService.IsNotNull(email.AttachmentFromMemory))
+                if (!email.AttachmentFromMemory.ListIsEmpty())
                 {
                     foreach (var attachment in email.AttachmentFromMemory)
                     {
                         // add attachments from memory stream
-                        if (UtilityService.IsNotNull(attachment.MemoryStream))
+                        if (attachment.MemoryStream.IsNotNull())
                         {
                             //save the data to a memory stream
                             //create the attachment from a stream. Be sure to name the data with a file and 

@@ -52,7 +52,7 @@
                                         string duedate = UtilityService.ShowDate(item.DueDate);
                                         string invoicedate = UtilityService.ShowDate(item.InvoiceDate);
                                     }
-                                    @if (UtilityService.HasPermission(Permissions.View_Invoice))
+                                    @if (UserAppData.HasPermission(Permissions.View_Invoice))
                                     {
                                         <td><a target="_blank" asp-controller="Transactions" asp-action="ViewInvoice" asp-route-id="@item.InvoiceID">@item.InvoiceID</a></td>
                                     }
@@ -71,7 +71,7 @@
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Transactions" asp-action="Invoices">Cancel</a>
-                    @if (UtilityService.HasPermission(Permissions.Generate_Invoices))
+                    @if (UserAppData.HasPermission(Permissions.Generate_Invoices))
                     {<a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="GenerateInvoice">Create Invoice</a>
                     }
                 </div>

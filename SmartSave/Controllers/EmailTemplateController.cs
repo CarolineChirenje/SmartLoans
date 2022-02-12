@@ -8,6 +8,7 @@ using SmartHelper;
 using SmartDomain;
 using SmartLogic.IService;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -24,7 +25,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> EmailTemplate()
         {
             Permissions permission = Permissions.View_Email_Template;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.EmailTemplates());
@@ -66,7 +67,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 EmailTemplate update = await (_service.FindEmailTemplate(EmailTemplate.EmailTemplateID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(EmailTemplate)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

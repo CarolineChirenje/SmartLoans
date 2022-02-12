@@ -10,6 +10,7 @@ using SmartSave.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -21,7 +22,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Roles()
         {
             Permissions permission = Permissions.View_Role;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Roles());
@@ -64,7 +65,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Role update = await (_service.GetRole(role.RoleID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(role)) == 0)
                     {
@@ -104,7 +105,7 @@ namespace SmartSave.Controllers
         {
             List<RolePermission> rolePermission = await (_service.GetRolePermissions(id));
 
-            if (UtilityService.IsNotNull(rolePermission))
+            if (!rolePermission.ListIsEmpty())
             {
                 ViewBag.RoleName = rolePermission.FirstOrDefault()?.Roles?.Name ?? "Uknown";
                 ViewBag.RoleID = id;
@@ -129,7 +130,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("ViewRole", new {id= roleID });
 
             Permission permission = await _service.FindPermission(id);
-            if (UtilityService.IsNull(permission))
+            if (permission.IsNull())
                 return RedirectToAction("ViewRole", new {id= roleID });
             return View(permission);
         }
@@ -137,7 +138,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> AddUserToRole(UserRole userRole)
         {
             Role update = await (_service.GetRole(userRole.RoleID));
-            if (UtilityService.IsNull(update))
+            if (update.IsNull())
                 return RedirectToAction(nameof(Roles));
             if (await _service.Save(userRole) == 0)
             {
@@ -161,7 +162,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> AddPermission(string[] selectedPermissions, Role role)
         {
             Role update = await (_service.GetRole(role.RoleID));
-            if (UtilityService.IsNotNull(update))
+            if (update.IsNotNull())
             {
                 if (await (_service.UpdatePermissions(role.RoleID, selectedPermissions)) == 0)
                 {
@@ -178,7 +179,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> AddMenu(string[] selectedMenus, Role role)
         {
             Role update = await (_service.GetRole(role.RoleID));
-            if (UtilityService.IsNotNull(update))
+            if (update.IsNotNull())
             {
                 if (await (_service.UpdateMenus(role.RoleID, selectedMenus)) == 0)
                 {

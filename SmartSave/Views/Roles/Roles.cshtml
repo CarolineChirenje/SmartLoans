@@ -54,7 +54,7 @@
                                             string roleStatus = @item.IsActive ? "Deactivate" : "Reactivate";
 
                                         }
-                                        @if (UtilityService.HasPermission(Permissions.View_Role))
+                                        @if (UserAppData.HasPermission(Permissions.View_Role))
                                         {
                                             <td><a asp-controller="Roles" asp-action="ViewRole" asp-route-id="@item.RoleID">@item.Name</a></td>
                                         }

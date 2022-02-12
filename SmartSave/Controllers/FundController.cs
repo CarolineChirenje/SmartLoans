@@ -10,6 +10,7 @@ using SmartHelper;
 using SmartDomain;
 using Microsoft.AspNetCore.Http;
 using SmartSave.Models;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -25,7 +26,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Fund()
         {
             Permissions permission = Permissions.View_Fund;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Funds());
@@ -67,7 +68,7 @@ namespace SmartSave.Controllers
             HttpContext.Session.SetString("FundID", id.ToString());
             PopulateDropDownList();
             var fund = await _service.FindFund(id);
-            if (UtilityService.IsNotNull(fund))
+            if (fund.IsNotNull())
                 return View(fund);
             else
                 return RedirectToAction(nameof(Fund));
@@ -81,7 +82,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Fund update = await (_service.FindFund(Fund.FundID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(Fund)) == 0)
                     {
@@ -128,22 +129,22 @@ namespace SmartSave.Controllers
                 {
                     TempData["Error"] = "A Category Item with the Same Name Already Exists";
                     return RedirectToAction("ViewFundCategory", new { id = fundCategoryItem.FundCategoryID });
-               }
+                }
                 fundCategoryItem.IsActive = true;
                 if (await (_service.Save(fundCategoryItem)) == 0)
                 {
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
                 }
-                return RedirectToAction("ViewFundCategory", new { Categoryid = fundCategoryItem.FundCategoryID, Fundid= FundID });
+                return RedirectToAction("ViewFundCategory", new { Categoryid = fundCategoryItem.FundCategoryID, Fundid = FundID });
             }
-            return RedirectToAction("ViewFundCategory", new { Categoryid = FundCategoryID, Fundid=FundID });
+            return RedirectToAction("ViewFundCategory", new { Categoryid = FundCategoryID, Fundid = FundID });
         }
 
         //[HttpPost]
         //public async Task<IActionResult> AddFundCategoryItem(int FundCategoryID, int FundItemID)
         //{
-    
+
         //    if (ModelState.IsValid)
         //    {
         //        FundCategoryItem fundCategoryItem = new FundCategoryItem { FundItemID = FundItemID, FundCategoryID = FundCategoryID };
@@ -183,7 +184,7 @@ namespace SmartSave.Controllers
             return RedirectToAction("ViewFund", new { id = FundCategory.FundID });
         }
         public async Task<IActionResult> ViewCategory(int id)
-        {            
+        {
             HttpContext.Session.SetString("FundCategoryID", id.ToString());
             PopulateDropDownList();
             return View(await _service.FindFundCategory(id));
@@ -204,8 +205,7 @@ namespace SmartSave.Controllers
             FundCategory _FundCategory = await _service.FindFundCategory(FundCategory.FundCategoryID);
             if (ModelState.IsValid)
             {
-
-                if (UtilityService.IsNotNull(_FundCategory))
+                if (_FundCategory.IsNotNull())
                 {
                     if (await (_service.Update(FundCategory)) == 0)
                     {

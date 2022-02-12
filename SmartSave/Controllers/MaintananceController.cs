@@ -8,6 +8,7 @@ using SmartHelper;
 using SmartDomain;
 using SmartLogic.IService;
 using Maintanance = SmartDomain.Maintanance;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -19,7 +20,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Maintanance()
         {
             Permissions permission = Permissions.View_Maintanances;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Maintanance());
@@ -32,7 +33,7 @@ namespace SmartSave.Controllers
         public IActionResult MaintananceMode()
         {
             var maintananceMode = _service.FindActiveMaintanance();
-            if (UtilityService.IsNotNull(maintananceMode) && !UtilityService.CanOverrideMaintananceMode)
+            if (maintananceMode.IsNotNull() && !UserAppData.CanOverrideMaintananceMode)
                 return View(maintananceMode);
             else
                 return RedirectToAction("Login", "Login");
@@ -68,7 +69,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Maintanance update = await (_service.FindMaintanance(Maintanance.MaintananceID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(Maintanance)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

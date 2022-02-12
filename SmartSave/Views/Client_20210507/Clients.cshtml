@@ -60,7 +60,7 @@
                                 {
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.AccountType)</td>
-                                        @if (UtilityService.HasPermission(Permissions.View_Client))
+                                        @if (UserAppData.HasPermission(Permissions.View_Client))
                                         {
                                             <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@Html.DisplayFor(modelItem => item.AccountNumber)</a> </td>
                                         }
@@ -79,7 +79,7 @@
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                    @if (UtilityService.HasPermission(Permissions.Add_Client))
+                    @if (UserAppData.HasPermission(Permissions.Add_Client))
                     {
                         <a class="btn btn-success pull-right" asp-controller="Client" asp-action="AddClient">New</a><br />
                     }

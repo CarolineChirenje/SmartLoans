@@ -108,7 +108,7 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="CustomSettings" asp-action="CustomSettings">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Custom_Setting))
+                @if (UserAppData.HasPermission(Permissions.Update_Custom_Setting))
                 {
                     <button type="submit" class="btn btn-info pull-right">Update</button>
                 }

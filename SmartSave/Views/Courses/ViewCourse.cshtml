@@ -82,11 +82,11 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Courses" asp-action="Courses">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Course))
+                @if (UserAppData.HasPermission(Permissions.Update_Course))
                 {
                     <button type="submit" class="btn btn-info">Update</button>
                 }
-                @if (UtilityService.HasPermission(Permissions.Delete_Course))
+                @if (UserAppData.HasPermission(Permissions.Delete_Course))
                 {
                     <a class="btn btn-danger" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.CourseID">Delete</a>
                 }
@@ -107,20 +107,20 @@
                     <!-- Nav tabs -->
 
                     <ul class="nav nav-tabs">
-                        @if (UtilityService.HasPermission(Permissions.View_Course_Fee))
+                        @if (UserAppData.HasPermission(Permissions.View_Course_Fee))
                         {
                             <li class="active">
                                 <a href="#Fees" data-toggle="tab">Fees</a>
                             </li>
                         }
-                        @if (UtilityService.HasPermission(Permissions.View_Course_Topic))
+                        @if (UserAppData.HasPermission(Permissions.View_Course_Topic))
                         {
                             <li>
                                 <a href="#CourseTopic" data-toggle="tab">Topics</a>
                             </li>
                         }
 
-                        @if (UtilityService.HasPermission(Permissions.View_Course_Intake))
+                        @if (UserAppData.HasPermission(Permissions.View_Course_Intake))
                         {
                             <li>
                                 <a href="#CourseIntake" data-toggle="tab">Intakes</a>
@@ -158,7 +158,7 @@
                                                             string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
                                                         }
 
-                                                        @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
+                                                        @if (UserAppData.HasPermission(Permissions.View_Product_Fee))
                                                         {
                                                             <td><a asp-controller="Courses" asp-action="ViewCourseFee" asp-route-id="@item.CourseFeeID">@item.Name</a></td>
                                                         }
@@ -179,7 +179,7 @@
                             </div>
 
                             <div class="box-footer">
-                                @if (UtilityService.HasPermission(Permissions.Add_Course_Fee))
+                                @if (UserAppData.HasPermission(Permissions.Add_Course_Fee))
                                 {
                                     <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#FeeForm">Add Fee</a>
                                 }
@@ -270,7 +270,7 @@
                                     </table>
                                 </div>
                             </div>
-                            @if (UtilityService.HasPermission(Permissions.Add_Course_Intake))
+                            @if (UserAppData.HasPermission(Permissions.Add_Course_Intake))
                             {
                                 <div class="box-footer">
                                     <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddCourseIntake">Add Intake</a>
@@ -379,7 +379,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    @if (UtilityService.HasPermission(Permissions.Add_Course_Intake))
+                    @if (UserAppData.HasPermission(Permissions.Add_Course_Intake))
                     {<button type="submit" class="btn btn-primary">Save Intake</button>}
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
@@ -496,7 +496,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    @if (UtilityService.HasPermission(Permissions.Add_Course_Fee))
+                    @if (UserAppData.HasPermission(Permissions.Add_Course_Fee))
                     {<button type="submit" class="btn btn-primary">Save Fee</button>}
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 

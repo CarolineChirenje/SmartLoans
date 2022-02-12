@@ -9,11 +9,11 @@ namespace SmartSave
 {
     public class OverrideMenuComponentFilter : ActionFilterAttribute
     {
-            public override void OnActionExecuting(ActionExecutingContext filterContext) => UtilityService.MenuComponent = Menu_Component.MenuList;
+            public override void OnActionExecuting(ActionExecutingContext filterContext) => UserAppData.MenuComponent = Menu_Component.MenuList;
     }
 
     public class OverrideUserNotFoundFilter : ActionFilterAttribute
     {
-        public override void OnActionExecuting(ActionExecutingContext filterContext) => UtilityService.CanOverrideUserNotFound =true;
+        public override void OnActionExecuting(ActionExecutingContext filterContext) => UserAppData.CanOverrideUserNotFound =true;
     }
 }
