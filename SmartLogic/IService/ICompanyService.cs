@@ -18,6 +18,6 @@ namespace SmartLogic
         Task<int> ActionCompany(int id, DatabaseAction action);
         Task<Company> FindCompany(int id);
         Task<List<Company>> Companies();
-
+        List<Company> GetActiveCompanies();
     }
 }

@@ -58,19 +58,21 @@ namespace SmartSave.Controllers
         }
 
         [OverrideMenuComponentFilter]
-        public ActionResult Clients(string accountNum = null, bool newClientsOnly = false, int productID = 0)
+        public ActionResult Clients(string accountNum = null, bool newClientsOnly = false, int productID = 0, int companyID=0)
         {
             try
             {
                 if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employee)
                     return RedirectToAction("Dashboard", "External");
-                List<ClientList> Clients = _service.Clients(accountNum, newClientsOnly, productID);
+                if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employer && UserAppData.CompanyID > 0)
+                    companyID = UserAppData.CompanyID;
+                List<ClientList> Clients = _service.Clients(accountNum, newClientsOnly, productID,companyID);
                 Permissions permission = Permissions.View_Client;
                 if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
-                if (!Clients.ListIsEmpty() && Clients.Count == 1)
-                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(Clients.FirstOrDefault().ClientID) });
+                //if (!Clients.ListIsEmpty() && Clients.Count == 1)
+                //    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(Clients.FirstOrDefault().ClientID) });
 
                 return View(Clients);
             }
@@ -82,6 +84,7 @@ namespace SmartSave.Controllers
 
 
         }
+
         public IActionResult MyAccount()
         {
             if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employee)

@@ -25,13 +25,15 @@ namespace SmartSave.Controllers
         readonly IRoleService _roleservice;
         readonly IDepartmentService _departmentservice;
         readonly IEmailTemplateService _emailTemplateService;
+        readonly ICompanyService _companyService;
         public UserController(IUserService service, IRoleService roleservice,
-        IDepartmentService departmentService, IEmailTemplateService emailTemplateService)
+        IDepartmentService departmentService, IEmailTemplateService emailTemplateService, ICompanyService companyService)
         {
             _service = service;
             _roleservice = roleservice;
             _departmentservice = departmentService;
             _emailTemplateService = emailTemplateService;
+            _companyService = companyService;
         }
 
         // GET: User
@@ -221,7 +223,22 @@ namespace SmartSave.Controllers
                 return RedirectToAction("ViewUser", new { id });
             }
         }
-
+        [HttpPost]
+        public ActionResult GetCompanies(int UserTypeID)
+        {
+            SelectList companyList = null;
+            if (UserTypeID == (int)TypeOfUser.Employer)
+            {
+                List<Company> companies = _companyService.GetActiveCompanies();
+                companies.Select(t => new
+                {
+                    t.CompanyID,
+                    t.Name,
+                });
+                companyList = new SelectList(companies, "CompanyID", "Name");
+            }
+            return Json(companyList);
+        }
         public void PopulateDropDownLists()
         {
             int userID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
@@ -248,6 +265,13 @@ namespace SmartSave.Controllers
 
             ViewBag.UserTypeList = new SelectList(userTypeList, "UserTypeID", "Name");
 
+            var companyList = _companyService.GetActiveCompanies().Select(t => new
+            {
+                t.CompanyID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.CompanyList = new SelectList(companyList, "CompanyID", "Name");
 
         }
         private IList<Department> GetDepartments()

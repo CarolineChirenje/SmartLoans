@@ -498,11 +498,12 @@ namespace SmartLogic
             }
 
         }
-        public List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0)
+        public List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0, int companyID = 0)
         {
             try
             {
                 List<int> ClientIDs = new List<int>();
+             
                 if (productID > 0)
                     ClientIDs = ClientProductIDs(productID);
                 var clients = (from c in _context.Clients
@@ -514,6 +515,8 @@ namespace SmartLogic
                     return null;
                 if (!String.IsNullOrEmpty(accountNumber))
                     clients = clients.Where(m => m.AccountNumber.Contains(accountNumber.Trim())).ToList();
+                if (companyID>0)
+                    clients = clients.Where(c => c.CompanyID==companyID).ToList();
 
                 if (newClientsOnly)
                     clients = clients.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).ToList();

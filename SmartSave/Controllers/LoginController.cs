@@ -89,8 +89,10 @@ namespace SmartSave.Controllers
                     UserAppData.UserRole = userRoles.FirstOrDefault()?.Roles.Name;
                     UserAppData.Permissions = userRolePermissions.Select(p => p.PermissionID).ToList();
                     UserAppData.SiteEnvironment = UtilityService.GetEnvironment;
-                    UserAppData.IsNotAdmin = user.UserTypeID!=(int)TypeOfUser.Administrator;
+                    UserAppData.IsNotAdmin = user.UserTypeID != (int)TypeOfUser.Administrator;
                     UserAppData.ApplicationName = UtilityService.GetApplicationName;
+                    UserAppData.CompanyID = user.CompanyID??0;
+                    
                     GetAppData().Wait();
                     if (DateTime.Now > user.PasswordExpiryDate)
                         return RedirectToAction("PasswordReset", new { id = user.UserID });
@@ -167,6 +169,14 @@ namespace SmartSave.Controllers
                 ClientPeek client = _clientService.GetClient(user.EmailAddress, user.IDNumber).Result;
                 if (client.IsNotNull())
                     return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
+                else
+                    return RedirectToAction("Dashboard", "External");
+            }
+
+            else if (user.UserTypeID == (int)TypeOfUser.Employer)
+            {
+                if (user.CompanyID.HasValue)
+                    return RedirectToAction("Clients", "Client", new { companyID = user.CompanyID.Value });
                 else
                     return RedirectToAction("Dashboard", "External");
             }
@@ -329,7 +339,7 @@ namespace SmartSave.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult PasswordReset(int id, int resetTypeID=1)
+        public ActionResult PasswordReset(int id, int resetTypeID = 1)
         {
             HttpContext.Session.SetString("UserIDKey", id.ToString());
             PasswordResetModel model = new PasswordResetModel()
@@ -348,9 +358,9 @@ namespace SmartSave.Controllers
                 if (result > 0)
                 {
                     TempData[MessageDisplayType.Success.ToString()] = "Password Reset Completed Successfully";
-                    if (model.ResetTypeID==2)
-                                           return RedirectToAction("ViewUser","User", new { id = model.UserID });
-                    
+                    if (model.ResetTypeID == 2)
+                        return RedirectToAction("ViewUser", "User", new { id = model.UserID });
+
                     return RedirectToAction("Login");
                 }
                 else

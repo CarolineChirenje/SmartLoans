@@ -54,6 +54,20 @@ namespace SmartLogic
             }
         }
 
+        public List<Company> GetActiveCompanies()
+        {
+            try
+            {
+                return _context.Companies.Where(c => c.IsActive)
+                            .AsNoTracking()
+                .ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<List<Company>> Companies()
         {
             try

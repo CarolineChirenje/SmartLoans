@@ -147,6 +147,8 @@ namespace SmartLogic
             updateUser.UserTypeID = user.UserTypeID;
             updateUser.EmailAddress = user.EmailAddress;
             updateUser.IDNumber = user.IDNumber;
+                if (user.CompanyID.HasValue)
+                    updateUser.CompanyID = user.CompanyID;
             updateUser.LastChangedBy = UserAppData.CurrentUserName;
             updateUser.LastChangedDate = DateTime.Now;
             _context.Update(updateUser);
@@ -155,14 +157,15 @@ namespace SmartLogic
             if (result > 0)
 
                 {
-                    UserAppData.CurrentUserName = user.UserName;
-                    UserAppData.UserFullName = user.UserFullName;
-                    UserAppData.UserProfileImage = user.ProfileImage;
-                    UserAppData.CurrentUserTypeID = user.UserTypeID;
-                    UserAppData.CanOverrideMaintananceMode = user.CanOverrideMaintananceMode;
+                    UserAppData.CurrentUserName = updateUser.UserName;
+                    UserAppData.UserFullName = updateUser.UserFullName;
+                    UserAppData.UserProfileImage = updateUser.ProfileImage;
+                    UserAppData.CurrentUserTypeID = updateUser.UserTypeID;
+                    UserAppData.CanOverrideMaintananceMode = updateUser.CanOverrideMaintananceMode;
+                    UserAppData.CompanyID = updateUser.CompanyID??0;
                     // also need to update id number and email address on client account 
                     Client client = _context.Clients.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
-                if (user.IsNotNull() && client.IsNotNull())
+                if (updateUser.IsNotNull() && client.IsNotNull())
                 {
                     client.EmailAddress = user.EmailAddress;
                     client.IDNumber = user.IDNumber;

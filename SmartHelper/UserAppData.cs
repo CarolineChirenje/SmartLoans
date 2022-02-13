@@ -25,6 +25,7 @@ namespace SmartHelper
         public static string Environment { get; set; }
         public static string ApplicationName { get; set; }
                 public static bool IsNotAdmin { get; set; }
+        public static int CompanyID { get; set; }
         public static SiteEnvironment SiteEnvironment { get; set; }
         
     }
