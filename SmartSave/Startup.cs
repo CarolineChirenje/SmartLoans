@@ -52,6 +52,7 @@ namespace SmartSave
                 _configValue = "Data Source=172.105.28.87;Initial Catalog=SmartSave; User Id=sa; Password=Ch1gumbu6299##";
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(_configValue);
             UserAppData.DatabaseConnection = builder.DataSource;
+           
             services.AddDbContext<DatabaseContext>(options =>
        options.UseSqlServer(_configValue));
        
@@ -119,6 +120,7 @@ namespace SmartSave
                     name: "default",
                     template: "{controller=Login}/{action=Login}/{id?}");
             });
+            UserAppData.SiteEnvironment = UtilityService.GetEnvironment;
             if (GetData.EnableLogger())
             {
                 SmartHelper.SmartLog log = GetData.SmartLogData();

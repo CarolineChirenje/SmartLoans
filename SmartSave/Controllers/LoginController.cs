@@ -350,30 +350,37 @@ namespace SmartSave.Controllers
         [HttpPost]
         public async Task<IActionResult> PasswordReset(PasswordResetModel model)
         {
-
-            if (model.Password.Equals(model.ConfirmPassword))
+            if (ModelState.IsValid)
             {
-                int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
-                int result = await _service.PasswordChange(userID, model.Password);
-                if (result > 0)
+                if (model.Password.Equals(model.ConfirmPassword))
                 {
-                    TempData[MessageDisplayType.Success.ToString()] = "Password Reset Completed Successfully";
-                    if (model.ResetTypeID == 2)
-                        return RedirectToAction("ViewUser", "User", new { id = model.UserID });
+                    int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
+                    int result = await _service.PasswordChange(userID, model.Password);
+                    if (result > 0)
+                    {
+                        TempData[MessageDisplayType.Success.ToString()] = "Password Reset Completed Successfully";
+                        if (model.ResetTypeID == 2)
+                            return RedirectToAction("ViewUser", "User", new { id = model.UserID });
 
-                    return RedirectToAction("Login");
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        TempData[MessageDisplayType.Error.ToString()] = "An error occurred failed to reset password";
+                        return View(model);
+                    }
                 }
                 else
                 {
-                    TempData[MessageDisplayType.Error.ToString()] = "An error occurred failed to reset password";
+                    TempData[MessageDisplayType.Error.ToString()] = "Passwords do not match";
                     return View(model);
                 }
             }
-            else
             {
-                TempData[MessageDisplayType.Error.ToString()] = "Passwords do not match";
+             
                 return View(model);
             }
+
         }
 
 
