@@ -112,10 +112,10 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="BankAccounts" asp-action="BankAccounts">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Bank_Account))
+                @if (UserAppData.HasPermission(Permissions.Update_Bank_Account))
                 {<button type="submit" class="btn btn-info">Update</button>
                 }
-                @if (UtilityService.HasPermission(Permissions.Delete_Bank_Account))
+                @if (UserAppData.HasPermission(Permissions.Delete_Bank_Account))
                 {<a class="btn btn-danger" asp-controller="BankAccounts" asp-action="Delete" asp-route-id="@Model.BankAccountID">Delete</a>
                 }
             </div>

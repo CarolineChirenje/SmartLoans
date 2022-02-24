@@ -4,13 +4,13 @@
 <section class="content-header">
     <h1>
         Dashboard
-        <small>@UtilityService.ApplicationName</small>
+        <small>@UserAppData.ApplicationName</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
     </ol>
-    @if (UtilityService.HasPermission(Permissions.View_Dashboard_Notices))
+    @if (UserAppData.HasPermission(Permissions.View_Dashboard_Notices))
     {
     @if (Model.Notices > 0)
     {
@@ -28,7 +28,7 @@
 <!-- Main content -->
 <section class="content">
     <!-- Small boxes (Stat box) -->
-    @if (UtilityService.HasPermission(Permissions.View_Dashboard_Notices))
+    @if (UserAppData.HasPermission(Permissions.View_Dashboard_Notices))
     {
         <div class="row">
             <div class="col-lg-3 col-xs-6">

@@ -40,13 +40,17 @@ namespace SmartDomain
         public string LastName { get; set; }
         public string UserName { get; set; }
 
+       
         public string Password { get; set; }
 
         public DateTime PasswordExpiryDate { get; set; }
-
+        public bool IsInstructor { get; set; }
         public bool IsActive { get; set; }
         public bool CanOverrideMaintananceMode { get; set; }
         public byte[] ProfileImage { get; set; }
+
+        public int? CompanyID { get; set; }
+        public virtual Company Company { get; set; }
         public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<UserAccessGrant> UserAccessGrants { get; set; }
         

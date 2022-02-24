@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using SmartHelper;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -26,11 +27,11 @@ namespace SmartSave.Controllers
                 string ActionName = actionDescriptor.ActionName;
                 var userNotFoundAttribute = actionDescriptor.EndpointMetadata.OfType<OverrideUserNotFoundFilter>();
                 if (userNotFoundAttribute.Any())
-                    UtilityService.CanOverrideUserNotFound = true;
+                    UserAppData.CanOverrideUserNotFound = true;
 
                 var maintananceMode = GetData.MaintananceMode();
                 var licenceMode = GetData.LicenceMode();
-                if (UtilityService.IsNotNull(maintananceMode) && !UtilityService.CanOverrideMaintananceMode)
+                if (maintananceMode.IsNotNull() && !UserAppData.CanOverrideMaintananceMode)
                 {
                     filterContext.Result = new RedirectToRouteResult(
                         new RouteValueDictionary {
@@ -38,7 +39,7 @@ namespace SmartSave.Controllers
                                 { "Action", "MaintananceMode" }
                                     });
                 }
-                else if (UtilityService.IsNotNull(licenceMode) && !UtilityService.CanOverrideMaintananceMode)
+                else if (licenceMode.IsNotNull() && !UserAppData.CanOverrideMaintananceMode)
                 {
                     filterContext.Result = new RedirectToRouteResult(
                             new RouteValueDictionary {
@@ -48,7 +49,7 @@ namespace SmartSave.Controllers
                 }
                 else
                 {
-                    if (UtilityService.IsNull(UtilityService.CurrentUserName) && !UtilityService.CanOverrideUserNotFound)
+                    if (UserAppData.CurrentUserName.IsNull() && !UserAppData.CanOverrideUserNotFound)
                     {
                         filterContext.Result = new RedirectToRouteResult(
                           new RouteValueDictionary {
@@ -57,18 +58,27 @@ namespace SmartSave.Controllers
                    });
                     }
                 }
-                if (!UtilityService.CanOverrideUserNotFound)
+                if (!UserAppData.CanOverrideUserNotFound)
                 {
-
-                    var attributes = actionDescriptor.EndpointMetadata.OfType<OverrideMenuComponentFilter>();
-                    if (attributes.Any())
-                        UtilityService.MenuComponent = Menu_Component.MenuList;
+                    if (UserAppData.IsNotAdmin)
+                    {
+                        if(UserAppData.CurrentUserTypeID==(int)TypeOfUser.Employer)
+                        UserAppData.MenuComponent = Menu_Component.EmployerMenuList;
+                        else
+                            UserAppData.MenuComponent = Menu_Component.EmployeeMenuList;
+                    }
                     else
-                        UtilityService.MenuComponent = GetMenuComponent(controllerName);
+                    {
+                        var attributes = actionDescriptor.EndpointMetadata.OfType<OverrideMenuComponentFilter>();
+                        if (attributes.Any())
+                            UserAppData.MenuComponent = Menu_Component.MenuList;
+                        else
+                            UserAppData.MenuComponent = GetMenuComponent(controllerName);
+                    }
                 }
                 else
                 {
-                    UtilityService.MenuComponent = Menu_Component.NoMenuList;
+                    UserAppData.MenuComponent = Menu_Component.NoMenuList;
                 }
             }
             catch (Exception ex)

@@ -44,7 +44,7 @@
                                             string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
                                         }
 
-                                        @if (UtilityService.HasPermission(Permissions.View_Konapo_Fund))
+                                        @if (UserAppData.HasPermission(Permissions.View_Konapo_Fund))
                                         {
                                             <td><a asp-controller="KonapoFund" asp-action="ViewKonapoFund" asp-route-id="@item.KonapoFundID">@item.KonapoRef</a> </td>
                                         }
@@ -53,7 +53,7 @@
                                             <td>@Html.DisplayFor(modelItem => item.KonapoRef)</td>
                                         }
 
-                                        @if (UtilityService.HasPermission(Permissions.View_Fund))
+                                        @if (UserAppData.HasPermission(Permissions.View_Fund))
                                         {
                                             <td><a asp-controller="Fund" target="_blank" asp-action="ViewFund" asp-route-id="@item.FundID">@item.Fund.Name</a> </td>
                                         }
@@ -72,7 +72,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                    @if (UtilityService.HasPermission(Permissions.Add_Konapo_Fund))
+                    @if (UserAppData.HasPermission(Permissions.Add_Konapo_Fund))
                     {
                         <a class="btn btn-success pull-right" asp-controller="KonapoFund" asp-route-id="@Model.ClientID" asp-action="AddKonapoFund">New</a><br />
                     }

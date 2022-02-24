@@ -43,7 +43,7 @@
                                             string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
 
                                         }
-                                        @if (UtilityService.HasPermission(Permissions.Update_Country))
+                                        @if (UserAppData.HasPermission(Permissions.Update_Country))
                                         {
                                             <td><a asp-controller="Country" asp-action="ViewCountry" asp-route-id="@item.CountryID">@item.Name</a></td>
                                         }

@@ -66,10 +66,10 @@
 
                         </div>
                         <div class="modal-footer">
-                            @if (UtilityService.HasPermission(Permissions.Capture_Payment))
+                            @if (UserAppData.HasPermission(Permissions.Capture_Payment))
                             {
                                 <button type="submit" class="btn btn-primary">Capture</button>}
-                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                            @if (UserAppData.HasPermission(Permissions.View_Client))
                             {<a class="btn btn-info" asp-controller="Client" asp-action="PendingTransactions" asp-route-id="@Model.ClientID">Back To Client Details</a>
                             } <a class="btn btn-default" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">Cancel</a>
                         </div>

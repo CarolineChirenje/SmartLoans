@@ -2829,6 +2829,7 @@
       "SmartAsync/1.0.0": {
         "dependencies": {
           "RabbitMQ.Client": "6.2.2",
+          "SmartExtensions": "1.0.0",
           "SmartHelper": "1.0.0",
           "SmartLog": "1.0.0"
         },

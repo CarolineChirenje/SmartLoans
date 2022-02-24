@@ -168,7 +168,7 @@
                     <!-- Nav tabs -->
 
                     <ul class="nav nav-tabs">
-                        @if (UtilityService.HasPermission(Permissions.View_Course_Intake_Register))
+                        @if (UserAppData.HasPermission(Permissions.View_Course_Intake_Register))
                         {
                             <li class="active">
                                 <a href="#Register" data-toggle="tab">Attendance Register</a>
@@ -205,7 +205,7 @@
                                                 {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.CourseTopic.Name)</td>
-                                                @if (UtilityService.HasPermission(Permissions.View_Course_Intake_Register))
+                                                @if (UserAppData.HasPermission(Permissions.View_Course_Intake_Register))
                                                 {
                                                     <td><a asp-controller="Courses" asp-action="ViewAttendanceRegister" asp-route-id="@item.AttendanceDate">@item.AttendanceDate</a></td>
                                                 }
@@ -225,7 +225,7 @@
                             </div>
 
                             <div class="box-footer">
-                                @if (UtilityService.HasPermission(Permissions.Generate_Attendance_Register))
+                                @if (UserAppData.HasPermission(Permissions.Generate_Attendance_Register))
                                 {<a class="btn btn-success  pull-right" data-toggle="modal" data-target="#MarkRegister">Generate Attendance Register</a>
                                 }
                             </div>
@@ -270,7 +270,7 @@
                     &nbsp;
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Requested By</label>
-                        <label for="inputEmail3" class="form-control label-default">@UtilityService.CurrentUserName</label>
+                        <label for="inputEmail3" class="form-control label-default">@UserAppData.CurrentUserName</label>
                     </div>
                     &nbsp;
                     &nbsp;
@@ -318,7 +318,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Update_Course_Intake))
+                        @if (UserAppData.HasPermission(Permissions.Update_Course_Intake))
                         {
                             <button type="submit" class="btn btn-primary">Save Register</button>
                         }

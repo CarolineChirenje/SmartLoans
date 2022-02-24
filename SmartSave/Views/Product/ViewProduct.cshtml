@@ -99,7 +99,7 @@
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Employees Linked To Product</label>
                 <div class="col-sm-10">
-                    @if (UtilityService.HasPermission(Permissions.View_User))
+                    @if (UserAppData.HasPermission(Permissions.View_User))
                     {
                         <a target="_blank" asp-controller="Client" asp-action="Clients" asp-route-productID="@Model.ProductID">@Model.ClientCount</a>
                     }
@@ -128,11 +128,11 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Product))
+                @if (UserAppData.HasPermission(Permissions.Update_Product))
                 {
                     <button type="submit" class="btn btn-info">Update</button>
                 }
-                @if (UtilityService.HasPermission(Permissions.Delete_Product))
+                @if (UserAppData.HasPermission(Permissions.Delete_Product))
                 {
                     <a class="btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.ProductID">Delete</a>
                 }
@@ -150,13 +150,13 @@
                         <!-- Nav tabs -->
 
                         <ul class="nav nav-tabs" id="myTab">
-                            @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
+                            @if (UserAppData.HasPermission(Permissions.View_Product_Fee))
                             {
                                 <li class="active">
                                     <a href="#Fees" data-toggle="tab">Fees</a>
                                 </li>
                             }
-                            @if (UtilityService.HasPermission(Permissions.View_Product_Assert))
+                            @if (UserAppData.HasPermission(Permissions.View_Product_Assert))
                             {
                                 <li>
                                     <a href="#Asserts" data-toggle="tab">Assert Class</a>
@@ -196,7 +196,7 @@
                                                         string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
                                                     }
                                                     
-                                                    @if (UtilityService.HasPermission(Permissions.View_Product_Fee))
+                                                    @if (UserAppData.HasPermission(Permissions.View_Product_Fee))
                                                     {
                                                         <td><a asp-controller="Product" asp-action="ViewProductFee" asp-route-id="@item.ProductFeeID">@item.Name</a></td>
                                                     }
@@ -217,7 +217,7 @@
                                 </div>
 
                                 <div class="box-footer">
-                                    @if (UtilityService.HasPermission(Permissions.Add_Product_Fee))
+                                    @if (UserAppData.HasPermission(Permissions.Add_Product_Fee))
                                     {
                                         <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#FeeForm">Add Fee</a>
                                     }
@@ -252,7 +252,7 @@
                                                        int categories = (item.Assert.AssertCategories == null) ? 0 : item.Assert.AssertCategories.Count();
 
                                                    }
-                                                    @if (UtilityService.HasPermission(Permissions.View_Assert))
+                                                    @if (UserAppData.HasPermission(Permissions.View_Assert))
                                                     {
                                                         <td><a asp-controller="Assert" asp-action="ViewAssert" asp-route-id="@item.ID">@item.Assert.Name</a></td>
                                                     }
@@ -269,7 +269,7 @@
                                         </table>
                                     </div>
                                     <div class="box-footer">
-                                        @if (UtilityService.HasPermission(Permissions.Add_Product_Assert))
+                                        @if (UserAppData.HasPermission(Permissions.Add_Product_Assert))
                                         {
                                             <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AssertsForm">Add Assert</a>}
                                     </div>
@@ -334,7 +334,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Add_Product_Assert))
+                        @if (UserAppData.HasPermission(Permissions.Add_Product_Assert))
                         {
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         }
@@ -402,7 +402,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    @if (UtilityService.HasPermission(Permissions.Add_Product_Fee))
+                    @if (UserAppData.HasPermission(Permissions.Add_Product_Fee))
                     {<button type="submit" class="btn btn-primary">Save Fee</button>}
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 

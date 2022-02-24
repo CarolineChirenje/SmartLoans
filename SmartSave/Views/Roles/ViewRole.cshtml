@@ -89,13 +89,13 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Roles" asp-action="Roles">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Role))
+                @if (UserAppData.HasPermission(Permissions.Update_Role))
                 {@if (!Model.Name.Contains("Super"))
                     {
                         <button type="submit" class="btn btn-info pull-right">Update</button>
                     }
             }
-                @if (UtilityService.HasPermission(Permissions.Delete_Role))
+                @if (UserAppData.HasPermission(Permissions.Delete_Role))
                 {
                     @if (!Model.Name.Contains("Super"))
                     {
@@ -175,7 +175,7 @@
                                 </div>
                             </div>
                             <div class="box-footer">
-                                @if (UtilityService.HasPermission(Permissions.Add_Permissions))
+                                @if (UserAppData.HasPermission(Permissions.Add_Permissions))
                                 {
                                     <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddPermissions">Add Permission</a>
                                 }
@@ -199,7 +199,7 @@
                                                 <th>Display Name</th>
                                                 <th>Order No</th>
                                                 <th>Menu Group</th>
-                                                @if (UtilityService.HasPermission(Permissions.Update_Role))
+                                                @if (UserAppData.HasPermission(Permissions.Update_Role))
                                                 {
                                                     <th>Action</th>
                                                 }
@@ -213,7 +213,7 @@
 
                                             <tr>
 
-                                                @if (UtilityService.HasPermission(Permissions.View_Menu))
+                                                @if (UserAppData.HasPermission(Permissions.View_Menu))
                                                 {
                                                     <td><a asp-controller="Menus" asp-action="ViewMenu" asp-route-id="@item.MenuID">@item.Menu.DisplayName</a></td>
                                                 }
@@ -226,7 +226,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.Menu.OrderNo)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Menu.MenuGroup.DisplayName)</td>
 
-                                                @if (UtilityService.HasPermission(Permissions.Remove_Menu_From_Role))
+                                                @if (UserAppData.HasPermission(Permissions.Remove_Menu_From_Role))
                                                 {
 
                                                     <td><a asp-controller="Roles" asp-action="RemoveMenuFromRole" asp-route-roleID="@item.RoleID" asp-route-menuid="@item.MenuID">Remove Menu</a></td>
@@ -237,7 +237,7 @@
                                 </div>
                             </div>
                             <div class="box-footer">
-                                @if (UtilityService.HasPermission(Permissions.Add_Menu_To_Role))
+                                @if (UserAppData.HasPermission(Permissions.Add_Menu_To_Role))
                                 {
                                     <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddMenu">Add Menu</a>
                                 }
@@ -270,7 +270,7 @@
                                                 {
 
                                                     <tr>
-                                                        @if (UtilityService.HasPermission(Permissions.View_User))
+                                                        @if (UserAppData.HasPermission(Permissions.View_User))
                                                         {
                                                             <td> <a asp-controller="User" asp-action="ViewUser" asp-route-id="@item.UserID">@item.User.UserFullName</a></td>
 
@@ -281,7 +281,7 @@
                                                             <td>@Html.DisplayFor(modelItem => item.User.UserFullName)</td>
 
                                                         }
-                                                        @if (UtilityService.HasPermission(Permissions.Update_Role))
+                                                        @if (UserAppData.HasPermission(Permissions.Update_Role))
                                                         {
 
                                                             <td><a asp-controller="Roles" asp-action="RemoveUserFromRole" asp-route-roleID="@item.RoleID" asp-route-UserID="@item.UserID">Remove User</a></td>
@@ -349,7 +349,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Add_Permissions))
+                        @if (UserAppData.HasPermission(Permissions.Add_Permissions))
                         {
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         }
@@ -408,7 +408,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Add_Permissions))
+                        @if (UserAppData.HasPermission(Permissions.Add_Permissions))
                         {
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         }
@@ -442,7 +442,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Update_User))
+                        @if (UserAppData.HasPermission(Permissions.Update_User))
                         {
                             <button type="submit" class="btn btn-primary">Add</button>
                         }

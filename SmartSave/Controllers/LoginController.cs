@@ -14,6 +14,8 @@ using SmartLog;
 using System.Linq;
 using SmartExtensions;
 using SmartAsync;
+using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
 
 namespace SmartSave.Controllers
 {
@@ -25,14 +27,15 @@ namespace SmartSave.Controllers
         private readonly ILoginService _service;
         private readonly IClientService _clientService;
         private readonly IUserService _userService;
-
-        public LoginController(DatabaseContext context, ILoginService service,
+        private readonly IMenuService _menuService;
+        public LoginController(IMenuService menuService, DatabaseContext context, ILoginService service,
         IClientService clientService, IUserService userService)
         {
             _context = context;
             _service = service;
             _clientService = clientService;
             _userService = userService;
+            _menuService = menuService;
         }
         public IActionResult UserNotFound()
         {
@@ -43,11 +46,11 @@ namespace SmartSave.Controllers
         public ActionResult Login()
         {
             var maintanance = GetData.MaintananceMode();
-            if (UtilityService.IsNotNull(maintanance))
+            if (maintanance.IsNotNull())
                 return RedirectToAction("MaintananceMode", "Maintanance");
 
             var licence = GetData.LicenceMode();
-            if (UtilityService.IsNotNull(licence))
+            if (licence.IsNotNull())
                 return RedirectToAction("LicenceMode", "Licence");
             return View();
         }
@@ -68,15 +71,29 @@ namespace SmartSave.Controllers
             }
 
             User user = await _service.Login(model.EmailAddress, model.Password);
-            if (UtilityService.IsNotNull(user))
+            if (user.IsNotNull())
             {
                 if (user.IsActive)
                 {
-                    UtilityService.CurrentUserName = user.UserName;
-                    UtilityService.UserFullName = user.UserFullName;
-                    UtilityService.UserProfileImage = user.ProfileImage;
-                    UtilityService.CurrentUserTypeID = user.UserTypeID;
-                    UtilityService.CanOverrideMaintananceMode = user.CanOverrideMaintananceMode;
+                    UserAppData.CurrentUserName = user.UserName;
+                    UserAppData.UserFullName = user.UserFullName;
+                    UserAppData.UserProfileImage = user.ProfileImage;
+                    UserAppData.CurrentUserTypeID = user.UserTypeID;
+                    UserAppData.CanOverrideMaintananceMode = user.CanOverrideMaintananceMode;
+
+                    UserAppData.UserType = (TypeOfUser)user.UserTypeID;
+                    var userRoles = user.UserRoles.ToList();
+                    var userRolePermissions = userRoles.SelectMany(r => r.Roles.RolePermissions).ToList();
+                    UserAppData.Roles = userRoles.Select(r => r.RoleID).ToList();
+                    UserAppData.UserRoleID = userRoles.FirstOrDefault()?.UserRoleID ?? 0;
+                    UserAppData.UserRole = userRoles.FirstOrDefault()?.Roles.Name;
+                    UserAppData.Permissions = userRolePermissions.Select(p => p.PermissionID).ToList();
+                    UserAppData.SiteEnvironment = UtilityService.GetEnvironment;
+                    UserAppData.IsNotAdmin = user.UserTypeID != (int)TypeOfUser.Administrator;
+                    UserAppData.ApplicationName = UtilityService.GetApplicationName;
+                    UserAppData.CompanyID = user.CompanyID??0;
+                    
+                    GetAppData().Wait();
                     if (DateTime.Now > user.PasswordExpiryDate)
                         return RedirectToAction("PasswordReset", new { id = user.UserID });
                     else
@@ -94,6 +111,20 @@ namespace SmartSave.Controllers
                 return View(model);
             }
         }
+
+        public async Task GetAppData()
+        {
+            AppData.MenuGroups = await _menuService.DisplayMenuGroups();
+            AppData.SettingsMenu = await _menuService.DisplayLayouts(LayoutComponent.Settings);
+            AppData.DeveloperMenu = await _menuService.DisplayLayouts(LayoutComponent.Khonapo_Fund);
+            AppData.ReportMenu = await _menuService.DisplayLayouts(LayoutComponent.Reporting);
+            AppData.ClientMenu = await _menuService.DisplayLayouts(LayoutComponent.Client);
+            AppData.KhonapoMenu = await _menuService.DisplayLayouts(LayoutComponent.Khonapo_Fund);
+            AppData.EmployeeMenu = await _menuService.DisplayLayouts(LayoutComponent.Employees);
+            AppData.EmployerMenu = await _menuService.DisplayLayouts(LayoutComponent.Employers);
+
+        }
+
         private ActionResult RedirectToSystem(string returnUrl, User user = null)
         {
             if (user == null)
@@ -113,7 +144,7 @@ namespace SmartSave.Controllers
                         IsReverify = user.ReVerify
                     };
                     var result = _service.GeneratePinCode(userAuthenticate);
-                    if (UtilityService.IsNotNull(result.PinCode))
+                    if (result.PinCode.IsNotNull())
                     {
                         userAuthenticate.PinCode = result.PinCode;
                         userAuthenticate.ExpiryDate = UtilityService.ShowDateTime(result.ExpiryDate);
@@ -136,10 +167,18 @@ namespace SmartSave.Controllers
             if (user.UserTypeID == (int)TypeOfUser.Employee)
             {
                 ClientPeek client = _clientService.GetClient(user.EmailAddress, user.IDNumber).Result;
-                if (UtilityService.IsNotNull(client))
+                if (client.IsNotNull())
                     return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
                 else
-                    return RedirectToAction("Dashboard", "Home");
+                    return RedirectToAction("Dashboard", "External");
+            }
+
+            else if (user.UserTypeID == (int)TypeOfUser.Employer)
+            {
+                if (user.CompanyID.HasValue)
+                    return RedirectToAction("Clients", "Client", new { companyID = user.CompanyID.Value });
+                else
+                    return RedirectToAction("Dashboard", "External");
             }
             else
                 return RedirectToAction("Dashboard", "Home");
@@ -192,10 +231,10 @@ namespace SmartSave.Controllers
 
             };
 
-            if (UtilityService.IsNotNull(confirmCode.Code))
+            if (confirmCode.Code.IsNotNull())
             {
                 UserAuthenticationCode userAuthenticationCode = await _service.ConfirmCode(userAuthenticate);
-                if (UtilityService.IsNotNull(userAuthenticationCode))
+                if (userAuthenticationCode.IsNotNull())
                 {
                     DateTime calculatedExpiryDate = userAuthenticationCode.ExpiryDate;
                     if (DateTime.Now > calculatedExpiryDate)
@@ -241,7 +280,7 @@ namespace SmartSave.Controllers
                 CodeType = CodeType.Password_Reset
             };
             var result = _service.GeneratePinCode(authenticate);
-            if (UtilityService.IsNotNull(result))
+            if (result.IsNotNull())
             {
                 authenticate.PinCode = result.PinCode;
                 Email email = EmailService.SendPasswordReset(authenticate);
@@ -279,7 +318,7 @@ namespace SmartSave.Controllers
             };
 
             UserAuthenticationCode pinReset = await _service.ConfirmCode(userAuthenticate);
-            if (UtilityService.IsNotNull(pinReset))
+            if (pinReset.IsNotNull())
             {
                 DateTime calculatedExpiryDate = pinReset.ExpiryDate;
                 if (DateTime.Now > calculatedExpiryDate)
@@ -300,36 +339,48 @@ namespace SmartSave.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult PasswordReset(int id)
+        public ActionResult PasswordReset(int id, int resetTypeID = 1)
         {
             HttpContext.Session.SetString("UserIDKey", id.ToString());
-            return View();
+            PasswordResetModel model = new PasswordResetModel()
+            { UserID = id, ResetTypeID = resetTypeID };
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> PasswordReset(PasswordResetModel model)
         {
-
-            if (model.Password.Equals(model.ConfirmPassword))
+            if (ModelState.IsValid)
             {
-                int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
-                int result = await _service.PasswordChange(userID, model.Password);
-                if (result > 0)
+                if (model.Password.Equals(model.ConfirmPassword))
                 {
-                    TempData[MessageDisplayType.Success.ToString()] = "Password Reset Completed Successfully";
-                    return RedirectToAction("Login");
+                    int userID = Convert.ToInt32(HttpContext.Session.GetString("UserIDKey"));
+                    int result = await _service.PasswordChange(userID, model.Password);
+                    if (result > 0)
+                    {
+                        TempData[MessageDisplayType.Success.ToString()] = "Password Reset Completed Successfully";
+                        if (model.ResetTypeID == 2)
+                            return RedirectToAction("ViewUser", "User", new { id = model.UserID });
+
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        TempData[MessageDisplayType.Error.ToString()] = "An error occurred failed to reset password";
+                        return View(model);
+                    }
                 }
                 else
                 {
-                    TempData[MessageDisplayType.Error.ToString()] = "An error occurred failed to reset password";
+                    TempData[MessageDisplayType.Error.ToString()] = "Passwords do not match";
                     return View(model);
                 }
             }
-            else
             {
-                TempData[MessageDisplayType.Error.ToString()] = "Passwords do not match";
+             
                 return View(model);
             }
+
         }
 
 
@@ -347,10 +398,8 @@ namespace SmartSave.Controllers
             }
 
             ClientPeek client = await _clientService.GetClient(model.EmailAddress, model.IDNumber);
-            if (UtilityService.IsNotNull(client))
-            {
-
-                // check if user does not already have a user  account 
+            if (client.IsNotNull())
+            {        // check if user does not already have a user  account 
                 bool _accountExists = await _service.UserAccountExists(client.EmailAddress, client.IDNumber);
                 if (_accountExists)
                 {
@@ -365,10 +414,10 @@ namespace SmartSave.Controllers
                     CodeType = CodeType.Password_Reset
                 };
                 var result = _service.GeneratePinCode(authenticate);
-                if (UtilityService.IsNotNull(result))
+                if (result.IsNotNull())
                 {
                     authenticate.PinCode = result.PinCode;
-                    Email email = EmailService.SendAccountCreationCode(authenticate); 
+                    Email email = EmailService.SendAccountCreationCode(authenticate);
                     bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
                     if (emailSuccessResult)
                     {
@@ -376,7 +425,8 @@ namespace SmartSave.Controllers
                         return View(model);
                     }
                     else
-                    {  TempData[MessageDisplayType.Success.ToString()] = $"Failed to send email with further  details regarding account creation.Please contact our Customer Service Support on {UtilityService.CustomerServiceNumber} for help.";
+                    {
+                        TempData[MessageDisplayType.Success.ToString()] = $"Failed to send email with further  details regarding account creation.Please contact our Customer Service Support on {UtilityService.CustomerServiceNumber} for help.";
                         return View(model);
                     }
                 }
@@ -407,7 +457,7 @@ namespace SmartSave.Controllers
                 IsAccountCreation = true
             };
             UserAuthenticationCode pinReset = await _service.ConfirmCode(userAuthenticate);
-            if (UtilityService.IsNotNull(pinReset))
+            if (pinReset.IsNotNull())
             {
                 DateTime calculatedExpiryDate = pinReset.ExpiryDate;
                 if (DateTime.Now > calculatedExpiryDate)
@@ -416,7 +466,8 @@ namespace SmartSave.Controllers
                     return View(Code);
                 }
                 else
-                {                    return RedirectToAction("FinaliseAccount", new { id = pinReset.ClientID });
+                {
+                    return RedirectToAction("FinaliseAccount", new { id = pinReset.ClientID });
                 }
             }
             else
@@ -455,9 +506,9 @@ namespace SmartSave.Controllers
             }
             else
             {
-              string  password= _userService.GetCredential(result);
-                Email email = EmailService.SendAccountCreationConfirmation(client.EmailAddress,password);
-                 bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
+                string password = _userService.GetCredential(result);
+                Email email = EmailService.SendAccountCreationConfirmation(client.EmailAddress, password);
+                bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
                 if (emailSuccessResult)
                 {
                     TempData[MessageDisplayType.Success.ToString()] = $"Account creation complete.We have sent an email to {client.EmailAddress} with your login credentials.";

@@ -10,6 +10,7 @@ using SmartHelper;
 using SmartDomain;
 using Microsoft.AspNetCore.Http;
 using SmartSave.Models;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -25,7 +26,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Assert()
         {
             Permissions permission = Permissions.View_Assert;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Asserts());
@@ -78,7 +79,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Assert update = await (_service.FindAssert(Assert.AssertID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(Assert)) == 0)
                     {
@@ -150,7 +151,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
 
-                if (UtilityService.IsNotNull(_AssertCategory))
+                if (_AssertCategory.IsNotNull())
                 {
                     if (await (_service.Update(AssertCategory)) == 0)
                     {

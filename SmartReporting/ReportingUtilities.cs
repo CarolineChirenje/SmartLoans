@@ -4,6 +4,7 @@ using MigraDocCore.DocumentObjectModel.MigraDoc.DocumentObjectModel.Shapes;
 using MigraDocCore.DocumentObjectModel.Shapes;
 using PdfSharpCore.Utils;
 using SixLabors.ImageSharp.PixelFormats;
+using SmartExtensions;
 using SmartHelper;
 using SmartLog;
 using System;
@@ -78,7 +79,7 @@ namespace SmartReporting
                 paragraph.AddLineBreak();
                 paragraph.AddText(reportFooter2);
             }
-            paragraph.Format.Font.Name = UtilityService.IsNull(UtilityService.ReportFooterFontName) ? (UtilityService.IsNull(UtilityService.ReportBodyFontName) ? "Arial" : UtilityService.ReportBodyFontName ): UtilityService.ReportFooterFontName;
+            paragraph.Format.Font.Name = UtilityService.ReportFooterFontName.IsNull() ? (UtilityService.ReportBodyFontName.IsNull() ? "Arial" : UtilityService.ReportBodyFontName ): UtilityService.ReportFooterFontName;
             paragraph.Format.Font.Size = UtilityService.ReportFooterFontSize == 0 ? 8 : UtilityService.ReportFooterFontSize;
           
             return paragraph;
@@ -88,7 +89,7 @@ namespace SmartReporting
         {
             try
             {                                 document.Info.Title = DocumentTitle;
-            document.Info.Subject = UtilityService.ApplicationName;
+            document.Info.Subject = UserAppData.ApplicationName;
             document.Info.Author = "Caroline Chirenje";
             return document;
             }
@@ -108,7 +109,7 @@ namespace SmartReporting
                 // Because all styles are derived from Normal, the next line changes the 
                 // font of the whole document. Or, more exactly, it changes the font of
                 // all styles and paragraphs that do not redefine the font.
-                style.Font.Name = UtilityService.IsNull(UtilityService.ReportBodyFontName) ? "Arial" : UtilityService.ReportBodyFontName;
+                style.Font.Name = UtilityService.ReportBodyFontName.IsNull() ? "Arial" : UtilityService.ReportBodyFontName;
                 style.Font.Size = UtilityService.ReportBodyFontSize == 0 ? 8 : UtilityService.ReportBodyFontSize;
 
                 style = document.Styles[StyleNames.Header];
@@ -119,7 +120,7 @@ namespace SmartReporting
 
                 // Create a new style called Table based on style Normal
                 style = document.Styles.AddStyle("Table", "Normal");
-                style.Font.Name = UtilityService.IsNull(UtilityService.ReportBodyFontName) ? "Arial" : UtilityService.ReportBodyFontName;
+                style.Font.Name = UtilityService.ReportBodyFontName.IsNull() ? "Arial" : UtilityService.ReportBodyFontName;
                 style.Font.Size = UtilityService.ReportBodyFontSize==0? 8:UtilityService.ReportBodyFontSize;
 
                 // Create a new style called Reference based on style Normal

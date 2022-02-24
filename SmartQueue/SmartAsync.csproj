@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmartErrorLog\SmartLog.csproj" />
+    <ProjectReference Include="..\SmartExtensions\SmartExtensions.csproj" />
     <ProjectReference Include="..\SmartHelper\SmartHelper.csproj" />
   </ItemGroup>
 

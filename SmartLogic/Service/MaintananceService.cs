@@ -28,7 +28,7 @@ namespace SmartLogic
                     _context.Maintanances.Remove(Maintanance);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                     Maintanance.LastChangedBy = UtilityService.CurrentUserName;
+                     Maintanance.LastChangedBy = UserAppData.CurrentUserName;
                     Maintanance.LastChangedDate = DateTime.Now;
                     _context.Update(Maintanance);
                 }
@@ -108,7 +108,7 @@ namespace SmartLogic
         {
             try
             {
-                Maintanance.LastChangedBy = UtilityService.CurrentUserName;
+                Maintanance.LastChangedBy = UserAppData.CurrentUserName;
                 Maintanance.LastChangedDate = DateTime.Now;
                 _context.Add(Maintanance);
                 return (await _context.SaveChangesAsync());
@@ -129,7 +129,7 @@ namespace SmartLogic
                 Maintanance update = await FindMaintanance(Maintanance.MaintananceID);
                 update.StartDate = Maintanance.StartDate;
                 update.EndDate = Maintanance.EndDate;
-                              update.LastChangedBy = UtilityService.CurrentUserName;
+                              update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Update(update);
                 return await _context.SaveChangesAsync();

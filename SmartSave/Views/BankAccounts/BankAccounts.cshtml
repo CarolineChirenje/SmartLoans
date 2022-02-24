@@ -46,7 +46,7 @@
                                     }
 
                                     <td>@Html.DisplayFor(modelItem => item.BankAccountType.Name)</td>
-                                    @if (UtilityService.HasPermission(Permissions.View_Bank_Account))
+                                    @if (UserAppData.HasPermission(Permissions.View_Bank_Account))
                                     {
                                         <td><a asp-controller="BankAccounts" asp-action="ViewBankAccount" asp-route-id="@item.BankAccountID">@accountNum</a></td>
                                     }
@@ -64,7 +64,7 @@
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="CustomSettings" asp-action="Dashboard">Cancel</a>
-                    @if (UtilityService.HasPermission(Permissions.Add_Bank_Account))
+                    @if (UserAppData.HasPermission(Permissions.Add_Bank_Account))
                     {
                         <a class="btn btn-success pull-right" asp-controller="BankAccounts" asp-action="AddBankAccount">New</a><br />
                     }

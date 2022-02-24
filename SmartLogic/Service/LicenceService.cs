@@ -28,7 +28,7 @@ namespace SmartLogic
                     _context.Licences.Remove(Licence);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                     Licence.LastChangedBy = UtilityService.CurrentUserName;
+                     Licence.LastChangedBy = UserAppData.CurrentUserName;
                     Licence.LastChangedDate = DateTime.Now;
                     _context.Update(Licence);
                 }
@@ -108,7 +108,7 @@ namespace SmartLogic
         {
             try
             {
-                Licence.LastChangedBy = UtilityService.CurrentUserName;
+                Licence.LastChangedBy = UserAppData.CurrentUserName;
                 Licence.LastChangedDate = DateTime.Now;
                 _context.Add(Licence);
                 return (await _context.SaveChangesAsync());
@@ -129,7 +129,7 @@ namespace SmartLogic
                 Licence update = await FindLicence(Licence.LicenceID);
                 update.StartDate = Licence.StartDate;
                 update.EndDate = Licence.EndDate;
-                              update.LastChangedBy = UtilityService.CurrentUserName;
+                              update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Update(update);
                 return await _context.SaveChangesAsync();

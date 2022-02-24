@@ -41,7 +41,7 @@ namespace SmartLogic
         public async Task<List<MenuGroup>> DisplayMenuGroups()
         {
             try
-            {                       return await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
+            { return await _context.MenuGroups.Include(x => x.Menus).OrderBy(m => m.OrderNo).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -70,7 +70,7 @@ namespace SmartLogic
             try
             {
 
-                       ParentMenu.LastChangedBy = UtilityService.CurrentUserName;
+                       ParentMenu.LastChangedBy = UserAppData.CurrentUserName;
             ParentMenu.LastChangedDate = DateTime.Now;
             _context.Add(ParentMenu);
             return (await _context.SaveChangesAsync());
@@ -97,7 +97,7 @@ namespace SmartLogic
             update.DisplayName = ParentMenu.DisplayName;
             update.OrderNo = ParentMenu.OrderNo;
             update.IsActive = ParentMenu.IsActive;
-            update.LastChangedBy = UtilityService.CurrentUserName;
+            update.LastChangedBy = UserAppData.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace SmartLogic
                 case DatabaseAction.Deactivate:
                 case DatabaseAction.Reactivate:
                     ParentMenu.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                    ParentMenu.LastChangedBy = UtilityService.CurrentUserName;
+                    ParentMenu.LastChangedBy = UserAppData.CurrentUserName;
                     ParentMenu.LastChangedDate = DateTime.Now;
                     _context.Update(ParentMenu);
                     break;
@@ -222,7 +222,7 @@ namespace SmartLogic
             try
             {
 
-                        menu.LastChangedBy = UtilityService.CurrentUserName;
+                        menu.LastChangedBy = UserAppData.CurrentUserName;
             menu.LastChangedDate = DateTime.Now;
             _context.Add(menu);
             return (await _context.SaveChangesAsync());
@@ -246,7 +246,7 @@ namespace SmartLogic
             update.CSSClass = UtilityService.HtmlDecode(menu.CSSClass);
             update.OrderNo = menu.OrderNo;
             update.IsActive = menu.IsActive;
-            update.LastChangedBy = UtilityService.CurrentUserName;
+            update.LastChangedBy = UserAppData.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();
@@ -301,7 +301,7 @@ namespace SmartLogic
                 case DatabaseAction.Deactivate:
                 case DatabaseAction.Reactivate:
                     Menu.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                    Menu.LastChangedBy = UtilityService.CurrentUserName;
+                    Menu.LastChangedBy = UserAppData.CurrentUserName;
                     Menu.LastChangedDate = DateTime.Now;
                     _context.Update(Menu);
                     break;
@@ -340,7 +340,7 @@ namespace SmartLogic
             try
             {
 
-                layout.LastChangedBy = UtilityService.CurrentUserName;
+                layout.LastChangedBy = UserAppData.CurrentUserName;
                 layout.LastChangedDate = DateTime.Now;
                 _context.Add(layout);
                 return (await _context.SaveChangesAsync());
@@ -427,7 +427,7 @@ namespace SmartLogic
             try
             {
 
-                menu.LastChangedBy = UtilityService.CurrentUserName;
+                menu.LastChangedBy = UserAppData.CurrentUserName;
                 menu.LastChangedDate = DateTime.Now;
                 _context.Add(menu);
                 return (await _context.SaveChangesAsync());
@@ -451,7 +451,7 @@ namespace SmartLogic
                 update.CSSClass = UtilityService.HtmlDecode(menu.CSSClass);
                 update.OrderNo = menu.OrderNo;
                 update.IsActive = menu.IsActive;
-                update.LastChangedBy = UtilityService.CurrentUserName;
+                update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Update(update);
                 return await _context.SaveChangesAsync();
@@ -492,7 +492,7 @@ namespace SmartLogic
                     case DatabaseAction.Deactivate:
                     case DatabaseAction.Reactivate:
                         Menu.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                        Menu.LastChangedBy = UtilityService.CurrentUserName;
+                        Menu.LastChangedBy = UserAppData.CurrentUserName;
                         Menu.LastChangedDate = DateTime.Now;
                         _context.Update(Menu);
                         break;

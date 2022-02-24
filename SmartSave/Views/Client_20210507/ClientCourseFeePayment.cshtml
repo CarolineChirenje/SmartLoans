@@ -1,5 +1,5 @@
 ﻿@model SmartDomain.ClientFee
-
+@using SmartExtensions; 
 @using SmartHelper;
 @using System.Collections.Generic;
 @{
@@ -234,7 +234,7 @@
                         </div>
                     </div>
                 </section>
-                @if (Model.Client.IsJointAccount && UtilityService.IsNotNull(Model.Client.JointApplicant))
+                @if (Model.Client.IsJointAccount && Model.Client.JointApplicant.IsNotNull())
                 {
                     <section id="CoApplicantInfo">
                         <h5 class="box-title">Co-Applicant Information</h5>
@@ -430,10 +430,10 @@
 
                         </div>
                         <div class="modal-footer">
-                            @if (UtilityService.HasPermission(Permissions.Capture_Payment))
+                            @if (UserAppData.HasPermission(Permissions.Capture_Payment))
                             {
                                 <button type="submit" class="btn btn-primary">Capture</button>}
-                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                            @if (UserAppData.HasPermission(Permissions.View_Client))
                             {<a class="btn btn-info" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">Back To Client Details</a>
                             } <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
                         </div>

@@ -9,6 +9,7 @@ using SmartDomain;
 using SmartHelper;
 using SmartDataAccess;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -29,7 +30,7 @@ namespace SmartLogic
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
                 DocumentType.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                DocumentType.LastChangedBy = UtilityService.CurrentUserName;
+                DocumentType.LastChangedBy = UserAppData.CurrentUserName;
                 DocumentType.LastChangedDate = DateTime.Now;
                 _context.Update(DocumentType);
             }
@@ -96,7 +97,7 @@ namespace SmartLogic
             try
             {
 
-                        DocumentType.LastChangedBy = UtilityService.CurrentUserName;
+                        DocumentType.LastChangedBy = UserAppData.CurrentUserName;
             DocumentType.LastChangedDate = DateTime.Now;
             _context.Add(DocumentType);
             return (await _context.SaveChangesAsync());
@@ -112,8 +113,8 @@ namespace SmartLogic
             try
             {
 
-                        DocumentType documentType = await _context.DocumentTypes.Where(b => b.Name.Equals(DocumentType.Name)).FirstOrDefaultAsync();
-            return UtilityService.IsNotNull(documentType);
+           DocumentType documentType = await _context.DocumentTypes.Where(b => b.Name.Equals(DocumentType.Name)).FirstOrDefaultAsync();
+            return documentType.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -126,7 +127,7 @@ namespace SmartLogic
             try
             {
 
-                        DocumentType.LastChangedBy = UtilityService.CurrentUserName;
+                        DocumentType.LastChangedBy = UserAppData.CurrentUserName;
             DocumentType.LastChangedDate = DateTime.Now;
             _context.Update(DocumentType);
             return await _context.SaveChangesAsync();

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartLogic;
 
@@ -24,7 +25,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> DocumentTypes()
         {
             Permissions permission = Permissions.View_Document_Type;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.DocumentTypes());
@@ -71,7 +72,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 DocumentType update = await (_service.FindDocumentType(DocumentType.DocumentTypeID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(DocumentType)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

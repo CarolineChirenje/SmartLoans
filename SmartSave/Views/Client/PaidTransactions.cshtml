@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="box-footer">
-                    @if (UtilityService.HasPermission(Permissions.Capture_Payment))
+                    @if (UserAppData.HasPermission(Permissions.Capture_Payment))
                     {
                         <a class="btn  btn-small btn-success pull-right" asp-controller="Transactions" asp-action="AddTransaction" asp-route-ClientID="@Model.ClientID">Upload Payment</a>
 

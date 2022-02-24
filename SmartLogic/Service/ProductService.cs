@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using SmartDataAccess;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartLog;
 using System;
@@ -147,7 +148,7 @@ namespace SmartLogic
                 product.DeductionPercentage = update.DeductionPercentage;
                 product.TransactionalFee = update.TransactionalFee;
                 product.ProductCode = update.ProductCode;
-                product.LastChangedBy = UtilityService.CurrentUserName;
+                product.LastChangedBy = UserAppData.CurrentUserName;
                 product.LastChangedDate = DateTime.Now;
                 _context.Update(product);
 
@@ -173,7 +174,7 @@ namespace SmartLogic
         {
             try
             {
-                Product.LastChangedBy = UtilityService.CurrentUserName;
+                Product.LastChangedBy = UserAppData.CurrentUserName;
                 Product.LastChangedDate = DateTime.Now;
                 _context.Add(Product);
                 await _context.SaveChangesAsync();
@@ -211,7 +212,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     Product.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                    Product.LastChangedBy = UtilityService.CurrentUserName;
+                    Product.LastChangedBy = UserAppData.CurrentUserName;
                     Product.LastChangedDate = DateTime.Now;
                     _context.Update(Product);
                 }
@@ -260,7 +261,7 @@ namespace SmartLogic
         {
             try
             {
-                Assert.LastChangedBy = UtilityService.CurrentUserName;
+                Assert.LastChangedBy = UserAppData.CurrentUserName;
                 Assert.LastChangedDate = DateTime.Now;
                 _context.Add(Assert);
                 await _context.SaveChangesAsync();
@@ -278,7 +279,7 @@ namespace SmartLogic
             try
             {
                 Assert assert = await _context.Asserts.Where(b => b.Name.Equals(Assert.Name)).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(assert);
+                return assert.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -294,7 +295,7 @@ namespace SmartLogic
                 assert.IsActive = Assert.IsActive;
                 assert.Name = Assert.Name;
                 assert.Description = Assert.Description;
-                assert.LastChangedBy = UtilityService.CurrentUserName;
+                assert.LastChangedBy = UserAppData.CurrentUserName;
                 assert.LastChangedDate = DateTime.Now;
                 _context.Update(assert);
                 return await _context.SaveChangesAsync();
@@ -315,7 +316,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     Assert.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                    Assert.LastChangedBy = UtilityService.CurrentUserName;
+                    Assert.LastChangedBy = UserAppData.CurrentUserName;
                     Assert.LastChangedDate = DateTime.Now;
                     _context.Update(Assert);
                 }
@@ -375,7 +376,7 @@ namespace SmartLogic
         {
             try
             {
-                AssertCategory.LastChangedBy = UtilityService.CurrentUserName;
+                AssertCategory.LastChangedBy = UserAppData.CurrentUserName;
                 AssertCategory.LastChangedDate = DateTime.Now;
                 _context.Add(AssertCategory);
                 return (await _context.SaveChangesAsync());
@@ -394,7 +395,7 @@ namespace SmartLogic
                 AssertCategory assertCategory = _context.AssertCategories.Find(AssertCategory.AssertCategoryID);
                 assertCategory.IsActive = AssertCategory.IsActive;
                 assertCategory.Name = AssertCategory.Name;
-                assertCategory.LastChangedBy = UtilityService.CurrentUserName;
+                assertCategory.LastChangedBy = UserAppData.CurrentUserName;
                 assertCategory.LastChangedDate = DateTime.Now;
                 _context.Update(assertCategory);
                 return (await _context.SaveChangesAsync());
@@ -415,7 +416,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     assertCategory.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                    assertCategory.LastChangedBy = UtilityService.CurrentUserName;
+                    assertCategory.LastChangedBy = UserAppData.CurrentUserName;
                     assertCategory.LastChangedDate = DateTime.Now;
                     _context.Update(assertCategory);
                 }
@@ -433,7 +434,7 @@ namespace SmartLogic
             try
             {
                 AssertCategory _assertCategory = await _context.AssertCategories.Where(b => b.Name.Equals(assertCategory.Name)).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(_assertCategory);
+                return _assertCategory.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -527,7 +528,7 @@ namespace SmartLogic
                     {
                         AssertID = assertid,
                         ProductID = productid,
-                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedBy = UserAppData.CurrentUserName,
                         LastChangedDate = DateTime.Now
                     };
                     _context.Add(productAssert);
@@ -592,7 +593,7 @@ namespace SmartLogic
             try
             {
 
-                ProductFee.LastChangedBy = UtilityService.CurrentUserName;
+                ProductFee.LastChangedBy = UserAppData.CurrentUserName;
                 ProductFee.LastChangedDate = DateTime.Now;
                 _context.Add(ProductFee);
                 return (await _context.SaveChangesAsync());
@@ -615,7 +616,7 @@ namespace SmartLogic
                 update.IsActive = ProductFee.IsActive;
                 update.Amount = ProductFee.Amount;
                 update.Description = ProductFee.Description;
-                update.LastChangedBy = UtilityService.CurrentUserName;
+                update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Entry(update).State = EntityState.Modified;
                 AddProductHistory(ProductFee);
@@ -669,7 +670,7 @@ namespace SmartLogic
             }
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
-                productFee.LastChangedBy = UtilityService.CurrentUserName;
+                productFee.LastChangedBy = UserAppData.CurrentUserName;
                 productFee.LastChangedDate = DateTime.Now;
                 _context.Update(productFee);
             }

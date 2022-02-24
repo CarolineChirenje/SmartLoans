@@ -56,7 +56,7 @@
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="FeatureFlag" asp-action="Dashboard">Cancel</a>
-                    @if (UtilityService.HasPermission(Permissions.Add_Maintanance_Notification))
+                    @if (UserAppData.HasPermission(Permissions.Add_Maintanance_Notification))
                     {
                         <a href="AddMaintanance" class="btn btn-success pull-right">New</a><br />
                     }

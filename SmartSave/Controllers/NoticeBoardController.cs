@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartDomain;
 using SmartHelper;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -23,7 +24,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> NoticeBoard()
         {
             Permissions permission = Permissions.View_Notice;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Notices());
@@ -73,7 +74,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 NoticeBoard update = await (_service.FindNotice(NoticeBoard.NoticeID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(NoticeBoard)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

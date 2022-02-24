@@ -96,7 +96,7 @@
             <!-- /.box-body -->
               <div class="box-footer">
                   <a class="btn btn-default" asp-controller="Menus" asp-action="MainMenu">Cancel</a>
-                  @if (UtilityService.HasPermission(Permissions.Update_Menu))
+                  @if (UserAppData.HasPermission(Permissions.Update_Menu))
                   {
                       <button type="submit" class="btn btn-info pull-right">Update</button>
                   }

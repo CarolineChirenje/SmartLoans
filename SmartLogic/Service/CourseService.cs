@@ -12,6 +12,7 @@ using System.IO;
 
 using SmartReporting;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -31,7 +32,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     Course.IsActive = DatabaseAction.Deactivate != action;
-                    Course.LastChangedBy = UtilityService.CurrentUserName;
+                    Course.LastChangedBy = UserAppData.CurrentUserName;
                     Course.LastChangedDate = DateTime.Now;
                     _context.Update(Course);
                 }
@@ -83,7 +84,7 @@ namespace SmartLogic
             try
             {
                 Course course = await _context.Courses.Where(b => b.Title.Equals(_course.Title)).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(course);
+                return course.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -133,7 +134,7 @@ namespace SmartLogic
             try
             {
 
-                Course.LastChangedBy = UtilityService.CurrentUserName;
+                Course.LastChangedBy = UserAppData.CurrentUserName;
                 Course.DateCreated = DateTime.Now;
                 Course.LastChangedDate = DateTime.Now;
                 _context.Add(Course);
@@ -150,7 +151,7 @@ namespace SmartLogic
         {
             try
             {
-                Course.LastChangedBy = UtilityService.CurrentUserName;
+                Course.LastChangedBy = UserAppData.CurrentUserName;
                 Course.LastChangedDate = DateTime.Now;
                 _context.Update(Course);
                 return await _context.SaveChangesAsync();
@@ -173,7 +174,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     outline.IsActive = DatabaseAction.Deactivate != action;
-                    outline.LastChangedBy = UtilityService.CurrentUserName;
+                    outline.LastChangedBy = UserAppData.CurrentUserName;
                     outline.LastChangedDate = DateTime.Now;
                     _context.Update(outline);
                 }
@@ -189,7 +190,7 @@ namespace SmartLogic
         {
             try
             {
-                courseTopic.LastChangedBy = UtilityService.CurrentUserName;
+                courseTopic.LastChangedBy = UserAppData.CurrentUserName;
                 courseTopic.LastChangedDate = DateTime.Now;
                 _context.Add(courseTopic);
                 return (await _context.SaveChangesAsync());
@@ -207,7 +208,7 @@ namespace SmartLogic
                 CourseTopic topic = _context.CourseTopics.Find(courseTopic.CourseTopicID);
                 topic.IsActive = courseTopic.IsActive;
                 topic.Name = courseTopic.Name;
-                topic.LastChangedBy = UtilityService.CurrentUserName;
+                topic.LastChangedBy = UserAppData.CurrentUserName;
                 topic.LastChangedDate = DateTime.Now;
                 _context.Update(topic);
                 return (await _context.SaveChangesAsync());
@@ -261,7 +262,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     session.IsActive = DatabaseAction.Deactivate != action;
-                    session.LastChangedBy = UtilityService.CurrentUserName;
+                    session.LastChangedBy = UserAppData.CurrentUserName;
                     session.LastChangedDate = DateTime.Now;
                     _context.Update(session);
                 }
@@ -277,7 +278,7 @@ namespace SmartLogic
         {
             try
             {
-                session.LastChangedBy = UtilityService.CurrentUserName;
+                session.LastChangedBy = UserAppData.CurrentUserName;
                 session.LastChangedDate = DateTime.Now;
                 _context.Add(session);
                 return (await _context.SaveChangesAsync());
@@ -295,7 +296,7 @@ namespace SmartLogic
                 CourseSession session = _context.CourseSessions.Find(courseSession.CourseSessionID);
                 session.IsActive = courseSession.IsActive;
                 session.Name = courseSession.Name;
-                session.LastChangedBy = UtilityService.CurrentUserName;
+                session.LastChangedBy = UserAppData.CurrentUserName;
                 session.LastChangedDate = DateTime.Now;
                 _context.Update(session);
                 return (await _context.SaveChangesAsync());
@@ -358,7 +359,7 @@ namespace SmartLogic
             try
             {
 
-                courseFee.LastChangedBy = UtilityService.CurrentUserName;
+                courseFee.LastChangedBy = UserAppData.CurrentUserName;
                 courseFee.LastChangedDate = DateTime.Now;
                 _context.Add(courseFee);
                 return (await _context.SaveChangesAsync());
@@ -381,7 +382,7 @@ namespace SmartLogic
                 update.IsActive = courseFee.IsActive;
                 update.Amount = courseFee.Amount;
                 update.Description = courseFee.Description;
-                update.LastChangedBy = UtilityService.CurrentUserName;
+                update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Entry(update).State = EntityState.Modified;
                 AddCourseFeeHistory(courseFee);
@@ -433,7 +434,7 @@ namespace SmartLogic
 
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    courseFee.LastChangedBy = UtilityService.CurrentUserName;
+                    courseFee.LastChangedBy = UserAppData.CurrentUserName;
                     courseFee.LastChangedDate = DateTime.Now;
                     _context.Update(courseFee);
                 }
@@ -457,7 +458,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     intake.IsActive = DatabaseAction.Deactivate != action;
-                    intake.LastChangedBy = UtilityService.CurrentUserName;
+                    intake.LastChangedBy = UserAppData.CurrentUserName;
                     intake.LastChangedDate = DateTime.Now;
                     _context.Update(intake);
                 }
@@ -473,7 +474,7 @@ namespace SmartLogic
         {
             try
             {
-                intake.LastChangedBy = UtilityService.CurrentUserName;
+                intake.LastChangedBy = UserAppData.CurrentUserName;
                 intake.LastChangedDate = DateTime.Now;
                 _context.Add(intake);
                 return (await _context.SaveChangesAsync());
@@ -491,7 +492,7 @@ namespace SmartLogic
                 CourseIntake courseIntake = _context.CourseIntakes.Find(intake.CourseIntakeID);
                 courseIntake.IsActive = intake.IsActive;
                 courseIntake.Name = intake.Name;
-                courseIntake.LastChangedBy = UtilityService.CurrentUserName;
+                courseIntake.LastChangedBy = UserAppData.CurrentUserName;
                 courseIntake.LastChangedDate = DateTime.Now;
                 _context.Update(courseIntake);
                 return (await _context.SaveChangesAsync());
@@ -579,9 +580,9 @@ namespace SmartLogic
                 AttendanceRegister attendanceRegister = new AttendanceRegister
                 {
                     AttendanceDate = courseIntake.AttendanceDate.ToString("yyyy-MMM-dd"),
-                    RequestedBy = UtilityService.CurrentUserName,
+                    RequestedBy = UserAppData.CurrentUserName,
                     CourseIntakeID = courseIntake.CourseIntakeID,
-                    LastChangedBy = UtilityService.CurrentUserName
+                    LastChangedBy = UserAppData.CurrentUserName
                 };
                 if (courseIntake.CourseTopic > 0)
                     attendanceRegister.CourseTopicID = courseIntake.CourseTopic;
@@ -603,7 +604,7 @@ namespace SmartLogic
                             AttendanceRegisterID = attendanceRegister.AttendanceRegisterID,
                             ClientID = clientID,
                             Present = true,
-                            LastChangedBy = UtilityService.CurrentUserName,
+                            LastChangedBy = UserAppData.CurrentUserName,
                             LastChangedDate = DateTime.Now
                         });
                     }
@@ -616,7 +617,7 @@ namespace SmartLogic
                             AttendanceRegisterID = attendanceRegister.AttendanceRegisterID,
                             ClientID = clientID,
                             Present = false,
-                            LastChangedBy = UtilityService.CurrentUserName,
+                            LastChangedBy = UserAppData.CurrentUserName,
                             LastChangedDate = DateTime.Now
                         });
                     }

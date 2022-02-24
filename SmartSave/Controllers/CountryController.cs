@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartHelper;
 using SmartDomain;
 using SmartLogic.IService;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -18,7 +19,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Country()
         {
             Permissions permission = Permissions.View_Country;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Country());
@@ -54,7 +55,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Country update = await (_service.FindCountry(Country.CountryID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(Country)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

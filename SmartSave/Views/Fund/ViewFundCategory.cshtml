@@ -234,7 +234,7 @@
                                         {
                                             <tr>
                                             
-                                                @if (UtilityService.HasPermission(Permissions.View_Fund_Item))
+                                                @if (UserAppData.HasPermission(Permissions.View_Fund_Item))
                                                 {
                                                     <td><a asp-controller="FundItem" asp-action="ViewFindItem" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a> </td>
                                                 }

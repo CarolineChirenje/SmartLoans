@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartHelper;
 using SmartDomain;
 using SmartLogic.IService;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -19,7 +20,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> FeatureFlag()
         {
             Permissions permission = Permissions.View_Feature_Flag;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.FeatureFlag());
@@ -55,7 +56,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 FeatureFlag update = await (_service.FindFeatureFlag(FeatureFlag.FeatureFlagID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(FeatureFlag)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

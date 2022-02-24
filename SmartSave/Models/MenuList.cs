@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartDomain;
+using SmartExtensions;
 
 namespace SmartSave
 {
-    
+
     [ViewComponent(Name = "MenuList")]
     public class MenuListViewComponent : ViewComponent
     {
@@ -16,7 +18,13 @@ namespace SmartSave
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View("MainMenu",await _service.DisplayMenuGroups());
+            var menuGroups = AppData.MenuGroups;
+            if (menuGroups.ListIsEmpty())
+            {
+                menuGroups = await _service.DisplayMenuGroups();
+                AppData.MenuGroups = menuGroups;
+            }
+            return View("MainMenu", menuGroups);
         }
     }
     [ViewComponent(Name = "ClientMenuList")]
@@ -26,7 +34,13 @@ namespace SmartSave
         public ClientMenuListViewComponent(IMenuService service) => _service = service;
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View("ClientMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Client));
+            var clientMenu = AppData.ClientMenu;
+            if (clientMenu.ListIsEmpty())
+            {
+                clientMenu = await _service.DisplayLayouts(SmartHelper.LayoutComponent.Client);
+                AppData.ClientMenu = clientMenu;
+            }
+            return View("ClientMenu", clientMenu);
         }
     }
 
@@ -37,7 +51,13 @@ namespace SmartSave
         public KhonapoMenuListViewComponent(IMenuService service) => _service = service;
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View("KhonapoMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Khonapo_Fund));
+            var konapoMenu = AppData.KhonapoMenu;
+            if (konapoMenu.ListIsEmpty())
+            {
+                konapoMenu = await _service.DisplayLayouts(SmartHelper.LayoutComponent.Khonapo_Fund);
+                AppData.KhonapoMenu = konapoMenu;
+            }
+            return View("KhonapoMenu", konapoMenu);
         }
     }
 
@@ -48,7 +68,13 @@ namespace SmartSave
         public DeveloperMenuListViewComponent(IMenuService service) => _service = service;
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View("DeveloperMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Developer_Menu));
+            var developerMenu = AppData.DeveloperMenu;
+            if (developerMenu.ListIsEmpty())
+            {
+                developerMenu = await _service.DisplayLayouts(SmartHelper.LayoutComponent.Developer_Menu);
+                AppData.DeveloperMenu = developerMenu;
+            }
+                return View("DeveloperMenu",developerMenu);
         }
     }
 
@@ -59,7 +85,13 @@ namespace SmartSave
         public SettingsMenuListViewComponent(IMenuService service) => _service = service;
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View("SettingsMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Settings));
+            var settingmenu = AppData.SettingsMenu;
+            if (settingmenu.ListIsEmpty())
+            {
+                settingmenu = await _service.DisplayLayouts(SmartHelper.LayoutComponent.Settings);
+                AppData.SettingsMenu = settingmenu;
+            }
+            return View("SettingsMenu", settingmenu);
         }
     }
     [ViewComponent(Name = "ReportingMenuList")]
@@ -69,15 +101,55 @@ namespace SmartSave
         public ReportingListViewComponent(IMenuService service) => _service = service;
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View("ReportingMenu", await _service.DisplayLayouts(SmartHelper.LayoutComponent.Reporting));
+            var reportMenu = AppData.ReportMenu;
+            if (reportMenu.ListIsEmpty())
+            {
+                reportMenu = await _service.DisplayLayouts(SmartHelper.LayoutComponent.Reporting);
+                AppData.ReportMenu = reportMenu;
+            }
+            return View("ReportingMenu", reportMenu);
+        }
+    }
+    
+      [ViewComponent(Name = "EmployeeMenuList")]
+    public class EmployeeMenuListViewComponent : ViewComponent
+    {
+        private readonly IMenuService _service;
+        public EmployeeMenuListViewComponent(IMenuService service) => _service = service;
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var employeeMenu = AppData.EmployeeMenu;
+            if (employeeMenu.ListIsEmpty())
+            {
+                employeeMenu = await _service.DisplayLayouts(SmartHelper.LayoutComponent.Employees);
+                AppData.EmployeeMenu = employeeMenu;
+            }
+            return View("EmployeeMenu", employeeMenu);
         }
     }
 
+    [ViewComponent(Name = "EmployerMenuList")]
+    public class EmployerMenuListViewComponent : ViewComponent
+    {
+        private readonly IMenuService _service;
+        public EmployerMenuListViewComponent(IMenuService service) => _service = service;
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var employerMenu = AppData.EmployerMenu;
+            if (employerMenu.ListIsEmpty())
+            {
+                employerMenu = await _service.DisplayLayouts(SmartHelper.LayoutComponent.Employers);
+                AppData.EmployerMenu = employerMenu;
+            }
+            return View("EmployerMenu", employerMenu);
+        }
+    }
+    [ViewComponent(Name = "NoMenuList")]
     public class NoMenuListViewComponent : ViewComponent
     {
         //private readonly IMenuService _service;
         //public NoMenuListViewComponent(IMenuService service) => _service = service;
-        public  IViewComponentResult Invoke()
+        public IViewComponentResult Invoke()
         {
             return View("BlankMenu");
         }

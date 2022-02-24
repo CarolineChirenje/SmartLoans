@@ -10,6 +10,7 @@ using SmartDataAccess;
 using SmartHelper;
 using SmartLogic.IService;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -29,7 +30,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     Bank.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                    Bank.LastChangedBy = UtilityService.CurrentUserName;
+                    Bank.LastChangedBy = UserAppData.CurrentUserName;
                     Bank.LastChangedDate = DateTime.Now;
                     _context.Update(Bank);
                 }
@@ -50,7 +51,7 @@ namespace SmartLogic
             try
             {
                 BankAccount bankAccount = await _context.BankAccounts.Where(b => b.AccountName.Equals(bank.AccountName) && b.AccountNumber.Equals(bank.AccountNumber)).FirstOrDefaultAsync();
-                result = UtilityService.IsNotNull(bankAccount);
+                result = bankAccount.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -121,7 +122,7 @@ namespace SmartLogic
 
             try
             {
-                Bank.LastChangedBy = UtilityService.CurrentUserName;
+                Bank.LastChangedBy = UserAppData.CurrentUserName;
                 Bank.LastChangedDate = DateTime.Now;
                 _context.Add(Bank);
                 await _context.SaveChangesAsync();
@@ -148,7 +149,7 @@ namespace SmartLogic
                 update.BankAccountTypeID = Bank.BankAccountTypeID;
                 update.CurrencyID = Bank.CurrencyID;
                 update.IsActive = Bank.IsActive;
-                update.LastChangedBy = UtilityService.CurrentUserName;
+                update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Update(update);
                 return await _context.SaveChangesAsync();

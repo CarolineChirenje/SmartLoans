@@ -8,6 +8,7 @@ using SmartHelper;
 using SmartDomain;
 using SmartLogic.IService;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -24,7 +25,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> BankAccounts()
         {
             Permissions permission = Permissions.View_Bank_Account;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Banks());
@@ -80,7 +81,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 BankAccount bankAccount = await (_service.FindBank(BankAccount.BankAccountID));
-                if (UtilityService.IsNotNull(bankAccount))
+                if (bankAccount.IsNotNull())
                 {
                     if (await (_service.Update(BankAccount)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -97,7 +98,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             BankAccount bankAccount = await (_service.FindBank(id));
-            if (UtilityService.IsNotNull(bankAccount))
+            if (bankAccount.IsNotNull())
             {
                 if (await (_service.Delete(id)) > 0)
                     return RedirectToAction(nameof(BankAccounts));
@@ -112,7 +113,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ChangeBankAccountstatus(int id, bool status)
         {
             BankAccount bankAccount = await (_service.FindBank(id));
-            if (UtilityService.IsNotNull(bankAccount))
+            if (bankAccount.IsNotNull())
             {
                 if (await (_service.ActionBank(id, status ? DatabaseAction.Deactivate : DatabaseAction.Reactivate)) == 0)
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

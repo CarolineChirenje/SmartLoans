@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<SmartDomain.InvoiceDetails>
 @using SmartHelper;
+@using SmartExtensions;
 @{
     TempData["Title"] = "Deductions";
     var invoiceID = 0;
@@ -21,10 +22,10 @@
             <div class="box">
                 <div class="box-header">
                     @{ var invoiceDetails = "Invoice Details";
-                        if (UtilityService.IsNotNull(Model))
+                        if (Model.IsNotNull())
                         {
                             var entry = Model.FirstOrDefault();
-                            if (UtilityService.IsNotNull(entry))
+                            if (entry.IsNotNull())
                             {
                                 invoiceDetails = $"Invoice No {entry.Invoice.InvoiceID} Due - {UtilityService.ShowDate(entry.Invoice.DueDate)}  Status - {entry.Invoice.Status}";
                                 invoiceID = entry.InvoiceID;
@@ -64,13 +65,13 @@
                                             string duedate = UtilityService.ShowDate(item.Invoice.DueDate);
                                             string affiliation = String.Empty;
 
-                                            if (UtilityService.IsNotNull(item.Client.ClientGroup))
+                                            if (item.Client.ClientGroup.IsNotNull())
                                             {
                                                 affiliation = item.Client.ClientGroupID == (int)Affiliation.Individual ? "Individual" : (item.Client.CompanyID != null ? item.Client.Company.Name : "");
                                             }
                                         }
                                         <td>@affiliation</td>
-                                        @if (UtilityService.HasPermission(Permissions.View_User))
+                                        @if (UserAppData.HasPermission(Permissions.View_User))
                                         {
                                             <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@item.Client.ClientFullName</a></td>
                                         }
@@ -81,7 +82,7 @@
                                         <td>@item.InvoiceNumber</td>
                                         <td>@Html.DisplayFor(modelItem => item.Client.Occupation)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Client.Salary)</td>
-                                        @if (UtilityService.HasPermission(Permissions.View_Product))
+                                        @if (UserAppData.HasPermission(Permissions.View_Product))
                                         {
                                             <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Product.Name</a></td>
                                         }

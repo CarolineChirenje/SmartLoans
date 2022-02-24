@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="box-footer">
-                    @if (UtilityService.HasPermission(Permissions.Add_Client_Course))
+                    @if (UserAppData.HasPermission(Permissions.Add_Client_Course))
                     {
                         <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#CourseForm">Register</a>
                     }
@@ -101,7 +101,7 @@
                     <input type="hidden" name="ClientID" value="@Model.ClientForm.ClientID" />
                 </div>
                 <div class="modal-footer">
-                    @if (UtilityService.HasPermission(Permissions.Add_Client_Course))
+                    @if (UserAppData.HasPermission(Permissions.Add_Client_Course))
                     {<button type="submit" class="btn btn-primary">Register</button>}
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 

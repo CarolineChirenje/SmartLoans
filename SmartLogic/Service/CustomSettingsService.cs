@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartDataAccess;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartLog;
 using System;
@@ -85,10 +86,10 @@ Include(x => x.CustomVariableType)
             try
             {                CustomSetting update = _context.CustomSettings.Where(r => r.CustomSettingID == CustomSetting.CustomSettingID)
                                .FirstOrDefault();
-                if (UtilityService.IsNotNull(update)) // I'm using a extension method
+                if (update.IsNotNull()) // I'm using a extension method
                 {
                     update.Value = CustomSetting.Value;
-                    update.LastChangedBy = UtilityService.CurrentUserName;
+                    update.LastChangedBy = UserAppData.CurrentUserName;
                     update.LastChangedDate = DateTime.Now;
                     // check if local is not null 
                     // detach
@@ -109,7 +110,7 @@ Include(x => x.CustomVariableType)
         {
             try
             {                CustomSetting.IsActive = true;
-                CustomSetting.LastChangedBy = UtilityService.CurrentUserName;
+                CustomSetting.LastChangedBy = UserAppData.CurrentUserName;
                 CustomSetting.LastChangedDate = DateTime.Now;
                 _context.Add(CustomSetting);
                 return (await _context.SaveChangesAsync());
@@ -141,7 +142,7 @@ Include(x => x.CustomVariableType)
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     CustomSetting.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                    CustomSetting.LastChangedBy = UtilityService.CurrentUserName;
+                    CustomSetting.LastChangedBy = UserAppData.CurrentUserName;
                     CustomSetting.LastChangedDate = DateTime.Now;
                     _context.Update(CustomSetting);
                 }
@@ -177,7 +178,7 @@ Include(x => x.CustomVariableType)
             try
             {
                 CustomSelectList customSetting = GetCustomSetting(applicationSetting);
-                if (UtilityService.IsNotNull(customSetting))
+                if (customSetting.IsNotNull())
                     return customSetting.Name;
                 else
                     return String.Empty;

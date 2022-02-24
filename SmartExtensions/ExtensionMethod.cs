@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
@@ -17,6 +18,24 @@ namespace SmartExtensions
         public static string ToPrettyJson<T>(this T _object) => JsonConvert.SerializeObject((object)_object, Formatting.Indented);
 
         public static T FromJson<T>(this string _object) => JsonConvert.DeserializeObject<T>(_object);
+
+        public static bool IsNotNull<T>(this T _object) => _object != null;
+        public static bool IsNull<T>(this T _object) => _object == null;
+
+        public static bool ListIsEmpty<T>(this List<T> _object)
+        {
+            bool result = false;
+            try
+            {
+                result = (_object == null 
+                ||_object.Count ==0);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
 
         public static int ToInt(this string value)
         {

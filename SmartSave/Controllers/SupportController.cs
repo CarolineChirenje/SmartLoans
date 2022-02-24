@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartHelper;
 using SmartDomain;
 using SmartLogic.IService;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -18,7 +19,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Support()
         {
             Permissions permission = Permissions.View_Technical_Support_Settings;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Support());
@@ -42,7 +43,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 TechnicalSupport update = await (_service.FindSupport(Support.TechnicalSupportID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(Support)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

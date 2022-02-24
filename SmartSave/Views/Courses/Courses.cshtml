@@ -46,7 +46,7 @@
                                         string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
                                         int sessionCount = item.CourseTopics == null ? 0 : item.CourseTopics.Count();
                                     }
-                                    @if (UtilityService.HasPermission(Permissions.View_Course))
+                                    @if (UserAppData.HasPermission(Permissions.View_Course))
                                     {
                                         <td><a asp-controller="Courses" asp-action="ViewCourse" asp-route-id="@item.CourseID">@item.Title</a></td>
                                     }
@@ -68,7 +68,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                    @if (UtilityService.HasPermission(Permissions.Add_Course))
+                    @if (UserAppData.HasPermission(Permissions.Add_Course))
                     {
                         <a class="btn btn-success pull-right" asp-controller="Courses" asp-action="AddCourse">New</a><br />
                     }

@@ -7,6 +7,7 @@ using SmartDataAccess;
 using SmartDomain;
 using SmartHelper;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -53,19 +54,49 @@ namespace SmartLogic
                 throw;
             }
         }
+
+        public BasicDetail GetUser(int id = 0, string username = null)
+        {
+            try
+            {
+                User user = new User();
+             if(id>0)
+                    user = _context.Users.Find(id);
+               else if (!String.IsNullOrEmpty(username))
+                    user = _context.Users.FirstOrDefault(u => u.UserName.ToUpper() == username.Trim().ToUpper());
+                if (user.IsNotNull())
+                {
+                    BasicDetail result = new BasicDetail()
+                    {
+                        IDNumber = user.IDNumber,
+                        EmailAddress = user.EmailAddress
+                    };
+                    return result;
+
+                }
+                else
+                    return null;
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public List<Role> GetUserRoles(int id = 0, string username = null)
         {
             try
             {
 
-            if (!UtilityService.IsNotNull(_context))
+            if (!_context.IsNotNull())
             {
                 return null;
             }
             if (!String.IsNullOrEmpty(username))
             {
                 var user = _context.Users.Where(u => u.UserName.ToUpper() == username.Trim().ToUpper()).FirstOrDefault();
-                if (!UtilityService.IsNotNull(user))
+                if (!user.IsNotNull())
                     return null;
                 id = user.UserID;
             }
@@ -109,13 +140,16 @@ namespace SmartLogic
             string oldIDNumber = updateUser.IDNumber;
             string oldEmailAddress = updateUser.EmailAddress;
             updateUser.ProfileImage = user.ProfileImage;
+            updateUser.IsInstructor = user.IsInstructor;
             updateUser.FirstName = user.FirstName;
             updateUser.LastName = user.LastName;
             updateUser.IsActive = user.IsActive;
             updateUser.UserTypeID = user.UserTypeID;
             updateUser.EmailAddress = user.EmailAddress;
             updateUser.IDNumber = user.IDNumber;
-            updateUser.LastChangedBy = UtilityService.CurrentUserName;
+                if (user.CompanyID.HasValue)
+                    updateUser.CompanyID = user.CompanyID;
+            updateUser.LastChangedBy = UserAppData.CurrentUserName;
             updateUser.LastChangedDate = DateTime.Now;
             _context.Update(updateUser);
 
@@ -123,18 +157,19 @@ namespace SmartLogic
             if (result > 0)
 
                 {
-                    UtilityService.CurrentUserName = user.UserName;
-                    UtilityService.UserFullName = user.UserFullName;
-                    UtilityService.UserProfileImage = user.ProfileImage;
-                    UtilityService.CurrentUserTypeID = user.UserTypeID;
-                    UtilityService.CanOverrideMaintananceMode = user.CanOverrideMaintananceMode;
+                    UserAppData.CurrentUserName = updateUser.UserName;
+                    UserAppData.UserFullName = updateUser.UserFullName;
+                    UserAppData.UserProfileImage = updateUser.ProfileImage;
+                    UserAppData.CurrentUserTypeID = updateUser.UserTypeID;
+                    UserAppData.CanOverrideMaintananceMode = updateUser.CanOverrideMaintananceMode;
+                    UserAppData.CompanyID = updateUser.CompanyID??0;
                     // also need to update id number and email address on client account 
                     Client client = _context.Clients.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
-                if (UtilityService.IsNotNull(user) && UtilityService.IsNotNull(client))
+                if (updateUser.IsNotNull() && client.IsNotNull())
                 {
                     client.EmailAddress = user.EmailAddress;
                     client.IDNumber = user.IDNumber;
-                    client.LastChangedBy = UtilityService.CurrentUserName;
+                    client.LastChangedBy = UserAppData.CurrentUserName;
                     client.LastChangedDate = DateTime.Now;
                     _context.Update(client);
                     result = await _context.SaveChangesAsync();
@@ -156,7 +191,7 @@ namespace SmartLogic
             {
 
             var user = _context.Users.Where(u => u.EmailAddress.Equals(emailAddress)).FirstOrDefault();
-            return UtilityService.IsNotNull(user);
+            return user.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -170,7 +205,7 @@ namespace SmartLogic
             {
 
             user.Password = Encryption.Encrypt(UtilityService.GeneratePassword);
-            user.LastChangedBy = String.IsNullOrEmpty(UtilityService.CurrentUserName) ? "System" : UtilityService.CurrentUserName;
+            user.LastChangedBy = String.IsNullOrEmpty(UserAppData.CurrentUserName) ? "System" : UserAppData.CurrentUserName;
             user.LastChangedDate = DateTime.Now;
             // user.UserTypeID = (int)TypeOfUser.Administrator;
             if (generateUserName)
@@ -186,7 +221,7 @@ namespace SmartLogic
                 UserRole userRole = new UserRole();
                 userRole.RoleID = (int)DefaultRoles.Employee;
                 userRole.UserID = userid;
-                userRole.LastChangedBy = String.IsNullOrEmpty(UtilityService.CurrentUserName) ? "System" : UtilityService.CurrentUserName;
+                userRole.LastChangedBy = String.IsNullOrEmpty(UserAppData.CurrentUserName) ? "System" : UserAppData.CurrentUserName;
                 userRole.LastChangedDate = DateTime.Now;
                 int _result = await Save(userRole);
             }
@@ -202,7 +237,7 @@ namespace SmartLogic
         {
             try
             {
-            user.LastChangedBy = UtilityService.CurrentUserName;
+            user.LastChangedBy = UserAppData.CurrentUserName;
             user.LastChangedDate = DateTime.Now;
             _context.Add(user);
             return (await _context.SaveChangesAsync());
@@ -238,7 +273,7 @@ namespace SmartLogic
                 {
                     UserID = UserID,
                     UserRoleID = roleID,
-                    LastChangedBy = UtilityService.CurrentUserName,
+                    LastChangedBy = UserAppData.CurrentUserName,
                     LastChangedDate = DateTime.Now,
                 };
 
@@ -292,7 +327,7 @@ namespace SmartLogic
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
 
-                userRole.LastChangedBy = UtilityService.CurrentUserName;
+                userRole.LastChangedBy = UserAppData.CurrentUserName;
                 userRole.LastChangedDate = DateTime.Now;
                 _context.Update(userRole);
             }
@@ -309,7 +344,7 @@ namespace SmartLogic
         {
             try
             {
-            List<Role> roles = GetUserRoles(username: UtilityService.CurrentUserName);
+            List<Role> roles = GetUserRoles(username: UserAppData.CurrentUserName);
             return roles.Any(x => x.RolePermissions.Any(p => p.PermissionID == (int)permission));
             }
             catch (Exception ex)
@@ -395,7 +430,7 @@ namespace SmartLogic
                     {
                         UserID = userID,
                         RoleID = roleid,
-                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedBy = UserAppData.CurrentUserName,
                         LastChangedDate = DateTime.Now
                     };
                     _context.Add(userRole);

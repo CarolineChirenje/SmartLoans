@@ -28,7 +28,7 @@ namespace SmartLogic
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
                 TransactionType.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                TransactionType.LastChangedBy = UtilityService.CurrentUserName;
+                TransactionType.LastChangedBy = UserAppData.CurrentUserName;
                 TransactionType.LastChangedDate = DateTime.Now;
                 _context.Update(TransactionType);
             }
@@ -124,7 +124,7 @@ namespace SmartLogic
         {
             try
             {
-                      TransactionType.LastChangedBy = UtilityService.CurrentUserName;
+                      TransactionType.LastChangedBy = UserAppData.CurrentUserName;
             TransactionType.LastChangedDate = DateTime.Now;
             _context.Add(TransactionType);
             return (await _context.SaveChangesAsync());
@@ -148,7 +148,7 @@ namespace SmartLogic
             update.TransactionStatus = TransactionType.TransactionStatus;
             update.Description = TransactionType.Description;
             update.IsActive = TransactionType.IsActive;
-            update.LastChangedBy = UtilityService.CurrentUserName;
+            update.LastChangedBy = UserAppData.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();

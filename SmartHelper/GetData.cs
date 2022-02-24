@@ -59,32 +59,7 @@ namespace SmartHelper
             return db.Query<string>(sqlQuery)?.SingleOrDefault();
         }
 
-        public static bool IsPermitted(int _permissionID)
-        {
-            string countValue;
-            string _selectClause = @"SELECT COUNT(rp.PermissionID) FROM Users u 
-              INNER JOIN UserRoles ur ON u.UserID = ur.UserID
-              INNER JOIN RolePermissions rp ON ur.RoleID = rp.RoleID ";
-            string _whereClause = $"WHERE u.UserName ='{UtilityService.CurrentUserName}' AND PermissionID ={_permissionID}";
-            string sqlCustomSetting = _selectClause + _whereClause;
-            using (IDbConnection db = new SqlConnection(SSDBConnection))
-            {
-                countValue = db.Query<string>(sqlCustomSetting).SingleOrDefault();
-            }
-
-            int permissionCount;
-            try
-            {
-                permissionCount = Int32.Parse(countValue);
-            }
-            catch
-            {
-
-                permissionCount = 0;
-            }
-            return permissionCount != 0;
-
-        }
+      
         public static string GetSupportValue(int supportListID)
         {
             string value;

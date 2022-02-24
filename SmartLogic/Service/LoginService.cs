@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SmartDataAccess;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartLog;
 
@@ -30,6 +31,9 @@ namespace SmartLogic
                 string encryptedPassword = Encryption.Encrypt(password);
                 return await _context.Users
                 .Include(u => u.UserAccessGrants)
+                 .Include(u => u.UserRoles)
+                 .ThenInclude(p=>p.Roles)
+                 .ThenInclude(p => p.RolePermissions)
                 .FirstOrDefaultAsync(u => u.EmailAddress.Equals(username)
                  && u.Password.Equals(encryptedPassword));
 
@@ -113,13 +117,13 @@ namespace SmartLogic
                 if (userAuthenticate.IsAccountCreation)
                 {
                     client = _context.Clients.FirstOrDefault(u => u.EmailAddress.Equals(userAuthenticate.EmailAddress) && u.IDNumber.Equals(userAuthenticate.IDNumber));
-                    if (UtilityService.IsNull(client))
+                    if (client.IsNull())
                         return null;
                 }
                 else
                 {
                     user = _context.Users.FirstOrDefault(u => u.EmailAddress.Equals(userAuthenticate.EmailAddress));
-                    if (UtilityService.IsNull(user))
+                    if (user.IsNull())
                         return null;
                 }
                 string encryptedPinCode = NewPinCode;
@@ -154,7 +158,7 @@ namespace SmartLogic
                              ).Select(x => x.UserAuthenticationCodeID).ToList();
 
                         
-                        if (UtilityService.IsNotNull(pincodes))
+                        if (!pincodes.ListIsEmpty())
                         {
                             var some = _context.UserAuthenticationCodes.Where(x => pincodes.Contains(x.UserAuthenticationCodeID)).ToList();
                             some.ForEach(a => a.IsValid = false);
@@ -185,9 +189,8 @@ namespace SmartLogic
         public async Task<bool> UserAccountExists(string emailaddress, string idnumber)
         {
             try
-            {
-                var user = await _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(user);
+            {                var user = await _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
+                return user.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -207,7 +210,7 @@ namespace SmartLogic
                             && u.IsAccountCreation == userAuthenticate.IsAccountCreation
                             && u.PinCodeTypeID == (int)userAuthenticate.CodeType
                             && u.IsValid);
-                if (UtilityService.IsNotNull(pinReset) &&
+                if (pinReset.IsNotNull() &&
                 pinReset.PinCodeTypeID == (int)CodeType.Multi_Factor_Authenticator &&
                 userAuthenticate.DoNotAskForTheDay)
                 {
@@ -231,7 +234,7 @@ namespace SmartLogic
         {
             try
             {
-                accessGrant.LastChangedBy = UtilityService.CurrentUserName;
+                accessGrant.LastChangedBy = UserAppData.CurrentUserName;
                 accessGrant.LastChangedDate = DateTime.Now;
                 _context.Add(accessGrant);
                 _context.SaveChanges();
@@ -249,10 +252,10 @@ namespace SmartLogic
                 User user = await _context.Users
                             .FirstOrDefaultAsync(u => u.UserID == userid);
 
-                if (UtilityService.IsNull(user))
+                if (user.IsNull())
                     return 0;
                 user.Password = encryptedPassword;
-                user.LastChangedBy = UtilityService.CurrentUserName;
+                user.LastChangedBy = UserAppData.CurrentUserName;
                 user.PasswordExpiryDate = DateTime.Now.AddDays(UtilityService.PasswordValidityPeriod);
                 user.LastChangedDate = DateTime.Now;
 

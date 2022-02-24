@@ -103,10 +103,10 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="NoticeBoard" asp-action="NoticeBoard">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Notice))
+                @if (UserAppData.HasPermission(Permissions.Update_Notice))
                 {<button type="submit" class="btn btn-info pull-right">Update</button>
                 }
-                @if (UtilityService.HasPermission(Permissions.Delete_Notice))
+                @if (UserAppData.HasPermission(Permissions.Delete_Notice))
                 {
                     <a class="btn btn-danger" asp-controller="NoticeBoard" asp-action="Delete" asp-route-id="@Model.NoticeID">Delete</a>
                 }

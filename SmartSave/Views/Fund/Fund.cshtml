@@ -43,7 +43,7 @@
                                         string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
                                         int categortyCount = item.FundCategories == null ? 0 : item.FundCategories.Count();
                                     }
-                                    @if (UtilityService.HasPermission(Permissions.View_Fund))
+                                    @if (UserAppData.HasPermission(Permissions.View_Fund))
                                     {
                                         <td><a asp-controller="Fund" asp-action="ViewFund" asp-route-id="@item.FundID">@item.Name</a></td>
                                     }
@@ -64,7 +64,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                    @if (UtilityService.HasPermission(Permissions.Add_Fund))
+                    @if (UserAppData.HasPermission(Permissions.Add_Fund))
                     {
                         <a class="btn btn-success pull-right" asp-controller="Fund" asp-action="AddFund">New</a><br />
                     }

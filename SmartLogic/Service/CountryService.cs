@@ -28,7 +28,7 @@ namespace SmartLogic
             else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
             {
                 Country.IsActive = DatabaseAction.Deactivate == action ? false : true;
-                Country.LastChangedBy = UtilityService.CurrentUserName;
+                Country.LastChangedBy = UserAppData.CurrentUserName;
                 Country.LastChangedDate = DateTime.Now;
                 _context.Update(Country);
             }
@@ -92,7 +92,7 @@ namespace SmartLogic
             try
             {
 
-            Country.LastChangedBy = UtilityService.CurrentUserName;
+            Country.LastChangedBy = UserAppData.CurrentUserName;
             Country.LastChangedDate = DateTime.Now;
             _context.Add(Country);
             return (await _context.SaveChangesAsync());
@@ -113,7 +113,7 @@ namespace SmartLogic
             Country update = await FindCountry(Country.CountryID);
             update.Name = Country.Name;
             update.IsActive = Country.IsActive;
-                        update.LastChangedBy = UtilityService.CurrentUserName;
+                        update.LastChangedBy = UserAppData.CurrentUserName;
             update.LastChangedDate = DateTime.Now;
             _context.Update(update);
             return await _context.SaveChangesAsync();

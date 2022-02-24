@@ -57,7 +57,7 @@
                                                 string roleStatus = @item.IsActive ? "Deactivate" : "Reactivate";
 
                                             }
-                                            @if (UtilityService.HasPermission(Permissions.View_Company))
+                                            @if (UserAppData.HasPermission(Permissions.View_Company))
                                             {
                                                 <td><a asp-controller="Company" asp-action="ViewCompany" asp-route-id="@item.CompanyID">@item.Company.Name</a></td>
 
@@ -67,7 +67,7 @@
 
                                                 <td>@Html.DisplayFor(modelItem => item.Company.Name)</td>
                                             }
-                                            @if (UtilityService.HasPermission(Permissions.View_Product))
+                                            @if (UserAppData.HasPermission(Permissions.View_Product))
                                             {
                                                 <td><a asp-controller="Product" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Name</a></td>
 
@@ -88,7 +88,7 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
-                        @if (UtilityService.HasPermission(Permissions.Add_Product))
+                        @if (UserAppData.HasPermission(Permissions.Add_Product))
                         {
                             <a href="AddProduct" class="btn btn-success pull-right">New Product</a><br />
                         }

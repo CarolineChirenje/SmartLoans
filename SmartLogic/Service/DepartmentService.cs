@@ -9,6 +9,7 @@ using SmartHelper;
 using SmartDomain;
 using SmartDataAccess;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -91,7 +92,7 @@ namespace SmartLogic
                     Department update = await FindDepartment(Department.DepartmentID);
         update.Name = Department.Name;
         update.IsActive = Department.IsActive;
-        update.LastChangedBy = UtilityService.CurrentUserName;
+        update.LastChangedBy = UserAppData.CurrentUserName;
         update.LastChangedDate = DateTime.Now;
         _context.Update(update);
         return await _context.SaveChangesAsync();
@@ -108,7 +109,7 @@ namespace SmartLogic
             {
 
                        Department.IsActive = true;
-        Department.LastChangedBy = UtilityService.CurrentUserName;
+        Department.LastChangedBy = UserAppData.CurrentUserName;
         Department.LastChangedDate = DateTime.Now;
         _context.Add(Department);
         return (await _context.SaveChangesAsync());
@@ -125,8 +126,8 @@ namespace SmartLogic
             try
             {
 
-                        Department department = await _context.Department.Where(b => b.Name.Equals(_department.Name)).FirstOrDefaultAsync();
-            return UtilityService.IsNotNull(department);
+             Department department = await _context.Department.Where(b => b.Name.Equals(_department.Name)).FirstOrDefaultAsync();
+            return department.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -161,7 +162,7 @@ namespace SmartLogic
         else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
         {
             Department.IsActive = DatabaseAction.Deactivate == action ? false : true;
-            Department.LastChangedBy = UtilityService.CurrentUserName;
+            Department.LastChangedBy = UserAppData.CurrentUserName;
             Department.LastChangedDate = DateTime.Now;
             _context.Update(Department);
         }

@@ -3,6 +3,7 @@ using MigraDocCore.DocumentObjectModel;
 using MigraDocCore.DocumentObjectModel.Shapes;
 using MigraDocCore.DocumentObjectModel.Tables;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartLog;
 using System;
@@ -93,7 +94,7 @@ namespace SmartReporting
                 column.Format.Alignment = ParagraphAlignment.Left;
                 paragraph = this.addressFrame.AddParagraph();
 
-                if (UtilityService.IsNull(_Company))
+                if (_Company.IsNull())
                 {
                     // Each item fills two rows
                     Row tblrow = this.table.AddRow();
@@ -262,7 +263,7 @@ namespace SmartReporting
                 tblrow1.Cells[1].Borders.Visible = false;
                 tblrow1.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
                 tblrow1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                tblrow1.Cells[1].AddParagraph(UtilityService.UserFullName);
+                tblrow1.Cells[1].AddParagraph(UserAppData.UserFullName);
 
                 tblrow1.Cells[2].Borders.Visible = false;
                 tblrow1.Cells[2].Format.Alignment = ParagraphAlignment.Left;

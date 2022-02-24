@@ -51,7 +51,7 @@
                                             int sessions = Model.Course.CourseTopics == null ? 0 : Model.Course.CourseTopics.Count();
 
                                         }
-                                        @if (UtilityService.HasPermission(Permissions.Update_Client_Course))
+                                        @if (UserAppData.HasPermission(Permissions.Update_Client_Course))
                                         {
                                         <label>
                                             @*<a data-toggle="modal" data-target="#CourseSessions">@sessions</a>*@
@@ -110,11 +110,11 @@
 
                         </div>
                         <div class="modal-footer">
-                            @if (UtilityService.HasPermission(Permissions.Update_Client_Course))
+                            @if (UserAppData.HasPermission(Permissions.Update_Client_Course))
                             {
                                 <button type="submit" class="btn btn-primary">Update</button>
                             }
-                            @if (UtilityService.HasPermission(Permissions.View_Client))
+                            @if (UserAppData.HasPermission(Permissions.View_Client))
                             {<a class="btn btn-info" asp-controller="Client" asp-action="Courses" asp-route-id="@Model.ClientID">View More Programmes</a>
                             } <a class="btn btn-default" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">Cancel</a>
                         </div>
@@ -172,7 +172,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        @if (UtilityService.HasPermission(Permissions.Update_Client_Course))
+                        @if (UserAppData.HasPermission(Permissions.Update_Client_Course))
                         {
                             @if (!@Model.IsDeRegistered || !@Model.DateCompleted.HasValue)
                             {

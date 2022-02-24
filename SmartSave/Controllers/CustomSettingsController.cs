@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartDomain;
 using SmartHelper;
 using CustomSetting = SmartDomain.CustomSetting;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -47,7 +48,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 CustomSetting update = await (_service.FindCustomSetting(CustomSettings.CustomSettingID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (CustomSettings.CustomSettingID == (int)AppSetting.Mail_Credential_Password)
                     {

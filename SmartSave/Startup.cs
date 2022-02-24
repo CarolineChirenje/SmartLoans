@@ -14,6 +14,7 @@ using SmartLogic;
 using SmartLogic.IService;
 using SmartMail;
 using System;
+using System.Data.SqlClient;
 using System.IO;
 
 namespace SmartSave
@@ -49,8 +50,12 @@ namespace SmartSave
             string _configValue = GetData.SSDBConnection;
             if (string.IsNullOrEmpty(_configValue))
                 _configValue = "Data Source=172.105.28.87;Initial Catalog=SmartSave; User Id=sa; Password=Ch1gumbu6299##";
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(_configValue);
+            UserAppData.DatabaseConnection = builder.DataSource;
+           
             services.AddDbContext<DatabaseContext>(options =>
        options.UseSqlServer(_configValue));
+       
             // setup dependency injection in service container
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IRoleService, RoleService>();
@@ -115,6 +120,7 @@ namespace SmartSave
                     name: "default",
                     template: "{controller=Login}/{action=Login}/{id?}");
             });
+            UserAppData.SiteEnvironment = UtilityService.GetEnvironment;
             if (GetData.EnableLogger())
             {
                 SmartHelper.SmartLog log = GetData.SmartLogData();

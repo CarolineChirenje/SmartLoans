@@ -152,7 +152,7 @@
                     <!-- Nav tabs -->
 
                     <ul class="nav nav-tabs">
-                        @if (UtilityService.HasPermission(Permissions.View_Course_Session))
+                        @if (UserAppData.HasPermission(Permissions.View_Course_Session))
                         {
                             <li class="active">
                                 <a href="#Sessions" data-toggle="tab">Sessions</a>
@@ -203,7 +203,7 @@
                             </div>
 
                             <div class="box-footer">
-                                @if (UtilityService.HasPermission(Permissions.Add_Course_Session))
+                                @if (UserAppData.HasPermission(Permissions.Add_Course_Session))
                                 {
                                     <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#SessionForm">Add Session</a>
                                 }

@@ -6,6 +6,7 @@ using SmartLogic;
 using Microsoft.AspNetCore.Mvc;
 using SmartHelper;
 using SmartDomain;
+using SmartExtensions;
 
 namespace SmartSave.Controllers
 {
@@ -17,7 +18,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> Department()
         {
             Permissions permission = Permissions.View_Department;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
             return View(await _service.Departments());
@@ -62,7 +63,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Department update = await (_service.FindDepartment(department.DepartmentID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(department)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");

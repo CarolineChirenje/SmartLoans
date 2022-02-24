@@ -1,7 +1,7 @@
 @using SmartSave;
 @using SmartHelper;
 <ul class="sidebar-menu" data-widget="tree">
-    <li class="header">@UtilityService.ApplicationName</li>
+    <li class="header">@UserAppData.ApplicationName</li>
     @if (UtilityService.ApplyRoleBasedMenus)
     {
         List<int> _roleMenus = UtilityService.GetRoleMenus;

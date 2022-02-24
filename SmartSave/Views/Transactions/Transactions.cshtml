@@ -53,7 +53,7 @@
                                         string paymentdate = UtilityService.ShowDate(item.PaymentDate);
 
                                     }
-                                    @if (UtilityService.HasPermission(Permissions.View_Payment))
+                                    @if (UserAppData.HasPermission(Permissions.View_Payment))
                                     {
                                         <td><a asp-controller="Transactions" asp-action="ViewTransaction" asp-route-id="@item.TransactionID">@item.TransRef</a></td>
                                     }
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    @if (UtilityService.HasPermission(Permissions.Capture_Payment))
+                    @if (UserAppData.HasPermission(Permissions.Capture_Payment))
                     {
                         <a class="btn btn-success pull-right" asp-controller="Transactions" asp-action="RecordPayment">Capture Transaction</a><br />
                     }

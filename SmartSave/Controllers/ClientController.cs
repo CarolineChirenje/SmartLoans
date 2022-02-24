@@ -58,19 +58,21 @@ namespace SmartSave.Controllers
         }
 
         [OverrideMenuComponentFilter]
-        public ActionResult Clients(string accountNum = null, bool newClientsOnly = false, int productID = 0)
+        public ActionResult Clients(string accountNum = null, bool newClientsOnly = false, int productID = 0, int companyID=0)
         {
             try
             {
-                if (UtilityService.UserType == (int)TypeOfUser.Employee)
-                    return RedirectToAction("Dashboard", "Home");
-                List<ClientList> Clients = _service.Clients(accountNum, newClientsOnly, productID);
+                if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employee)
+                    return RedirectToAction("Dashboard", "External");
+                if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employer && UserAppData.CompanyID > 0)
+                    companyID = UserAppData.CompanyID;
+                List<ClientList> Clients = _service.Clients(accountNum, newClientsOnly, productID,companyID);
                 Permissions permission = Permissions.View_Client;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
-                if (UtilityService.IsNotNull(Clients) && Clients.Count == 1)
-                    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(Clients.FirstOrDefault().ClientID) });
+                //if (!Clients.ListIsEmpty() && Clients.Count == 1)
+                //    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(Clients.FirstOrDefault().ClientID) });
 
                 return View(Clients);
             }
@@ -82,23 +84,28 @@ namespace SmartSave.Controllers
 
 
         }
+
         public IActionResult MyAccount()
         {
-            if (UtilityService.UserType == (int)TypeOfUser.Employee)
+            if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employee)
             {
-                User user = _userService.FindUser(0, UtilityService.CurrentUserName).Result;
-                if (UtilityService.IsNotNull(user))
+                BasicDetail user = _userService.GetUser(username:UserAppData.CurrentUserName);
+                if (user.IsNotNull())
                 {
                     ClientPeek client = _service.GetClient(user.EmailAddress, user.IDNumber).Result;
-                    if (UtilityService.IsNotNull(client))
+                    if (client.IsNotNull())
                     {
                         return RedirectToAction("ViewClient", "Client", new { id = client.ClientID });
                     }
                     else
-                        return RedirectToAction("Dashboard", "Home");
-                }
+                    {
+                        TempData["Error"] ="No records found";
+
+                        return RedirectToAction("Dashboard", "External");
+                    }
+                        }
                 else
-                    return RedirectToAction("Dashboard", "Home");
+                    return RedirectToAction("Dashboard", "External");
             }
             return RedirectToAction("Dashboard", "Home");
         }
@@ -108,7 +115,7 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.View_Konapo_Fund;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
                 ClientKonapoFunds clientKonapo = _service.GetClientKonapoFunds(id).Result;
                 return View(clientKonapo);
@@ -150,7 +157,7 @@ namespace SmartSave.Controllers
             if (id == 0 && accountNum == null)
                 return RedirectToAction(nameof(Clients));
             ClientForm client = await _service.FindClient(id);
-            if (UtilityService.IsNotNull(client))
+            if (client.IsNotNull())
             {
                 HttpContext.Session.SetString("ClientID", client.ClientID.ToString());
                 GetDropDownLists();
@@ -165,7 +172,7 @@ namespace SmartSave.Controllers
             {
                 GetDropDownLists();
                 SalaryHistory history = _service.SalaryHistory(id);
-                if (UtilityService.IsNull(history))
+                if (history.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
                 return View(history);
@@ -185,7 +192,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 ClientForm update = await _service.FindClient(client.ClientID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(client)) == 0)
                     {
@@ -214,13 +221,13 @@ namespace SmartSave.Controllers
         public ActionResult Contacts(int id)
         {
             Permissions permission = Permissions.View_Client_Contact;
-            if (!UtilityService.HasPermission(permission))
+            if (!UserAppData.HasPermission(permission))
                 return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
             try
             {
                 GetDropDownLists();
                 Contacts contacts = _service.ClientContacts(id);
-                if (UtilityService.IsNull(contacts))
+                if (contacts.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
                 return View(contacts);
@@ -248,7 +255,7 @@ namespace SmartSave.Controllers
 
             GetDropDownLists();
             ClientContact ClientContact = await _service.FindContact(id);
-            if (UtilityService.IsNotNull(ClientContact))
+            if (ClientContact.IsNotNull())
                 return View(ClientContact);
             else
                 return RedirectToAction("Contacts", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
@@ -256,12 +263,13 @@ namespace SmartSave.Controllers
 
         [HttpPost]
         public async Task<IActionResult> ViewContact(ClientContact clientContact)
-        {            if (UtilityService.IsNotNull(clientContact))
+        {
+            if (clientContact.IsNotNull())
             {
                 GetDropDownLists();
                 int clientContactID = clientContact.ClientContactID;
                 ClientContact update = await _service.FindContact(clientContactID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(clientContact)) == 0)
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -292,12 +300,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.View_Client_Note;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 Comments comments = _service.ClientNotes(id);
-                if (UtilityService.IsNull(comments))
+                if (comments.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
                 return View(comments);
             }
@@ -336,7 +344,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 ClientNote update = await _service.FindNote(ClientNote.ClientNoteID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(ClientNote)) == 0)
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -371,12 +379,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.Client_View_Document;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 Docs document = _service.ClientDocuments(id);
-                if (UtilityService.IsNull(document))
+                if (document.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
                 return View(document);
             }
@@ -453,7 +461,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 ClientDocument update = await _service.FindDocument(ClientDocument.ClientDocumentID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(update)) == 0)
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -483,11 +491,11 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.Generate_Client_Statement;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 Statement statement = _service.ClientStatements(id);
-                if (UtilityService.IsNull(statement))
+                if (statement.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
                 var statementList = _settingService.GetStatementList().Select(t => new
                 {
@@ -611,7 +619,7 @@ namespace SmartSave.Controllers
                     To = statement.Client.EmailAddress,
                     AttachmentFromMemory = attachments
                 };
-                if (UtilityService.IsNotNull(emailTemplate))
+                if (emailTemplate.IsNotNull())
                 {
                     email.Body = emailTemplate.Body;
                     email.Subject = emailTemplate.Subject;
@@ -620,13 +628,13 @@ namespace SmartSave.Controllers
                 bool emailSuccessResult = RabbitQueue.Publish(email.ToJson());
                 if (emailSuccessResult)
                 {
-                    if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                    if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
                         emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
                 }
                 else
                 {
-                    if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                    if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
                         emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
                 }
@@ -687,7 +695,7 @@ namespace SmartSave.Controllers
                     To = statement.Client.EmailAddress,
                     AttachmentFromMemory = attachments
                 };
-                if (UtilityService.IsNotNull(emailTemplate))
+                if (emailTemplate.IsNotNull())
                 {
                     email.Body = emailTemplate.Body;
                     email.Subject = emailTemplate.Subject;
@@ -696,13 +704,13 @@ namespace SmartSave.Controllers
                 bool emailSuccessResult = RabbitQueue.Publish(email.ToJson());
                 if (emailSuccessResult)
                 {
-                    if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                    if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
                         emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
                 }
                 else
                 {
-                    if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+                    if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
                         emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
                     TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
                 }
@@ -717,7 +725,8 @@ namespace SmartSave.Controllers
             using (MemoryStream stream = new MemoryStream())
             {
                 try
-                {                    Document document = printOut.Print(statement);
+                {
+                    Document document = printOut.Print(statement);
                     // Create a renderer for the MigraDoc document.
                     PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer
                     {
@@ -780,10 +789,10 @@ namespace SmartSave.Controllers
             stream.Write(documentGenerated, 0, documentGenerated.Length);
             var document = PdfReader.Open(stream, UtilityService.StatementPasswordForAdmin.Trim(), PdfDocumentOpenMode.Modify);
 
-            if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+            if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
             {
                 const int emSize = 100;
-                string watermark = $"{UtilityService.SiteEnvironment}";
+                string watermark = $"{UserAppData.SiteEnvironment}";
                 // Create the font for drawing the watermark.
                 var font = new XFont("Times New Roman", emSize, XFontStyle.BoldItalic);
                 //this makes _mem resizeable 
@@ -868,12 +877,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.View_Client_Payments;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 Transactions transactions = _service.PaidTransactions(id);
-                if (UtilityService.IsNull(transactions))
+                if (transactions.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
                 return View(transactions);
             }
@@ -889,12 +898,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.View_Client_Outstanding_Payments;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 PendingTransactions transactions = _service.PendingTransactions(id, DateTime.Now.AddDays(30));
-                if (UtilityService.IsNull(transactions))
+                if (transactions.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
                 return View(transactions);
             }
@@ -910,12 +919,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.View_Client_Deductions;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 Deductions transactions = _service.GetClientDeductions(id);
-                if (UtilityService.IsNull(transactions))
+                if (transactions.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
                 return View(transactions);
             }
@@ -933,7 +942,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 ClientForm clientForm = await _service.FindClient(payment.ClientID);
-                if (UtilityService.IsNotNull(clientForm))
+                if (clientForm.IsNotNull())
                 {
                     if (await (_paymentService.CreatePayment(payment, (TransactionTypeList)payment.TransactionTypeID)) == 0)
                     {
@@ -959,7 +968,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ActionTransaction(int id, int transactionTypeID, int clientid)
         {
             Transaction paymentsFile = await (_paymentService.PaymentFile(id));
-            if (UtilityService.IsNotNull(paymentsFile))
+            if (paymentsFile.IsNotNull())
             {
                 if (await (_paymentService.ReversePayment(paymentsFile, (TransactionTypeList)transactionTypeID)) == 0)
                     TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -982,7 +991,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 Transaction paymentsFile = await _paymentService.PaymentFile(payment.TransactionID);
-                if (UtilityService.IsNotNull(paymentsFile))
+                if (paymentsFile.IsNotNull())
                 {
                     if (await (_paymentService.CreatePayment(paymentsFile, (TransactionTypeList)id)) == 0)
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -1002,12 +1011,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.View_Client_Medical_Details;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 Medical medical = _service.MedicalFiles(id);
-                if (UtilityService.IsNull(medical))
+                if (medical.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
                 return View(medical);
             }
@@ -1037,7 +1046,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("MedicalFiles", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
             GetDropDownLists();
             var medicalDetails = await _service.FindMedicalDetail(id);
-            if (UtilityService.IsNotNull(medicalDetails))
+            if (medicalDetails.IsNotNull())
                 return View(medicalDetails);
             else
                 return RedirectToAction("MedicalFiles", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
@@ -1050,11 +1059,10 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 ClientMedicalDetail update = await _service.FindMedicalDetail(ClientMedicalDetail.ClientMedicalID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(ClientMedicalDetail)) == 0)
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
                 }
                 return RedirectToAction("ViewMedicalDetail", new { id = ClientMedicalDetail.ClientMedicalID });
             }
@@ -1079,12 +1087,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.View_Client_Dependent;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 Dependents dependents = _service.ClientDependents(id);
-                if (UtilityService.IsNull(dependents))
+                if (dependents.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
                 return View(dependents);
             }
@@ -1112,7 +1120,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("Dependents", new { id = Clientid });
 
             ClientDependent ClientDependent = await _service.FindDependent(id);
-            if (UtilityService.IsNull(ClientDependent))
+            if (ClientDependent.IsNull())
                 return RedirectToAction("Dependents", new { id = Clientid });
             HttpContext.Session.SetString("GenderID", ClientDependent.GenderID.ToString());
             GetDropDownLists();
@@ -1126,7 +1134,7 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 ClientDependent update = await _service.FindDependent(ClientDependent.ClientDependentID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(ClientDependent)) == 0)
                     {
@@ -1162,12 +1170,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.View_Client_Product;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 ClientPackages packages = _service.GetClientProducts(id);
-                if (UtilityService.IsNull(packages))
+                if (packages.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
                 return View(packages);
@@ -1220,9 +1228,8 @@ namespace SmartSave.Controllers
             GetDropDownLists();
             if (ModelState.IsValid)
             {
-
                 ClientProduct update = await _service.FindProduct(clientProduct.ClientProductID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (!String.IsNullOrEmpty(clientProduct.DeductionAmount))
                     {
@@ -1268,12 +1275,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.View_Client_Course;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 CoachingProgrammes courses = _service.Courses(id);
-                if (UtilityService.IsNull(courses))
+                if (courses.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
                 return View(courses);
@@ -1313,10 +1320,8 @@ namespace SmartSave.Controllers
             if (id == 0)
                 return RedirectToAction("Courses", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
             ClientCourse clientCourse = await _service.FindCourse(id);
-            if (UtilityService.IsNotNull(clientCourse))
-            {
+            if (clientCourse.IsNotNull())
                 HttpContext.Session.SetString("CourseID", clientCourse.CourseID.ToString());
-            }
             GetDropDownLists();
             return View(clientCourse);
         }
@@ -1327,7 +1332,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
             ClientFee clientFee = await _service.FindClientFee(id);
             GetDropDownLists();
-            if (UtilityService.IsNotNull(clientFee))
+            if (clientFee.IsNotNull())
                 return View(clientFee);
             return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
         }
@@ -1336,7 +1341,7 @@ namespace SmartSave.Controllers
         public async Task<IActionResult> ClientFeePayment(ClientFee clientFee)
         {
             ClientFee update = await _service.FindClientFee(clientFee.ClientFeeID);
-            if (UtilityService.IsNotNull(update))
+            if (update.IsNotNull())
             {
                 clientFee.Amount = UtilityService.GetDecimalAmount(clientFee.InputAmount);
                 int result = await _service.PayFee(clientFee);
@@ -1358,7 +1363,7 @@ namespace SmartSave.Controllers
                 return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
             ClientFee clientFee = await _service.FindClientFee(id);
             GetDropDownLists();
-            if (UtilityService.IsNotNull(clientFee))
+            if (clientFee.IsNotNull())
                 return View(clientFee);
             return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
         }
@@ -1383,8 +1388,7 @@ namespace SmartSave.Controllers
             var client = _service.FindClient(clientID).Result;
             result.Client = client;
             var courseBreakDown = _settingService.GetCourseBreakDown(courseID).ToList();
-
-            if (UtilityService.IsNotNull(courseBreakDown))
+            if (!courseBreakDown.ListIsEmpty())
             {
                 var clientSessions = new HashSet<int>(_settingService.GetUserAttendedSessions(clientID, courseID)?.Select(c => c.CourseSessionID));
                 var courseList = new List<CourseView>();
@@ -1431,12 +1435,11 @@ namespace SmartSave.Controllers
             if (ModelState.IsValid)
             {
                 ClientCourse update = await _service.FindCourse(clientCourse.ClientCourseID);
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(clientCourse)) == 0)
                     {
                         TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-
                     }
                 }
                 return RedirectToAction("ViewClientCourse", new { id = clientCourse.ClientCourseID });
@@ -1472,12 +1475,12 @@ namespace SmartSave.Controllers
             try
             {
                 Permissions permission = Permissions.Generate_Client_Statement;
-                if (!UtilityService.HasPermission(permission))
+                if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
                 Register register = _service.AttendanceRegisters(id);
-                if (UtilityService.IsNull(register))
+                if (register.IsNull())
                     return RedirectToAction("ViewClient", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
                 return View(register);
             }
@@ -1504,7 +1507,7 @@ namespace SmartSave.Controllers
             if (clientID > 0)
             {
                 defaultCompany = _service.GetClientCompany(clientID).Result;
-                if (UtilityService.IsNull(defaultCompany))
+                if (defaultCompany.IsNull())
                     defaultCompany = _settingService.FindDefaultCompany();
             }
             else
@@ -1518,7 +1521,7 @@ namespace SmartSave.Controllers
                     t.Name,
                 }).OrderBy(t => t.Name);
 
-                if (UtilityService.IsNull(defaultCompany))
+                if (defaultCompany.IsNull())
                     companyList = new SelectList(companies, "CompanyID", "Name");
                 else
                     companyList = new SelectList(companies, "CompanyID", "Name", defaultCompany.CompanyID);

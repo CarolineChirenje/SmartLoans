@@ -38,12 +38,12 @@ namespace SmartSave.Controllers
         {
             try
             {
-                if (UtilityService.UserType == (int)TypeOfUser.Employee)
+                if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employee)
                     return RedirectToAction("Dashboard", "Home");
                 if (id > 0)
                 {
                     Permissions permission = Permissions.View_Konapo_Fund;
-                    if (!UtilityService.HasPermission(permission))
+                    if (!UserAppData.HasPermission(permission))
                         return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
                     List<KonapoFund> funds = _service.GetClientKonapoFunds(id).Result;
                     return View(funds);
@@ -52,13 +52,9 @@ namespace SmartSave.Controllers
                 {
                     List<KonapoFund> funds = _service.GetKonapoFunds(refNum, newfundsOnly).Result;
                     Permissions permission = Permissions.View_Konapo_Fund;
-                    if (!UtilityService.HasPermission(permission))
+                    if (!UserAppData.HasPermission(permission))
                         return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
-
-                    //if (UtilityService.IsNotNull(funds) && funds.Count == 1)
-                    //    return RedirectToAction("ViewKonapoFund", new { id = Convert.ToInt32(funds.FirstOrDefault().KonapoFundID) });
-
-                    return View(funds);
+                                            return View(funds);
                 }
             }
             catch (Exception ex)
@@ -121,7 +117,7 @@ namespace SmartSave.Controllers
         {
 
             KonapoFund update = await (_service.FindKonapoFund(clientKonapoFundCalculation.KonapoFundID));
-            if (UtilityService.IsNotNull(update))
+            if (update.IsNotNull())
             {
                 KonapoFund kfund = new KonapoFund
                 {
@@ -161,7 +157,7 @@ namespace SmartSave.Controllers
             {
                 PopulateDropDownList();
                 KonapoFundCTI update = await (_service.FindKonapoFundCTI(KonapoFund.KonapoFundCTIID));
-                if (UtilityService.IsNotNull(update))
+                if (update.IsNotNull())
                 {
                     if (await (_service.Update(KonapoFund)) == 0)
                         TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
@@ -261,7 +257,7 @@ namespace SmartSave.Controllers
                 {
 
                     KonapoFundReport report = _service.FindKonapoReport(id).Result;
-                    if (UtilityService.IsNotNull(report))
+                    if (report.IsNotNull())
                     {
                         string filename = report.FileName;
                         byte[] pdfFile = report.Report;
@@ -332,10 +328,10 @@ namespace SmartSave.Controllers
             stream.Write(documentGenerated, 0, documentGenerated.Length);
             var document = PdfReader.Open(stream, UtilityService.StatementPasswordForAdmin.Trim(), PdfDocumentOpenMode.Modify);
 
-            if (UtilityService.SiteEnvironment != SiteEnvironment.Production)
+            if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
             {
                 const int emSize = 100;
-                string watermark = $"{UtilityService.SiteEnvironment}";
+                string watermark = $"{UserAppData.SiteEnvironment}";
                 // Create the font for drawing the watermark.
                 var font = new XFont("Times New Roman", emSize, XFontStyle.BoldItalic);
                 //this makes _mem resizeable 

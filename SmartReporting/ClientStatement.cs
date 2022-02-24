@@ -1,6 +1,7 @@
 ﻿using MigraDocCore.DocumentObjectModel;
 using MigraDocCore.DocumentObjectModel.Shapes;
 using MigraDocCore.DocumentObjectModel.Tables;
+using SmartExtensions;
 using SmartHelper;
 using SmartInterfaces;
 using SmartLog;
@@ -193,7 +194,7 @@ namespace SmartReporting
                 if (statement == Statements.Product_Based_Statement)
                 {
                     columnName = "Product";
-                    columnValue = UtilityService.IsNull(_statement.Product) ? " All " : _statement.Product.Name;
+                    columnValue = _statement.Product.IsNull() ? " All " : _statement.Product.Name;
                 }
                 else
                 {

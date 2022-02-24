@@ -45,7 +45,7 @@
                                         string activateStatus = UtilityService.ShowActiveAction(@item.IsActive);
 
                                     }
-                                    @if (UtilityService.HasPermission(Permissions.View_Transaction_Type))
+                                    @if (UserAppData.HasPermission(Permissions.View_Transaction_Type))
                                     {
                                         <td><a asp-controller="TransactionType" asp-action="ViewTransactionType" asp-route-id="@item.TransactionTypeID">@item.Name</a></td>
                                     }

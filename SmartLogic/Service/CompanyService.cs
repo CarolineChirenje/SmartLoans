@@ -9,6 +9,7 @@ using SmartDomain;
 using SmartHelper;
 using SmartDataAccess;
 using SmartLog;
+using SmartExtensions;
 
 namespace SmartLogic
 {
@@ -39,7 +40,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     Company.IsActive = DatabaseAction.Deactivate != action;
-                    Company.LastChangedBy = UtilityService.CurrentUserName;
+                    Company.LastChangedBy = UserAppData.CurrentUserName;
                     Company.LastChangedDate = DateTime.Now;
                     _context.Update(Company);
                 }
@@ -53,6 +54,20 @@ namespace SmartLogic
             }
         }
 
+        public List<Company> GetActiveCompanies()
+        {
+            try
+            {
+                return _context.Companies.Where(c => c.IsActive)
+                            .AsNoTracking()
+                .ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<List<Company>> Companies()
         {
             try
@@ -74,7 +89,7 @@ namespace SmartLogic
             {
 
                 Company company = await _context.Companies.Where(b => b.Name.Equals(_company.Name)).FirstOrDefaultAsync();
-                return UtilityService.IsNotNull(company);
+                return company.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -104,7 +119,7 @@ namespace SmartLogic
             {
                 Company company = _context.Companies.Where(r => r.IsDefault)
          .AsNoTracking().FirstOrDefault();
-                if (UtilityService.IsNull(company))
+                if (company.IsNull())
                     Company.IsDefault = true;
 
                 else
@@ -124,7 +139,7 @@ namespace SmartLogic
                         }
                     }
                 }
-                Company.LastChangedBy = UtilityService.CurrentUserName;
+                Company.LastChangedBy = UserAppData.CurrentUserName;
                 Company.LastChangedDate = DateTime.Now;
                 _context.Add(Company);
                 return (await _context.SaveChangesAsync());
@@ -153,7 +168,7 @@ namespace SmartLogic
                         {
 
                             var defaultCompany = _context.Companies.Where(s => s.IsDefault && s.CompanyID != Company.CompanyID).FirstOrDefault();
-                            if (UtilityService.IsNotNull(defaultCompany))
+                            if (defaultCompany.IsNotNull())
                             {
                                 defaultCompany.IsDefault = false;
                                 _context.Update(defaultCompany);
@@ -177,7 +192,7 @@ namespace SmartLogic
                 company.Website = Company.Website;
                 company.CountryID = Company.CountryID;
                 company.Fax = Company.Fax;
-                company.LastChangedBy = UtilityService.CurrentUserName;
+                company.LastChangedBy = UserAppData.CurrentUserName;
                 company.LastChangedDate = DateTime.Now;
                 _context.Update(company);
                 return (await _context.SaveChangesAsync());

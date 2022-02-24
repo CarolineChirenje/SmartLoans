@@ -89,11 +89,11 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Assert" asp-action="Assert">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Assert))
+                @if (UserAppData.HasPermission(Permissions.Update_Assert))
                 {
                     <button type="submit" class="btn btn-info">Update</button>
                 }
-                @if (UtilityService.HasPermission(Permissions.Delete_Assert))
+                @if (UserAppData.HasPermission(Permissions.Delete_Assert))
                 {
                     <a class="btn btn-danger" asp-controller="Assert" asp-action="Delete" asp-route-id="@Model.AssertID">Delete</a>
                 }

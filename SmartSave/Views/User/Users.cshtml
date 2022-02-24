@@ -56,7 +56,7 @@
                                         string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
                                         int rolesCount = item.UserRoles.Count();
                                     }
-                                    @if (UtilityService.HasPermission(Permissions.View_User))
+                                    @if (UserAppData.HasPermission(Permissions.View_User))
                                     {
                                         <td><a asp-controller="User" asp-action="ViewUser" asp-route-id="@item.UserID">@fullName</a></td>
                                     }
@@ -69,7 +69,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.EmailAddress)</td>
                                     <td>@Html.DisplayFor(modelItem => item.UserType.Name)</td>
                                     <td>@activeStatus</td>
-                                    @if (UtilityService.HasPermission(Permissions.View_Role))
+                                    @if (UserAppData.HasPermission(Permissions.View_Role))
                                     {
                                         <td><a asp-controller="User" asp-action="UserRoles" asp-route-id="@item.UserID">@rolesCount</a></td>
                                     }
@@ -88,7 +88,7 @@
             </div>
             <!-- /.box -->
             <div class="box-footer">
-                @if (UtilityService.HasPermission(Permissions.Add_User))
+                @if (UserAppData.HasPermission(Permissions.Add_User))
                 {
                     <a class="btn btn-success pull-right" asp-controller="User" asp-action="AddUser">Add User</a><br />
                 }

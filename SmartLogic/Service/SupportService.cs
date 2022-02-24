@@ -54,7 +54,7 @@ namespace SmartLogic
             {
                 TechnicalSupport update = await FindSupport(Support.TechnicalSupportID);
                  update.Value = Support.Value;
-                update.LastChangedBy = UtilityService.CurrentUserName;
+                update.LastChangedBy = UserAppData.CurrentUserName;
                  update.LastChangedDate = DateTime.Now;
                 _context.Update(update);
                 return await _context.SaveChangesAsync();

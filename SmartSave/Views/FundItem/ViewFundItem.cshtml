@@ -75,11 +75,11 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="FundItem" asp-action="FundItems">Cancel</a>
-                @if (UtilityService.HasPermission(Permissions.Update_Fund_Item))
+                @if (UserAppData.HasPermission(Permissions.Update_Fund_Item))
                 {
                     <button type="submit" class="btn btn-info">Update</button>
                 }
-                @if (UtilityService.HasPermission(Permissions.Delete_Fund_Item))
+                @if (UserAppData.HasPermission(Permissions.Delete_Fund_Item))
                 {
                     <a class="btn btn-danger" asp-controller="FundItem" asp-action="Delete" asp-route-id="@Model.FundItemID">Delete</a>
                 }

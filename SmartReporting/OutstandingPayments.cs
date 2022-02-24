@@ -2,6 +2,7 @@
 using MigraDocCore.DocumentObjectModel.Shapes;
 using MigraDocCore.DocumentObjectModel.Tables;
 using SmartDomain;
+using SmartExtensions;
 using SmartHelper;
 using SmartInterfaces;
 using SmartLog;
@@ -128,7 +129,7 @@ namespace SmartReporting
                     tblrow3.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                     tblrow3.Cells[0].AddParagraph(_statement.Client.City);
                 }
-                if (UtilityService.IsNotNull(_statement.Client.Country))
+                if (_statement.Client.Country.IsNotNull())
                 {
 
                     Row tblrow4 = this.table.AddRow();

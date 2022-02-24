@@ -58,7 +58,7 @@
                 </div>
                 <input type="hidden" name="ClientID" value="@Model.ClientID" />
                 <div class="box-footer">
-                    @if (UtilityService.HasPermission(Permissions.Add_Client_Dependent))
+                    @if (UserAppData.HasPermission(Permissions.Add_Client_Dependent))
                     {
                         <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#DependentForm">Add Dependent</a>
                     }
@@ -124,7 +124,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    @if (UtilityService.HasPermission(Permissions.Add_Client_Dependent))
+                    @if (UserAppData.HasPermission(Permissions.Add_Client_Dependent))
                     {
                         <button type="submit" class="btn btn-primary">Save</button>
                     }

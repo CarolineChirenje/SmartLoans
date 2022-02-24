@@ -242,7 +242,7 @@ namespace SmartLogic
                 update.Name = role.Name;
                 update.Description = role.Description;
                 update.IsActive = role.IsActive;
-                update.LastChangedBy = UtilityService.CurrentUserName;
+                update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Update(update);
                 return await _context.SaveChangesAsync();
@@ -259,7 +259,7 @@ namespace SmartLogic
             {
 
                 int result = 0;
-                role.LastChangedBy = UtilityService.CurrentUserName;
+                role.LastChangedBy = UserAppData.CurrentUserName;
                 role.LastChangedDate = DateTime.Now;
                 _context.Add(role);
                 result = await _context.SaveChangesAsync();
@@ -325,7 +325,7 @@ namespace SmartLogic
                     _context.RolePermissions.Remove(permission);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
-                    permission.LastChangedBy = UtilityService.CurrentUserName;
+                    permission.LastChangedBy = UserAppData.CurrentUserName;
                     permission.LastChangedDate = DateTime.Now;
                     _context.Update(permission);
                 }
@@ -351,7 +351,7 @@ namespace SmartLogic
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
                 {
                     roles.IsActive = DatabaseAction.Deactivate != action;
-                    roles.LastChangedBy = UtilityService.CurrentUserName;
+                    roles.LastChangedBy = UserAppData.CurrentUserName;
                     roles.LastChangedDate = DateTime.Now;
                     _context.Update(roles);
                 }
@@ -420,7 +420,7 @@ namespace SmartLogic
                     {
                         PermissionID = permissionid,
                         RoleID = roleID,
-                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedBy = UserAppData.CurrentUserName,
                         LastChangedDate = DateTime.Now
                     };
                     _context.Add(rolePermissions);
@@ -471,7 +471,7 @@ namespace SmartLogic
         {
             try
             {
-                user.LastChangedBy = UtilityService.CurrentUserName;
+                user.LastChangedBy = UserAppData.CurrentUserName;
                 user.LastChangedDate = DateTime.Now;
                 _context.Add(user);
                 return (await _context.SaveChangesAsync());
@@ -553,7 +553,7 @@ namespace SmartLogic
                     {
                         MenuID = menuid,
                         RoleID = roleID,
-                        LastChangedBy = UtilityService.CurrentUserName,
+                        LastChangedBy = UserAppData.CurrentUserName,
                         LastChangedDate = DateTime.Now
                     };
                     _context.Add(roleMenu);
