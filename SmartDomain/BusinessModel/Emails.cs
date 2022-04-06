@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -35,7 +36,11 @@ namespace SmartDomain
         public string CreatedBy { get; set; }
         public int EmailStatus { get; set; }
         public DateTime? DelaySendingUntil { get; set; }
+        public bool GrantAccessToTestEnvironment { get; set; } = UserAppData.GrantAccessToTestEnvironment;
+        public string TestEmailAddress { get; set; } = UtilityService.TestEmailAddress;
+        public string AppUserEmailAddress { get; set; } = UserAppData.UserEmailAddress;
 
+        public SiteEnvironment SiteEnvironment { get; set; } = UserAppData.SiteEnvironment;
     }
 
     public class AttachmentFromMemory

@@ -25,8 +25,7 @@
                         <thead>
                             <tr>
                                 <th>Full Name</th>
-                                <th>User Name</th>
-                                <th>Email</th>
+                                                               <th>Email</th>
                                 <th>Is Active</th>
                                 <th>Roles</th>
                                 <th>Last Changed Date</th>
@@ -53,7 +52,7 @@
                                         <td>@fullName</td>
 
                                     }
-                                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                                   
                                     <td>@Html.DisplayFor(modelItem => item.EmailAddress)</td>
                                     <td>@activeStatus</td>
                                     @if (UserAppData.HasPermission(Permissions.View_User))

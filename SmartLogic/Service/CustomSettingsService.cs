@@ -16,9 +16,10 @@ namespace SmartLogic
     public class CustomSettingsService : ICustomSettingsService
     {
         private DatabaseContext _context;
-                public CustomSettingsService(DatabaseContext context) => _context = context;
+        public CustomSettingsService(DatabaseContext context) => _context = context;
         public CustomSettingsService()
-        {            if (_context == null)
+        {
+            if (_context == null)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
                 optionsBuilder.UseSqlServer(GetData.SSDBConnection);
@@ -40,7 +41,8 @@ namespace SmartLogic
             }
         }
         CustomSetting GetCustomSetting(string name)
-        {            try
+        {
+            try
             {
                 return _context.CustomSettings.
                     Include(x => x.CustomVariableType).
@@ -81,24 +83,28 @@ Include(x => x.CustomVariableType)
                 throw;
             }
         }
-              public async Task<int> Update(CustomSetting CustomSetting)
+        public async Task<int> Update(CustomSetting CustomSetting)
         {
             try
-            {                CustomSetting update = _context.CustomSettings.Where(r => r.CustomSettingID == CustomSetting.CustomSettingID)
-                               .FirstOrDefault();
-                if (update.IsNotNull()) // I'm using a extension method
+            {
+                CustomSetting update = _context.CustomSettings.Where(r => r.CustomSettingID == CustomSetting.CustomSettingID)
+                  .FirstOrDefault();
+                if (update.IsNotNull())
                 {
                     update.Value = CustomSetting.Value;
                     update.LastChangedBy = UserAppData.CurrentUserName;
                     update.LastChangedDate = DateTime.Now;
-                    // check if local is not null 
                     // detach
                     _context.Entry(update).State = EntityState.Detached;
                 }
                 // set Modified flag in your entry
                 _context.Entry(update).State = EntityState.Modified;
-                //  _context.Update(update);
-                return await _context.SaveChangesAsync();
+                int result = await _context.SaveChangesAsync();
+                if (result > 1 && update.CustomSettingID == (int)AppSetting.Site_Default_Environment)
+                    UserAppData.SiteEnvironment = UtilityService.GetEnvironment;
+
+                return result;
+
             }
             catch (Exception ex)
             {
@@ -109,7 +115,8 @@ Include(x => x.CustomVariableType)
         public async Task<int> Save(CustomSetting CustomSetting)
         {
             try
-            {                CustomSetting.IsActive = true;
+            {
+                CustomSetting.IsActive = true;
                 CustomSetting.LastChangedBy = UserAppData.CurrentUserName;
                 CustomSetting.LastChangedDate = DateTime.Now;
                 _context.Add(CustomSetting);
@@ -122,8 +129,10 @@ Include(x => x.CustomVariableType)
             }
         }
         public async Task<int> Delete(int id)
-        {            try
-            {                var CustomSetting = await _context.CustomSettings.FindAsync(id);
+        {
+            try
+            {
+                var CustomSetting = await _context.CustomSettings.FindAsync(id);
                 _context.CustomSettings.Remove(CustomSetting);
                 return (await _context.SaveChangesAsync());
             }
@@ -136,7 +145,8 @@ Include(x => x.CustomVariableType)
         public async Task<int> ActionCustomSetting(int id, DatabaseAction action)
         {
             try
-            {                CustomSetting CustomSetting = await FindCustomSetting(id);
+            {
+                CustomSetting CustomSetting = await FindCustomSetting(id);
                 if (DatabaseAction.Remove == action)
                     _context.CustomSettings.Remove(CustomSetting);
                 else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
@@ -192,7 +202,8 @@ Include(x => x.CustomVariableType)
         public string GetCustomSettingValue(AppSetting applicationSetting, string value = null, bool isGet = true)
         {
             try
-            {                            CustomSelectList customSetting;
+            {
+                CustomSelectList customSetting;
                 if (isGet)
                 {
                     customSetting = GetCustomSetting(applicationSetting);

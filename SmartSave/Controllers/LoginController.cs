@@ -75,7 +75,7 @@ namespace SmartSave.Controllers
             {
                 if (user.IsActive)
                 {
-                    UserAppData.CurrentUserName = user.UserName;
+                    UserAppData.CurrentUserName = user.EmailAddress;
                     UserAppData.UserFullName = user.UserFullName;
                     UserAppData.UserProfileImage = user.ProfileImage;
                     UserAppData.CurrentUserTypeID = user.UserTypeID;
@@ -92,7 +92,9 @@ namespace SmartSave.Controllers
                     UserAppData.IsNotAdmin = user.UserTypeID != (int)TypeOfUser.Administrator;
                     UserAppData.ApplicationName = UtilityService.GetApplicationName;
                     UserAppData.CompanyID = user.CompanyID??0;
-                    
+                    UserAppData.GrantAccessToTestEnvironment = user.GrantAccessToTestEnvironment;
+                    UserAppData.UserEmailAddress = user.EmailAddress;
+
                     GetAppData().Wait();
                     if (DateTime.Now > user.PasswordExpiryDate)
                         return RedirectToAction("PasswordReset", new { id = user.UserID });
@@ -196,7 +198,7 @@ namespace SmartSave.Controllers
         public ActionResult Authenticate(UserAuthenticate userAuthenticate)
         {
             Email email = EmailService.SendPassCode(userAuthenticate);
-            bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
+            bool emailSuccessResult = RabbitQueue.Publish(email);
             if (emailSuccessResult)
                 return RedirectToAction("Verify", "Login", userAuthenticate);
             else
@@ -284,7 +286,7 @@ namespace SmartSave.Controllers
             {
                 authenticate.PinCode = result.PinCode;
                 Email email = EmailService.SendPasswordReset(authenticate);
-                bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
+                bool emailSuccessResult = RabbitQueue.Publish(email);
                 if (emailSuccessResult)
                 {
                     TempData[MessageDisplayType.Success.ToString()] = $"We have sent an email {model.EmailAddress} with the password reset details.";
@@ -418,7 +420,7 @@ namespace SmartSave.Controllers
                 {
                     authenticate.PinCode = result.PinCode;
                     Email email = EmailService.SendAccountCreationCode(authenticate);
-                    bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
+                    bool emailSuccessResult = RabbitQueue.Publish(email);
                     if (emailSuccessResult)
                     {
                         TempData[MessageDisplayType.Success.ToString()] = $"We have sent an email to {model.EmailAddress} with further  details regarding account creation.";
@@ -494,8 +496,7 @@ namespace SmartSave.Controllers
             user.EmailAddress = client.EmailAddress;
             user.FirstName = client.FirstName;
             user.LastName = client.LastName;
-            user.UserName = client.UserName;
-            user.IDNumber = client.IDNumber;
+                       user.IDNumber = client.IDNumber;
             user.IsActive = true;
             user.UserTypeID = (int)TypeOfUser.Employee;
             int result = await _userService.Save(user, false);
@@ -508,7 +509,7 @@ namespace SmartSave.Controllers
             {
                 string password = _userService.GetCredential(result);
                 Email email = EmailService.SendAccountCreationConfirmation(client.EmailAddress, password);
-                bool emailSuccessResult = RabbitQueue.Publish(email.ToPrettyJson());
+                bool emailSuccessResult = RabbitQueue.Publish(email);
                 if (emailSuccessResult)
                 {
                     TempData[MessageDisplayType.Success.ToString()] = $"Account creation complete.We have sent an email to {client.EmailAddress} with your login credentials.";

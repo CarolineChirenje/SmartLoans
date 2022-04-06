@@ -31,5 +31,7 @@ namespace SmartHelper
         public int PrefetchCount { get; set; }
         public bool Global { get; set; }
         public bool UsePassiveDeclaration { get; set; }
+        public string SiteEnvironment { get; set; }
+    
     }
 }

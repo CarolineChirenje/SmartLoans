@@ -621,6 +621,9 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
+              "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
+                "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj"
+              },
               "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
                 "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj"
               },

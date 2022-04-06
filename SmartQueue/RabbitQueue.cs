@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SmartDomain;
 using SmartExtensions;
 using SmartHelper;
 using SmartLog;
@@ -13,7 +14,7 @@ namespace SmartAsync
     {
         private static RabbitMQConfig config = GetData.GetRabbitMQConfig();
 
-        public static bool Publish(string message, Queues queue= Queues.Emails)
+        public static bool Publish(Email email, Queues queue = Queues.Emails)
         {
             if (((object)config).IsNull())
             {
@@ -22,7 +23,8 @@ namespace SmartAsync
             }
             try
             {
-                string routingKey = string.Format("{0}_{1}", (object)UserAppData.SiteEnvironment, (object)queue);
+                string message = email.ToPrettyJson();
+                string routingKey = string.Format("{0}_{1}", email.SiteEnvironment, (object)queue);
                 using (IConnection connection = new ConnectionFactory()
                 {
                     HostName = config.EndPoint,
@@ -57,7 +59,8 @@ namespace SmartAsync
                     CustomLog.Log(LogSource.Rabbit_MQ, new Exception("No Rabbit MQ End Points Found Consume Action Failed to Complete"));
                     return response;
                 }
-                string queue1 = string.Format("{0}_{1}", (object)UserAppData.SiteEnvironment, (object)queue);
+                SiteEnvironment siteEnvironment = (SiteEnvironment)((object)UserAppData.SiteEnvironment ?? SiteEnvironment.Test);
+                string queue1 = string.Format("{0}_{1}", siteEnvironment, (object)queue);
                 using (IConnection connection = new ConnectionFactory()
                 {
                     HostName = config.EndPoint,

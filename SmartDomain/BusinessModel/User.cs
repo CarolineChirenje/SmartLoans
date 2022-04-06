@@ -38,13 +38,13 @@ namespace SmartDomain
         [Required(ErrorMessage = "This field is required.")]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
-        public string UserName { get; set; }
-
-       
+      
         public string Password { get; set; }
 
         public DateTime PasswordExpiryDate { get; set; }
         public bool IsInstructor { get; set; }
+
+        public bool GrantAccessToTestEnvironment { get; set; }
         public bool IsActive { get; set; }
         public bool CanOverrideMaintananceMode { get; set; }
         public byte[] ProfileImage { get; set; }

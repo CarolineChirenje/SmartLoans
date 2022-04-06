@@ -51,12 +51,12 @@ namespace SmartHelper
         public static SiteEnvironment GetEnvironment
         {
             get
-            {
-
-                string _result = GetData.GetSettingValue((int)AppSetting.Site_Default_Environment)?.Value;
-                int _siteEnv = 1;
+            { 
+               
+                int _siteEnv = (int)SiteEnvironment.Test;
                 try
                 {
+                    string _result = GetData.GetSettingValue((int)AppSetting.Site_Default_Environment)?.Value;
                     _siteEnv = Int32.Parse(_result, CultureInfo.InvariantCulture);
                 }
                 catch (Exception)
@@ -606,8 +606,7 @@ namespace SmartHelper
         public static string HtmlDecode(string htmlValue) => WebUtility.HtmlDecode(htmlValue);
         public static string HtmlEncode(string stringValue) => WebUtility.HtmlEncode(stringValue);
         public static bool StringParameterHasValue(string value) => !String.IsNullOrEmpty(value);
-        public static string GenerateUserName(string firstName, string LastName) => $"{firstName.Substring(0, 1).ToUpper()}{LastName}{GenerateRandomNumbers(2)}";
-        ///Generate QueryRef
+          ///Generate QueryRef
         internal static string GenerateQueryRef()
         {
             string queryRef = $"Q{DateTime.Now.Year}{ DateTime.Now.ToString("MMM").ToUpper()}{RandomAlphanumeric()}";

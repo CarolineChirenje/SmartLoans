@@ -625,7 +625,7 @@ namespace SmartSave.Controllers
                     email.Subject = emailTemplate.Subject;
                 }
                 string emailAddress = statement.Client.EmailAddress;
-                bool emailSuccessResult = RabbitQueue.Publish(email.ToJson());
+                bool emailSuccessResult = RabbitQueue.Publish(email);
                 if (emailSuccessResult)
                 {
                     if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
@@ -701,7 +701,7 @@ namespace SmartSave.Controllers
                     email.Subject = emailTemplate.Subject;
                 }
                 string emailAddress = statement.Client.EmailAddress;
-                bool emailSuccessResult = RabbitQueue.Publish(email.ToJson());
+                bool emailSuccessResult = RabbitQueue.Publish(email);
                 if (emailSuccessResult)
                 {
                     if (UserAppData.SiteEnvironment != SiteEnvironment.Production)

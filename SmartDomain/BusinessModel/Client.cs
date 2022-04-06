@@ -17,8 +17,7 @@ namespace SmartDomain
         public int ClientID { get; set; }
         public string AccountNumber { get; set; }
         public bool IsActive { get; set; }
-        public string UserName { get; set; }
-        public DateTime RegistrationDate { get; set; }
+              public DateTime RegistrationDate { get; set; }
         public int GenderID { get; set; }
         public virtual Gender Gender { get; set; }
         [ForeignKey("TitleID")]

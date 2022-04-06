@@ -9,12 +9,15 @@ namespace SmartHelper
     {
         public static string CurrentUserName { get; set; }
         public static string UserFullName { get; set; }
+        public static string UserEmailAddress { get; set; }
         public static string UserRole { get; set; }
         public static int UserRoleID { get; set; }
         public static byte[] UserProfileImage { get; set; }
         public static int CurrentUserTypeID { get; set; }
         public static bool CanOverrideMaintananceMode { get; set; }
         public static bool CanOverrideUserNotFound { get; set; }
+
+        public static bool GrantAccessToTestEnvironment { get; set; }
         public static TypeOfUser UserType { get; set; }
 
         public static Menu_Component MenuComponent { get; set; }
@@ -24,7 +27,7 @@ namespace SmartHelper
         public static string DatabaseConnection { get; set; }
         public static string Environment { get; set; }
         public static string ApplicationName { get; set; }
-                public static bool IsNotAdmin { get; set; }
+        public static bool IsNotAdmin { get; set; }
         public static int CompanyID { get; set; }
         public static SiteEnvironment SiteEnvironment { get; set; }
         

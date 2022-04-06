@@ -41,7 +41,7 @@ namespace SmartLogic
             {
 
             if (!String.IsNullOrEmpty(username))
-                id = _context.Users.FirstOrDefault(u => u.UserName.ToUpper() == username.Trim().ToUpper())?.UserID ?? 0;
+                id = _context.Users.FirstOrDefault(u => u.EmailAddress.ToUpper() == username.Trim().ToUpper())?.UserID ?? 0;
             return await _context.Users.Include(p => p.UserRoles)
                          .ThenInclude(r => r.Roles)
                          .ThenInclude(r => r.RolePermissions)
@@ -63,7 +63,7 @@ namespace SmartLogic
              if(id>0)
                     user = _context.Users.Find(id);
                else if (!String.IsNullOrEmpty(username))
-                    user = _context.Users.FirstOrDefault(u => u.UserName.ToUpper() == username.Trim().ToUpper());
+                    user = _context.Users.FirstOrDefault(u => u.EmailAddress.ToUpper() == username.Trim().ToUpper());
                 if (user.IsNotNull())
                 {
                     BasicDetail result = new BasicDetail()
@@ -95,7 +95,7 @@ namespace SmartLogic
             }
             if (!String.IsNullOrEmpty(username))
             {
-                var user = _context.Users.Where(u => u.UserName.ToUpper() == username.Trim().ToUpper()).FirstOrDefault();
+                var user = _context.Users.Where(u => u.EmailAddress.ToUpper() == username.Trim().ToUpper()).FirstOrDefault();
                 if (!user.IsNotNull())
                     return null;
                 id = user.UserID;
@@ -157,7 +157,7 @@ namespace SmartLogic
             if (result > 0)
 
                 {
-                    UserAppData.CurrentUserName = updateUser.UserName;
+                    UserAppData.CurrentUserName = updateUser.EmailAddress;
                     UserAppData.UserFullName = updateUser.UserFullName;
                     UserAppData.UserProfileImage = updateUser.ProfileImage;
                     UserAppData.CurrentUserTypeID = updateUser.UserTypeID;
@@ -185,7 +185,7 @@ namespace SmartLogic
             }
         }
 
-        public bool UserExists(string emailAddress)
+        public bool EmailExists(string emailAddress)
         {
             try
             {
@@ -207,9 +207,7 @@ namespace SmartLogic
             user.Password = Encryption.Encrypt(UtilityService.GeneratePassword);
             user.LastChangedBy = String.IsNullOrEmpty(UserAppData.CurrentUserName) ? "System" : UserAppData.CurrentUserName;
             user.LastChangedDate = DateTime.Now;
-            // user.UserTypeID = (int)TypeOfUser.Administrator;
-            if (generateUserName)
-                user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
+           
             user.PasswordExpiryDate = DateTime.Now;
             _context.Add(user);
             await _context.SaveChangesAsync();

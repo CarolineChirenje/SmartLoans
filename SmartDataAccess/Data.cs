@@ -914,15 +914,15 @@ namespace SmartDataAccess
                             UserTypeID = (int)TypeOfUser.Administrator,
                             LastChangedDate = DateTime.Now,
                             EmailAddress = "carochire@gmail.com",
-                            Password = Encryption.Encrypt(UtilityService.GetMessageToDisplay("ADMIN")),
+                            Password = Encryption.Encrypt("admin"),
                             IsActive = true,
-                            UserName = "SuperUser",
                             FirstName = "Wadzanai Caroline",
                             LastName = "Chirenje",
                             IDNumber="8904161200188",
                             LastChangedBy = "SuperUser",
                             PasswordExpiryDate=DateTime.MinValue,
-                            CanOverrideMaintananceMode=true
+                            CanOverrideMaintananceMode=true,
+                            GrantAccessToTestEnvironment=true
                         },
                          new User()
                          {
@@ -930,12 +930,11 @@ namespace SmartDataAccess
                              UserTypeID = (int)TypeOfUser.Employer,
                              LastChangedDate = DateTime.Now,
                              EmailAddress = "carochire89@gmail.com",
-                             Password = Encryption.Encrypt(UtilityService.GetMessageToDisplay("ADMIN")),
+                             Password = Encryption.Encrypt("admin"),
                              IsActive = true,
-                             UserName = "Employer",
-                             FirstName = "John",
-                             LastName = "Jarani",
-                             IDNumber="0000000000000",
+                                                       FirstName = "Elroitec",
+                             LastName = "Employer",
+                             IDNumber="201703232441609",
                              LastChangedBy = "SuperUser",
                              PasswordExpiryDate=DateTime.MinValue
                          },
@@ -945,14 +944,13 @@ namespace SmartDataAccess
                              UserTypeID = (int)TypeOfUser.Employee,
                              LastChangedDate = DateTime.Now,
                              EmailAddress = "carolinesolutions89@gmail.com",
-                             Password = Encryption.Encrypt(UtilityService.GetMessageToDisplay("ADMIN")),
+                             Password = Encryption.Encrypt("admin"),
                              IsActive = true,
-                             UserName = "Employee",
-                             FirstName = "Ndini",
-                             LastName = "Ndadaro",
-                             IDNumber="1111111111111",
+                             FirstName = "Elroitec",
+                             LastName = "Employee",
+                             IDNumber="20200716041609",
                              LastChangedBy = "SuperUser",
-                              PasswordExpiryDate=DateTime.MinValue
+                             PasswordExpiryDate=DateTime.MinValue
                    },
             };
             return users.ToArray();

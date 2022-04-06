@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SmartDomain\SmartDomain.csproj" />
     <ProjectReference Include="..\SmartErrorLog\SmartLog.csproj" />
     <ProjectReference Include="..\SmartExtensions\SmartExtensions.csproj" />
     <ProjectReference Include="..\SmartHelper\SmartHelper.csproj" />

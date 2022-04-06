@@ -9,6 +9,7 @@
       "SmartAsync/1.0.0": {
         "dependencies": {
           "RabbitMQ.Client": "6.2.2",
+          "SmartDomain": "1.0.0",
           "SmartExtensions": "1.0.0",
           "SmartHelper": "1.0.0",
           "SmartLog": "1.0.0"
@@ -312,6 +313,16 @@
           }
         }
       },
+      "SmartDomain/1.0.0": {
+        "dependencies": {
+          "SmartHelper": "1.0.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
+          "System.Text.Encodings.Web": "6.0.0"
+        },
+        "runtime": {
+          "SmartDomain.dll": {}
+        }
+      },
       "SmartExtensions/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.1",
@@ -556,6 +567,11 @@
       "sha512": "sha512-6akRtHK/wab3246t4p5v3HQrtQk8LboOt5T4dtpNgsp3zvDeM4/Gx8V12t0h+c/W9/enUrilk8n6EQqdQorZAA==",
       "path": "system.threading.channels/4.7.1",
       "hashPath": "system.threading.channels.4.7.1.nupkg.sha512"
+    },
+    "SmartDomain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "SmartExtensions/1.0.0": {
       "type": "project",

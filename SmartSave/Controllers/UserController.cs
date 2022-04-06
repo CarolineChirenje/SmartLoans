@@ -65,12 +65,12 @@ namespace SmartSave.Controllers
             if (UtilityService.StringParameterHasValue(String.Concat(user.FirstName, ' ', user.LastName)))
             {
 
-                if (_service.UserExists(user.EmailAddress))
+                if (_service.EmailExists(user.EmailAddress))
                 {
                     TempData[MessageDisplayType.Error.ToString()] = $"A User Account with the same email address {user.EmailAddress} already exists";
                     return View(user);
                 }
-                user.UserName = UtilityService.GenerateUserName(user.FirstName, user.LastName);
+               
                 // To convert the  uploaded Photo as Byte Array before save to DB    
                 if (ProfileImage != null)
                 {
@@ -113,7 +113,7 @@ namespace SmartSave.Controllers
                         email.Body = UtilityService.HtmlDecode(_emailBody);
                         email.Subject = $"New Account Created - {UserAppData.ApplicationName}";
                     }
-                    RabbitQueue.Publish(email.ToJson());
+                    RabbitQueue.Publish(email);
                     return RedirectToAction("ViewUser", new { id = result });
                 }
             }

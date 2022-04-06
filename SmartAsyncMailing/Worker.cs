@@ -24,23 +24,28 @@ namespace SmartAsyncMailing
         private ConnectionFactory _connectionFactory;
         private IConnection _connection;
         private IModel _channel;
-        private string QueueName = $"{(object)UserAppData.SiteEnvironment}_{(object)Queues.Emails.ToString()}";
+        private string QueueName=$"Test_{Queues.Emails}";
         private readonly IMailService _mailer;
-
+        private RabbitMQConfig rabbitMqConfig = GetData.GetRabbitMQConfig();
+        private string siteEnvironment;
         public Worker(ILogger<Worker> logger, IMailService mailer)
         {
             this._logger = logger;
             this._mailer = mailer;
+            this.siteEnvironment = SiteEnvironment.Test.ToString();
+            
         }
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            RabbitMQConfig rabbitMqConfig = GetData.GetRabbitMQConfig();
+             
             if (((object)rabbitMqConfig).IsNull())
             {
                 CustomLog.Log(LogSource.Rabbit_MQ, new Exception("No Rabbit MQ End Points Found Consume Action Failed to Complete"));
                 return base.StartAsync(cancellationToken);
             }
+             siteEnvironment = rabbitMqConfig.SiteEnvironment.IsNull() ? SiteEnvironment.Test.ToString() : rabbitMqConfig.SiteEnvironment;
+            this.QueueName = $"{siteEnvironment}_{Queues.Emails}";
             this._connectionFactory = new ConnectionFactory()
             {
                 HostName = rabbitMqConfig.EndPoint,
@@ -110,10 +115,16 @@ namespace SmartAsyncMailing
                 {
                     this._logger.LogInformation(string.Format("Received message from Rabbit Queue [{0}] for processing at: {1}", (object)this.QueueName, (object)DateTimeOffset.Now));
                     Email email = message.FromJson<Email>();
-                    this._logger.LogInformation(string.Format("Processing Email [{0}]: {1}", (object)UserAppData.SiteEnvironment, (object)DateTimeOffset.Now));
-                    if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
-                        email.To = UtilityService.TestEmailAddress;
-                    bool flag =  _mailer.SendEmail(email);
+                    this._logger.LogInformation(string.Format("Processing Email [{0}]: {1}", siteEnvironment, (object)DateTimeOffset.Now));
+                    
+                    if (!siteEnvironment.Equals(SiteEnvironment.Production.ToString()))
+                    {
+                        string testEmailAddress = email.TestEmailAddress;
+                        string appUserEmailAddress = email.AppUserEmailAddress;
+                        string testEmail = email.GrantAccessToTestEnvironment ? (String.IsNullOrEmpty(appUserEmailAddress) ? testEmailAddress : appUserEmailAddress) : testEmailAddress;
+                        email.To = testEmail;
+                    }
+                    bool flag = _mailer.SendEmail(email);
                     this._logger.LogInformation(string.Format("Send Email to {0} at: {1} : Status {2}", (object)email.To, (object)DateTimeOffset.Now, (object)flag));
                 }
                 else

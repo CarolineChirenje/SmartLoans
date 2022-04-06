@@ -250,8 +250,6 @@ namespace SmartLogic
                     client.AccountNumber = NewClientAccountNumber;
                 else
                     client.AccountNumber = clientForm.AccountNumber;
-
-                client.UserName = UtilityService.GenerateUserName(clientForm.FirstName, clientForm.LastName);
                 client.LastChangedBy = UserAppData.CurrentUserName;
                 client.LastChangedDate = DateTime.Now;
                 client.RegistrationDate = DateTime.Now;
@@ -2250,8 +2248,7 @@ namespace SmartLogic
                     DepartmentID = result.DepartmentID,
                     IsActive = result.IsActive,
                     RegistrationDate = result.RegistrationDate,
-                    UserName = result.UserName,
-                    LastChangedBy = result.LastChangedBy,
+                                        LastChangedBy = result.LastChangedBy,
                     LastChangedDate = result.LastChangedDate,
                     IsJointAccount = result.ClientAccountTypeID == (int)Client_AccountType.Joint
                 };
@@ -2294,8 +2291,7 @@ namespace SmartLogic
                     LastName = result.LastName,
                     IDNumber = result.IDNumber,
                     EmailAddress = result.EmailAddress,
-                    UserName = result.UserName,
-                    AccountNumber = result.AccountNumber
+                                       AccountNumber = result.AccountNumber
                 };
                 return clientPeek;
             }

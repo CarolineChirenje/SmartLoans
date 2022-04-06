@@ -406,6 +406,21 @@
           "lib/netcoreapp3.0/System.Threading.Channels.dll": {}
         }
       },
+      "SmartDomain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "SmartHelper": "1.0.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
+          "System.Text.Encodings.Web": "6.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SmartDomain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartDomain.dll": {}
+        }
+      },
       "SmartExtensions/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -1305,6 +1320,11 @@
         "version.txt"
       ]
     },
+    "SmartDomain/1.0.0": {
+      "type": "project",
+      "path": "../SmartDomain/SmartDomain.csproj",
+      "msbuildProject": "../SmartDomain/SmartDomain.csproj"
+    },
     "SmartExtensions/1.0.0": {
       "type": "project",
       "path": "../SmartExtensions/SmartExtensions.csproj",
@@ -1324,6 +1344,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "RabbitMQ.Client >= 6.2.2",
+      "SmartDomain >= 1.0.0",
       "SmartExtensions >= 1.0.0",
       "SmartHelper >= 1.0.0",
       "SmartLog >= 1.0.0"
@@ -1356,6 +1377,9 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
+            "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
+              "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj"
+            },
             "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
               "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj"
             },
