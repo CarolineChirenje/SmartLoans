@@ -19,7 +19,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Application_Name,
                     Name = AppSetting.Application_Name.ToString().Replace("_", " "),
-                    Value="Smart Save",
+                    Value="Smart Loans",
                     Description="Displayed as the Application Name",
                     CustomVariableTypeID=(int)VariableType.String,
                    IsActive = true,
@@ -31,7 +31,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Application_Name_Prefix,
                     Name = AppSetting.Application_Name_Prefix.ToString().Replace("_", " "),
-                    Value="SS",
+                    Value="SL",
                     Description="Short Name for Application",
                     CustomVariableTypeID=(int)VariableType.String,
                                      IsActive = true,
@@ -66,7 +66,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Account_Number_Prefix,
                     Name = AppSetting.Account_Number_Prefix.ToString().Replace("_", " "),
-                    Value="SS",
+                    Value="SL",
                     Description="Account Number Prefix if Any",
                     CustomVariableTypeID=(int)VariableType.String,
                                      IsActive = true,
@@ -301,7 +301,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Mail_Default_Subject,
                     Name = AppSetting.Mail_Default_Subject.ToString().Replace("_", " "),
-                    Value=$"Smart Save  Admin",
+                    Value=$"Smart Loan  Admin",
                     Description="Default Email Subject Name Used By Auto-Generated Emails",
                     CustomVariableTypeID=(int)VariableType.String,
                                      IsActive = true,
@@ -337,7 +337,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Site_URL,
                     Name = AppSetting.Site_URL.ToString().Replace("_", " "),
-                    Value=@"http://smartwealth.elroitec.com/",
+                    Value=@"http://smartloan.elroitec.com/",
                     Description="Site URL",
                     CustomVariableTypeID=(int)VariableType.String,
                     IsActive = true,
@@ -870,7 +870,7 @@ namespace SmartDataAccess
                 new Company()
                 {
                     CompanyID = 1,
-                    Name = String.IsNullOrEmpty(UserAppData.ApplicationName) ? "Smart Save" : UserAppData.ApplicationName,
+                    Name = String.IsNullOrEmpty(UserAppData.ApplicationName) ? "Smart Loan" : UserAppData.ApplicationName,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser",
                     IsActive = true,

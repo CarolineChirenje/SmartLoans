@@ -1051,11 +1051,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj",
+      "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj",
       "projectName": "SmartDomain",
-      "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj",
+      "projectPath": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj",
       "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-      "outputPath": "C:\\DEV\\SmartWealth\\SmartDomain\\obj\\",
+      "outputPath": "C:\\DEV\\SmartLoans\\SmartDomain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1072,8 +1072,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
+            "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj"
             }
           }
         }

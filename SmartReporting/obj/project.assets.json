@@ -3292,11 +3292,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj",
+      "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartReporting\\SmartReporting.csproj",
       "projectName": "SmartReporting",
-      "projectPath": "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj",
+      "projectPath": "C:\\DEV\\SmartLoans\\SmartReporting\\SmartReporting.csproj",
       "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-      "outputPath": "C:\\DEV\\SmartWealth\\SmartReporting\\obj\\",
+      "outputPath": "C:\\DEV\\SmartLoans\\SmartReporting\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3313,17 +3313,17 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj"
+            "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj"
             },
-            "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj"
+            "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj"
             },
-            "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj"
+            "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj"
             },
-            "C:\\DEV\\SmartWealth\\SmartInterfaces\\SmartInterfaces.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartInterfaces\\SmartInterfaces.csproj"
+            "C:\\DEV\\SmartLoans\\SmartInterfaces\\SmartInterfaces.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartInterfaces\\SmartInterfaces.csproj"
             }
           }
         }

@@ -11,15 +11,11 @@ namespace SmartDomain
     public class ProductHistory : ChangeAudit
     {
         [Key]
-             public int ProductHistoryID { get; set; }
+        public int ProductHistoryID { get; set; }
         public int ProductID { get; set; }
         public virtual Product Product { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal DeductionPercentage { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal IncreamentPercentage { get; set; }
-
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal TransactionalLevy { get; set; }
+        public int ProductComputationID { get; set; }
+        public bool IsLegibleForPenalties { get; set; }
+        public int? CurrencyID { get; set; }
     }
 }

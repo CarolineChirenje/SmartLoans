@@ -1,6 +1,6 @@
 #!/bin/bash
 
-nohup dotnet /home/elroitecProjects/REM/SmartREM.dll > /home/elroitecProjects/REM/SmartREM.log &
+nohup dotnet /home/elroitecProjects/SmartLoans/Test/SmartLoan.dll > /home/elroitecProjects/SmartLoans/Test/SmartLoan.log &
 
 exit
 

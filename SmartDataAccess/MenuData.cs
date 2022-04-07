@@ -28,8 +28,8 @@ namespace SmartDataAccess
                 },
                 new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Employees,
-                    DisplayName = MenuGroups.Employees.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Clients,
+                    DisplayName = MenuGroups.Clients.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-users"),
@@ -40,8 +40,8 @@ namespace SmartDataAccess
                 },
                    new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Core_Services,
-                    DisplayName = MenuGroups.Core_Services.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Transactions,
+                    DisplayName = MenuGroups.Transactions.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-money"),
@@ -77,8 +77,8 @@ namespace SmartDataAccess
                 },
                   new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Programmes,
-                    DisplayName = MenuGroups.Programmes.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Products,
+                    DisplayName = MenuGroups.Products.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-graduation-cap"),
@@ -88,8 +88,8 @@ namespace SmartDataAccess
                 },
                     new MenuGroup()
                 {
-                    MenuGroupID = (int)MenuGroups.Konapo,
-                    DisplayName = MenuGroups.Konapo.ToString().Replace("_", " "),
+                    MenuGroupID = (int)MenuGroups.Loans,
+                    DisplayName = MenuGroups.Loans.ToString().Replace("_", " "),
                     IsActive = true,
                     IsActiveMenu = false,
                     CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
@@ -147,8 +147,8 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 1,
-                    MenuGroupID = (int)MenuGroups.Employees,
-                    DisplayName = "Employees",
+                    MenuGroupID = (int)MenuGroups.Clients,
+                    DisplayName = "Clients",
                     ControllerName = "Client",
                     ActionName = "Clients",
                     IsActive = true,
@@ -161,7 +161,7 @@ namespace SmartDataAccess
                  new Menu()
                 {
                     MenuID = 2,
-                    MenuGroupID = (int)MenuGroups.Employees,
+                    MenuGroupID = (int)MenuGroups.Clients,
                     DisplayName = "My Account",
                     ControllerName = "Client",
                     ActionName = "MyAccount",
@@ -175,8 +175,8 @@ namespace SmartDataAccess
                    new Menu()
                 {
                     MenuID =3,
-                    MenuGroupID = (int)MenuGroups.Konapo,
-                    DisplayName = "Konapo Fund",
+                    MenuGroupID = (int)MenuGroups.Loans,
+                    DisplayName = "Loans",
                     ControllerName = "KonapoFund",
                     ActionName = "KonapoFunds",
                     IsActive = true,
@@ -189,7 +189,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 4,
-                    MenuGroupID = (int)MenuGroups.Core_Services,
+                    MenuGroupID = (int)MenuGroups.Transactions,
                     DisplayName = "Transactions",
                     ControllerName = "Transactions",
                     ActionName = "Transactions",
@@ -218,7 +218,7 @@ namespace SmartDataAccess
                 new Menu()
                 {
                     MenuID = 6,
-                    MenuGroupID = (int)MenuGroups.Core_Services,
+                    MenuGroupID = (int)MenuGroups.Products,
                     DisplayName = "Products",
                     ControllerName = "Product",
                     ActionName = "Product",
@@ -229,20 +229,7 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
                 },
 
-                new Menu()
-                {
-                    MenuID = 7,
-                    MenuGroupID = (int)MenuGroups.Programmes,
-                    DisplayName = "Coaching Programmes",
-                    ControllerName = "Courses",
-                    ActionName = "Courses",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-university"),
-                    OrderNo = 7,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                },
+             
 
                   new Menu()
                 {

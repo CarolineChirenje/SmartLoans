@@ -11,6 +11,6 @@ namespace SmartLogic
         int GetNewKhonapoFunds();
         int GetProductPayments();
         int GetOpenNotices();
-        int GetNewCourses();
+        //int GetNewCourses();
     }
 }

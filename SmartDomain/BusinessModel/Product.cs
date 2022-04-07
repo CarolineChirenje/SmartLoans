@@ -14,39 +14,21 @@ namespace SmartDomain
         public int ProductID { get; set; }
         public string Name { get; set; }
         public string ProductCode { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal DeductionPercentage { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal IncreamentPercentage { get; set; }
-
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal TransactionalFee { get; set; }
+        public bool IsLegibleForPenalties { get; set; }
         public bool IsActive { get; set; }
+
+        public int ProductComputationID { get; set; }
+        public virtual ProductComputation ProductComputation { get; set; }
         public int CompanyID { get; set; }
         public virtual Company Company { get; set; }
         public int CountryID { get; set; }
         public virtual Country Country { get; set; }
-        public virtual List<Client> Clients { get; set; }
-        public virtual List<ProductAssert> ProductAsserts { get; set; }
-        public virtual List<ProductAssertCategory> ProductAssertCategories { get; set; }
+        public int? CurrencyID { get; set; }
+        public virtual Currency Currency { get; set; }
+        public virtual List<Loan> Loans { get; set; }
         public virtual List<ProductFee> ProductFees { get; set; }
-        [NotMapped]
-        public int ClientCount { get; set; }
-
-        [NotMapped]
-        public int FrequencyID { get; set; }
-
-
-        [NotMapped]
-        public string increasePercentage { get; set; }
-
-        [NotMapped]
-        public string deductPercentage { get; set; }
-
-        [NotMapped]
-        public string transactionalLevy { get; set; }
-
-
+        
+        
 
 
 

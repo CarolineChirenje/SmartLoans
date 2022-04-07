@@ -272,23 +272,7 @@ namespace SmartLogic
                 throw;
             }
         }
-        public List<Course> GetActiveCourseList()
-
-        {
-            try
-            {
-
-                return _context.Courses.Where(p => p.IsActive)
-      .AsNoTracking()
-     .ToList();
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-
+      
 
         public List<Gender> GenderList()
         {
@@ -304,21 +288,7 @@ namespace SmartLogic
             }
         }
 
-        public List<Course> GetCourseList()
-        {
-            try
-            {
-
-
-                return _context.Courses.Where(x => x.IsActive).ToList();
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-
+     
         public List<Country> GetCountryList()
         {
             try
@@ -362,9 +332,7 @@ namespace SmartLogic
                 throw;
             }
         }
-        public List<User> GetInstructors() => _context.Users
-        .Include(ur => ur.UserRoles).Where(x => x.IsActive && x.IsInstructor).ToList();
-
+      
         public Custom DocumentFormatMatch(string documentFormat, int DocumentTypeID)
         {
             try
@@ -388,151 +356,11 @@ namespace SmartLogic
                 throw;
             }
         }
-        public List<CourseTopic> GetCourseOutlines(int courseID)
-        {
-            try
-            {
-
-                return _context.CourseTopics.Include(c=>c.CourseSessions)
-               .Where(c => c.CourseID == courseID).ToList();
-
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-
-        public List<CourseBreakDown> GetCourseBreakDown(int courseID)
-        {
-            try
-            {
-
-              var result=  _context.CourseTopics.Include(c => c.CourseSessions)
-                   .Where(c => c.CourseID == courseID).Select(c=> new CourseBreakDown { CourseName=c.Name , CourseSessions=c.CourseSessions.ToList() }).ToList();
-                return result;
-
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-        public List<CourseSession> GetUserAttendedSessions(int clientid, int courseid)
-        {
-            try
-            {
-
-                var clientCourse = _context.ClientCourses.Where(c => c.ClientID == clientid && c.CourseID == courseid).FirstOrDefault();
-                int _ClientCourseID = 0;
-                if (clientCourse.IsNotNull())
-                    _ClientCourseID = clientCourse.ClientCourseID;
-
-                IEnumerable<int> courseSessions = from c in _context.ClientTranscripts
-                                                  where c.ClientCourseID == _ClientCourseID
-                                                  select c.CourseSessionID;
-                return _context.CourseSessions
-               .Where(c => courseSessions.Contains(c.CourseSessionID)).ToList();
-
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-       public decimal GetTransactionFee(int productID)
-        {
-            try
-            {
-                decimal result = 0M;
-                var fee = _context.Products.Where(p => p.ProductID == productID).FirstOrDefault()?.TransactionalFee;
-                                
-                try
-                {
-                  if(fee.HasValue)
-                    result = Convert.ToDecimal(fee.Value);
-                }
-                catch 
-                {
-
-                }
-               
-                return result;
-
-
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-        public List<Assert> GetAssertsLinkedToProduct(int productID)
-        {
-            try
-            {
-
-                IEnumerable<int> asserts = from a in _context.ProductAsserts
-                                           where a.ProductID == productID
-                                           select a.AssertID;
-
-                return _context.Asserts.Where(a => asserts.Contains(a.AssertID) && a.IsActive).ToList();
-
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-
-
-        public List<AssertCategory> GetAssertCategory(int assertID)
-        {
-            try
-            {
-
-                var categories = _context.AssertCategories.Where(a => a.AssertID == assertID && a.IsActive).AsNoTracking().ToList();
-                return categories;
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-
-
-        public List<Assert> GetAssertsList()
-        {
-            try
-            {
-                return _context.Asserts.ToList();
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
-
-        public List<AssertCategory> GetAssertCategoryList()
-        {
-            try
-            {
-
-                var categories = _context.AssertCategories.AsNoTracking().ToList();
-                return categories;
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
+     
+       
+      
+     
+      
         public List<Titles> GetTitles()
         {
             try
@@ -564,21 +392,6 @@ namespace SmartLogic
             }
         }
 
-        public List<CourseIntake> GetCourseIntakes(bool activeOnly = false)
-        {
-            try
-            {
-
-                var courseIntakes = _context.CourseIntakes.AsNoTracking().ToList();
-                if (activeOnly)
-                    courseIntakes = courseIntakes.Where(ci => ci.IsActive).ToList();
-                return courseIntakes;
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
+      
     }
 }

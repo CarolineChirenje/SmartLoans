@@ -1,0 +1,47 @@
+@using SmartLoan;
+@using SmartHelper;
+@using Microsoft.AspNetCore.Http
+
+<ul class="sidebar-menu" data-widget="tree">
+    <li class="header">@UserAppData.ApplicationName</li>
+    <li class="nav-item">
+    <a asp-controller="Home" asp-action="Dashboard">
+        <i class="fa fa-umbrella nav-icon" aria-hidden="true"></i>
+        Dashboard</a>
+    </li>
+  
+    @{
+        int khonapoID = 0;
+        try
+        {
+            khonapoID = Convert.ToInt32(Context.Session.GetString("KonapoFundID"));
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    @foreach (var menu in Model)
+    {
+<li class="nav-item">
+    @if (menu.LinkRequiresID)
+    {
+        <a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName" asp-route-id="@khonapoID">
+            <i class="@UtilityService.HtmlEncode(menu.CSSClass) nav-icon" aria-hidden="true"></i>
+            @menu.DisplayName
+        </a>
+    }
+    else
+    {
+        <a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName">
+            <i class="@UtilityService.HtmlEncode(menu.CSSClass) nav-icon" aria-hidden="true"></i>
+            @menu.DisplayName
+        </a>
+    }
+</li>
+    }
+
+</ul>
+
+

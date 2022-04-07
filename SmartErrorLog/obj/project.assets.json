@@ -1051,11 +1051,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
+      "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj",
       "projectName": "SmartLog",
-      "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
+      "projectPath": "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj",
       "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-      "outputPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\obj\\",
+      "outputPath": "C:\\DEV\\SmartLoans\\SmartErrorLog\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1072,8 +1072,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
+            "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj"
             }
           }
         }

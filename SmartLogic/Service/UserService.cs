@@ -140,8 +140,7 @@ namespace SmartLogic
             string oldIDNumber = updateUser.IDNumber;
             string oldEmailAddress = updateUser.EmailAddress;
             updateUser.ProfileImage = user.ProfileImage;
-            updateUser.IsInstructor = user.IsInstructor;
-            updateUser.FirstName = user.FirstName;
+                       updateUser.FirstName = user.FirstName;
             updateUser.LastName = user.LastName;
             updateUser.IsActive = user.IsActive;
             updateUser.UserTypeID = user.UserTypeID;

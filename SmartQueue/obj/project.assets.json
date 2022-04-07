@@ -1356,11 +1356,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj",
+      "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartQueue\\SmartAsync.csproj",
       "projectName": "SmartAsync",
-      "projectPath": "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj",
+      "projectPath": "C:\\DEV\\SmartLoans\\SmartQueue\\SmartAsync.csproj",
       "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-      "outputPath": "C:\\DEV\\SmartWealth\\SmartQueue\\obj\\",
+      "outputPath": "C:\\DEV\\SmartLoans\\SmartQueue\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1377,17 +1377,17 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj"
+            "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj"
             },
-            "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj"
+            "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj"
             },
-            "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj"
+            "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj"
             },
-            "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
+            "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj"
             }
           }
         }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "34lX9C7YbNL1xlBFVDeQOTrnQwfTzvDrbuabkaxOMBquexBVmr0HKtwOdFb1zV3g+2lmFY6kdt4SiUTDhrYsWg==",
+  "dgSpecHash": "c2cisPn4TXQLWIKgVsXEiqDK6GffZ61slNn0wKRLvOjxzHILAFrTveWLrAYUXa0F/S/DJPk/c4ryOuL33/cQzg==",
   "success": true,
-  "projectFilePath": "C:\\DEV\\SmartWealth\\SmartMail\\SmartMail.csproj",
+  "projectFilePath": "C:\\DEV\\SmartLoans\\SmartMail\\SmartMail.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\corecompat.system.drawing.v2\\5.2.0-preview1-r131\\corecompat.system.drawing.v2.5.2.0-preview1-r131.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",

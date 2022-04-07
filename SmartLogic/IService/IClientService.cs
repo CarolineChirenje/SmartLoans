@@ -23,7 +23,7 @@ namespace SmartLogic
         List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0, int companyID=0);
         Task<List<string>> ClientAccountNumbers(string account);
         Task<ClientPeek> GetClient(string emailAddress=null, string idnumber=null,int? clientID=null);
-        Register AttendanceRegisters(int clientID);
+       
         Task<bool> ClientExists(int Clientid = 0);
 
         Task<ClientKonapoFunds> GetClientKonapoFunds(int clientID);
@@ -52,13 +52,7 @@ namespace SmartLogic
         Task<int> ActionDocument(int id, DatabaseAction action);
         Task<bool> DocumentUploaded(int clientID, int documentTypeID);
 
-        //Medical Details
-        Medical MedicalFiles(int clientID);
-        Task<ClientMedicalDetail> FindMedicalDetail(int id);
-        Task<int> Save(ClientMedicalDetail ClientMedicalDetail);
-        Task<int> Update(ClientMedicalDetail ClientMedicalDetail);
-        Task<int> ActionMedicalDetail(int id, DatabaseAction action);
-
+        
         //Dependent
         
          Dependents ClientDependents(int clientID);
@@ -67,37 +61,10 @@ namespace SmartLogic
         Task<int> Update(ClientDependent ClientDependent);
         Task<int> ActionDependent(int id, DatabaseAction action);
 
-        //Product
-        Task<ClientProduct> FindProduct(int id);
-        Task<int> Save(ClientProduct ClientProduct);
-        Task<int> Update(ClientProduct ClientProduct);
-        Task<int> ActionProduct(int id, DatabaseAction action);
-       ClientPackages GetClientProducts(int clientID);
-        List<Product> GetClientRegisteredProducts(int id);
-        InvoicePackage GetPotentialInvoiceEntries(int InvoiceID, int ProductID, DateTime InvoiceDate);
-        //Course
-        CoachingProgrammes Courses(int clientID);
-        Task<ClientCourse> FindCourse(int id);
-        Task<int> Save(ClientCourse ClientCourse);
-        Task<bool> HasActiveEnrollement(int clientID, int courseID);
-
-        Task<bool> MaximumCourseLimitReached(int courseIntakeID);
-        Task<int> Update(ClientCourse ClientCourse);
-        Task<int> ActionCourse(int id);
-
-        Transactions PaidTransactions(int clientID);
-        PendingTransactions PendingTransactions(int clientID, DateTime cutoffDate);
-        Deductions GetClientDeductions(int clientID);
-        List<ClientFee> ClientFees(int clientID);
-        Task<ClientFee> FindClientFee(int id);
-        Task<int> PayFee(ClientFee clientFee);
+     
         Task<Company> GetClientCompany(int clientID);
-
-        Task<int> UpdateSessions(int clientCourseID, string[] selectedSessions);
-
         SalaryHistory SalaryHistory(int clientID);
 
-        Statement ClientStatements(int clientID);
 
     }
 }

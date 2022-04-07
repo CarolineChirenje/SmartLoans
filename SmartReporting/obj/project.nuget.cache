@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "x/b3lPTCJbcTkVM1wrq/qpsrOicX+DNNQKBSKsBgfqO+04lsQ6WrJ7HGZoOj+nO+/kNRR3I7vntykjKb/F4sAQ==",
+  "dgSpecHash": "VVLXv630b+ETfXjzS/Z7RR1OnSN7+0D4MIXJhN/FiEoiIjHXm2YlI8c7tVvz2dgeB8FWvnaRnqardDmw51cUmQ==",
   "success": true,
-  "projectFilePath": "C:\\DEV\\SmartWealth\\SmartReporting\\SmartReporting.csproj",
+  "projectFilePath": "C:\\DEV\\SmartLoans\\SmartReporting\\SmartReporting.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\corecompat.system.drawing.v2\\5.2.0-preview1-r131\\corecompat.system.drawing.v2.5.2.0-preview1-r131.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",

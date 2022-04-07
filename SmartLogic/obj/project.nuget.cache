@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YGAzoDHGqb88xbPS0qv/0CeOHK0/esFTZl6psM9RBK6UlWRBkM0kFLe58TkYsa+H8SaWU/kz9VI6gzBKIF7cxw==",
+  "dgSpecHash": "do8W1U0NV7/6+LSg5z6LOZv5vcN/IXVaGj30I99DJNLOM3KFfIw0dk3qSgzhU753GZbPCsnILH5a3naTXJILKw==",
   "success": true,
-  "projectFilePath": "C:\\DEV\\SmartWealth\\SmartLogic\\SmartLogic.csproj",
+  "projectFilePath": "C:\\DEV\\SmartLoans\\SmartLogic\\SmartLogic.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\corecompat.system.drawing.v2\\5.2.0-preview1-r131\\corecompat.system.drawing.v2.5.2.0-preview1-r131.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",

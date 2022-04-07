@@ -63,18 +63,18 @@ namespace SmartLogic
         }
 
 
-        public int GetNewCourses()
-        {
-            try
-            {
-                return _context.Courses.Where(c => c.DateCreated.Date >= DateTime.Now.AddDays(-1).Date && c.DateCreated.Date <= DateTime.Now.Date).Count();
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
+        //public int GetNewCourses()
+        //{
+        //    try
+        //    {
+        //        return _context.Courses.Where(c => c.DateCreated.Date >= DateTime.Now.AddDays(-1).Date && c.DateCreated.Date <= DateTime.Now.Date).Count();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        CustomLog.Log(LogSource.Logic_Base, ex);
+        //        throw;
+        //    }
+        //}
         public int GetOpenNotices()
         {
             try

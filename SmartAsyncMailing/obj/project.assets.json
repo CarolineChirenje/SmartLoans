@@ -8978,11 +8978,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartAsyncMailing\\SmartAsyncMailing.csproj",
+      "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartAsyncMailing\\SmartAsyncMailing.csproj",
       "projectName": "SmartAsyncMailing",
-      "projectPath": "C:\\DEV\\SmartWealth\\SmartAsyncMailing\\SmartAsyncMailing.csproj",
+      "projectPath": "C:\\DEV\\SmartLoans\\SmartAsyncMailing\\SmartAsyncMailing.csproj",
       "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-      "outputPath": "C:\\DEV\\SmartWealth\\SmartAsyncMailing\\obj\\",
+      "outputPath": "C:\\DEV\\SmartLoans\\SmartAsyncMailing\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8999,11 +8999,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj"
+            "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj"
             },
-            "C:\\DEV\\SmartWealth\\SmartMail\\SmartMail.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartMail\\SmartMail.csproj"
+            "C:\\DEV\\SmartLoans\\SmartMail\\SmartMail.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartMail\\SmartMail.csproj"
             }
           }
         }

@@ -1,0 +1,185 @@
+﻿@model SmartDomain.User
+@using SmartHelper;
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        User Details
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Add User</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="AddUser" enctype="multipart/form-data">
+            <div class="box-body">
+
+                @if (TempData["Error"] != null)
+                {<div class="container">
+                        <div class="text-danger">@TempData["Error"].ToString()</div>
+                    </div>
+                }
+
+                @if (TempData["Success"] != null)
+                {<div class="container">
+                        <div class="text-success">@TempData["Success"].ToString()</div>
+                    </div>
+                }
+                @if (TempData["Warning"] != null)
+                {<div class="container">
+                        <div class="text-warning">@TempData["Warning"].ToString()</div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">ID Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="IDNumber" placeholder="National ID" required>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" required>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" required>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" name="EmailAddress" placeholder="Email Address" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Profile Photo</label>
+                    <input type="file" name="ProfileImage" id="ProfileImage" accept=".jpg,.jpeg,.png" onchange="validateImageType()" />
+
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">User Type</label>
+                    <div class="col-sm-10">
+                        <select asp-for="UserTypeID" class="form-control" asp-items="ViewBag.UserTypeList" onchange="GetCompany(this.value)">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+                    <div class="col-sm-10">
+
+                        <select id="CompanyList" name="CompanyID" class="form-control">
+                        </select>
+                        <span id="CompanyListNotFound" class="text-danger text-bold"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                    <div class="checkbox">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" data-val="true" id="IsActive"
+                                   name="IsActive" value="true">
+                        </label>
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Grant Access To Test Environment</label>
+                    <div class="checkbox">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" data-val="true" id="GrantAccessToTestEnvironment"
+                                   name="GrantAccessToTestEnvironment" value="true">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="User" asp-action="Users">Cancel</a>
+                @if (UserAppData.HasPermission(Permissions.Add_User))
+                {
+                    <button type="submit" class="btn btn-info pull-right">Add</button>
+                }
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('#UserTypeID').change(function (e) {
+            // Your event handler
+        });
+
+        // And now fire change event when the DOM is ready
+        $('#UserTypeID').trigger('change');
+
+       
+
+    });
+    function validateImageType() {
+        var fileName = document.getElementById("ProfileImage").value;
+        var idxDot = fileName.lastIndexOf(".") + 1;
+        var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+        if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+            //TO DO
+        } else {
+            alert("Only jpg/jpeg and png files are allowed!");
+        }
+    }
+   
+   
+    function GetCompany(_UserTypeID) {
+        console.log(_UserTypeID);
+        if (_UserTypeID === 2) {
+            var processmessage = "<option value='0'> Please wait whilst we retrieve Companies registered on the System...</option>";
+            $("#CompanyList").html(processmessage).show();
+        }
+        var url = "/User/GetCompanies/";
+        // alert(_UserTypeID);
+        $.ajax({
+            url: url,
+            data: { UserTypeID: _UserTypeID },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                console.log(data);
+                var markup = "<option value='0'>Select Company</option>";
+                if(_UserTypeID===2 && (data == null || data.length == 0)) {
+                    $("#CompanyListNotFound").text("No Active Companies Found")
+                    $(":submit").attr("disabled", true);
+                }
+                else {
+                    $("#CompanyListNotFound").text("");
+                    $(":submit").removeAttr("disabled");
+
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
+                    }
+                }
+                $("#CompanyList").html(markup).show();
+            },
+            error: function (reponse) {
+                console.log(response);
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+ 
+</script>

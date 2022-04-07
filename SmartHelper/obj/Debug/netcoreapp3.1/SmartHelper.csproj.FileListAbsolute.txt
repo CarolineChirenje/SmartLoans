@@ -11,3 +11,15 @@ C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.AssemblyInfo.
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.csproj.CoreCompileInputs.cache
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.dll
 C:\DEV\SmartWealth\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.pdb
+C:\DEV\SmartLoans\SmartHelper\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
+C:\DEV\SmartLoans\SmartHelper\bin\Debug\netcoreapp3.1\SmartHelper.deps.json
+C:\DEV\SmartLoans\SmartHelper\bin\Debug\netcoreapp3.1\SmartHelper.dll
+C:\DEV\SmartLoans\SmartHelper\bin\Debug\netcoreapp3.1\SmartHelper.pdb
+C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.SmartHelper.resources
+C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.csproj.GenerateResource.cache
+C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.AssemblyInfoInputs.cache
+C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.AssemblyInfo.cs
+C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.csproj.CoreCompileInputs.cache
+C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.dll
+C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.pdb

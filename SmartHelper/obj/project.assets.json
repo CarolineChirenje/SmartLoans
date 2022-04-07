@@ -1031,11 +1031,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj",
+      "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj",
       "projectName": "SmartHelper",
-      "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj",
+      "projectPath": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj",
       "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-      "outputPath": "C:\\DEV\\SmartWealth\\SmartHelper\\obj\\",
+      "outputPath": "C:\\DEV\\SmartLoans\\SmartHelper\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",

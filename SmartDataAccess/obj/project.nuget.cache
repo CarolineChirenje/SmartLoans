@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3RzhrF/gnSDR1bWOn4qvQ4PKuR5Aqq9/PmxYs5RQv3ZLeXVo/FC26j1jMeqgBDqC3CdzZ24qOaiLGSWgvoxxeQ==",
+  "dgSpecHash": "kBjTSME20lRxhqE3wc+kvvInMqwSNYwzsNlWMPjMeyX6udMzxay8JKNb3pyTTzjIOcVRWstITN3h2Hjw5WxSvw==",
   "success": true,
-  "projectFilePath": "C:\\DEV\\SmartWealth\\SmartDataAccess\\SmartDataAccess.csproj",
+  "projectFilePath": "C:\\DEV\\SmartLoans\\SmartDataAccess\\SmartDataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

@@ -8251,11 +8251,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartMail\\SmartMail.csproj",
+      "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartMail\\SmartMail.csproj",
       "projectName": "SmartMail",
-      "projectPath": "C:\\DEV\\SmartWealth\\SmartMail\\SmartMail.csproj",
+      "projectPath": "C:\\DEV\\SmartLoans\\SmartMail\\SmartMail.csproj",
       "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-      "outputPath": "C:\\DEV\\SmartWealth\\SmartMail\\obj\\",
+      "outputPath": "C:\\DEV\\SmartLoans\\SmartMail\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8272,11 +8272,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj"
+            "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj"
             },
-            "C:\\DEV\\SmartWealth\\SmartLogic\\SmartLogic.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartLogic\\SmartLogic.csproj"
+            "C:\\DEV\\SmartLoans\\SmartLogic\\SmartLogic.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartLogic\\SmartLogic.csproj"
             }
           }
         }

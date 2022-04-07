@@ -8,3 +8,13 @@ C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.Assem
 C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.csproj.CoreCompileInputs.cache
 C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.dll
 C:\DEV\SmartWealth\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.pdb
+C:\DEV\SmartLoans\SmartExtensions\bin\Debug\netcoreapp3.1\SmartExtensions.deps.json
+C:\DEV\SmartLoans\SmartExtensions\bin\Debug\netcoreapp3.1\SmartExtensions.dll
+C:\DEV\SmartLoans\SmartExtensions\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
+C:\DEV\SmartLoans\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.csproj.AssemblyReference.cache
+C:\DEV\SmartLoans\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartLoans\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.AssemblyInfoInputs.cache
+C:\DEV\SmartLoans\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.AssemblyInfo.cs
+C:\DEV\SmartLoans\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.csproj.CoreCompileInputs.cache
+C:\DEV\SmartLoans\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.dll
+C:\DEV\SmartLoans\SmartExtensions\obj\Debug\netcoreapp3.1\SmartExtensions.pdb

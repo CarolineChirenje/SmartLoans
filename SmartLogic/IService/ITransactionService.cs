@@ -17,7 +17,7 @@ namespace SmartLogic
         Task<long> NewPayments();
         int RemoveInvoice(int invoiceID);
         int FinaliseInvoice(int invoiceID);
-                 int ProcessInvoice(List<int> ClientProductIDs, int InvoiceID);
+        //int ProcessInvoice(List<int> ClientProductIDs, int InvoiceID);
         Task<int> RemoveInvoiceEntries(List<int> invoiceDetailsID);
         Task<int> CreateInvoice(DateTime InvoiceDate, DateTime DueDate, int? productID);
         bool InvoiceHasEntries(int invoiceID);

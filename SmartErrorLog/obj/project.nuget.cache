@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "d7kx0GBQ7n+2mznUAjvcIkCuGT3D6idS24MJ/cLe8jNRBTqFkhkRhrcA7tKA6BajURToxU7yTDNYB4iv9LX4zg==",
+  "dgSpecHash": "lpG51M+ji9BdOe6w1ZD4T/8nSvQn9pXKl+YNya2rBkQepCnim1mfJr0Aa9Mo3CEbpxrtltH2IdeJLuKMpNRK7A==",
   "success": true,
-  "projectFilePath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
+  "projectFilePath": "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",

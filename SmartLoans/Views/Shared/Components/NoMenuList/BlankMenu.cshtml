@@ -1,0 +1,28 @@
+@using SmartLoan;
+@using SmartHelper;
+@using Microsoft.AspNetCore.Http
+
+<ul class="sidebar-menu" data-widget="tree">
+    <li class="header">@UserAppData.ApplicationName</li>
+    <li class="nav-item">
+        @*<a asp-controller="Home" asp-action="Dashboard">
+            <i class="fa fa-umbrella nav-icon" aria-hidden="true"></i>
+            Dashboard
+        </a>*@
+    </li>
+
+    @*@foreach (var menu in Model)
+    {
+        <li class="nav-item">
+
+            <a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName">
+                <i class="@UtilityService.HtmlEncode(menu.CSSClass) nav-icon" aria-hidden="true"></i>
+                @menu.DisplayName
+            </a>
+
+        </li>
+    }*@
+
+</ul>
+
+

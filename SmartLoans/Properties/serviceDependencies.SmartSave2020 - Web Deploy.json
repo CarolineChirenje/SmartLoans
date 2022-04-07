@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/smartsavedbserver/databases/SmartLoan",
+      "type": "mssql.azure",
+      "connectionId": "SSDBConnection",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

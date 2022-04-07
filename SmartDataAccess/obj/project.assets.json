@@ -6227,11 +6227,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartDataAccess\\SmartDataAccess.csproj",
+      "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartDataAccess\\SmartDataAccess.csproj",
       "projectName": "SmartDataAccess",
-      "projectPath": "C:\\DEV\\SmartWealth\\SmartDataAccess\\SmartDataAccess.csproj",
+      "projectPath": "C:\\DEV\\SmartLoans\\SmartDataAccess\\SmartDataAccess.csproj",
       "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-      "outputPath": "C:\\DEV\\SmartWealth\\SmartDataAccess\\obj\\",
+      "outputPath": "C:\\DEV\\SmartLoans\\SmartDataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -6248,11 +6248,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj"
+            "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj"
             },
-            "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
-              "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
+            "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj": {
+              "projectPath": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj"
             }
           }
         }

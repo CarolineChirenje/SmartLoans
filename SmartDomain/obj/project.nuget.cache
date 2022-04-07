@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NP5n2+1d4EDhYhm0kSOZAa0bs/TqNASdKqOEhqaYgokaCvYGhwJoh2YbLsTwQm/aYgltfzlu0Q649LincDAV1w==",
+  "dgSpecHash": "zNbEylMRFbfTTmGicJ3lfNfYLnkd4gjGtxC2ABPJDylf7bGPu5AZCGHrjCpYd3r5A6VubzR14MHRl+lVv6/qfQ==",
   "success": true,
-  "projectFilePath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj",
+  "projectFilePath": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",

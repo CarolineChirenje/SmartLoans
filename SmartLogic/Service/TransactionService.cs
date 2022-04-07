@@ -96,20 +96,7 @@ namespace SmartLogic
                 PaymentsFile.LastChangedBy = UserAppData.CurrentUserName;
                 PaymentsFile.LastChangedDate = DateTime.Now;
                 _context.Add(PaymentsFile);
-                result = await _context.SaveChangesAsync();
-                if (PaymentsFile.ClientFeeID.HasValue)
-                {
-                    ClientFee clientFee = _context.ClientFees.Find(PaymentsFile.ClientFeeID);
-                    if (clientFee.IsNotNull())
-                    {
-                        clientFee.DatePaid = DateTime.Now;
-                        clientFee.LastChangedBy = UserAppData.CurrentUserName;
-                        clientFee.LastChangedDate = DateTime.Now;
-                        _context.Update(clientFee);
-                        result = await _context.SaveChangesAsync();
-
-                    }
-                }
+              
                 if (PaymentsFile.InvoiceDetailID.HasValue)
                 {
                     try
@@ -209,8 +196,8 @@ namespace SmartLogic
                 if (PaymentsFile.ProductID.HasValue)
                     newPaymentFile.ProductID = PaymentsFile.ProductID;
 
-                if (PaymentsFile.CourseID.HasValue)
-                    newPaymentFile.CourseID = PaymentsFile.CourseID;
+                //if (PaymentsFile.CourseID.HasValue)
+                //    newPaymentFile.CourseID = PaymentsFile.CourseID;
                 newPaymentFile.TransactionFee = (PaymentsFile.TransactionFee * -1);
                 newPaymentFile.Amount = (AmountInclVat * -1);
                 newPaymentFile.VAT = (VATAmount * -1);
@@ -221,19 +208,6 @@ namespace SmartLogic
                 int ReversalPaymentID = newPaymentFile.TransactionID;
                 updateOldPayment(transactionID, oldPaymentStatus, newPaymentFile.TransRef, ReversalPaymentID);
 
-                if (PaymentsFile.ClientFeeID.HasValue)
-                {
-                    ClientFee clientFee = _context.ClientFees.Find(PaymentsFile.ClientFeeID);
-                    if (clientFee.IsNotNull())
-                    {
-                        clientFee.DatePaid = null;
-                        clientFee.LastChangedBy = UserAppData.CurrentUserName;
-                        clientFee.LastChangedDate = DateTime.Now;
-                        _context.Update(clientFee);
-                        result = await _context.SaveChangesAsync();
-
-                    }
-                }
                 if (PaymentsFile.InvoiceDetailID.HasValue)
                 {
                     try
@@ -285,7 +259,7 @@ namespace SmartLogic
                 return await _context.Transactions.Where(p => p.ClientID == ClientID)
                   .Include(p => p.Client)
                   .Include(p => p.Product)
-                  .Include(p => p.Course)
+                //  .Include(p => p.Course)
                   .Include(p => p.PaymentStatus)
                    .Include(p => p.TransactionType)
                     .ThenInclude(p => p.TransactionStatus)
@@ -307,7 +281,7 @@ namespace SmartLogic
                 return await _context.Transactions
                   .Include(p => p.Client)
                  .Include(p => p.Product)
-                 .Include(p => p.Course)
+                // .Include(p => p.Course)
                   .Include(p => p.PaymentStatus)
                   .Include(p => p.TransactionType)
                   .ThenInclude(p => p.TransactionStatus)
@@ -329,7 +303,7 @@ namespace SmartLogic
                 .Include(p => p.Client)
                  .Include(p => p.Client)
                  .Include(p => p.Product)
-                 .Include(p => p.Course)
+               //  .Include(p => p.Course)
                  .Include(p => p.PaymentStatus)
                  .Include(p => p.TransactionType)
                  .ThenInclude(p => p.TransactionStatus)
@@ -354,7 +328,7 @@ namespace SmartLogic
                 return await _context.Transactions
 
                  .Include(p => p.Product)
-                                 .Include(p => p.Course)
+                 //.Include(p => p.Course)
                  .Include(p => p.PaymentStatus)
                  .Include(p => p.TransactionType)
                  .ThenInclude(p => p.TransactionStatus)
@@ -502,109 +476,109 @@ namespace SmartLogic
                 throw;
             }
         }
-        public int ProcessInvoice(List<int> ClientProductIDs, int InvoiceID)
-        {
-            try
-            {
-                int result = 0;
+        //public int ProcessInvoice(List<int> ClientProductIDs, int InvoiceID)
+        //{
+        //    try
+        //    {
+        //        int result = 0;
 
-                var clientProduct = _context.ClientProducts.
-                    Include(c => c.Product).
-                       Include(c => c.Client).
-                       ThenInclude(c => c.ClientOccupationHistory).
-                       Where(t => ClientProductIDs.Contains(t.ClientProductID)).ToList();
+        //        var clientProduct = _context.ClientProducts.
+        //            Include(c => c.Product).
+        //               Include(c => c.Client).
+        //               ThenInclude(c => c.ClientOccupationHistory).
+        //               Where(t => ClientProductIDs.Contains(t.ClientProductID)).ToList();
 
-                if (!clientProduct.ListIsEmpty())
-                {
-                    foreach (var item in clientProduct)
-                    {//1.
-                        decimal _percentageDeduction = item.DeductionPercentage.HasValue ? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
-                        decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
-                        decimal _currentSalary = item.Client.Salary;
-                        decimal? _previousSalary = null;
-                        decimal _totalDeductionPercentage = 0M;
-                        decimal _totalDeduction = 0M;
-                        DeductionApplied deductionApplied = DeductionApplied.Product;
-                        if (!item.DoNotDeduct) //only deduct if do not deduct is set to false
-                        {
-                            if (item.DeductionPercentage.HasValue || item.IncreamentPercentage.HasValue)
-                                deductionApplied = DeductionApplied.Individual;
-                            else
-                                deductionApplied = DeductionApplied.Product;
-                            var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
-                            if (_lastSalary.IsNotNull())
-                                _previousSalary = _lastSalary.Salary;
+        //        if (!clientProduct.ListIsEmpty())
+        //        {
+        //            foreach (var item in clientProduct)
+        //            {//1.
+        //                decimal _percentageDeduction = item.DeductionPercentage.HasValue ? item.DeductionPercentage.Value : item.Product.DeductionPercentage;
+        //                decimal _percentageIncrement = item.IncreamentPercentage.HasValue ? item.IncreamentPercentage.Value : item.Product.IncreamentPercentage;
+        //                decimal _currentSalary = item.Client.Salary;
+        //                decimal? _previousSalary = null;
+        //                decimal _totalDeductionPercentage = 0M;
+        //                decimal _totalDeduction = 0M;
+        //                DeductionApplied deductionApplied = DeductionApplied.Product;
+        //                if (!item.DoNotDeduct) //only deduct if do not deduct is set to false
+        //                {
+        //                    if (item.DeductionPercentage.HasValue || item.IncreamentPercentage.HasValue)
+        //                        deductionApplied = DeductionApplied.Individual;
+        //                    else
+        //                        deductionApplied = DeductionApplied.Product;
+        //                    var _lastSalary = item.Client.ClientOccupationHistory.OrderByDescending(oh => oh.Occupation).FirstOrDefault();
+        //                    if (_lastSalary.IsNotNull())
+        //                        _previousSalary = _lastSalary.Salary;
 
-                            if (_previousSalary.HasValue)
-                            {
-                                if (_currentSalary > _previousSalary.Value)
-                                    _totalDeductionPercentage = _percentageDeduction + _percentageIncrement;
-                                else
-                                    _totalDeductionPercentage = _percentageDeduction;
-                            }
-                            else
-                                _totalDeductionPercentage = _percentageDeduction;
-                            _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
-                        }
-                        else
-                        {
-                            deductionApplied = DeductionApplied.Do_Not_Deduct;
-                            _totalDeduction = 0M;
-                        }
-                        InvoiceDetails deductionDetails = new InvoiceDetails
-                        {
-                            ClientID = item.ClientID,
-                            ClientProductID = item.ClientProductID,
-                            Salary = _currentSalary,
-                            ProductID = item.ProductID,
-                            InvoiceID = InvoiceID,
-                            DeductedAmount = _totalDeduction,
-                            TotalDeductionPercentage = _totalDeductionPercentage,
-                            DeductionPercentage = _percentageDeduction,
-                            AdditionalDeductionPercentage = _percentageIncrement,
-                            LastChangedBy = UserAppData.CurrentUserName,
-                            LastChangedDate = DateTime.Now,
-                            InvoiceNumber = $"{item.Client.AccountNumber}-INV-{InvoiceID}",
-                            DeductionTypeID = (int)deductionApplied,
-                            PaymentStatusID = (int)PaymentState.Pending
+        //                    if (_previousSalary.HasValue)
+        //                    {
+        //                        if (_currentSalary > _previousSalary.Value)
+        //                            _totalDeductionPercentage = _percentageDeduction + _percentageIncrement;
+        //                        else
+        //                            _totalDeductionPercentage = _percentageDeduction;
+        //                    }
+        //                    else
+        //                        _totalDeductionPercentage = _percentageDeduction;
+        //                    _totalDeduction = _currentSalary * (_totalDeductionPercentage / 100M);
+        //                }
+        //                else
+        //                {
+        //                    deductionApplied = DeductionApplied.Do_Not_Deduct;
+        //                    _totalDeduction = 0M;
+        //                }
+        //                InvoiceDetails deductionDetails = new InvoiceDetails
+        //                {
+        //                    ClientID = item.ClientID,
+        //                    ClientProductID = item.ClientProductID,
+        //                    Salary = _currentSalary,
+        //                    ProductID = item.ProductID,
+        //                    InvoiceID = InvoiceID,
+        //                    DeductedAmount = _totalDeduction,
+        //                    TotalDeductionPercentage = _totalDeductionPercentage,
+        //                    DeductionPercentage = _percentageDeduction,
+        //                    AdditionalDeductionPercentage = _percentageIncrement,
+        //                    LastChangedBy = UserAppData.CurrentUserName,
+        //                    LastChangedDate = DateTime.Now,
+        //                    InvoiceNumber = $"{item.Client.AccountNumber}-INV-{InvoiceID}",
+        //                    DeductionTypeID = (int)deductionApplied,
+        //                    PaymentStatusID = (int)PaymentState.Pending
 
-                        };
-                        _context.Add(deductionDetails);
-                    }
+        //                };
+        //                _context.Add(deductionDetails);
+        //            }
 
-                    if (clientProduct.Count() > 0)
-                        result = _context.SaveChanges();
-                    if (result > 0)
-                    {
-                        try
-                        {
-                            Invoice update = _context.Invoices.
-                            Where(t => t.InvoiceID == InvoiceID).FirstOrDefault();
-                            if (update.IsNotNull())
-                            {
-                                update.InvoiceStatusID = (int)InvoiceState.Processed;
-                                update.LastChangedBy = UserAppData.CurrentUserName;
-                                update.LastChangedDate = DateTime.Now;
-                                _context.Entry(update).State = EntityState.Modified;
-                                return _context.SaveChanges();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            CustomLog.Log(LogSource.Logic_Base, ex);
-                            throw;
-                        }
-                    }
-                }
-                result = InvoiceID;
-                return result;
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw ex;
-            }
-        }
+        //            if (clientProduct.Count() > 0)
+        //                result = _context.SaveChanges();
+        //            if (result > 0)
+        //            {
+        //                try
+        //                {
+        //                    Invoice update = _context.Invoices.
+        //                    Where(t => t.InvoiceID == InvoiceID).FirstOrDefault();
+        //                    if (update.IsNotNull())
+        //                    {
+        //                        update.InvoiceStatusID = (int)InvoiceState.Processed;
+        //                        update.LastChangedBy = UserAppData.CurrentUserName;
+        //                        update.LastChangedDate = DateTime.Now;
+        //                        _context.Entry(update).State = EntityState.Modified;
+        //                        return _context.SaveChanges();
+        //                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    CustomLog.Log(LogSource.Logic_Base, ex);
+        //                    throw;
+        //                }
+        //            }
+        //        }
+        //        result = InvoiceID;
+        //        return result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        CustomLog.Log(LogSource.Logic_Base, ex);
+        //        throw ex;
+        //    }
+        //}
         public async Task<List<InvoiceDetails>> GetInvoiceDetails(List<int> ClientProductIDs, DateTime InvoiceDate)
         {
             try

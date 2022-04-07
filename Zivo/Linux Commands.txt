@@ -4,4 +4,18 @@
  sudo systemctl start SmartAsyncMailing.service 
  sudo systemctl status SmartAsyncMailing.service 
  ls -la
- 
+/etc/nginx/sites-available
+service nginx reload
+
+https://www.digitalocean.com/community/questions/can-t-start-nginx-job-for-nginx-service-failed
+
+https://www.linode.com/docs/guides/how-to-enable-disable-website/
+
+https://www.cloudinsidr.com/content/heres-fix-nginx-error-failed-read-pid-file-linux/
+
+https://ubuntu.com/tutorials/install-and-configure-nginx#1-overview
+
+
+sudo ln -s /etc/nginx/sites-available/smartloans.elroitec.com /etc/nginx/sites-enabled/
+
+https://monovm.com/blog/how-to-save-and-exit-in-nano-editor/#:~:text=Save%20Nano%20Command%3A%20Ctrl%2BO,Ctrl%2BX%20will%20close%20nano.

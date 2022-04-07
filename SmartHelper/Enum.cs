@@ -6,13 +6,13 @@ namespace SmartHelper
     public enum MenuGroups
     {
         DashBoard = 1,
-        Employees,
-        Core_Services,
+        Clients,
+        Transactions,
         Reporting,
         Settings,
         Invoicing,
-        Programmes,
-        Konapo,
+        Products,
+        Loans,
        
         //
         Menu = 9998,
@@ -666,22 +666,15 @@ namespace SmartHelper
         Update_Client_Contact,
         Delete_Client_Contact,
         View_Client_Contact,
-        Add_Client_Product,
-        Update_Client_Product,
-        Delete_Client_Product,
-        View_Client_Product,
+        Add_Client_Loan,
+        Update_Client_Loan,
+        Delete_Client_Loan,
+        View_Client_Loan,
         Add_Client_Dependent,
         Update_Client_Dependent,
         Delete_Client_Dependent,
         View_Client_Dependent,
-        Add_Client_Course,
-        Update_Client_Course,
-        Delete_Client_Course,
-        View_Client_Course,
-        Add_Client_Medical_Details,
-        Update_Client_Medical_Details,
-        Delete_Client_Medical_Details,
-        View_Client_Medical_Details,
+            
         View_Client_Payments,
         Generate_Client_Statement,
         Client_Upload_Document,
@@ -736,16 +729,6 @@ namespace SmartHelper
         Delete_Menu,
         View_Menu,
 
-
-        // Course
-        Add_Course,
-        Update_Course,
-        Delete_Course,
-        View_Course,
-        View_Course_Fee,
-        Add_Course_Fee,
-        Update_Course_Fee,
-        Delete_Course_Fee,
 
 
         // Custom Setting
@@ -810,17 +793,7 @@ namespace SmartHelper
         Delete_Assert,
         View_Assert,
 
-        Add_Course_Topic,
-        Update_Course_Topic,
-        Delete_Course_Topic,
-        View_Course_Topic,
-
-        Add_Course_Intake,
-        Update_Course_Intake,
-        Delete_Course_Intake,
-        View_Course_Intake,
-        View_Course_Intake_Register,
-        Generate_Attendance_Register,
+       
         View_Invoice_Details,
         Print_Statement_With_No_Reversals,
         Auto_Generate_Receipt,
@@ -833,10 +806,23 @@ namespace SmartHelper
         View_Licences,
         View_Maintanances,
         View_Technical_Support_Settings,
-        Add_Course_Session,
-        Update_Course_Session,
-        Delete_Course_Session,
-        View_Course_Session,
+
+        Add_Loan_Use,
+        Update_Loan_Use,
+        Delete_Loan_Use,
+        View_Loan_Use,
+
+        Add_Loan_Type,
+        Update_Loan_Type,
+        Delete_Loan_Type,
+        View_Loan_Type,
+
+
+
+        Add_Loan_Status,
+        Update_Loan_Status,
+        Delete_Loan_Status,
+        View_Loan_Status,
         Add_Fund,
         Update_Fund,
         Delete_Fund,
@@ -849,6 +835,9 @@ namespace SmartHelper
         Update_Konapo_Fund,
         Delete_Konapo_Fund,
         View_Konapo_Fund
+
+
+
     }
     public enum InvoiceState
     {   Created = 1,

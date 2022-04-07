@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sv6n2cBez09i5V+fZA/x259IQiFKeYY5zl5qYdMELj1nLqoeHMWgIGVfj2wJA7tWgRONz3yQGcocpWT1jFTF8w==",
+  "dgSpecHash": "XIfng865SmhIVj03kmNKWNhyncM9cY2darMoLHCSih6YLIoaTJLzl+cOMiqVzvtmj+QV/PbcOocqTqZfjQUHxw==",
   "success": true,
-  "projectFilePath": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj",
+  "projectFilePath": "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",

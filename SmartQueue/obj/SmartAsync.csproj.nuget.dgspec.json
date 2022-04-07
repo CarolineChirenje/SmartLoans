@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj": {}
+    "C:\\DEV\\SmartLoans\\SmartQueue\\SmartAsync.csproj": {}
   },
   "projects": {
-    "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
+    "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj",
         "projectName": "SmartDomain",
-        "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj",
+        "projectPath": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj",
         "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-        "outputPath": "C:\\DEV\\SmartWealth\\SmartDomain\\obj\\",
+        "outputPath": "C:\\DEV\\SmartLoans\\SmartDomain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
-                "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
+              "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj": {
+                "projectPath": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj"
               }
             }
           }
@@ -72,14 +72,14 @@
         }
       }
     },
-    "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
+    "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj",
         "projectName": "SmartLog",
-        "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj",
+        "projectPath": "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj",
         "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-        "outputPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\obj\\",
+        "outputPath": "C:\\DEV\\SmartLoans\\SmartErrorLog\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -96,8 +96,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
-                "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
+              "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj": {
+                "projectPath": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj"
               }
             }
           }
@@ -140,14 +140,14 @@
         }
       }
     },
-    "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj": {
+    "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj",
         "projectName": "SmartExtensions",
-        "projectPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj",
+        "projectPath": "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj",
         "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-        "outputPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\obj\\",
+        "outputPath": "C:\\DEV\\SmartLoans\\SmartExtensions\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -204,14 +204,14 @@
         }
       }
     },
-    "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
+    "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj",
         "projectName": "SmartHelper",
-        "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj",
+        "projectPath": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj",
         "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-        "outputPath": "C:\\DEV\\SmartWealth\\SmartHelper\\obj\\",
+        "outputPath": "C:\\DEV\\SmartLoans\\SmartHelper\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -292,14 +292,14 @@
         }
       }
     },
-    "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj": {
+    "C:\\DEV\\SmartLoans\\SmartQueue\\SmartAsync.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartQueue\\SmartAsync.csproj",
         "projectName": "SmartAsync",
-        "projectPath": "C:\\DEV\\SmartWealth\\SmartQueue\\SmartAsync.csproj",
+        "projectPath": "C:\\DEV\\SmartLoans\\SmartQueue\\SmartAsync.csproj",
         "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-        "outputPath": "C:\\DEV\\SmartWealth\\SmartQueue\\obj\\",
+        "outputPath": "C:\\DEV\\SmartLoans\\SmartQueue\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -316,17 +316,17 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj": {
-                "projectPath": "C:\\DEV\\SmartWealth\\SmartDomain\\SmartDomain.csproj"
+              "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj": {
+                "projectPath": "C:\\DEV\\SmartLoans\\SmartDomain\\SmartDomain.csproj"
               },
-              "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj": {
-                "projectPath": "C:\\DEV\\SmartWealth\\SmartErrorLog\\SmartLog.csproj"
+              "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj": {
+                "projectPath": "C:\\DEV\\SmartLoans\\SmartErrorLog\\SmartLog.csproj"
               },
-              "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj": {
-                "projectPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj"
+              "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj": {
+                "projectPath": "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj"
               },
-              "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj": {
-                "projectPath": "C:\\DEV\\SmartWealth\\SmartHelper\\SmartHelper.csproj"
+              "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj": {
+                "projectPath": "C:\\DEV\\SmartLoans\\SmartHelper\\SmartHelper.csproj"
               }
             }
           }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj": {}
+    "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj": {}
   },
   "projects": {
-    "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj": {
+    "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj",
+        "projectUniqueName": "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj",
         "projectName": "SmartExtensions",
-        "projectPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\SmartExtensions.csproj",
+        "projectPath": "C:\\DEV\\SmartLoans\\SmartExtensions\\SmartExtensions.csproj",
         "packagesPath": "C:\\Users\\Caroline Chirenje\\.nuget\\packages\\",
-        "outputPath": "C:\\DEV\\SmartWealth\\SmartExtensions\\obj\\",
+        "outputPath": "C:\\DEV\\SmartLoans\\SmartExtensions\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Caroline Chirenje\\AppData\\Roaming\\NuGet\\NuGet.Config",

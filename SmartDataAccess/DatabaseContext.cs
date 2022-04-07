@@ -179,14 +179,12 @@ namespace SmartDataAccess
 
         public DbSet<Client> Clients { get; set; }
         public DbSet<JointApplicant> JointApplicants { get; set; }
-        public DbSet<ClientCourse> ClientCourses { get; set; }
-        public DbSet<ClientTranscript> ClientTranscripts { get; set; }
+      
         public DbSet<ClientContact> ClientContacts { get; set; }
         public DbSet<ClientDocument> ClientDocuments { get; set; }
         public DbSet<ClientNote> ClientNotes { get; set; }
         public DbSet<ClientDependent> ClientDependents { get; set; }
-        public DbSet<ClientProduct> ClientProducts { get; set; }
-        public DbSet<ClientFee> ClientFees { get; set; }
+       
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceDetails> InvoiceDetails { get; set; }
         public DbSet<ClientOccupationHistory> ClientOccupationHistory { get; set; }
@@ -194,27 +192,15 @@ namespace SmartDataAccess
         public DbSet<ClientGroup> ClientGroups { get; set; }
         public DbSet<UserAuthenticationCode> UserAuthenticationCodes { get; set; }
         public DbSet<PinCodeType> PinCodeTypes { get; set; }
-        public DbSet<ClientMedicalDetail> ClientMedicalDetails { get; set; }
-        public DbSet<NoticeBoard> NoticeBoard { get; set; }
+              public DbSet<NoticeBoard> NoticeBoard { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductHistory> ProductHistory { get; set; }
         public DbSet<ProductFee> ProductFees { get; set; }
         public DbSet<ProductFeeHistory> ProductFeeHistory { get; set; }
-        public DbSet<ProductAssert> ProductAsserts { get; set; }
-        public DbSet<AssertCategory> AssertCategories { get; set; }
-        public DbSet<Assert> Asserts { get; set; }
+      
         public DbSet<InvoiceStatus> InvoiceStatuses { get; set; }
         public DbSet<DeductionType> DeductionTypes { get; set; }
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<CourseTopic> CourseTopics { get; set; }
-        public DbSet<CourseSession> CourseSessions { get; set; }
-        public DbSet<CourseFee> CourseFees { get; set; }
-        public DbSet<CourseFeeHistory> CourseFeeHistory { get; set; }
-        public DbSet<CourseIntake> CourseIntakes { get; set; }
-        public DbSet<AttendanceRegisterDetail> AttendanceRegisterDetails { get; set; }
-        public DbSet<AttendanceRegister> AttendanceRegisters { get; set; }
-
-        public DbSet<Department> Department { get; set; }
+          public DbSet<Department> Department { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<PriorityRank> PriorityRanks { get; set; }
         public DbSet<ContactType> ContactTypes { get; set; }
@@ -262,6 +248,23 @@ namespace SmartDataAccess
         public DbSet<KonapoFundCTI> KonapoFundCTIs { get; set; }
         public DbSet<KonapoFundReport> KonapoFundReports { get; set; }
         public DbSet<KonapoFundCTIHistory> KonapoFundCTIHistories { get; set; }
+
+
+        //Loans
+        public DbSet<Loan> Loans { get; set; }
+        public DbSet<LoanUse> LoanUses { get; set; }
+        public DbSet<LoanType> LoanTypes { get; set; }
+        public DbSet<LoanSector> LoanSectors { get; set; }
+        public DbSet<LoanStatus> LoanStatus { get; set; }
+        public DbSet<LoanFiscal> LoanFiscals { get; set; }
+        public DbSet<LoanFinance> LoanFinances { get; set; }
+        public DbSet<LoanSchedule> LoanSchedules { get; set; }
+        public DbSet<ProductComputation> ProductComputations { get; set; }
+        
+        public DbSet<LoanDocument> LoanDocuments { get; set; }
+        public DbSet<LoanBeneficiary> LoanBeneficiaries { get; set; }
+        
+
         // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
         // Script-Migration -From 20180904195021_InitialCreate
     }

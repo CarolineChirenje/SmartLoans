@@ -42,13 +42,11 @@ namespace SmartDomain
         public virtual List<ClientDocument> ClientDocuments { get; set; }
         public virtual ICollection<Transaction> ClientPayments { get; set; }
         public virtual List<ClientNote> ClientNotes { get; set; }
-        public virtual List<ClientMedicalDetail> ClientMedicalDetails { get; set; }
+      
         public virtual List<ClientDependent> ClientDependents { get; set; }
-        public virtual List<ClientProduct> ClientProducts { get; set; }
-        public virtual List<ClientCourse> ClientCourses { get; set; }
-        public virtual List<ClientFee> ClientFees { get; set; }
+        
         public virtual List<InvoiceDetails> InvoiceDetails { get; set; }
-        public List<AttendanceRegisterDetail> AttendanceRegister { get; set; }
+        public virtual List<Loan> Loans { get; set; }
         public virtual List<ClientOccupationHistory> ClientOccupationHistory { get; set; }
 
         public List<KonapoFund> KonapoFunds { get; set; }
@@ -74,11 +72,7 @@ namespace SmartDomain
         [NotMapped]
         public int RelationshipTypeID { get; set; }
 
-        [NotMapped]
-        public int CourseID { get; set; }
-
-        [NotMapped]
-        public int CourseIntakeID { get; set; }
+       
 
         [NotMapped]
         public int ProductID { get; set; }
