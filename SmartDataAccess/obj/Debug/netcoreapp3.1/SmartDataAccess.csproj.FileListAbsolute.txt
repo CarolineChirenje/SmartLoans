@@ -17,6 +17,11 @@ C:\DEV\SmartWealth\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.cspro
 C:\DEV\SmartWealth\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.dll
 C:\DEV\SmartWealth\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.pdb
 C:\DEV\SmartWealth\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.genruntimeconfig.cache
+C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.csproj.AssemblyReference.cache
+C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.AssemblyInfoInputs.cache
+C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.AssemblyInfo.cs
+C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartDataAccess\bin\Debug\netcoreapp3.1\SmartDataAccess.deps.json
 C:\DEV\SmartLoans\SmartDataAccess\bin\Debug\netcoreapp3.1\SmartDataAccess.runtimeconfig.json
 C:\DEV\SmartLoans\SmartDataAccess\bin\Debug\netcoreapp3.1\SmartDataAccess.runtimeconfig.dev.json
@@ -27,11 +32,6 @@ C:\DEV\SmartLoans\SmartDataAccess\bin\Debug\netcoreapp3.1\SmartHelper.dll
 C:\DEV\SmartLoans\SmartDataAccess\bin\Debug\netcoreapp3.1\SmartDomain.pdb
 C:\DEV\SmartLoans\SmartDataAccess\bin\Debug\netcoreapp3.1\SmartHelper.pdb
 C:\DEV\SmartLoans\SmartDataAccess\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
-C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.csproj.AssemblyReference.cache
-C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.GeneratedMSBuildEditorConfig.editorconfig
-C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.AssemblyInfoInputs.cache
-C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.AssemblyInfo.cs
-C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.csproj.CopyComplete
 C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.dll
 C:\DEV\SmartLoans\SmartDataAccess\obj\Debug\netcoreapp3.1\SmartDataAccess.pdb

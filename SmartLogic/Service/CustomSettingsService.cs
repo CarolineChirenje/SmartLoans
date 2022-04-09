@@ -171,6 +171,8 @@ Include(x => x.CustomVariableType)
             {
                 CustomSetting customSetting = _context.CustomSettings.Where(r => r.CustomSettingID == (int)applicationSetting)
                  .AsNoTracking().FirstOrDefault();
+                if (customSetting.IsNull())
+                    return null;
                 return new CustomSelectList()
                 {
                     ID = customSetting.CustomSettingID,

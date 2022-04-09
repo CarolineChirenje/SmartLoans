@@ -127,7 +127,6 @@
 
   <ItemGroup>
     <Folder Include="Logs\" />
-    <Folder Include="SmartResources\" />
   </ItemGroup>
   
   <ItemGroup>
@@ -137,6 +136,16 @@
     <Content Include="wwwroot\bower_components\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="SmartResources\**" />
+    <Compile Remove="Views\KonapoFund\**" />
+    <Content Remove="SmartResources\**" />
+    <Content Remove="Views\KonapoFund\**" />
+    <EmbeddedResource Remove="SmartResources\**" />
+    <EmbeddedResource Remove="Views\KonapoFund\**" />
+    <None Remove="SmartResources\**" />
+    <None Remove="Views\KonapoFund\**" />
   </ItemGroup>
 
   

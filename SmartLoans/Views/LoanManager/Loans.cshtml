@@ -1,0 +1,113 @@
+﻿@model IEnumerable<SmartInterfaces.LoanForm>
+@using SmartHelper;
+@{
+    TempData["Title"] = "Loans";
+}
+
+<section class="content-header">
+    <h1>
+        @TempData["Title"]
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">@TempData["Title"]</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Manage Loans</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    @if (TempData["Error"] != null)
+                    {<div class="container">
+                            <div class="text-danger">@TempData["Error"].ToString()</div>
+                        </div>
+                        <br />
+                    }
+                    <div class="container">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    </div>
+
+                    @if (TempData["Success"] != null)
+                    {<div class="container">
+                            <div class="text-success">@TempData["Success"].ToString()</div>
+                        </div>
+                    }
+                    @if (TempData["Warning"] != null)
+                    {<div class="container">
+                            <div class="text-warning">@TempData["Warning"].ToString()</div>
+                        </div>
+                    }
+                    <div class="dataTable_wrapper">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Loan Type</th>
+                                    <th>Loan Number</th>
+                                    <th>Applicant</th>
+                                    <th>DateCreated</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="odd gradeX">
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.LoanType)</td>
+                                    @if (UserAppData.HasPermission(Permissions.View_Client))
+                                    {
+                                        <td><a asp-controller="LoanManager" asp-action="ViewLoan" asp-route-id="@item.LoanID">@Html.DisplayFor(modelItem => item.LoanRef)</a> </td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Html.DisplayFor(modelItem => item.LoanRef)</td>
+                                    }
+
+                                    @if (UserAppData.HasPermission(Permissions.View_Client))
+                                    {
+                                        <td><a asp-controller="Client" asp-action="ViewClient" asp-route-id="@item.ClientID">@Html.DisplayFor(modelItem => item.Applicant)</a> </td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Html.DisplayFor(modelItem => item.Applicant) </td>
+                                    }
+                                    <td>@UtilityService.ShowDateTime(item.RegistrationDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LoanStatus)</td>
+
+                                </tr>
+                                }
+                        </table>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    @if (UserAppData.HasPermission(Permissions.Add_Loan))
+                    {
+                        <a class="btn btn-success pull-right" asp-controller="LoanManager" asp-action="AddLoan">New</a><br />
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+
+</script>

@@ -23,3 +23,4 @@ C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.AssemblyInfo.c
 C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.dll
 C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.pdb
+C:\DEV\SmartLoans\SmartHelper\obj\Debug\netcoreapp3.1\SmartHelper.csproj.AssemblyReference.cache

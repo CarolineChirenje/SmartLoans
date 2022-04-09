@@ -1,0 +1,114 @@
+﻿@model SmartDomain.LoanNote
+
+@using SmartHelper;
+@using System.Collections.Generic;
+@{
+    TempData["Title"] = "Loan Details";
+}
+
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+    <h1>
+        @Model.Loan.LoanRef Note
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <partial name="_MessageDisplay" />
+    <form method="post" asp-controller="Loan" asp-action="ViewLoanNote">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Information
+                    </div>
+                    <!-- /.panel-heading -->
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Comment:</label>
+                            <textarea class="form-control" name="Comment">@Model.Comment</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">DueDate:</label>
+                            <input asp-for="@Model.DueDate" type="date" class="form-control" />
+                            <span asp-validation-for="@Model.DueDate class=" text-danger"></span>
+                        </div>
+                        @if (UserAppData.CurrentUserTypeID != (int)TypeOfUser.Employee)
+                        {
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Visible To Admin Only</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="@Model.VisibleToAdminOnly" />
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                        @{
+
+                            string closedDate = UtilityService.ShowDateTime(Model.DateClosed);
+                            string dateUploaded = UtilityService.ShowDateTime(Model.DateUploaded);
+
+                        }
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Initiator</label>
+                            <label for="inputEmail3" class="form-control label-default">@Model.UserType.Name</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Date Uploaded:</label>
+                            <label for="inputEmail3" class="form-control label-default">@dateUploaded</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Date Closed:</label>
+                            <label for="inputEmail3" class="form-control label-default">@closedDate</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+
+                            <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+
+                            <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+
+                        </div>
+
+                        <input type="hidden" name="LoanNoteID" value="@Model.LoanNoteID" />
+
+                    </div>
+                    <div class="modal-footer">
+                        @if (UserAppData.HasPermission(Permissions.Update_Loan_Note))
+                        {
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <a class="btn btn-success" asp-controller="LoanManager" asp-action="CloseNote" asp-route-noteid="@Model.LoanNoteID" asp-route-loanid="@Model.LoanID">Close</a>
+                        }
+                        @if (UserAppData.HasPermission(Permissions.Delete_Client_Note))
+                        {
+                            <a class="btn btn-danger" asp-controller="LoanManager" asp-action="ActionNote" asp-route-noteid="@Model.LoanNoteID" asp-route-loanid="@Model.LoanID">Delete</a>
+                        }
+                        @if (UserAppData.HasPermission(Permissions.View_Loan))
+                        {
+                            <a class="btn btn-info" asp-controller="LoanManager" asp-action="Notes" asp-route-id="@Model.LoanID">View More Notes</a>
+                        } <a class="btn btn-default" asp-controller="LoanManager" asp-action="Notes" asp-route-id="@Model.LoanID">Cancel</a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- /.box -->
+</section>
+
+

@@ -31,10 +31,11 @@ namespace SmartLogic
                 Product product = await _context.Products
                    .Where(r => r.ProductID == ProductID)
                     .Include(c => c.Company)
-                   .Include(m => m.Loans)
-                   .Include(p => p.ProductFees)
-                   .ThenInclude(p => p.Frequency)
-                                    .AsNoTracking().FirstOrDefaultAsync();
+                     .Include(p => p.ProductFees)
+                    .ThenInclude(c => c.CalculationType)
+                     .Include(p => p.ProductFees)
+                   .ThenInclude(p => p.Fee)
+               .AsNoTracking().FirstOrDefaultAsync();
 
                 return product;
             }
@@ -45,17 +46,18 @@ namespace SmartLogic
             }
         }
 
-        
+
         public async Task<Product> GetProduct(string name)
         {
             try
             {
                 return await _context.Products.Where(r => r.Name.ToUpper() == name.Trim().ToUpper())
-                               .Include(c => c.Company)
-                   .Include(m => m.Loans)
-                   .Include(p => p.ProductFees)
-                   .ThenInclude(p => p.Frequency)
-                                                                .AsNoTracking().FirstOrDefaultAsync();
+                   .Include(c => c.Company)
+                    .Include(p => p.ProductFees)
+                   .ThenInclude(p => p.Fee)
+                      .Include(p => p.ProductFees)
+                   .ThenInclude(p => p.CalculationType)
+                  .AsNoTracking().FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -72,9 +74,8 @@ namespace SmartLogic
                 return await _context.Products
 
                             .Include(c => c.Company)
-                   .Include(m => m.Loans)
-                   .Include(p => p.ProductFees)
-                   .ThenInclude(p => p.Frequency)
+                                      .Include(p => p.ProductFees)
+                   .ThenInclude(p => p.Fee)
                                     .Include(p => p.Country)
                     .AsNoTracking()
                 .ToListAsync();
@@ -96,7 +97,7 @@ namespace SmartLogic
                .Include(c => c.Company)
                    .Include(m => m.Loans)
                    .Include(p => p.ProductFees)
-                   .ThenInclude(p => p.Frequency)
+                   .ThenInclude(p => p.Fee)
                                   .AsNoTracking()
                 .ToList();
             }
@@ -256,16 +257,16 @@ namespace SmartLogic
             {
                 ProductFee update = _context.ProductFees.
                 Where(t => t.ProductFeeID == ProductFee.ProductFeeID).FirstOrDefault();
-                update.Name = ProductFee.Name;
-                update.FrequencyID = ProductFee.FrequencyID;
+                update.FeeID = ProductFee.FeeID;
                 update.IsActive = ProductFee.IsActive;
                 update.Amount = ProductFee.Amount;
-                update.Description = ProductFee.Description;
+                update.CalculationTypeID = ProductFee.CalculationTypeID;
                 update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Entry(update).State = EntityState.Modified;
                 AddProductHistory(ProductFee);
-                return await _context.SaveChangesAsync();
+                int result= await _context.SaveChangesAsync();
+                return result;
             }
             catch (Exception ex)
             {
@@ -283,10 +284,9 @@ namespace SmartLogic
                 //Fee History
                 ProductFeeHistory feeHistory = new ProductFeeHistory();
                 feeHistory.Amount = productFee.Amount;
-                feeHistory.Description = productFee.Description;
+                feeHistory.CalculationTypeID = productFee.CalculationTypeID;
                 feeHistory.IsActive = productFee.IsActive;
-                feeHistory.FrequencyID = productFee.FrequencyID;
-                feeHistory.Name = productFee.Name;
+                feeHistory.FeeID = productFee.FeeID;
                 feeHistory.ProductID = productFee.ProductID;
                 feeHistory.ProductFeeID = productFee.ProductFeeID;
                 feeHistory.LastChangedBy = productFee.LastChangedBy;

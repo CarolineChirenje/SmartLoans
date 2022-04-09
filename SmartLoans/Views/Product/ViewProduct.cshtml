@@ -37,56 +37,80 @@
                     <div class="text-warning">@TempData["Warning"].ToString()</div>
                 </div>
             }
-        <div class="box-body">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
-                <div class="col-sm-10">
-                    <select asp-for="CompanyID" class="form-control" asp-items="ViewBag.CompanyList">
-                        <option value="">----</option>
-                    </select>
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CompanyID" class="form-control" asp-items="ViewBag.CompanyList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="Name" value="@Model.Name">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name" value="@Model.Name">
+                    </div>
                 </div>
-            </div>
-           
-         
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
-                <div class="col-sm-10">
-                    <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
-                        <option value="">----</option>
-                    </select>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Currency</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CurrencyID" class="form-control" asp-items="ViewBag.CurrencyList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
-                <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Computation Category</label>
+                    <div class="col-sm-10">
+                        <select asp-for="ProductComputationID" class="form-control" asp-items="ViewBag.ProductComputationList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Legible For Penalties</label>
+                    <div class="col-sm-2">
 
-                    <label class="checkbox-inline">
-                        @Html.CheckBoxFor(model => model.IsActive)
-                    </label>
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.IsLegibleForPenalties)
+                        </label>
 
+                    </div>
                 </div>
-            </div>
-                        <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                    <div class="col-sm-2">
 
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.IsActive)
+                        </label>
+
+                    </div>
                 </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="ProductID" value="@Model.ProductID" />
             </div>
-            <input type="hidden" name="ProductID" value="@Model.ProductID" />
-        </div>
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>
@@ -118,13 +142,8 @@
                                     <a href="#Fees" data-toggle="tab">Fees</a>
                                 </li>
                             }
-                            @if (UserAppData.HasPermission(Permissions.View_Product_Assert))
-                            {
-                                <li>
-                                    <a href="#Asserts" data-toggle="tab">Assert Class</a>
-                                </li>
-                            }
-                           
+                          
+
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
@@ -143,8 +162,8 @@
                                                 <tr>
                                                     <th>Fee Name</th>
                                                     <th>Amount</th>
-                                                    <th>Payment Terms</th>
                                                     <th>Is Active</th>
+                                                    <th>Calculate Type</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -157,20 +176,20 @@
                                                     @{
                                                         string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
                                                     }
-                                                    
+
                                                     @if (UserAppData.HasPermission(Permissions.View_Product_Fee))
                                                     {
-                                                        <td><a asp-controller="Product" asp-action="ViewProductFee" asp-route-id="@item.ProductFeeID">@item.Name</a></td>
+                                                        <td><a asp-controller="Product" asp-action="ViewProductFee" asp-route-id="@item.ProductFeeID">@item.Fee.Name</a></td>
                                                     }
                                                     else
                                                     {
-                                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.Fee.Name)</td>
                                                     }
 
                                                     <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.Frequency.Name)</td>
+                                                  
                                                     <td>@activeStatus</td>
-
+                                                    <td>@Html.DisplayFor(modelItem => item.CalculationType.Name)</td>
                                                 </tr>
                                                     }
                                                 }
@@ -186,7 +205,7 @@
                                 </div>
                             </div>
 
-                           
+
 
                             <!-- /.panel-body -->
                         </div>
@@ -211,24 +230,31 @@
             <form method="post" asp-controller="Product" asp-action="AddProductFee">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-                        <input type="text" class="form-control" name="Name">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Fee</label>
+
+                        <select asp-for="@Model.FeeID" class="form-control" asp-items="ViewBag.FeeList">
+                            <option value="">----</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Calculation Type</label>
+
+                        <select asp-for="@Model.CalculationTypeID" class="form-control" asp-items="ViewBag.CalculationTypeList">
+                            <option value="">----</option>
+                        </select>
+
                     </div>
 
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Description</label>
-                        <textarea class="form-control" name="Description" rows="5"></textarea>
-                    </div>
-
 
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Amount</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Value</label>
 
                         <input type="text" class="form-control" id="Amount" name="CostAmount">
                         <span id="AmountError" class="text-danger text-bold"></span>
 
                     </div>
-                    
+
                     <div class="form-group">
                         <div>
                             <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>

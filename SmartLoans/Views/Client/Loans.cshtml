@@ -1,0 +1,95 @@
+﻿@model SmartInterfaces.ClientLoans
+@using SmartHelper;
+@{
+    TempData["Title"] = "Loans";
+}
+
+<section class="content-header">
+    <h1>
+        @TempData["Title"]
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/Home/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">@TempData["Title"]</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Manage Loans</h3>
+
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Ref</th>
+                                                                <th>Status</th>
+                                <th>Registration Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Loans != null)
+                            {
+                                @foreach (var item in Model.Loans)
+                                {
+
+                            <tr>
+                                @{
+                                    string dateCreated = UtilityService.ShowDateTime(item.LastChangedDate);
+                                }
+
+                                @if (UserAppData.HasPermission(Permissions.View_Client_Loan))
+                                {
+                                    <td><a asp-controller="LoanManager" asp-action="ViewLoan" asp-route-id="@item.LoanID">@item.LoanRef</a> </td>
+                                }
+                                else
+                                {
+                                    <td>@Html.DisplayFor(modelItem => item.LoanRef)</td>
+                                }
+
+                                @*@if (UserAppData.HasPermission(Permissions.View_Product))
+                                {
+                                    <td><a asp-controller="Product" target="_blank" asp-action="ViewProduct" asp-route-id="@item.ProductID">@item.Product.Name</a> </td>
+                                }
+                                else
+                                {
+                                    <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                                }*@
+                                <td>@Html.DisplayFor(modelItem => item.LoanStatus.Name)</td>
+                                <td>@UtilityService.ShowDateTime(item.RegistrationDate)</td>
+
+                            </tr>
+                                }
+                            }
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                    @if (UserAppData.HasPermission(Permissions.Add_Loan))
+                    {
+                        <a class="btn btn-success pull-right" asp-controller="LoanManager" asp-route-id="@Model.ClientID" asp-action="AddLoan">New</a><br />
+                    }
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- DataTables -->
+<script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#example1').DataTable();
+    });
+
+</script>

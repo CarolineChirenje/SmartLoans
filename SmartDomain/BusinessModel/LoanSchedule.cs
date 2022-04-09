@@ -14,7 +14,10 @@ namespace SmartDomain
         public virtual Loan Loan { get; set; }
         public int LedgerNo { get; set; }
         public bool IsPaid { get; set; }
-      
+        public string DueDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime DateCreated { get; set; }
+
     }
 }
 

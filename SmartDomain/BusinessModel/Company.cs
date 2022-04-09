@@ -17,6 +17,9 @@ namespace SmartDomain
         [ForeignKey("CountryID")]
         public int? CountryID { get; set; }
         public virtual Country Country { get; set; }
+        public int? FiscalYearID { get; set; }
+        public virtual FiscalYear FiscalYear { get; set; }
+        
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string Mobile { get; set; }

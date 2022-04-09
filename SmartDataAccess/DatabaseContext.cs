@@ -16,18 +16,17 @@ namespace SmartDataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity(typeof(LoanBeneficiary))
+                     .HasOne(typeof(Loan), "Loan")
+                     .WithMany()
+                     .HasForeignKey("LoanID")
+                     .OnDelete(DeleteBehavior.NoAction); // no ON DELETE
 
-            modelBuilder.Entity(typeof(KonapoFundCT))
-                 .HasOne(typeof(KonapoFund), "KonapoFund")
-                 .WithMany()
-                 .HasForeignKey("KonapoFundID")
-                 .OnDelete(DeleteBehavior.NoAction); // no ON DELETE
-
-            modelBuilder.Entity(typeof(KonapoFundCTI))
-                 .HasOne(typeof(KonapoFundCT), "KonapoFundCT")
-                 .WithMany()
-                 .HasForeignKey("KonapoFundCTID")
-                 .OnDelete(DeleteBehavior.NoAction); // no ON DELETE
+            //modelBuilder.Entity(typeof(KonapoFundCTI))
+            //     .HasOne(typeof(KonapoFundCT), "KonapoFundCT")
+            //     .WithMany()
+            //     .HasForeignKey("KonapoFundCTID")
+            //     .OnDelete(DeleteBehavior.NoAction); // no ON DELETE
             modelBuilder.Entity<UserRole>().HasKey(sc => new { sc.UserID, sc.RoleID });
 
             //System Roles
@@ -55,9 +54,7 @@ namespace SmartDataAccess
             modelBuilder.Entity<Currency>().HasData(
              Data.GetCurrencies());
 
-            //// product Frequencies
-            modelBuilder.Entity<Frequency>().HasData(
-                Data.GetFrequencies());
+           
             //   user types
             modelBuilder.Entity<UserType>().HasData(
              Data.GetUserTypes());
@@ -157,13 +154,26 @@ namespace SmartDataAccess
           Data.GetDeductionTypes());
             modelBuilder.Entity<TechnicalSupport>().HasData(
            Data.GetSupportInformation());
-            modelBuilder.Entity<FundSource>().HasData(
-          Data.GetFundSources());
+           
             modelBuilder.Entity<PinCodeType>().HasData(
           Data.GetPinCodeTypes());
             modelBuilder.Entity<UserAuthenticationCode>()
              .Property(p => p.IsValid)
              .HasDefaultValue(true);
+
+          
+            modelBuilder.Entity<PenaltyType>().HasData(
+          Data.GetPenaltyTypes());
+
+
+            modelBuilder.Entity<LoanStatus>().HasData(
+          Data.GetLoanState());
+
+            modelBuilder.Entity<CalculationType>().HasData(
+           Data.GetCalculationTypes());
+            
+
+
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UserAccessGrant> UserAccessGrants { get; set; }
@@ -193,10 +203,7 @@ namespace SmartDataAccess
         public DbSet<UserAuthenticationCode> UserAuthenticationCodes { get; set; }
         public DbSet<PinCodeType> PinCodeTypes { get; set; }
               public DbSet<NoticeBoard> NoticeBoard { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductHistory> ProductHistory { get; set; }
-        public DbSet<ProductFee> ProductFees { get; set; }
-        public DbSet<ProductFeeHistory> ProductFeeHistory { get; set; }
+       
       
         public DbSet<InvoiceStatus> InvoiceStatuses { get; set; }
         public DbSet<DeductionType> DeductionTypes { get; set; }
@@ -205,7 +212,7 @@ namespace SmartDataAccess
         public DbSet<PriorityRank> PriorityRanks { get; set; }
         public DbSet<ContactType> ContactTypes { get; set; }
         public DbSet<WeekDay> WeekDays { get; set; }
-        public DbSet<Frequency> Frequencies { get; set; }
+       
         public DbSet<Gender> Genders { get; set; }
         public DbSet<StatementList> StatementLists { get; set; }
         public DbSet<RelationshipType> RelationshipTypes { get; set; }
@@ -238,33 +245,30 @@ namespace SmartDataAccess
         public DbSet<UserAccessRestriction> UserAccessRestrictions { get; set; }
 
 
-        public DbSet<Fund> Funds { get; set; }
-        public DbSet<FundItem> FundItems { get; set; }
-        public DbSet<FundCategory> FundCategories { get; set; }
-        public DbSet<FundCategoryItem> FundCategoryItems { get; set; }
-        public DbSet<FundSource> FundSources { get; set; }
-        public DbSet<KonapoFund> KonapoFunds { get; set; }
-        public DbSet<KonapoFundCT> KonapoFundCTs { get; set; }
-        public DbSet<KonapoFundCTI> KonapoFundCTIs { get; set; }
-        public DbSet<KonapoFundReport> KonapoFundReports { get; set; }
-        public DbSet<KonapoFundCTIHistory> KonapoFundCTIHistories { get; set; }
-
-
         //Loans
         public DbSet<Loan> Loans { get; set; }
         public DbSet<LoanUse> LoanUses { get; set; }
         public DbSet<LoanType> LoanTypes { get; set; }
         public DbSet<LoanSector> LoanSectors { get; set; }
         public DbSet<LoanStatus> LoanStatus { get; set; }
-        public DbSet<LoanFiscal> LoanFiscals { get; set; }
+        public DbSet<FiscalYear> FiscalYears { get; set; }
         public DbSet<LoanFinance> LoanFinances { get; set; }
         public DbSet<LoanSchedule> LoanSchedules { get; set; }
         public DbSet<ProductComputation> ProductComputations { get; set; }
-        
+        public DbSet<ProductPenalty> ProductPenalties { get; set; }
+        public DbSet<PenaltyType> PenaltyTypes { get; set; }
         public DbSet<LoanDocument> LoanDocuments { get; set; }
         public DbSet<LoanBeneficiary> LoanBeneficiaries { get; set; }
-        
-
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductHistory> ProductHistory { get; set; }
+        public DbSet<ProductFee> ProductFees { get; set; }
+        public DbSet<ProductFeeHistory> ProductFeeHistory { get; set; }
+        public DbSet<Fee> Fees { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<CategoryItem> CategoryItems { get; set; }
+        public DbSet<LoanNote> LoanNotes { get; set; }
+        public DbSet<CalculationType> CalculationTypes { get; set; }
         // The following example creates a script for all migrations after the InitialCreate migration, using the migration ID.
         // Script-Migration -From 20180904195021_InitialCreate
     }

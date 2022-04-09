@@ -13,7 +13,7 @@ namespace SmartDomain
         public static List<LayoutMenu> SettingsMenu { get; set; }
         public static List<LayoutMenu> EmployeeMenu { get; set; }
         public static List<LayoutMenu> EmployerMenu { get; set; }
-        public static List<LayoutMenu> KhonapoMenu { get; set; }
+        public static List<LayoutMenu> LoanMenu { get; set; }
       
         
     }

@@ -69,8 +69,8 @@ namespace SmartLoan
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IEmailTemplateService, EmailTemplateService>();
             services.AddScoped<ITransactionService, TransactionService>();
-            services.AddScoped<IKonapoFundService, KonapoFundService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IManageLoanService, ManageLoanService>();
             services.AddScoped<ILoanService, LoanService>();
             services.AddScoped<INoticeBoardService, NoticeBoardService>();
             services.AddScoped<ISettingService, SettingService>();

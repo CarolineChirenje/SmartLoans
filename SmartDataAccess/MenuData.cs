@@ -75,17 +75,7 @@ namespace SmartDataAccess
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
-                  new MenuGroup()
-                {
-                    MenuGroupID = (int)MenuGroups.Products,
-                    DisplayName = MenuGroups.Products.ToString().Replace("_", " "),
-                    IsActive = true,
-                    IsActiveMenu = false,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-graduation-cap"),
-                    OrderNo = 8,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-                },
+                
                     new MenuGroup()
                 {
                     MenuGroupID = (int)MenuGroups.Loans,
@@ -177,8 +167,8 @@ namespace SmartDataAccess
                     MenuID =3,
                     MenuGroupID = (int)MenuGroups.Loans,
                     DisplayName = "Loans",
-                    ControllerName = "KonapoFund",
-                    ActionName = "KonapoFunds",
+                    ControllerName = "Loan",
+                    ActionName = "Dashboard",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-calculator"),
                     OrderNo = 3,
@@ -215,22 +205,7 @@ namespace SmartDataAccess
 
                 },
 
-                new Menu()
-                {
-                    MenuID = 6,
-                    MenuGroupID = (int)MenuGroups.Products,
-                    DisplayName = "Products",
-                    ControllerName = "Product",
-                    ActionName = "Product",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-bomb"),
-                    OrderNo =6,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-                },
-
              
-
                   new Menu()
                 {
                     MenuID= 8,

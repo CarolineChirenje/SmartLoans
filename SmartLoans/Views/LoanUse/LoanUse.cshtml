@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SmartDomain.LoanUse>
 @using SmartHelper;
 @{
-    TempData["Title"] = "LoanUse";
+    TempData["Title"] = "Loan Use";
 }
 
 <section class="content-header">
@@ -9,7 +9,7 @@
         @TempData["Title"]
     </h1>
     <ol class="breadcrumb">
-        <li><a href="~/CustomSettings/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="~/Loan/Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">@TempData["Title"]</li>
     </ol>
 </section>
@@ -19,7 +19,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Manage LoanUse</h3>
+                    <h3 class="box-title">Manage Loan Use</h3>
 
                 </div>
                 <!-- /.box-header -->
@@ -62,7 +62,7 @@
                                             <td>@Html.DisplayFor(modelItem => item.Name)</td>
                                         }
                                         <td>@activeStatus</td>
-                                          <td>@dateCreated</td>
+                                        <td>@dateCreated</td>
                                         <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
 
 
@@ -73,10 +73,10 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <a class="btn btn-default" asp-controller="CustomSettings" asp-action="Dashboard">Cancel</a>
+                    <a class="btn btn-default" asp-controller="Loan" asp-action="Dashboard">Cancel</a>
                     @if (UserAppData.HasPermission(Permissions.Add_Loan_Use))
                     {
-                        <a href="Add" class="btn btn-success pull-right">Create</a><br />
+                        <a class="btn btn-success pull-right" asp-controller="LoanUse" asp-action="Add">Create</a><br />
                     }
                 </div>
             </div>

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Configuration;
 
 namespace SmartHelper
 {
@@ -11,9 +10,8 @@ namespace SmartHelper
         Reporting,
         Settings,
         Invoicing,
-        Products,
         Loans,
-       
+
         //
         Menu = 9998,
         Developer_Menu = 999,
@@ -21,8 +19,7 @@ namespace SmartHelper
     public enum LayoutComponent
     {
         Client = 1,
-        Products,
-        Khonapo_Fund,
+        Loan_Manager,
         Developer_Menu,
         Settings,
         Reporting,
@@ -33,7 +30,7 @@ namespace SmartHelper
     {//Name must the same with ComponentList
         MenuList = 1,
         ClientMenuList,
-        KhonapoMenuList,
+        LoanMenuList,
         DeveloperMenuList,
         SettingsMenuList,
         ReportingMenuList,
@@ -613,7 +610,8 @@ namespace SmartHelper
         Report_Footer_Font_Name,
         Report_Footer_Font_Size,
         Allow_Two_Factor_Authentication,
-        Pass_Code_Validity_Period
+        Pass_Code_Validity_Period,
+        Loan_Number_Prefix,
 
     }
 
@@ -630,11 +628,7 @@ namespace SmartHelper
         Employee,
 
     }
-    public enum FrequencyList
-    {
-        Once_Off = 1,
-        Monthly
-    }
+
 
     public enum PaymentState
     {
@@ -666,15 +660,17 @@ namespace SmartHelper
         Update_Client_Contact,
         Delete_Client_Contact,
         View_Client_Contact,
+
         Add_Client_Loan,
         Update_Client_Loan,
         Delete_Client_Loan,
         View_Client_Loan,
+
         Add_Client_Dependent,
         Update_Client_Dependent,
         Delete_Client_Dependent,
         View_Client_Dependent,
-            
+
         View_Client_Payments,
         Generate_Client_Statement,
         Client_Upload_Document,
@@ -783,17 +779,9 @@ namespace SmartHelper
         Delete_Product_Fee,
         View_Product_Fee,
 
-        Add_Product_Assert,
-        Update_Product_Assert,
-        View_Product_Assert,
 
 
-        Add_Assert,
-        Update_Assert,
-        Delete_Assert,
-        View_Assert,
 
-       
         View_Invoice_Details,
         Print_Statement_With_No_Reversals,
         Auto_Generate_Receipt,
@@ -817,30 +805,57 @@ namespace SmartHelper
         Delete_Loan_Type,
         View_Loan_Type,
 
+        Add_Fee,
+        Update_Fee,
+        Delete_Fee,
+        View_Fee,
+
 
 
         Add_Loan_Status,
         Update_Loan_Status,
         Delete_Loan_Status,
         View_Loan_Status,
-        Add_Fund,
-        Update_Fund,
-        Delete_Fund,
-        View_Fund,
-        Add_Fund_Item,
-        Update_Fund_Item,
-        Delete_Fund_Item,
-        View_Fund_Item,
-        Add_Konapo_Fund,
-        Update_Konapo_Fund,
-        Delete_Konapo_Fund,
-        View_Konapo_Fund
+        Add_Category,
+        Update_Category,
+        Delete_Category,
+        View_Category,
 
+
+        Add_Loan,
+        Update_Loan,
+        Delete_Loan,
+        View_Loan,
+
+        Add_Loan_Beneficiary,
+        Update_Loan_Beneficiary,
+        View_Loan_Beneficiary,
+        Delete_Loan_Beneficiary,
+
+        Add_Product_Computation,
+        Update_Product_Computation,
+        View_Product_Computation,
+        Delete_Product_Computation,
+
+        Loan_Upload_Document,
+        Loan_View_Document,
+
+        Add_Loan_Note,
+        Update_Loan_Note,
+        View_Loan_Note,
+        Delete_Loan_Note,
+
+
+        Add_Fiscal_Year,
+        Update_Fiscal_Year,
+        View_Fiscal_Year,
+        Delete_Fiscal_Year
 
 
     }
     public enum InvoiceState
-    {   Created = 1,
+    {
+        Created = 1,
         Processed = 2,
         Finalised,
         Unknown
@@ -925,7 +940,7 @@ namespace SmartHelper
         Product = 1,
         Individual,
         Do_Not_Deduct,
-         }
+    }
     public enum GenderOrientation
     {
         Female = 1,
@@ -953,7 +968,7 @@ namespace SmartHelper
     {
         Product_Based_Statement = 1,
         Transaction_List = 2,
-        Outstanding_Payments=3,
+        Outstanding_Payments = 3,
         Deductions
 
     }
@@ -986,18 +1001,38 @@ namespace SmartHelper
         Individual = 2,
     }
 
-    public enum Cash_Type
-    {
-        Bank = 1,
-        Cash = 2,
-        Not_Specified
-    }
 
     public enum CodeType
     {
         Password_Reset = 1,
         Multi_Factor_Authenticator = 2,
         Account_Creation
-      }
+    }
+
+    public enum PenaltyMarkers
+    {
+        X_Days = 1,
+        Y_Days,
+        X_Days_More,
+        Y_Days_More,
+        X_Days_Less,
+        Y_Days_Less
+
+    }
+
+    public enum LoanState
+    {
+        Created = 1,
+        Awaiting_Approval = 2,
+        Active = 3
+
+    }
+    public enum Calculation_Type
+    {
+        Flat_Rate = 1,
+        Percentage_Of = 2,
+      
+
+    }
 }
 

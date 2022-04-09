@@ -27,10 +27,13 @@ namespace SmartDomain
         public virtual Currency Currency { get; set; }
         public virtual List<Loan> Loans { get; set; }
         public virtual List<ProductFee> ProductFees { get; set; }
-        
-        
 
-
+        public virtual List<ProductPenalty> ProductPenalties { get; set; }
+        [NotMapped]
+        public int FeeID { get; set; }
+        [NotMapped]
+        public int CalculationTypeID { get; set; }
+        
 
     }
 }

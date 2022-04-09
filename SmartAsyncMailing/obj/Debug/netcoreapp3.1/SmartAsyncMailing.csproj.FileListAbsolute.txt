@@ -282,6 +282,11 @@ C:\DEV\SmartWealth\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.c
 C:\DEV\SmartWealth\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.dll
 C:\DEV\SmartWealth\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.pdb
 C:\DEV\SmartWealth\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.genruntimeconfig.cache
+C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.csproj.AssemblyReference.cache
+C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.AssemblyInfoInputs.cache
+C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.AssemblyInfo.cs
+C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\appsettings.json
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartAsyncMailing.exe
@@ -415,11 +420,6 @@ C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartInterfaces.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartLog.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartLogic.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartReporting.pdb
-C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.csproj.AssemblyReference.cache
-C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.GeneratedMSBuildEditorConfig.editorconfig
-C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.AssemblyInfoInputs.cache
-C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.AssemblyInfo.cs
-C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.csproj.CopyComplete
 C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.dll
 C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.pdb

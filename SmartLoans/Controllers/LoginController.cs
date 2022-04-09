@@ -118,11 +118,11 @@ namespace SmartLoan.Controllers
         {
             AppData.MenuGroups = await _menuService.DisplayMenuGroups();
             AppData.SettingsMenu = await _menuService.DisplayLayouts(LayoutComponent.Settings);
-            AppData.DeveloperMenu = await _menuService.DisplayLayouts(LayoutComponent.Khonapo_Fund);
+            AppData.DeveloperMenu = await _menuService.DisplayLayouts(LayoutComponent.Developer_Menu);
             AppData.ReportMenu = await _menuService.DisplayLayouts(LayoutComponent.Reporting);
             AppData.ClientMenu = await _menuService.DisplayLayouts(LayoutComponent.Client);
-            AppData.KhonapoMenu = await _menuService.DisplayLayouts(LayoutComponent.Khonapo_Fund);
-            AppData.EmployeeMenu = await _menuService.DisplayLayouts(LayoutComponent.Employees);
+            AppData.LoanMenu = await _menuService.DisplayLayouts(LayoutComponent.Loan_Manager);
+            AppData.ClientMenu = await _menuService.DisplayLayouts(LayoutComponent.Client);
             AppData.EmployerMenu = await _menuService.DisplayLayouts(LayoutComponent.Employers);
 
         }

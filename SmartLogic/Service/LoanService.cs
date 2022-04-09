@@ -139,8 +139,8 @@ namespace SmartLogic
             bool result = false;
             try
             {
-                LoanSector loanSector = await _context.LoanSectors.Where(b => b.Name.Equals(type.Name)).FirstOrDefaultAsync();
-                result = type.IsNotNull();
+                LoanType loanTypes = await _context.LoanTypes.Where(b => b.Name.Equals(type.Name)).FirstOrDefaultAsync();
+                result = loanTypes.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -401,7 +401,10 @@ namespace SmartLogic
             int result = 0;
             try
             {
+                
                 var _result = await _context.LoanStatus.FindAsync(id);
+                if (_result.LoanStatusID <= (Enum.GetNames(typeof(LoanState)).Length))
+                    return 0;
                 _context.LoanStatus.Remove(_result);
                 result = await _context.SaveChangesAsync();
             }
@@ -455,6 +458,8 @@ namespace SmartLogic
         {
             try
             {
+                if (loanStatus.LoanStatusID <= (Enum.GetNames(typeof(LoanState)).Length))
+                    return 1;
 
                 LoanStatus update = _context.LoanStatus.Where(r => r.LoanStatusID == loanStatus.LoanStatusID).FirstOrDefault();
                 update.IsActive = loanStatus.IsActive;
@@ -473,13 +478,13 @@ namespace SmartLogic
         #endregion LoanUse
 
 
-        #region LoanFiscal
-        public async Task<bool> IsDuplicate(LoanFiscal  loanFiscal)
+        #region Fiscal
+        public async Task<bool> IsDuplicate(FiscalYear fiscalYear)
         {
             bool result = false;
             try
             {
-                LoanFiscal use = await _context.LoanFiscals.Where(b => b.Name.Equals(loanFiscal.Name)).FirstOrDefaultAsync();
+                FiscalYear use = await _context.FiscalYears.Where(b => b.Name.Equals(fiscalYear.Name)).FirstOrDefaultAsync();
                 result = use.IsNotNull();
             }
             catch (Exception ex)
@@ -490,12 +495,12 @@ namespace SmartLogic
             }
             return result;
         }
-        public async Task<List<LoanFiscal>> LoanFiscals()
+        public async Task<List<FiscalYear>> FiscalYears()
         {
-            List<LoanFiscal> result = null;
+            List<FiscalYear> result = null;
             try
             {
-                result = await _context.LoanFiscals
+                result = await _context.FiscalYears
                               .AsNoTracking()
                .ToListAsync();
             }
@@ -509,13 +514,13 @@ namespace SmartLogic
 
         }
 
-        public async Task<int> DeleteLoanFiscal(int id)
+        public async Task<int> DeleteFiscal(int id)
         {
             int result = 0;
             try
             {
-                var _result = await _context.LoanFiscals.FindAsync(id);
-                _context.LoanFiscals.Remove(_result);
+                var _result = await _context.FiscalYears.FindAsync(id);
+                _context.FiscalYears.Remove(_result);
                 result = await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -527,12 +532,12 @@ namespace SmartLogic
             return result;
         }
 
-        public async Task<LoanFiscal> FindLoanFiscal(int id)
+        public async Task<FiscalYear> FindFiscalYear(int id)
         {
-            LoanFiscal result = null;
+            FiscalYear result = null;
             try
             {
-                result = await _context.LoanFiscals.Where(r => r.LoanFiscalID == id)
+                result = await _context.FiscalYears.Where(r => r.FiscalYearID == id)
                                  .AsNoTracking().FirstOrDefaultAsync();
             }
             catch (Exception ex)
@@ -544,14 +549,14 @@ namespace SmartLogic
             return result;
         }
 
-        public async Task<int> Save(LoanFiscal loanFiscal)
+        public async Task<int> Save(FiscalYear fiscal)
         {
 
             try
             {
-                loanFiscal.LastChangedBy = UserAppData.CurrentUserName;
-                loanFiscal.LastChangedDate = DateTime.Now;
-                _context.Add(loanFiscal);
+                fiscal.LastChangedBy = UserAppData.CurrentUserName;
+                fiscal.LastChangedDate = DateTime.Now;
+                _context.Add(fiscal);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -560,17 +565,17 @@ namespace SmartLogic
                 CustomLog.Log(LogSource.Logic_Base, ex);
                 throw;
             }
-            return loanFiscal.LoanFiscalID;
+            return fiscal.FiscalYearID;
         }
 
 
-        public async Task<int> Update(LoanFiscal loanFiscal)
+        public async Task<int> Update(FiscalYear fiscal)
         {
             try
             {
 
-                LoanFiscal update = _context.LoanFiscals.Where(r => r.LoanFiscalID == loanFiscal.LoanFiscalID).FirstOrDefault();
-                update.IsActive = loanFiscal.IsActive;
+                FiscalYear update = _context.FiscalYears.Where(r => r.FiscalYearID == fiscal.FiscalYearID).FirstOrDefault();
+                update.IsCurrent = fiscal.IsCurrent;
                 update.LastChangedBy = UserAppData.CurrentUserName;
                 update.LastChangedDate = DateTime.Now;
                 _context.Update(update);
@@ -583,6 +588,554 @@ namespace SmartLogic
             }
 
         }
-        #endregion LoanFiscal
+        #endregion Fiscal
+
+
+        #region Category
+        public async Task<Category> FindCategory(int categoryID)
+        {
+            try
+            {
+                return await _context.Categories.Where(a => a.CategoryID == categoryID)
+                 .Include(a => a.SubCategories)
+                .ThenInclude(a => a.CategoryItems)
+                .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Save(Category category)
+        {
+            try
+            {
+                category.LastChangedBy = UserAppData.CurrentUserName;
+                category.LastChangedDate = DateTime.Now;
+                _context.Add(category);
+                await _context.SaveChangesAsync();
+                return category.CategoryID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<bool> IsDuplicate(Category category)
+        {
+            try
+            {
+                Category category1 = await _context.Categories.Where(b => b.Name.Equals(category.Name)).FirstOrDefaultAsync();
+                return category1.IsNotNull();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Update(Category category)
+        {
+            try
+            {
+                Category category1 = _context.Categories.Find(category.CategoryID);
+                category1.IsActive = category.IsActive;
+                category1.Name = category.Name;
+                category1.Description = category.Description;
+                category1.LastChangedBy = UserAppData.CurrentUserName;
+                category1.LastChangedDate = DateTime.Now;
+                _context.Update(category1);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> ActionCategory(int CategoryID, DatabaseAction action)
+        {
+            try
+            {
+                Category cat = await FindCategory(CategoryID);
+                if (DatabaseAction.Remove == action)
+                    _context.Categories.Remove(cat);
+                else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+                {
+                    cat.IsActive = DatabaseAction.Deactivate != action;
+                    cat.LastChangedBy = UserAppData.CurrentUserName;
+                    cat.LastChangedDate = DateTime.Now;
+                    _context.Update(cat);
+                }
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<List<Category>> Categories()
+        {
+            try
+            {
+                return await _context.Categories
+                .Include(a => a.SubCategories)
+                .ThenInclude(a => a.CategoryItems)
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        #endregion Categories
+
+
+        #region SubCategories
+        public List<SubCategory> GetSubCategories(int categoryID)
+        {
+            try
+            {
+                return _context.SubCategories
+             .Where(c => c.CategoryID == categoryID).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+
+        public async Task<SubCategory> FindSubCategory(int id)
+        {
+            try
+            {
+                return await _context.SubCategories
+                .Include(c => c.Category)
+                    .Include(c => c.CategoryItems).
+                  Where(r => r.SubCategoryID == id)
+                     .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Save(SubCategory subCategory)
+        {
+            try
+            {
+                subCategory.LastChangedBy = UserAppData.CurrentUserName;
+                subCategory.LastChangedDate = DateTime.Now;
+                _context.Add(subCategory);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Update(SubCategory subCategory)
+        {
+            try
+            {
+
+                SubCategory sub = _context.SubCategories.Find(subCategory.CategoryID);
+                sub.IsActive = subCategory.IsActive;
+                sub.Name = subCategory.Name;
+                sub.LastChangedBy = UserAppData.CurrentUserName;
+                sub.LastChangedDate = DateTime.Now;
+                _context.Update(sub);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> ActionSubCategory(int id, DatabaseAction action)
+        {
+            try
+            {
+                SubCategory subCategory = await FindSubCategory(id);
+                if (DatabaseAction.Remove == action)
+                    _context.SubCategories.Remove(subCategory);
+                else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+                {
+                    subCategory.IsActive = DatabaseAction.Deactivate != action;
+                    subCategory.LastChangedBy = UserAppData.CurrentUserName;
+                    subCategory.LastChangedDate = DateTime.Now;
+                    _context.Update(subCategory);
+                }
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<bool> IsDuplicate(SubCategory subCategory)
+        {
+            try
+            {
+                SubCategory _subCategory = await _context.SubCategories.Where(b => b.Name.Equals(subCategory.Name)).FirstOrDefaultAsync();
+                return _subCategory.IsNotNull();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
+
+        #endregion SubCategories
+
+        #region CategoryItem
+        public async Task<CategoryItem> FindCategoryItem(int id)
+        {
+            try
+            {
+                return await _context.CategoryItems.
+                    Include(c => c.SubCategory).
+                  Where(r => r.CategoryItemID == id)
+                     .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<CategoryItem> GetCategoryItem(int id)
+        {
+            try
+            {
+                return await _context.CategoryItems.
+                    Include(c => c.SubCategory).
+                     Where(r => r.CategoryItemID == id)
+                     .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Save(CategoryItem categoryItem)
+        {
+            try
+            {
+                categoryItem.LastChangedBy = UserAppData.CurrentUserName;
+                categoryItem.LastChangedDate = DateTime.Now;
+                _context.Add(categoryItem);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> Update(CategoryItem categoryItem)
+        {
+            try
+            {
+
+                CategoryItem categoryItem1 = _context.CategoryItems.Find(categoryItem.CategoryItemID);
+                categoryItem1.IsActive = categoryItem.IsActive;
+                categoryItem1.LastChangedBy = UserAppData.CurrentUserName;
+                categoryItem1.LastChangedDate = DateTime.Now;
+                _context.Update(categoryItem1);
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public async Task<int> ActionCategoryItem(int id, DatabaseAction action)
+        {
+            try
+            {
+                CategoryItem categoryItem = await FindCategoryItem(id);
+                if (DatabaseAction.Remove == action)
+                    _context.CategoryItems.Remove(categoryItem);
+                else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+                {
+                    categoryItem.IsActive = DatabaseAction.Deactivate != action;
+                    categoryItem.LastChangedBy = UserAppData.CurrentUserName;
+                    categoryItem.LastChangedDate = DateTime.Now;
+                    _context.Update(categoryItem);
+                }
+                return (await _context.SaveChangesAsync());
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<bool> IsDuplicate(CategoryItem categoryItem)
+        {
+            try
+            {
+                CategoryItem categoryItem1 = await _context.CategoryItems.Where(b => b.Name == categoryItem.Name && b.SubCategoryID == categoryItem.SubCategoryID).FirstOrDefaultAsync();
+                return categoryItem1.IsNotNull();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
+
+        #endregion FundCategoryItem
+
+
+        #region LoanSector
+        public async Task<bool> IsDuplicate(Fee fee)
+        {
+            bool result = false;
+            try
+            {
+                Fee _fee = await _context.Fees.Where(b => b.Name.Equals(fee.Name)).FirstOrDefaultAsync();
+                result = _fee.IsNotNull();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+        }
+        public async Task<List<Fee>> Fees()
+        {
+            List<Fee> result = null;
+            try
+            {
+                result = await _context.Fees
+                .AsNoTracking()
+               .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+
+        }
+
+        public async Task<int> DeleteFee(int id)
+        {
+            int result = 0;
+            try
+            {
+                var _result = await _context.Fees.FindAsync(id);
+                _context.Fees.Remove(_result);
+                result = await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+        }
+
+        public async Task<Fee> FindFee(int id)
+        {
+            Fee result = null;
+            try
+            {
+                result = await _context.Fees.Where(r => r.FeeID == id)
+                                 .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+        }
+
+        public async Task<int> Save(Fee fee)
+        {
+
+            try
+            {
+                fee.LastChangedBy = UserAppData.CurrentUserName;
+                fee.LastChangedDate = DateTime.Now;
+                _context.Add(fee);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return fee.FeeID;
+        }
+
+
+        public async Task<int> Update(Fee fee)
+        {
+            try
+            {
+
+                Fee update = _context.Fees.Where(r => r.FeeID == fee.FeeID).FirstOrDefault();
+                update.IsActive = fee.IsActive;
+                update.LastChangedBy = UserAppData.CurrentUserName;
+                update.LastChangedDate = DateTime.Now;
+                _context.Update(update);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
+        #endregion Fees
+
+        #region ProductComputations
+        public async Task<int> Save(ProductComputation productComputation)
+        {
+
+            try
+            {
+
+                productComputation.CreatedBy = UserAppData.CurrentUserName;
+                productComputation.DateCreated = DateTime.Now;
+                productComputation.LastChangedBy = UserAppData.CurrentUserName;
+                productComputation.LastChangedDate = DateTime.Now;
+                _context.Add(productComputation);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return productComputation.ProductComputationID;
+        }
+        public async Task<int> DeleteProductComputation(int id)
+        {
+            int result = 0;
+            try
+            {
+                var _result = await _context.ProductComputations.FindAsync(id);
+                _context.ProductComputations.Remove(_result);
+                result = await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+        }
+
+        public async Task<bool> IsDuplicate(ProductComputation computation)
+        {
+            bool result = false;
+            try
+            {
+                ProductComputation productComputation = await _context.ProductComputations.Where(b => b.PluginName.Equals(computation.PluginName)).FirstOrDefaultAsync();
+                result = productComputation.IsNotNull();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+        }
+        public async Task<List<ProductComputation>> ProductComputations()
+        {
+            try
+            {
+
+
+                var plugins = await _context.ProductComputations
+                .AsNoTracking()
+                .ToListAsync();
+
+                                return plugins;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<int> Update(ProductComputation computation)
+        {
+            try
+            {
+                var _plugin = await _context.ProductComputations.FindAsync(computation.ProductComputationID);
+                if (_plugin.IsNull())
+                    return 0;
+                _plugin.PluginName = computation.PluginName;
+                _plugin.Method = computation.Method;
+                _plugin.IsActive = computation.IsActive;
+                _plugin.LastChangedBy = UserAppData.CurrentUserName;
+                _plugin.LastChangedDate = DateTime.Now;
+                _context.Update(_plugin);
+                await _context.SaveChangesAsync();
+                return _plugin.ProductComputationID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public async Task<ProductComputation> FindProductComputation(int id)
+        {
+            ProductComputation result = null;
+            try
+            {
+                result = await _context.ProductComputations.Where(r => r.ProductComputationID == id)
+                                 .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+        }
+        #endregion ProductComputations
+
+
     }
 }

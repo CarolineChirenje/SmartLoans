@@ -184,7 +184,7 @@ namespace SmartDataAccess
                     Value="Smart Admin",
                     Description ="Display Sender Name As",
                     CustomVariableTypeID=(int)VariableType.String,
-                                     IsActive = true,
+                    IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                },
@@ -196,7 +196,7 @@ namespace SmartDataAccess
                     Value="0.14",
                     Description ="Percentage To Which VAT is calculated on ",
                     CustomVariableTypeID=(int)VariableType.Percentage,
-                                     IsActive = true,
+                    IsActive = true,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                },
@@ -301,7 +301,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Mail_Default_Subject,
                     Name = AppSetting.Mail_Default_Subject.ToString().Replace("_", " "),
-                    Value=$"Smart Loan  Admin",
+                    Value=$"Smart Loan Admin",
                     Description="Default Email Subject Name Used By Auto-Generated Emails",
                     CustomVariableTypeID=(int)VariableType.String,
                                      IsActive = true,
@@ -526,6 +526,18 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
+                new SmartDomain.CustomSetting()
+                {
+                    CustomSettingID = (int)AppSetting.Loan_Number_Prefix,
+                    Name = AppSetting.Loan_Number_Prefix.ToString().Replace("_", " "),
+                    Value="SLL",
+                    Description="Loan Account Number Prefix",
+                    CustomVariableTypeID=(int)VariableType.String,
+                    IsActive = true,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+
+                },
                 };
 
             return settings.ToArray();
@@ -735,25 +747,7 @@ namespace SmartDataAccess
             }
             return userTypes.ToArray();
         }
-        public static Frequency[] GetFrequencies()
-        {
-            List<Frequency> frequencies = new List<Frequency>();
-            var p = from FrequencyList s in Enum.GetValues(typeof(FrequencyList))
-                    select new { ID = s, Name = s.ToString() };
-            foreach (var x in p)
-            {
-                frequencies.Add(new Frequency()
-                {
-                    FrequencyID = (int)x.ID,
-                    Name = x.Name.Replace("_", " "),
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                });
-            }
-            return frequencies.ToArray();
-        }
+    
         public static PaymentStatus[] GetPaymentStatuses()
         {
             List<PaymentStatus> payments = new List<PaymentStatus>();
@@ -1306,7 +1300,23 @@ namespace SmartDataAccess
             }
             return lists.ToArray();
         }
-
+        public static PenaltyType[] GetPenaltyTypes()
+        {
+            List<PenaltyType> lists = new List<PenaltyType>();
+            var p = from PenaltyMarkers s in Enum.GetValues(typeof(PenaltyMarkers))
+                    select new { ID = s, Name = s.ToString() };
+            foreach (var x in p)
+            {
+                lists.Add(new PenaltyType()
+                {
+                    PenaltyTypeID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                });
+            }
+            return lists.ToArray();
+        }
         public static TechnicalSupport[] GetSupportInformation()
         {
             List<TechnicalSupport> lists = new List<TechnicalSupport>();
@@ -1327,26 +1337,7 @@ namespace SmartDataAccess
             return lists.ToArray();
         }
 
-        public static FundSource[] GetFundSources()
-        {
-            List<FundSource> lists = new List<FundSource>();
-            var p = from Cash_Type s in Enum.GetValues(typeof(Cash_Type))
-                    select new { ID = s, Name = s.ToString() };
-            foreach (var x in p)
-            {
-                lists.Add(new FundSource()
-                {
-                    FundSourceID = (int)x.ID,
-                    Name = x.Name.ToString().Replace("_", " "),
-                    IsActive = true,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser"
-
-                });
-            }
-            return lists.ToArray();
-        }
-
+      
         public static PinCodeType[] GetPinCodeTypes()
         {
             List<PinCodeType> lists = new List<PinCodeType>();
@@ -1366,6 +1357,42 @@ namespace SmartDataAccess
             return lists.ToArray();
         }
 
+        public static LoanStatus[] GetLoanState()
+        {
+            List<LoanStatus> lists = new List<LoanStatus>();
+            var p = from LoanState s in Enum.GetValues(typeof(LoanState))
+                    select new { ID = s, Name = s.ToString() };
+            foreach (var x in p)
+            {
+                lists.Add(new LoanStatus()
+                {
+                    LoanStatusID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser",
+                    IsActive = true
+                }); ;
+            }
+            return lists.ToArray();
+        }
+        public static CalculationType[] GetCalculationTypes()
+        {
+            List<CalculationType> lists = new List<CalculationType>();
+            var p = from Calculation_Type s in Enum.GetValues(typeof(Calculation_Type))
+                    select new { ID = s, Name = s.ToString() };
+            foreach (var x in p)
+            {
+                lists.Add(new CalculationType()
+                {
+                    CalculationTypeID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser",
+                    IsActive = true
+                }); ;
+            }
+            return lists.ToArray();
+        }
     }
 
 }

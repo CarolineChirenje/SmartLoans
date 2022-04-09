@@ -1,0 +1,126 @@
+﻿@model SmartInterfaces.Beneficiary;
+@using SmartHelper;
+@using System.Collections.Generic;
+@{
+    TempData["Title"] = "Loan Beneficiary Details";
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @Model.LoanForm.LoanRef Beneficiary
+    </h1> 
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <partial name="_MessageDisplay" />
+    <form method="post" asp-controller="LoanManager" asp-action="ViewLoanBeneficiary">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Information
+                    </div>
+                    <!-- /.panel-heading -->
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Name:</label>
+                            <input type="text" class="form-control" name="Name" value="@Model.BeneficiaryDetail.Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Surname:</label>
+                            <input type="text" class="form-control" name="LastName" value="@Model.BeneficiaryDetail.Surname">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">ID Number:</label>
+                            <input type="tel" class="form-control" name="IDNumber" value="@Model.BeneficiaryDetail.IDNumber">
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="@Model.BeneficiaryDetail.DateOfBirth" class="col-sm-2 control-label">Date Of Birth</label>
+
+                            <input asp-for="@Model.BeneficiaryDetail.DateOfBirth" type="date" class="form-control" />
+                            <span class="text-danger">(@Model.BeneficiaryDetail.Age)</span>
+                            <span asp-validation-for="@Model.BeneficiaryDetail.DateOfBirth" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Gender:</label>
+                            <select asp-for="@Model.BeneficiaryDetail.GenderID" class="form-control"
+                                    asp-items="ViewBag.GenderList">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Relation:</label>
+                            <select asp-for="@Model.BeneficiaryDetail.RelationshipTypeID" class="form-control"
+                                    asp-items="ViewBag.RelationshipTypeList">
+                                <option></option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Category:</label>
+                            <select asp-for="@Model.BeneficiaryDetail.CategoryID" class="form-control"
+                                    asp-items="ViewBag.CategoryList">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Entity Category:</label>
+                            <select asp-for="@Model.BeneficiaryDetail.SubCategoryID" class="form-control"
+                                    asp-items="ViewBag.SubCategoryList">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Entity:</label>
+                            <select asp-for="@Model.BeneficiaryDetail.CategoryItemID" class="form-control"
+                                    asp-items="ViewBag.CategoryItemList">
+                                <option></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+
+                            <label for="inputEmail3" class="form-control label-default">@Model.BeneficiaryDetail.LastChangedBy</label>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+
+                            <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.BeneficiaryDetail.LastChangedDate)</label>
+
+                        </div>
+                        <input type="hidden" name="LoanBeneficiaryID" value="@Model.BeneficiaryDetail.BeneficiaryID" />
+                        <input type="hidden" name="LoanID" value="@Model.LoanForm.LoanID" />
+                    </div>
+                    <div class="modal-footer">
+                        @if (UserAppData.HasPermission(Permissions.Update_Loan_Beneficiary))
+                        {
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        } @if (UserAppData.HasPermission(Permissions.Delete_Loan_Beneficiary))
+                        {
+                            <a class="btn btn-danger" asp-controller="LoanManager" asp-action="ActionBeneficiary" asp-route-beneficiaryID="@Model.BeneficiaryDetail.BeneficiaryID" asp-route-loanid="@Model.LoanForm.LoanID">Delete</a>
+                        }
+                        @if (UserAppData.HasPermission(Permissions.View_Loan))
+                        {
+                            <a class="btn btn-info" asp-controller="LoanManager" asp-action="Loans">View More Details</a>
+                        }<a class="btn btn-default" asp-controller="LoanManager" asp-action="ViewLoan" asp-route-id="@Model.LoanForm.LoanID">Cancel</a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- /.box -->
+</section>
+

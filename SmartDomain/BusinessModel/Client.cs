@@ -49,7 +49,7 @@ namespace SmartDomain
         public virtual List<Loan> Loans { get; set; }
         public virtual List<ClientOccupationHistory> ClientOccupationHistory { get; set; }
 
-        public List<KonapoFund> KonapoFunds { get; set; }
+       
         [NotMapped]
         public bool IsJointAccount { get { return ClientAccountTypeID == (int)Client_AccountType.Joint; } }
         [NotMapped]

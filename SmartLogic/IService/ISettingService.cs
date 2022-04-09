@@ -17,7 +17,7 @@ namespace SmartLogic
         List<Gender> GenderList();
         List<Product> GetActiveProductList();
         List<TransactionType> GetActiveTransactionTypeList();
-        List<FundSource> GetActiveFundSource();
+      
         Product FindProduct(int productid);
         Company FindDefaultCompany();
         List<Company> GetCompanies(bool activeOnly = false);
@@ -28,13 +28,27 @@ namespace SmartLogic
         Custom DocumentFormatMatch(string documentFormat, int DocumentTypeID);
         List<BankAccountType> GetBankAccountTypes();
         List<Currency> GetCurrencies();
+
+        List<ProductComputation> GetProductComputations();
         List<DocumentFormat> GetDocumentFormats();
         List<Country> GetCountryList();
-        List<Frequency> GetFrequencyList();
+        List<Fee> GetFeeList();
+        List<CalculationType> GetCalculationTypeList();
 
         List<Titles> GetTitles();
         List<ClientAccountType> GetClientAccountTypes();
         List<ClientGroup> GetAffiliations();
+
+        List<LoanUse> GetLoanUses();
+        List<LoanType> GetLoanTypes();
+        List<LoanStatus> GetLoanStatus();
+        List<LoanSector> GetLoanSectors();
+
+
+        List<Category> GetCategories();
+        List<SubCategory> GetSubCategories();
+        List<CategoryItem> GetCategoryItems();
+       
 
     }
 

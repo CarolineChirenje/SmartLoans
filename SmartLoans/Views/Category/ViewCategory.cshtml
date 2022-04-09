@@ -1,0 +1,221 @@
+﻿@model SmartDomain.Category
+@using SmartHelper;
+<section class="content-header">
+    <h1>
+        Category
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+            <h3 class="box-title">@Model.Name</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="/Category/ViewCategory">
+
+            @if (TempData["Error"] != null)
+            {<div class="container">
+                    <div class="text-danger">@TempData["Error"].ToString()</div>
+                </div>
+                <br />
+            }
+            <div class="container">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
+
+            @if (TempData["Success"] != null)
+            {<div class="container">
+                    <div class="text-success">@TempData["Success"].ToString()</div>
+                </div>
+            }
+            @if (TempData["Warning"] != null)
+            {<div class="container">
+                    <div class="text-warning">@TempData["Warning"].ToString()</div>
+                </div>
+            }
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name" value="@Model.Name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="Description" rows="5" value="@Model.Description">@Model.Description </textarea>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Categories</label>
+                    <div class="col-sm-10">
+                        <a data-toggle="modal" data-target="#CategoryCategories">@Model.SubCategories?.Count()</a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                    <div class="col-sm-2">
+                        <label class="checkbox-inline">
+                            @Html.CheckBoxFor(model => model.IsActive)
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Changed By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="CategoryID" value="@Model.CategoryID" />
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Category" asp-action="Category">Cancel</a>
+                @if (UserAppData.HasPermission(Permissions.Update_Category))
+                {
+                    <button type="submit" class="btn btn-info">Update</button>
+                }
+                @if (UserAppData.HasPermission(Permissions.Delete_Category))
+                {
+                    <a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@Model.CategoryID">Delete</a>
+                }
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Additional Information
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <!-- Nav tabs -->
+
+                    <ul class="nav nav-tabs">
+
+                        <li class="active">
+                            <a href="#SubCategory" data-toggle="tab">Sub Categories</a>
+                        </li>
+
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade in active " id="SubCategory">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Information
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="dataTable_wrapper">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Is Active</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.SubCategories != null)
+                                            {
+
+                                                foreach (var item in Model.SubCategories)
+                                                {
+                                                    <tr>
+                                                        @{
+                                                            string activeStatus = UtilityService.ShowYesOrNo(item.IsActive);
+
+                                                        }
+                                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                        <td>@activeStatus</td>
+                                                        <td><a asp-controller="Category" asp-action="ViewSubCategory" asp-route-id="@item.SubCategoryID">View</a> | <a asp-controller="Category" asp-action="ActionSubCategory" asp-route-Categoryid="@item.CategoryID" asp-route-SubCategoryID="@item.SubCategoryID">Delete</a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddSubCategory">Add Sub Category</a>
+                            </div>
+                        </div>
+
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="AddSubCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Category" asp-action="AddSubCategory">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Category:</label>
+                        <input type="text" class="form-control" value="@Model.Name" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Category:</label>
+                        <input type="text" class="form-control" name="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Is  Active</label>
+                        <div class="checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" data-val="true" id="IsActive"
+                                       name="IsActive" value="true">
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="CategoryID" value="@Model.CategoryID" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Category</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

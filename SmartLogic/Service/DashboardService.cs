@@ -38,7 +38,7 @@ namespace SmartLogic
             try
             {
 
-                return _context.KonapoFunds.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).Count();
+                return 0;// _context.KonapoFunds.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).Count();
             }
             catch (Exception ex)
             {

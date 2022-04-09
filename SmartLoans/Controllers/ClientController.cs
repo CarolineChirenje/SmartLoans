@@ -62,19 +62,16 @@ namespace SmartLoan.Controllers
         {
             try
             {
+                Permissions permission = Permissions.View_Client;
+                if (!UserAppData.HasPermission(permission))
+                    return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
                 if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employee)
                     return RedirectToAction("Dashboard", "External");
                 if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employer && UserAppData.CompanyID > 0)
                     companyID = UserAppData.CompanyID;
                 List<ClientList> Clients = _service.Clients(accountNum, newClientsOnly, productID, companyID);
-                Permissions permission = Permissions.View_Client;
-                if (!UserAppData.HasPermission(permission))
-                    return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
-
-                //if (!Clients.ListIsEmpty() && Clients.Count == 1)
-                //    return RedirectToAction("ViewClient", new { id = Convert.ToInt32(Clients.FirstOrDefault().ClientID) });
-
-                return View(Clients);
+              
+               return View(Clients);
             }
             catch (Exception ex)
             {
@@ -110,15 +107,16 @@ namespace SmartLoan.Controllers
             return RedirectToAction("Dashboard", "Home");
         }
 
-        public ActionResult KonapoFunds(int id)
+       
+        public ActionResult Loans(int id)
         {
             try
             {
-                Permissions permission = Permissions.View_Konapo_Fund;
+                Permissions permission = Permissions.View_Client_Loan;
                 if (!UserAppData.HasPermission(permission))
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
-                ClientKonapoFunds clientKonapo = _service.GetClientKonapoFunds(id).Result;
-                return View(clientKonapo);
+                ClientLoans client = _service.GetClientLoans(id).Result;
+                return View(client);
             }
             catch (Exception ex)
             {
@@ -1168,8 +1166,7 @@ namespace SmartLoan.Controllers
                 dependentGenderID = 0;
             }
 
-            List<Product> clientproductList = null;
-
+         
             var genderList = _settingService.GenderList(); if (genderList != null)
             {
                 genderList.Select(t => new

@@ -45,14 +45,49 @@ namespace SmartLogic
         Task<List<LoanStatus>> LoanStatuses();
 
 
-        Task<int> DeleteLoanFiscal(int id);
-        Task<int> Save(LoanFiscal loanFiscal);
-        Task<int> Update(LoanFiscal loanFiscal);
-        Task<bool> IsDuplicate(LoanFiscal loanFiscal);
-        Task<LoanFiscal> FindLoanFiscal(int id);
-        Task<List<LoanFiscal>> LoanFiscals();
+        Task<int> DeleteFiscal(int id);
+        Task<int> Save(FiscalYear loanFiscal);
+        Task<int> Update(FiscalYear loanFiscal);
+        Task<bool> IsDuplicate(FiscalYear fiscalYear);
+        Task<FiscalYear> FindFiscalYear(int id);
+        Task<List<FiscalYear>> FiscalYears();
+
+        Task<Category> FindCategory(int categoryID);
+        Task<int> Save(Category category);
+        Task<bool> IsDuplicate(Category category);
+        Task<int> Update(Category category);
+        Task<int> ActionCategory(int CategoryID, DatabaseAction action);
+        Task<List<Category>> Categories();
+
+        List<SubCategory> GetSubCategories(int categoryID);
+        Task<SubCategory> FindSubCategory(int id);
+        Task<int> Save(SubCategory subCategory);
+        Task<int> Update(SubCategory subCategory);
+        Task<int> ActionSubCategory(int id, DatabaseAction action);
+        Task<bool> IsDuplicate(SubCategory subCategory);
+
+        Task<CategoryItem> FindCategoryItem(int id);
+        Task<CategoryItem> GetCategoryItem(int id);
+        Task<int> Save(CategoryItem categoryItem);
+        Task<int> Update(CategoryItem categoryItem);
+        Task<int> ActionCategoryItem(int id, DatabaseAction action);
+        Task<bool> IsDuplicate(CategoryItem categoryItem);
 
 
+        Task<int> DeleteFee(int id);
+        Task<int> Save(Fee fees);
+        Task<int> Update(Fee fees);
+        Task<bool> IsDuplicate(Fee fees);
+        Task<Fee> FindFee(int id);
+        Task<List<Fee>> Fees();
+
+
+        Task<bool> IsDuplicate(ProductComputation computation);
+        Task<int> DeleteProductComputation(int id);
+        Task<int> Save(ProductComputation computation);
+        Task<int> Update(ProductComputation computation);
+              Task<ProductComputation> FindProductComputation(int id);
+        Task<List<ProductComputation>> ProductComputations();
     }
 
 

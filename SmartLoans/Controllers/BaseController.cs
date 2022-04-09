@@ -65,7 +65,7 @@ namespace SmartLoan.Controllers
                         if(UserAppData.CurrentUserTypeID==(int)TypeOfUser.Employer)
                         UserAppData.MenuComponent = Menu_Component.EmployerMenuList;
                         else
-                            UserAppData.MenuComponent = Menu_Component.EmployeeMenuList;
+                            UserAppData.MenuComponent = Menu_Component.ClientMenuList;
                     }
                     else
                     {
@@ -94,10 +94,16 @@ namespace SmartLoan.Controllers
                 case "Client":
                     component = Menu_Component.ClientMenuList;
                     break;
-                case "KonapoFund":
-                case "Fund":
-                case "FundItem":
-                    component = Menu_Component.KhonapoMenuList;
+                case "LoanManager":
+                case "Loan":
+                case "Product":
+                case "Fee":
+                case "Category":
+                case "LoanUse":
+                case "LoanType":
+                case "LoanStatus":
+
+                    component = Menu_Component.LoanMenuList;
                     break;
                 case "Support":
                 case "Licence":

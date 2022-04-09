@@ -79,6 +79,20 @@ namespace SmartLogic
             }
         }
 
+        public List<ProductComputation> GetProductComputations()
+        {
+            try
+            {
+
+                return _context.ProductComputations.Where(x => x.IsActive).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        
         public List<DocumentFormat> GetDocumentFormats()
         {
             try
@@ -93,12 +107,12 @@ namespace SmartLogic
             }
         }
 
-        public List<Frequency> GetFrequencyList()
+        public List<Fee> GetFeeList()
         {
             try
             {
 
-                return _context.Frequencies.Where(x => x.IsActive).ToList();
+                return _context.Fees.Where(x => x.IsActive).ToList();
             }
             catch (Exception ex)
             {
@@ -187,19 +201,7 @@ namespace SmartLogic
                 throw;
             }
         }
-       public List<FundSource> GetActiveFundSource()
-        {
-            try
-            {
-
-                return _context.FundSources.Where(T => T.IsActive).ToList();
-            }
-            catch (Exception ex)
-            {
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-        }
+     
         public List<TransactionType> GetActiveTransactionTypeList()
         {
             try
@@ -392,6 +394,121 @@ namespace SmartLogic
             }
         }
 
-      
+        public List<LoanUse> GetLoanUses()
+        {
+            try
+            {
+
+                var result = _context.LoanUses.Where(r => r.IsActive).AsNoTracking().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public List<LoanType> GetLoanTypes()
+        {
+            try
+            {
+
+                var result = _context.LoanTypes.Where(r => r.IsActive).AsNoTracking().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public List<LoanStatus> GetLoanStatus()
+        {
+            try
+            {
+
+                var result = _context.LoanStatus.Where(r => r.IsActive).AsNoTracking().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public List<LoanSector> GetLoanSectors()
+        {
+            try
+            {
+
+                var result = _context.LoanSectors.Where(r => r.IsActive).AsNoTracking().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<Category> GetCategories()
+        {
+            try
+            {
+
+                var result = _context.Categories.Where(r => r.IsActive).AsNoTracking().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<SubCategory> GetSubCategories()
+        {
+            try
+            {
+
+                var result = _context.SubCategories.Where(r => r.IsActive).AsNoTracking().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public List<CategoryItem> GetCategoryItems()
+        {
+            try
+            {
+
+                var result = _context.CategoryItems.Where(r => r.IsActive).AsNoTracking().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+      public  List<CalculationType> GetCalculationTypeList()
+        {
+            try
+            {
+
+                var result = _context.CalculationTypes.Where(r => r.IsActive).AsNoTracking().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
     }
 }

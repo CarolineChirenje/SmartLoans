@@ -1,0 +1,129 @@
+﻿@model SmartInterfaces.Statement;
+@using SmartHelper;
+@using System.Collections.Generic;
+@{
+    TempData["Title"] = "Client Details";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @Model.Client.ClientRef
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+  
+   <partial name="_MessageDisplay"/>
+  
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tab-pane fade in" id="Statements">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Generate Statements
+                        </div>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <form method="post" asp-controller="Client" asp-action="GenerateStatement">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Statement Type:</label>
+                                <select id="ddlStatements" asp-for="StatementID" class="form-control" asp-items="ViewBag.ClientStatement" onchange="showProduct(this.value)">
+                                </select>
+
+                            </div>
+                            <div id="ddlProduct" class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Registered Products:</label>
+                                <select asp-for="ProductID" class="form-control" asp-items="ViewBag.RegisteredProducts">
+                                    <option value="">----</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Transaction Date From</label>
+                                    <input type="date" class="form-control" name="StartDate" ID="StartDate" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Transaction Date To</label>
+                                    <input type="date" class="form-control" name="EndDate" ID="EndDate" required>
+                                </div>
+
+                            </div>
+                            @if (UserAppData.HasPermission(Permissions.Print_Statement_With_No_Reversals))
+                            {
+                                <div class="form-group" id="PrintReversalSection">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Print Reversals</label>
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" data-val="true" id="PrintReversalsOnStatement"
+                                                   name="PrintReversalsOnStatement" value="true">
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (UserAppData.HasPermission(Permissions.Generate_Client_Statement))
+                            {
+                                <br />
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Email Statement</label>
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" data-val="true" id="EmailStatement"
+                                                   name="EmailStatement" value="true">
+                                        </label>
+                                    </div>
+                                </div>
+
+                            }
+                            <input type="hidden" name="ClientID" value="@Model.ClientID" />
+                            <div class="box-footer">
+                                @if (UserAppData.HasPermission(Permissions.Generate_Client_Statement))
+                                {
+                                    <button type="submit" class="btn  btn-small btn-success">Generate Statement</button>
+                                }
+                                <a class="btn btn-default pull-right" asp-controller="Client" asp-action="ViewClient" asp-route-id="@Model.ClientID">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- /.box -->
+</section>
+<script>
+    $(document).ready(function () {
+       
+        var futureDate = new Date();
+        futureDate.setDate(futureDate.getDate() + 90);
+        var previousDate = new Date();
+        previousDate.setDate(previousDate.getDate() - 90);
+               document.getElementById('StartDate').value = previousDate.toISOString().substring(0, 10);
+        document.getElementById('EndDate').value = futureDate.toISOString().substring(0, 10);
+
+        showProduct($('#ddlStatements').val());
+    });
+    function showProduct(_statementID) {
+
+        if (_statementID == 1) {
+            $("#ddlProduct").show();
+        }
+        else {
+            $("#ddlProduct").hide();
+        }
+        if (_statementID == 2) {
+            $("#PrintReversalSection").show();
+        }
+        else {
+            $("#PrintReversalSection").hide();
+        }
+    }
+    </script>

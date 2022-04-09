@@ -38,107 +38,116 @@
                     <div class="text-warning">@TempData["Warning"].ToString()</div>
                 </div>
             }
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Name" placeholder="Name" required>
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Code</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Code" placeholder="Company Code">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="AddressLine1" placeholder="Address Line 1">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="AddressLine2" placeholder="Address Line 2">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">City</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="City" placeholder="City">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
-                    <div class="col-sm-10">
-                        <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
-                            <option value="">----</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Phone</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Phone" placeholder="Phone">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Fax</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Fax" placeholder="Fax">
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Mobile</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Mobile" placeholder="Mobile">
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Website</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Website" placeholder="Website">
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Is Default Company</label>
-                    <div class="checkbox">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" data-val="true" id="IsDefault"
-                                   name="IsDefault" value="true">
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
-                    <div class="checkbox">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" data-val="true" id="IsActive"
-                                   name="IsActive" value="true">
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Logo</label>
-                    <input type="file" name="CompanyLogo" id="CompanyLogo" accept=".png" />
+        <div class="box-body">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Name" placeholder="Name" required>
 
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Code</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Code" placeholder="Company Code">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Address Line 1</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="AddressLine1" placeholder="Address Line 1">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Address Line 2</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="AddressLine2" placeholder="Address Line 2">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">City</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="City" placeholder="City">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                <div class="col-sm-10">
+                    <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                        <option value="">----</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Phone</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Phone" placeholder="Phone">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Fax</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Fax" placeholder="Fax">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Mobile</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Mobile" placeholder="Mobile">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Website</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Website" placeholder="Website">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Is Default Company</label>
+                <div class="checkbox">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" data-val="true" id="IsDefault"
+                               name="IsDefault" value="true">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
+                <div class="checkbox">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" data-val="true" id="IsActive"
+                               name="IsActive" value="true">
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Logo</label>
+                <input type="file" name="CompanyLogo" id="CompanyLogo" accept=".png" />
+
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Fiscal Year</label>
+                <div class="col-sm-10">
+                    <select asp-for="FiscalYearID" class="form-control" asp-items="ViewBag.FiscalYearList">
+                        <option value="">----</option>
+                    </select>
+                </div>
+            </div>
+        </div>
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="Company" asp-action="Companies">Cancel</a>

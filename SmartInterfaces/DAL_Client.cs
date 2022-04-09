@@ -144,60 +144,15 @@ namespace SmartInterfaces
         public List<ContactList> ContactLists { get; set; }
     }
 
-    public class ClientKonapoFunds
-    {
-        public int ClientID { get; set; }
-                public List<KonapoFund> KonapoFunds { get; set; }
-    }
-
-    public class ClientKonapoFundCalculation
-    {
-        public int ClientID { get; set; }
-        public int FundID { get; set; }
-        public int KonapoFundID { get; set; }
-        public string KonapoRef { get; set; }
-       public bool IsActive { get; set; }
-        
-        public string FundName { get; set; }
-        public string ClientRef { get; set; }
-        public KonapoFund KonapoFund { get; set; }
-        public decimal KhonapoFundAmount { get; set; }
-        public List<KonapoFundCT> KonapoFundCTs { get; set; }
-        public List<CategoryAmount> CategoryAmount { get; set; }
-
-        public List<KonapoFundReport> KonapoFundReport { get; set; }
-    }
-
+  
     public class CategoryAmount
     {
         public int CategoryID { get; set; }
         public string Category { get; set; }
         public decimal? TotalAmount { get; set; }
     }
-        public class ClientKonapoFund
-    {
-        public int ClientID { get; set; }
-        public int FundID { get; set; }
-        public int KonapoFundID { get; set; }
-        public string KonapoRef { get; set; }
-        public KonapoFund KonapoFund { get; set; }
-        public List<KonapoFundCT> KonapoFundCTs { get; set; }
-    }
-
-    public class ClientKonapoFundItems
-    {
-        public int ClientID { get; set; }
-        public int FundID { get; set; }
-        public int KonapoFundID { get; set; }
-        public string CategoryName { get; set; }
-        public int CategoryID { get; set; }
-        public string KonapoRef { get; set; }
-        public string FundDetails { get; set; }
-        
-        public bool IsActive { get; set; }
-        public KonapoFund KonapoFund { get; set; }
-        public List<KonapoFundCTI> KonapoFundCTIs { get; set; }
-    }
+    
+    
     public class ContactList
     {
         public int ClientID { get; set; }
@@ -252,46 +207,7 @@ namespace SmartInterfaces
     }
 
 
-    public class Register
-    {
-        public int ClientID { get; set; }
-        public ClientForm ClientForm { get; set; }
-        public List<RegisterList> RegisterList { get; set; }
-    }
-
-    public class RegisterList
-    {
-        public int ClientID { get; set; }
-        public int AttendanceRegisterDetailID { get; set; }
-        public string Course { get; set; }
-        public string Intake { get; set; }
-        public string AttendanceDate { get; set; }
-        public string Status { get; set; }
-        public string Session { get; set; }
-
-        public string CourseTopic { get; set; }
-
-
-    }
-
-    public class Medical
-    {
-        public int ClientID { get; set; }
-        public ClientForm ClientForm { get; set; }
-        public List<MedicalList> MedicalList { get; set; }
-    }
-
-    public class MedicalList
-    {
-        public int ClientID { get; set; }
-        public int ClientMedicalID { get; set; }
-        public string Telephone { get; set; }
-        public string MedicalAid { get; set; }
-        public string MedicalAidNo { get; set; }
-        public string Hospital { get; set; }
-        public string Doctor { get; set; }
-
-    }
+  
 
     public class Docs
     {
@@ -316,31 +232,7 @@ namespace SmartInterfaces
 
     }
 
-    public class ClientPackages
-    {
-        public int ClientID { get; set; }
-        public int ProductID { get; set; }
-        [NotMapped]
-        public string DeductionAmount { get; set; }
-        [NotMapped]
-        public string IncreamentAmount { get; set; }
-        public ClientForm ClientForm { get; set; }
-        public List<ProductList> ProductList { get; set; }
-    }
-
-    public class ProductList
-    {
-        public int ClientID { get; set; }
-        public int ClientProductID { get; set; }
-        public string Status { get; set; }
-        public string RegistrationDate { get; set; }
-        public DateTime DateRegistered { get; set; }
-        public string ProductName { get; set; }
-        public string LastChangedDate { get; set; }
-        public string LastChangedBy { get; set; }
-        public string DeductionToBeApplied { get; set; }
-
-    }
+   
     public class Transactions
     {
         public int ClientID { get; set; }
@@ -392,13 +284,7 @@ namespace SmartInterfaces
 
 
     }
-    public class Deductions
-    {
-        public int ClientID { get; set; }
-        public ClientForm ClientForm { get; set; }
-        public List<InvoiceList> Invoice { get; set; }
-
-    }
+   
 
     public class InvoiceList
     {
@@ -416,34 +302,11 @@ namespace SmartInterfaces
         public string Status { get; set; }
      
     }
-    public class CoachingProgrammes
+
+    public class ClientLoans
     {
         public int ClientID { get; set; }
-        public int CourseID { get; set; }
-        public int CourseIntakeID { get; set; }
-        public ClientForm ClientForm { get; set; }
-        public List<CourseList> CourseList { get; set; }
-
-    }
-
-    public class CourseList
-    {
-
-        public int ClientCourseID { get; set; }
-        public int ClientID { get; set; }
-        public int CourseID { get; set; }
-        public int? CourseIntakeID { get; set; }
-        public string Intake { get; set; }
-        public string CourseName { get; set; }
-        public int Topics { get; set; }
-
-        public int Sessions { get; set; }
-
-        public int CompletedSessions { get; set; }
-        public DateTime DateRegistered { get; set; }
-        public string RegistrationDate { get; set; }
-        public string DateCompleted { get; set; }
-        public string Status { get; set; }
+        public List<Loan> Loans { get; set; }
     }
 
     public class SalaryHistory

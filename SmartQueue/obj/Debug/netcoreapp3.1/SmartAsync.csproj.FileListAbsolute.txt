@@ -18,6 +18,11 @@ C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartExtensions.dll
 C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
 C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartDomain.dll
 C:\DEV\SmartWealth\SmartQueue\bin\Debug\netcoreapp3.1\SmartDomain.pdb
+C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.csproj.AssemblyReference.cache
+C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.AssemblyInfoInputs.cache
+C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.AssemblyInfo.cs
+C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartQueue\bin\Debug\netcoreapp3.1\SmartAsync.deps.json
 C:\DEV\SmartLoans\SmartQueue\bin\Debug\netcoreapp3.1\SmartAsync.dll
 C:\DEV\SmartLoans\SmartQueue\bin\Debug\netcoreapp3.1\SmartAsync.pdb
@@ -30,11 +35,6 @@ C:\DEV\SmartLoans\SmartQueue\bin\Debug\netcoreapp3.1\SmartLog.pdb
 C:\DEV\SmartLoans\SmartQueue\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
 C:\DEV\SmartLoans\SmartQueue\bin\Debug\netcoreapp3.1\SmartHelper.pdb
 C:\DEV\SmartLoans\SmartQueue\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
-C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.csproj.AssemblyReference.cache
-C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.GeneratedMSBuildEditorConfig.editorconfig
-C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.AssemblyInfoInputs.cache
-C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.AssemblyInfo.cs
-C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.csproj.CopyComplete
 C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.dll
 C:\DEV\SmartLoans\SmartQueue\obj\Debug\netcoreapp3.1\SmartAsync.pdb

@@ -44,20 +44,20 @@ namespace SmartLoan
         }
     }
 
-    [ViewComponent(Name = "KhonapoMenuList")]
+    [ViewComponent(Name = "LoanMenuList")]
     public class KhonapoMenuListViewComponent : ViewComponent
     {
         private readonly IMenuService _service;
         public KhonapoMenuListViewComponent(IMenuService service) => _service = service;
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var konapoMenu = AppData.KhonapoMenu;
-            if (konapoMenu.ListIsEmpty())
+            var loanmenu = AppData.LoanMenu;
+            if (loanmenu.ListIsEmpty())
             {
-                konapoMenu = await _service.DisplayLayouts(SmartHelper.LayoutComponent.Khonapo_Fund);
-                AppData.KhonapoMenu = konapoMenu;
+                loanmenu = await _service.DisplayLayouts(SmartHelper.LayoutComponent.Loan_Manager) ;
+                AppData.LoanMenu = loanmenu;
             }
-            return View("KhonapoMenu", konapoMenu);
+            return View("LoanMenu", loanmenu);
         }
     }
 

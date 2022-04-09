@@ -146,12 +146,15 @@ namespace SmartLoan.Controllers
 
 
             GetDropDownLists();
+            Decimal _amount = UtilityService.GetDecimalAmount(productFee.Amount.ToString());
+            productFee.Amount = _amount;
             ProductFee update = await _service.FindProductFee(productFee.ProductFeeID);
             if (update.IsNotNull())
             {
-                if (await (_service.Update(productFee)) == 0)
+                int result = await (_service.Update(productFee));
+                if (result == 0)
                     TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("ViewProduct", new { id = productFee.ProductID });
+                return RedirectToAction("ViewProductFee", new { id = productFee.ProductFeeID     });
             }
             return RedirectToAction("ViewProduct", new { id = productFee.ProductID });
 
@@ -176,13 +179,22 @@ namespace SmartLoan.Controllers
 
             ViewBag.CountryList = new SelectList(country, "CountryID", "Name");
 
-            var frequency = _settingService.GetFrequencyList().Select(t => new
+            var currency = _settingService.GetCurrencies().Where(c=>c.IsActive).Select(t => new
             {
-                t.FrequencyID,
+                t.CurrencyID,
                 t.Name,
             }).OrderBy(t => t.Name);
 
-            ViewBag.FrequencyList = new SelectList(frequency, "FrequencyID", "Name");
+            ViewBag.CurrencyList = new SelectList(currency, "CurrencyID", "Name");
+
+
+            var productCompution = _settingService.GetProductComputations().Where(c => c.IsActive).Select(t => new
+            {
+                t.ProductComputationID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.ProductComputationList= new SelectList(productCompution, "ProductComputationID", "Name");
 
 
             List<Company> activeCompanies = _service.Companies();
@@ -196,6 +208,26 @@ namespace SmartLoan.Controllers
             }).OrderBy(t => t.Name);
 
             ViewBag.CompanyList = new SelectList(company, "CompanyID", "Name", defaultCompany ?? UtilityService.DefaultCompanyID);
+
+
+
+            var fee = _settingService.GetFeeList().Select(t => new
+            {
+                t.FeeID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.FeeList = new SelectList(fee, "FeeID", "Name");
+
+            var calculationType = _settingService.GetCalculationTypeList().Select(t => new
+            {
+                t.CalculationTypeID,
+                t.Name,
+            }).OrderBy(t => t.Name);
+
+            ViewBag.CalculationTypeList = new SelectList(calculationType, "CalculationTypeID", "Name");
+
+            
 
         }
 

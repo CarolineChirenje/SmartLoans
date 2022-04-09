@@ -26,7 +26,7 @@ namespace SmartLogic
        
         Task<bool> ClientExists(int Clientid = 0);
 
-        Task<ClientKonapoFunds> GetClientKonapoFunds(int clientID);
+       Task<ClientLoans> GetClientLoans(int clientID);
 
         //Notes
         Comments ClientNotes(int clientID);
@@ -34,6 +34,7 @@ namespace SmartLogic
         Task<int> Save(ClientNote note);
         Task<int> Update(ClientNote note);
         Task<int> ActionNote(int id, DatabaseAction action);
+
 
 
         //Contact

@@ -2,7 +2,7 @@
 @using SmartHelper;
 <section class="content-header">
     <h1>
-        LoanUse
+        Loan Use
     </h1>
 </section>
 <!-- Main content -->
@@ -74,7 +74,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">Cancel</a>
+                <a class="btn btn-default" asp-controller="LoanUse" asp-action="LoanUse">Cancel</a>
                 @if (UserAppData.HasPermission(Permissions.Update_Loan_Use))
                 {
                     <button type="submit" class="btn btn-info ">Update</button>

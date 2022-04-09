@@ -150,16 +150,16 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser"
 
                 },
-               
-               
-                
+
+
+
                  new LayoutMenu()
                 {
                     LayoutMenuID =9,
-                    LayoutID = (int)LayoutComponent.Khonapo_Fund,
-                    DisplayName = "Fund Set Up",
-                    ControllerName = "Fund",
-                    ActionName = "Fund",
+                    LayoutID = (int)LayoutComponent.Loan_Manager,
+                    DisplayName = "Category",
+                    ControllerName = "Category",
+                    ActionName = "Category",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-calculator"),
                     OrderNo =9,
@@ -167,27 +167,13 @@ namespace SmartDataAccess
                     LastChangedBy = "SuperUser",
                     LinkRequiresID=false
                 },
-                    new LayoutMenu()
-                {
-                   LayoutMenuID =10,
-                    LayoutID = (int)LayoutComponent.Khonapo_Fund,
-                    DisplayName = "Fund Items",
-                    ControllerName = "FundItem",
-                    ActionName = "FundItems",
-                    IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-navicon"),
-                    OrderNo =10,
-                    LastChangedDate = DateTime.Now,
-                    LastChangedBy = "SuperUser",
-                    LinkRequiresID=false
-                },
-                   new LayoutMenu()
+               new LayoutMenu()
                 {
                     LayoutMenuID =11,
-                    LayoutID = (int)LayoutComponent.Khonapo_Fund,
-                    DisplayName = "Konapo Funds",
-                    ControllerName = "KonapoFund",
-                    ActionName = "KonapoFunds",
+                    LayoutID = (int)LayoutComponent.Loan_Manager,
+                    DisplayName = "Manager Loans",
+                    ControllerName = "LoanManager",
+                    ActionName = "Loans",
                     IsActive = true,
                     CSSClass = UtilityService.HtmlDecode("fa fa-line-chart"),
                     OrderNo =0,
@@ -323,12 +309,12 @@ namespace SmartDataAccess
                 new LayoutMenu()
                 {
                     LayoutMenuID =21,
-                    LayoutID = (int)LayoutComponent.Settings,
+                    LayoutID = (int)LayoutComponent.Loan_Manager,
                     DisplayName = "Loan Uses",
                     ControllerName = "LoanUse",
                     ActionName = "LoanUse",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-lightbulb-o"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-american-sign-language-interpreting"),
                     OrderNo =21,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -459,12 +445,12 @@ namespace SmartDataAccess
                  new LayoutMenu()
                 {
                     LayoutMenuID =31,
-                    LayoutID = (int)LayoutComponent.Settings,
+                    LayoutID = (int)LayoutComponent.Loan_Manager,
                     DisplayName = "Loan Types",
                     ControllerName = "LoanType",
                     ActionName = "LoanType",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-lightbulb-o"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-cog"),
                     OrderNo =31,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
@@ -472,17 +458,68 @@ namespace SmartDataAccess
                   new LayoutMenu()
                 {
                     LayoutMenuID =32,
-                    LayoutID = (int)LayoutComponent.Settings,
+                    LayoutID = (int)LayoutComponent.Loan_Manager,
                     DisplayName = "Loan Status",
                     ControllerName = "LoanStatus",
                     ActionName = "LoanStatus",
                     IsActive = true,
-                    CSSClass = UtilityService.HtmlDecode("fa fa-lightbulb-o"),
+                    CSSClass = UtilityService.HtmlDecode("fa fa-cogs"),
                     OrderNo =32,
                     LastChangedDate = DateTime.Now,
                     LastChangedBy = "SuperUser"
                 },
-               
+                 new LayoutMenu()
+                {
+                    LayoutMenuID =33,
+                    LayoutID = (int)LayoutComponent.Loan_Manager,
+                    DisplayName = "Fees",
+                    ControllerName = "Fee",
+                    ActionName = "Fee",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa fa-fax"),
+                    OrderNo =33,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+                  new LayoutMenu()
+                {
+                    LayoutMenuID =34,
+                    LayoutID = (int)LayoutComponent.Loan_Manager,
+                    DisplayName = "Products",
+                    ControllerName = "Product",
+                    ActionName = "Product",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-bomb"),
+                    OrderNo =34,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+                   new LayoutMenu()
+                {
+                    LayoutMenuID =35,
+                    LayoutID = (int)LayoutComponent.Loan_Manager,
+                    DisplayName = "Product Computing",
+                    ControllerName = "ProductComputation",
+                    ActionName = "ProductComputation",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-hdd-o"),
+                    OrderNo =35,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
+                  new LayoutMenu()
+                {
+                    LayoutMenuID =36,
+                    LayoutID = (int)LayoutComponent.Settings,
+                    DisplayName = "Fiscal Years",
+                    ControllerName = "FiscalYear",
+                    ActionName = "FiscalYear",
+                    IsActive = true,
+                    CSSClass = UtilityService.HtmlDecode("fa fa-calendar"),
+                    OrderNo =35,
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser"
+                },
             };
             return menus.ToArray();
 

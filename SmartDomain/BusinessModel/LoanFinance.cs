@@ -10,10 +10,12 @@ namespace SmartDomain
     {
         [Key]
         public int LoanFinanceID { get; set; }
-        public int LoanID { get; set; }
-        public virtual Loan Loan { get; set; }
+        public int ProductID { get; set; }
+        public virtual Product Product { get; set; }
+        public int Duration { get; set; }
+        public DateTime StartDate { get; set; }
         public DateTime MaturityDate { get; set; }
-        public DateTime ValueDate { get; set; }
+      
         [Column(TypeName = "decimal(18, 0)")]
         public decimal ApplicationFee { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
@@ -23,17 +25,19 @@ namespace SmartDomain
         [Column(TypeName = "decimal(18, 0)")]
         public decimal FeesReq { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
-        public decimal FinanceAmount { get; set; }
+        public decimal MaturityValue { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
         public decimal FxFixing { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
         public decimal Installment { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
-        public decimal? InterestRate { get; set; }
+        public decimal? Interest { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
         public decimal MinimumUpfront { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
         public decimal Upfront { get; set; }
+        [Column(TypeName = "decimal(18, 0)")]
+        public decimal CollectionFee { get; set; }
         public DateTime DateCreated { get; set; }
 
     }

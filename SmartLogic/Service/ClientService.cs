@@ -72,24 +72,23 @@ namespace SmartLogic
             return result;
 
         }
-        public async Task<ClientKonapoFunds> GetClientKonapoFunds(int clientID)
+        public async Task<ClientLoans> GetClientLoans(int clientID)
         {
             try
             {
-             var konapo = await _context.KonapoFunds.Where(p => p.ClientID == clientID)
-               .Include(m => m.Client)
-                               .Include(p => p.Fund)
-                .ThenInclude(p => p.FundCategories)
-                .ThenInclude(p => p.FundCategoryItems)
-             .AsNoTracking()
-             .ToListAsync();
+                var loans = await _context.Loans.Where(p => p.ClientID == clientID)
+                  .Include(m => m.Client)
+                                    .Include(p => p.LoanFinance)
+                   .Include(p => p.LoanStatus)
+                   .AsNoTracking()
+                   .ToListAsync();
 
-                ClientKonapoFunds clientKonapoFunds = new ClientKonapoFunds
+                ClientLoans clientLoans = new ClientLoans
                 {
                     ClientID = clientID,
-                    KonapoFunds = konapo
+                    Loans = loans
                 };
-             return clientKonapoFunds;
+                return clientLoans;
             }
             catch (Exception ex)
             {

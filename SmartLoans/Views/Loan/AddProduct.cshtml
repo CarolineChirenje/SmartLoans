@@ -1,0 +1,162 @@
+﻿@model SmartDomain.Product
+@using SmartHelper;
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Product
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Add Product</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="AddProduct">
+            <div class="box-body">
+
+                @if (TempData["Error"] != null)
+                {<div class="container">
+                        <div class="text-danger">@TempData["Error"].ToString()</div>
+                    </div>
+                    <br />
+                }
+                <div class="container">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                </div>
+
+                @if (TempData["Success"] != null)
+                {<div class="container">
+                        <div class="text-success">@TempData["Success"].ToString()</div>
+                    </div>
+                }
+                @if (TempData["Warning"] != null)
+                {<div class="container">
+                        <div class="text-warning">@TempData["Warning"].ToString()</div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CompanyID" class="form-control" asp-items="ViewBag.CompanyList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name" placeholder="Name" required>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Company</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CurrencyID" class="form-control" asp-items="ViewBag.CurrencyList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Computation Category</label>
+                    <div class="col-sm-10">
+                        <select asp-for="ProductComputationID" class="form-control" asp-items="ViewBag.ProductComputationList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Is Legible For Penalties</label>
+                    <div class="checkbox">
+                        <input type="hidden" name="IsActive" value="true" />
+                        <label class="checkbox-inline">
+                            <input type="checkbox" class="minimal" name="IsLegibleForPenalties" checked />
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Country</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CountryID" class="form-control" asp-items="ViewBag.CountryList">
+                            <option value="">----</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                    <div class="checkbox">
+                        <input type="hidden" name="IsActive" value="true" />
+                        <label class="checkbox-inline">
+                            <input type="checkbox" class="minimal" name="IsActive" checked />
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <a class="btn btn-default" asp-controller="Product" asp-action="Product">Cancel</a>
+                @if (UserAppData.HasPermission(Permissions.Add_Product))
+                {
+                    <button type="submit" class="btn btn-info pull-right">Create</button>
+                }
+                </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+</section>
+
+<script>
+
+
+    $(document).ready(function () {
+
+    });
+
+
+    $(function () {
+        $('#DeductionPercentage').blur(function () {
+            var tempVal = $('#DeductionPercentage').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#DeductionPercentageError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#DeductionPercentageError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+
+        $('#IncreamentPercentage').blur(function () {
+            var tempVal = $('#IncreamentPercentage').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#IncreamentPercentageError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#IncreamentPercentageError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+        $('#TransactionalLevy').blur(function () {
+            var tempVal = $('#TransactionalLevy').val();
+            if (tempVal != this.value.match(/^\d+\.?\d{0,2}/)) {
+                $("#TransactionalLevyError").text("Only Decimal Numbers Separated by a Decimal Point Are Allowed in this field")
+                $(":submit").attr("disabled", true);
+            }
+            else {
+                $("#TransactionalLevyError").text("");
+                $(":submit").removeAttr("disabled");
+            }
+        })
+       
+    })
+
+ 
+</script>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,12 +25,17 @@ namespace SmartDomain
         public string IDNumber { get; set; }
         [Column(TypeName = "date")]
         public DateTime DateOfBirth { get; set; }
-      
+        public int GenderID { get; set; }
+        public virtual Gender Gender { get; set; }
         public int RelationshipTypeID { get; set; }
         public virtual RelationshipType RelationshipType { get; set; }
-        //[Column("SubEntityID")]
-        //public int SubEntityId { get; set; }
+        public int CategoryItemID { get; set; }
+        public virtual CategoryItem CategoryItem { get; set; }
 
+        [NotMapped]
+        public int Age { get { return UtilityService.CalculateAge(DateOfBirth); } }
+        [NotMapped]
+        public string FullName { get { return String.Concat(Name, ",", Surname); } }
 
     }
 }
