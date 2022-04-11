@@ -1393,6 +1393,46 @@ namespace SmartDataAccess
             }
             return lists.ToArray();
         }
+
+        public static Fee[] GetFees()
+        {
+            List<Fee> lists = new List<Fee>();
+            var p = from LoanFees s in Enum.GetValues(typeof(LoanFees))
+                    select new { ID = s, Name = s.ToString() };
+            foreach (var x in p)
+            {
+                lists.Add(new Fee()
+                {
+                    FeeID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser",
+                    IsActive = true
+                }); ;
+            }
+            return lists.ToArray();
+        }
+
+        public static ProductComputation[] GetProductComputation()
+        {
+            List<ProductComputation> lists = new List<ProductComputation>();
+            var p = from Product_Computation s in Enum.GetValues(typeof(Product_Computation))
+                    select new { ID = s, Name = s.ToString() };
+            foreach (var x in p)
+            {
+                lists.Add(new ProductComputation()
+                {
+                    ProductComputationID = (int)x.ID,
+                    Name = x.Name.Replace("_", " "),
+                    DateCreated = DateTime.Now,
+                     CreatedBy= "SuperUser",
+                    LastChangedDate = DateTime.Now,
+                    LastChangedBy = "SuperUser",
+                    IsActive = true
+                }); ;
+            }
+            return lists.ToArray();
+        }
     }
 
 }

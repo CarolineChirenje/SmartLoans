@@ -56,15 +56,7 @@
                     <input type="text" class="form-control" name="Method" value="@Model.Method">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Is Active</label>
-                <div class="col-sm-2">
-                    <label class="checkbox-inline">
-                        @Html.CheckBoxFor(model => model.IsActive)
-                    </label>
-
-                </div>
-            </div>
+           
 
 
             <div class="form-group">
@@ -101,10 +93,7 @@
                 {
                     <button type="submit" class="btn btn-info ">Update</button>
                 }
-                @if (UserAppData.HasPermission(Permissions.Delete_Product_Computation))
-                {
-                    <a class="btn btn-danger" asp-controller="ProductComputation" asp-action="Delete" asp-route-id="@Model.ProductComputationID">Delete</a>
-                }
+               
             </div>
             <!-- /.box-footer -->
         </form>

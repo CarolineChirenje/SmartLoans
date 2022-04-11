@@ -11,7 +11,7 @@ namespace SmartLogic
 
     public interface ILoanService
     {
-     
+
         Task<int> DeleteLoanSector(int id);
         Task<int> Save(LoanSector sector);
         Task<int> Update(LoanSector sector);
@@ -74,19 +74,16 @@ namespace SmartLogic
         Task<bool> IsDuplicate(CategoryItem categoryItem);
 
 
-        Task<int> DeleteFee(int id);
-        Task<int> Save(Fee fees);
+
         Task<int> Update(Fee fees);
-        Task<bool> IsDuplicate(Fee fees);
+
         Task<Fee> FindFee(int id);
         Task<List<Fee>> Fees();
 
 
-        Task<bool> IsDuplicate(ProductComputation computation);
-        Task<int> DeleteProductComputation(int id);
-        Task<int> Save(ProductComputation computation);
+
         Task<int> Update(ProductComputation computation);
-              Task<ProductComputation> FindProductComputation(int id);
+        Task<ProductComputation> FindProductComputation(int id);
         Task<List<ProductComputation>> ProductComputations();
     }
 

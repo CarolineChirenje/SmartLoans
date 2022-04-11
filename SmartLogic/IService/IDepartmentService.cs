@@ -17,8 +17,7 @@ namespace SmartLogic
         Task<int> Update(Department department);
         Task<int> ActionDepartment(int departmentId, DatabaseAction action);
         Task<int> ActionUserAccess(int id, int clientid, DatabaseAction action);
-        Task<List<Client>> DepartmentClients(int id);
-        Task<Department> FindDepartment(int departmentId);
+              Task<Department> FindDepartment(int departmentId);
         Task<List<Department>> Departments();
         List<Department> GetDepartments();
         Task<bool> IsDuplicate(Department _department);

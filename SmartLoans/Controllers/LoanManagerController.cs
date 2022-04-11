@@ -24,12 +24,13 @@ namespace SmartLoan.Controllers
         private readonly IManageLoanService _service;
         private readonly ISettingService _settingService;
         private readonly IClientService _clientService;
-
-        public LoanManagerController(IManageLoanService service, ISettingService settingService, IClientService clientService)
+        private readonly IProductService _productService;
+        public LoanManagerController(IManageLoanService service, ISettingService settingService, IClientService clientService, IProductService productService)
         {
             _service = service;
             _settingService = settingService;
             _clientService = clientService;
+            _productService = productService;
         }
 
         // GET: Loans
@@ -99,6 +100,21 @@ namespace SmartLoan.Controllers
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return View(Loan);
         }
+        [HttpPost]
+        public async Task<IActionResult> Approve(LoanFinance loanFinance)
+        {
+           // if (ModelState.IsValid)
+            {
+                Loan update = await (_service.FindLoan(loanFinance.LoanID));
+                if (update.IsNotNull())
+                {
+                    if (await (_service.Save(loanFinance)) == 0)
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+
+                }
+            }
+            return RedirectToAction("ViewLoan", new { id = loanFinance.LoanID });
+        }
 
 
         public async Task<IActionResult> Delete(int id)
@@ -122,8 +138,8 @@ namespace SmartLoan.Controllers
                     return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
 
                 GetDropDownLists();
-                Beneficiaries  beneficiary = _service.LoanBeneficiaries(id);
-                               return View(beneficiary);
+                Beneficiaries beneficiary = _service.LoanBeneficiaries(id);
+                return View(beneficiary);
             }
             catch (Exception ex)
             {
@@ -344,6 +360,26 @@ namespace SmartLoan.Controllers
             }
             return RedirectToAction("Notes", new { id = loanNote.LoanID });
         }
+        [HttpPost]
+        public async Task<IActionResult> Finalise(int id)
+        {
+            if (await (_service.FinaliseLoan(id)) == 0)
+            {
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+               
+            }
+            return RedirectToAction("ViewLoan", new { id });
+        }
+        [HttpPost]
+        public async Task<IActionResult> RejectLoan(LoanNote loanNote)
+        {
+                if (await (_service.RejectLoan(loanNote)) == 0)
+                {
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return View(loanNote);
+                }
+            return RedirectToAction("ViewLoan", new { id = loanNote.LoanID });
+        }
         public async Task<IActionResult> ViewLoanNote(int id)
         {
             if (id == 0)
@@ -381,6 +417,34 @@ namespace SmartLoan.Controllers
                 TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction("Notes", new { id = loanid });
         }
+
+        [HttpPost]
+        public ActionResult GetProductFees(int productID ,int feeID)
+        {
+            ProductFee productFees = new ProductFee();
+            if (productID != 0)
+            {
+                productFees = _productService.GetProductFee(productID,feeID);
+                if (productFees.IsNotNull())
+                    return Json(productFees);
+                else
+                    return Json(null);
+            }
+            return Json(null);
+        }
+
+        [HttpPost]
+        public ActionResult GetProductType(int productID)
+        {
+            int type = 0;
+            if (productID != 0)
+            {
+                type = _productService.GetProductType(productID);
+                return Json(type);
+            }
+            return Json(type);
+        }
+
 
         private void GetDropDownLists()
         {
@@ -456,7 +520,7 @@ namespace SmartLoan.Controllers
             ViewBag.LoanTypeList = new SelectList(loanTypes, "LoanTypeID", "Name");
 
 
-            var categoryList = _settingService.GetCategories(); 
+            var categoryList = _settingService.GetCategories();
             if (categoryList != null)
             {
                 categoryList.Select(t => new

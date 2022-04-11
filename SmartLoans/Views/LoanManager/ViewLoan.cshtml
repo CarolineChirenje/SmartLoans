@@ -77,6 +77,13 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                        <div class="col-sm-10">
+                            <label for="inputEmail3" class="form-control label-default">@Model.LoanStatus?.Name</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
                         <div class="col-sm-10">
                             <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
@@ -90,7 +97,7 @@
 
                         </div>
                     </div>
-                    <input type="hidden" id="LoanID" name="KonapoFundID" value="@Model.LoanID" />
+                    <input type="hidden" id="LoanID" name="LoanID" value="@Model.LoanID" />
                     <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
                     <input type="hidden" id="LoanRef" name="LoanRef" value="@Model.LoanRef" />
 
@@ -138,186 +145,242 @@
                                     Information
                                 </div>
                             </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
-                                    <div class="col-sm-10">
-                                        <select asp-for="@Model.ProductID" class="form-control" asp-items="ViewBag.ProductList">
-                                            <option value="">----</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Effective Date</label>
-                                    <div class="col-sm-10">
-                                        <input type="date" class="form-control" id="StartDate" name="StartDate" onchange="CalculateMaturityDate()" required>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
+                            <form class="form-horizontal" method="post" action="/LoanManager/Approve">
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
 
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Tenor (Months)</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Duration" name="Duration" onchange="CalculateMaturityDate()">
-                                        <span id="DurationError" class="text-danger text-bold"></span>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Product</label>
+                                        <div class="col-sm-10">
+                                            <select asp-for="@Model.ProductID" class="form-control" asp-items="ViewBag.ProductList" onchange="GetSelectedProduct(this.value)">
+                                                <option value="">----</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Maturity Date</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="MaturityDate" name="MaturityDate" onchange="CalculateTotal()" disabled>
+                                    <br />
+                                    <br />
 
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Application Fee</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="ApplicationFee" name="ApplicationFee" value="0.00" onchange="CalculateTotal()">
+                                            <span id="ApplicationFeeError" class="text-danger text-bold"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Application Fee</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ApplicationFee" name="ApplicationFee" value="0.00" onchange="CalculateTotal()">
-                                        <span id="ApplicationFeeError" class="text-danger text-bold"></span>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Principal</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="Principal" name="Principal" value="0.00" onchange="CalculateTotal()">
+                                            <span id="PrincipalError" class="text-danger text-bold"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Principal</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Principal" name="Principal" value="0.00" onchange="CalculateTotal()">
-                                        <span id="PrincipalError" class="text-danger text-bold"></span>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Effective Date</label>
+                                        <div class="col-sm-10">
+                                            <input type="date" class="form-control" id="StartDate" name="StartDate" onchange="CalculateMaturityDate()" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Effective Deposit</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="EffectiveDeposit" name="EffectiveDeposit" onchange="CalculateTotal()" disabled>
-                                        <span id="EffectiveDepositError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
+                                    <br />
+                                    <br />
 
-                                <div class="panel panel-success">
-                                    <div class="panel-heading">
-                                        Loan Calculations
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Tenor (Months)</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="Duration" name="Duration" value="12" onchange="CalculateMaturityDate()">
+                                            <span id="DurationError" class="text-danger text-bold"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Application Fee</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="CalcAppFee" name="CalcAppFee" value="0.00" onchange="CalculateTotal()">
-                                        <span id="CalcAppFeeError" class="text-danger text-bold"></span>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Effective Deposit</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="EffectiveDeposit" name="EffectiveDeposit" value="0.00" onchange="CalculateTotal()">
+                                            <span id="EffectiveDepositError" class="text-danger text-bold"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
+                                    <br />
+                                    <br />
 
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Collection Fee</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="CollectionFee" name="CollectionFee" value="0.00" onchange="CalculateTotal()">
-                                        <span id="CollectionFeeError" class="text-danger text-bold"></span>
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            Loan Calculations
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Application Fee</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="CalcAppFee" name="CalcAppFee" value="0.00" onchange="CalculateTotal()">
+                                            <span id="CalcAppFeeError" class="text-danger text-bold"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
 
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Upfront Fees</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Upfront" name="Upfront" value="0.00" onchange="CalculateTotal()">
-                                        <span id="UpfrontError" class="text-danger text-bold"></span>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Collection Fee</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="CollectionFee" name="CollectionFee" value="0.00" onchange="CalculateTotal()">
+                                            <span id="CollectionFeeError" class="text-danger text-bold"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">UpFront Deposit </label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="MinimumUpfront" name="MinimumUpfront" onchange="CalculateTotal()" disabled>
-                                        <span id="MinimumUpfrontError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Fees Required</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="FeesReq" name="FeesReq" onchange="CalculateTotal()" disabled>
-                                        <span id="FeesReqError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Interest</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Interest" name="Interest" onchange="CalculateTotal()" disabled>
-                                        <span id="InterestError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Fx Fixing</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="FxFixing" name="FxFixing" onchange="CalculateTotal()" disabled>
-                                        <span id="FxFixingError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Maturity Value</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="MaturityValue" name="MaturityValue" onchange="CalculateTotal()" disabled>
-                                        <span id="MaturityValueError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Remittance</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Installment" name="Installment" onchange="CalculateTotal()" disabled>
-                                        <span id="InstallmentError" class="text-danger text-bold"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-                            </div>
+                                    <br />
+                                    <br />
 
-                            <div class="box-footer">
-                                <a class="btn  btn-small btn-success pull-right" data-toggle="modal" data-target="#AddSubCategory">Submit for Approval</a>
-                            </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Upfront Fees</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="Upfront" name="Upfront" value="0.00" onchange="CalculateTotal()">
+                                            <span id="UpfrontError" class="text-danger text-bold"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">UpFront Deposit </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="MinimumUpfront" name="MinimumUpfront" onchange="CalculateTotal()" disabled>
+                                            <span id="MinimumUpfrontError" class="text-danger text-bold"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Fees Required</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="FeesReq" name="FeesReq" onchange="CalculateTotal()" disabled>
+                                            <span id="FeesReqError" class="text-danger text-bold"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Interest</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="Interest" name="Interest" onchange="CalculateTotal()" disabled>
+                                            <span id="InterestError" class="text-danger text-bold"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Fx Fixing</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="FxFixing" name="FxFixing" onchange="CalculateTotal()" disabled>
+                                            <span id="FxFixingError" class="text-danger text-bold"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Maturity Date</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="MaturityDate" name="MaturityDate" onchange="CalculateTotal()" disabled>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Maturity Value</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="MaturityValue" name="MaturityValue" onchange="CalculateTotal()" disabled>
+                                            <span id="MaturityValueError" class="text-danger text-bold"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Remittance</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="Installment" name="Installment" onchange="CalculateTotal()" disabled>
+                                            <span id="InstallmentError" class="text-danger text-bold"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                                <input type="hidden" id="LoanID" name="LoanID" value="@Model.LoanID" />
+                                <input type="hidden" id="ClientID" name="ClientID" value="@Model.ClientID" />
+                                <input type="hidden" id="LoanRef" name="LoanRef" value="@Model.LoanRef" />
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-small btn-success pull-right">Submit for Approval</button>
+                                    @if (UserAppData.HasPermission(Permissions.Finalise_Loan))
+                                    {
+                                        <a class="btn btn-default pull-right" asp-controller="LoanManager" asp-action="Finalise" asp-route-id="@Model.LoanID">Finalise</a>
+                                        <a class="btn btn-danger pull-right" data-toggle="modal" data-target="#RejectForm">Add Reject</a>
+                                        
+                                    }
+                                </div>
+
+                            </form>
+                            <!-- /.panel-body -->
                         </div>
-
-                        <!-- /.panel-body -->
+                        <!-- /.panel -->
                     </div>
-                    <!-- /.panel -->
-                </div>
 
+                </div>
+            </div>
             </div>
         </div>
 
 </section>
+<div class="modal fade" id="RejectForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.LoanRef</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="LoanManager" asp-action="AddLoanNote">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Comment:</label>
+                        <textarea class="form-control" name="Comment" rows="5"></textarea>
+                    </div>
+                   
+
+                    @if (UserAppData.CurrentUserTypeID != (int)TypeOfUser.Employee)
+                    {
+                        <div class="form-group">
+                            <div>
+                                <label for="inputEmail3" class="col-sm-2 control-label">Visible To Admin Only:</label>
+
+                                <div class="checkbox">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" data-val="true" id="VisibleToAdminOnly"
+                                               name="VisibleToAdminOnly" value="true">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <input type="hidden" name="LoanID" value="@Model.LoanID" />
+
+                </div>
+                <div class="modal-footer">
+                   <button type="submit" class="btn btn-primary">Reject</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <link href="~/dist/css/anchor.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js" integrity="sha256-H8xrCe0tZFi/C2CgxkmiGksqVaxhW0PFcUKZJZo1yNU=" crossorigin="anonymous"></script>
 
 <script>
-    // When the user clicks on <div>, open the popup
-    function myPopUpFunction() {
-        var popup = document.getElementById("myPopup");
-        popup.classList.toggle("show");
-    }
+
+    var ProductID = 0;
+    var ProductType = 0;
+
     $(document).ready(function () {
         var currentdate = new Date();
         var currentMonth = currentdate.getMonth();
@@ -325,9 +388,9 @@
         var newDate = new Date(currentYear, currentMonth, 1);
         var nextMonth = new Date(newDate.setMonth(newDate.getMonth() + 1))
         $('#StartDate').val(nextMonth.toISOString().substring(0, 10));
-        CalculateTableTotal();
         CalculateTotal();
-        CalculateCI();
+        CalculateMaturityDate();
+
 
     });
     function CalculateMaturityDate() {
@@ -339,21 +402,12 @@
         var currentYear = _startdate.getFullYear();
         var newDate = new Date(currentYear, currentMonth, 1);
         var maturitydate = new Date(newDate.setMonth(newDate.getMonth() + parseInt(months)));
-
-        alert(maturitydate);
         $('#MaturityDate').val(maturitydate.toISOString().substring(0, 10));
+        CalculateTotal();
 
 
     }
-    $(function () {
-        $("#accordion").accordion({
-            /*It will disable all the active(open) pane i.e .
-            collapsible: true,
-            active:false,*/
-            heightStyle: "content",
 
-        });
-    });
     $(function () {
         $('#btnPrint').click(function () {
             PrintForm();
@@ -382,63 +436,101 @@
 
     function CalculateTotal() {
 
-        var deposit = 0.00;// take from product
-        var principal = $('#Principal').val();
-        var applicationFee = $('#ApplicationFee').val();
-        var calculatedapplicationFee = 0.00;
-        var effectiveDeposit = $('#EffectiveDeposit').val();
-        var interestRate = 0.00;
-        var minCharge = 0.00;// take from product
+
+        //Deposit = 1,
+        //    Interest_Rate = 2,
+        //    Minimum_Charge,
+        //    Documentation_Fee,
+        //    Fixed_Rate,
+        //    Principal,
+        //    Discount,
+        //    Principal_Measure
+        console.log("Product ID " + ProductID);
+        var deposit = ProductID > 0 ? toDecimal(getFee(1)) : 0.00;
+        var minCharge = ProductID > 0 ? toDecimal(getFee(3)) : 0.00;
+        var documentationFee = ProductID > 0 ? toDecimal(getFee(4)) : 0.00;
+        console.log("Documentation Fee " + documentationFee);
+        console.log(typeof (documentationFee));
+        var interestRate = ProductID > 0 ? toDecimal(getFee(2)) : 0.00;
+        var fxRate = ProductID > 0 ? toDecimal(getFee(5)) : 0.00;
+        var principal = toDecimal($('#Principal').val());
+
+        var applicationFee = toDecimal($('#ApplicationFee').val());
+        var effectiveDeposit = toDecimal($('#EffectiveDeposit').val());
+
         var collectionFee = 0.00;
         var upFront = 0.00;
-        var minUpFront = 0.00;
+        var minUpFrontDeposit = 0.00;
 
         var duration = $('#Duration').val();
         var feesReq = 0.00;
         var interest = 0.00;
         var fxFixing = 0.00;;
-        var maturityValue = 0.00 //$('#MaturityValue').val();
-        var installment = 0.00;//$('#Installment').val();
+        var maturityValue = 0.00;
+        var installment = 0.00;
 
-        var actualCollect = (principal * (1 - deposit) * doc_fee).toFixed(2);
+        var actualCollect = (principal * (1 - deposit) * documentationFee).toFixed(2);
+        console.log("Actual Collection Fee " + actualCollect);
+        console.log("Minimum Charge Fee " + minCharge);
         if (minCharge != 0) {
-            collectionFee = Math.Max(actualCollect, min_charge);
+            collectionFee = Math.max(actualCollect, minCharge);
         }
         else {
             collectionFee = actualCollect;
         }
 
-        var fees = (applicationFee + collectionFee).ToFixed(2);
-        minUpFront = ((deposit * principal) + (fees)).ToFixed(2);
-        var depositamount = (deposit * principal).toFixed(2);
-        feesReq = (principal - (Math.Max(mindep, effective_dep)) + fees).toFixed(2);
-        if (type == 2) {
-            // type 2 = fees* (loanduration+1)* interestrate where original duration is the actual loan duration
-            interest = (feereq * (duration + 1) * interestrate).toFixed(2);
+        var fees = applicationFee + toDecimal(collectionFee);
+
+
+        var depositamount = deposit * principal;
+        minUpFrontDeposit = depositamount + fees;
+        feesReq = principal - (Math.max(minUpFrontDeposit, effectiveDeposit)) + fees;
+        //Type_1 = 1,
+        //    Type_2 = 2,
+        if (ProductType == 2) {
+            // ProductType 2 = fees* (loanduration+1)* interestrate where original duration is the actual loan duration
+            interest = (feesReq * (duration + 1) * interestRate);
         }
         else {
-            //type 1 = fees*(loanduration )*interest rate where  original duration is the actual loan durationn
-            interest = (feereq * duration * interestrate).toFixed(2);
+            //ProductType 1 = fees*(loanduration )*interest rate where  original duration is the actual loan durationn
+            interest = (feesReq * duration * interestRate);
         }
-        finance = (feereq + interest).toFixed(2);
-        fixedamount = (fixrate * principle).toFixed(2);
-        maturityValue = (finance + fixedamount).toFixed(2);
+        finance = feesReq + interest;
+        fixedamount = fxRate * principal;
+        maturityValue = finance + fixedamount;
         //  installment = Math.Round((amounttofinance) / (loanduration), 2); original formula
-        installment = ((maturityValue) / (loanduration - 1)).toFixed(2);
-        fxFixing = fixedamount.toFixed(2);
+        installment = (maturityValue) / (duration - 1);
+        fxFixing = fixedamount;
 
-        $('#CalcAppFee').val(calculatedapplicationFee.toFixed(2));
-        $('#MinimumUpfront').val(minUpFront.toFixed(2));
-        $('#CollectionFee').val(collectionFee.toFixed(2));
-        $('#Upfront').val(upFront.toFixed(2));
-        $('#FeesReq').val(feesReq.toFixed(2));
-        $('#Interest').val(interest.toFixed(2));
-        $('#MaturityValue').val(maturityValue.toFixed(2));
-        $('#Installment').val(installment.toFixed(2));
+
+        minUpFrontDeposit = minUpFrontDeposit.toFixed(2);
+        console.log("Collection Fee " + collectionFee);
+        collectionFee = Number(collectionFee).toFixed(2);
+        upFront = upFront.toFixed(2);
+        feesReq = feesReq.toFixed(2);
+        interest = interest.toFixed(2);
+        maturityValue = maturityValue.toFixed(2);
+        installment = installment.toFixed(2);
+        fxFixing = fxFixing.toFixed(2);
+        $('#CalcAppFee').val(applicationFee);
+        $('#ApplicationFee').val(applicationFee);
+        $('#MinimumUpfront').val(minUpFrontDeposit);
+        $('#CollectionFee').val(collectionFee);
+        $('#Upfront').val(upFront);
+        $('#FeesReq').val(feesReq);
+        $('#Interest').val(interest);
+        $('#MaturityValue').val(maturityValue);
+        $('#Installment').val(installment);
         $('#FxFixing').val(fxFixing);
 
     }
+    function getFee(feeID) {
+        //Flat_Rate = 1,
+        //Percentage_Of = 2,
 
+        console.log("Fee " + feeID);
+        return GetProductFee(feeID);
+    }
     function getValue(amount) {
 
         var result = typeof amount === 'string' ?
@@ -464,194 +556,85 @@
         })
     }
 
-    function PrintForm() {
 
-        //var monthlybreakdown = $('#calc').tableToJSON();
-        //console.log(monthlybreakdown);
-        //console.log(JSON.stringify(monthlybreakdown));
-        var fund = $('#Fund').val();
-        fund = fund.replace(",", ".")
-        var KonapoFundID = $('#KonapoFundID').val();
-        var ClientID = $('#ClientID').val();
-        var FundReference = $('#FundReference').val();
-        var FundName = $('#FundName').val();
-        //Calculation Form
-        var CFPeriod = $('#Period').val();
-        var CFEmergencyfund = $('#EmergencyTotal').val();
-        var CFAnnualFund = $('#AnnualTotal').val();
-        var CFLifeTimeRetirement = $('#LifeTimeTotal').val();
-        var CFRetirementPeriod = $('#Retirement').val();
-        var CFFund = fund;
-        var CFDisplayOnReport = $('#CFDisplayOnReport').is(':checked');
-        //Compound Interest : OTI
-        var OTIInvestmentAmount = $('#InvestmentAmountOT').val();
-        var OTIInterestRate = $('#InterestRateOT').val();
-        var OTITenure = $('#TenureOT').val();
-        var OTITotalValue = $('#ValueAfterTenureOT').val();
-        var OTIMultiplier = $('#MultiplierOT').val();
-        var OTIDisplayOnReport = $('#OTIDisplayOnReport').is(':checked');
+    function toDecimal(figure) {
 
-        //Target : TimeRequired
-        var TTRIncomeAverage = $('#IncomeAverage').val();
-        var TTRCommittment = $('#Committment').val();
-        var TTRFundTargetMonths = $('#FundTargetMonths').val();
-        var TTRFundTargetYears = $('#FundTargetYears').val();
-        var TTRDisplayOnReport = $('#TTRDisplayOnReport').is(':checked');
-        //Target : AccountingForProgress
-        var TAFPProgress = $('#Progress').val();
-        var TAFPBalance = $('#Balance').val();
-        var TAFPCommittment = $('#MCommitment').val();
-        var TAFPTargetMonths = $('#TargetRMonths').val();
-        var TAFPTargetYears = $('#TargetRYears').val();
-        var TAFPDisplayOnReport = $('#TAFPDisplayOnReport').is(':checked');
-        //Target : AnnualTarget
-        var TATProgress = $('#AProgress').val();
-        var TATBalance = $('#ABalance').val();
-        var TATCommittment = $('#AMCommitment').val();
-        var TATTargetMonths = $('#ATargetRMonths').val();
-        var TATTargetYears = $('#ATargetRYears').val();
-        var TATDisplayOnReport = $('#TATDisplayOnReport').is(':checked');
+        var result = parseFloat(figure);
+        if (isNaN(result))
+            return 0.00;
+        else
+            return result;
+
+    }
+    function GetSelectedProduct(_productID) {
+
+        ProductID = _productID;
+        console.log("Selected Product ID = " + ProductID);
+        GetProductType();
+    }
 
 
-        //Compound Interest Regular Deposits
+    function GetProductType() {
+        console.log("Product ID " + ProductID);
+        var url = "/LoanManager/GetProductType/";
+        $.ajax({
+            url: url,
+            data: { productID: ProductID },
+            cache: false,
+            type: "POST",
+            success: function (ProductType) {
+                console.log("Product Type " + ProductType);
+            },
+            failure: function (ProductType) {
+                console.log(productfees.responseText);
+            },
+            error: function (ProductType) {
+                console.log(productfees.responseText);
+            }
+        });
+    }
 
-        var RDInvestmentAmount = $('#InvestmentAmount').val();
-        var RDInterestRate = $('#InterestRate').val();
-        var RDTenure = $('#Tenure').val();
-        var RDContributions = $('#ContributionsMonth').val();
-        var RDPaymentsYear = $('#PaymentsYear').val();
-        var RDTotalValue = $('#PostTenureValue').val();
-        var RDMultiplier = $('#Multiplier').val();
-        var RDDisplayOnReport = $('#RDDisplayOnReport').is(':checked');
-        var MBDisplayOnReport = $('#MBDisplayOnReport').is(':checked');
-        var CurrentURL = window.location.port ? $(location).attr('protocol') + $(location).attr('port') + '//' + $(location).attr('hostname') : $(location).attr('protocol') + '//' + $(location).attr('hostname');
-        var SavePrintedReport = $('#SavePrintedReport').is(':checked');
+    function GetProductFee(FeeID, ProductType) {
+        console.log("Product ID " + ProductID);
+        var url = "/LoanManager/GetProductFees/";
+        $.ajax({
+            url: url,
+            data: { productID: ProductID, feeID: FeeID },
+            cache: false,
+            type: "POST",
+            success: function (fee) {
 
-        var konapoCalculations = {
-            "KonapoFundID": KonapoFundID,
-            "ClientID": ClientID,
-            "FundName": FundName,
-            "FundReference": FundReference,
-            //Calculation Form
-            "CFEmergencyfund": CFEmergencyfund,
-            "CFPeriod": CFPeriod,
-            "CFAnnualFund": CFAnnualFund,
-            "CFLifeTimeRetirement": CFLifeTimeRetirement,
-            "CFRetirementPeriod": CFRetirementPeriod,
-            "CFFund": CFFund,
-            "CFDisplayOnReport": CFDisplayOnReport,
-
-            //Compound Interest One Time Investment
-            "OTIInvestmentAmount": OTIInvestmentAmount,
-            "OTIInterestRate": OTIInterestRate,
-            "OTITenure": OTITenure,
-            "OTITotalValue": OTITotalValue,
-            "OTIMultiplier": OTIMultiplier,
-            "OTIDisplayOnReport": OTIDisplayOnReport,
-            //Target : TimeRequired
-            "TTRIncomeAverage": TTRIncomeAverage,
-            "TTRCommittment": TTRCommittment,
-            "TTRFundTargetMonths": TTRFundTargetMonths,
-            "TTRFundTargetYears": TTRFundTargetYears,
-            "TTRDisplayOnReport": TTRDisplayOnReport,
-            //Target : AccountForProgress
-            "TAFPProgress": TAFPProgress,
-            "TAFPBalance": TAFPBalance,
-            "TAFPCommittment": TAFPCommittment,
-            "TAFPTargetMonths": TAFPTargetMonths,
-            "TAFPTargetYears": TAFPTargetYears,
-            "TAFPDisplayOnReport": TAFPDisplayOnReport,
-
-            //Target : AnnualTarget
-            "TATProgress": TATProgress,
-            "TATBalance": TATBalance,
-            "TATCommittment": TATCommittment,
-            "TATTargetMonths": TATTargetMonths,
-            "TATTargetYears": TATTargetYears,
-            "TATDisplayOnReport": TATDisplayOnReport,
-
-            //Compound Interest Regular Deposits
-            "RDInvestmentAmount": RDInvestmentAmount,
-            "RDInterestRate": RDInterestRate,
-            "RDTenure": RDTenure,
-            "RDPaymentsYear": RDPaymentsYear,
-            "RDContributions": RDContributions,
-            "RDTotalValue": RDTotalValue,
-            "RDMultiplier": RDMultiplier,
-            "RDDisplayOnReport": RDDisplayOnReport,
-
-            "MBDisplayOnReport": MBDisplayOnReport,
-            "CurrentURL": CurrentURL,
-            "SavePrintedReport": SavePrintedReport
-        };
-        console.log(konapoCalculations);
-        console.log(JSON.stringify(konapoCalculations));
-
-        if (konapoCalculations != null) {
-            $.ajax({
-                type: "POST",
-                url: "/KonapoFund/GetKhonapoReport/",
-                data: JSON.stringify(konapoCalculations),
-                contentType: "application/json;",
-                dataType: "json",
-                success: function (response) {
-                    if (response != null) {
-                        console.log("Response received ");
-                        console.log(response);
-                        console.log(response.filename);
-
-                        var fileName = response.filename;
-                        console.log('File Name ' + fileName);
-                        if (fileName === undefined || fileName === null)
-                            alert(response);
-                        else {
-                            var bytes = _base64ToArrayBuffer(response.fileContents);
-                            saveByteArray(fileName, bytes);
-                        }
-                    }
-
-                    else {
-                        alert("An error has occurred.This application may no longer proceed with downloading the report.Please contact your System Administrator for Assistance");
-                    }
-
-                },
-                failure: function (response) {
-                    alert("An error has occurred.This application may no longer proceed with downloading the report.Please contact your System Administrator for Assistance");
-                    console.log(response.responseText);
-                },
-                error: function (response) {
-                    alert("An error has occurred.This application may no longer proceed with downloading the report.Please contact your System Administrator for Assistance");
-                    console.log(response.responseText);
+                console.log(fee);
+                if (fee == null || fee.length == 0) {
+                    return 0.00;
                 }
-            });
-        }
+                else {
 
+                    var calculationTypeID = fee.calculationTypeID;
+                    console.log("Calculation Type " + calculationTypeID);
+                    if (calculationTypeID == 1) {
+                        console.log("Fee Amount " + fee.amount + " FeeID " + FeeID);
+                        return fee.amount;
+                    }
+                    else {
+                        var percent = (fee.amount / 100).toFixed(2);
+                        console.log("Fee Amount  " + percent + " FeeID " + FeeID);
+                        return percent;
+                    }
+                }
+
+            },
+            failure: function (ProductType) {
+                console.log(productfees.responseText);
+                return null;
+            },
+            error: function (ProductType) {
+                console.log(productfees.responseText);
+                return null;
+            }
+        });
     }
 
-    function _base64ToArrayBuffer(base64) {
-        var binary_string = window.atob(base64);
-        var len = binary_string.length;
-        var bytes = new Uint8Array(len);
-        for (var i = 0; i < len; i++) {
-            bytes[i] = binary_string.charCodeAt(i);
-        }
-        return bytes.buffer;
-    }
 
-    function saveByteArray(reportName, byte) {
-        var blob = new Blob([byte], { type: "application/octetstream" });
-        var isIE = false || !!document.documentMode;
-        if (isIE) {
-            window.navigator.msSaveBlob(blob, reportName);
-        } else {
-            var url = window.URL || window.webkitURL;
-            link = url.createObjectURL(blob);
-            var a = $("<a />");
-            a.attr("download", reportName);
-            a.attr("href", link);
-            $("body").append(a);
-            a[0].click();
-            $("body").remove(a);
-        }
-    }
+
 </script>

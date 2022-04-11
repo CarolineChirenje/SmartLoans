@@ -171,8 +171,14 @@ namespace SmartDataAccess
 
             modelBuilder.Entity<CalculationType>().HasData(
            Data.GetCalculationTypes());
-            
 
+
+            modelBuilder.Entity<Fee>().HasData(
+           Data.GetFees());
+
+            modelBuilder.Entity<ProductComputation>().HasData(
+          Data.GetProductComputation());
+            
 
         }
         public DbSet<User> Users { get; set; }

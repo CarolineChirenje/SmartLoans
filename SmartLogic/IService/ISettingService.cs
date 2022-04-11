@@ -48,7 +48,9 @@ namespace SmartLogic
         List<Category> GetCategories();
         List<SubCategory> GetSubCategories();
         List<CategoryItem> GetCategoryItems();
+
        
+
 
     }
 

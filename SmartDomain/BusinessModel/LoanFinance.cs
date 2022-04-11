@@ -40,6 +40,9 @@ namespace SmartDomain
         public decimal CollectionFee { get; set; }
         public DateTime DateCreated { get; set; }
 
+        [NotMapped]
+        public int LoanID { get; set; }
+
     }
 }
 

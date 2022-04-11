@@ -48,15 +48,7 @@ namespace SmartLoan.Controllers
         // GET:
         public async Task<IActionResult> ViewDepartment(int id) => View(await _service.FindDepartment(id));
 
-        // GET:
-        public async Task<IActionResult> ViewDepartmentUsers(int id = 0)
-        {
-            Department department = await (_service.FindDepartment(id));
-            @TempData["Title"] = department.Name;
-            ViewBag.DepartmentID = id;
-            return View(await _service.DepartmentClients(id));
-        }
-
+     
         [HttpPost]
         public async Task<IActionResult> ViewDepartment(Department department)
         {

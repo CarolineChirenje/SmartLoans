@@ -401,7 +401,7 @@ namespace SmartLogic
             int result = 0;
             try
             {
-                
+
                 var _result = await _context.LoanStatus.FindAsync(id);
                 if (_result.LoanStatusID <= (Enum.GetNames(typeof(LoanState)).Length))
                     return 0;
@@ -909,22 +909,7 @@ namespace SmartLogic
 
 
         #region LoanSector
-        public async Task<bool> IsDuplicate(Fee fee)
-        {
-            bool result = false;
-            try
-            {
-                Fee _fee = await _context.Fees.Where(b => b.Name.Equals(fee.Name)).FirstOrDefaultAsync();
-                result = _fee.IsNotNull();
-            }
-            catch (Exception ex)
-            {
-
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-            return result;
-        }
+     
         public async Task<List<Fee>> Fees()
         {
             List<Fee> result = null;
@@ -944,24 +929,7 @@ namespace SmartLogic
 
         }
 
-        public async Task<int> DeleteFee(int id)
-        {
-            int result = 0;
-            try
-            {
-                var _result = await _context.Fees.FindAsync(id);
-                _context.Fees.Remove(_result);
-                result = await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-            return result;
-        }
-
+      
         public async Task<Fee> FindFee(int id)
         {
             Fee result = null;
@@ -979,26 +947,7 @@ namespace SmartLogic
             return result;
         }
 
-        public async Task<int> Save(Fee fee)
-        {
-
-            try
-            {
-                fee.LastChangedBy = UserAppData.CurrentUserName;
-                fee.LastChangedDate = DateTime.Now;
-                _context.Add(fee);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-            return fee.FeeID;
-        }
-
-
+     
         public async Task<int> Update(Fee fee)
         {
             try
@@ -1021,72 +970,14 @@ namespace SmartLogic
         #endregion Fees
 
         #region ProductComputations
-        public async Task<int> Save(ProductComputation productComputation)
-        {
-
-            try
-            {
-
-                productComputation.CreatedBy = UserAppData.CurrentUserName;
-                productComputation.DateCreated = DateTime.Now;
-                productComputation.LastChangedBy = UserAppData.CurrentUserName;
-                productComputation.LastChangedDate = DateTime.Now;
-                _context.Add(productComputation);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-            return productComputation.ProductComputationID;
-        }
-        public async Task<int> DeleteProductComputation(int id)
-        {
-            int result = 0;
-            try
-            {
-                var _result = await _context.ProductComputations.FindAsync(id);
-                _context.ProductComputations.Remove(_result);
-                result = await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-            return result;
-        }
-
-        public async Task<bool> IsDuplicate(ProductComputation computation)
-        {
-            bool result = false;
-            try
-            {
-                ProductComputation productComputation = await _context.ProductComputations.Where(b => b.PluginName.Equals(computation.PluginName)).FirstOrDefaultAsync();
-                result = productComputation.IsNotNull();
-            }
-            catch (Exception ex)
-            {
-
-                CustomLog.Log(LogSource.Logic_Base, ex);
-                throw;
-            }
-            return result;
-        }
-        public async Task<List<ProductComputation>> ProductComputations()
+           public async Task<List<ProductComputation>> ProductComputations()
         {
             try
-            {
-
-
-                var plugins = await _context.ProductComputations
+            {                var plugins = await _context.ProductComputations
                 .AsNoTracking()
                 .ToListAsync();
 
-                                return plugins;
+                return plugins;
             }
             catch (Exception ex)
             {
@@ -1104,7 +995,6 @@ namespace SmartLogic
                     return 0;
                 _plugin.PluginName = computation.PluginName;
                 _plugin.Method = computation.Method;
-                _plugin.IsActive = computation.IsActive;
                 _plugin.LastChangedBy = UserAppData.CurrentUserName;
                 _plugin.LastChangedDate = DateTime.Now;
                 _context.Update(_plugin);

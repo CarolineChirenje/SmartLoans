@@ -24,27 +24,7 @@ namespace SmartLoan.Controllers
             return View(await _service.Fees());
         }
 
-        public IActionResult Add()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Add(Fee Fee)
-        {
-            if (ModelState.IsValid)
-            {
-                if (await _service.IsDuplicate(Fee))
-                {
-                    TempData[MessageDisplayType.Error.ToString()] = "Failed to Create Fee a Fee  with the same Name Already Exists";
-                    return View(Fee);
-                }
-                if (await (_service.Save(Fee)) == 0)
-                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");;
-                return RedirectToAction(nameof(Fee));
-            }
-            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction(nameof(Fee));
-        }
+      
         // GET:
         public async Task<IActionResult> ViewFee(int id) => View(await _service.FindFee(id));
 
@@ -69,19 +49,6 @@ namespace SmartLoan.Controllers
         }
 
 
-        public async Task<IActionResult> Delete(int id)
-        {
-            if (await (_service.DeleteFee(id)) > 0)
-                return RedirectToAction(nameof(Fee));
-            else
-            {
-                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("ViewFee", new { id });
-            }
-
-        }
-       
-      
 
     }
 }

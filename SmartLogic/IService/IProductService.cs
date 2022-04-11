@@ -20,14 +20,16 @@ namespace SmartLogic
         Task<Product> FindProduct(int ProductId);
         Task<List<Product>> Products();
         List<Company> Companies();
-        
+
         //Product Fee
         Task<ProductFee> FindProductFee(int id);
         Task<int> Save(ProductFee productFee);
         Task<int> Update(ProductFee productFee);
         Task<int> ActionProductFee(int id, DatabaseAction action);
 
+        ProductFee GetProductFee(int productID, int feeID); 
 
+        int GetProductType(int productID);
 
     }
 }

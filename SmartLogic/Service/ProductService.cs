@@ -300,6 +300,35 @@ namespace SmartLogic
             }
 
         }
+        public int GetProductType(int productID)
+        {
+            try
+            {
+
+                var result = _context.Products.Where(r => r.ProductID == productID).AsNoTracking().FirstOrDefault()?.ProductComputationID ?? 0;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+       public ProductFee GetProductFee(int productID, int feeID)
+        {
+            try
+            {
+
+                var result = _context.ProductFees.Where(r => r.ProductID == productID && r.FeeID == feeID).AsNoTracking().FirstOrDefault();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<int> ActionProductFee(int id, DatabaseAction action)
         {
             try

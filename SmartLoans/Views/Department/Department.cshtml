@@ -38,8 +38,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Is Active</th>
-                                    <th>Users</th>
-                                    <th>Last Changed Date</th>
+                                                                    <th>Last Changed Date</th>
                                     <th>Last Changed By</th>
 
                                 </tr>
@@ -63,8 +62,7 @@
                                             <td>@Html.DisplayFor(modelItem => item.Name)</td>
                                         }
                                         <td>@activeStatus</td>
-                                        <td><a asp-controller="Department" asp-action="ViewDepartmentUsers" asp-route-id="@item.DepartmentID">@item.Clients?.Count()</a></td>
-                                        <td>@dateCreated</td>
+                                          <td>@dateCreated</td>
                                         <td>@Html.DisplayFor(modelItem => item.LastChangedBy)</td>
 
 

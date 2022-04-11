@@ -12,14 +12,14 @@ namespace SmartDomain
     {
         [Key]
         public int ProductComputationID { get; set; }
-        [Required]
+       
         [StringLength(50)]
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        [Required]
+       
         [StringLength(50)]
         public string PluginName { get; set; }
-        [Required]
+       
         [StringLength(50)]
         public string Method { get; set; }
         

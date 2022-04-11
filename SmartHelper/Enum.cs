@@ -780,8 +780,6 @@ namespace SmartHelper
         View_Product_Fee,
 
 
-
-
         View_Invoice_Details,
         Print_Statement_With_No_Reversals,
         Auto_Generate_Receipt,
@@ -805,13 +803,10 @@ namespace SmartHelper
         Delete_Loan_Type,
         View_Loan_Type,
 
-        Add_Fee,
+      
         Update_Fee,
-        Delete_Fee,
         View_Fee,
-
-
-
+       
         Add_Loan_Status,
         Update_Loan_Status,
         Delete_Loan_Status,
@@ -826,16 +821,17 @@ namespace SmartHelper
         Update_Loan,
         Delete_Loan,
         View_Loan,
+        Finalise_Loan,
 
         Add_Loan_Beneficiary,
         Update_Loan_Beneficiary,
         View_Loan_Beneficiary,
         Delete_Loan_Beneficiary,
 
-        Add_Product_Computation,
+       
         Update_Product_Computation,
         View_Product_Computation,
-        Delete_Product_Computation,
+       
 
         Loan_Upload_Document,
         Loan_View_Document,
@@ -1009,6 +1005,13 @@ namespace SmartHelper
         Account_Creation
     }
 
+    public enum Product_Computation
+    {
+        Type_1 = 1,
+        Type_2= 2,
+        
+    }
+
     public enum PenaltyMarkers
     {
         X_Days = 1,
@@ -1024,14 +1027,25 @@ namespace SmartHelper
     {
         Created = 1,
         Awaiting_Approval = 2,
-        Active = 3
+        Active = 3,
+        Rejected
 
     }
     public enum Calculation_Type
     {
         Flat_Rate = 1,
         Percentage_Of = 2,
-      
+   }
+    public enum LoanFees
+    {
+        Deposit= 1,
+        Interest_Rate = 2,
+        Minimum_Charge,
+        Documentation_Fee,
+        Fixed_Rate,
+        Principal,
+        Discount,
+        Principal_Measure
 
     }
 }

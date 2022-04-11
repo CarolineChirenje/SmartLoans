@@ -24,27 +24,7 @@ namespace SmartLoan.Controllers
             return View(await _service.ProductComputations());
         }
 
-        public IActionResult Add()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Add(ProductComputation ProductComputation)
-        {
-            if (ModelState.IsValid)
-            {
-                if (await _service.IsDuplicate(ProductComputation))
-                {
-                    TempData[MessageDisplayType.Error.ToString()] = "Failed to Create Product Computation a Product Computation  with the same Name Already Exists";
-                    return View(ProductComputation);
-                }
-                if (await (_service.Save(ProductComputation)) == 0)
-                    TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");;
-                return RedirectToAction(nameof(ProductComputation));
-            }
-            TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-            return RedirectToAction(nameof(ProductComputation));
-        }
+       
         // GET:
         public async Task<IActionResult> ViewProductComputation(int id) => View(await _service.FindProductComputation(id));
 
@@ -69,17 +49,6 @@ namespace SmartLoan.Controllers
         }
 
 
-        public async Task<IActionResult> Delete(int id)
-        {
-            if (await (_service.DeleteProductComputation(id)) > 0)
-                return RedirectToAction(nameof(ProductComputation));
-            else
-            {
-                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                return RedirectToAction("ViewProductComputation", new { id });
-            }
-
-        }
        
       
 

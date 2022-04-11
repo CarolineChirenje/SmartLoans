@@ -218,7 +218,7 @@ namespace SmartLogic
                 CustomLog.Log(LogSource.Logic_Base, ex);
                 return "Uknown";
             }
-            
+
         }
         public async Task<int> Save(ClientForm clientForm)
         {
@@ -241,7 +241,6 @@ namespace SmartLogic
                     City = clientForm.City,
                     MobileNumber = clientForm.MobileNumber,
                     Occupation = clientForm.Occupation,
-                    DepartmentID = clientForm.DepartmentID,
                     AddressLine1 = clientForm.AddressLine1,
                     AddressLine2 = clientForm.AddressLine2
                 };
@@ -329,7 +328,6 @@ namespace SmartLogic
                     updateClient.CountryID = clientForm.CountryID;
                     updateClient.MobileNumber = clientForm.MobileNumber;
                     updateClient.DateOfBirth = clientForm.DateOfBirth;
-                    updateClient.DepartmentID = clientForm.DepartmentID;
                     updateClient.GenderID = clientForm.GenderID;
                     updateClient.LastChangedBy = UserAppData.CurrentUserName;
                     updateClient.LastChangedDate = DateTime.Now;
@@ -446,14 +444,14 @@ namespace SmartLogic
 
         }
 
-        
+
         public List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0, int companyID = 0)
         {
             try
             {
                 List<int> ClientIDs = new List<int>();
-             
-              
+
+
                 var clients = (from c in _context.Clients
                                join t in _context.Titles on c.TitleID equals t.TitleID
                                join cg in _context.ClientGroups on c.ClientGroupID equals cg.ClientGroupID
@@ -463,8 +461,8 @@ namespace SmartLogic
                     return null;
                 if (!String.IsNullOrEmpty(accountNumber))
                     clients = clients.Where(m => m.AccountNumber.Contains(accountNumber.Trim())).ToList();
-                if (companyID>0)
-                    clients = clients.Where(c => c.CompanyID==companyID).ToList();
+                if (companyID > 0)
+                    clients = clients.Where(c => c.CompanyID == companyID).ToList();
 
                 if (newClientsOnly)
                     clients = clients.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).ToList();
@@ -508,7 +506,7 @@ namespace SmartLogic
                 throw;
             }
         }
-       
+
         public async Task<List<string>> ClientAccountNumbers(string account)
         {
             try
@@ -636,7 +634,7 @@ namespace SmartLogic
                 };
                 if (clientNotes.ListIsEmpty())
                     return comments;
-              
+
                 List<CommentsList> result = new List<CommentsList>();
 
                 foreach (var clientNote in clientNotes)
@@ -765,7 +763,7 @@ namespace SmartLogic
                                 Include(ct => ct.RelationshipType).
                  Include(ct => ct.ContactType).
                  Where(c => c.ClientID == clientID).ToList();
-               
+
                 Contacts contacts = new Contacts
                 {
                     ClientID = clientID,
@@ -889,9 +887,9 @@ namespace SmartLogic
                     ClientForm = FindClient(clientID).Result
                 };
                 if (clientDocs.ListIsEmpty())
-                 
-                return docs;
-               
+
+                    return docs;
+
                 List<DocumentList> result = new List<DocumentList>();
 
                 foreach (var document in clientDocs)
@@ -1155,7 +1153,7 @@ namespace SmartLogic
             }
         }
 
-  
+
 
         public Transactions PaidTransactions(int clientID)
         {
@@ -1201,7 +1199,7 @@ namespace SmartLogic
             }
         }
 
-     
+
 
         #region Helpers
         ClientForm GetClient(Client result)
@@ -1231,10 +1229,9 @@ namespace SmartLogic
                     ClientAccountTypeID = result.ClientAccountTypeID,
                     ClientGroupID = result.ClientGroupID,
                     CompanyID = result.CompanyID,
-                    DepartmentID = result.DepartmentID,
-                    IsActive = result.IsActive,
+                                        IsActive = result.IsActive,
                     RegistrationDate = result.RegistrationDate,
-                                        LastChangedBy = result.LastChangedBy,
+                    LastChangedBy = result.LastChangedBy,
                     LastChangedDate = result.LastChangedDate,
                     IsJointAccount = result.ClientAccountTypeID == (int)Client_AccountType.Joint
                 };
@@ -1277,7 +1274,7 @@ namespace SmartLogic
                     LastName = result.LastName,
                     IDNumber = result.IDNumber,
                     EmailAddress = result.EmailAddress,
-                                       AccountNumber = result.AccountNumber
+                    AccountNumber = result.AccountNumber
                 };
                 return clientPeek;
             }

@@ -23,8 +23,8 @@ namespace SmartDomain
         [ForeignKey("TitleID")]
         public int TitleID { get; set; }
         public virtual Titles Title { get; set; }
-        public int? DepartmentID { get; set; }
-        public virtual Department Department { get; set; }
+       
+        public byte[] Picture { get; set; }
         public string Occupation { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         [DefaultValue("0.00")]

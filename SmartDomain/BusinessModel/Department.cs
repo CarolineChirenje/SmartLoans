@@ -10,7 +10,7 @@ namespace SmartDomain
         public int DepartmentID { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public virtual List<Client> Clients { get; set; }
+     
         
     }
 }

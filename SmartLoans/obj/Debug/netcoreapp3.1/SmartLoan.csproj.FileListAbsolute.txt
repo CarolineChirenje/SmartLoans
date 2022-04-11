@@ -61,7 +61,6 @@ C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\External\Dashbo
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\FeatureFlag\Dashboard.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\FeatureFlag\FeatureFlag.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\FeatureFlag\ViewFeatureFlag.cshtml.g.cs
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\Fee\Add.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\Fee\Fee.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\Fee\ViewFee.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\Home\About.cshtml.g.cs
@@ -9906,7 +9905,6 @@ C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\LoanManager\Vie
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\LoanManager\_MessageDisplay.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\LoanMenuList\LoanMenu.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\LoanManager\ViewLoan.cshtml.g.cs
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\ProductComputation\Add.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\ProductComputation\ProductComputation.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\ProductComputation\ViewProductComputation.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\LoanManager\ViewLoanBeneficiary.cshtml.g.cs

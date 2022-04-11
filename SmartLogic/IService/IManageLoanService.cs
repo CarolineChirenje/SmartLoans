@@ -45,6 +45,10 @@ namespace SmartLogic
         Task<int> ActionNote(int id, DatabaseAction action);
 
 
+        Task<int> Save(LoanFinance loanFinance);
+        Task<int> RejectLoan(LoanNote note);
+
+
     }
 }
 

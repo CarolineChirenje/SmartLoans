@@ -258,7 +258,55 @@ namespace SmartLogic
                 throw;
             }
         }
+        public async Task<int> Save(LoanFinance loanfinance)
+        {
+            try
+            {
+              
+                loanfinance.LastChangedBy = UserAppData.CurrentUserName;
+                loanfinance.LastChangedDate = DateTime.Now;
+                _context.Add(loanfinance);
+               int result= await _context.SaveChangesAsync();
+                if (result > 0)
+                  await  ChangeLoanStatus(loanfinance.LoanID, (int)LoanState.Awaiting_Approval);
+                return loanfinance.LoanID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
 
+        public async Task<int> RejectLoan(LoanNote loanNote)
+        {
+            try
+            {
+                if (!loanNote.DueDate.IsNotNull())
+                    loanNote.DueDate = DateTime.Now;
+                if (!loanNote.DateClosed.IsNotNull())
+                    loanNote.DateClosed = DateTime.Now;
+                if (loanNote.Comment.IsNull())
+                    loanNote.Comment = "Loan Rejected";
+                loanNote.UserTypeID = UserAppData.CurrentUserTypeID;
+                loanNote.UploadedBy = loanNote.LastChangedBy = UserAppData.CurrentUserName;
+                loanNote.LastChangedDate = DateTime.Now;
+                loanNote.DateUploaded = DateTime.Now;
+                _context.Add(loanNote);
+                int result= (await _context.SaveChangesAsync());
+                 if(result>0)
+                 {
+                    await ChangeLoanStatus(loanNote.LoanID, (int)LoanState.Rejected);
+                 }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
         public async Task<int> FinaliseLoan(int LoanID)
         {
             try
@@ -854,6 +902,7 @@ namespace SmartLogic
                 throw;
             }
         }
+
         public async Task<int> Save(LoanNote loanNote)
         {
             try

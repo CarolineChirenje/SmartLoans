@@ -74,9 +74,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Loan" asp-action="Dashboard">Cancel</a>
-                    @if (UserAppData.HasPermission(Permissions.Add_Fee))
-                    {<a class="btn btn-success pull-right" asp-controller="Fee" asp-action="Add">Create</a><br />
-                    }
+                   
                 </div>
             </div>
             <!-- /.box -->

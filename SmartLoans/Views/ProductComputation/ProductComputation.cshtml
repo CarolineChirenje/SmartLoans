@@ -37,7 +37,6 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Is Active</th>
                                     <th>Last Changed Date</th>
                                     <th>Last Changed By</th>
 
@@ -74,10 +73,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a class="btn btn-default" asp-controller="Loan" asp-action="Dashboard">Cancel</a>
-                    @if (UserAppData.HasPermission(Permissions.Add_Product_Computation))
-                    {<a class="btn btn-success pull-right" asp-controller="ProductComputation" asp-action="Add">Create</a><br />
 
-                    }
                 </div>
             </div>
             <!-- /.box -->
