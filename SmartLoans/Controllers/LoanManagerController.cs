@@ -116,7 +116,21 @@ namespace SmartLoan.Controllers
             return RedirectToAction("ViewLoan", new { id = loanFinance.LoanID });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Finalise(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                Loan update = await (_service.FindLoan(id));
+                if (update.IsNotNull())
+                {
+                    if (await (_service.FinaliseLoan(id)) == 0)
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
 
+                }
+            }
+            return RedirectToAction("ViewLoan", new { id = id });
+        }
         public async Task<IActionResult> Delete(int id)
         {
             if (await (_service.Delete(id)) > 0)
@@ -360,16 +374,7 @@ namespace SmartLoan.Controllers
             }
             return RedirectToAction("Notes", new { id = loanNote.LoanID });
         }
-        [HttpPost]
-        public async Task<IActionResult> Finalise(int id)
-        {
-            if (await (_service.FinaliseLoan(id)) == 0)
-            {
-                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-               
-            }
-            return RedirectToAction("ViewLoan", new { id });
-        }
+       
         [HttpPost]
         public async Task<IActionResult> RejectLoan(LoanNote loanNote)
         {

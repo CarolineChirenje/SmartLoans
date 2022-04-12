@@ -822,6 +822,7 @@ namespace SmartHelper
         Delete_Loan,
         View_Loan,
         Finalise_Loan,
+        Un_Finalise_Loan,
 
         Add_Loan_Beneficiary,
         Update_Loan_Beneficiary,

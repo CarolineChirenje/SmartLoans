@@ -20,7 +20,7 @@ namespace SmartLogic
     public class ManageLoanService : IManageLoanService
     {
         private readonly DatabaseContext _context;
-        private readonly IClientService clientService=new ClientService();
+        private readonly IClientService clientService = new ClientService();
         readonly ICustomSettingsService _settingService = new CustomSettingsService();
         public ManageLoanService(DatabaseContext context) => _context = context;
         public async Task<Loan> FindLoan(int loanid)
@@ -35,7 +35,7 @@ namespace SmartLogic
                    .Include(p => p.LoanType)
                    .Include(p => p.LoanStatus)
                    .Include(p => p.LoanUse)
-                  
+                   .Include(p => p.LoanSchedules)
                    .AsNoTracking().FirstOrDefaultAsync();
 
                 return loan;
@@ -262,13 +262,17 @@ namespace SmartLogic
         {
             try
             {
-              
+
                 loanfinance.LastChangedBy = UserAppData.CurrentUserName;
                 loanfinance.LastChangedDate = DateTime.Now;
                 _context.Add(loanfinance);
-               int result= await _context.SaveChangesAsync();
+                int result = await _context.SaveChangesAsync();
+
                 if (result > 0)
-                  await  ChangeLoanStatus(loanfinance.LoanID, (int)LoanState.Awaiting_Approval);
+                {
+                    await ChangeLoanStatus(loanfinance.LoanID, (int)LoanState.Awaiting_Approval);
+                    UpdateLoanFinance(loanfinance.LoanID, loanfinance.LoanFinanceID);
+                }
                 return loanfinance.LoanID;
             }
             catch (Exception ex)
@@ -293,11 +297,11 @@ namespace SmartLogic
                 loanNote.LastChangedDate = DateTime.Now;
                 loanNote.DateUploaded = DateTime.Now;
                 _context.Add(loanNote);
-                int result= (await _context.SaveChangesAsync());
-                 if(result>0)
-                 {
+                int result = (await _context.SaveChangesAsync());
+                if (result > 0)
+                {
                     await ChangeLoanStatus(loanNote.LoanID, (int)LoanState.Rejected);
-                 }
+                }
                 return result;
             }
             catch (Exception ex)
@@ -321,12 +325,11 @@ namespace SmartLogic
                 loan.LastChangedBy = UserAppData.CurrentUserName;
                 loan.LastChangedDate = DateTime.Now;
                 _context.Update(loan);
-              int result= await _context.SaveChangesAsync();
+                int result = await _context.SaveChangesAsync();
                 // Create LoanSchedule based on  duration 
-                if (loan.LoanFinance.IsNull())
-                    return result;
-                LoanSchedule(loan);
-                return result; 
+                if (loan.LoanFinance.IsNotNull())
+                    LoanSchedule(loan);
+                return result;
             }
             catch (Exception ex)
             {
@@ -340,8 +343,14 @@ namespace SmartLogic
         {
             try
             {
+               
                 if (loan.LoanFinance.Duration > 0)
                 {
+                    var loanschedules = _context.LoanSchedules.Where(ls => ls.LoanID == loan.LoanID).ToList();
+                    if (loanschedules.IsNotNull())
+                        _context.RemoveRange(loanschedules);
+                    _context.SaveChanges();
+
                     for (int scheduleCount = 1; scheduleCount <= loan.LoanFinance.Duration; scheduleCount++)
                     {
                         LoanSchedule schedule = new LoanSchedule()
@@ -384,6 +393,27 @@ namespace SmartLogic
                 loan.LastChangedDate = DateTime.Now;
                 _context.Update(loan);
                 await _context.SaveChangesAsync();
+                return loan.LoanID;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+
+        public int UpdateLoanFinance(int LoanID, int LoanFinanceID)
+        {
+            try
+            {
+                Loan loan = _context.Loans.Find(LoanID);
+                if (loan.IsNull())
+                    return loan.LoanID;
+                loan.LoanFinanceID = LoanFinanceID;
+                loan.LastChangedBy = UserAppData.CurrentUserName;
+                loan.LastChangedDate = DateTime.Now;
+                _context.Update(loan);
+               _context.SaveChanges();
                 return loan.LoanID;
             }
             catch (Exception ex)
