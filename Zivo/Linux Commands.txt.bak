@@ -16,7 +16,8 @@ https://www.cloudinsidr.com/content/heres-fix-nginx-error-failed-read-pid-file-l
 https://ubuntu.com/tutorials/install-and-configure-nginx#1-overview
 
 
-sudo ln -s /etc/nginx/sites-available/smartloans.elroitec.com /etc/nginx/sites-enabled/
+
+sudo ln -s /etc/nginx/sites-available/smartwealth.elroitec.com /etc/nginx/sites-enabled/
 
 https://monovm.com/blog/how-to-save-and-exit-in-nano-editor/#:~:text=Save%20Nano%20Command%3A%20Ctrl%2BO,Ctrl%2BX%20will%20close%20nano.
 
@@ -34,3 +35,8 @@ To install Nginx, use following command:
 
 sudo apt update
 sudo apt install nginx
+https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04
+https://monovm.com/blog/how-to-save-and-exit-in-nano-editor/
+
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/loans.elroitec.com
+sudo nano /etc/nginx/sites-available/loans.elroitec.com

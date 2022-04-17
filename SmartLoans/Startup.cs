@@ -49,7 +49,7 @@ namespace SmartLoan
 
             string _configValue = GetData.SSDBConnection;
             if (string.IsNullOrEmpty(_configValue))
-                _configValue = "Data Source=172.105.28.87;Initial Catalog=SmartLoan; User Id=sa; Password=Ch1gumbu6299##";
+                _configValue = "Data Source=194.195.121.86;Initial Catalog=SmartLoan; User Id=sa; Password=Ch1gumbu6299##";
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(_configValue);
             UserAppData.DatabaseConnection = builder.DataSource;
            

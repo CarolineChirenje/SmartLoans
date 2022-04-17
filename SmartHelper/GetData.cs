@@ -91,7 +91,7 @@ namespace SmartHelper
             string _environment = Environment();
             string connectionStringName = $"SSDBConnection{_environment}";
             string configValue = _configuration.GetConnectionString(connectionStringName);
-            return string.IsNullOrEmpty(configValue) ? "Data Source=172.105.28.87;Initial Catalog=SmartLoan;User Id=sa;Password=Ch1gumbu6299##" : configValue;
+            return string.IsNullOrEmpty(configValue) ? "Data Source=194.195.121.86;Initial Catalog=SmartLoan;User Id=sa;Password=Ch1gumbu6299##" : configValue;
 
         }
         public static List<T> ConvertDataTable<T>(DataTable dt)
