@@ -3,6 +3,7 @@
  sudo systemctl enable SmartAsyncMailing.service 
  sudo systemctl start SmartAsyncMailing.service 
  sudo systemctl status SmartAsyncMailing.service 
+  sudo systemctl stop SmartAsyncMailing.service 
  ls -la
 /etc/nginx/sites-available
 service nginx reload
@@ -38,7 +39,7 @@ sudo apt install nginx
 https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04
 https://monovm.com/blog/how-to-save-and-exit-in-nano-editor/
 
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/loans.elroitec.com
+sudo cp /etc/nginx/sites-available/smartloans.elroitec.com /etc/nginx/sites-available/smartwealth.elroitec.com
 sudo nano /etc/nginx/sites-available/lms.elroitec.com
 sudo ln -s /etc/nginx/sites-available/smartloans.elroitec.com /etc/nginx/sites-enabled/
 
@@ -49,3 +50,27 @@ mv loans.elroitec.com smartloans.elroitec.com
 sudo cp /etc/nginx/sites-available/rem.elroitec.com /etc/nginx/sites-available/lms.elroitec.com
 
 Also add the domain to AAA records on linode
+
+
+sudo ln -s /etc/nginx/sites-available/smartloans.elroitec.com /etc/nginx/sites-enabled/
+
+Address already in use means that the port you are trying to allocate for your current execution is already occupied/allocated to some other process.
+
+If you are a developer and if you are working on an application which require lots of testing, you might have an instance of your same application running in background (may be you forgot to stop it properly)
+
+So if you encounter this error, just see which application/process is using the port.
+
+In linux try using netstat -tulpn. This command will list down a process list with all running processes.
+
+Check if an application is using your port. If that application or process is another important one then you might want to use another port which is not used by any process/application.
+
+Anyway you can stop the process which uses your port and let your application take it.
+
+If you are in linux environment try,
+
+Use netstat -tulpn to display the processes
+kill <pid> This will terminate the process
+If you are using windows,
+
+Use netstat -a -o -n to check for the port usages
+Use taskkill /F /PID <pid> to kill that process

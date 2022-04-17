@@ -5,6 +5,6 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Publish\SmartLoans</_PublishTargetUrl>
-    <History>True|2022-04-06T11:52:55.2164311Z;</History>
+    <History>True|2022-04-17T08:44:10.0095106Z;True|2022-04-17T18:43:22.2896728+10:00;True|2022-04-06T21:52:55.2164311+10:00;</History>
   </PropertyGroup>
 </Project>
