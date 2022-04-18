@@ -31,6 +31,7 @@ namespace SmartLogic
                 Loan loan = await _context.Loans
                    .Where(r => r.LoanID == loanid)
                     .Include(c => c.Client)
+                     .Include(m => m.LoanFinance)
                    .Include(m => m.LoanSector)
                    .Include(p => p.LoanType)
                    .Include(p => p.LoanStatus)
@@ -159,7 +160,32 @@ namespace SmartLogic
         }
 
 
+        public async Task<int> ActiveStatus(int id)
+        {
+            try
+            {
 
+                Loan loan = await _context.Loans.FindAsync(id);
+                if (loan.IsNull())
+                    return 0;
+
+
+                bool activeStatus = loan.IsActive;
+                loan.IsActive = !activeStatus;
+                loan.LastChangedBy = UserAppData.CurrentUserName;
+                loan.LastChangedDate = DateTime.Now;
+                _context.Update(loan);
+
+
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
         public async Task<int> Update(Loan update)
         {
             try
@@ -248,6 +274,7 @@ namespace SmartLogic
                 loan.LastChangedBy = UserAppData.CurrentUserName;
                 loan.LastChangedDate = DateTime.Now;
                 loan.RegistrationDate = DateTime.Now;
+                loan.CreatedBy = UserAppData.CurrentUserName;
                 _context.Add(loan);
                 await _context.SaveChangesAsync();
                 return loan.LoanID;
@@ -296,6 +323,7 @@ namespace SmartLogic
                 loanNote.UploadedBy = loanNote.LastChangedBy = UserAppData.CurrentUserName;
                 loanNote.LastChangedDate = DateTime.Now;
                 loanNote.DateUploaded = DateTime.Now;
+
                 _context.Add(loanNote);
                 int result = (await _context.SaveChangesAsync());
                 if (result > 0)
@@ -324,6 +352,8 @@ namespace SmartLogic
                 loan.LoanStatusID = (int)LoanState.Active;
                 loan.LastChangedBy = UserAppData.CurrentUserName;
                 loan.LastChangedDate = DateTime.Now;
+                loan.FinalisedBy = UserAppData.CurrentUserName;
+                loan.DateFinalised = DateTime.Now;
                 _context.Update(loan);
                 int result = await _context.SaveChangesAsync();
                 // Create LoanSchedule based on  duration 
@@ -343,7 +373,7 @@ namespace SmartLogic
         {
             try
             {
-               
+
                 if (loan.LoanFinance.Duration > 0)
                 {
                     var loanschedules = _context.LoanSchedules.Where(ls => ls.LoanID == loan.LoanID).ToList();
@@ -391,6 +421,12 @@ namespace SmartLogic
                 loan.LoanStatusID = StatusID;
                 loan.LastChangedBy = UserAppData.CurrentUserName;
                 loan.LastChangedDate = DateTime.Now;
+
+                if (StatusID == (int)LoanState.Rejected)
+                {
+                    loan.FinalisedBy = UserAppData.CurrentUserName;
+                    loan.DateFinalised = DateTime.Now;
+                }
                 _context.Update(loan);
                 await _context.SaveChangesAsync();
                 return loan.LoanID;
@@ -413,7 +449,7 @@ namespace SmartLogic
                 loan.LastChangedBy = UserAppData.CurrentUserName;
                 loan.LastChangedDate = DateTime.Now;
                 _context.Update(loan);
-               _context.SaveChanges();
+                _context.SaveChanges();
                 return loan.LoanID;
             }
             catch (Exception ex)

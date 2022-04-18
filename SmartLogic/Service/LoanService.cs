@@ -993,9 +993,7 @@ namespace SmartLogic
                 var _plugin = await _context.ProductComputations.FindAsync(computation.ProductComputationID);
                 if (_plugin.IsNull())
                     return 0;
-                _plugin.PluginName = computation.PluginName;
-                _plugin.Method = computation.Method;
-                _plugin.LastChangedBy = UserAppData.CurrentUserName;
+                                _plugin.LastChangedBy = UserAppData.CurrentUserName;
                 _plugin.LastChangedDate = DateTime.Now;
                 _context.Update(_plugin);
                 await _context.SaveChangesAsync();

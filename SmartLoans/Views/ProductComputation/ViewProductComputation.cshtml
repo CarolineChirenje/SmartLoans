@@ -37,55 +37,40 @@
                     <div class="text-warning">@TempData["Warning"].ToString()</div>
                 </div>
             }
-        <div class="box-body">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="Name" value="@Model.Name">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name" value="@Model.Name">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Plugin Name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="PluginName" value="@Model.PluginName">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Created By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.CreatedBy</label>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Method</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="Method" value="@Model.Method">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Date Created</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.DateCreated)</label>
+                    </div>
                 </div>
-            </div>
-           
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
+                    </div>
+                </div>
 
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Created By</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@Model.CreatedBy</label>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
+                    </div>
                 </div>
+                <input type="hidden" name="ProductComputationID" value="@Model.ProductComputationID" />
             </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Date Created</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.DateCreated)</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">LastChanged By</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@Model.LastChangedBy</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Last Updated</label>
-                <div class="col-sm-10">
-                    <label for="inputEmail3" class="form-control label-default">@UtilityService.ShowDateTime(@Model.LastChangedDate)</label>
-                </div>
-            </div>
-            <input type="hidden" name="ProductComputationID" value="@Model.ProductComputationID" />
-        </div>
             <!-- /.box-body -->
             <div class="box-footer">
                 <a class="btn btn-default" asp-controller="ProductComputation" asp-action="ProductComputation">Cancel</a>
@@ -93,7 +78,7 @@
                 {
                     <button type="submit" class="btn btn-info ">Update</button>
                 }
-               
+
             </div>
             <!-- /.box-footer -->
         </form>

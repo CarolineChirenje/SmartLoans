@@ -337,7 +337,7 @@ namespace SmartDataAccess
                 {
                     CustomSettingID = (int)AppSetting.Site_URL,
                     Name = AppSetting.Site_URL.ToString().Replace("_", " "),
-                    Value=@"http://smartloan.elroitec.com/",
+                    Value=@"http://lms.elroitec.com/",
                     Description="Site URL",
                     CustomVariableTypeID=(int)VariableType.String,
                     IsActive = true,

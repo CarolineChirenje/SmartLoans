@@ -9913,3 +9913,4 @@ C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\Client\Loans.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\FiscalYear\Add.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\FiscalYear\FiscalYear.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\FiscalYear\ViewFiscalYear.cshtml.g.cs
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\LoanManager\CaptureFinance.cshtml.g.cs

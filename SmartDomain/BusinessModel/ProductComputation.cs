@@ -16,13 +16,7 @@ namespace SmartDomain
         [StringLength(50)]
         public string Name { get; set; }
         public bool IsActive { get; set; }
-       
-        [StringLength(50)]
-        public string PluginName { get; set; }
-       
-        [StringLength(50)]
-        public string Method { get; set; }
-        
+      
         [StringLength(50)]
         public string CreatedBy { get; set; }
         [Column(TypeName = "datetime")]

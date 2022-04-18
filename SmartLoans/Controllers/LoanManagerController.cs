@@ -43,11 +43,14 @@ namespace SmartLoan.Controllers
             return View(await _service.GetLoans(loanRef, newLoansOnly, companyID));
         }
 
+
         public IActionResult AddLoan()
         {
             GetDropDownLists();
             return View();
         }
+
+
         [HttpPost]
         public async Task<IActionResult> AddLoan(Loan Loan)
         {
@@ -62,14 +65,39 @@ namespace SmartLoan.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("ViewLoan", new { id = _result });
+                    return RedirectToAction("CaptureFinance", new { id = _result });
                 }
             }
             TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
             return RedirectToAction(nameof(Loans));
         }
+
         // GET:
         public async Task<IActionResult> ViewLoan(int id, string Loanname = null)
+        {
+            if (id == 0 && Loanname == null)
+                return RedirectToAction(nameof(Loans));
+
+            Loan Loan = await _service.FindLoan(id);
+            if (Loan.IsNotNull())
+            {
+
+                HttpContext.Session.SetString("LoanID", Loan.LoanID.ToString());
+                GetDropDownLists();
+                if (Loan.LoanFinance.IsNotNull() && Loan.LoanStatusID != (int)LoanState.Created)
+                    return View(Loan);
+                else
+                {
+                    return RedirectToAction("CaptureFinance", new { id = Loan.LoanID });
+                }
+
+            }
+            else
+                return RedirectToAction(nameof(Loans));
+        }
+
+        // GET:
+        public async Task<IActionResult> CaptureFinance(int id, string Loanname = null)
         {
             if (id == 0 && Loanname == null)
                 return RedirectToAction(nameof(Loans));
@@ -82,7 +110,7 @@ namespace SmartLoan.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ViewLoan(Loan Loan)
+        public async Task<IActionResult> CaptureFinance(Loan Loan)
         {
 
             if (ModelState.IsValid)
@@ -103,7 +131,7 @@ namespace SmartLoan.Controllers
         [HttpPost]
         public async Task<IActionResult> Approve(LoanFinance loanFinance)
         {
-           // if (ModelState.IsValid)
+            // if (ModelState.IsValid)
             {
                 Loan update = await (_service.FindLoan(loanFinance.LoanID));
                 if (update.IsNotNull())
@@ -141,6 +169,28 @@ namespace SmartLoan.Controllers
                 return RedirectToAction("ViewLoan", new { id });
             }
 
+        }
+        public async Task<IActionResult> ActiveStatus(int id)
+        {
+            if (await (_service.ActiveStatus(id)) == 0)
+                TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
+
+            return RedirectToAction("ViewLoan", new { id });
+        }
+        [HttpGet]
+        public async Task<IActionResult> ReCapture(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                Loan update = await (_service.FindLoan(id));
+                if (update.IsNotNull())
+                {
+                    if (await (_service.ChangeLoanStatus(id, (int)LoanState.Created)) == 0)
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+
+                }
+            }
+            return RedirectToAction("ViewLoan", new { id = id });
         }
         //Beneficiary Details
         public ActionResult Beneficiaries(int id)
@@ -374,15 +424,15 @@ namespace SmartLoan.Controllers
             }
             return RedirectToAction("Notes", new { id = loanNote.LoanID });
         }
-       
+
         [HttpPost]
         public async Task<IActionResult> RejectLoan(LoanNote loanNote)
         {
-                if (await (_service.RejectLoan(loanNote)) == 0)
-                {
-                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
-                    return View(loanNote);
-                }
+            if (await (_service.RejectLoan(loanNote)) == 0)
+            {
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                return View(loanNote);
+            }
             return RedirectToAction("ViewLoan", new { id = loanNote.LoanID });
         }
         public async Task<IActionResult> ViewLoanNote(int id)
@@ -424,12 +474,12 @@ namespace SmartLoan.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetProductFees(int productID ,int feeID)
+        public ActionResult GetProductFees(int productID, int feeID)
         {
             ProductFee productFees = new ProductFee();
             if (productID != 0)
             {
-                productFees = _productService.GetProductFee(productID,feeID);
+                productFees = _productService.GetProductFee(productID, feeID);
                 if (productFees.IsNotNull())
                     return Json(productFees);
                 else

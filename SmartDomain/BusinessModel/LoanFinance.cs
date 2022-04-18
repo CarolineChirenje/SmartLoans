@@ -15,7 +15,9 @@ namespace SmartDomain
         public int Duration { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime MaturityDate { get; set; }
-      
+
+        [Column(TypeName = "decimal(18, 0)")]
+        public decimal Principal { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
         public decimal ApplicationFee { get; set; }
         [Column(TypeName = "decimal(18, 0)")]

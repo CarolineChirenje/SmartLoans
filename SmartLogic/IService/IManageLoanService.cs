@@ -13,6 +13,7 @@ namespace SmartLogic
     {
 
         Task<int> Delete(int id);
+        Task<int> ActiveStatus(int id);
         Task<int> Save(Loan Loan);
         Task<int> Update(Loan Loan);
         Task<int> ActionLoan(int loanid, DatabaseAction action);
