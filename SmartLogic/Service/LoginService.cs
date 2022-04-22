@@ -32,7 +32,7 @@ namespace SmartLogic
                 return await _context.Users
                 .Include(u => u.UserAccessGrants)
                  .Include(u => u.UserRoles)
-                 .ThenInclude(p=>p.Roles)
+                 .ThenInclude(p => p.Roles)
                  .ThenInclude(p => p.RolePermissions)
                 .FirstOrDefaultAsync(u => u.EmailAddress.Equals(username)
                  && u.Password.Equals(encryptedPassword));
@@ -157,7 +157,7 @@ namespace SmartLogic
                              && p.ExpiryDate.Date == DateTime.Now.Date
                              ).Select(x => x.UserAuthenticationCodeID).ToList();
 
-                        
+
                         if (!pincodes.ListIsEmpty())
                         {
                             var some = _context.UserAuthenticationCodes.Where(x => pincodes.Contains(x.UserAuthenticationCodeID)).ToList();
@@ -186,11 +186,29 @@ namespace SmartLogic
                 throw;
             }
         }
-        public async Task<bool> UserAccountExists(string emailaddress, string idnumber)
+
+        public bool HasAccessToSite(string emailaddress)
         {
             try
-            {                var user = await _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
+            {
+                var user = _context.Users.Where(u => u.EmailAddress.Equals(emailaddress)).FirstOrDefault();
+                if (user.IsNotNull())
+                    return user.GrantAccessToTestEnvironment;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public bool HasAccount(string emailaddress)
+        {
+            try
+            {
+                var user = _context.Users.Where(u => u.EmailAddress.Equals(emailaddress)).FirstOrDefault();
                 return user.IsNotNull();
+
             }
             catch (Exception ex)
             {
@@ -199,6 +217,20 @@ namespace SmartLogic
             }
         }
 
+
+        public async Task<bool> UserAccountExists(string emailaddress, string idnumber)
+        {
+            try
+            {
+                var user = await _context.Users.Where(u => u.EmailAddress.Equals(emailaddress) && u.IDNumber.Equals(idnumber)).FirstOrDefaultAsync();
+                return user.IsNotNull();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public async Task<UserAuthenticationCode> ConfirmCode(UserAuthenticate userAuthenticate)
         {
             try

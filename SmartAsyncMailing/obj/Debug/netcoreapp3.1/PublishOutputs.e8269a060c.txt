@@ -128,5 +128,6 @@ C:\Publish\Mail\SmartHelper.pdb
 C:\Publish\Mail\SmartHelper.dll.config
 C:\Publish\Mail\SmartInterfaces.pdb
 C:\Publish\Mail\SmartLog.pdb
+C:\Publish\Mail\SmartLog.dll.config
 C:\Publish\Mail\SmartLogic.pdb
 C:\Publish\Mail\SmartReporting.pdb

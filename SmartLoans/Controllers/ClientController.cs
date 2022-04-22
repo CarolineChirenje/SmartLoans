@@ -70,8 +70,8 @@ namespace SmartLoan.Controllers
                 if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employer && UserAppData.CompanyID > 0)
                     companyID = UserAppData.CompanyID;
                 List<ClientList> Clients = _service.Clients(accountNum, newClientsOnly, productID, companyID);
-              
-               return View(Clients);
+
+                return View(Clients);
             }
             catch (Exception ex)
             {
@@ -107,7 +107,7 @@ namespace SmartLoan.Controllers
             return RedirectToAction("Dashboard", "Home");
         }
 
-       
+
         public ActionResult Loans(int id)
         {
             try
@@ -252,7 +252,7 @@ namespace SmartLoan.Controllers
                 return RedirectToAction("Contacts", new { id = Convert.ToInt32(HttpContext.Session.GetString("ClientID")) });
 
             GetDropDownLists();
-            var ClientContact =await _service.FindContact(id);
+            var ClientContact = await _service.FindContact(id);
             return View(ClientContact);
         }
 
@@ -620,13 +620,23 @@ namespace SmartLoan.Controllers
                 if (emailSuccessResult)
                 {
                     if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
-                        emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
+                    {
+                        if (UserAppData.GrantAccessToTestEnvironment)
+                            emailAddress = $"[Test Email Address] {UserAppData.UserEmailAddress}";
+                        else
+                            emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
+                    }
                     TempData[MessageDisplayType.Success.ToString()] = $"Email Successfully sent to {emailAddress}";
                 }
                 else
                 {
                     if (UserAppData.SiteEnvironment != SiteEnvironment.Production)
-                        emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}";
+                    {
+                        if (UserAppData.GrantAccessToTestEnvironment)
+                            emailAddress = $"[Test Email Address] {UserAppData.UserEmailAddress}";
+                        else
+                            emailAddress = $"[Test Email Address] {UtilityService.TestEmailAddress}"; ;
+                    }
                     TempData[MessageDisplayType.Error.ToString()] = $"Failed to send email to {emailAddress}";
                 }
                 return RedirectToAction("Statements", new { id = statement.ClientID });
@@ -1166,7 +1176,7 @@ namespace SmartLoan.Controllers
                 dependentGenderID = 0;
             }
 
-         
+
             var genderList = _settingService.GenderList(); if (genderList != null)
             {
                 genderList.Select(t => new

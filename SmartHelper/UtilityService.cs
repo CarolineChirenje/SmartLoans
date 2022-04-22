@@ -594,6 +594,9 @@ namespace SmartHelper
         public static void ClearUserNames()
         {
             UserAppData.MenuComponent = Menu_Component.MenuList;
+            UserAppData.CurrentUserName = null;
+            UserAppData.GrantAccessToTestEnvironment = false;
+            UserAppData.UserEmailAddress = null;
         }
         public static decimal GetDecimalAmount(string Amount)
         {

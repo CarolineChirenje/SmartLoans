@@ -14,11 +14,6 @@ C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.cspro
 C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.dll
 C:\DEV\SmartWealth\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.pdb
-C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.GeneratedMSBuildEditorConfig.editorconfig
-C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.AssemblyInfoInputs.cache
-C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.AssemblyInfo.cs
-C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.csproj.CoreCompileInputs.cache
-C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.csproj.AssemblyReference.cache
 C:\DEV\SmartLoans\SmartInterfaces\bin\Debug\netcoreapp3.1\SmartInterfaces.deps.json
 C:\DEV\SmartLoans\SmartInterfaces\bin\Debug\netcoreapp3.1\SmartInterfaces.dll
 C:\DEV\SmartLoans\SmartInterfaces\bin\Debug\netcoreapp3.1\SmartInterfaces.pdb
@@ -27,6 +22,11 @@ C:\DEV\SmartLoans\SmartInterfaces\bin\Debug\netcoreapp3.1\SmartHelper.dll
 C:\DEV\SmartLoans\SmartInterfaces\bin\Debug\netcoreapp3.1\SmartDomain.pdb
 C:\DEV\SmartLoans\SmartInterfaces\bin\Debug\netcoreapp3.1\SmartHelper.pdb
 C:\DEV\SmartLoans\SmartInterfaces\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
+C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.csproj.AssemblyReference.cache
+C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.AssemblyInfoInputs.cache
+C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.AssemblyInfo.cs
+C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.csproj.CopyComplete
 C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.dll
 C:\DEV\SmartLoans\SmartInterfaces\obj\Debug\netcoreapp3.1\SmartInterfaces.pdb

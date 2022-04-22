@@ -250,7 +250,7 @@ namespace SmartDataAccess
         public DbSet<LayoutMenu> LayoutMenus { get; set; }
         public DbSet<UserAccessRestriction> UserAccessRestrictions { get; set; }
 
-
+        public DbSet<Mail> Mails { get; set; }
         //Loans
         public DbSet<Loan> Loans { get; set; }
         public DbSet<LoanUse> LoanUses { get; set; }

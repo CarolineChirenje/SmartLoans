@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmartExtensions\SmartExtensions.csproj" />
+    <ProjectReference Include="..\SmartLogic\SmartLogic.csproj" />
     <ProjectReference Include="..\SmartMail\SmartMail.csproj" />
   </ItemGroup>
 

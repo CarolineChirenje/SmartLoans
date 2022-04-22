@@ -271,6 +271,7 @@ C:\DEV\SmartWealth\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartHelper.pdb
 C:\DEV\SmartWealth\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
 C:\DEV\SmartWealth\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartInterfaces.pdb
 C:\DEV\SmartWealth\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartLog.pdb
+C:\DEV\SmartWealth\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartLog.dll.config
 C:\DEV\SmartWealth\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartLogic.pdb
 C:\DEV\SmartWealth\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartReporting.pdb
 C:\DEV\SmartWealth\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.csproj.AssemblyReference.cache
@@ -411,6 +412,7 @@ C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartLogic.dll
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartMail.dll
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartReporting.dll
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
+C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartLogic.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartMail.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartDataAccess.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartDomain.pdb
@@ -418,7 +420,6 @@ C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartHelper.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartInterfaces.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartLog.pdb
-C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartLogic.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\bin\Debug\netcoreapp3.1\SmartReporting.pdb
 C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.csproj.CopyComplete
 C:\DEV\SmartLoans\SmartAsyncMailing\obj\Debug\netcoreapp3.1\SmartAsyncMailing.dll

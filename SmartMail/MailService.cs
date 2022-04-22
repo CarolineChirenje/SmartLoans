@@ -62,9 +62,7 @@ namespace SmartMail
             try
             {  //set the sender address of the mail message
                 mMailMessage.From.Add(new MailboxAddress(MAILDISPLAYNAME, CREDENTIALUSERNAME));
-                if (UserAppData.SiteEnvironment == SiteEnvironment.Production)
-                {
-                    //set the recipient address of the mail message
+                                   //set the recipient address of the mail message
                     foreach (var address in email.To.Split(','))
                         mMailMessage.To.Add(MailboxAddress.Parse(address));
                     //set the carbon copy address
@@ -79,12 +77,7 @@ namespace SmartMail
                         foreach (var address in email.BCC.Split(','))
                             mMailMessage.Bcc.Add(MailboxAddress.Parse(address));
                     }
-                }
-                else
-                {
-                    string mailAddress = UtilityService.TestEmailAddress;
-                    mMailMessage.To.Add(MailboxAddress.Parse(mailAddress));
-                }
+               
                 //set the subject of the mail message
                 mMailMessage.Subject = string.IsNullOrEmpty(email.Subject) ? DEFAULTEMAILSUBJECT : email.Subject;
                 //set the format of the mail message body and the mail message

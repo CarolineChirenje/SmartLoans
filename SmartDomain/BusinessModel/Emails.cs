@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SmartDomain
 {
-  public  class Email
+    public class Email
     {
         /// <summary>
         /// This helper class sends an email message using the System.Net.Mail namespace
@@ -39,7 +39,8 @@ namespace SmartDomain
         public bool GrantAccessToTestEnvironment { get; set; } = UserAppData.GrantAccessToTestEnvironment;
         public string TestEmailAddress { get; set; } = UtilityService.TestEmailAddress;
         public string AppUserEmailAddress { get; set; } = UserAppData.UserEmailAddress;
-
+        public string TestUserEmailAddress { get; set; }
+        public string ApplicationName { get; set; } = UserAppData.ApplicationName;
         public SiteEnvironment SiteEnvironment { get; set; } = UserAppData.SiteEnvironment;
     }
 

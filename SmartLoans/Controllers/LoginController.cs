@@ -91,7 +91,7 @@ namespace SmartLoan.Controllers
                     UserAppData.SiteEnvironment = UtilityService.GetEnvironment;
                     UserAppData.IsNotAdmin = user.UserTypeID != (int)TypeOfUser.Administrator;
                     UserAppData.ApplicationName = UtilityService.GetApplicationName;
-                    UserAppData.CompanyID = user.CompanyID??0;
+                    UserAppData.CompanyID = user.CompanyID ?? 0;
                     UserAppData.GrantAccessToTestEnvironment = user.GrantAccessToTestEnvironment;
                     UserAppData.UserEmailAddress = user.EmailAddress;
 
@@ -118,11 +118,9 @@ namespace SmartLoan.Controllers
         {
             AppData.MenuGroups = await _menuService.DisplayMenuGroups();
             AppData.SettingsMenu = await _menuService.DisplayLayouts(LayoutComponent.Settings);
-            AppData.DeveloperMenu = await _menuService.DisplayLayouts(LayoutComponent.Developer_Menu);
             AppData.ReportMenu = await _menuService.DisplayLayouts(LayoutComponent.Reporting);
             AppData.ClientMenu = await _menuService.DisplayLayouts(LayoutComponent.Client);
-            AppData.LoanMenu = await _menuService.DisplayLayouts(LayoutComponent.Loan_Manager);
-            AppData.ClientMenu = await _menuService.DisplayLayouts(LayoutComponent.Client);
+            AppData.EmployeeMenu = await _menuService.DisplayLayouts(LayoutComponent.Employees);
             AppData.EmployerMenu = await _menuService.DisplayLayouts(LayoutComponent.Employers);
 
         }
@@ -228,7 +226,7 @@ namespace SmartLoan.Controllers
             {
                 UserID = confirmCode.UserID == 0 ? userID : confirmCode.UserID,
                 CodeType = CodeType.Multi_Factor_Authenticator,
-                PinCode = confirmCode.Code.Trim(),
+                PinCode = confirmCode.Code,
                 DoNotAskForTheDay = confirmCode.DoNotAskForTheDay,
 
             };
@@ -275,6 +273,12 @@ namespace SmartLoan.Controllers
                 TempData[MessageDisplayType.Error.ToString()] = UtilityService.GetMessageToDisplay("GENERICERROR");
                 return View(model);
             }
+
+            if (!_service.HasAccount(model.EmailAddress))
+            {
+                TempData[MessageDisplayType.Error.ToString()] = "Account does not exist";
+                return View(model);
+            }
             UserAuthenticate authenticate = new UserAuthenticate()
             {
                 IsAccountCreation = false,
@@ -286,6 +290,10 @@ namespace SmartLoan.Controllers
             {
                 authenticate.PinCode = result.PinCode;
                 Email email = EmailService.SendPasswordReset(authenticate);
+                email.GrantAccessToTestEnvironment = _service.HasAccessToSite(model.EmailAddress);
+                UserAppData.UserEmailAddress = model.EmailAddress;
+                if (email.GrantAccessToTestEnvironment)
+                    email.TestUserEmailAddress = model.EmailAddress;
                 bool emailSuccessResult = RabbitQueue.Publish(email);
                 if (emailSuccessResult)
                 {
@@ -379,7 +387,7 @@ namespace SmartLoan.Controllers
                 }
             }
             {
-             
+
                 return View(model);
             }
 
@@ -496,7 +504,7 @@ namespace SmartLoan.Controllers
             user.EmailAddress = client.EmailAddress;
             user.FirstName = client.FirstName;
             user.LastName = client.LastName;
-                       user.IDNumber = client.IDNumber;
+            user.IDNumber = client.IDNumber;
             user.IsActive = true;
             user.UserTypeID = (int)TypeOfUser.Employee;
             int result = await _userService.Save(user, false);

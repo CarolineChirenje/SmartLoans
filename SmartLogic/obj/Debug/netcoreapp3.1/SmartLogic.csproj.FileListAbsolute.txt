@@ -24,11 +24,11 @@ C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.CoreComp
 C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.dll
 C:\DEV\SmartWealth\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.pdb
+C:\DEV\SmartLoans\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.AssemblyReference.cache
 C:\DEV\SmartLoans\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.GeneratedMSBuildEditorConfig.editorconfig
 C:\DEV\SmartLoans\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.AssemblyInfoInputs.cache
 C:\DEV\SmartLoans\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.AssemblyInfo.cs
 C:\DEV\SmartLoans\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.CoreCompileInputs.cache
-C:\DEV\SmartLoans\SmartLogic\obj\Debug\netcoreapp3.1\SmartLogic.csproj.AssemblyReference.cache
 C:\DEV\SmartLoans\SmartLogic\bin\Debug\netcoreapp3.1\SmartLogic.deps.json
 C:\DEV\SmartLoans\SmartLogic\bin\Debug\netcoreapp3.1\SmartLogic.dll
 C:\DEV\SmartLoans\SmartLogic\bin\Debug\netcoreapp3.1\SmartLogic.pdb

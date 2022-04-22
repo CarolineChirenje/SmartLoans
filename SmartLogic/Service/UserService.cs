@@ -26,7 +26,7 @@ namespace SmartLogic
         {
             try
             {
-            return _context.UserTypes.Where(t => t.IsActive).ToList();
+                return _context.UserTypes.Where(t => t.IsActive).ToList();
             }
             catch (Exception ex)
             {
@@ -40,13 +40,13 @@ namespace SmartLogic
             try
             {
 
-            if (!String.IsNullOrEmpty(username))
-                id = _context.Users.FirstOrDefault(u => u.EmailAddress.ToUpper() == username.Trim().ToUpper())?.UserID ?? 0;
-            return await _context.Users.Include(p => p.UserRoles)
-                         .ThenInclude(r => r.Roles)
-                         .ThenInclude(r => r.RolePermissions)
-                         .Include(ut => ut.UserType).
-                Where(r => r.UserID == id).FirstOrDefaultAsync();
+                if (!String.IsNullOrEmpty(username))
+                    id = _context.Users.FirstOrDefault(u => u.EmailAddress.ToUpper() == username.Trim().ToUpper())?.UserID ?? 0;
+                return await _context.Users.Include(p => p.UserRoles)
+                             .ThenInclude(r => r.Roles)
+                             .ThenInclude(r => r.RolePermissions)
+                             .Include(ut => ut.UserType).
+                    Where(r => r.UserID == id).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -60,9 +60,9 @@ namespace SmartLogic
             try
             {
                 User user = new User();
-             if(id>0)
+                if (id > 0)
                     user = _context.Users.Find(id);
-               else if (!String.IsNullOrEmpty(username))
+                else if (!String.IsNullOrEmpty(username))
                     user = _context.Users.FirstOrDefault(u => u.EmailAddress.ToUpper() == username.Trim().ToUpper());
                 if (user.IsNotNull())
                 {
@@ -89,26 +89,26 @@ namespace SmartLogic
             try
             {
 
-            if (!_context.IsNotNull())
-            {
-                return null;
-            }
-            if (!String.IsNullOrEmpty(username))
-            {
-                var user = _context.Users.Where(u => u.EmailAddress.ToUpper() == username.Trim().ToUpper()).FirstOrDefault();
-                if (!user.IsNotNull())
+                if (!_context.IsNotNull())
+                {
                     return null;
-                id = user.UserID;
-            }
-            string[] roles = _context.UserRoles.Where(
-         userRole => userRole.UserID == id).Select(r => r.RoleID.ToString()).ToArray();
+                }
+                if (!String.IsNullOrEmpty(username))
+                {
+                    var user = _context.Users.Where(u => u.EmailAddress.ToUpper() == username.Trim().ToUpper()).FirstOrDefault();
+                    if (!user.IsNotNull())
+                        return null;
+                    id = user.UserID;
+                }
+                string[] roles = _context.UserRoles.Where(
+             userRole => userRole.UserID == id).Select(r => r.RoleID.ToString()).ToArray();
 
-            return _context
-            .Roles
-            .Include(p => p.RolePermissions)
-            .Include(usr => usr.UserRoles)
-            .Where(r => roles.Contains(r.RoleID.ToString()))
-            .ToList();
+                return _context
+                .Roles
+                .Include(p => p.RolePermissions)
+                .Include(usr => usr.UserRoles)
+                .Where(r => roles.Contains(r.RoleID.ToString()))
+                .ToList();
             }
             catch (Exception ex)
             {
@@ -121,9 +121,9 @@ namespace SmartLogic
         {
             try
             {
-           return await _context.Users.
-                Include(usr => usr.UserRoles).
-                Include(ut => ut.UserType).ToListAsync();
+                return await _context.Users.
+                     Include(usr => usr.UserRoles).
+                     Include(ut => ut.UserType).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -133,49 +133,55 @@ namespace SmartLogic
         }
         public async Task<int> Update(User user)
         {
+
             try
             {
 
-            User updateUser = await FindUser(user.UserID);
-            string oldIDNumber = updateUser.IDNumber;
-            string oldEmailAddress = updateUser.EmailAddress;
-            updateUser.ProfileImage = user.ProfileImage;
-                       updateUser.FirstName = user.FirstName;
-            updateUser.LastName = user.LastName;
-            updateUser.IsActive = user.IsActive;
-            updateUser.UserTypeID = user.UserTypeID;
-            updateUser.EmailAddress = user.EmailAddress;
-            updateUser.IDNumber = user.IDNumber;
+                User updateUser = await FindUser(user.UserID);
+                string oldIDNumber = updateUser.IDNumber;
+                string oldEmailAddress = updateUser.EmailAddress;
+                updateUser.ProfileImage = user.ProfileImage;
+                updateUser.FirstName = user.FirstName;
+                updateUser.LastName = user.LastName;
+                updateUser.IsActive = user.IsActive;
+                updateUser.UserTypeID = user.UserTypeID;
+                updateUser.EmailAddress = user.EmailAddress;
+                updateUser.IDNumber = user.IDNumber;
+                updateUser.GrantAccessToTestEnvironment = user.GrantAccessToTestEnvironment;
                 if (user.CompanyID.HasValue)
                     updateUser.CompanyID = user.CompanyID;
-            updateUser.LastChangedBy = UserAppData.CurrentUserName;
-            updateUser.LastChangedDate = DateTime.Now;
-            _context.Update(updateUser);
+                updateUser.LastChangedBy = UserAppData.CurrentUserName;
+                updateUser.LastChangedDate = DateTime.Now;
+                _context.Update(updateUser);
 
-            int result = await _context.SaveChangesAsync();
-            if (result > 0)
+                int result = await _context.SaveChangesAsync();
+                if (result > 0)
 
                 {
-                    UserAppData.CurrentUserName = updateUser.EmailAddress;
-                    UserAppData.UserFullName = updateUser.UserFullName;
-                    UserAppData.UserProfileImage = updateUser.ProfileImage;
-                    UserAppData.CurrentUserTypeID = updateUser.UserTypeID;
-                    UserAppData.CanOverrideMaintananceMode = updateUser.CanOverrideMaintananceMode;
-                    UserAppData.CompanyID = updateUser.CompanyID??0;
+                    if (UserAppData.CurrentUserName.Equals(updateUser.EmailAddress))
+                    {
+                        UserAppData.CurrentUserName = updateUser.EmailAddress;
+                        UserAppData.UserFullName = updateUser.UserFullName;
+                        UserAppData.UserProfileImage = updateUser.ProfileImage;
+                        UserAppData.CurrentUserTypeID = updateUser.UserTypeID;
+                        UserAppData.CanOverrideMaintananceMode = updateUser.CanOverrideMaintananceMode;
+                        UserAppData.GrantAccessToTestEnvironment = updateUser.GrantAccessToTestEnvironment;
+                        UserAppData.CompanyID = updateUser.CompanyID ?? 0;
+                    }
                     // also need to update id number and email address on client account 
                     Client client = _context.Clients.FirstOrDefault(u => u.IDNumber.Equals(oldIDNumber) && u.EmailAddress.Equals(oldEmailAddress));
-                if (updateUser.IsNotNull() && client.IsNotNull())
-                {
-                    client.EmailAddress = user.EmailAddress;
-                    client.IDNumber = user.IDNumber;
-                    client.LastChangedBy = UserAppData.CurrentUserName;
-                    client.LastChangedDate = DateTime.Now;
-                    _context.Update(client);
-                    result = await _context.SaveChangesAsync();
-                }
+                    if (updateUser.IsNotNull() && client.IsNotNull())
+                    {
+                        client.EmailAddress = user.EmailAddress;
+                        client.IDNumber = user.IDNumber;
+                        client.LastChangedBy = UserAppData.CurrentUserName;
+                        client.LastChangedDate = DateTime.Now;
+                        _context.Update(client);
+                        result = await _context.SaveChangesAsync();
+                    }
 
-            }
-            return result;
+                }
+                return result;
             }
             catch (Exception ex)
             {
@@ -189,8 +195,8 @@ namespace SmartLogic
             try
             {
 
-            var user = _context.Users.Where(u => u.EmailAddress.Equals(emailAddress)).FirstOrDefault();
-            return user.IsNotNull();
+                var user = _context.Users.Where(u => u.EmailAddress.Equals(emailAddress)).FirstOrDefault();
+                return user.IsNotNull();
             }
             catch (Exception ex)
             {
@@ -203,26 +209,26 @@ namespace SmartLogic
             try
             {
 
-            user.Password = Encryption.Encrypt(UtilityService.GeneratePassword);
-            user.LastChangedBy = String.IsNullOrEmpty(UserAppData.CurrentUserName) ? "System" : UserAppData.CurrentUserName;
-            user.LastChangedDate = DateTime.Now;
-           
-            user.PasswordExpiryDate = DateTime.Now;
-            _context.Add(user);
-            await _context.SaveChangesAsync();
-            int userid = user.UserID;
+                user.Password = Encryption.Encrypt(UtilityService.GeneratePassword);
+                user.LastChangedBy = String.IsNullOrEmpty(UserAppData.CurrentUserName) ? "System" : UserAppData.CurrentUserName;
+                user.LastChangedDate = DateTime.Now;
 
-            if ((TypeOfUser)user.UserTypeID == TypeOfUser.Employee)
-            {
-                //assign default role
-                UserRole userRole = new UserRole();
-                userRole.RoleID = (int)DefaultRoles.Employee;
-                userRole.UserID = userid;
-                userRole.LastChangedBy = String.IsNullOrEmpty(UserAppData.CurrentUserName) ? "System" : UserAppData.CurrentUserName;
-                userRole.LastChangedDate = DateTime.Now;
-                int _result = await Save(userRole);
-            }
-            return userid;
+                user.PasswordExpiryDate = DateTime.Now;
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                int userid = user.UserID;
+
+                if ((TypeOfUser)user.UserTypeID == TypeOfUser.Employee)
+                {
+                    //assign default role
+                    UserRole userRole = new UserRole();
+                    userRole.RoleID = (int)DefaultRoles.Employee;
+                    userRole.UserID = userid;
+                    userRole.LastChangedBy = String.IsNullOrEmpty(UserAppData.CurrentUserName) ? "System" : UserAppData.CurrentUserName;
+                    userRole.LastChangedDate = DateTime.Now;
+                    int _result = await Save(userRole);
+                }
+                return userid;
             }
             catch (Exception ex)
             {
@@ -234,10 +240,10 @@ namespace SmartLogic
         {
             try
             {
-            user.LastChangedBy = UserAppData.CurrentUserName;
-            user.LastChangedDate = DateTime.Now;
-            _context.Add(user);
-            return (await _context.SaveChangesAsync());
+                user.LastChangedBy = UserAppData.CurrentUserName;
+                user.LastChangedDate = DateTime.Now;
+                _context.Add(user);
+                return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
             {
@@ -249,8 +255,8 @@ namespace SmartLogic
         {
             try
             {
-            string _password = _context.Users.Find(id)?.Password;
-            return Encryption.Decrypt(_password);
+                string _password = _context.Users.Find(id)?.Password;
+                return Encryption.Decrypt(_password);
             }
             catch (Exception ex)
             {
@@ -263,22 +269,22 @@ namespace SmartLogic
         {
             try
             {
-            foreach (var role in RoleID)
-            {
-                int.TryParse(role, out int roleID);
-                UserRole userRole = new UserRole
+                foreach (var role in RoleID)
                 {
-                    UserID = UserID,
-                    UserRoleID = roleID,
-                    LastChangedBy = UserAppData.CurrentUserName,
-                    LastChangedDate = DateTime.Now,
-                };
+                    int.TryParse(role, out int roleID);
+                    UserRole userRole = new UserRole
+                    {
+                        UserID = UserID,
+                        UserRoleID = roleID,
+                        LastChangedBy = UserAppData.CurrentUserName,
+                        LastChangedDate = DateTime.Now,
+                    };
 
-                _context.Add(userRole);
-            }
+                    _context.Add(userRole);
+                }
 
-            await _context.SaveChangesAsync();
-            return (await _context.SaveChangesAsync());
+                await _context.SaveChangesAsync();
+                return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
             {
@@ -290,9 +296,9 @@ namespace SmartLogic
         {
             try
             {
-            var usr = await _context.Users.FindAsync(id);
-            _context.Users.Remove(usr);
-            return (await _context.SaveChangesAsync());
+                var usr = await _context.Users.FindAsync(id);
+                _context.Users.Remove(usr);
+                return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
             {
@@ -304,7 +310,7 @@ namespace SmartLogic
         {
             try
             {
-            return await _context.UserRoles.Where(usr => usr.RoleID == id && usr.UserID == userid).FirstOrDefaultAsync();
+                return await _context.UserRoles.Where(usr => usr.RoleID == id && usr.UserID == userid).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -317,18 +323,18 @@ namespace SmartLogic
             try
             {
 
-            UserRole userRole = await GetUserRole(id, userid);
+                UserRole userRole = await GetUserRole(id, userid);
 
-            if (DatabaseAction.Remove == action)
-                _context.UserRoles.Remove(userRole);
-            else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
-            {
+                if (DatabaseAction.Remove == action)
+                    _context.UserRoles.Remove(userRole);
+                else if (DatabaseAction.Deactivate == action || DatabaseAction.Reactivate == action)
+                {
 
-                userRole.LastChangedBy = UserAppData.CurrentUserName;
-                userRole.LastChangedDate = DateTime.Now;
-                _context.Update(userRole);
-            }
-            return (await _context.SaveChangesAsync());
+                    userRole.LastChangedBy = UserAppData.CurrentUserName;
+                    userRole.LastChangedDate = DateTime.Now;
+                    _context.Update(userRole);
+                }
+                return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
             {
@@ -341,8 +347,8 @@ namespace SmartLogic
         {
             try
             {
-            List<Role> roles = GetUserRoles(username: UserAppData.CurrentUserName);
-            return roles.Any(x => x.RolePermissions.Any(p => p.PermissionID == (int)permission));
+                List<Role> roles = GetUserRoles(username: UserAppData.CurrentUserName);
+                return roles.Any(x => x.RolePermissions.Any(p => p.PermissionID == (int)permission));
             }
             catch (Exception ex)
             {
@@ -358,7 +364,7 @@ namespace SmartLogic
         {
             try
             {
-            return _context.Roles.ToList();
+                return _context.Roles.ToList();
             }
             catch (Exception ex)
             {
@@ -445,11 +451,11 @@ namespace SmartLogic
         {
             try
             {
-            List<UserRole> userRoles = await _context.UserRoles.Where(r => r.UserID == userID).ToListAsync();
-            var rolesToBeRemoved = userRoles
-                    .Where(x => roles.Any(y => y == x.RoleID));
-            _context.UserRoles.RemoveRange(rolesToBeRemoved);
-            return (await _context.SaveChangesAsync());
+                List<UserRole> userRoles = await _context.UserRoles.Where(r => r.UserID == userID).ToListAsync();
+                var rolesToBeRemoved = userRoles
+                        .Where(x => roles.Any(y => y == x.RoleID));
+                _context.UserRoles.RemoveRange(rolesToBeRemoved);
+                return (await _context.SaveChangesAsync());
             }
             catch (Exception ex)
             {
@@ -457,5 +463,5 @@ namespace SmartLogic
                 throw;
             }
         }
-}
+    }
 }

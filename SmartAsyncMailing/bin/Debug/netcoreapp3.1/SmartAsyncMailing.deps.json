@@ -13,6 +13,7 @@
           "Microsoft.Extensions.Hosting.Systemd": "6.0.0",
           "RabbitMQ.Client": "6.2.2",
           "SmartExtensions": "1.0.0",
+          "SmartLogic": "1.0.0",
           "SmartMail": "1.0.0"
         },
         "runtime": {

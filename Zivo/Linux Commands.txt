@@ -41,13 +41,15 @@ https://monovm.com/blog/how-to-save-and-exit-in-nano-editor/
 
 sudo cp /etc/nginx/sites-available/smartloans.elroitec.com /etc/nginx/sites-available/smartwealth.elroitec.com
 sudo nano /etc/nginx/sites-available/lms.elroitec.com
-sudo ln -s /etc/nginx/sites-available/smartloans.elroitec.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/lms.elroitec.com /etc/nginx/sites-enabled/
 
 
 mv loans.elroitec.com smartloans.elroitec.com
 
 
 sudo cp /etc/nginx/sites-available/rem.elroitec.com /etc/nginx/sites-available/lms.elroitec.com
+
+sudo cp /etc/nginx/sites-available/s.elroitec.com /etc/nginx/sites-available/smartwealth.elroitec.com
 
 Also add the domain to AAA records on linode
 

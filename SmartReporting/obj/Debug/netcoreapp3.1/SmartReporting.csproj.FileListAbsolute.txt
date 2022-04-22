@@ -22,13 +22,6 @@ C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.
 C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.dll
 C:\DEV\SmartWealth\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.pdb
-C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.AssemblyReference.cache
-C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.Resource.resources
-C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.GenerateResource.cache
-C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.GeneratedMSBuildEditorConfig.editorconfig
-C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.AssemblyInfoInputs.cache
-C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.AssemblyInfo.cs
-C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartReporting\bin\Debug\netcoreapp3.1\SmartReporting.deps.json
 C:\DEV\SmartLoans\SmartReporting\bin\Debug\netcoreapp3.1\SmartReporting.dll
 C:\DEV\SmartLoans\SmartReporting\bin\Debug\netcoreapp3.1\SmartReporting.pdb
@@ -43,6 +36,13 @@ C:\DEV\SmartLoans\SmartReporting\bin\Debug\netcoreapp3.1\SmartExtensions.pdb
 C:\DEV\SmartLoans\SmartReporting\bin\Debug\netcoreapp3.1\SmartInterfaces.pdb
 C:\DEV\SmartLoans\SmartReporting\bin\Debug\netcoreapp3.1\SmartHelper.pdb
 C:\DEV\SmartLoans\SmartReporting\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
+C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.AssemblyReference.cache
+C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.Resource.resources
+C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.GenerateResource.cache
+C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.AssemblyInfoInputs.cache
+C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.AssemblyInfo.cs
+C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.csproj.CopyComplete
 C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.dll
 C:\DEV\SmartLoans\SmartReporting\obj\Debug\netcoreapp3.1\SmartReporting.pdb

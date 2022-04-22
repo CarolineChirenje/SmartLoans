@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SmartLogic;
 using SmartMail;
 using System;
 
@@ -15,6 +16,7 @@ namespace SmartAsyncMailing
         
             services.AddHostedService<Worker>();
             services.AddSingleton<IMailService, MailService>();
+            services.AddSingleton<ILogService, LogService>();
         }));
     }
 }
