@@ -58,7 +58,7 @@ namespace SmartLoan.Controllers
         }
 
         [OverrideMenuComponentFilter]
-        public ActionResult Clients(string accountNum = null, bool newClientsOnly = false, int productID = 0, int companyID = 0)
+     public ActionResult Clients(string accountNum = null, bool newClientsOnly = false, int productID = 0, int companyID = 0)
         {
             try
             {
@@ -70,6 +70,28 @@ namespace SmartLoan.Controllers
                 if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employer && UserAppData.CompanyID > 0)
                     companyID = UserAppData.CompanyID;
                 List<ClientList> Clients = _service.Clients(accountNum, newClientsOnly, productID, companyID);
+
+                return View(Clients);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+
+
+        }
+        public ActionResult Birthdays()
+        {
+            try
+            {
+                Permissions permission = Permissions.View_Client;
+                if (!UserAppData.HasPermission(permission))
+                    return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+                if (UserAppData.CurrentUserTypeID == (int)TypeOfUser.Employee)
+                    return RedirectToAction("Dashboard", "External");
+
+                List<ClientList> Clients = _service.Birthdays();
 
                 return View(Clients);
             }

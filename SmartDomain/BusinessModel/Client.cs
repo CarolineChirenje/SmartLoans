@@ -105,7 +105,10 @@ namespace SmartDomain
         public string ClientFullName { get { return IsJointAccount ? (String.Concat(PrimaryApplicantName, (JointApplicant != null ? $" & {CoApplicantSalutation}" : ""))) : PrimaryApplicantName; } }
         [NotMapped]
         public int JointAccountEnumValue { get { return (int)Client_AccountType.Joint; } }
-
+        [NotMapped]
+        public int Age { get { return UtilityService.CalculateAge(DateOfBirth); } }
+        [NotMapped]
+        public int DaysLeftToBirthday { get { return UtilityService.RemainingDays(DateOfBirth); } }
     }
 
 }

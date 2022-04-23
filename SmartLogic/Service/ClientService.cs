@@ -444,6 +444,48 @@ namespace SmartLogic
 
         }
 
+        public List<ClientList> Birthdays()
+        {
+            try
+            {
+          
+              var clients=  _context.Clients
+              .Include(g=>g.Gender).ToList()
+              .Where(c => c.DaysLeftToBirthday==365 || c.DaysLeftToBirthday== 366).ToList();
+                if (clients.IsNull())
+                    return null;
+
+                    List<ClientList> list = new List<ClientList>();
+                foreach (var client in clients)
+                {
+                    var record = new ClientList
+                    {
+                        ClientID = client.ClientID,
+                        TitleID = client.TitleID,
+                        Status = UtilityService.ShowActiveStatus(client.IsActive),
+                        AccountType = _context.ClientGroups.Find(client.ClientGroupID)?.Name,
+                        Initials = client.Initials,
+                        LastName = client.LastName,
+                        AccountNumber = client.AccountNumber,
+                        IsJointAccount = ((Client_AccountType)client.ClientAccountTypeID == Client_AccountType.Joint),
+                        Affiliation = ((Affiliation)client.ClientGroupID == Affiliation.Individual ? Affiliation.Individual.ToString() : (_context.Companies.Find(client.CompanyID)?.Name)),
+                        Age = client.Age,
+                        DateOfBirth= UtilityService.ShowDate(client.DateOfBirth),
+                        Gender=client.Gender.Name
+                        };
+
+                    list.Add(record);
+                }
+                return list.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+
+                throw;
+            }
+        }
 
         public List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0, int companyID = 0)
         {

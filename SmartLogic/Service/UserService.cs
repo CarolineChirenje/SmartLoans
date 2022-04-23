@@ -42,7 +42,9 @@ namespace SmartLogic
 
                 if (!String.IsNullOrEmpty(username))
                     id = _context.Users.FirstOrDefault(u => u.EmailAddress.ToUpper() == username.Trim().ToUpper())?.UserID ?? 0;
-                return await _context.Users.Include(p => p.UserRoles)
+                return await _context.Users.
+                             Include(p => p.UserToDos)
+                             .Include(p => p.UserRoles)
                              .ThenInclude(r => r.Roles)
                              .ThenInclude(r => r.RolePermissions)
                              .Include(ut => ut.UserType).

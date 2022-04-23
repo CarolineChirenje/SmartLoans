@@ -229,6 +229,16 @@ namespace SmartHelper
                  System.IO.Path.GetExtension(fileName)
                 );
         }
+
+        public static int RemainingDays(DateTime birthdate)
+        {
+            DateTime today = DateTime.Today;
+            DateTime nextBirthday = birthdate.AddYears(CalculateAge(birthdate) + 1);
+
+            TimeSpan difference = nextBirthday - DateTime.Today;
+
+            return Convert.ToInt32(difference.TotalDays);
+        }
         public static int CalculateAge(DateTime birthdate)
         {
             // Save today's date.

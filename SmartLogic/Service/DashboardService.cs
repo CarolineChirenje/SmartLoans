@@ -91,8 +91,20 @@ namespace SmartLogic
                 throw;
             }
         }
+      
+         public int GetBirthdays()
+        {
+            try
+            {
 
-
+                return _context.Clients.ToList().Where(c=>c.DaysLeftToBirthday == 365 || c.DaysLeftToBirthday == 366).ToList().Count();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public List<UserToDo> GetUserToDoList()
         {
             try

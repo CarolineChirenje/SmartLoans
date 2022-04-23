@@ -15,6 +15,8 @@ namespace SmartLogic
         int GetNewLoans();
         int GetProductPayments();
         int GetOpenNotices();
+
+        int GetBirthdays();
         List<UserToDo> GetUserToDoList();
     }
 }

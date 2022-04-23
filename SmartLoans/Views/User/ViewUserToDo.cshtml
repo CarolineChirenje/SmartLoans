@@ -66,12 +66,13 @@
                         @if (UserAppData.HasPermission(Permissions.Update_To_Do))
                         {
                             <button type="submit" class="btn btn-primary">Update</button>
-                                     }
+                        }
                         @if (UserAppData.HasPermission(Permissions.Delete_To_Do))
                         {
-                            <a class="btn btn-danger" asp-controller="User" asp-action="DeleteToDo" asp-route-id="@Model.UserToDoID">Delete</a>
+                            <a class="btn btn-danger" asp-controller="User" asp-action="DeleteToDo" asp-route-id="@Model.UserToDoID">&nbsp;&nbsp;Delete</a>
                         }
-                          </div>
+                        <a class="btn btn-default" asp-controller="Home" asp-action="Dashboard">&nbsp;&nbsp;Cancel</a>
+                    </div>
 
 
                 </div>

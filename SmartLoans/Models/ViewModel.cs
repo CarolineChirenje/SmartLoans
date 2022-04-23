@@ -119,6 +119,8 @@ namespace SmartLoan.Models
 
         public int NewLoans { get; set; }
 
+        public int Birthdays { get; set; }
+
     }
 
     public class ProductAssert

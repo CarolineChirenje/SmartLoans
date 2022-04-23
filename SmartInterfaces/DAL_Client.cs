@@ -28,6 +28,9 @@ namespace SmartInterfaces
         public string CoApplicantSalutation { get { return IsJointAccount ? String.Concat(((Title)ApplicantTitleID).ToString(), " ", JointApplicantInitials, " ", JointApplicantLastName) : ""; } }
         public string ClientFullName { get { return IsJointAccount ? (String.Concat(PrimaryApplicantName, (IsJointAccount ? $" & {CoApplicantSalutation}" : ""))) : PrimaryApplicantName; } }
 
+        public string Gender { get; set; }
+        public string DateOfBirth { get; set; }
+        public int Age { get; set; }
     }
     public class PersonalDetails
     {
@@ -95,7 +98,7 @@ namespace SmartInterfaces
         public bool ShowClientButtons { get; set; } = false;
     }
 
-  
+
     public class ClientPeek
     {
         public int ClientID { get; set; }
@@ -111,7 +114,7 @@ namespace SmartInterfaces
         [Required]
         public string IDNumber { get; set; }
         public string EmailAddress { get; set; }
-      
+
     }
     public class JointApplicantForm : PersonalDetails
     {
@@ -144,15 +147,15 @@ namespace SmartInterfaces
         public List<ContactList> ContactLists { get; set; }
     }
 
-  
+
     public class CategoryAmount
     {
         public int CategoryID { get; set; }
         public string Category { get; set; }
         public decimal? TotalAmount { get; set; }
     }
-    
-    
+
+
     public class ContactList
     {
         public int ClientID { get; set; }
@@ -207,7 +210,7 @@ namespace SmartInterfaces
     }
 
 
-  
+
 
     public class Docs
     {
@@ -232,7 +235,7 @@ namespace SmartInterfaces
 
     }
 
-   
+
     public class Transactions
     {
         public int ClientID { get; set; }
@@ -284,7 +287,7 @@ namespace SmartInterfaces
 
 
     }
-   
+
 
     public class InvoiceList
     {
@@ -300,7 +303,7 @@ namespace SmartInterfaces
         public string DueDate { get; set; }
         public string InvoiceDate { get; set; }
         public string Status { get; set; }
-     
+
     }
 
     public class ClientLoans

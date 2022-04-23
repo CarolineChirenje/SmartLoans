@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -19,7 +20,11 @@ namespace SmartDomain
         public string  ToDo { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DueDate { get; set; }
-        
+        [NotMapped]
+        public bool IsOverDue { get { return DateTime.Now > DueDate; } }
+
+        [NotMapped]
+        public bool ModifiedByMe { get { return String.IsNullOrEmpty(LastChangedBy) ? true : LastChangedBy.Equals(UserAppData.CurrentUserName); } }
     }
 
 }

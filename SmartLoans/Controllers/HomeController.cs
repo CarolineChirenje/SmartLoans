@@ -20,13 +20,13 @@ namespace SmartLoan.Controllers
             {
                 ProductPayments = _service.GetProductPayments(),
                 NewClientsCount = _service.GetNewClientRegistrations(),
-                UserToDoList=_service.GetUserToDoList(),
+                UserToDoList = _service.GetUserToDoList(),
                 Notices = _service.GetOpenNotices(),
                 NewLoans = _service.GetNewLoans(),
-                ClientWithLoans=_service.GetClientWithLoans(),
-                ClientWithoutLoans=_service.GetClientWithLoans(),
+                ClientWithLoans = _service.GetClientWithLoans(),
+                ClientWithoutLoans = _service.GetClientWithLoans(),
+                Birthdays = _service.GetBirthdays()
 
-                
             };
             return View(dashboard);
 

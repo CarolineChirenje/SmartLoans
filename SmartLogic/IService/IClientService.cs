@@ -21,6 +21,8 @@ namespace SmartLogic
         string GetClientRef(int clientID);
         Task<ClientForm> FindClient(int Clientid = 0, string accountNumber = null);
         List<ClientList> Clients(string accountNumber = null, bool newClientsOnly = false, int productID = 0, int companyID=0);
+
+        List<ClientList> Birthdays();
         Task<List<string>> ClientAccountNumbers(string account);
         Task<ClientPeek> GetClient(string emailAddress=null, string idnumber=null,int? clientID=null);
        
