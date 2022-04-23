@@ -523,8 +523,10 @@ namespace SmartLogic
             UserToDo result = null;
             try
             {
-                result = await _context.UserToDos.Where(r => r.UserToDoID == id)
-                .AsNoTracking().FirstOrDefaultAsync();
+                result = await _context.UserToDos
+                               .Include(p => p.User)
+                               .Where(r => r.UserToDoID == id)
+                               .AsNoTracking().FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {

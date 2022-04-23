@@ -9916,3 +9916,4 @@ C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.csproj.CopyComple
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.dll
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.pdb
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.genruntimeconfig.cache
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\User\_MessageDisplay.cshtml.g.cs
