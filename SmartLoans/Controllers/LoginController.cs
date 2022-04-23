@@ -80,7 +80,7 @@ namespace SmartLoan.Controllers
                     UserAppData.UserProfileImage = user.ProfileImage;
                     UserAppData.CurrentUserTypeID = user.UserTypeID;
                     UserAppData.CanOverrideMaintananceMode = user.CanOverrideMaintananceMode;
-
+                    UserAppData.UserID = user.UserID;
                     UserAppData.UserType = (TypeOfUser)user.UserTypeID;
                     var userRoles = user.UserRoles.ToList();
                     var userRolePermissions = userRoles.SelectMany(r => r.Roles.RolePermissions).ToList();
@@ -94,7 +94,7 @@ namespace SmartLoan.Controllers
                     UserAppData.CompanyID = user.CompanyID ?? 0;
                     UserAppData.GrantAccessToTestEnvironment = user.GrantAccessToTestEnvironment;
                     UserAppData.UserEmailAddress = user.EmailAddress;
-
+                   
                     GetAppData().Wait();
                     if (DateTime.Now > user.PasswordExpiryDate)
                         return RedirectToAction("PasswordReset", new { id = user.UserID });

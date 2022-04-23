@@ -9520,6 +9520,7 @@ C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\bower_co
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\bower_components\select2\tests\vendor\qunit-1.23.1.css
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\bower_components\select2\tests\vendor\qunit-1.23.1.js
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\bower_components\select2\vendor\jquery-2.1.0.js
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\PubTmp\Out\run.sh
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\PubTmp\Out\SmartLoan.exe
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\Content\bootstrap.css
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\Content\bootstrap.min.css

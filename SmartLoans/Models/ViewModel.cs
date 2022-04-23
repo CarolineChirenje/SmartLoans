@@ -110,11 +110,14 @@ namespace SmartLoan.Models
     public class DashBoardViewModel
     {
         public int NewClientsCount { get; set; }
+        public int ClientWithLoans { get; set; }
+        public int ClientWithoutLoans { get; set; }
         public int ProductPayments { get; set; }
-        public int CoursePrograms { get; set; }
+        public List<UserToDo> UserToDoList { get; set; }
+        
         public int Notices { get; set; }
 
-        public int NewFunds { get; set; }
+        public int NewLoans { get; set; }
 
     }
 

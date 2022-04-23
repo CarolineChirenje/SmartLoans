@@ -31,6 +31,7 @@ namespace SmartLogic
                 string encryptedPassword = Encryption.Encrypt(password);
                 return await _context.Users
                 .Include(u => u.UserAccessGrants)
+                .Include(u => u.UserToDos)
                  .Include(u => u.UserRoles)
                  .ThenInclude(p => p.Roles)
                  .ThenInclude(p => p.RolePermissions)

@@ -147,6 +147,11 @@
     <None Remove="SmartResources\**" />
     <None Remove="Views\KonapoFund\**" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="run.sh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   
 

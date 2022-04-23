@@ -26,6 +26,14 @@ namespace SmartLogic
         List<Role> GetAllRoles();
         List<UserType> GetUserTypes();
         bool HasPermission(Permissions permission);
+        
         Task<int> UpdateRoles(int userID, string[] selectedRoles);
+
+        Task<bool> IsDuplicate(UserToDo userToDo);
+        Task<UserToDo> FindToDo(int id);
+        Task<List<UserToDo>> ToDoList(int userID);
+        Task<int> DeleteToDo(int id);
+        Task<int> Update(UserToDo userToDo);
+        Task<int> Save(UserToDo userToDo);
     }
 }

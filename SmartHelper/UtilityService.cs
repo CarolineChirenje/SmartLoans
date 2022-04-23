@@ -597,6 +597,7 @@ namespace SmartHelper
             UserAppData.CurrentUserName = null;
             UserAppData.GrantAccessToTestEnvironment = false;
             UserAppData.UserEmailAddress = null;
+            UserAppData.UserID = 0;
         }
         public static decimal GetDecimalAmount(string Amount)
         {

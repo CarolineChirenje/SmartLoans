@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartDataAccess;
+using SmartDomain;
 using SmartHelper;
 using SmartLog;
 using System;
@@ -33,12 +34,41 @@ namespace SmartLogic
             }
         }
         
-          public int GetNewKhonapoFunds()
+         public int GetClientWithLoans()
         {
             try
             {
 
-                return 0;// _context.KonapoFunds.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).Count();
+                return _context.Loans.Select(rp => rp.ClientID).Distinct().Count();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+        public int GetClientWithOutLoans()
+        {
+            try
+            {
+                int clients = _context.Clients.Count();
+                int clientsWithLoans = GetClientWithLoans();
+                int clientWithoutLoans = clients - clientsWithLoans;
+                return clientWithoutLoans;
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
+     
+        public int GetNewLoans()
+        {
+            try
+            {
+
+                return _context.Loans.Where(rp => rp.RegistrationDate.Date >= DateTime.Now.AddDays(-1).Date && rp.RegistrationDate.Date <= DateTime.Now.Date).Count();
             }
             catch (Exception ex)
             {
@@ -63,18 +93,18 @@ namespace SmartLogic
         }
 
 
-        //public int GetNewCourses()
-        //{
-        //    try
-        //    {
-        //        return _context.Courses.Where(c => c.DateCreated.Date >= DateTime.Now.AddDays(-1).Date && c.DateCreated.Date <= DateTime.Now.Date).Count();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        CustomLog.Log(LogSource.Logic_Base, ex);
-        //        throw;
-        //    }
-        //}
+        public List<UserToDo> GetUserToDoList()
+        {
+            try
+            {
+                return _context.UserToDos.Where(c => c.UserID==UserAppData.UserID).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+        }
         public int GetOpenNotices()
         {
             try

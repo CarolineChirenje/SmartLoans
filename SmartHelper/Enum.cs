@@ -846,7 +846,12 @@ namespace SmartHelper
         Add_Fiscal_Year,
         Update_Fiscal_Year,
         View_Fiscal_Year,
-        Delete_Fiscal_Year
+        Delete_Fiscal_Year,
+
+        Add_To_Do,
+        Update_To_Do,
+        View_To_Do,
+        Delete_To_Do
 
 
     }

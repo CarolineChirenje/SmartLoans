@@ -5,6 +5,8 @@ using System.Text;
 
 namespace SmartHelper
 {
+  
+
     public static class UserAppData
     {
         public static string CurrentUserName { get; set; }
@@ -23,12 +25,15 @@ namespace SmartHelper
         public static Menu_Component MenuComponent { get; set; }
         public static List<int> Permissions { get; set; }
         public static List<int> Roles { get; set; }
+
         public static bool HasPermission(Permissions permission) => Permissions.Any(p => p == (int)permission);
         public static string DatabaseConnection { get; set; }
         public static string Environment { get; set; }
         public static string ApplicationName { get; set; }
         public static bool IsNotAdmin { get; set; }
         public static int CompanyID { get; set; }
+        public static int UserID { get; set; }
+        
         public static SiteEnvironment SiteEnvironment { get; set; }
         
     }

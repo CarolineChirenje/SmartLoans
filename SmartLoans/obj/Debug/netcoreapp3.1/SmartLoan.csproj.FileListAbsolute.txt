@@ -1,13 +1,3 @@
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.csproj.AssemblyReference.cache
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.Resource.resources
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.csproj.GenerateResource.cache
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.GeneratedMSBuildEditorConfig.editorconfig
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.AssemblyInfoInputs.cache
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.AssemblyInfo.cs
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.csproj.CoreCompileInputs.cache
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.MvcApplicationPartsAssemblyInfo.cache
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.RazorAssemblyInfo.cache
-C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.RazorAssemblyInfo.cs
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\appsettings.json
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\Custom\vendors\bootstrap-wysihtml5\component.json
@@ -9545,6 +9535,7 @@ C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\wwwroot\bower_components\se
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\wwwroot\bower_components\select2\tests\vendor\qunit-1.23.1.css
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\wwwroot\bower_components\select2\tests\vendor\qunit-1.23.1.js
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\wwwroot\bower_components\select2\vendor\jquery-2.1.0.js
+C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\run.sh
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\SmartLoan.deps.json
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\SmartLoan.runtimeconfig.json
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\SmartLoan.runtimeconfig.dev.json
@@ -9738,6 +9729,16 @@ C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\SmartHelper.dll.config
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\SmartMail.pdb
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\SmartAsync.pdb
 C:\DEV\SmartLoans\SmartLoans\bin\Debug\netcoreapp3.1\SmartReporting.pdb
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.csproj.AssemblyReference.cache
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.Resource.resources
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.csproj.GenerateResource.cache
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.AssemblyInfoInputs.cache
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.AssemblyInfo.cs
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.csproj.CoreCompileInputs.cache
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.MvcApplicationPartsAssemblyInfo.cache
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.RazorAssemblyInfo.cache
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.RazorAssemblyInfo.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\staticwebassets\SmartLoan.StaticWebAssets.Manifest.cache
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.TagHelpers.input.cache
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.TagHelpers.output.cache
@@ -9905,6 +9906,7 @@ C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\TransactionType
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\User\AddUser.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\User\Users.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\User\ViewUser.cshtml.g.cs
+C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\User\ViewUserToDo.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
 C:\DEV\SmartLoans\SmartLoans\obj\Debug\netcoreapp3.1\SmartLoan.RazorTargetAssemblyInfo.cache

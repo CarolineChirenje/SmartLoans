@@ -52,7 +52,8 @@ namespace SmartDomain
         public virtual Company Company { get; set; }
         public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<UserAccessGrant> UserAccessGrants { get; set; }
-        
+        public virtual List<UserToDo> UserToDos { get; set; }
+
         public virtual List<UserAccessRestriction> UserAccessRestrictions { get; set; }
 
         [NotMapped]

@@ -30,10 +30,6 @@ C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CoreCompil
 C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CopyComplete
 C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.dll
 C:\DEV\SmartWealth\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.pdb
-C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.GeneratedMSBuildEditorConfig.editorconfig
-C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfoInputs.cache
-C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfo.cs
-C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartMail\bin\Debug\netcoreapp3.1\SmartMail.deps.json
 C:\DEV\SmartLoans\SmartMail\bin\Debug\netcoreapp3.1\SmartMail.dll
 C:\DEV\SmartLoans\SmartMail\bin\Debug\netcoreapp3.1\SmartMail.pdb
@@ -55,6 +51,10 @@ C:\DEV\SmartLoans\SmartMail\bin\Debug\netcoreapp3.1\SmartInterfaces.pdb
 C:\DEV\SmartLoans\SmartMail\bin\Debug\netcoreapp3.1\SmartLog.pdb
 C:\DEV\SmartLoans\SmartMail\bin\Debug\netcoreapp3.1\SmartReporting.pdb
 C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.AssemblyReference.cache
+C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfoInputs.cache
+C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.AssemblyInfo.cs
+C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CoreCompileInputs.cache
 C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.csproj.CopyComplete
 C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.dll
 C:\DEV\SmartLoans\SmartMail\obj\Debug\netcoreapp3.1\SmartMail.pdb

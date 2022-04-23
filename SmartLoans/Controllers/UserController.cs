@@ -16,6 +16,7 @@ using System.IO;
 using SmartMail;
 using SmartAsync;
 using SmartExtensions;
+using Microsoft.Extensions.Logging;
 
 namespace SmartLoan.Controllers
 {
@@ -238,6 +239,84 @@ namespace SmartLoan.Controllers
                 companyList = new SelectList(companies, "CompanyID", "Name");
             }
             return Json(companyList);
+        }
+
+
+        /// <summary>
+        /// To Do List
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// 
+
+        [HttpPost]
+        public async Task<IActionResult> AddToDo(UserToDo userToDo)
+        {
+            if (ModelState.IsValid)
+            {
+                bool duplicate = await _service.IsDuplicate(userToDo);
+                if (duplicate)
+                {
+                    TempData["Error"] = "To Do Item Already Exists";
+                    return View(userToDo);
+                }
+                if (await (_service.Save(userToDo)) == 0)
+                {
+                    TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return View(userToDo);
+                }
+
+            }
+            return RedirectToAction("Dashboard", "Home");
+
+        }
+        public ActionResult ToDoList(int id)
+        {
+            try
+            {
+                Permissions permission = Permissions.View_To_Do;
+                if (!UserAppData.HasPermission(permission))
+                    return RedirectToAction("UnAuthorizedAccess", "Home", new { name = permission.ToString().Replace("_", " ") });
+
+               
+                var todoList = _service.ToDoList(id);
+                return View(todoList);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Debug, ex.ToString());
+                return RedirectToAction("Error", "Home");
+            }
+        }
+       public async Task<IActionResult> ViewUserToDo(int id)
+        {
+            if (id == 0)
+                return RedirectToAction("Dashboard", "Home");
+            return View(await _service.FindToDo(id));
+        }
+        [HttpPost]
+        public async Task<IActionResult> ViewUserToDo(UserToDo userToDo)
+        {
+          
+            if (ModelState.IsValid)
+            {
+                UserToDo update = await _service.FindToDo(userToDo.UserToDoID);
+                if (update.IsNotNull())
+                {
+                    if (await (_service.Update(userToDo)) == 0)
+                        TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+                    return RedirectToAction("ViewUserToDo", new { id = userToDo.UserToDoID });
+                }
+                return RedirectToAction("Dashboard","Home");
+            }
+            TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            return RedirectToAction("ViewUserToDo", new { id = userToDo.UserToDoID });
+        }
+        public async Task<IActionResult> DeleteToDo(int id)
+        {
+            if (await (_service.DeleteToDo(id)) == 0)
+                TempData["Error"] = UtilityService.GetMessageToDisplay("GENERICERROR");
+            return RedirectToAction("Dashboard", "Home");
         }
         public void PopulateDropDownLists()
         {

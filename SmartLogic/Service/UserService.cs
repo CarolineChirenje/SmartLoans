@@ -463,5 +463,120 @@ namespace SmartLogic
                 throw;
             }
         }
+        #region ToDoList
+        public async Task<bool> IsDuplicate(UserToDo userToDo)
+        {
+            bool result = false;
+            try
+            {
+                UserToDo todo = await _context.UserToDos.Where(b => b.ToDo.Equals(userToDo.ToDo) && b.UserID == userToDo.UserID).FirstOrDefaultAsync();
+                result = todo.IsNotNull();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+        }
+        public async Task<List<UserToDo>> ToDoList(int userID)
+        {
+            List<UserToDo> result = null;
+            try
+            {
+                result = await _context.UserToDos.Where(u => u.UserID == userID)
+               .AsNoTracking()
+               .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+
+        }
+
+        public async Task<int> DeleteToDo(int id)
+        {
+            int result = 0;
+            try
+            {
+
+                var _result = await _context.UserToDos.FindAsync(id);
+                _context.UserToDos.Remove(_result);
+                result = await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+        }
+
+        public async Task<UserToDo> FindToDo(int id)
+        {
+            UserToDo result = null;
+            try
+            {
+                result = await _context.UserToDos.Where(r => r.UserToDoID == id)
+                .AsNoTracking().FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return result;
+        }
+
+        public async Task<int> Save(UserToDo userToDo)
+        {
+            try
+            {
+                userToDo.DateCreated = DateTime.Now;
+                userToDo.LastChangedBy = UserAppData.CurrentUserName;
+                userToDo.LastChangedDate = DateTime.Now;
+                _context.Add(userToDo);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+            return userToDo.UserToDoID;
+        }
+
+
+        public async Task<int> Update(UserToDo userToDo)
+        {
+            try
+            {
+
+                UserToDo update = _context.UserToDos.Where(r => r.UserToDoID == userToDo.UserToDoID).FirstOrDefault();
+                update.ToDo = userToDo.ToDo;
+                update.DueDate = userToDo.DueDate;
+                update.LastChangedBy = UserAppData.CurrentUserName;
+                update.LastChangedDate = DateTime.Now;
+                _context.Update(update);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                CustomLog.Log(LogSource.Logic_Base, ex);
+                throw;
+            }
+
+        }
+        #endregion ToDoList
+
+
     }
 }
