@@ -44,6 +44,7 @@ namespace SmartDomain
 
         [NotMapped]
         public int LoanID { get; set; }
+     
 
     }
 }

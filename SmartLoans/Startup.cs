@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ using SmartLogic.IService;
 using SmartMail;
 using System;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 
 namespace SmartLoan
@@ -86,7 +88,13 @@ namespace SmartLoan
             services.AddScoped<ISupportService, SupportService>();
 
             // Add MVC services to the services container.
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMvc(
+            options => options.EnableEndpointRouting = false
+
+            );
+            //services.AddMvc(
+            //options.ModelBinderProviders.Insert(0, new CustomBinderProvider());
+            //);
             services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
             services.AddSession(options =>
             {
@@ -107,7 +115,20 @@ namespace SmartLoan
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            var supportedCultures = new[]
+            {
+                new CultureInfo("en-US"),
+                //new CultureInfo("es"),
+            };
 
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                // Formatting numbers, dates, etc.
+                SupportedCultures = supportedCultures,
+                // Localized UI strings.
+                SupportedUICultures = supportedCultures
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

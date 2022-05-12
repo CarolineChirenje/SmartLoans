@@ -131,7 +131,7 @@ namespace SmartLoan.Controllers
         [HttpPost]
         public async Task<IActionResult> Approve(LoanFinance loanFinance)
         {
-            // if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 Loan update = await (_service.FindLoan(loanFinance.LoanID));
                 if (update.IsNotNull())
