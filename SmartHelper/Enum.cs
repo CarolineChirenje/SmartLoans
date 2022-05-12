@@ -851,7 +851,9 @@ namespace SmartHelper
         Add_To_Do,
         Update_To_Do,
         View_To_Do,
-        Delete_To_Do
+        Delete_To_Do,
+
+        Generate_Loan_Statement,
 
 
     }

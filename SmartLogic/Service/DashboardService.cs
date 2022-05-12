@@ -109,7 +109,7 @@ namespace SmartLogic
         {
             try
             {
-                return _context.UserToDos.Where(c => c.UserID==UserAppData.UserID).ToList();
+                return _context.UserToDos.Where(c => c.UserID==UserAppData.UserID).OrderBy(c=>c.DueDate).ToList();
             }
             catch (Exception ex)
             {

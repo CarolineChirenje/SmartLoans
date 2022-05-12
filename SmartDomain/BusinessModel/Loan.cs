@@ -45,6 +45,9 @@ namespace SmartDomain
 
         [NotMapped]
         public int ProductID { get; set; }
+        [NotMapped]
+        public int StatementID { get; set; }
+        
     }
 }
 
